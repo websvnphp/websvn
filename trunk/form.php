@@ -29,7 +29,8 @@ require("include/setup.inc");
 
 function redirect($loc)
 {
-   $url = "http://${_SERVER["HTTP_HOST"]}$loc";
+   $scheme = strtolower(substr($_SERVER['SERVER_PROTOCOL'], 0, strpos( $_SERVER['SERVER_PROTOCOL'], '/'))); 
+   $url = $scheme."://${_SERVER["HTTP_HOST"]}$loc";
    header("Location: $url");
    echo "<html><script language=\"JavaScript\" type=\"text/JavaScript\">window.location = \"$url\"</script></html>";
 }

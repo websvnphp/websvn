@@ -1,5 +1,7 @@
 CHANGES
 
+FIX: Detect use of the HTTPS protocol when using the drop-down box to
+     select projects.
 FIX: The PNGs in the BlueGrey style are now transparent under Internet
      Explorer 5.5 and higher.
 
