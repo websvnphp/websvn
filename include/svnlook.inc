@@ -26,6 +26,8 @@
 // These binding currently use svnlook to achieve their goal.  Once a proper SWIG binding has been
 // produces, there'll be an option to use those instead
 
+require_once("include/utils.inc");
+
 // Function returns true if the give entry in a directory tree is at the top level
 
 function _topLevel($entry)
@@ -554,7 +556,7 @@ Class SVNRepository
             
    		while (!feof($result))
    		{
-   			print(transChars(fgets($result, 1024), $pre));
+   			print hardspace(transChars(fgets($result, 1024), $pre));
    		}
     
          if ($pre)

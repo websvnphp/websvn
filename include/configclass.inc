@@ -46,6 +46,7 @@ Class Config
    var $multiViews = false;
    var $useEnscript = false;
    var $rss = false;
+   var $spaces = 8;
 
    var $templatePath = "./templates/Standard/";
 
@@ -341,6 +342,13 @@ Class Config
          $this->outputEnc = $enc;
          $vars["charset"] = $enc;
       }
+   }
+   
+   // Tab expansion functions
+   
+   function expandTabsBy($sp)
+   {
+      $this->spaces = $sp;
    }
 }
 ?>

@@ -2,7 +2,7 @@
 
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004 Tim Armes
-// rss feed (C) 2004 by Lübbe Onken
+// RSS feed initial version (C) 2004 by Lübbe Onken
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ include("include/feedcreator.class.php");
 
 require_once("include/setup.inc");
 require_once("include/svnlook.inc");
-require("include/utils.inc");
-require("include/template.inc");
+require_once("include/utils.inc");
+require_once("include/template.inc");
 
 $rep = (int)@$_REQUEST["rep"];
 $path = escapeshellcmd(@$_REQUEST["path"]);

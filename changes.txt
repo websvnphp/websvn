@@ -7,6 +7,10 @@ ADD: Translatations for French and Portuguese
 ADD: .exe is recognised by default as haivng content-type
      application/x-msdownload
 ADD: Recognised links are now 'linkified' in the log messages
+ADD: Tabs in file/diff listings are now expanded by a user
+     configurable number of spaces.  Note that this option 
+     doesn't apply to the "Show all" diff view, since diff expands
+     all tabs to 8 spaces regardless.
 
 FIX: Removed the revision 0 that has appeared in the previous version
 FIX: Repositories were not sorted alphabetically when using ParentPath
