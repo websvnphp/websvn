@@ -27,8 +27,8 @@ won't currently work in safe mode, due to the need to call svnlook.
 You'll also need diff (preferably the GNU version; for Windows users I'd
 recommend the Cygwin version) and svnlook available.
 
-Rename distconfig.inc as config.inc and then edit it as directed in the file
-itself.
+Rename distconfig.inc as config.inc (found in the includes directory)and then
+edit it as directed in the file itself.
 
 If everything has gone well, you should be able to view your projects by
 pointing your browser at the index.php file.
