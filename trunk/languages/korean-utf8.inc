@@ -19,9 +19,9 @@
 //
 // --
 //
-// korean-euc.inc
+// korean-utf8.inc
 // Translator: Lee Jae-Hong
-// Korean(EUC) language strings
+// Korean(utf8) language strings
 
 $lang["LOG"] = "로그";
 $lang["DIFF"] = "비교";
@@ -80,10 +80,10 @@ $lang["LINENO"] = "행번호";
 $lang["BLAMEFOR"] = "리비전의 내용변경추적";
 
 $lang["YEARS"] = "년";
-$lang["MONTHS"] = "월";
-$lang["WEEKS"] = "주";
+$lang["MONTHS"] = "개월";
+$lang["WEEKS"] = "주일";
 $lang["DAYS"] = "일";
-$lang["HOURS"] = "시";
+$lang["HOURS"] = "시간";
 $lang["MINUTES"] = "분";
 
 $lang["GO"] = "Go";
