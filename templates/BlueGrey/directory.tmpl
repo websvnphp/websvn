@@ -1,43 +1,45 @@
 
-<h1>[websvn:repname] - [lang:REV] [websvn:rev]</h1>
-[websvn:goheadlink]
-<p><b>[lang:LASTMOD]:</b> [websvn:author] - [websvn:date]
-<p><b>[lang:LOGMSG]:</b><br>
-[websvn:log]
-<p>
-[websvn-test:hidechanges]
-   <p>[websvn:showchangeslink]
-[websvn-endtest]
+<h1>[websvn:repname]</h1>
 
-[websvn-test:showchanges]
-   <p><b>[lang:CHANGES]:</b><br>
-   <center><table border=0 cellpadding=4 cellspacing=0>
-      <tr>
-         <th class="HdrClmn"><center><b>[lang:NEWFILES]</b></center></th>
-         <th class="HdrClmn"><center><b>[lang:CHANGEDFILES]</b></center></th>
-         <th class="HdrClmnEnd"><center><b>[lang:DELETEDFILES]</b></center></th>
-      </tr>
-      <tr>  
-         <td class="row0" style="border-right: 1px solid black">[websvn:newfiles]</td>
-         <td class="row0" style="border-right: 1px solid black">[websvn:changedfiles]</td>
-         <td class="row0">[websvn:deletedfiles]</td>
-      </tr>
-   </table>
-   <p>[websvn:hidechangeslink]
-   </center>
+<table border=0 cellpadding=4 cellspacing=0>
+<tr><th colspan=2 class="HdrClmnEnd">[lang:REVINFO]</th></tr>
+<tr><td class="row0">[lang:REV]</td><td>[websvn:rev]
+[websvn-test:goheadlink]
+ - [websvn:goheadlink]
 [websvn-endtest]
+</td></tr>
+<tr><td class="row0">[lang:AUTHOR]</td><td>[websvn:author]</td></tr>
+<tr><td class="row0">[lang:LASTMOD]</td><td>[websvn:date]</td></tr>
+<tr><td class="row0">[lang:LOGMSG]</td><td>[websvn:log]</td></tr>
+[websvn-test:changedfilesbr]
+<tr><td class="row0">[lang:CHANGEDFILES]</td><td>[websvn:changedfilesbr]</td></tr>
+[websvn-endtest]
+[websvn-test:newfilesbr]
+<tr><td class="row0">[lang:NEWFILES]</td><td>[websvn:newfilesbr]</td></tr>
+[websvn-endtest]
+[websvn-test:deletedfilesbr]
+<tr><td class="row0">[lang:DELETEDFILES]</td><td>[websvn:deletedfilesbr]</td></tr>
+[websvn-endtest]
+</table>
 
 <p><hr>
 <b>[lang:CURDIR]:</b> [websvn:curdirlinks] - [websvn:curdirloglink]
 <p>
 <table cellpadding="2px" cellspacing="0" width="100%">
    <tr>
-      <th class="HdrClmn" width="100%"><b>Path</b></th>
-      <th class="HdrClmnEnd"><b>Log</b></td>
+      <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
+      <th class="HdrClmnEnd"><b>[lang:LOG]</b></td>
    </tr>
    [websvn-startlisting]
    <tr>
-      <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[websvn:filelink]</td>
+      <td style="border-right: 1px solid black" class="row[websvn:rowparity]">
+         [websvn-test:isDir]
+            <img align="middle" src="templates/BlueGrey/folder.png" alt="[FOLDER]">   
+         [websvn-else]
+            <img align="middle" src="templates/BlueGrey//file.png" alt="[FILE]">
+         [websvn-endtest]      
+         [websvn:filelink]
+      </td>
       <td class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
    </tr>
    [websvn-endlisting]

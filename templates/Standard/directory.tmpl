@@ -18,7 +18,27 @@
          <th><center><b>[lang:DELETEDFILES]</b></center></th>
       </tr>
       <tr>  
-         <td>[websvn:newfiles]</td>
+         <td>
+         [websvn-test:newfilesbr]
+            [websvn:newfilesbr]
+         [websvn-else]
+            &nbsp;
+         [websvn-endtest]
+         </td>
+         <td>
+         [websvn-test:changedfilesbr]
+            [websvn:changedfilesbr]
+         [websvn-else]
+            &nbsp;
+         [websvn-endtest]
+         </td>
+         <td>
+         [websvn-test:deletedfilesbr]
+            [websvn:deletedfilesbr]
+         [websvn-else]
+            &nbsp;
+         [websvn-endtest]
+         </td>
          <td>[websvn:changedfiles]</td>
          <td>[websvn:deletedfiles]</td>
       </tr>
