@@ -67,15 +67,15 @@ if ($config->multiViews)
    if ($pos === false)
    {
       $name = substr($path, 0);
-      $_REQUEST["path"] = "/";
+      $path = "/";
    }
    else
    {
       $name = substr($path, 0, $pos);
-      $_REQUEST["path"] = substr($path, $pos + 1);
+      $path = substr($path, $pos + 1);
    }
       
-   $_REQUEST["rep"] = $config->findRepository($name);
+   $rep = $config->findRepository($name);
 
    // find the operation type
    $op = @$_REQUEST["op"];
