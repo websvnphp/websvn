@@ -41,12 +41,15 @@ if (@$_REQUEST["selectproj"])
    $rep = (int)@$_REQUEST["rep"];
    
    $basedir = dirname($_SERVER["PHP_SELF"]);
+   if ($basedir != "" && $basedir != DIRECTORY_SEPARATOR && $basedir != "\\" && $basedir != "/" )
+      $basedir .= "/";
+   
    $url = $config->getURL($rep, "/", "dir");
    
    if ($config->multiViews)
       redirect($url);
    else
-      redirect($basedir."/".$url);   
+      redirect($basedir.$url);   
 }
 
 
