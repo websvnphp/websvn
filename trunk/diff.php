@@ -182,6 +182,7 @@ if ($prevrev)
    		      {
                   $mod = $line{0};
                   $text = hardspace(transChars(rtrim(substr($line, 1)), ($config->useEnscript)?false:true));
+                  if ($text == "") $text = "&nbsp;";
                   
                   switch ($mod)
                   {
