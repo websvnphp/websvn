@@ -118,7 +118,7 @@ else
    echo "<p><a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=0\">${lang["HIDECHANGED"]}</a></center>";
 }
 
-echo "<p><hr><h1>$ppath&nbsp- <font size=\"smaller\"><a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged\">${lang["VIEWLOG"]}</a></font></h1>";
+echo "<p><hr><h1>$ppath&nbsp;- <font size=\"smaller\"><a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged\">${lang["VIEWLOG"]}</a></font></h1>";
 
 echo "<table border=1 class=\"outlined\" width=\"100%\" cellpadding=2><tr><th><b>${lang["PATH"]}</b></td><th align=\"center\"><b>${lang["LOG"]}</b></td></tr>";
 
