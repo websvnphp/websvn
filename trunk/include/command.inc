@@ -39,8 +39,13 @@ function transChars($str, $doEnt = true)
    }
    
    if ($doEnt)
-      $str = htmlentities($str);
-      
+   {
+      if (version_compare(phpversion(), "4.1.0", "<"))
+         $str = htmlentities($str);
+      else
+         $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
+   }
+
    return $str;
 }
 
@@ -63,7 +68,10 @@ function transArray($arr)
          }
       }
 
-      $narr[$key] = htmlentities(rtrim($value));
+      if (version_compare(phpversion(), "4.1.0", "<"))
+         $narr[$key] = htmlentities(rtrim($value));
+      else
+         $narr[$key] = htmlentities(rtrim($value), ENT_COMPAT, $config->outputEnc);
    }
       
    return $narr;

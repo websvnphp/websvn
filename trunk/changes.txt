@@ -27,6 +27,7 @@ FIX: Under Windows, links in the RSS output would start with "\" if WebSVN
      was installed in the server's root directory.
 FIX: Sed wouldn't work under all versions of Windows due to the use of single
      quotes around the paramters
+FIX: Improved character encoding support for log messages etc;
 
 1.40
 

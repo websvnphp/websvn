@@ -23,7 +23,9 @@ GNU General Public License for more details: <http://www.gnu.org/licenses/gpl.tx
 
 Changelog:
 
-Modification for WebSVN:  The main description link wasn't put through htmlspecialcharacters
+Modifications for WebSVN:
+   The main description link wasn't put through htmlspecialcharacters
+   Output encoding now defined by $config
 
 v1.6    05-10-04
     added stylesheet to RSS 1.0 feeds
@@ -629,8 +631,9 @@ class RSSCreator10 extends FeedCreator {
      * The feed will contain all items previously added in the same order.
      * @return    string    the feed's complete text
      */
-    function createFeed() {     
-        $feed = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
+    function createFeed() {
+        global $config;     
+        $feed = "<?xml version=\"1.0\" encoding=\"".$config->outputEnc."\"?>\n";
         $feed.= "<?xml-stylesheet href=\"http://www.w3.org/2000/08/w3c-synd/style.css\" type=\"text/css\"?>\n";
         $feed.= $this->_createGeneratorComment();
         $feed.= "<rdf:RDF\n";
@@ -724,7 +727,8 @@ class RSSCreator091 extends FeedCreator {
      * @return    string    the feed's complete text
      */
     function createFeed() {
-        $feed = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
+        global $config;     
+        $feed = "<?xml version=\"1.0\" encoding=\"".$config->outputEnc."\"?>\n";
         $feed.= $this->_createGeneratorComment();
         $feed.= "<rss version=\"".$this->RSSVersion."\">\n";
         $feed.= "    <channel>\n";
@@ -1009,6 +1013,7 @@ class MBOXCreator extends FeedCreator {
      * @return    string    the feed's complete text
      */
     function createFeed() {
+        global $config;
         for ($i=0;$i<count($this->items);$i++) {
             if ($this->items[$i]->author!="") {
                 $from = $this->items[$i]->author;
@@ -1018,7 +1023,7 @@ class MBOXCreator extends FeedCreator {
             $itemDate = new FeedDate($this->items[$i]->date);
             $feed.= "From ".strtr(MBOXCreator::qp_enc($from)," ","_")." ".date("D M d H:i:s Y",$itemDate->unix())."\n";
             $feed.= "Content-Type: text/plain;\n";
-            $feed.= "    charset=\"ISO-8859-15\"\n";
+            $feed.= "    charset=\"".$config->outputEnc."\"\n";
             $feed.= "Content-Transfer-Encoding: quoted-printable\n";
             $feed.= "Content-Type: text/plain\n";
             $feed.= "From: \"".MBOXCreator::qp_enc($from)."\"\n";
