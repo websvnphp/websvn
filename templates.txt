@@ -162,6 +162,8 @@ deletedfiles - list of the deleted files separated by spaces
 
 curdirlinks - List of the path of this directory with links to each one
 curdirloglink - Link to the log view of current directory
+curdirrsslink - Link to the RSS feed for the current directory
+curdirrssanchor - The <a href=...> tag to the RSS feed for the current directory
 
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
@@ -170,7 +172,8 @@ rowparity - Parity of the row (0 or 1).  Used to generate striped tables
 fileviewloglink - Link to the log page for the file
 isDir - true if the current file is a directory (use with [websvn-test:isDir]
         to display icons) 
-
+rsslink - Link to the RSS feed for this file/directory
+rssanchor - The <a href=...> tag to the RSS feed for this file/directory
 
 Variables defined for log.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

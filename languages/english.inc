@@ -71,6 +71,10 @@ $lang["MORERESULTS"] = "Find more matches...";
 $lang["NORESULTS"] = "There are no logs matching your query";
 $lang["NOMORERESULTS"] = "There are no more logs matching your query";
 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
+$lang["FILESMODIFIED"] = "file(s) modified"; 
+$lang["RSSFEED"] = "RSS feed"; 
+
 $lang["YEARS"] = "years";
 $lang["MONTHS"] = "months";
 $lang["WEEKS"] = "weeks";

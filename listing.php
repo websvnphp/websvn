@@ -91,6 +91,7 @@ $vars["repname"] = $repname;
 
 $dirurl = $config->getURL($rep, $path, "dir");
 $logurl = $config->getURL($rep, $path, "log");
+$rssurl = $config->getURL($rep, $path, "rss");
 
 if ($rev != $youngest)
    $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&sc=1\">${lang["GOYOUNGEST"]}</a>";
@@ -159,6 +160,11 @@ else
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a>";
+if ($config->rss)
+{
+   $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&sc=$showchanged&isdir=1\">${lang["RSSFEED"]}</a>";
+   $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&sc=$showchanged&isdir=1\">";
+}
 
 $index = 0;
 $listing = array();
@@ -187,6 +193,13 @@ foreach($contents as $file)
          
    $fileurl = $config->getURL($rep, $path.$file, "log");
    $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a>";
+   
+   $rssurl = $config->getURL($rep, $path.$file, "rss");
+   if ($config->rss)
+   {
+      $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&sc=$showchanged&isdir=$isDir\">${lang["RSSFEED"]}</a>";
+      $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&sc=$showchanged&isdir=$isDir\">";
+   }
    
    $row = 1 - $row;
    $index++;

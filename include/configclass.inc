@@ -26,6 +26,13 @@
 require("include/command.inc");
 require("include/version.inc");
 
+// Auxillary function used to sort repositories by name
+
+function cmpReps($a, $b)
+{
+   return strcasecmp($a["name"], $b["name"]);
+}
+
 Class Config
 {
    var $svnlook = "svnlook";
@@ -38,6 +45,7 @@ Class Config
    var $cacheResults = false;
    var $multiViews = false;
    var $useEnscript = false;
+   var $rss = false;
 
    var $templatePath = "./templates/Standard/";
 
@@ -127,6 +135,15 @@ Class Config
       $this->useEnscript = true;
    }
 
+   // offerRSS
+   //
+   // Use Enscript to colourise listings
+   
+   function offerRSS()
+   {
+      $this->rss = true;
+   }
+
    // getURL
    //
    // Get the URL to a path name based on the current config
@@ -178,6 +195,10 @@ Class Config
 
             case "form":
                $fname = "form.php";
+               break;
+
+            case "rss":
+               $fname = "rss.php";
                break;
          }
          
@@ -269,11 +290,6 @@ Class Config
       // On a windows machine we need to put spaces around the entire command
       // to allow for spaces in the path
       $this->templatePath = $path;
-   }
-
-   function cmpReps($a, $b)
-   {
-      return strcasecmp($a["name"], $b["name"]);
    }
 
    // parentPath
