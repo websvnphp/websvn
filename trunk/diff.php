@@ -81,7 +81,14 @@ if (!isset($rep))
 
 list ($repname, $reppath) = $config->getRepository($rep);
 $svnrep = new SVNRepository($reppath);
-$log = $svnrep->getLogDetails($path, $rev);
+
+// If there's no revision info, go to the lastest revision for this path
+$history = $svnrep->getHistory($path);
+$youngest = $history[0]["rev"];
+
+if (empty($rev))
+   $rev = $youngest;
+
 $history = $svnrep->getHistory($path, $rev);
 
 if ($path{0} != "/")
@@ -92,12 +99,14 @@ else
 $prevrev = @$history[1]["rev"];
 
 $vars["repname"] = $repname;
-$vars["rev"] = $log["rev"];
+$vars["rev"] = $rev;
 $vars["path"] = $ppath;
 $vars["prevrev"] = $prevrev;
 
 $vars["rev1"] = $history[0]["rev"];
-$vars["rev2"] = $history[1]["rev"];
+$vars["rev2"] = $prevrev;
+
+$listing = array();
 
 if ($prevrev)
 {

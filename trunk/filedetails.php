@@ -41,17 +41,31 @@ if (!isset($rep))
 
 list ($repname, $reppath) = $config->getRepository($rep);
 $svnrep = new SVNRepository($reppath);
-$log = $svnrep->getLogDetails($path, $rev);
 
 if ($path{0} != "/")
    $ppath = "/".$path;
 else
    $ppath = $path;
 
+$passrev = $rev;
+
+// If there's no revision info, go to the lastest revision for this path
+$history = $svnrep->getHistory($path);
+$youngest = $history[0]["rev"];
+
+if (empty($rev))
+   $rev = $youngest;
+
+if ($rev != $youngest)
+   $vars["goyoungestlink"] = "<a href=\"filedetails.php?rep=$rep&path=$path&sc=1\">${lang["GOYOUNGEST"]}</a>";
+else
+   $vars["goyoungestlink"] = "";
+
+
 $vars["repname"] = $repname;
-$vars["rev"] = $log["rev"];
+$vars["rev"] = $rev;
 $vars["path"] = $ppath;
-$vars["prevdifflink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+$vars["prevdifflink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
 
 $listing = array ();
 

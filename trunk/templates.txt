@@ -91,10 +91,11 @@ Variables defined for directory.tmpl
 
 repname - Name of the repository
 rev - Revision being viewed
+path - Path of item being logged
 author - Author of current revision
 date - Date that revision was committed
 log - Log message of revision
-goheadlink - Link to head revision of repository
+goyoungestlink - Link to head revision of repository
 
 showchanges - 1 if showing changes (for websvn-test)
 hidechanges - 1 if hiding changes (for websvn-test)
