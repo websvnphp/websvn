@@ -58,6 +58,8 @@ the controls is repeated for each item in the list
 ...
 [websvn-enddefineicons]
 ...
+
+[websvn-treenode]
 [websvn-icon]
 
 These commands are used to display certain icons next to certain file types in
@@ -69,22 +71,35 @@ particular extension use the syntax:
 
 .<extension>=<HTML code>
 
-There are also two special filetypes:
+There are also some special filetypes:
 
 dir=<HTML code> is used for directory icons
 *=<HTML code> is used for all filetypes which have no other definition
 
+i-node - | shaped node of the tree view
+t-node - T shaped node of the tree view
+l-node - L shaped node of the tree view
+e-node - Empty node of the tree view
+
 Example from the BlueGrey scheme:
 
 [websvn-defineicons]
-dir=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
+dir=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
 *=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
 .c=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
 .h=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
+.s=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/files.png" alt="[S-FILE]">
+
+i-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/i-node.png" alt="[NODE]">
+t-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/t-node.png" alt="[NODE]">
+l-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/l-node.png" alt="[NODE]">
+e-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/e-node.png" alt="[NODE]">
 [websvn-enddefineicons]
 
-Inside the [websvn-startlisting] block, the command [websvn-icon] will output
-the HTML code defined for the type of the current file.
+Inside the [websvn-startlisting] block, the command [websvn-treeview] will
+output the HTML code defined for the appropriate tree view icon.
+[websvn-icon] will output the HTML code defined for the type of the current
+file.
 
 ---
 

@@ -51,6 +51,111 @@ function fileLink($path, $file)
    }
 }
 
+function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
+{
+   global $rep, $passrev, $showchanged, $config, $lang;
+
+   $path = "";
+
+   for ($n = 0; $n <= $level; $n++)
+   {
+      $path .= $subs[$n]."/";
+   }
+
+   $contents = $svnrep->dirContents($path, $rev);
+
+   // List each file in the current directory
+   $loop = 0;
+   $last_index = 0;
+   foreach($contents as $file)
+   {
+      $isDir = ($file{strlen($file) - 1} == "/"?1:0);
+
+      $listing[$index]["fileviewdllink"] = "&nbsp;";
+      if ($isDir)
+      {
+         $listing[$index]["filetype"] = "dir";
+
+         if ($config->allowDownload)
+         {
+            $dlurl = $config->getURL($rep, $path.$file, "dl"); 
+            $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
+         }
+      }
+      else
+      {
+         if ($level != $limit)
+         {
+            // List directories only, skip all files
+            continue;
+         }
+         
+         $listing[$index]["filetype"] = strrchr($file, ".");
+      }   
+
+      $listing[$index]["rowparity"] = ($index % 2)?"1":"0";
+      $listing[$index]["filelink"] = fileLink($path, $file);
+
+      // The history command doesn't return with a trailing slash.  We need to remember here if the
+      // file is a directory or not! 
+   
+      $listing[$index]["isDir"] = $isDir;
+   
+      $listing[$index]["level"] = $level;
+      $listing[$index]["node"] = 0; // t-node
+   
+      $fileurl = $config->getURL($rep, $path.$file, "log");
+      $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
+   
+      $rssurl = $config->getURL($rep, $path.$file, "rss");
+      if ($config->rss)
+      {
+         $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["RSSFEED"]}</a>";
+         $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">";
+      }
+   
+      $index++;
+      $loop++;
+      $last_index = $index;
+
+      if (($level != $limit) && ($isDir))
+      {
+         if (!strcmp($subs[$level + 1]."/", $file))
+         {
+            $listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $listing, $index);
+            $index = count($listing);
+         }
+      }      
+    }
+
+    if ($last_index != 0)
+    {
+       $listing[$last_index - 1]["node"] = 1; // l-node
+    }
+
+   return $listing;
+}
+
+function showTreeDir($svnrep, $path, $rev, $listing)
+{
+   global $vars;
+
+   $subs = explode("/", $path);
+
+   // For directory, the last element in the subs is empty.
+   // For file, the last element in the subs is the file name.
+   // Therefore, it is always count($subs) - 2
+   $limit = count($subs) - 2;
+
+   for ($n = 0; $n < $limit; $n++)
+   {
+      $vars["last_i_node"][$n] = FALSE;
+   }
+
+   return showDirFiles($svnrep, $subs, 0, $limit, $rev, $listing, 0);
+
+}
+
 // Make sure that we have a repository
 if (!isset($rep))
 {
@@ -165,51 +270,9 @@ if ($config->rss)
 if ($config->allowDownload)
    $vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
 
-$index = 0;
 $listing = array();
 
-// List each file in the current directory
-$row = 0;
-foreach($contents as $file)
-{
-   $listing[$index]["rowparity"] = "$row";
-   $listing[$index]["filelink"] = fileLink($path, $file);
-
-   // The history command doesn't return with a trailing slash.  We need to remember here if the
-   // file is a directory or not! 
-   
-   $isDir = ($file{strlen($file) - 1} == "/"?1:0);
-   $listing[$index]["isDir"] = $isDir;
-   
-   $listing[$index]["fileviewdllink"] = "";
-   if ($isDir)
-   {
-      $listing[$index]["filetype"] = "dir";
-
-      if ($config->allowDownload)
-      {
-         $dlurl = $config->getURL($rep, $path.$file, "dl"); 
-         $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
-      }
-   }
-   else
-   {
-      $listing[$index]["filetype"] = strrchr($file, ".");
-   }   
-         
-   $fileurl = $config->getURL($rep, $path.$file, "log");
-   $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
-
-   $rssurl = $config->getURL($rep, $path.$file, "rss");
-   if ($config->rss)
-   {
-      $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["RSSFEED"]}</a>";
-      $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">";
-   }
-   
-   $row = 1 - $row;
-   $index++;
-}
+$listing = showTreeDir($svnrep, $path, $rev, $listing);
 
 $vars["version"] = $version;
 

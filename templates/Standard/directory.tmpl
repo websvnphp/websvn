@@ -52,6 +52,15 @@
    </center>
 [websvn-endtest]
 
+[websvn-defineicons]
+dir=&nbsp;&nbsp;&nbsp;&nbsp;
+i-node=&nbsp;&nbsp;&nbsp;&nbsp;
+t-node=&nbsp;&nbsp;&nbsp;&nbsp;
+l-node=&nbsp;&nbsp;&nbsp;&nbsp;
+e-node=&nbsp;&nbsp;&nbsp;&nbsp;
+*=&nbsp;&nbsp;&nbsp;&nbsp;
+[websvn-enddefineicons]
+
 <p><hr>
 <b>[lang:CURDIR]:</b> [websvn:curdirlinks] - [websvn:curdirloglink]
 [websvn-test:allowdownload]
@@ -74,7 +83,10 @@
    </tr>
    [websvn-startlisting]
    <tr>
-      <td class="[websvn:rowparity]">[websvn:filelink]</td>
+      <td class="[websvn:rowparity]">
+         [websvn-treenode]
+         [websvn:filelink]
+      </td>
       <td class="[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
       [websvn-test:allowdownload]
          <td class="[websvn:rowparity]">[websvn:fileviewdllink]</td>
