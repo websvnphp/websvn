@@ -62,7 +62,7 @@ e-node=&nbsp;&nbsp;&nbsp;&nbsp;
 [websvn-enddefineicons]
 
 <p><hr>
-<b>[lang:CURDIR]:</b> [websvn:curdirlinks] - [websvn:curdirloglink]
+<b>[lang:CURDIR]:</b> [websvn:curdirlinks] - [websvn:curdirloglink] - [websvn:curdircomplink]
 [websvn-test:allowdownload]
  - [websvn:curdirdllink]
 [websvn-endtest]
@@ -70,31 +70,36 @@ e-node=&nbsp;&nbsp;&nbsp;&nbsp;
  - [websvn:curdirrssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a>
 [websvn-endtest]
 <p>
-<table class="outlined" width="100%" cellpadding=2>
-   <tr>
-      <th width="100%"><b>[lang:PATH]</b></th>
-      <th><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-      [websvn-test:allowdownload]
-         <th><b>[lang:TARBALL]</b></th>
-      [websvn-endtest]
-      [websvn-test:curdirrsslink]
-         <th><b>[lang:RSSFEED]</b></th>
-      [websvn-endtest]
-   </tr>
-   [websvn-startlisting]
-   <tr>
-      <td class="[websvn:rowparity]">
-         [websvn-treenode]
-         [websvn:filelink]
-      </td>
-      <td class="[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
-      [websvn-test:allowdownload]
-         <td class="[websvn:rowparity]">[websvn:fileviewdllink]</td>
-      [websvn-endtest]
-      [websvn-test:curdirrsslink]
-         <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
-      [websvn-endtest]
-   </tr>
-   [websvn-endlisting]
-</table>
 
+[websvn:compare_form]
+   <table class="outlined" width="100%" cellpadding=2>
+      <tr>
+         <th width="100%"><b>[lang:PATH]</b></th>
+         <th><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
+         [websvn-test:allowdownload]
+            <th><b>[lang:TARBALL]</b></th>
+         [websvn-endtest]
+         [websvn-test:curdirrsslink]
+            <th><b>[lang:RSSFEED]</b></th>
+         [websvn-endtest]
+      </tr>
+      [websvn-startlisting]
+      <tr>
+         <td class="[websvn:rowparity]">
+            [websvn:compare_box]
+            [websvn-treenode]
+            [websvn:filelink]
+         </td>
+         <td class="[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
+         [websvn-test:allowdownload]
+            <td class="[websvn:rowparity]">[websvn:fileviewdllink]</td>
+         [websvn-endtest]
+         [websvn-test:curdirrsslink]
+            <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
+         [websvn-endtest]
+      </tr>
+      [websvn-endlisting]
+   </table>
+<p>
+[websvn:compare_submit]  
+[websvn:compare_endform]
