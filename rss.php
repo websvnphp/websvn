@@ -2,7 +2,9 @@
 
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004 Tim Armes
-// RSS feed initial version (C) 2004 by Lübbe Onken
+//
+// RSS feed initial version by Lübbe Onken
+// Modifications for the first official RSS feed release by Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -36,6 +38,13 @@ $path = escapeshellcmd(@$_REQUEST["path"]);
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 $isDir = (@$_REQUEST["isdir"] == 1)?1:0;
 $rev = (int)@$_REQUEST["rev"];
+
+// Override the rep parameter with the repository name if it's available
+$repname = @$_REQUEST["repname"];
+if (isset($repname))
+{
+    $rep = $config->findRepository($repname);
+}
 
 $maxmessages = 20;
 
