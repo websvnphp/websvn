@@ -1,7 +1,12 @@
 CHANGES
 
+1.37
+
+CHANGE: Aesthetic changes to the BlueGrey scheme
+
 FIX: Really make sure that we redirect to the right place when using the
      drop-down box to select projects.
+FIX: Nested [webtest]'s didn't always work
 
 1.36
 
