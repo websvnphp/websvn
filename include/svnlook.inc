@@ -472,12 +472,13 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       $pre = false;
-      $path = quote($path);
       
       // Get the file contents info
       
       $ext = strrchr($path, ".");
       $l = @$extensions[$ext];
+      
+      $path = quote($path);
         
       if ($config->useEnscript && !empty($l))
       {
