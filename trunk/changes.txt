@@ -1,11 +1,12 @@
 CHANGES
 
+1.38
+
 ADD: Templates can now define icons for particular file types
      (see BlueGrey scheme for an example)
-ADD: Display php files with syntax highlighting
+ADD: Display of  PHP files with syntax highlighting
 ADD: Improve site navigation with links to each directory level on all
      pages.
-
 
 1.37
 
@@ -79,7 +80,7 @@ FIX: Stop diff from comparing space changes
 
 1.31
 
-FIX: Direcory view had disappeared!
+FIX: Directory view had disappeared!
 FIX: Included missing file setup.inc
 FIX: Handle spaces in filenames
 
@@ -99,7 +100,7 @@ ADD: [websvn-test] function can now be nested
 ADD: locwebsvnhttp variable added in template system
 ADD: Bluegrey scheme now has show/hide changed link
 
-FIX: Possible security hole with by abuse of popen
+FIX: Possible security hole with abuse of popen
 FIX: WebSVN should now function correctly (again) on non windows servers.
 FIX: First character of diff listing was missing
 
@@ -113,7 +114,7 @@ CHANGE: The youngest revision of the current directory is now shown by
         This means that clicking on a directory will show the lastest 
         changes associated with it. A specific revision can still be
         selected from a log view
-CHANGE: Only show the lead name when viewing directory contents
+CHANGE: Only show the leaf name when viewing directory contents
 
 FIX: Fixed error concerning use of pclose
 
