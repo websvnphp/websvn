@@ -66,9 +66,9 @@ function hardspace($s)
   return $spaces.$s;
 }
 
-$rep = @$_REQUEST["rep"];
-$path = @$_REQUEST["path"];
-$rev = @$_REQUEST["rev"];
+$rep = (int)@$_REQUEST["rep"];
+$path = escapeshellcmd(@$_REQUEST["path"]);
+$rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 $all = (@$_REQUEST["all"] == 1)?1:0;
 

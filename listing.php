@@ -27,9 +27,9 @@ require("include/config.inc");
 require("include/svnlook.inc");
 require("include/template.inc");
 
-$rep = @$_REQUEST["rep"];
-$path = @$_REQUEST["path"];
-$rev = @$_REQUEST["rev"];
+$rep = (int)@$_REQUEST["rep"];
+$path = escapeshellcmd(@$_REQUEST["path"]);
+$rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
 
