@@ -25,6 +25,7 @@
 
 require_once("include/setup.inc");
 require_once("include/svnlook.inc");
+require("include/utils.inc");
 require("include/template.inc");
 
 $rep = (int)@$_REQUEST["rep"];
@@ -106,9 +107,11 @@ $vars["repname"] = $repname;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 
+createDirLinks($rep, $ppath, $rev, $showchanged);
+
 $url = $config->getURL($rep, $path, "diff");
 
-$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+$vars["prevdifflink"] = "<a href=\"${url}rev=$rev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
 
 $listing = array ();
 
