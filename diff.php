@@ -137,7 +137,7 @@ if ($prevrev)
    {
       // Open a pipe to the diff command with $context lines of context
       
-      $cmd = quoteCommand($config->diff." --ignore-space-change -U $context $oldtname $newtname", false);
+      $cmd = quoteCommand($config->diff." --ignore-all-space -U $context $oldtname $newtname", false);
       
       if ($diff = popen($cmd, "r"))
       {
@@ -194,10 +194,10 @@ if ($prevrev)
                      case "+":
                         
                         // Try to mark "changed" line sensibly
-                        if (!empty($listing[$index-1]) && $listing[$index-1]["rev1diffclass"] == "diffdeleted" && $listing[$index-1]["rev2diffclass"] == "diff")
+                        if (!empty($listing[$index-1]) && empty($listing[$index-1]["rev1lineno"]) && $listing[$index-1]["rev1diffclass"] == "diffdeleted" && $listing[$index-1]["rev2diffclass"] == "diff")
                         {
                            $i = $index - 1;
-                           while (!empty($listing[$i-1]) && $listing[$i-1]["rev1diffclass"] == "diffdeleted" && $listing[$i-1]["rev2diffclass"] == "diff")
+                           while (!empty($listing[$i-1]) && empty($listing[$i-1]["rev1lineno"]) && $listing[$i-1]["rev1diffclass"] == "diffdeleted" && $listing[$i-1]["rev2diffclass"] == "diff")
                               $i--;
                               
                            $listing[$i]["rev1diffclass"] = "diffchanged";

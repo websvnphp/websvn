@@ -247,7 +247,13 @@ $extEnscript = array
   ".vh"      => "verilog",
   ".vhd"     => "vhdl",
   ".vhdl"    => "vhdl",
-  ".py"      => "python"
+  ".py"      => "python",
+  
+  // The following are handled internally by WebSVN, since there's no
+  // support for them in Enscript
+  
+  ".php"     => "php",
+  ".inc"     => "php"  
 );
 
 // Default 'zipped' array
