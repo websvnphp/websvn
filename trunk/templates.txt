@@ -1,0 +1,176 @@
+
+THE TEMPLATING SYSTEM
+~~~~~~~~~~~~~~~~~~~~~
+
+Everyone wants their view onto their SVN repository to fit in with their look
+and feel.  With WebSVN's templating system this is very possible.
+
+To create your own templates, you first need to change your config.inc file to
+tell WebSVN where the templates are stored.  For example:
+
+$config->setTemplatePath("./templates/Standard/");
+
+This directory should contain at least the following files:
+
+header.tmpl - Header templated included before any other
+footer.tmpl - Footer templated included after any other
+
+index.tmpl - The main project page template
+
+directory.tmpl - Listing of a directory
+log.tmple - Log of a directory or file
+file.tmpl - Contents of a text file
+diff.tmpl - Differences between text files
+
+Each template file should be written in HTML, but is allowed to contain certain
+WebSVN controls.  There are two control types, commands and variables.
+
+
+COMMANDS
+~~~~~~~~
+
+
+There are a few commands available:
+
+[websvn-test:varname]
+...
+[websvn-else]
+...
+[websvn-endtest]
+
+If the variable is non-0 write out the first part else write out the second
+
+---
+
+[websvn-startlisting]
+...
+[websvn-endlisting]
+
+
+Used in pages that contain listings of files, logs, etc.  Everything between
+the controls is repeated for each item in the list
+
+---
+
+[websvn-getlisting] (used in file.tmpl only)
+ 
+Get the contents of the file being viewed and output it exactly
+
+---
+
+[websvn-getlistingbr] (used in file.tmpl only)
+
+Get the contents of the file being viewed and output it with a <br> after each
+line.
+
+---
+
+NOTE:  Controls MUST appear on there own line.
+
+VARIABLES
+~~~~~~~~~
+
+
+Variables are written in the form [websvn:varname] where varname is the name of
+a variable passed to the template.  The control is replaced with the variable
+required.
+
+The variables available are described below for each template.
+You may also access the language file using [lang:varname] is order to keep your
+templates international!
+
+Variables defined for index.tmpl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+projlink - Link to the project
+
+Variables defined for directory.tmpl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+repname - Name of the repository
+rev - Revision being viewed
+author - Author of current revision
+date - Date that revision was committed
+log - Log message of revision
+goheadlink - Link to head revision of repository
+
+showchanges - 1 if showing changes (for websvn-test)
+hidechanges - 1 if hiding changes (for websvn-test)
+showchangeslink - Link to page with changes hidden
+hidechangeslink - Link to page with changes shown
+
+newfilesbr - list of the new files separated by <BR>'s
+changedfilesbr - list of the changed files separated by <BR>'s
+deletedfilesbr - list of the deleted files separated by <BR>'s
+
+newfiles - list of the new files separated by spaces
+changedfiles - list of the changed files separated by spaces
+deletedfiles - list of the deleted files separated by spaces
+
+curdirlinks - List of the path of this directory with links to each one
+curdirloglink - Link to the log view of current directory
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+filelink - Link to the file
+rowparity - Parity of the row (0 or 1).  Used to generate striped tables
+fileviewloglink - Link to the log page for the file
+isDir - true if the current file is a directory (use with [websvn-test:isDir]
+        to display icons) 
+
+Variables defined for log.tmpl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+repname - Name of the repository
+rev - Revision being viewed
+path - Path of item being logged
+
+pagelinks - List of list to all the pages of the log
+showalllink - Link to show the entire log in one go
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+revpathlink - Link to revision
+revauthor - Author of this revision
+revage - Age of revision
+revlog - Log message of revision
+
+Variables defined for file.tmpl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+repname - Name of the repository
+rev - Revision being viewed
+path - Path of item being logged
+
+prevdifflink - Link to comparison with previous revision
+
+Note: Use commands [websvn-getlistingbr] or [websvn-getlisting] to display the
+      listing.
+
+Variables defined for diff.tmpl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+repname - Name of the repository
+rev - Revision being viewed
+path - Path of item being logged
+
+rev1 - Revision of the older file
+rev2 - Revision of the newer file
+
+showcompactlink - Link to compact view
+showalllink - Link to full view
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+rev1lineno / rev2lineno - Line number of the next difference block.  Only
+                          defined at the start of the block.
+rev2diffclass / rev2diffclass - Class name of the diff block used for colouring
+                                differences.  The result is one of:
+                                    * diff (no changes)
+                                    * diffadded
+                                    * diffchanged
+                                    *diffdeleted
+rev1line / rev2line - The line under comparison
+
