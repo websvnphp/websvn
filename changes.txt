@@ -10,6 +10,8 @@ NEW: Tarballs of directories may now be downloaded.
      Set $config->allowdownload(); in config.inc to allow this.
 NEW: New style 'Zinn' based on the templates created for
      http://www.projectzinn.org/.  Thanks to Justin Doran.
+NEW: File delivery now looks at the defined Mime-Type.  Thanks to
+     Peter Valdemar Mørch for this patch.
 NEW: Traditional Chinese translation
      
 CHANGE: Style information removed from RSS feed
