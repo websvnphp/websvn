@@ -97,6 +97,8 @@ else
       $first = false;
       $vars["newfiles"] .= fileLink("", $file);
    }
+   if ($vars["newfiles"] == "")
+      $vars["newfiles"] = "&nbsp;";
       
    $first = true;
    $vars["changedfiles"] = "";
@@ -106,15 +108,19 @@ else
       $first = false;
       $vars["changedfiles"] .= fileLink("", $file);
    }
+   if ($vars["changedfiles"] == "")
+      $vars["changedfiles"] = "&nbsp;";
 
    $first = true;
    $vars["deletedfiles"] = "";
    foreach ($changes["deleted"] as $file)
    {
-      if (!$first) $vars["changedfiles"] .= "<br>";
+      if (!$first) $vars["deletedfiles"] .= "<br>";
       $first = false;
-      $vars["changedfiles"] .= $file;
+      $vars["deletedfiles"] .= $file;
    }
+   if ($vars["deletedfiles"] == "")
+      $vars["deletedfiles"]= "&nbsp;";
 
    $vars["hidechangeslink"] = "<a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=0\">${lang["HIDECHANGED"]}</a>";
    
@@ -138,18 +144,6 @@ $vars["curdirloglink"] = "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$sho
 $index = 0;
 $listing = array();
 
-// Give the user a chance to go back up the tree
-if ($ppath != "/")
-{
-   // Find the parent path (or the whole path if it's already a directory)
-   $pos = strrpos(substr($ppath, 0, -1), "/");
-   $parent = substr($ppath, 0, $pos + 1);
-
-   $listing[$index]["filelink"] = "<a href=\"listing.php?rep=$rep&path=$parent&rev=$rev&sc=$showchanged\">../</a>";
-   $listing[$index]["fileviewloglink"] = "";
-   $index++;
-}
-
 // List each file in the current directory
 $row = 0;
 foreach($contents as $file)
@@ -169,7 +163,7 @@ foreach($contents as $file)
 
 $vars["version"] = $version;
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."listing.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."directory.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
 
 ?>

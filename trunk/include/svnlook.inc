@@ -446,7 +446,7 @@ Class SVNRepository
    //
    // Print the contents of a file without filling up Apache's memory
    
-   function listFileContents($path, $rev = 0)
+   function listFileContents($path, $br, $rev = 0)
    {
       global $config;
       
@@ -459,6 +459,7 @@ Class SVNRepository
 		while (!feof($result))
 		{
 			print(transChars(fgets($result, 1000)));
+			if ($br) echo "<br>";
 		}
 		
 		pclose($result);
