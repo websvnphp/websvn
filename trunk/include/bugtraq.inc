@@ -60,6 +60,9 @@ class Bugtraq
          
          if (!empty($this->msgstring) && !empty($this->urlstring))
          {
+            $this->msgstring = trim($this->msgstring);
+            $this->urlstring = trim($this->urlstring);
+            
             if (($bugidpos = strpos($this->msgstring, "%BUGID%")) !== false && strpos($this->urlstring, "%BUGID%") !== false)
             {
                // Get the textual parts of the message string for comparison purposes
@@ -107,7 +110,7 @@ class Bugtraq
                $issue  = trim(substr($issues, 0, $pos));
                $issues = substr($issues, $pos + 1);
                
-               $line .= "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">$issue</a>, ";
+               $line .= "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">$issue</a>,";
             }
             $line .= "<a href=\"".str_replace("%BUGID%", $issues, $this->urlstring)."\">".trim($issues)."</a>".$this->lastPart;
             
