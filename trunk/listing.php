@@ -71,6 +71,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
    // List each file in the current directory
    $loop = 0;
    $last_index = 0;
+   $openDir = false;
+   
    foreach($contents as $file)
    {
       $isDir = ($file{strlen($file) - 1} == "/"?1:0);
