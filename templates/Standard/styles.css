@@ -20,7 +20,7 @@ HR { color: #99007E; background-color: #99007E  }
 
 .highlight { color: #99007E; font-style: italic;  }
 
-TABLE.bordered, TABLE.outlined
+TABLE.bordered, TABLE.outlined, TABLE.blame
 {
    border-collapse: collapse;
    border: solid 2px #99007E;
@@ -36,14 +36,14 @@ TABLE.bordered, TABLE.outlined
    padding: 0px 5px 0px 5px;
 }
 
-.outlined TH
+.outlined TH, .blame TH
 {
    padding: 5px 5px 5px 5px;
    font-weight: bold;
    border: solid 2px #99007E;
 }
 
-.outlined TD
+.outlined TD, .blame TD
 {
    padding: 1px 5px 1px 5px;
    border-right: solid 2px #99007E;

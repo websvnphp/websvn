@@ -97,6 +97,10 @@ if ($config->multiViews)
          $file = "diff.php";
          break;
 
+      case "blame":
+         $file = "blame.php";
+         break;
+
       case "rss":
          $file = "rss.php";
          break;
