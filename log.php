@@ -34,8 +34,40 @@ $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 $page = (int)@$_REQUEST["page"];
 $all = (@$_REQUEST["all"] == 1)?1:0;
 $isDir = (@$_REQUEST["isdir"] == 1)?1:0;
+$dosearch = (@$_REQUEST["logsearch"] == 1)?1:0;
+$search = trim(@$_REQUEST["search"]);
+$words = explode(" ", $search);
+
+if ($search == "")
+   $dosearch = false;   
+
+// removeAccents
+//
+// Remove all the accents from a string.  This function doesn't seem
+// ideal, but expecting everyone to install 'unac' seems a little
+// excessive as well...
+
+function removeAccents($string)
+{ 
+   return strtr($string,
+                "ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ",
+                "AAAAAAaaaaaaOOOOOOooooooEEEEeeeeCcIIIIiiiiUUUUuuuuyNn"); 
+} 
+
+// Normalise the search words
+foreach ($words as $index => $word)
+{
+   $words[$index] = strtolower(removeAccents($word));
+   
+   // Remove empty string introduced by multiple spaces
+   if ($words[$index] == "")
+      unset($words[$index]);
+}
 
 if (empty($page)) $page = 1;
+
+// If searching, display all the results
+if ($dosearch) $all = true;
 
 $maxperpage = 20;
 
@@ -106,38 +138,62 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
 {
    $r = $history[$n];
    
+   // Assume a good match
+   $match = true;
+   
    $log = $svnrep->getLogDetails($path, $r["rev"]);
-
-   // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
-   $rpath = $r["path"];
-   if ($isDir && $rpath{strlen($rpath) - 1} != "/")
-      $rpath .= "/";
-
-   // Find the parent path (or the whole path if it's already a directory)
-   $pos = strrpos($rpath, "/");
-   $parent = substr($rpath, 0, $pos + 1);
-
-   $url = $config->getURL($rep, $parent, "dir");
-   $listing[$index]["revlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=1\">${r["rev"]}</a>";
-
-   if ($isDir)
+   
+   // Check the log for the search words, if searching
+   if ($dosearch)
    {
-      $url = $config->getURL($rep, $rpath, "dir"); 
-      $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
-   }
-   else
-   {
-      $url = $config->getURL($rep, $rpath, "file"); 
-      $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
-   }
+      // Turn all the HTML entities into real characters.  Admittedly, we're assuming
+      // use of the ISO-8859-1 character set...
+      $msg = html_entity_decode($log["message"]);
       
-   $listing[$index]["revauthor"] = $log["author"];
-   $listing[$index]["revage"] = $log["age"];
-   $listing[$index]["revlog"] = nl2br($log["message"]);
-   $listing[$index]["rowparity"] = "$row";;
+      // Make sure that each word in the search in also in the log
+      foreach($words as $word)
+      {
+         if (strpos(strtolower(removeAccents($msg)), $word) === false)
+         {
+            $match = false;
+            break;
+         }
+      }
+   }
+   
+   if ($match)
+   {
+      // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
+      $rpath = $r["path"];
+      if ($isDir && $rpath{strlen($rpath) - 1} != "/")
+         $rpath .= "/";
+   
+      // Find the parent path (or the whole path if it's already a directory)
+      $pos = strrpos($rpath, "/");
+      $parent = substr($rpath, 0, $pos + 1);
+   
+      $url = $config->getURL($rep, $parent, "dir");
+      $listing[$index]["revlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=1\">${r["rev"]}</a>";
+   
+      if ($isDir)
+      {
+         $url = $config->getURL($rep, $rpath, "dir"); 
+         $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
+      }
+      else
+      {
+         $url = $config->getURL($rep, $rpath, "file"); 
+         $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
+      }
+      
+      $listing[$index]["revauthor"] = $log["author"];
+      $listing[$index]["revage"] = $log["age"];
+      $listing[$index]["revlog"] = nl2br($log["message"]);
+      $listing[$index]["rowparity"] = "$row";;
 
-   $row = 1 - $row;
-   $index++;
+      $row = 1 - $row;
+      $index++;
+   }
 }
 
 // Work out the paging options
@@ -164,6 +220,30 @@ if ($pages > 1)
    $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
    echo "</center>";
 }
+
+// Create the project change combo box
+ 
+$url = $config->getURL($rep, $path, "log");
+$vars["logsearch_form"] = "<form action=\"$url\" method=\"post\" name=\"logsearchform\">";
+
+$reps = $config->getRepositories();
+$vars["logsearch_inputbox"] = "<input name=\"search\" value=\"$search\">";
+
+$vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
+$vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\">".
+                             "<input type=\"hidden\" name=\"op\" value=\"form\">".
+                             "<input type=\"hidden\" name=\"rev\" value=\"$rev\">".
+                             "<input type=\"hidden\" name=\"sc\" value=\"$showchanged\">".
+                             "<input type=\"hidden\" name=\"isDir\" value=\"$isDir\">".
+                             "</form>";   
+
+if ($search != "")
+{
+   $url = $config->getURL($rep, $path, "log");
+   $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&sc=$showchanged\">${lang["CLEARLOG"]}</a>";
+}
+else
+   $vars["logsearch_clearloglink"] = "";
 
 $vars["version"] = $version;
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
