@@ -155,7 +155,7 @@ Class Config
                break;
          }
          
-         return dirname($base)."/".$fname."?rep=$rep&path=$path&";
+         return $fname."?rep=$rep&path=$path&";
       }
    }
 
