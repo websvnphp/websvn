@@ -194,17 +194,17 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
       $parent = substr($rpath, 0, $pos + 1);
    
       $url = $config->getURL($rep, $parent, "dir");
-      $listing[$index]["revlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=1\">${r["rev"]}</a>";
+      $listing[$index]["revlink"] = "<a href=\"${url}rev=${r["rev"]}&amp;sc=1\">${r["rev"]}</a>";
    
       if ($isDir)
       {
          $url = $config->getURL($rep, $rpath, "dir"); 
-         $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
+         $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&amp;sc=$showchanged\">$rpath</a>";
       }
       else
       {
          $url = $config->getURL($rep, $rpath, "file"); 
-         $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
+         $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&amp;sc=$showchanged\">$rpath</a>";
       }
       
       $listing[$index]["revauthor"] = $log["author"];
@@ -220,7 +220,7 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
    if (!$numSearchResults)
    {
       $url = $config->getURL($rep, $path, "log");
-      $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&isdir=$isDir&logsearch=1&search=$search&fr=${r["rev"]}\">${lang["MORERESULTS"]}</a>";
+      $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$revamp;&sc=$showchanged&amp;isdir=$isDir&logsearch=1&search=$search&fr=${r["rev"]}\">${lang["MORERESULTS"]}</a>";
       break;
    }
 }
@@ -253,17 +253,17 @@ if ($pages > 1)
    $next = $page + 1;
    echo "<p><center>";
       
-   if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&sc=$showchanged&page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
+   if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&amp;sc=$showchanged&amp;page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
    for ($p = 1; $p <= $pages; $p++)
    {
       if ($p != $page)
-         $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&sc=$showchanged&page=$p\">$p</a> "; 
+         $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sc=$showchanged&amp;page=$p\">$p</a> "; 
       else
          $vars["pagelinks"] .= "<b>$p </b>";
    }
-   if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&sc=$showchanged&page=$next\">${lang["NEXT"]}&nbsp;></a>";   
+   if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sc=$showchanged&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
    
-   $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
+   $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sc=$showchanged&amp;all=1\">${lang["SHOWALL"]}</a>";
    echo "</center>";
 }
 
@@ -286,7 +286,7 @@ $vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"
 if ($search != "")
 {
    $url = $config->getURL($rep, $path, "log");
-   $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&isdir=$isDir\">${lang["CLEARLOG"]}</a>";
+   $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
 }
 else
    $vars["logsearch_clearloglink"] = "";

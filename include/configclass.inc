@@ -179,7 +179,7 @@ Class Config
             $url .= "/".$this->_repositories[$rep]["name"].$path;
             
             if ($op != "dir")
-               $url .= "?op=$op&";
+               $url .= "?op=$op&amp;";
             else
                $url .= "?";
          }
@@ -222,16 +222,16 @@ Class Config
          if ($this->refRepositoriesByNumber)
          {
             if ($rep == -1)
-               return $fname."?path=".urlencode($path)."&";
+               return $fname."?path=".urlencode($path)."&amp;";
             else
-               return $fname."?rep=$rep&path=".urlencode($path)."&";
+               return $fname."?rep=$rep&amp;path=".urlencode($path)."&amp;";
          }
          else
          {
             if ($rep == -1)
-               return $fname."?path=".urlencode($path)."&";
+               return $fname."?path=".urlencode($path)."&amp;";
             else
-               return $fname."?repname=".$this->_repositories[$rep]["name"]."&path=".urlencode($path)."&";
+               return $fname."?repname=".$this->_repositories[$rep]["name"]."&amp;path=".urlencode($path)."&amp;";
          }
       }
    }
