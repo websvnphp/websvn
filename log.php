@@ -231,7 +231,7 @@ $vars["logsearch_inputbox"] = "<input name=\"search\" value=\"$search\">";
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
 $vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\">".
-                             "<input type=\"hidden\" name=\"op\" value=\"form\">".
+                             "<input type=\"hidden\" name=\"op\" value=\"log\">".
                              "<input type=\"hidden\" name=\"rev\" value=\"$rev\">".
                              "<input type=\"hidden\" name=\"sc\" value=\"$showchanged\">".
                              "<input type=\"hidden\" name=\"isDir\" value=\"$isDir\">".
