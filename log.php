@@ -295,7 +295,7 @@ else
    $vars["logsearch_clearloglink"] = "";
 
 $url = $config->getURL($rep, "", "comp");
-$vars["compare_form"] = "<form action=\"$url\" method=\"get\" name=\"compareform\">";
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREREVS"]}\">";
 $vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
