@@ -418,7 +418,7 @@ Class SVNRepository
          else
          {
             $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
-            $cmd = quoteCommand(config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
+            $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
             @exec($cmd);
          }
       }
