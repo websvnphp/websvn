@@ -44,6 +44,13 @@ if (!isset($_REQUEST["sc"]))
 
 if ($config->multiViews)
 {
+   // If this is a form handling request, deal with it
+   if (@$_REQUEST["op"] == "form")
+   {
+      include("$locwebsvnreal/form.php");
+      exit;
+   }
+
    $path = @$_SERVER["PATH_INFO"];
 
    // Remove initial slash

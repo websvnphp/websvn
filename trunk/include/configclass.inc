@@ -139,13 +139,19 @@ Class Config
          // Remove the .php
          $base = substr($base, 0, -4);
          
-         if ($path{0} != "/") $path = "/".$path;
+         if ($path && $path{0} != "/") $path = "/".$path;
                
-         $url =  $base ."/".$this->_repositories[$rep]["name"].$path;
-         if ($op != "dir")
-            $url .= "?op=$op&";
-         else
-            $url .= "?";
+         $url =  $base;
+         
+         if ($rep != -1)
+         {
+            $url .= "/".$this->_repositories[$rep]["name"].$path;
+            
+            if ($op != "dir")
+               $url .= "?op=$op&";
+            else
+               $url .= "?";
+         }
             
          return $url;
       }
@@ -167,6 +173,10 @@ Class Config
 
             case "diff":
                $fname = "diff.php";
+               break;
+
+            case "form":
+               $fname = "form.php";
                break;
          }
          
