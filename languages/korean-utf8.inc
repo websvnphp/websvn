@@ -87,3 +87,9 @@ $lang["HOURS"] = "시간";
 $lang["MINUTES"] = "분";
 
 $lang["GO"] = "Go";
+
+// The following are defined by some languages to stop unwanted line splitting
+// in the template files. 
+
+$lang["NOBR"] = "<nobr>";
+$lang["ENDNOBR"] = "</nobr>";
