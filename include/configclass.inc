@@ -83,7 +83,21 @@ Class Config
    function setServerIsWindows()
    {
       $this->serverIsWindows = true;
-      $this->setInputEncoding("CP850");
+      
+      // Try to set the input encoding intelligently
+      
+      $cp = 0;
+      if ($cp = @shell_exec("CHCP"))
+      {
+         $cp = trim(substr($cp, strpos($cp, ":") + 1));
+         settype($sp, "integer");
+         print $cp;
+      }
+      
+      // Use the most sensible default value if that failed
+      if ($cp == 0) $cp = 850;
+         
+      $this->setInputEncoding("CP$cp");
    }
 
    // setCachingOn
