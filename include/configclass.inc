@@ -71,6 +71,10 @@ Class Config
    
    function addRepository($name, $path)
    {
+      if (($path{strlen($path) - 1} == DIRECTORY_SEPARATOR) ||
+          ($path{strlen($path) - 1} == "/"))
+         $path = substr($path, 0, -1);
+         
       $this->_repositories[] = array("name" => $name, "path" => $path);
    }
 
