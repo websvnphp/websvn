@@ -23,8 +23,8 @@
 //
 // Main page.  Lists all the projects
 
-require("include/setup.inc");
-require("include/svnlook.inc");
+require_once("include/setup.inc");
+require_once("include/svnlook.inc");
 require("include/template.inc");
 
 $vars["action"] = $lang["PROJECTS"];

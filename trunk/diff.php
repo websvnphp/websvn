@@ -24,8 +24,8 @@
 // Show the differences between 2 revisions of a file.
 //
 
-require("include/setup.inc");
-require("include/svnlook.inc");
+require_once("include/setup.inc");
+require_once("include/svnlook.inc");
 require("include/template.inc");
 
 $context = 5;

@@ -23,7 +23,7 @@
 //
 // Handling of WebSVN forms
 
-require("include/setup.inc");
+require_once("include/setup.inc");
 
 // Generic redirect handling
 
