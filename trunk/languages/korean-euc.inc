@@ -26,8 +26,9 @@
 $lang["LOG"] = "로그";
 $lang["DIFF"] = "비교";
 
-$lang["NOREP"] = "저장소가 지정되어있지 않습니다.";
-$lang["NOPATH"] = "경로를 찾을 수 없ㅅ브니다.";
+$lang["NOREP"] = "저장소가 지정되어 있지 않습니다.";
+$lang["NOPATH"] = "경로를 찾을 수 없습니다.";
+$lang["SUPPLYREP"] = "include/config.inc 파일의 \$config->parentPath 또는 \$config->addRepository에 저장소의 경로를 지정해 주십시오.<p>설치 설명서를 참조해 주십시오.";
 
 $lang["DIFFREVS"] = "리비전간 비교";
 $lang["AND"] = "와(과)";
@@ -37,7 +38,7 @@ $lang["SHOWENTIREFILE"] = "모두 보기";
 $lang["SHOWCOMPACT"] = "바뀐 부분만 보기";
 
 $lang["DIFFPREV"] = "이전 리비전과 비교";
-$lang["BLAME"] = "내용변경추적";
+$lang["BLAME"] = "수정한 사람 보기";
 
 $lang["REVINFO"] = "리비전 정보";
 $lang["GOYOUNGEST"] = "최신 리비전으로 가기";
@@ -55,6 +56,7 @@ $lang["AUTHOR"] = "작성자";
 $lang["AGE"] = "기간";
 $lang["LOG"] = "로그";
 $lang["CURDIR"] = "현재 디렉토리";
+$lang["TARBALL"] = "Tarball";
 
 $lang["PREV"] = "이전";
 $lang["NEXT"] = "다음";
@@ -77,7 +79,7 @@ $lang["FILESMODIFIED"] = "파일 수정됨";
 $lang["RSSFEED"] = "RSS feed"; 
 
 $lang["LINENO"] = "행번호";
-$lang["BLAMEFOR"] = "리비전의 내용변경추적";
+$lang["BLAMEFOR"] = "수정한 사람 보기, 리비전 ";
 
 $lang["YEARS"] = "년";
 $lang["MONTHS"] = "개월";
@@ -88,8 +90,21 @@ $lang["MINUTES"] = "분";
 
 $lang["GO"] = "Go";
 
+$lang["PATHCOMPARISON"] = "경로 비교";
+$lang["COMPAREPATHS"] = "경로 비교하기";
+$lang["COMPAREREVS"] = "리비전 비교하기";
+$lang["PROPCHANGES"] = "특성 변경 :";
+$lang["CONVFROM"] = "이 비교는 바뀐 경로를 보여 줍니다.";
+$lang["TO"] = "에서";
+$lang["REVCOMP"] = "역 비교";
+$lang["COMPPATH"] = "비교 경로:";
+$lang["WITHPATH"] = "경로:";
+
 // The following are defined by some languages to stop unwanted line splitting
 // in the template files. 
 
-$lang["NOBR"] = "<nobr>";
-$lang["ENDNOBR"] = "</nobr>";
+$lang["NOBR"] = "";
+$lang["ENDNOBR"] = "";
+
+// $lang["NOBR"] = "<nobr>";
+// $lang["ENDNOBR"] = "</nobr>";
