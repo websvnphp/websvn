@@ -2,8 +2,11 @@ CHANGES
 
 1.60 
 
+NEW: Directory displays are now shown in tree view (so that it's harder
+     to get lost).  Many thanks to Brent Lu for this excellent patch.
+     The prettiest result are available in the BlueGrey scheme.
 NEW: Tarballs of directories may now be downloaded.
-     Set $config->allowdownload(); in config.inc
+     Set $config->allowdownload(); in config.inc to allow this.
 NEW: New style 'Zinn' based on the templates created for
      http://www.projectzinn.org/.  Thanks to Justin Doran.
      
