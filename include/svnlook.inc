@@ -355,8 +355,6 @@ Class SVNRepository
       $ext = strrchr($path, ".");
       $l = @$extEnscript[$ext];
         
-      $path = quote($path);
-
       if ($l == "php")
       {         
          // Output the file to the filename
@@ -427,8 +425,6 @@ Class SVNRepository
       
       $ext = strrchr($path, ".");
       $l = @$extEnscript[$ext];
-      
-      $path = quote($path);
       
       // Deal with php highlighting internally
       if ($l == "php")

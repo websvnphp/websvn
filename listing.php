@@ -32,16 +32,21 @@ function fileLink($path, $file)
 {
    global $rep, $passrev, $showchanged, $config;
    
+   if ($path == "" || $path{0} != "/")
+      $ppath = "/".$path;
+   else
+      $ppath = $path;
+
    $isDir = $file{strlen($file) - 1} == "/";
       
    if ($isDir)
    {
-      $url = $config->getURL($rep, $path.$file, "dir");
+      $url = $config->getURL($rep, $ppath.$file, "dir");
       return "<a href=\"${url}rev=$passrev&sc=$showchanged\">$file</a>";
    }
    else
    {
-      $url = $config->getURL($rep, $path.$file, "file");
+      $url = $config->getURL($rep, $ppath.$file, "file");
       return "<a href=\"${url}rev=$passrev&sc=$showchanged\">$file</a>";
    }
 }
