@@ -34,6 +34,7 @@ $lang["SHOWCOMPACT"] = "Only display areas with differences";
 
 $lang["DIFFPREV"] = "Diff with Previous";
 
+$lang["REVINFO"] = "Revision Information";
 $lang["GOHEAD"] = "Go to head revision";
 $lang["LASTMOD"] = "Last modification";
 $lang["LOGMSG"] = "Log message";
