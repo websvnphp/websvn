@@ -488,7 +488,10 @@ Class SVNRepository
             
    		while (!feof($result))
    		{
-   			print hardspace(transChars(fgets($result, 1024), $pre));
+   		   $line = fgets($result, 1024);
+   		   if ($pre) $line = replaceEntities($line);
+   		   
+   		   print hardspace($line);
    		}
     
          if ($pre)

@@ -22,6 +22,8 @@ CHANGE: Style information removed from RSS feed
 CHANGE: Changed files are now hidden by defaut (since the directory
         comparison link is far more useful)
 
+FIX: File listing were't being shown with the correct accented characters
+     under windows.
 FIX: File listing sometimes failed when there were spaces in the filename
 FIX: Some setups wouldn't allow diff generations with enscript
      enabled.
