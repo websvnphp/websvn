@@ -84,7 +84,7 @@ if (!empty($cont))
    
    header("Content-Type: $cont");
    //header("Content-Length: $size");
-   header("Content-Disposition: attachment; filename=$base");
+   header("Content-Disposition: inline; filename=$base");
    
    $svnrep->getFileContents($path, "", $rev);
    
