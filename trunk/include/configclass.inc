@@ -287,6 +287,15 @@ Class Config
          }
          closedir($handle); 
       }
+
+      // Sort the repositories into alphabetical order
+      
+      function cmpReps($a, $b)
+      {
+         return strcasecmp($a["name"], $b["name"]);
+      }
+
+      usort($this->_repositories, "cmpReps");
    }
    
    // Encoding functions
