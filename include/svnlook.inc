@@ -66,7 +66,12 @@ function encodepath($uri)
    $parts = explode('/', $uri);
    for ($i = 0; $i < count($parts); $i++)
    {
-     $parts[$i] = rawurlencode($parts[$i]);
+      if ( function_exists("mb_detect_encoding") && function_exists("mb_convert_encoding"))
+      {
+         $parts[$i] = mb_convert_encoding($parts[$i], "UTF-8", mb_detect_encoding($parts[$i]));
+      }
+      
+      $parts[$i] = rawurlencode($parts[$i]);
    }
    
    $uri = implode('/', $parts);
