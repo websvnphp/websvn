@@ -215,17 +215,8 @@ $config->setCachingOn();
 
 $config->expandTabsBy(8);
 
-// $config->findRepository("myrep")->expandTabsBy(3); // Expand Tabs by 3 for repository 'myrep'
-
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
 
-// $config->findRepository("myrep")->hideRSS(); // Specifically hide RSS links for 'myrep'
-// $config->findRepository("myrep")->showRSS(); // Specifically show RSS links for 'myrep'
-// WebSVN URLs now use the repository names rather than internal numbers.  This means that
-// bookmarks remain the same when new projects are added.  In the unlikely event that you have
-// multiple projects with the same name, uncomment this line to return to the previous system
-//
-// $config->setRepositoryAccessByNumber();
-
+// $config->findRepository("myrep")->expandTabsBy(3); // Expand Tabs by 3 for repository 'myrep'
 ?>

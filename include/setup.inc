@@ -275,17 +275,15 @@ if (empty($reps[0]))
    exit;
 }
 
-// Get the repository number
-
-$rep = (int)@$_REQUEST["rep"];
-
 // Override the rep parameter with the repository name if it's available
 $repname = @$_REQUEST["repname"];
 if (isset($repname))
 {
     $rep = $config->findRepository($repname);
 }
-
+else
+   $rep = $reps[0];
+   
 // Retrieve other standard parameters
 
 if (version_compare(phpversion(), "4.1.0", "<"))
@@ -306,16 +304,16 @@ function createProjectSelectionForm()
    $vars["projects_form"] = "<form action=\"$url\" method=\"post\" name=\"projectform\">";
    
    $reps = $config->getRepositories();
-   $vars["projects_select"] = "<select name=\"rep\">";
+   $vars["projects_select"] = "<select name=\"repname\">";
    
-  foreach ($reps as $index => $trep)
+   foreach ($reps as $trep)
    {
-      if ($rep == $index)
+      if ($rep->name == $trep->name)
          $sel = "selected";
       else
          $sel = "";
          
-      $vars["projects_select"] .= "<option value=\"$index\" $sel>${trep["name"]}</option>";
+      $vars["projects_select"] .= "<option value=\"".$trep->name."\" $sel>".$trep->name."</option>";
    }
    
    $vars["projects_select"] .= "</select>";
@@ -331,4 +329,11 @@ if (!$config->multiViews)
 {
    createProjectSelectionForm();
 }
+
+if ($rep)
+{
+   $vars["allowdownload"] = $rep->getAllowDownload();
+   $vars["repname"] = $rep->name;
+}
+
 ?>

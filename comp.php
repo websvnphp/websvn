@@ -29,12 +29,7 @@ require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
 
-// Make sure that we have a repository
-if (!isset($rep))
-{
-   echo $lang["NOREP"];
-   exit;
-}
+$svnrep = new SVNRepository($rep->path);
 
 function checkRevision($rev)
 {
@@ -54,8 +49,7 @@ function checkRevision($rev)
    return "HEAD";   
 }
 
-list ($repname, $reppath) = $config->getRepository($rep);
-$svnrep = new SVNRepository($reppath);
+$svnrep = new SVNRepository($rep->path);
 
 // Retrieve the request information
 $path1 = @$_REQUEST["compare"][0];
@@ -92,6 +86,7 @@ $vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&am
 if ($rev1 == 0) $rev1 = "HEAD";
 if ($rev2 == 0) $rev2 = "HEAD";
 
+$vars["repname"] = $rep->name;
 $vars["action"] = $lang["PATHCOMPARISON"];
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"$path1\">";
@@ -101,7 +96,6 @@ $vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";
 $vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"manualorder\" value=\"1\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
-$vars["repname"] = $repname;
 $vars["path1"] = $path1;
 $vars["path2"] = $path2;
 
@@ -162,7 +156,7 @@ if ($diff = popen($cmd, "r"))
       	      {
       	         case " ":
       	            $listing[$index]["diffclass"] = "diff";
-      	            $subline = trim(substr($line, 1));
+      	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
       	            if (empty($subline)) $subline = "&nbsp;";
       	            $listing[$index++]["line"] = $subline;
                      if ($debug) print "Including as diff: $subline<br>";
@@ -170,7 +164,7 @@ if ($diff = popen($cmd, "r"))
       	   
       	         case "+":
       	            $listing[$index]["diffclass"] = "diffadded";
-      	            $subline = trim(substr($line, 1));
+      	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
       	            if (empty($subline)) $subline = "&nbsp;";
       	            $listing[$index++]["line"] = $subline;
                      if ($debug) print "Including as added: $subline<br>";
@@ -178,7 +172,7 @@ if ($diff = popen($cmd, "r"))
       
       	         case "-":
       	            $listing[$index]["diffclass"] = "diffdeleted";
-      	            $subline = trim(substr($line, 1));
+      	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
       	            if (empty($subline)) $subline = "&nbsp;";
       	            $listing[$index++]["line"] = $subline;
                      if ($debug) print "Including as removed: $subline<br>";

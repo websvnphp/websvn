@@ -78,7 +78,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
       {
          $listing[$index]["filetype"] = "dir";
 
-         if ($config->allowDownload)
+         if ($rep->getAllowDownload())
          {
             $dlurl = $config->getURL($rep, $path.$file, "dl"); 
             $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
@@ -119,7 +119,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
       $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
    
       $rssurl = $config->getURL($rep, $path.$file, "rss");
-      if ($config->rss)
+      if ($rep->getHideRss())
       {
          $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["RSSFEED"]}</a>";
          $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">";
@@ -174,8 +174,7 @@ if (!isset($rep))
    exit;
 }
 
-list ($repname, $reppath) = $config->getRepository($rep);
-$svnrep = new SVNRepository($reppath);
+$svnrep = new SVNRepository($rep->path);
 
 // Revision info to pass along chain
 $passrev = $rev;
@@ -199,7 +198,7 @@ if ($path == "" || $path{0} != "/")
 else
    $ppath = $path;
 
-$vars["repname"] = $repname;
+$vars["repname"] = $rep->name;
 
 $dirurl = $config->getURL($rep, $path, "dir");
 $logurl = $config->getURL($rep, $path, "log");
@@ -275,14 +274,14 @@ else
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
 $vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".urlencode($history[1]["path"])."@".$history[1]["rev"]."&amp;compare%5B%5D=".urlencode($history[0]["path"])."@".$history[0]["rev"]."\">${lang["DIFFPREV"]}</a>";
-
-if ($config->rss)
+ 
+if ($rep->getHideRss())
 {
    $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["RSSFEED"]}</a>";
    $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">";
 }
 
-if ($config->allowDownload)
+if ($rep->getAllowDownload())
    $vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
 
 $url = $config->getURL($rep, "", "comp");

@@ -30,8 +30,136 @@ require("include/version.inc");
 
 function cmpReps($a, $b)
 {
-   return strcasecmp($a["name"], $b["name"]);
+   return strcasecmp($a->name, $b->name);
 }
+
+// A Repository configuration class
+
+Class Repository
+{
+   var $name;
+   var $path;
+   
+   // Local configuration options must start off unset
+   var $allowDownload;
+   var $rss;
+   var $spaces;
+   var $ignoreSvnMimeTypes;
+   var $ignoreWebSVNContentTypes;
+   
+   function Repository($name, $path)
+   {
+      $this->name = $name;
+      $this->path = $path;
+   }
+   
+   // Local configuration accessors
+      
+   // RSS Feed
+   
+   function hideRSS()
+   {
+      $this->rss = false;
+   }
+
+   function showRSS()
+   {
+      $this->rss = true;
+   }
+
+   function getHideRSS()
+   {
+      global $config;
+
+      if (isset($this->rss))
+         return $this->rss;
+         
+      return $config->rss;
+   }
+   
+   // Download
+   
+   function allowDownload()
+   {
+      $this->allowDownload = true;
+   }
+
+   function disallowDownload()
+   {
+      $this->allowDownload = false;
+   }
+
+   function getAllowDownload()
+   {
+      global $config;
+
+      if (isset($this->allowDownload))
+         return $this->allowDownload;
+         
+      return $config->allowDownload;
+   }
+
+   // Tab expansion
+   
+   function expandTabsBy($sp)
+   {
+      $this->spaces = $sp;
+   }
+   
+   function getExpandTabsBy()
+   {
+      global $config;
+
+      if (isset($this->spaces))
+         return $this->spaces;
+         
+      return $config->spaces;
+   }
+
+   // Mime Type Handing
+   
+   function ignoreSvnMimeTypes()
+   {
+      $this->ignoreSvnMimeTypes = true;
+   }
+
+   function useSvnMimeTypes()
+   {
+      $this->ignoreSvnMimeTypes = false;
+   }
+
+   function getIgnoreSvnMimeTypes()
+   {
+      global $config;
+
+      if (isset($this->ignoreSvnMimeTypes))
+         return $this->ignoreSvnMimeTypes;
+         
+      return $config->ignoreSvnMimeTypes;
+   }
+
+   function ignoreWebSVNContentTypes()
+   {
+      $this->ignoreWebSVNContentTypes = true;
+   }
+
+   function useWebSVNContentTypes()
+   {
+      $this->ignoreWebSVNContentTypes = false;
+   }
+
+   function getIgnoreWebSVNContentTypes()
+   {
+      global $config;
+
+      if (isset($this->ignoreWebSVNContentTypes))
+         return $this->ignoreWebSVNContentTypes;
+         
+      return $config->ignoreWebSVNContentTypes;
+   }
+}
+
+// The general configuration class
 
 Class Config
 {
@@ -58,9 +186,7 @@ Class Config
   
    var $templatePath = "./templates/Standard/";
 
-   // Disgard any svn:mime-type properties on files.
    var $ignoreSvnMimeTypes = false;
-   // If you only want to rely on svn:mime-type settings in the repository
    var $ignoreWebSVNContentTypes = false;
 
    // Default character encodings
@@ -82,12 +208,12 @@ Class Config
           ($path{strlen($path) - 1} == "/"))
          $path = substr($path, 0, -1);
          
-      $this->_repositories[] = array("name" => $name, "path" => $path);
+      $this->_repositories[] = new Repository($name, $path);
    }
 
    function getRepository($rep)
    {
-      return array($this->_repositories[$rep]["name"], $this->_repositories[$rep]["path"]);
+      return $this->_repositories[$rep];
    }
 
    function getRepositories()
@@ -99,10 +225,10 @@ Class Config
    {
       foreach ($this->_repositories as $index => $rep)
       {
-         if (strcasecmp($rep["name"], $name) == 0)
-            return $index;
+         if (strcasecmp($rep->name, $name) == 0)
+            return $rep;
       }
-      return 0;
+      return null;
    }
 
    // setServerIsWindows
@@ -177,7 +303,6 @@ Class Config
       global $vars;
       
       $this->allowDownload = true;
-      $vars["allowdownload"] = true;
    }
 
    // getURL
@@ -199,7 +324,7 @@ Class Config
          
          if ($rep != -1)
          {
-            $url .= "/".$this->_repositories[$rep]["name"].$path;
+            $url .= "/".$rep->name.$path;
             
             if ($op != "dir")
                $url .= "?op=$op&amp;";
@@ -250,20 +375,10 @@ Class Config
                break;
          }
 
-         if ($this->refRepositoriesByNumber)
-         {
-            if ($rep == -1)
-               return $fname."?path=".urlencode($path)."&amp;";
-            else
-               return $fname."?rep=$rep&amp;path=".urlencode($path)."&amp;";
-         }
+         if ($rep == -1)
+            return $fname."?path=".urlencode($path)."&amp;";
          else
-         {
-            if ($rep == -1)
-               return $fname."?path=".urlencode($path)."&amp;";
-            else
-               return $fname."?repname=".$this->_repositories[$rep]["name"]."&amp;path=".urlencode($path)."&amp;";
-         }
+            return $fname."?repname=".$rep->name."&amp;path=".urlencode($path)."&amp;";
       }
    }
 
@@ -423,11 +538,6 @@ Class Config
    
    // Misc settings
    
-   function setRepositoryAccessByNumber()
-   {
-      $this->refRepositoriesByNumber = true;
-   }
-
    function ignoreSvnMimeTypes()
    {
       $this->ignoreSvnMimeTypes = true;

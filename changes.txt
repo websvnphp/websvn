@@ -12,6 +12,8 @@ NEW: New style 'Zinn' based on the templates created for
      http://www.projectzinn.org/.  Thanks to Justin Doran.
 NEW: File delivery now looks at the defined Mime-Type.  Thanks to
      Peter Valdemar Mørch for this patch.
+NEW: Various configuration options may now be applied on a per project
+     basis.  Look in distconfig for instructions.
 NEW: Traditional Chinese translation
      
 CHANGE: Style information removed from RSS feed

@@ -31,15 +31,7 @@ require_once("include/template.inc");
 
 $vars["action"] = $lang["BLAME"];
 
-// Make sure that we have a repository
-if (!isset($rep))
-{
-   echo $lang["NOREP"];
-   exit;
-}
-
-list ($repname, $reppath) = $config->getRepository($rep);
-$svnrep = new SVNRepository($reppath);
+$svnrep = new SVNRepository($rep->path);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getHistory($path);
@@ -57,7 +49,7 @@ else
 $pos = strrpos($ppath, "/");
 $parent = substr($ppath, 0, $pos + 1);
 
-$vars["repname"] = $repname;
+$vars["repname"] = $rep->name;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 
