@@ -37,8 +37,13 @@
 //
 // $config->setSVNCommandPath("Path/to/svnlook/ e.g. c:\\program files\\subversion\\bin");
 // $config->setDiffPath("Path/to/diff/command/");
+
+// For syntax colouring, if option enabled...
 // $config->setEnscriptPath("Path/to/diff/command/");
 // $config->setSedPath("Path/to/diff/command/");
+
+// For delivered GZIP'd filed, if option enabled...
+// $config->setGZipPath("Path/to/diff/command/");
 
 // --- REPOSITORY SETUP ---
 
@@ -95,13 +100,22 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // --- FILE CONTENT ---
 //
+// You may wish certain file types to be GZIP'd and delieved to the user when clicked apon.
+// This is useful for binary files and the like that don't display well in a browser window!
+// Copy, uncomment and modify this line for each extension to which this rule should apply.
+// (Don't forget the . before the extension.  You don't need an index between the []'s).
+// If you'd rather that the files were delivered uncompressed with the associated MIME type,
+// then read below.
+//
+// $zipped[] = ".dll";
+
 // WebSVN has a built in list of associations from file extension to MIME content type. (You can
 // view this list in setup.inc). By default, any extension clicked on via WebSVN that isn't
 // included in this list will be brought up as ASCII text in the browser window (although this
 // text may optionally be colourised.  See below). 
 //
 // For any extension that has a MIME type defined, the file will be delivered to the user as an
-// attachment.
+// attachment with the given MIME type (unless you've asked for it to be GZIP'd above).
 //
 // Following the examples below, you can add new associations, modify the default ones or even
 // delete them entirely (to show them in ASCII via WebSVN).

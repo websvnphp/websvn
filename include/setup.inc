@@ -254,6 +254,10 @@ if (!@$CONFIG)
      ".py"      => "python"
    );
 
+   // Default 'zipped' array
+   
+   $zipped = array ();
+
    // Get the user's personalised config
    
    require("config.inc");

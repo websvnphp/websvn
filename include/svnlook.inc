@@ -438,7 +438,7 @@ Class SVNRepository
    //
    // Dump the content of a file to the given filename
    
-   function getFileContents($path, $filename, $rev = 0)
+   function getFileContents($path, $filename, $rev = 0, $pipe = "")
    {
       global $config, $extEnscript;
       
@@ -447,7 +447,7 @@ Class SVNRepository
       // If there's no filename, we'll just deliver the contents as it is to the user
       if ($filename == "")
       {
-         passthru($config->svnlook." cat $revstr ".$this->repPath." $path");
+         passthru($config->svnlook." cat $revstr ".$this->repPath." $path $pipe");
       }
       
       // Get the file contents info
