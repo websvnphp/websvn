@@ -203,6 +203,19 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->findRepository("myrep")->hideRSS(); // Specifically hide RSS links for 'myrep'
 // $config->findRepository("myrep")->showRSS(); // Specifically show RSS links for 'myrep'
 
+// --- BUGTRAQ ---
+
+// Uncomment this line if you wish to use bugtraq: properties to show links to your BugTracker
+// from the log messages.
+//
+// $config->useBugtraqProperties();
+//
+// To change the global option for individual repositories, uncomment and replicate
+// the required line below (replacing 'myrep' for the name of the repository to be changed).
+
+// $config->findRepository("myrep")->useBugtraqProperties(); // Specifically use bugtraq properties for 'myrep'
+// $config->findRepository("myrep")->ignoreBugtraqProperties(); // Specifically ignore bugtraq properties for 'myrep'
+
 // --- MISCELLANOUS ---
 
 // Uncomment this if you don't have the right to use it.  Be warned that you may need it however!

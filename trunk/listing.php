@@ -27,6 +27,7 @@ require_once("include/setup.inc");
 require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
+require_once("include/bugtraq.inc");
 
 function fileLink($path, $file, $returnjoin = false)
 {
@@ -211,10 +212,12 @@ if ($rev != $youngest && $youngest != -1)
 else
    $vars["goyoungestlink"] = "";
 
+$bugtraq = new Bugtraq($rep, $svnrep, $ppath);
+
 $vars["action"] = "";
 $vars["author"] = $log['author'];
 $vars["date"] = $log['date'];
-$vars["log"] = nl2br(create_anchors($log['message']));
+$vars["log"] = $bugtraq->replaceIDs(nl2br(create_anchors($log['message'])));
 $vars["rev"] = $log["rev"];
 $vars["path"] = $ppath;
 
