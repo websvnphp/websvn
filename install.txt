@@ -11,7 +11,8 @@ WebSVN offers the following features:
 
 * Easy to use interface 
 * Highly customisable templating system 
-* Colourisation of file listings 
+* Colourisation of file listings
+* Blame view
 * Log message searching
 * Fast browsing thanks to internal caching feature 
 * Apache MultiViews support 

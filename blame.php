@@ -29,6 +29,8 @@ require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
 
+$vars["action"] = $lang["BLAME"];
+
 // Make sure that we have a repository
 if (!isset($rep))
 {
