@@ -266,6 +266,15 @@ $zipped = array ();
 
 require("config.inc");
 
+// Make sure that the user has set up a repository
+
+$reps = $config->getRepositories();
+if (empty($reps[0]))
+{
+   echo $lang["SUPPLYREP"];
+   exit;
+}
+
 // Get the repository number
 
 $rep = (int)@$_REQUEST["rep"];
@@ -298,7 +307,8 @@ function createProjectSelectionForm()
    
    $reps = $config->getRepositories();
    $vars["projects_select"] = "<select name=\"rep\">";
-   foreach ($reps as $index => $trep)
+   
+  foreach ($reps as $index => $trep)
    {
       if ($rep == $index)
          $sel = "selected";
@@ -307,6 +317,7 @@ function createProjectSelectionForm()
          
       $vars["projects_select"] .= "<option value=\"$index\" $sel>${trep["name"]}</option>";
    }
+   
    $vars["projects_select"] .= "</select>";
    
    $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
