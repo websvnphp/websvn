@@ -81,8 +81,8 @@ $rss->description = "${lang["RSSFEEDTITLE"]} - $repname";
 $rss->link = getFullURL($baseurl.$listurl);
 $rss->syndicationURL = $rss->link;
 
-$divbox = "<div style=\"border: 1px solid #888; background-color: #DDD; padding: 0.25em 0.5em;margin: 0em; \">";
-$divfont = "<span style=\"font-weight: bold;\">";
+//$divbox = "<div>";
+//$divfont = "<span>";
 
 if ($maxmessages > count($history))
    $maxmessages = count($history);
@@ -135,7 +135,7 @@ for ($n = 0; $n < $maxmessages; $n++)
    
    $item->title = "$sdesc";
    $item->link = getFullURL($baseurl."${url}rev=${r["rev"]}&amp;sc=$showchanged");
-   $item->description = $divbox.$divfont."${lang["REV"]} ${r["rev"]} - ${log["author"]} </span> ($files ${lang["FILESMODIFIED"]})</div><p>".nl2br(create_anchors($desc))."</p>";
+   $item->description = "<div><strong>${lang["REV"]} ${r["rev"]} - ${log["author"]}</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
    $item->date = $log["committime"];
    $item->author = $log["author"];
      

@@ -1,5 +1,9 @@
 CHANGES
 
+1.52 
+
+CHANGE: Style information removed from RSS feed
+
 1.51
 
 NEW: Korean translation
