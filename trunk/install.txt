@@ -80,13 +80,13 @@ To do this you must:
 - Configure the parent directory of wsvn.php to use MultiViews (see Apache
   docs).
 
-- Change config.php to include the line $config->useMultiViews();
+- Change config.inc to include the line $config->useMultiViews();
 
 - Change the paths at the beginning of wsvn.php
 
 Now go to http://servername/wsvn/ and make sure that you get the index page.
 
-The repname part of the URL is the name given to it in the config.php file.
+The repname part of the URL is the name given to it in the config.inc file.
 For this reason you may wish to avoid putting spaces in the name.
 
 LICENCE

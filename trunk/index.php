@@ -23,7 +23,7 @@
 //
 // Main page.  Lists all the projects
 
-require("include/config.inc");
+require("include/setup.inc");
 require("include/svnlook.inc");
 require("include/template.inc");
 

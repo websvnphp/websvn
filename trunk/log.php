@@ -23,7 +23,7 @@
 //
 // Show the logs for the given path
 
-require("include/config.inc");
+require("include/setup.inc");
 require("include/svnlook.inc");
 require("include/template.inc");
 
