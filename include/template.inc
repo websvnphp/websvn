@@ -24,7 +24,12 @@
 // Templating system to allow advanced page customisation
 
 $ignore = false;
+
+// Stack of previous test results
 $ignorestack = array();
+
+// Number of test levels currently ignored
+$ignorelevel = 0;
 
 // parseCommand
 //
@@ -32,30 +37,50 @@ $ignorestack = array();
 
 function parseCommand($line, $vars)
 { 
-   global $ignore, $ignorestack;
+   global $ignore, $ignorestack, $ignorelevel;
    
    // Check for test conditions      
    if (strncmp(trim($line), "[websvn-test:", 13) == 0)
    {
-      $line = trim($line);
-      $var = substr($line, 13, -1);
-      if (empty($vars[$var]))
+      if (!$ignore)
       {
-         array_push($ignorestack, $ignore);
-         $ignore = true;
+         $line = trim($line);
+         $var = substr($line, 13, -1);
+         if (empty($vars[$var]))
+         {
+            array_push($ignorestack, $ignore);
+            $ignore = true;
+         }
       }
+      else
+      {
+         $ignorelevel++;
+      }
+      
       return true;
    }
    
    if (strncmp(trim($line), "[websvn-else]", 13) == 0)
    {
-      $ignore = !$ignore;
+      if ($ignorelevel == 0)
+      {
+         $ignore = !$ignore;
+      }
+         
       return true;
    }
 
    if (strncmp(trim($line), "[websvn-endtest]", 16) == 0)
    {
-      $ignore = array_pop($ignorestack);
+      if ($ignorelevel > 0)
+      {
+         $ignorelevel--;
+      }
+      else
+      {
+         $ignore = array_pop($ignorestack);
+      }
+      
       return true;
    }
    
@@ -63,7 +88,9 @@ function parseCommand($line, $vars)
    {
       global $path, $rev, $svnrep;
    
-      $svnrep->listFileContents($path, $rev);
+      if (!$ignore)
+         $svnrep->listFileContents($path, $rev);
+      
       return true;
    }
    

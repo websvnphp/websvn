@@ -101,7 +101,7 @@ Variables defined for index.tmpl
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
 projlink - Link to the project
-
+rowparity - Parity of the row (0 or 1).  Used to generate striped tables
 
 Variables defined for directory.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
