@@ -96,7 +96,7 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         exec($config->svnlook." tree $revstr ".$this->repPath." > $cachedname");
+         @exec($config->svnlook." tree $revstr ".$this->repPath." > $cachedname");
       }
       
       if ($config->cacheResults && file_exists($cachedname))
@@ -251,7 +251,7 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         exec($config->svnlook." info $revstr ".$this->repPath." $path > $cachedname");
+         @exec($config->svnlook." info $revstr ".$this->repPath." $path > $cachedname");
       }
       
       // Get the log info
@@ -389,7 +389,7 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         exec($config->svnlook." changed $revstr ".$this->repPath." > $cachedname");
+         @exec($config->svnlook." changed $revstr ".$this->repPath." > $cachedname");
       }
       
       if ($config->cacheResults && file_exists($cachedname))
@@ -459,13 +459,13 @@ Class SVNRepository
 
       if ($config->useEnscript && !empty($l))
       {
-         exec($config->svnlook." cat $revstr ".$this->repPath." $path | ".
-              $config->enscript." --color --language=html --pretty-print=$l -o - | ".
-              $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename");
+         @exec($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+               $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+               $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename");
       }
       else
       {
-         exec($config->svnlook." cat $revstr ".$this->repPath." $path > $filename");
+         @exec($config->svnlook." cat $revstr ".$this->repPath." $path > $filename");
       }
   }
 
