@@ -45,7 +45,7 @@ Class Config
    var $cacheResults = false;
    var $multiViews = false;
    var $useEnscript = false;
-   var $rss = false;
+   var $rss = true;
    var $spaces = 8;
    var $refRepositoriesByNumber = false;
 
@@ -141,9 +141,9 @@ Class Config
    //
    // Use Enscript to colourise listings
    
-   function offerRSS()
+   function hideRSS()
    {
-      $this->rss = true;
+      $this->rss = false;
    }
 
    // getURL
