@@ -71,17 +71,11 @@ $lang["MORERESULTS"] = "Find more matches...";
 $lang["NORESULTS"] = "There are no logs matching your query";
 $lang["NOMORERESULTS"] = "There are no more logs matching your query";
 
-$lang["YEAR"] = "year";
 $lang["YEARS"] = "years";
-$lang["MONTH"] = "month";
 $lang["MONTHS"] = "months";
-$lang["WEEK"] = "week";
 $lang["WEEKS"] = "weeks";
-$lang["DAY"] = "day";
 $lang["DAYS"] = "days";
-$lang["HOUR"] = "hour";
 $lang["HOURS"] = "hours";
-$lang["MINUTE"] = "minute";
 $lang["MINUTES"] = "minutes";
 
 $lang["GO"] = "Go";
