@@ -84,8 +84,8 @@ $config = new Config;
 //
 // Uncomment ONLY the display file that you want.  
 
-$config->setTemplatePath("./templates/Standard/");
-//$config->setTemplatePath("./templates/BlueGrey/");
+$config->setTemplatePath("$locwebsvnreal/templates/Standard/");
+//$config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
 
 // LANGUAGE SETUP
 
