@@ -130,9 +130,9 @@ if ($prevrev)
    // Split this data up into an array
    $output = explode("\n", $output);
 
-   echo "<table class=\"diff\" width=\"100%\"><tr><td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[0]["rev"]."</b></td>".
+   echo "<table class=\"diff\" width=\"100%\"><tr><td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[1]["rev"]."</b></td>".
         "<td rowspan=100000 width=5></td>".
-        "<td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[1]["rev"]."</b></td></tr>";
+        "<td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[0]["rev"]."</b></td></tr>";
    
    // Output the differences with 5 lines of context
    $outputline = array ();
