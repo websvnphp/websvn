@@ -25,6 +25,8 @@
 // Location of websvn directory via HTTP
 //
 // e.g.  For http://servername/websvn use /websvn
+//
+// Note that wsvn.php need not be in the /websvn directory (and normally isn't).
 $locwebsvnhttp = "/websvn";  
 
 // Physical location of websvn directory
