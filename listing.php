@@ -23,8 +23,8 @@
 //
 // Show the listing for the given repository/path/revision
 
-require("config.inc");
-require("svnlook.inc");
+require("include/config.inc");
+require("include/svnlook.inc");
 
 include("templates/header.php");
 

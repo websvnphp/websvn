@@ -26,7 +26,7 @@
 // --- DON'T CHANGE THIS PART ---
 
 // Include the configuration class
-require("configclass.inc");
+require("include/configclass.inc");
 
 // Create the config
 $config = new Config;
