@@ -98,4 +98,18 @@ function runCommand($cmd)
    exit;
 }
 
+// quote
+//
+// Quote a string to send to the command line
+
+function quote($str)
+{
+   global $config;
+
+   if ($config->serverIsWindows)
+      return "\"$str\"";
+   else
+      return escapeshellarg($str);      
+}
+
 ?>
