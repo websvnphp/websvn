@@ -77,7 +77,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get complete tree for given path and revision 
-      $tree = shell_exec($config->adminCommandPath."svnlook tree $revstr ".$this->repPath." $path");
+      $tree = runCommand($config->adminCommandPath."svnlook tree $revstr ".$this->repPath." $path");
       
       // Split this data up into an array
       $tree = explode("\n", $tree);
@@ -96,16 +96,16 @@ Class SVNRepository
    
    function getLogDetails($path, $rev = 0)
    {
-      global $config;
+      global $config, $lang;
       
       $revstr = _revStr($rev);
       
       // Get the log info
-      $output = shell_exec($config->adminCommandPath."svnlook info $revstr ".$this->repPath." $path");
+      $output = runCommand($config->adminCommandPath."svnlook info $revstr ".$this->repPath." $path");
       
       // Split this data up into an array
       $output = explode("\n", $output);
-      
+            
       // Create a nice array to return
       $log["author"] = $output[0];
       $log["date"] = $output[1];
@@ -117,22 +117,13 @@ Class SVNRepository
          $log["message"] .= "\n".$output[$pos];
          $pos++;
       }
-      
-      // Deal with the fact the the characters aren't encoded normally when svnlook is
-      // caleed from Windows.  The returned values are from the DOS code page (CP850)
-      
-      if ($config->serverIsWindows)
-      {
-         //$log["message"] = iconv("cp850", "iso-8859-1", $log["message"]);
-         $log["message"] = strtr($log["message"], "…‚Šˆ‹Œ“—–‡", "àéèêïîôùûç");
-      }
-      
+            
       // If we're working on the head, get the head revision
       if ($rev > 0)
          $log["rev"] = $rev;
       else
       {
-         $head = shell_exec($config->adminCommandPath."svnlook youngest ".$this->repPath);
+         $head = runCommand($config->adminCommandPath."svnlook youngest ".$this->repPath);
          settype($head, "integer");
          $log["rev"] = $head;
       }
@@ -147,7 +138,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get the log info
-      $output = shell_exec($config->adminCommandPath."svnlook changed $revstr ".$this->repPath);
+      $output = runCommand($config->adminCommandPath."svnlook changed $revstr ".$this->repPath);
       
       // Split this data up into an array
       $output = explode("\n", $output);
@@ -191,7 +182,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get the log info
-      $output = shell_exec($config->adminCommandPath."svnlook cat $revstr ".$this->repPath." $path");
+      $output = runCommand($config->adminCommandPath."svnlook cat $revstr ".$this->repPath." $path");
       
       return $output;
    }
@@ -203,7 +194,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get the history info
-      $output = shell_exec($config->adminCommandPath."svnlook history $revstr ".$this->repPath." $path");
+      $output = runCommand($config->adminCommandPath."svnlook history $revstr ".$this->repPath." $path");
       
       // Split this data up into an array
       $output = explode("\n", $output);
