@@ -74,7 +74,7 @@ function transArray($arr)
          }
       }
 
-      $narr[$key] = replaceEntities($narr[$key]);
+      $narr[$key] = replaceEntities(rtrim($value));
    }
       
    return $narr;
