@@ -23,8 +23,8 @@
 //
 // Show the logs for the given path
 
-require("include/setup.inc");
-require("include/svnlook.inc");
+require_once("include/setup.inc");
+require_once("include/svnlook.inc");
 require("include/template.inc");
 
 $rep = (int)@$_REQUEST["rep"];

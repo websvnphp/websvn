@@ -23,8 +23,8 @@
 //
 // Show the listing for the given repository/path/revision
 
-require("include/setup.inc");
-require("include/svnlook.inc");
+require_once("include/setup.inc");
+require_once("include/svnlook.inc");
 require("include/template.inc");
 
 $rep = (int)@$_REQUEST["rep"];
