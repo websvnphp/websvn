@@ -222,7 +222,7 @@ if ($prevrev)
       {
          while (!feof($diff))
          {
-            $output = fgets($diff);         
+            $output = rtrim(fgets($diff));         
           
             // Get each file's line
             if (!empty($output))
@@ -240,7 +240,7 @@ if ($prevrev)
                }
       
                $oldline = hardspace(transChars(rtrim(substr($output, 0, 299)), ($config->useEnscript)?false:true));
-               $newline = hardspace(transChars(rtrim(substr($output, 302)), ($config->useEnscript)?false:true));
+               $newline = hardspace(transChars(substr($output, 302), ($config->useEnscript)?false:true));
             
                if ($oldline == "") $oldline = "&nbsp;";
                if ($newline == "") $newline = "&nbsp;";
