@@ -72,7 +72,7 @@ if ($config->multiViews)
    else
    {
       $name = substr($path, 0, $pos);
-      $path = substr($path, $pos + 1);
+      $path = substr($path, $pos);
    }
       
    $rep = $config->findRepository($name);
