@@ -128,6 +128,17 @@ for ($n = 0; $n < $maxmessages; $n++)
    $item->title = "$sdesc";
    $item->link = getFullURL($baseurl."${url}rev=${r["rev"]}&amp;sc=$showchanged");
    $item->description = "<div><strong>${lang["REV"]} ${r["rev"]} - ${log["author"]}</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
+   if ($showchanged) {
+     foreach ($changes["added"] as $file) {
+       $item->description .= "+ $file<br>";
+     }
+     foreach ($changes["updated"] as $file) {
+       $item->description .= "~ $file<br>";
+     }
+     foreach ($changes["deleted"] as $file) {
+       $item->description .= "- $file<br>";
+     }
+   }
    $item->date = $log["committime"];
    $item->author = $log["author"];
      
