@@ -1,5 +1,11 @@
 CHANGES
 
+1.35
+
+ADD: You can now specify a list of file types (extensions) for files which
+     should be delivered to the user in a GZIP'd archive rather that 
+     displayed as ASCII in the browser window.
+
 FIX: Detect use of the HTTPS protocol when using the drop-down box to
      select projects.
 FIX: The PNGs in the BlueGrey style are now transparent under Internet
