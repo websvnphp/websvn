@@ -440,7 +440,7 @@ Class SVNRepository
    
    function getFileContents($path, $filename, $rev = 0)
    {
-      global $config, $extensions;
+      global $config, $extEnscript;
       
       $revstr = _revStr($rev);
       
@@ -453,7 +453,7 @@ Class SVNRepository
       // Get the file contents info
       
       $ext = strrchr($path, ".");
-      $l = @$extensions[$ext];
+      $l = @$extEnscript[$ext];
         
       $path = quote($path);
 
@@ -475,7 +475,7 @@ Class SVNRepository
    
    function listFileContents($path, $br, $rev = 0)
    {
-      global $config, $extensions;
+      global $config, $extEnscript;
       
       $revstr = _revStr($rev);
       $pre = false;
@@ -483,7 +483,7 @@ Class SVNRepository
       // Get the file contents info
       
       $ext = strrchr($path, ".");
-      $l = @$extensions[$ext];
+      $l = @$extEnscript[$ext];
       
       $path = quote($path);
         

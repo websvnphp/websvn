@@ -27,7 +27,7 @@
 
 // Define the configuration
 
-// PLATFORM CONFIGURATION
+// --- PLATFORM CONFIGURATION ---
 
 // Uncomment the next line if your running a windows server
 //
@@ -40,7 +40,7 @@
 // $config->setEnscriptPath("Path/to/diff/command/");
 // $config->setSedPath("Path/to/diff/command/");
 
-// REPOSITORY SETUP
+// --- REPOSITORY SETUP ---
 
 // There are 2 methods for defining the repositiories available on the system.  Either you list
 // them by hand, in which case you can give each one the name of your choice, or you use the
@@ -55,20 +55,20 @@
 //
 // $config->parentPath("Path/to/parent (e.g. c:\\svn)");
 
-// LOOK AND FEEL
+// --- LOOK AND FEEL ---
 //
 // Uncomment ONLY the display file that you want.  
 
 $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
 
-// LANGUAGE SETUP
+// --- LANGUAGE SETUP ---
 
 // Uncomment ONLY the language file which you want.  If you want English then don't do anything here.
 //
 // include("languages/german.inc");
 
-// MISCELLANOUS
+// --- MISCELLANOUS ---
 
 // Uncomment this line if you want to use MultiView to access the repository by, for example:
 //
@@ -85,7 +85,24 @@ set_time_limit(0);
 // Comment this line to turn off caching of repo information.  This will slow down your browsing.
 $config->setCachingOn();
 
-// COLOURISATION
+// --- FILE CONTENT ---
+//
+// WebSVN has a built in list of associations from file extension to MIME content type. (You can
+// view this list in setup.inc). By default, any extension clicked on via WebSVN that isn't
+// included in this list will be brought up as ASCII text in the browser window (although this
+// text may optionally be colourised.  See below). 
+//
+// For any extension that has a MIME type defined, the file will be delivered to the user as an
+// attachment.
+//
+// Following the examples below, you can add new associations, modify the default ones or even
+// delete them entirely (to show them in ASCII via WebSVN).
+
+// $contentType[".c"] = "plain/text"; // Create a new association
+// $contentType[".doc"] = "plain/text"; // Modify an existing one
+// unset($contentType[".m"] // Remove a default association
+
+// --- COLOURISATION ---
 
 // Uncomment this line if you want to use Enscript to colourise your file listings
 //
@@ -94,70 +111,12 @@ $config->setCachingOn();
 //
 // $config->useEnscript();
 
-// List of extensions recognised by enscript.  Remove or change the extension => language
-// bindings as needed.
-
-$extensions = array
-(
-  ".ada"     => "ada",
-  ".adb"     => "ada",
-  ".ads"     => "ada",
-  ".awk"     => "awk",
-  ".c"       => "c",
-  ".c++"     => "cpp",
-  ".cc"      => "cpp",
-  ".cpp"     => "cpp",
-  ".csh"     => "csh",
-  ".cxx"     => "cpp",
-  ".diff"    => "diffu",
-  ".dpr"     => "delphi",
-  ".el"      => "elisp",
-  ".eps"     => "postscript",
-  ".f"       => "fortran",
-  ".for"     => "fortran",
-  ".gs"      => "haskell",
-  ".h"       => "c",
-  ".hpp"     => "cpp",
-  ".hs"      => "haskell",
-  ".htm"     => "html",
-  ".html"    => "html",
-  ".idl"     => "idl",
-  ".java"    => "java",
-  ".js"      => "javascript",
-  ".lgs"     => "haskell",
-  ".lhs"     => "haskell",
-  ".m"       => "objc",
-  ".m4"      => "m4",
-  ".man"     => "nroff",
-  ".nr"      => "nroff",
-  ".p"       => "pascal",
-  ".pas"     => "delphi",
-  ".patch"   => "diffu",
-  ".pkg"     => "sql", 
-  ".pl"      => "perl",
-  ".pm"      => "perl",
-  ".pp"      => "pascal",
-  ".ps"      => "postscript",
-  ".s"       => "asm",
-  ".scheme"  => "scheme",
-  ".scm"     => "scheme",
-  ".scr"     => "synopsys",
-  ".sh"      => "sh",
-  ".shtml"   => "html",
-  ".sql"     => "sql",
-  ".st"      => "states",
-  ".syn"     => "synopsys",
-  ".synth"   => "synopsys",
-  ".tcl"     => "tcl",
-  ".tex"     => "tex",
-  ".texi"    => "tex",
-  ".texinfo" => "tex",
-  ".v"       => "verilog",
-  ".vba"     => "vba",
-  ".vh"      => "verilog",
-  ".vhd"     => "vhdl",
-  ".vhdl"    => "vhdl",
-  ".py"      => "python"
-);
+// Enscript need to be told what the contents of a file are so that it can be colourised
+// correctly.  WebSVN includes a predefined list of mappings from file extension to Enscript
+// file type (viewable in setup.inc).
+//
+// Here you should add and other extensions not already listed or redefine the default ones. eg:
+//
+// $extEnscript["pas"] = "pascal";
 
 ?>
