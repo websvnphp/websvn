@@ -1,6 +1,11 @@
 CHANGES
 
-1.31/1.31a
+1.32
+
+FIX: Links no longer functionned correctly when used in basic
+     (non-multiviews) mode.
+
+1.31
 
 FIX: Direcory view had disappeared!
 FIX: Included missing file setup.inc
