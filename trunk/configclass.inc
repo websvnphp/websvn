@@ -107,9 +107,9 @@ Class Config
       // On a windows machine we need to put spaces around the entire command
       // to allow for spaces in the path
       if ($this->serverIsWindows)
-         $this->diff = "\"${path}svnlook\"";
+         $this->diff = "\"${path}diff\"";
       else         
-         $this->diff = "${path}svnlook";
+         $this->diff = "${path}diff";
    }
 
    // parentPath
