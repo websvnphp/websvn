@@ -26,21 +26,21 @@
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
-$lang["NOREP"] = "No se especifico un repositorio";
+$lang["NOREP"] = "No se especificó un repositorio";
 $lang["NOPATH"] = "Ruta no encontrada";
-$lang["SUPPLYREP"] = "Por Favor, configure una ruta a un repositorio en include/config.inc usando \$config->parentPath o \$config->addRepository<p>Verifique la guía de instalación para mas detalles.";
+$lang["SUPPLYREP"] = "Por Favor, configure una ruta a un repositorio en include/config.inc usando \$config->parentPath o \$config->addRepository<p>Verifique la guía de instalación para mas detalles";
 
 $lang["DIFFREVS"] = "Diff entre versiones";
 $lang["AND"] = "y";
 $lang["REV"] = "Rev";
-$lang["LINE"] = "Linea";
+$lang["LINE"] = "Línea";
 $lang["SHOWENTIREFILE"] = "Mostrar el archivo completo";
-$lang["SHOWCOMPACT"] = "Solo mostrar areas con diferencias";
+$lang["SHOWCOMPACT"] = "Solo mostrar áreas con diferencias";
 
 $lang["DIFFPREV"] = "Comparar con el anterior";
 $lang["BLAME"] = "Autoría";
 
-$lang["REVINFO"] = "Revision Information";
+$lang["REVINFO"] = "Información sobre la revisión";
 $lang["GOYOUNGEST"] = "Ir a la última revisión";
 $lang["LASTMOD"] = "Ultima modificación";
 $lang["LOGMSG"] = "Mensaje de Log";
@@ -53,7 +53,7 @@ $lang["DELETEDFILES"] = "Archivos borrados";
 $lang["VIEWLOG"] = "Ver&nbsp;Log";
 $lang["PATH"] = "Ruta";
 $lang["AUTHOR"] = "Autor";
-$lang["AGE"] = "Antiguedad";
+$lang["AGE"] = "Antigüedad";
 $lang["LOG"] = "Log";
 $lang["CURDIR"] = "Directorio Actual";
 $lang["TARBALL"] = "Tarball";
@@ -69,22 +69,22 @@ $lang["PROJECTS"] = "Proyectos de&nbsp;Subversion";
 $lang["SERVER"] = "Servidor de&nbsp;Subversion";
 
 $lang["SEARCHLOG"] = "Buscar en el log";
-$lang["CLEARLOG"] = "Limpiar la busqueda actual";
+$lang["CLEARLOG"] = "Limpiar la búsqueda actual";
 $lang["MORERESULTS"] = "Buscar mas coincidencias";
-$lang["NORESULTS"] = "Ningún log coincide con su busqueda";
-$lang["NOMORERESULTS"] = "No hay mas logs que coincidan con su busqueda";
+$lang["NORESULTS"] = "Ningún log coincide con su búsqueda";
+$lang["NOMORERESULTS"] = "No hay mas logs que coincidan con su búsqueda";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
 $lang["FILESMODIFIED"] = "Archivo(s) modificados"; 
 $lang["RSSFEED"] = "RSS feed"; 
 
-$lang["LINENO"] = "Linea Nro.";
-$lang["BLAMEFOR"] = "Informacion de culpa para rev";
+$lang["LINENO"] = "Línea Nro.";
+$lang["BLAMEFOR"] = "Información de culpa para rev";
 
 $lang["YEARS"] = "Años";
 $lang["MONTHS"] = "meses";
 $lang["WEEKS"] = "semanas";
-$lang["DAYS"] = "dias";
+$lang["DAYS"] = "días";
 $lang["HOURS"] = "horas";
 $lang["MINUTES"] = "minutos";
 
@@ -110,4 +110,3 @@ $lang["ENDNOBR"] = "";
 
 // $lang["NOBR"] = "<nobr>";
 // $lang["ENDNOBR"] = "</nobr>";
-
