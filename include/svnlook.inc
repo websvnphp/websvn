@@ -276,9 +276,15 @@ Class SVNRepository
 
       sscanf($date, "%d-%d-%d %d:%d:%d %d", $y, $mo, $d, $h, $m, $s, $offset);
       
+      // Remove the offset to get the time in GMT
       $h -= $offset / 100;
       
-      // Get this time (as GMT) in seconds, taking into account the local timezone shift from GMT
+      // Get the commit time as seconds.  Note that the mktime function assumes that the time being
+      // passed to it is a local time - it will therefore subtract/add the required number of hours
+      // to make it GMT.  Since we already have the time in GMT we first add the localtime offset to
+      // get the commit time in local time.  The offset calculated above already handles the summer
+      // time case, so we tell mktime not to take this into account.
+      
       $lt = gettimeofday();
       $minwest = $lt["minuteswest"];
       $committime = mktime($h ,$m - $minwest, $s, $mo, $d, $y, 0);
