@@ -24,19 +24,20 @@
 // Swedish language strings
 
 $lang["LOG"] = "Logg";
-$lang["DIFF"] = "Diff";
+$lang["DIFF"] = "Skillnad";
 
-$lang["NOREP"] = "Ingen bunker angiven"; //repository
+$lang["NOREP"] = "Inget arkiv angivet"; //repository
 $lang["NOPATH"] = "S&ouml;kv&auml;gen saknas";
+$lang["SUPPLYREP"] = "V&auml;nligen s&auml;tt upp en s&ouml;v&auml;g till arkivet i include/config.inc med \$config->parentPath eller \$config->addRepository<p>Se installationsanvisningen f&ouml;r mer detaljer";
 
-$lang["DIFFREVS"] = "Diff mellan rev.";
+$lang["DIFFREVS"] = "Skillnad mellan rev.";
 $lang["AND"] = "och";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Rad";
 $lang["SHOWENTIREFILE"] = "Visa hela filen";
 $lang["SHOWCOMPACT"] = "Visa bara omr&aring;den med skillnader";
 
-$lang["DIFFPREV"] = "Diff mot f&ouml;reg&aring;ende";
+$lang["DIFFPREV"] = "Skillnad mot f&ouml;reg&aring;ende";
 $lang["BLAME"] = "Ansvarig";
 
 $lang["REVINFO"] = "Revisionsinformation";
@@ -55,6 +56,7 @@ $lang["AUTHOR"] = "F&ouml;rfattare";
 $lang["AGE"] = "&Aring;lder";
 $lang["LOG"] = "Logg";
 $lang["CURDIR"] = "Nuvarande folder";
+$lang["TARBALL"] = "Tarball";
 
 $lang["PREV"] = "F&ouml;reg.";
 $lang["NEXT"] = "N&auml;sta";
@@ -87,4 +89,26 @@ $lang["HOURS"] = "timmar";
 $lang["MINUTES"] = "minuter";
 
 $lang["GO"] = "Utf&ouml;r";
+
+$lang["PATHCOMPARISON"] = "S&ouml;kv&auml;gsj&auml;mf&ouml;relse";
+$lang["COMPAREPATHS"] = "J&auml;mf&ouml;r s&ouml;kv&auml;gar";
+$lang["COMPAREREVS"] = "J&auml;mf&ouml;r revisioner";
+$lang["PROPCHANGES"] = "Egenskaps&auml;ndringar :";
+$lang["CONVFROM"] = "Denna j&auml;mförelse visar &auml;ndringarna som beh&ouml;vs för att konvertera s&ouml;kv&auml;g "; 
+$lang["TO"] = "till";
+$lang["REVCOMP"] = "V&auml;xla j&auml;mf&ouml;relse";
+$lang["COMPPATH"] = "J&auml;mf&ouml;r s&ouml;kv&auml;g:";
+$lang["WITHPATH"] = "Med s&ouml;kv&auml;g:";
+$lang["FILEDELETED"] = "Filen raderad";
+$lang["FILEADDED"] = "Ny fil";
+
+// The following are defined by some languages to stop unwanted line splitting
+// in the template files. 
+
+$lang["NOBR"] = "";
+$lang["ENDNOBR"] = "";
+
+// $lang["NOBR"] = "<nobr>";
+// $lang["ENDNOBR"] = "</nobr>";
+
 
