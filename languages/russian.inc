@@ -38,7 +38,7 @@ $lang["SHOWENTIREFILE"] = "Показать целый файл";
 $lang["SHOWCOMPACT"] = "Отображать только области с различиями";
 
 $lang["DIFFPREV"] = "Сравнение с предыдущим";
-$lang["BLAME"] = "Blame";
+$lang["BLAME"] = "Ответственность";
 
 $lang["REVINFO"] = "Информация о ревизии";
 $lang["GOYOUNGEST"] = "Идти к последней ревизии";
@@ -70,11 +70,11 @@ $lang["SERVER"] = "Subversion&nbsp;Server";
 $lang["SEARCHLOG"] = "Искать log for";
 $lang["CLEARLOG"] = "Очистить текущий поиск";
 $lang["MORERESULTS"] = "Искать еще совпадения...";
-$lang["NORESULTS"] = "There are no logs matching your query";
-$lang["NOMORERESULTS"] = "There are no more logs matching your query";
+$lang["NORESULTS"] = "Нет logs, соответствующих Вашему запросу";
+$lang["NOMORERESULTS"] = "Больше нет logs, соответствующих Вашему запросу";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "Фаийл(ы) изменены"; 
+$lang["FILESMODIFIED"] = "Файл(ы) изменены"; 
 $lang["RSSFEED"] = "RSS feed"; 
 
 $lang["LINENO"] = "Строка #.";
@@ -87,4 +87,4 @@ $lang["DAYS"] = "день";
 $lang["HOURS"] = "час";
 $lang["MINUTES"] = "минута";
 
-$lang["GO"] = "Go";
+$lang["GO"] = "Перейти";
