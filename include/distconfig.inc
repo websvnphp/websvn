@@ -42,7 +42,10 @@
 // $config->setEnscriptPath("Path/to/enscript/command/");
 // $config->setSedPath("Path/to/sed/command/");
 
-// For delivered GZIP'd filed, if option enabled...
+// For delivered tarballs, if option enabled...
+// $config->setTarPath("Path/to/tar/command/");
+
+// For delivered GZIP'd files and tarballs, if option enabled...
 // $config->setGZipPath("Path/to/gzip/command/");
 
 // --- REPOSITORY SETUP ---
