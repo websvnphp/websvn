@@ -8,15 +8,15 @@ ADD: .exe is recognised by default as having content-type
      application/x-msdownload
 ADD: Recognised links are now 'linkified' in the log messages
 ADD: Tabs in file/diff listings are now expanded by a user
-     configurable number of spaces.  Note that this option 
-     doesn't apply to the "Show all" diff view, since diff expands
-     all tabs to 8 spaces regardless.
+     configurable number of spaces. 
 ADD: WebSVN URLs now access the repository by name rather than number.
      This means that bookmarks will stay the same when new projects
      are added.  The old behaviour can be configure in config.inc.
 
 FIX: Removed the revision 0 that has appeared in the previous version
 FIX: Repositories were not sorted alphabetically when using ParentPath
+FIX: The PNG support script needed for IE (and the BlueGrey scheme) is
+     now only loaded with IE
 
 1.39
 
