@@ -77,7 +77,6 @@ Class SVNRepository
       global $config, $locwebsvnreal;
       
       $revstr = _revStr($rev);
-      $path = quote($path);
       
       $tree = array();
       
