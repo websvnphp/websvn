@@ -69,15 +69,33 @@ function transArray($arr)
    return $narr;
 }
 
+function quoteCommand($cmd, $redirecterr)
+{
+   global $config;
+   
+   if ($redirecterr)
+      $cmd .= " 2>&1";
+      
+   // On Windows machines, the whole line needs quotes round it so that it's
+   // passed to cmd.exe correctly
+
+   if ($config->serverIsWindows)
+      $cmd = "\"$cmd\"";
+   
+   return $cmd;
+}
+
 function runCommand($cmd)
 {
    global $lang;
    
    $output = array ();
    $err = false;
-   
+
+   $c = quoteCommand($cmd, false);
+      
    // Try to run the command normally
-   if ($handle = popen($cmd, "r"))
+   if ($handle = popen($c, "r"))
    {
       $firstline = true;
 		while (!feof($handle))
@@ -99,7 +117,10 @@ function runCommand($cmd)
    echo "${lang["BADCMD"]}: <i><b>$cmd</b></i><br>";
    
    // Rerun the command, this time grabbing the error information
-   $output = transChars(shell_exec($cmd."  2>&1"));
+
+   $c = quoteCommand($cmd, true);
+
+   $output = transChars(shell_exec($c));
    if (!empty($output)) print "<p>".nl2br($output);
    exit;
 }

@@ -136,7 +136,10 @@ if ($prevrev)
    if (!$all)
    {
       // Open a pipe to the diff command with $context lines of context
-      if ($diff = popen($config->diff." --ignore-space-change -U $context $oldtname $newtname", "r"))
+      
+      $cmd = quoteCommand($config->diff." --ignore-space-change -U $context $oldtname $newtname", false);
+      
+      if ($diff = popen($cmd, "r"))
       {
          // Ignore the 3 header lines
   		   $line = fgets($diff);
@@ -237,7 +240,10 @@ if ($prevrev)
       $listing = array();
 
       // Get the diff  output
-      if ($diff = popen($config->diff." -y -t -W 600 -w $oldtname $newtname", "r"))
+      
+      $cmd = quoteCommand($config->diff." -y -t -W 600 -w $oldtname $newtname", false);
+      
+      if ($diff = popen($cmd, "r"))
       {
          while (!feof($diff))
          {
