@@ -78,6 +78,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/spanish.inc");
 // include("languages/portuguese.inc");
 // include("languages/swedish.inc");
+// include("languages/polish.inc");
 
 // include("languages/japanese-euc.inc");  // (Almost Unix/Linux/BSD)
 // include("languages/japanese-jis.inc");  // (ISO-2022-JP)

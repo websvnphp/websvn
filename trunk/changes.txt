@@ -1,7 +1,10 @@
 CHANGES
 
+NEW: Polish translation
+
 FIX: Accented characters weren't shown correctly in the directory comparison
      view.
+FIX: Remove error one only one revision was available
 
 1.61
 
