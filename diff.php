@@ -97,19 +97,11 @@ if ($prevrev)
    echo "<p>";
    
    // Get the contents of the two files
-   $new = $svnrep->getFileContents($path, $history[0]["rev"]);
-   $old = $svnrep->getFileContents($path, $history[1]["rev"]);
-
-   // Save these into temp files so that we can operate on them
-   $oldtname = tempnam("temp", "");
-   $fp = fopen($oldtname, "w");
-   fwrite($fp, $old);
-   fclose($fp);
-
    $newtname = tempnam("temp", "");
-   $fp = fopen($newtname, "w");
-   fwrite($fp, $new);
-   fclose($fp);
+   $new = $svnrep->getFileContents($path, $newtname, $history[0]["rev"]);
+
+   $oldtname = tempnam("temp", "");
+   $old = $svnrep->getFileContents($path, $oldtname, $history[1]["rev"]);
    
    // Get the diff  output
    $output = runCommand($config->diff." -y -t -W 600 -w $oldtname $newtname");
@@ -129,9 +121,6 @@ if ($prevrev)
    
    echo "<p>";
    
-   // Split this data up into an array
-   $output = explode("\n", $output);
-
    echo "<table class=\"diff\" width=\"100%\"><tr><td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[1]["rev"]."</b></td>".
         "<td rowspan=100000 width=5></td>".
         "<td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[0]["rev"]."</b></td></tr>";

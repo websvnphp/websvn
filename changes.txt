@@ -12,6 +12,8 @@ ADD: A 'ParentPath' can now be specified, rather than having to specify the
 FIX: Rewrite of the file list code.  Should now be quite a bit faster
 FIX: Use a more memory efficient algorithm to list file contents
 FIX: Spaces in Windows path to svnlook and diff are now handled properly
+FIX: Calls to external commands such as svnlook no longer require Windows
+     style line endings.
 
 1.02
 
