@@ -49,9 +49,9 @@ if (@$_REQUEST["selectproj"])
    $url = $config->getURL($rep, "/", "dir");
    
    if ($config->multiViews)
-      redirect($url);
+      redirect($url."sc=$showchanged");
    else
-      redirect($basedir.$url);   
+      redirect($basedir.$url."sc=$showchanged");   
 }
 
 
