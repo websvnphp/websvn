@@ -140,6 +140,7 @@ $vars["logsearch_moreresultslink"] = "";
 $row = 0;
 $index = 0;
 $listing = array();
+$found = false;
 
 for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
 {
@@ -170,7 +171,10 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
          }
          
          if ($match)
+         {
             $numSearchResults--;
+            $found = true;
+         }
       }
       else
          $match = false;
@@ -217,6 +221,23 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
       $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&isdir=$isDir&logsearch=1&search=$search&fr=${r["rev"]}\">${lang["MORERESULTS"]}</a>";
       break;
    }
+}
+
+$vars["logsearch_resultsfound"] = true;
+
+if ($dosearch && !$found)
+{
+   if ($fromRev == 0)
+   {
+      $vars["logsearch_nomatches"] = true;
+      $vars["logsearch_resultsfound"] = false;
+   }
+   else
+      $vars["logsearch_nomorematches"] = true;
+}
+else if ($dosearch && $numSearchResults > 0)
+{
+   $vars["logsearch_nomorematches"] = true;
 }
 
 // Work out the paging options

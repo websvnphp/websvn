@@ -158,6 +158,12 @@ logsearch_endform -  HTML </form> specification for the log search box box
                      (includes hidden field declarations)
 logsearch_clearloglink - Link to unfiltered display (remove current search
                          criteria)
+                         
+logsearch_resultsfound - true when there are logs to display
+logsearch_nomatches - true when there are no matches for the current request
+logsearch_nomorematches - true when there are no further matches to the current
+                          request (but there have been previous pages,
+                          for example)
 
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 

@@ -68,6 +68,8 @@ $lang["SERVER"] = "Subversion&nbsp;Server";
 $lang["SEARCHLOG"] = "Search log for";
 $lang["CLEARLOG"] = "Clear current search";
 $lang["MORERESULTS"] = "Find more matches...";
+$lang["NORESULTS"] = "There are no logs matching your query";
+$lang["NOMORERESULTS"] = "There are no more logs matching your query";
 
 $lang["YEAR"] = "year";
 $lang["YEARS"] = "years";
