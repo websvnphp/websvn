@@ -68,11 +68,11 @@ dir=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.pn
       <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
       [websvn-test:allowdownload]
          [websvn-test:curdirrsslink]
-            <th class="HdrClmn"><b>[lang:LOG]</b></th>
+            <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
             <th class="HdrClmn"><b>[lang:TARBALL]</b></th>
             <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></th>
          [websvn-else]
-            <th class="HdrClmn"><b>[lang:LOG]</b></th>
+            <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
             <th class="HdrClmnEnd"><b>[lang:TARBALL]</b></th>
          [websvn-endtest]
       [websvn-else]
@@ -80,7 +80,7 @@ dir=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.pn
             <th class="HdrClmn"><b>[lang:LOG]</b></th>
             <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></th>
          [websvn-else]
-            <th class="HdrClmnEnd"><b>[lang:LOG]</b></th>
+            <th class="HdrClmnEnd"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
          [websvn-endtest]
       [websvn-endtest]
    </tr>
@@ -92,19 +92,19 @@ dir=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.pn
       </td>
       [websvn-test:allowdownload]
          [websvn-test:curdirrsslink]
-            <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
+            <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
             <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[websvn:fileviewdllink]</td>
             <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
          [websvn-else]
-            <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
+            <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
             <td class="row[websvn:rowparity]">[websvn:fileviewdllink]</td>
          [websvn-endtest]
       [websvn-else]
          [websvn-test:curdirrsslink]
-            <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
+            <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
             <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
          [websvn-else]
-            <td class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
+            <td class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
          [websvn-endtest]
       [websvn-endtest]   
    </tr>
