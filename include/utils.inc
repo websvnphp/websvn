@@ -95,4 +95,43 @@ function create_anchors($text)
 	return ($ret);
 }
 
+function getFullURL($loc)
+{
+   $protocol = 'http';
+   
+   if (isset($_SERVER["HTTPS"]) && (strtolower($_SERVER["HTTPS"]) != "off"))
+   {
+   	$protocol = "https";
+   }
+   
+   $port = ":".$_SERVER["SERVER_PORT"];
+   if ((":80" == $port && "http" == $protocol) ||
+       (":443" == $port && "https" == $protocol)) 
+   {
+      $port = "";
+   }
+   
+   if (isset($_SERVER["HTTP_HOST"]))
+   {
+   	$host = $_SERVER["HTTP_HOST"];
+   }
+   else if (isset($_SERVER["SERVER_NAME"]))
+   {
+   	$host = $_SERVER["SERVER_NAME"].$port;
+   }
+   else if (isset($_SERVER["SERVER_ADDR"]))
+   {
+   	$host = $_SERVER["SERVER_ADDR"].$port;
+   }
+   else
+   {
+      print "Unable to redirect";
+      exit;
+   }
+   
+   $url	= $protocol . "://" . $host . $loc;
+
+   return $url;
+}
+
 ?>
