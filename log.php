@@ -83,6 +83,8 @@ if (!isset($rep))
 list ($repname, $reppath) = $config->getRepository($rep);
 $svnrep = new SVNRepository($reppath);
 
+$passrev = $rev;
+
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getHistory($path);
 $youngest = $history[0]["rev"];
@@ -100,7 +102,7 @@ $vars["repname"] = $repname;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 
-createDirLinks($rep, $ppath, $rev, $showchanged);
+createDirLinks($rep, $ppath, $passrev, $showchanged);
 
 $logurl = $config->getURL($rep, $path, "log");
 
