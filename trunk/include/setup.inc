@@ -30,8 +30,7 @@
 if (!@$CONFIG)
 {
    $CONFIG = true;
-   
-   
+    
    // Include the configuration class
    require("include/configclass.inc");
    
@@ -53,7 +52,14 @@ if (!@$CONFIG)
    // Create the config
    $config = new Config;
 
-   // Set up the default extension handling
+   // Set up the default character encodings
+   if (function_exists("iconv_get_encoding"))
+   {
+     $config->setInputEncoding(iconv_get_encoding("input_encoding"));
+     $config->setOutputEncoding(iconv_get_encoding("input_encoding"));   
+   }
+
+   // Set up the default content-type extension handling
    
    $contentType = array (
    
