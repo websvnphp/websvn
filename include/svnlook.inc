@@ -269,81 +269,66 @@ Class SVNRepository
       }
                      
       // Create a nice array to return
-      $log["author"] = $output[0];
+      $log["author"] = ($output[0] ? $output[0] : "&nbsp;");
       
       $date = $output[1];
       $log["date"] = $date;
 
-      sscanf($date, "%d-%d-%d %d:%d:%d", $y, $mo, $d, $h, $m, $s);
+      sscanf($date, "%d-%d-%d %d:%d:%d %d", $y, $mo, $d, $h, $m, $s, $offset);
       
-      // Get this time (as GMT) in seconds
-      $committime = mktime($h ,$m, $s, $mo, $d, $y, 0);
+      $h -= $offset / 100;
+      
+      // Get this time (as GMT) in seconds, taking into account the local timezone shift from GMT
+      $lt = gettimeofday();
+      $minwest = $lt["minuteswest"];
+      $committime = mktime($h ,$m - $minwest, $s, $mo, $d, $y, 0);
+      
+      // Get the current time (as GMT)
+      $t = localtime(time(), 1);
+      $curtime = mktime($t["tm_hour"],  $t["tm_min"], $t["tm_sec"], $t["tm_mon"] + 1, $t["tm_mday"], $t["tm_year"] + 1900, $t["tm_isdst"]);
       
       // Get the number of seconds since the commit
-      $agesecs = time() - $committime;
+      $agesecs = $curtime - $committime;
       if ($agesecs < 0) $agesecs = 0;
       
       // Now create a nice human readable age based on these figures
-      $years = floor($agesecs / (60*60*24*356));
-      $agesecs -= $years * (60*60*24*356);
-      if ($years > 0)
+      $years = floor($agesecs / (60*60*24*365));
+      if ($years > 1)
       {
-         if ($years == 1)
-            $log["age"] = "1&nbsp;${lang["YEAR"]}";
-         else
-            $log["age"] = "$years&nbsp;${lang["YEARS"]}";         
+         $log["age"] = "$years&nbsp;${lang["YEARS"]}";         
       }
       else
       {
-         $months = floor($agesecs / (60*60*24*356/12));
-         $agesecs -= $months * (60*60*24*356/12);
-         if ($months > 0)
+         $months = floor($agesecs / (60*60*24*365/12));
+         if ($months > 1)
          {
-            if ($months == 1)
-               $log["age"] = "1&nbsp;${lang["MONTH"]}";
-            else
-               $log["age"] = "$months&nbsp;${lang["MONTHS"]}";
+            $log["age"] = "$months&nbsp;${lang["MONTHS"]}";
          }
          else
          {
             $weeks = floor($agesecs / (60*60*24*7));
-            $agesecs -= $weeks * (60*60*24*7);
-            if ($weeks > 0)
+            if ($weeks > 1)
             {
-               if ($weeks == 1)
-                  $log["age"] = "1&nbsp;${lang["WEEK"]}";
-               else
-                  $log["age"] = "$weeks&nbsp;${lang["WEEKS"]}";
+               $log["age"] = "$weeks&nbsp;${lang["WEEKS"]}";
             }
             else
             {              
                $days = floor($agesecs / (60*60*24));
-               $agesecs -= $days * (60*60*24);
-               if ($days > 0)
+               if ($days > 1)
                {
-                  if ($days == 1)
-                     $log["age"] = "1&nbsp;${lang["DAY"]}";
-                  else
-                      $log["age"] = "$days&nbsp;${lang["DAYS"]}";
+                  $log["age"] = "$days&nbsp;${lang["DAYS"]}";
                }
                else
                { 
                   $hours = floor($agesecs / (60*60));
-                  $agesecs -= $hours * (60*60*24);
-                  if ($hours > 0)
+                  if ($hours > 1)
                   {
-                     if ($hours == 1)
-                        $log["age"] = "1&nbsp;${lang["HOUR"]}";
-                     else
-                        $log["age"] = "$hours&nbsp;${lang["HOURS"]}";
+                     $log["age"] = "$hours&nbsp;${lang["HOURS"]}";
                   }
                   else
                   { 
                      $minutes = floor($agesecs / 60);
-                     if ($minutes == 1)
-                        $log["age"] = "1&nbsp;${lang["MINUTE"]}";
-                     else
-                        $log["age"] = "$minutes&nbsp;${lang["MINUTES"]}";
+                     $log["age"] = "$minutes&nbsp;${lang["MINUTES"]}";
                   }
                }
             }
@@ -593,9 +578,12 @@ Class SVNRepository
             continue;  
             
          $record = trim($record);
-         list($rev, $path) = split(" ", $record, 2);
-         if ($rev)
+         if ($record != "")
+         {
+            list($rev, $path) = split(" ", $record, 2);
+            $path = trim($path);
             $history[] = array("rev" => $rev, "path" => $path);
+         }
       }
          
       return $history;
