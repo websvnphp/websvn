@@ -179,7 +179,7 @@ Class SVNRepository
                }
             }
 
-            pclose($files);
+            fclose($files);
             
             // Sort the entries into alphabetical order with the directories at the top of the list
             usort($tree, "_dirSort");
