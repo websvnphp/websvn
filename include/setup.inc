@@ -148,6 +148,7 @@ if (!@$CONFIG)
    ".ram" => "audio/x-pn-realaudio", // RealAudio
    ".rpm" => "audio/x-pn-realaudio-plugin", // RealAudio (plug-in)
    ".wav" => "audio/x-wav", // Windows WAVE audio
+   ".mp3" => "audio/x-mp3", // MP3 files
    ".gif" => "image/gif", // gif image
    ".ief" => "image/ief", // Image Exchange Format
    ".jpg" => "image/jpeg", // JPEG image
