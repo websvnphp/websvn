@@ -465,7 +465,7 @@ Class SVNRepository
          }
          else
          {
-            $cmd = quoteCommand($config->svnlook." cat $revstr ".quote($this->repPath)." $path 2>&1", false);
+            $cmd = quoteCommand($config->svnlook." cat $revstr ".quote($this->repPath)." ".quote($path)." 2>&1", false);
             
             if (!($result = popen($cmd, "r")))
                return;
