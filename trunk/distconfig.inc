@@ -23,57 +23,51 @@
 //
 // Configuration parameters
 
-require("command.inc");
-require("version.inc");
+// --- DON'T CHANGE THIS PART ---
 
-Class Config
-{
-   var $adminCommandPath;
-   var $diffCommandPath;
-   var $serverIsWindows = false;
+// Include the configuration class
+require("configclass.inc");
 
-   var $_repositories;
-   
-   function Config()
-   {
-      $this->adminCommandPath = "";
-      $this->diffCommandPath = "";
-   }
-   
-   function addRepository($name, $path)
-   {
-      $this->_repositories[] = array("name" => $name, "path" => $path);
-   }
-
-   function getRepository($rep)
-   {
-      return array($this->_repositories[$rep]["name"], $this->_repositories[$rep]["path"]);
-   }
-
-   function getRepositories()
-   {
-      return $this->_repositories;
-   }
-}
-
+// Create the config
 $config = new Config;
 
-// For each repository, copy the line below, uncomment it and replace the name and path
-//
-// $config->addRepository("NameToDisplay", "Path/to/repository (e.g. c:\svn\proj)");
+// --- FOLLOW THE INSTRUCTIONS BELOW TO CONFIGURE YOUR SETUP ---
 
-// Configure these line if your commands aren't on your path.  You need a directory separator at the end
-//
-// $config->adminCommandPath = "Path/to/svnlook/";
-// $config->diffCommandPath = "Path/to/diff/command/";
+// Define the configuration
+
+// PLATFORM CONFIGURATION
 
 // Uncomment the next line if your running a windows server
-// $config->serverIsWindows = true;
+//
+// $config->setServerIsWindows();
 
-// Un comment this if you don't have the right to use it.  Be warned that you may need it however!
-set_time_limit(0);
+// Configure these lines if your commands aren't on your path.   Spaces are allowed on Windows machines.
+//
+// $config->setSVNCommandPath("Path/to/svnlook/ e.g. c:\\program files\\subversion\\bin");
+// $config->setDiffPath("Path/to/diff/command/");
+
+// REPOSITORY SETUP
+
+// There are 2 methods for defining the repositiories available on the system.  Either you list
+// them by hand, in which case you can give each one the name of your choice, or you use the
+// parent path function, in which case the name of the directory is used as the repository name.
+//
+// To configure the repositories by hand, copy the line below, uncomment it and replace the name and path
+//
+// $config->addRepository("NameToDisplay", "Path/to/repository (e.g. c:\svn\proj)");
+//
+// To use the parent path method, uncomment the newt line and and replace the path with your one.  You
+// can call the function several times if you have several parent paths.
+//
+// $config->parentPath("Path/to/parent (e.g. c:\svn\)");
+
+// LANGUAGE SETUP
 
 // Uncomment ONLY the language file which you want
 include("languages/english.inc");
 
+// MISCELLANOUS
+
+// Un comment this if you don't have the right to use it.  Be warned that you may need it however!
+set_time_limit(0);
 ?>

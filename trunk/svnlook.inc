@@ -75,7 +75,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get complete tree for given path and revision 
-      $tree = runCommand($config->adminCommandPath."svnlook tree $revstr ".$this->repPath." $path");
+      $tree = runCommand($config->svnlook." tree $revstr ".$this->repPath." $path");
       
       // Split this data up into an array
       $tree = explode("\n", $tree);
@@ -99,7 +99,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get the log info
-      $output = runCommand($config->adminCommandPath."svnlook info $revstr ".$this->repPath." $path");
+      $output = runCommand($config->svnlook." info $revstr ".$this->repPath." $path");
       
       // Split this data up into an array
       $output = explode("\n", $output);
@@ -121,7 +121,7 @@ Class SVNRepository
          $log["rev"] = $rev;
       else
       {
-         $head = runCommand($config->adminCommandPath."svnlook youngest ".$this->repPath);
+         $head = runCommand($config->svnlook." youngest ".$this->repPath);
          settype($head, "integer");
          $log["rev"] = $head;
       }
@@ -136,7 +136,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get the log info
-      $output = runCommand($config->adminCommandPath."svnlook changed $revstr ".$this->repPath);
+      $output = runCommand($config->svnlook." changed $revstr ".$this->repPath);
       
       // Split this data up into an array
       $output = explode("\n", $output);
@@ -180,7 +180,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get the log info
-      $output = runCommand($config->adminCommandPath."svnlook cat $revstr ".$this->repPath." $path");
+      $output = runCommand($config->svnlook." cat $revstr ".$this->repPath." $path");
       
       return $output;
    }
@@ -192,7 +192,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       // Get the history info
-      $output = runCommand($config->adminCommandPath."svnlook history $revstr ".$this->repPath." $path");
+      $output = runCommand($config->svnlook." history $revstr ".$this->repPath." $path");
       
       // Split this data up into an array
       $output = explode("\n", $output);
