@@ -5,6 +5,7 @@ CHANGES
 ADD: Swedish translation
 
 FIX: SHOWALL was being redefined in the language files
+FIX: The directory listing view sometimes showed [lang:DELETEDFILES
 
 1.40
 
