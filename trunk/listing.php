@@ -66,6 +66,13 @@ $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getHistory($path);
+
+if (empty($history[0]))
+{
+   print "${lang["NOPATH"]} - '$path'";
+   exit;
+}
+
 $youngest = $history[0]["rev"];
 
 if (empty($rev))

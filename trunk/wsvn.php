@@ -54,12 +54,20 @@ if ($config->multiViews)
    
    // Get the repository name
    $pos = strpos($path, "/");
-   $name = substr($path, 0, $pos);
-   
-   // Get the path within the repository
-   $_REQUEST["path"] = substr($path, $pos + 1);
+
+   if ($pos === false)
+   {
+      $name = substr($path, 0);
+      $_REQUEST["path"] = "/";
+   }
+   else
+   {
+      $name = substr($path, 0, $pos);
+      $_REQUEST["path"] = substr($path, $pos + 1);
+   }
+      
    $_REQUEST["rep"] = $config->findRepository($name);
-   
+
    // find the operation type
    $op = @$_REQUEST["op"];
    switch ($op)
