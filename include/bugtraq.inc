@@ -78,7 +78,8 @@ class Bugtraq
    {
       if ($this->propsfound)
       {
-         $logmsg = "";
+         $logmsg  = "";
+         $message = rtrim($message);
          
          // Just compare the last line            
          if ($offset = strrpos($message, "\n"))
@@ -90,7 +91,7 @@ class Bugtraq
             $lastLine = $message;
             
          // Make sure that our line really is an issue tracker message
-         if (strncmp($lastLine, $this->firstPart, $this->firstPartLen) == 0 &&
+         if (((strncmp($lastLine, $this->firstPart, $this->firstPartLen) == 0) || (($offset !== false) && ($logmsg == ""))) &&
              strcmp(substr($lastLine, -$this->lastPartLen, $this->lastPartLen), $this->lastPart) == 0)
          {
             // Get the issues list
@@ -106,9 +107,9 @@ class Bugtraq
                $issue  = trim(substr($issues, 0, $pos));
                $issues = substr($issues, $pos + 1);
                
-               $line .= "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">$issue</a>,";
+               $line .= "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">$issue</a>, ";
             }
-            $line .= "<a href=\"".str_replace("%BUGID%", $issues, $this->urlstring)."\">$issues</a>".$this->lastPart;
+            $line .= "<a href=\"".str_replace("%BUGID%", $issues, $this->urlstring)."\">".trim($issues)."</a>".$this->lastPart;
             
             return $logmsg.$line;
          }
