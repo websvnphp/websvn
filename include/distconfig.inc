@@ -39,11 +39,11 @@
 // $config->setDiffPath("Path/to/diff/command/");
 
 // For syntax colouring, if option enabled...
-// $config->setEnscriptPath("Path/to/diff/command/");
-// $config->setSedPath("Path/to/diff/command/");
+// $config->setEnscriptPath("Path/to/enscript/command/");
+// $config->setSedPath("Path/to/sed/command/");
 
 // For delivered GZIP'd filed, if option enabled...
-// $config->setGZipPath("Path/to/diff/command/");
+// $config->setGZipPath("Path/to/gzip/command/");
 
 // --- REPOSITORY SETUP ---
 
@@ -139,7 +139,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 //
 // Here you should add and other extensions not already listed or redefine the default ones. eg:
 //
-// $extEnscript["pas"] = "pascal";
+// $extEnscript[".pas"] = "pascal";
 
 // --- MISCELLANOUS ---
 
