@@ -88,8 +88,10 @@ charset - The charset requested by the user
 projects_form - HTML <form> specification for the projects selection box
 projects_select - HTML <select>...</select> specification for the project
                   options
+projects_submut - HTML <input> specification for the projects selection GO
+                  button
 projects_endform - HTML </form> specification for the projects selection
-                   box (includes hidden field declaration)
+                   box (includes hidden field declarations)
 
 
 
@@ -148,6 +150,14 @@ path - Path of item being logged
 
 pagelinks - List of list to all the pages of the log
 showalllink - Link to show the entire log in one go
+
+logsearch_form - HTML <form> specification for the log search box
+logsearch_inputbox - HTML <input> specification for the log search box
+logsearch_submit - HTML <input> specification for the log search GO button
+logsearch_endform -  HTML </form> specification for the log search box box
+                     (includes hidden field declarations)
+logsearch_clearloglink - Link to unfiltered display (remove current search
+                         criteria)
 
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
