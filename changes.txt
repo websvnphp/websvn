@@ -2,8 +2,13 @@ CHANGES
 
 1.41
 
-NEW: The cached files are now compressed - Make sure that you delete
-     all the existing cached files before installing this version
+Notes: Before installing this version you should delete all the existing
+       cache files.
+       
+       wsvn.php has changed.  You should redo and appropriate configuration
+       changes inside this file.
+
+NEW: The cached files are now compressed
 NEW: The project selection box shows the current project by default
 NEW: Swedish translation
 
@@ -24,9 +29,9 @@ NEW: Tabs in file/diff listings are now expanded by a user
      configurable number of spaces. 
 NEW: WebSVN URLs now access the repository by name rather than number.
      This means that bookmarks will stay the same when new projects
-     are added.  The old behaviour can be configure in config.inc.
+     are added.  The old behaviour can be configured in config.inc.
 
-FIX: Removed the revision 0 that has appeared in the previous version
+FIX: Removed the revision 0 that has appeared since the previous version
 FIX: Repositories were not sorted alphabetically when using ParentPath
 FIX: The PNG support script needed for IE (and the BlueGrey scheme) is
      now only loaded with IE
@@ -63,7 +68,7 @@ NEW: Improve site navigation with links to each directory level on all
 NEW: Display a message when there are no results found
 
 CHANGE: Aesthetic changes to the BlueGrey scheme
-CHANGE: Sort entries more natrually
+CHANGE: Sort entries more naturally
 
 FIX: Really make sure that we redirect to the right place when using the
      drop-down box to select projects.
@@ -83,7 +88,7 @@ FIX: Problem surrounding the quoting of commands and command line arguments
 1.35
 
 NEW: You can now specify a list of file types (extensions) for files which
-     should be delivered to the user in a GZIP'd archive rather that 
+     should be delivered to the user in a GZIP'd archive rather than 
      displayed as ASCII in the browser window.
 
 CHANGE: Files delived with a MIME Content type are now sent as "inline".
@@ -214,7 +219,7 @@ NEW: Improved command handling to report returned errors.  Considerably helps
      initial installation problems.
 NEW: Show the author of each revision in the log view
 
-FIX: Removed the spurious &nsbp that some people were seeing
+FIX: Removed the spurious &nbsp that some people were seeing
 
 1.01 (5 Feb 2004)
 
