@@ -19,7 +19,8 @@
 //
 // --
 //
-// japanese(jis).inc
+// japanese-jis.inc
+// Translator: BEPPU Masamichi
 //
 // Japanese(JIS) language strings
 
@@ -37,6 +38,7 @@ $lang["SHOWENTIREFILE"] = "全て表示";
 $lang["SHOWCOMPACT"] = "異なる行の周辺だけ表示";
 
 $lang["DIFFPREV"] = "前のリビジョンとの差分";
+$lang["BLAME"] = "詳細表示";
 
 $lang["REVINFO"] = "リビジョン情報";
 $lang["GOYOUNGEST"] = "最新のリビジョンへ";
@@ -59,7 +61,7 @@ $lang["PREV"] = "前";
 $lang["NEXT"] = "次";
 $lang["SHOWALL"] = "全て表示";
 
-$lang["BADCMD"] = "Error running this command";
+$lang["BADCMD"] = "コマンド実行中のエラー";
 
 $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;プロジェクト一覧";
@@ -75,6 +77,9 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "ファイルが修正されました"; 
 $lang["RSSFEED"] = "RSS feed"; 
 
+$lang["LINENO"] = "行番号";
+$lang["BLAMEFOR"] = "詳細表示 対象リビジョン";
+                                                                                
 $lang["YEARS"] = "年間";
 $lang["MONTHS"] = "ヵ月間";
 $lang["WEEKS"] = "週間";
@@ -82,4 +87,4 @@ $lang["DAYS"] = "日間";
 $lang["HOURS"] = "時間";
 $lang["MINUTES"] = "分";
 
-$lang["GO"] = "Go";
+$lang["GO"] = "GO";
