@@ -2,6 +2,7 @@ CHANGES
 
 1.51
 
+FIX: Use svn --non-interactive to ensure that svn doesn't prompt WebSVN for input
 FIX: Corrections to the French translation
 FIX: Display an explanatory message when the user hasn't configured any
      repository paths
