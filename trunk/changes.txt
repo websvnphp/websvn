@@ -4,8 +4,7 @@ CHANGES
 
 NEW: Korean translation
 
-FIX: When using Multiviews, change to the WebSVN directory before executing
-     commands so that tempnam works.
+FIX: Diff now works when the file name has changed between versions
 FIX: RSS feed now generates Content-Type header for XML so that IE can display
      the contents
 FIX: Diff and Blame didn't work properly for php files when enscript wasn't used
