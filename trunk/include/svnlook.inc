@@ -288,6 +288,7 @@ Class SVNRepository
       $lt = gettimeofday();
       $minwest = $lt["minuteswest"];
       $committime = mktime($h ,$m - $minwest, $s, $mo, $d, $y, 0);
+      $log["committime"] = $committime;
       
       // Get the current time (as GMT)
       $t = localtime(time(), 1);
@@ -589,8 +590,11 @@ Class SVNRepository
          if ($record != "")
          {
             list($rev, $path) = split(" ", $record, 2);
-            $path = trim($path);
-            $history[] = array("rev" => $rev, "path" => $path);
+            if ($rev)
+            {
+               $path = trim($path);
+               $history[] = array("rev" => $rev, "path" => $path);
+            }
          }
       }
          
