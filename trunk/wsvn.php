@@ -97,6 +97,10 @@ if ($config->multiViews)
          $file = "diff.php";
          break;
 
+      case "rss":
+         $file = "rss.php";
+         break;
+      
       default:
          $file = "listing.php";
    }
