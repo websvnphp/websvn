@@ -38,6 +38,11 @@ $dosearch = (@$_REQUEST["logsearch"] == 1)?1:0;
 $search = trim(@$_REQUEST["search"]);
 $words = explode(" ", $search);
 
+$fromRev = (int)@$_REQUEST["fr"];
+
+// Max number of results to find at a time
+$numSearchResults = 10;
+
 if ($search == "")
    $dosearch = false;   
 
@@ -130,6 +135,8 @@ else
    if ($lastrevindex > $revisions - 1) $lastrevindex = $revisions - 1;
 }
 
+$vars["logsearch_moreresultslink"] = "";
+
 $row = 0;
 $index = 0;
 $listing = array();
@@ -146,19 +153,27 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
    // Check the log for the search words, if searching
    if ($dosearch)
    {
-      // Turn all the HTML entities into real characters.  Admittedly, we're assuming
-      // use of the ISO-8859-1 character set...
-      $msg = html_entity_decode($log["message"]);
-      
-      // Make sure that each word in the search in also in the log
-      foreach($words as $word)
+      if ((empty($fromRev) || $fromRev > $r["rev"]))
       {
-         if (strpos(strtolower(removeAccents($msg)), $word) === false)
+         // Turn all the HTML entities into real characters.  Admittedly, we're assuming
+         // use of the ISO-8859-1 character set...
+         $msg = html_entity_decode($log["message"]);
+         
+         // Make sure that each word in the search in also in the log
+         foreach($words as $word)
          {
-            $match = false;
-            break;
+            if (strpos(strtolower(removeAccents($msg)), $word) === false)
+            {
+               $match = false;
+               break;
+            }
          }
+         
+         if ($match)
+            $numSearchResults--;
       }
+      else
+         $match = false;
    }
    
    if ($match)
@@ -193,6 +208,14 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
 
       $row = 1 - $row;
       $index++;
+   }
+   
+   // If we've reached the search limit, stop here...
+   if (!$numSearchResults)
+   {
+      $url = $config->getURL($rep, $path, "log");
+      $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&isdir=$isDir&logsearch=1&search=$search&fr=${r["rev"]}\">${lang["MORERESULTS"]}</a>";
+      break;
    }
 }
 
@@ -234,13 +257,13 @@ $vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"
                              "<input type=\"hidden\" name=\"op\" value=\"log\">".
                              "<input type=\"hidden\" name=\"rev\" value=\"$rev\">".
                              "<input type=\"hidden\" name=\"sc\" value=\"$showchanged\">".
-                             "<input type=\"hidden\" name=\"isDir\" value=\"$isDir\">".
+                             "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\">".
                              "</form>";   
 
 if ($search != "")
 {
    $url = $config->getURL($rep, $path, "log");
-   $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&sc=$showchanged\">${lang["CLEARLOG"]}</a>";
+   $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&isdir=$isDir\">${lang["CLEARLOG"]}</a>";
 }
 else
    $vars["logsearch_clearloglink"] = "";
