@@ -175,6 +175,16 @@ foreach($contents as $file)
    
    $isDir = ($file{strlen($file) - 1} == "/"?1:0);
    $listing[$index]["isDir"] = $isDir;
+   
+   if ($isDir)
+   {
+      $listing[$index]["filetype"] = "dir";
+   }
+   else
+   {
+      $listing[$index]["filetype"] = strrchr($file, ".");
+   }   
+         
    $fileurl = $config->getURL($rep, $path.$file, "log");
    $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a>";
    
@@ -183,6 +193,7 @@ foreach($contents as $file)
 }
 
 $vars["version"] = $version;
+
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."directory.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);

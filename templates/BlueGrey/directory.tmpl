@@ -46,6 +46,13 @@
 [websvn-endtest]
 </table>
 
+[websvn-defineicons]
+dir=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
+*=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
+.c=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
+.h=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
+[websvn-enddefineicons]
+
 <p><hr>
 [websvn:curdirlinks] - [websvn:curdirloglink]
 <p>
@@ -57,11 +64,7 @@
    [websvn-startlisting]
    <tr>
       <td style="border-right: 1px solid black" class="row[websvn:rowparity]">
-         [websvn-test:isDir]
-            <img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">   
-         [websvn-else]
-            <img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey//file.png" alt="[FILE]">
-         [websvn-endtest]      
+         [websvn-icon]
          [websvn:filelink]
       </td>
       <td class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
