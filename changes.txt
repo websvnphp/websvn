@@ -2,6 +2,8 @@ CHANGES
 
 1.51
 
+FIX: RSS feed now generates Content-Type header for XML so that IE can display
+     the contents
 FIX: Diff didn't work properly for php files when enscript wasn't being used
 FIX: Use svn --non-interactive to ensure that svn doesn't prompt WebSVN for input
 FIX: Corrections to the French translation

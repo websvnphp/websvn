@@ -143,6 +143,7 @@ for ($n = 0; $n < $maxmessages; $n++)
 }
 
 // valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML
+header("Content-Type: text/xml");
 echo $rss->createFeed("RSS2.0");
 
 ?>
