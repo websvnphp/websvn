@@ -23,8 +23,6 @@ GNU General Public License for more details: <http://www.gnu.org/licenses/gpl.tx
 
 Changelog:
 
-Modification for WebSVN:  Links shouldn't be subjected to htmlspecialchars otherwise & turns into &amp;
-
 v1.6    05-10-04
     added stylesheet to RSS 1.0 feeds
     fixed generator comment (thanks Kevin L. Papendick and Tanguy Pruvot)
@@ -649,7 +647,7 @@ class RSSCreator10 extends FeedCreator {
         $feed.= "        <items>\n";
         $feed.= "            <rdf:Seq>\n";
         for ($i=0;$i<count($this->items);$i++) {
-            $feed.= "                <rdf:li rdf:resource=\"".$this->items[$i]->link."\"/>\n";
+            $feed.= "                <rdf:li rdf:resource=\"".htmlspecialchars($this->items[$i]->link)."\"/>\n";
         }
         $feed.= "            </rdf:Seq>\n";
         $feed.= "        </items>\n";
@@ -664,7 +662,7 @@ class RSSCreator10 extends FeedCreator {
         $feed.= $this->_createAdditionalElements($this->items[$i]->additionalElements, "    ");
         
         for ($i=0;$i<count($this->items);$i++) {
-            $feed.= "    <item rdf:about=\"".$this->items[$i]->link."\">\n";
+            $feed.= "    <item rdf:about=\"".htmlspecialchars($this->items[$i]->link)."\">\n";
             //$feed.= "        <dc:type>Posting</dc:type>\n";
             $feed.= "        <dc:format>text/html</dc:format>\n";
             if ($this->items[$i]->date!=null) {
@@ -678,7 +676,7 @@ class RSSCreator10 extends FeedCreator {
                 $feed.= "        <dc:creator>".htmlspecialchars($this->items[$i]->author)."</dc:creator>\n";
             }
             $feed.= "        <title>".htmlspecialchars(strip_tags(strtr($this->items[$i]->title,"\n\r","  ")))."</title>\n";
-            $feed.= "        <link>".$this->items[$i]->link."</link>\n";
+            $feed.= "        <link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
             $feed.= "        <description>".htmlspecialchars($this->items[$i]->description)."</description>\n";
             $feed.= $this->_createAdditionalElements($this->items[$i]->additionalElements, "        ");
             $feed.= "    </item>\n";
@@ -730,7 +728,7 @@ class RSSCreator091 extends FeedCreator {
         $feed.= "    <channel>\n";
         $feed.= "        <title>".FeedCreator::iTrunc(htmlspecialchars($this->title),100)."</title>\n";
         $feed.= "        <description>".FeedCreator::iTrunc(htmlspecialchars($this->description),500)."</description>\n";
-        $feed.= "        <link>".$this->link."</link>\n";
+        $feed.= "        <link>".htmlspecialchars($this->link)."</link>\n";
         $now = new FeedDate();
         $feed.= "        <lastBuildDate>".htmlspecialchars($now->rfc822())."</lastBuildDate>\n";
         $feed.= "        <generator>".FEEDCREATOR_VERSION."</generator>\n";
@@ -790,7 +788,7 @@ class RSSCreator091 extends FeedCreator {
         for ($i=0;$i<count($this->items);$i++) {
             $feed.= "        <item>\n";
             $feed.= "            <title>".FeedCreator::iTrunc(htmlspecialchars(strip_tags($this->items[$i]->title)),100)."</title>\n";
-            $feed.= "            <link>".$this->items[$i]->link."</link>\n";
+            $feed.= "            <link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
             $feed.= "            <description>".htmlspecialchars($this->items[$i]->description)."</description>\n";
             if ($this->items[$i]->author!="") {
                 $feed.= "            <author>".htmlspecialchars($this->items[$i]->author)."</author>\n";
