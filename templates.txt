@@ -137,7 +137,7 @@ charset - The charset requested by the user
 projects_form - HTML <form> specification for the projects selection box
 projects_select - HTML <select>...</select> specification for the project
                   options
-projects_submut - HTML <input> specification for the projects selection GO
+projects_submit - HTML <input> specification for the projects selection GO
                   button
 projects_endform - HTML </form> specification for the projects selection
                    box (includes hidden field declarations)
@@ -181,11 +181,17 @@ curdirloglink - Link to the log view of current directory
 curdirrsslink - Link to the RSS feed for the current directory
 curdirrssanchor - The <a href=...> tag to the RSS feed for the current directory
 curdirdllink - Link to the tarball of current directory
+curdircomplink - Link to comparison with previously changed revision
 
 allowdownload - True if downloading has been configured
 
+compare_form - HTML <form> specification for the comparison form
+compare_submit - HTML <input> specification for the comparison button
+compare_endform - HTML </form> specification for the comparison form
+
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
+compare_box - HTML checkbox specification for the comparison option
 filelink - Link to the file
 rowparity - Parity of the row (0 or 1).  Used to generate striped tables
 fileviewloglink - Link to the log page for the file
@@ -222,8 +228,13 @@ logsearch_nomorematches - true when there are no further matches to the current
                           request (but there have been previous pages,
                           for example)
 
+compare_form - HTML <form> specification for the comparison form
+compare_submit - HTML <input> specification for the comparison button
+compare_endform - HTML </form> specification for the comparison form
+
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
+compare_box - HTML checkbox specification for the comparison option
 revpathlink - Link to revision
 revauthor - Author of this revision
 revage - Age of revision
@@ -271,7 +282,7 @@ rev2diffclass / rev2diffclass - Class name of the diff block used for colouring
                                     * diff (no changes)
                                     * diffadded
                                     * diffchanged
-                                    *diffdeleted
+                                    * diffdeleted
 rev1line / rev2line - The line under comparison
 
 Variables defined for blame.tmpl
@@ -291,3 +302,29 @@ lineno - Line number of the line
 revision - Revision in which the line changed
 author - Last author to modify the line
 line - The line itself
+
+Variables defined for compare.tmpl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+repname - Name of the repository
+path1 - First path being compared 
+rev1 - Revision of first path
+path2 - Second path being compared 
+rev2 - Revision of second path
+
+revlink - Link to reverse comparison
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+newpath - Name of new file under comparison (only defined at start of block)
+difflines - Lines changed information for this file.  Start of diff lines.
+            (only defined after newpath)
+diffclass - Class name of the diff block used for colouring
+            differences.  The result is one of:
+               * diff (no changes)
+               * diffadded
+               * diffdeleted
+line - The line under comparison
+enddifflines - End of diff lines
+properties - Property changes
+endpath - End of current path
