@@ -147,6 +147,44 @@ function parseCommand($line, $vars, $handle)
       
       return true;
    }
+
+   if (strncmp(trim($line), "[websvn-treenode]", 17) == 0)
+   {
+      global $icons, $vars;
+   
+      if (!$ignore)
+      {
+         if ((!empty($icons["i-node"])) && (!empty($icons["t-node"])) && (!empty($icons["l-node"])))
+         {
+            for ($n = 1; $n < $vars["level"]; $n++)
+            {
+               if ($vars["last_i_node"][$n])
+               {
+                  echo parseTags($icons["e-node"], $vars);
+               }
+               else
+               {
+                  echo parseTags($icons["i-node"], $vars);
+               }
+            }
+
+            if ($vars["level"] != 0)
+            {
+               if ($vars["node"] == 0)
+               {
+                  echo parseTags($icons["t-node"], $vars);
+               }
+               else
+               {
+                  echo parseTags($icons["l-node"], $vars);
+                  $vars["last_i_node"][$vars["level"]] = TRUE;
+               }
+            }
+         }
+      }
+
+      return true;
+   }
       
    return false;
 }
