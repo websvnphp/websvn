@@ -154,6 +154,10 @@ If all has gone well, repositories should now by accessible by
 http://servername/wsvn/repname
 
 Note the index page can be accessed through http://servername/wsvn
+If you want to view the index page by http://servername/ you need to
+add another directive to the .htaccess file:
+
+DirectoryIndex wsvn.php
 
 We are now in a position where each repository has it's own URL location.
 To configure authentication we can use the same method as for controlling
@@ -180,9 +184,35 @@ directive.
 The authenticaion now works as for the repository access via SVN.  Very nice!
 
 Newer versions of subversion allow use of the SVNParentPath directive with
-AuthzSVNAccessFile , making for an even nicer set up.
+AuthzSVNAccessFile , making for an even nicer set up.  Here's an example:
+
+<Location /svn>
+DAV svn
+SVNParentPath C:\svn
+AuthType SSPI
+SSPIAuth On
+SSPIAuthoritative On
+SSPIDomain MYDOMAIN
+SSPIOfferBasic On
+AuthzSVNAccessFile c:\svn\accessfile.txt
+Require valid-user
+</Location>		
+
+<Location /wsvn/>
+SVNParentPath C:\svn
+AuthType SSPI
+SSPIAuth On
+SSPIAuthoritative On
+SSPIDomain MYDOMAIN
+SSPIOfferBasic On
+AuthzSVNAccessFile c:\svn\accessfile.txt
+Satisfy Any
+Require valid-user
+</Location>	
+
+Note the use of the / after /wsvn/ in the location directive.  If you use
+<Location /wsvn> then you won't be able to access the index.
 
 LICENCE
 
 GNU Public licence.
-
