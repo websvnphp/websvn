@@ -2,6 +2,7 @@ CHANGES
 
 1.51
 
+FIX: Corrections to the French translation
 FIX: Display an explanatory message when the user hasn't configured any
      repository paths
 
