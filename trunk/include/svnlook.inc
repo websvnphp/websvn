@@ -94,13 +94,27 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         $cmd = quoteCommand($config->svnlook." tree $revstr ".$this->repPath." > $cachedname", false);
-         @exec($cmd);
+         $cmd = quoteCommand($config->svnlook." tree $revstr ".$this->repPath, false);
+         
+         if (($handle = popen($cmd, "r")) !== FALSE)
+         {
+            if (($output = gzopen($cachedname, "w")) !== FALSE)
+            {
+                  while (!feof($handle))
+            		{
+            		   $line = fgets($handle);
+            		   gzwrite($output, $line);
+            		}
+            		
+            	gzclose($output);
+            }
+         	pclose($handle);
+         }
       }
       
       if ($config->cacheResults && file_exists($cachedname))
       {
-         if ($files = fopen($cachedname, "r"))
+         if ($files = gzopen($cachedname, "r"))
          {
             $state = 0; // Work out sub path
             $finished = false;
@@ -110,7 +124,7 @@ Class SVNRepository
                $path = "/".$path;
             }
                   
-            while (!feof($files) && !$finished)
+            while (!gzeof($files) && !$finished)
             {
                switch ($state)
                {
@@ -132,7 +146,7 @@ Class SVNRepository
                      break;
                      
                   case 1: // Search for the path
-                     $line = fgets($files);
+                     $line = gzgets($files);
                      if (strcmp(rtrim($line), $searchpath) == 0)
                      {
                         $state = 0;
@@ -148,7 +162,7 @@ Class SVNRepository
                      break;
                      
                   case 3: // Find all the lines with $spaces before them
-                     $line = fgets($files);
+                     $line = gzgets($files);
                      $ok = true;
                      if (strlen($line) > $spaces)
                      {
@@ -182,7 +196,7 @@ Class SVNRepository
                }
             }
 
-            fclose($files);
+            gzclose($files);
             
             // Sort the entries into alphabetical order with the directories at the top of the list
             usort($tree, "_dirSort");
@@ -256,14 +270,28 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         $cmd = quoteCommand($config->svnlook." info $revstr ".$this->repPath." $path > $cachedname", false);
-         @exec($cmd);
+         $cmd = quoteCommand($config->svnlook." info $revstr ".$this->repPath." $path", false);
+
+         if (($handle = popen($cmd, "r")) !== FALSE)
+         {
+            if (($output = gzopen($cachedname, "w")) !== FALSE)
+            {
+                  while (!feof($handle))
+            		{
+            		   $line = fgets($handle);
+            		   gzwrite($output, $line);
+            		}
+            		
+            	gzclose($output);
+            }
+         	pclose($handle);
+         }
       }
       
       // Get the log info
       if ($config->cacheResults && file_exists($cachedname))
       {
-         $output = transArray(file($cachedname));
+         $output = transArray(gzfile($cachedname));
       }
       else
       {   
@@ -387,13 +415,27 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         $cmd = quoteCommand($config->svnlook." changed $revstr ".$this->repPath." > $cachedname", false);
-         @exec($cmd);
+         $cmd = quoteCommand($config->svnlook." changed $revstr ".$this->repPath, false);
+
+         if (($handle = popen($cmd, "r")) !== FALSE)
+         {
+            if (($output = gzopen($cachedname, "w")) !== FALSE)
+            {
+                  while (!feof($handle))
+            		{
+            		   $line = fgets($handle);
+            		   gzwrite($output, $line);
+            		}
+            		
+            	gzclose($output);
+            }
+         	pclose($handle);
+         }
       }
       
       if ($config->cacheResults && file_exists($cachedname))
       {
-         $output = transArray(file($cachedname));
+         $output = transArray(gzfile($cachedname));
       }
       else
       {
@@ -405,7 +447,7 @@ Class SVNRepository
       
       foreach ($output as $changed)
       {
-         if ((trim($changed) != "")
+         if (trim($changed) != "")
          {
             $mod = $changed{0};
             $name = substr($changed, 4);
