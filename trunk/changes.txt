@@ -9,8 +9,9 @@ distconfig.inc to config.inc redo the appropriate changes are described.
 ADD: A 'ParentPath' can now be specified, rather than having to specify the
      directories by hand.
 
+FIX: Rewrite of the file list code.  Should now be quite a bit faster
 FIX: Use a more memory efficient algorithm to list file contents
-FIX: Spaces in Windows path to svnlook and diff are now handled properly.
+FIX: Spaces in Windows path to svnlook and diff are now handled properly
 
 1.02
 
