@@ -447,6 +447,7 @@ Class SVNRepository
       if ($filename == "")
       {
          passthru($config->svnlook." cat $revstr ".$this->repPath." $path $pipe");
+         return;
       }
       
       // Get the file contents info
@@ -465,7 +466,6 @@ Class SVNRepository
          // Get the file as a string (memory hogging, but we have no other options)
          $content = highlight_file($filename, true);
          
-
          // Destroy the previous version, and replace it with the highlighted version
          $f = fopen($filename, "w");
          if ($f)
@@ -486,10 +486,15 @@ Class SVNRepository
       {
          if ($config->useEnscript)
          {
+            // Get the files, feed it through enscript, then remove the enscript headers using sed
+            //
+            // Note that the sec command returns only the part of the file between <PRE> and </PRE>.
+            // It's complicated because it's designed not to return those lines themselves.
+         
             $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-                                $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename", false);
+                                $config->sed." -n '1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p}' > $filename", false);
             @exec($cmd);
          }
          else
