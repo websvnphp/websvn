@@ -7,6 +7,8 @@ ADD: .exe is recognised by default as haivng content-type
      application/x-msdownload
 ADD: Recognised links are now 'linkified' in the log messages
 
+FIX: Removed the revision 0 that has appeared in the previous version
+
 1.39
 
 CHANGE: In the human-readable date strings, display up to 119 minutes,
