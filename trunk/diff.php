@@ -96,20 +96,6 @@ if ($prevrev)
    echo "<h1>$repname - $ppath - ${lang["DIFFREVS"]} ".$history[0]["rev"]." ${lang["AND"]} ".$history[1]["rev"]."</h1>";
    echo "<p>";
    
-   // Get the contents of the two files
-   $newtname = tempnam("temp", "");
-   $new = $svnrep->getFileContents($path, $newtname, $history[0]["rev"]);
-
-   $oldtname = tempnam("temp", "");
-   $old = $svnrep->getFileContents($path, $oldtname, $history[1]["rev"]);
-   
-   // Get the diff  output
-   $output = runCommand($config->diff." -y -t -W 600 -w $oldtname $newtname");
-      
-   // Remove our temporary files   
-   unlink($oldtname);
-   unlink($newtname);
-
    if (!$all)
    {
       echo "<p><center><a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a></center>";
@@ -118,72 +104,128 @@ if ($prevrev)
    {
       echo "<p><center><a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=0\">${lang["SHOWCOMPACT"]}</a></center>";
    }
-   
+
    echo "<p>";
    
    echo "<table class=\"diff\" width=\"100%\"><tr><td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[1]["rev"]."</b></td>".
         "<td rowspan=100000 width=5></td>".
         "<td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[0]["rev"]."</b></td></tr>";
-   
-   // Output the differences with 5 lines of context
-   $outputline = array ();
-   
-   foreach ($output as $lineno => $line)
-   {
-      // Since we've asked for a 600 column output, the mod indicator is on the 300th or 301th column
-      // (I've no idea why it changes).
-      
-      $mod = "";
-      $len = strlen($line);
-      if ($len >= 300)
-      {
-         $mod = $line{299};
-         if ($mod == " " && $len >= 301) $mod = $line{300};
-      }
-      
-      if ($all)
-      {
-         $outputline[$lineno] = $mod;
-      }
-      else if ($mod != " " && $mod != "")
-      {
-         for ($l = $lineno - $context; $l < $lineno + $context; $l++)
-         {
-            if (empty($outputline[$l]))
-               $outputline[$l] = "=";
-         }
-         $outputline[$lineno] = $mod;
-      }
-   }
 
-   $curline = 1;
-   foreach ($outputline as $line => $mod)
+   // Get the contents of the two files
+   $newtname = tempnam("temp", "");
+   $new = $svnrep->getFileContents($path, $newtname, $history[0]["rev"]);
+
+   $oldtname = tempnam("temp", "");
+   $old = $svnrep->getFileContents($path, $oldtname, $history[1]["rev"]);
+   
+   $file1cache = array();
+
+   if (!$all)
    {
-      if ($curline != $line)
+      // Open a pipe to the diff command with $context lines of context
+      if ($diff = popen($config->diff." -U $context $oldtname $newtname", "r"))
       {
-         echo "<tr><td colspan=3 style=\"padding: 3px 0 3px 0\" align=\"center\"><b>${lang["LINE"]} ".($line + 1)."...</b></td></tr>";
-         $curline = $line;
-      }
- 
-      // Get each file's line
-      if (!empty($output[$line]))
-      {
-         $oldline = hardspace(htmlspecialchars(rtrim(substr($output[$line], 0, 299))));
-         $newline = hardspace(htmlspecialchars(rtrim(substr($output[$line], 301))));
-      
-         if ($oldline == "") $oldline = "&nbsp;";
-         if ($newline == "") $newline = "&nbsp;";
+         // Ignore the 3 header lines
+  		   $line = fgets($diff);
+  		   $line = fgets($diff);
+
+         // Get the first real line
+  		   $line = fgets($diff);
          
-         $lclass = $rclass = "class=\"diff\"";
-         if ($mod == "<") $lclass = "class=\"diffdeleted\"";
-         else if ($mod == ">") $rclass = "class=\"diffadded\"";
-         else if ($mod == "|") $lclass = $rclass = "class=\"diffchanged\"";
-         
-         echo "<tr><td $lclass>$oldline</td><td $rclass>$newline</td></tr>\n";
-      }
-      
-      $curline++;
+   		while (!feof($diff))
+   		{  
+   		   // Get the first line of this range
+   		   sscanf($line, "@@ -%d", $oline);
+   		   
+   		   $line = substr($line, strpos($line, "+"));
+   		   sscanf($line, "+%d", $nline);
+   		   
+   		   // Output the line numbers
+            echo "<tr><td style=\"padding: 3px 0 3px 0\" align=\"center\"><b>${lang["LINE"]} $oline...</b></td><td style=\"padding: 3px 0 3px 0\" align=\"center\"><b>${lang["LINE"]} $nline...</b></td></tr>";
+
+            $fin = false;
+            while (!feof($diff) && !$fin)
+            {          
+  
+   		      $line = fgets($diff);
+               if (!strncmp($line, "@@", 2))
+   		      {
+   		         $fin = true;
+   		      }
+   		      else
+   		      {
+                  $mod = $line{0};
+                  $lclass = $rclass = "class=\"diff\"";
+                  
+                  $text = hardspace(htmlspecialchars(rtrim(substr($line, 2))));
+                  
+                  switch ($mod)
+                  {
+                     case "-":
+                        $lclass = "class=\"diffdeleted\"";
+                        echo "<tr><td $lclass>$text</td><td $rclass>&nbsp;</td>";
+                        break;  
+
+                     case "+":
+                        $rclass = "class=\"diffadded\"";
+                        echo "<tr><td $lclass>&nbsp;</td><td $rclass>$text</td>";
+                        break;
+                        
+                     default:
+                        echo "<tr><td $lclass>$text</td><td $rclass>$text</td>";
+                        break;                         		
+                  }
+   		      }
+   		   }
+   		}   
+   		
+   		pclose($diff);   
+      }		   
    }
+   else
+   {
+      // Get the diff  output
+      if ($diff = popen($config->diff." -y -t -W 600 -w $oldtname $newtname", "r"))
+      {
+         while (!feof($diff))
+         {
+            $output = fgets($diff);         
+          
+            // Get each file's line
+            if (!empty($output))
+            {
+               // Since we've asked for a 600 column output, the mod indicator is on the 300th or 301th column
+               // (I've no idea why it changes).
+               
+               $mod = "";
+               $len = strlen($output);
+               if ($len >= 300)
+               {
+                  $mod = $output{299};
+                  if ($mod == " " && $len >= 301) $mod = $output{300};
+                  if ($mod == " " && $len >= 302) $mod = $output{301};
+               }
+      
+               $oldline = hardspace(htmlspecialchars(rtrim(substr($output, 0, 299))));
+               $newline = hardspace(htmlspecialchars(rtrim(substr($output, 302))));
+            
+               if ($oldline == "") $oldline = "&nbsp;";
+               if ($newline == "") $newline = "&nbsp;";
+               
+               $lclass = $rclass = "class=\"diff\"";
+               if ($mod == "<") $lclass = "class=\"diffdeleted\"";
+               else if ($mod == ">") $rclass = "class=\"diffadded\"";
+               else if ($mod == "|") $lclass = $rclass = "class=\"diffchanged\"";
+               
+               echo "<tr><td $lclass>$oldline</td><td $rclass>$newline</td></tr>\n";
+            }
+         }      
+      }
+   }
+   
+   // Remove our temporary files   
+   unlink($oldtname);
+   unlink($newtname);
    
    echo "</table>";
 }
