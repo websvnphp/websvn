@@ -46,6 +46,7 @@ $lang["DELETEDFILES"] = "Deleted files";
 $lang["VIEWLOG"] = "View&nbsp;Log";
 $lang["PATH"] = "Path";
 $lang["AUTHOR"] = "Author";
+$lang["AGE"] = "Age";
 $lang["LOG"] = "Log";
 
 $lang["PREV"] = "Prev";
@@ -58,3 +59,16 @@ $lang["RETURNED"] = "Returned";
 $lang["POWERED"] = "Powered by WebSVN";
 $lang["PROJECTS"] = "Subversion&nbsp;Projects";
 $lang["SERVER"] = "Subversion&nbsp;Server";
+
+$lang["YEAR"] = "year";
+$lang["YEARS"] = "years";
+$lang["MONTH"] = "month";
+$lang["MONTHS"] = "months";
+$lang["WEEK"] = "week";
+$lang["WEEKS"] = "weeks";
+$lang["DAY"] = "day";
+$lang["DAYS"] = "days";
+$lang["HOUR"] = "hour";
+$lang["HOURS"] = "hours";
+$lang["MINUTE"] = "minute";
+$lang["MINUTES"] = "minutes";
