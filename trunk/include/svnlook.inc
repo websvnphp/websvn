@@ -469,16 +469,24 @@ Class SVNRepository
          @exec($cmd);
          
          // Get the file as a string (memory hogging, but we have no other options)
-         $file = highlight_file($filename, true);
+         $content = highlight_file($filename, true);
          
+
          // Destroy the previous version, and replace it with the highlighted version
          $f = fopen($filename, "w");
          if ($f)
          {
-            fwrite($f, $file);
-            fputs($f, "\n");
+            // The highlight file function doesn't deal with line endings very nicely at all.  We'll have to do it
+            // by hand.
+            $content = explode("<br />", $content);
+            
+            foreach ($content as $line)
+            {
+               fputs($f, rtrim($line)."\n");
+            }
+            
             fclose($f);
-         }
+         }         
       }
       else
       {

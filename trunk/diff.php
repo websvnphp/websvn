@@ -138,7 +138,7 @@ if ($prevrev)
       // Open a pipe to the diff command with $context lines of context
       
       $cmd = quoteCommand($config->diff." --ignore-all-space -U $context $oldtname $newtname", false);
-      
+
       if ($diff = popen($cmd, "r"))
       {
          // Ignore the 3 header lines
@@ -178,7 +178,6 @@ if ($prevrev)
    		      else
    		      {
                   $mod = $line{0};
-                  
                   $text = hardspace(transChars(rtrim(substr($line, 1)), ($config->useEnscript)?false:true));
                   
                   switch ($mod)
