@@ -304,7 +304,7 @@ function createProjectSelectionForm()
    $vars["projects_form"] = "<form action=\"$url\" method=\"post\" name=\"projectform\">";
    
    $reps = $config->getRepositories();
-   $vars["projects_select"] = "<select name=\"repname\">";
+   $vars["projects_select"] = "<select name=\"repname\" onchange=\"javascript:this.form.submit();\">";
    
    foreach ($reps as $trep)
    {
