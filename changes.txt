@@ -1,5 +1,17 @@
 CHANGES
 
+1.03
+
+Note that the config.inc file has completely changed in this release, in
+order to make it more "future proof" and resiliant.  You'll need to copy
+distconfig.inc to config.inc redo the appropriate changes are described.
+
+ADD: A 'ParentPath' can now be specified, rather than having to specify the
+     directories by hand.
+
+FIX: Use a more memory efficient algorithm to list file contents
+FIX: Spaces in Windows path to svnlook and diff are now handled properly.
+
 1.02
 
 ADD: Improved command handling to report returned errors.  Considerably helps
