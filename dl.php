@@ -75,7 +75,7 @@ if (mkdir($tmpname))
    {
       header("Content-Type: application/x-gzip");
       header("Content-Length: $size");
-      header("Content-Disposition: attachment; filename=$arcname.tar.gz");
+      header("Content-Disposition: attachment; filename=".$rep->name."-$arcname.tar.gz");
       @fpassthru($fp);
    }
    else
