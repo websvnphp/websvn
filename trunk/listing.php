@@ -130,7 +130,7 @@ if ($ppath != "/")
    $pos = strrpos(substr($ppath, 0, -1), "/");
    $parent = substr($ppath, 0, $pos + 1);
 
-   echo "<tr><td><a href=\"listing.php?rep=$rep&path=$parent&rev=$rev&sc=$showchanged\">..</a></td><td>&nbsp;</td></tr>";
+   echo "<tr><td><a href=\"listing.php?rep=$rep&path=$parent&rev=$rev&sc=$showchanged\">../</a></td><td>&nbsp;</td></tr>";
 }
 
 // List each file in the current directory

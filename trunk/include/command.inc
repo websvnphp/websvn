@@ -36,6 +36,24 @@ function transChars($str)
    return $str;
 }
 
+function transArray($arr)
+{
+   global $config;
+   
+   $narr = array();
+   
+   if ($config->serverIsWindows)
+   {
+      foreach ($arr as $key => $value)
+      {
+         //$output = iconv("cp850", "iso-8859-1", $ooutput]);
+         $narr[$key] = htmlentities(strtr($value, "…‚‹“—–‡", "ΰιθκοξτωϋη"));
+      }
+   }
+   
+   return $narr;
+}
+
 function runCommand($cmd)
 {
    global $lang;
