@@ -35,7 +35,7 @@
 
 // Configure these lines if your commands aren't on your path.   Spaces are allowed on Windows machines.
 //
-// $config->setSVNCommandPath("Path/to/svnlook/ e.g. c:\\program files\\subversion\\bin");
+// $config->setSVNCommandPath("Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin");
 // $config->setDiffPath("Path/to/diff/command/");
 
 // For syntax colouring, if option enabled...
