@@ -88,6 +88,7 @@ $vars["repname"] = $repname;
 $dirurl = $config->getURL($rep, $path, "dir");
 $logurl = $config->getURL($rep, $path, "log");
 $rssurl = $config->getURL($rep, $path, "rss");
+$dlurl = $config->getURL($rep, $path, "dl");
 
 if ($rev != $youngest && $youngest != -1)
    $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&amp;sc=1\">${lang["GOYOUNGEST"]}</a>";
@@ -161,6 +162,8 @@ if ($config->rss)
    $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["RSSFEED"]}</a>";
    $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">";
 }
+if ($config->allowDownload)
+   $vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
 
 $index = 0;
 $listing = array();
@@ -178,9 +181,16 @@ foreach($contents as $file)
    $isDir = ($file{strlen($file) - 1} == "/"?1:0);
    $listing[$index]["isDir"] = $isDir;
    
+   $listing[$index]["fileviewdllink"] = "";
    if ($isDir)
    {
       $listing[$index]["filetype"] = "dir";
+
+      if ($config->allowDownload)
+      {
+         $dlurl = $config->getURL($rep, $path.$file, "dl"); 
+         $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
+      }
    }
    else
    {
@@ -189,7 +199,7 @@ foreach($contents as $file)
          
    $fileurl = $config->getURL($rep, $path.$file, "log");
    $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
-   
+
    $rssurl = $config->getURL($rep, $path.$file, "rss");
    if ($config->rss)
    {

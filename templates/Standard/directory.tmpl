@@ -54,6 +54,9 @@
 
 <p><hr>
 <b>[lang:CURDIR]:</b> [websvn:curdirlinks] - [websvn:curdirloglink]
+[websvn-test:allowdownload]
+ - [websvn:curdirdllink]
+[websvn-endtest]
 [websvn-test:curdirrsslink]
  - [websvn:curdirrssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a>
 [websvn-endtest]
@@ -62,16 +65,22 @@
    <tr>
       <th width="100%"><b>[lang:PATH]</b></th>
       <th><b>[lang:LOG]</b></th>
+      [websvn-test:allowdownload]
+         <th><b>[lang:TARBALL]</b></th>
+      [websvn-endtest]
       [websvn-test:curdirrsslink]
-      <th><b>[lang:RSSFEED]</b></th>
+         <th><b>[lang:RSSFEED]</b></th>
       [websvn-endtest]
    </tr>
    [websvn-startlisting]
    <tr>
       <td class="[websvn:rowparity]">[websvn:filelink]</td>
       <td class="[websvn:rowparity]">[websvn:fileviewloglink]</td>
+      [websvn-test:allowdownload]
+         <td class="[websvn:rowparity]">[websvn:fileviewdllink]</td>
+      [websvn-endtest]
       [websvn-test:curdirrsslink]
-      <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
+         <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
       [websvn-endtest]
    </tr>
    [websvn-endlisting]

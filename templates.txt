@@ -165,6 +165,9 @@ curdirlinks - List of the path of this directory with links to each one
 curdirloglink - Link to the log view of current directory
 curdirrsslink - Link to the RSS feed for the current directory
 curdirrssanchor - The <a href=...> tag to the RSS feed for the current directory
+curdirdllink - Link to the download link of current directory
+
+allowdownload - True if downloading has been configured
 
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
