@@ -637,10 +637,10 @@ class RSSCreator10 extends FeedCreator {
         $feed.= "    xmlns=\"http://purl.org/rss/1.0/\"\n";
         $feed.= "    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n";
         $feed.= "    xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n";
-        $feed.= "    <channel rdf:about=\"".$this->syndicationURL."\">\n";
+        $feed.= "    <channel rdf:about=\"".htmlspecialchars($this->syndicationURL)."\">\n";
         $feed.= "        <title>".htmlspecialchars($this->title)."</title>\n";
         $feed.= "        <description>".htmlspecialchars($this->description)."</description>\n";
-        $feed.= "        <link>".$this->link."</link>\n";
+        $feed.= "        <link>".htmlspecialchars($this->link)."</link>\n";
         if ($this->image!=null) {
             $feed.= "        <image rdf:resource=\"".$this->image->url."\" />\n";
         }
@@ -661,7 +661,7 @@ class RSSCreator10 extends FeedCreator {
             $feed.= "        <url>".$this->image->url."</url>\n";
             $feed.= "    </image>\n";
         }
-        $feed.= $this->_createAdditionalElements($this->items[$i]->additionalElements, "    ");
+        //$feed.= $this->_createAdditionalElements($this->items[$i]->additionalElements, "    ");
         
         for ($i=0;$i<count($this->items);$i++) {
             $feed.= "    <item rdf:about=\"".htmlspecialchars($this->items[$i]->link)."\">\n";
