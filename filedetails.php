@@ -56,27 +56,47 @@ $youngest = $history[0]["rev"];
 if (empty($rev))
    $rev = $youngest;
 
-$url = $config->getURL($rep, $path, "file");
-
-if ($rev != $youngest)
-   $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
+$extn = strrchr($path, ".");
+$cont = @$contentType[$extn];
+if (!empty($cont))
+{
+   // This file has an associated MIME Type.  We deliver it to the user
+   
+   $base = basename($path);
+   
+   header("Content-Type: $cont");
+   //header("Content-Length: $size");
+   header("Content-Disposition: attachment; filename=$base");
+   
+   $svnrep->getFileContents($path, "", $rev);
+   
+   exit;
+}
 else
-   $vars["goyoungestlink"] = "";
-
-
-$vars["repname"] = $repname;
-$vars["rev"] = $rev;
-$vars["path"] = $ppath;
-
-$url = $config->getURL($rep, $path, "diff");
-
-$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
-
-$listing = array ();
-
-$vars["version"] = $version;
-parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."file.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
-
+{
+   // There's no associated MIME type.  Show the file using WebSVN.
+   
+   $url = $config->getURL($rep, $path, "file");
+   
+   if ($rev != $youngest)
+      $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
+   else
+      $vars["goyoungestlink"] = "";
+   
+   
+   $vars["repname"] = $repname;
+   $vars["rev"] = $rev;
+   $vars["path"] = $ppath;
+   
+   $url = $config->getURL($rep, $path, "diff");
+   
+   $vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+   
+   $listing = array ();
+   
+   $vars["version"] = $version;
+   parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+   parseTemplate($config->templatePath."file.tmpl", $vars, $listing);
+   parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
+}
 ?>
