@@ -56,7 +56,7 @@ $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Antiguedad";
 $lang["LOG"] = "Log";
 $lang["CURDIR"] = "Directorio Actual";
-$lang["TARBALL"] = "Tarball"
+$lang["TARBALL"] = "Tarball";
 
 $lang["PREV"] = "Ant";
 $lang["NEXT"] = "Sig";
