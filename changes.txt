@@ -1,5 +1,10 @@
 CHANGES
 
+1.51
+
+FIX: Display an explanatory message when the user hasn't configured any
+     repository paths
+
 1.50
 
 Notes: Before installing this version you should delete all the existing
