@@ -16,6 +16,7 @@ FIX: A year is 365 days, not 356.
 FIX: Base ages correctly upon GMT
 FIX: The diff output did not escape html entities when enscript was
      enabled and the file extension was not recognised for enscript. 
+FIX: distconfig.inc has a few minor errors in the examples.
 
 1.38
 
