@@ -1,5 +1,10 @@
 CHANGES
 
+ADD: Better support for internationalisation
+     (Template writers:  Please note the use of the new variable 'charset')
+
+FIX: HTML files now display correcly on all machines
+
 1.33
 
 There are a few changes to the config file in this release.  Copy
