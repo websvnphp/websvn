@@ -283,25 +283,36 @@ $path = escapeshellcmd(@$_REQUEST["path"]);
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
-// Create the project change combo box
- 
-$url = $config->getURL(-1, "", "form");
-$vars["projects_form"] = "<form action=\"$url\" method=\"post\" name=\"projectform\">";
-
-$reps = $config->getRepositories();
-$vars["projects_select"] = "<select name=\"rep\">";
-foreach ($reps as $index => $trep)
-{
-   if ($rep == $index)
-      $sel = "selected";
-   else
-      $sel = "";
-      
-   $vars["projects_select"] .= "<option value=\"$index\" $sel>${trep["name"]}</option>";
+// Function to create the project selection HTML form
+function createProjectSelectionForm()
+{ 
+   global $config, $vars, $rep, $lang, $showchanged;
+   
+   $url = $config->getURL(-1, "", "form");
+   $vars["projects_form"] = "<form action=\"$url\" method=\"post\" name=\"projectform\">";
+   
+   $reps = $config->getRepositories();
+   $vars["projects_select"] = "<select name=\"rep\">";
+   foreach ($reps as $index => $trep)
+   {
+      if ($rep == $index)
+         $sel = "selected";
+      else
+         $sel = "";
+         
+      $vars["projects_select"] .= "<option value=\"$index\" $sel>${trep["name"]}</option>";
+   }
+   $vars["projects_select"] .= "</select>";
+   
+   $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
+   $vars["projects_endform"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\"><input type=\"hidden\" name=\"op\" value=\"form\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 }
-$vars["projects_select"] .= "</select>";
 
-$vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
-$vars["projects_endform"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\"><input type=\"hidden\" name=\"op\" value=\"form\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
+// Create the form if we're not in MultiViews.  Otherwise wsvn must create the form once the current project has
+// been found
 
+if (!$config->multiViews)
+{
+   createProjectSelectionForm();
+}
 ?>
