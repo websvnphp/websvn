@@ -462,17 +462,38 @@ Class SVNRepository
         
       $path = quote($path);
 
-      if ($config->useEnscript && !empty($l))
-      {
-         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
-                             $config->enscript." --color --language=html --pretty-print=$l -o - | ".
-                             $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename", false);
+      if ($l == "php")
+      {         
+         // Output the file to the filename
+         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path > $filename", false);
          @exec($cmd);
+         
+         // Get the file as a string (memory hogging, but we have no other options)
+         $file = highlight_file($filename, true);
+         
+         // Destroy the previous version, and replace it with the highlighted version
+         $f = fopen($filename, "w");
+         if ($f)
+         {
+            fwrite($f, $file);
+            fputs($f, "\n");
+            fclose($f);
+         }
       }
       else
       {
-         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path > $filename", false);
-         @exec($cmd);
+         if ($config->useEnscript && !empty($l))
+         {
+            $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+                                $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+                                $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename", false);
+            @exec($cmd);
+         }
+         else
+         {
+            $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path > $filename", false);
+            @exec($cmd);
+         }
       }
   }
 
@@ -493,38 +514,52 @@ Class SVNRepository
       $l = @$extEnscript[$ext];
       
       $path = quote($path);
-        
-      if ($config->useEnscript && !empty($l))
+      
+      // Deal with php highlighting internally
+      if ($l == "php")
       {
-         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
-                             $config->enscript." --color --language=html --pretty-print=$l -o - | ".
-                             $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' 2>&1", false);
-                               
-         if (!($result = popen($cmd, "r")))
-            return;
+         $tmp = tempnam("temp", "wsvn");
+         
+         // Output the file to a temporary file
+         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path > $tmp", false);
+         @exec($cmd);
+         highlight_file($tmp);
+         unlink($tmp);
       }
       else
-      {
-         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path 2>&1", false);
-         
-         if (!($result = popen($cmd, "r")))
-            return;
-           
-         $pre = true;
+      {  
+         if ($config->useEnscript && !empty($l))
+         {
+            $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+                                $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+                                $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' 2>&1", false);
+                                  
+            if (!($result = popen($cmd, "r")))
+               return;
+         }
+         else
+         {
+            $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path 2>&1", false);
+            
+            if (!($result = popen($cmd, "r")))
+               return;
+              
+            $pre = true;
+         }
+          
+         if ($pre)
+            echo "<PRE>";
+            
+   		while (!feof($result))
+   		{
+   			print(transChars(fgets($result, 1024), $pre));
+   		}
+    
+         if ($pre)
+            echo "</PRE>";
+   		
+   		pclose($result);
       }
-       
-      if ($pre)
-         echo "<PRE>";
-         
-		while (!feof($result))
-		{
-			print(transChars(fgets($result, 1024), $pre));
-		}
-
-      if ($pre)
-         echo "</PRE>";
-		
-		pclose($result);
    }
 
    function getHistory($path, $rev = 0)
