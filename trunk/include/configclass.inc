@@ -91,7 +91,6 @@ Class Config
       {
          $cp = trim(substr($cp, strpos($cp, ":") + 1));
          settype($sp, "integer");
-         print $cp;
       }
       
       // Use the most sensible default value if that failed
