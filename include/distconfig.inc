@@ -109,14 +109,82 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // Uncomment this if you don't have the right to use it.  Be warned that you may need it however!
 set_time_limit(0);
 
+// Comment this line to turn off caching of repo information.  This will slow down your browsing.
+$config->setCachingOn();
+
+// COLOURISATION
+
 // Uncomment this line if you want to use Enscript to colourise your file listings
 //
 // You'll need Enscript version 1.6 or higher AND Sed installed to use this feature. 
-// Set the paths above.
-// $config->useEnscript();
+// Set the path above.
+$config->useEnscript();
 
-// Comment this line to turn off caching of repo information.  This will slow down your browsing.
-$config->setCachingOn();
+// List of extensions recognised by enscript.  Remove or change the extension => language
+// bindings as needed.
+
+$extensions = array
+(
+  ".ada"     => "ada",
+  ".adb"     => "ada",
+  ".ads"     => "ada",
+  ".awk"     => "awk",
+  ".c"       => "c",
+  ".c++"     => "cpp",
+  ".cc"      => "cpp",
+  ".cpp"     => "cpp",
+  ".csh"     => "csh",
+  ".cxx"     => "cpp",
+  ".diff"    => "diffu",
+  ".dpr"     => "delphi",
+  ".el"      => "elisp",
+  ".eps"     => "postscript",
+  ".f"       => "fortran",
+  ".for"     => "fortran",
+  ".gs"      => "haskell",
+  ".h"       => "c",
+  ".hpp"     => "cpp",
+  ".hs"      => "haskell",
+  ".htm"     => "html",
+  ".html"    => "html",
+  ".idl"     => "idl",
+  ".java"    => "java",
+  ".js"      => "javascript",
+  ".lgs"     => "haskell",
+  ".lhs"     => "haskell",
+  ".m"       => "objc",
+  ".m4"      => "m4",
+  ".man"     => "nroff",
+  ".nr"      => "nroff",
+  ".p"       => "pascal",
+  ".pas"     => "delphi",
+  ".patch"   => "diffu",
+  ".pkg"     => "sql", 
+  ".pl"      => "perl",
+  ".pm"      => "perl",
+  ".pp"      => "pascal",
+  ".ps"      => "postscript",
+  ".s"       => "asm",
+  ".scheme"  => "scheme",
+  ".scm"     => "scheme",
+  ".scr"     => "synopsys",
+  ".sh"      => "sh",
+  ".shtml"   => "html",
+  ".sql"     => "sql",
+  ".st"      => "states",
+  ".syn"     => "synopsys",
+  ".synth"   => "synopsys",
+  ".tcl"     => "tcl",
+  ".tex"     => "tex",
+  ".texi"    => "tex",
+  ".texinfo" => "tex",
+  ".v"       => "verilog",
+  ".vba"     => "vba",
+  ".vh"      => "verilog",
+  ".vhd"     => "vhdl",
+  ".vhdl"    => "vhdl",
+  ".py"      => "python"
+);
 
 }
 ?>
