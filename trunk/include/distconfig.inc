@@ -23,6 +23,10 @@
 //
 // Configuration parameters
 
+if (!@$CONFIG)
+{
+$CONFIG = true;
+
 // --- DON'T CHANGE THIS PART ---
 
 // Include the configuration class
@@ -33,6 +37,15 @@ $lang = array();
 
 // Include a default language file.
 require("languages/english.inc");
+
+// Set up svnlocwebsvn
+if (empty($locwebsvnhttp))
+   $locwebsvnhttp = ".";
+
+if (empty($locwebsvnreal))
+   $locwebsvnreal = ".";
+
+$vars["locwebsvnhttp"] = $locwebsvnhttp;
 
 // Create the config
 $config = new Config;
@@ -68,8 +81,9 @@ $config = new Config;
 // $config->parentPath("Path/to/parent (e.g. c:\\svn)");
 
 // LOOK AND FEEL
-
+//
 // Uncomment ONLY the display file that you want.  
+
 $config->setTemplatePath("./templates/Standard/");
 //$config->setTemplatePath("./templates/BlueGrey/");
 
@@ -81,9 +95,20 @@ $config->setTemplatePath("./templates/Standard/");
 
 // MISCELLANOUS
 
-// Un comment this if you don't have the right to use it.  Be warned that you may need it however!
+// Uncomment this line if you want to use MultiView to access the repository by, for example:
+//
+// http://servername/wsvn/repname/path/in/repository
+//
+// Note: The websvn directory will need to have Multiviews turned on in Apache, and you'll need to configure
+//       wsvn.php
+
+//$config->useMultiViews();
+
+// Uncomment this if you don't have the right to use it.  Be warned that you may need it however!
 set_time_limit(0);
 
 // Uncomment this line to turn off caching of repo information.  This will slow down your browsing.
 $config->setCachingOn();
+
+}
 ?>
