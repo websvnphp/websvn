@@ -110,7 +110,7 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
       echo "<td valign=\"top\"><a href=\"filedetails.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a></td>";
       
    echo "<td valign=\"top\">".nl2br($log["author"])."</td>";
-   echo "<td valign=\"top\">".nl2br(($log["message"])."</td>";
+   echo "<td valign=\"top\">".nl2br($log["message"])."</td>";
    
    echo "</tr>";
 }
