@@ -32,7 +32,7 @@ function transChars($str, $doEnt = true)
    {
       if (function_exists("iconv"))
       {
-         $output = iconv($config->inputEnc, $config->outputEnc, $str);
+         $output = @iconv($config->inputEnc, $config->outputEnc, $str);
          if (!empty($output))
             $str = $output;
       }
@@ -57,11 +57,11 @@ function transArray($arr)
       {
          if (function_exists("iconv"))
          {
-            $output = iconv($config->inputEnc, $config->outputEnc, $value);
+            $output = @iconv($config->inputEnc, $config->outputEnc, $value);
             if (!empty($output))
                $value = $output;
          }
-         }
+      }
 
       $narr[$key] = htmlentities(rtrim($value));
    }
