@@ -23,8 +23,63 @@
          [websvn-endtest]
          [websvn:path]
       </title>
+
+   <script>
+      function setSubmit()
+      {
+         if (document.getElementById('comparesubmit'))
+         {
+            count = 0
+            f = document.getElementById('compareform')
+            for (i = 0 ; i < f.elements.length ; i++)
+            if (f.elements[i].type == 'checkbox' && f.elements[i].checked)
+            {
+               count += 1
+            }
+            
+            if (count == 2)
+            {
+               document.getElementById('comparesubmit').disabled = false
+            }
+            else
+            {
+               document.getElementById('comparesubmit').disabled = true
+            }
+         }
+      }   
+   
+      function checkCB(chBox)
+      {
+         count = 0
+         first = null
+         f = chBox.form
+         for (i = 0 ; i < f.elements.length ; i++)
+         if (f.elements[i].type == 'checkbox' && f.elements[i].checked)
+         {
+            if (first == null && f.elements[i] != chBox)
+               first = f.elements[i]
+            count += 1
+         }
+         
+         if (count > 2) 
+         {
+            first.checked = false
+            count -= 1
+         }
+         
+         if (count == 2)
+         {
+            if (document.getElementById('comparesubmit') != null) document.getElementById('comparesubmit').disabled = false
+         }
+         else
+         {
+            if (document.getElementById('comparesubmit') != null) document.getElementById('comparesubmit').disabled = true
+         }
+      }
+   </script>
+
    </head>
-   <body>
+   <body onload="setSubmit()">
 
    <div style="text-align: center">
      <a href="http://subversion.tigris.org/"><img style="border: 0; width: 468px; height: 64px" src="[websvn:locwebsvnhttp]/templates/BlueGrey/subversion.png" alt="Subversion" /></a>
