@@ -1,0 +1,57 @@
+
+<h1>[websvn:repname]</h1>
+
+<table border=0 cellpadding=4 cellspacing=0>
+<tr><th colspan=2 class="HdrClmnEnd">[lang:REVINFO]</th></tr>
+<tr><td class="row0" valign="top"><b>[lang:CURDIR]</b></td><td>[websvn:path]</td></tr>
+<tr><td class="row0"><b>[lang:REV]</b></td><td>[websvn:rev]
+[websvn-test:goyoungestlink]
+ - [websvn:goyoungestlink]
+[websvn-endtest]
+</td></tr>
+<tr><td class="row0" valign="top"><b>[lang:AUTHOR]</b></td><td>[websvn:author]</td></tr>
+<tr><td class="row0" valign="top"><b>[lang:LASTMOD]</b></td><td>[websvn:date]</td></tr>
+<tr><td class="row0" valign="top"><b>[lang:LOGMSG]</b></td><td>[websvn:log]</td></tr>
+[websvn-test:hidechanges]
+   <tr><td class="row0" valign="top">&nbsp;</td><td>([websvn:showchangeslink])</td></tr>
+[websvn-else]
+[websvn:showchangeslink]
+   <tr><td class="row0" valign="top">&nbsp;</td><td>([websvn:hidechangeslink])</td></tr>
+   [websvn-test:changedfilesbr]
+   <tr><td class="row0" valign="top"><b>[lang:CHANGEDFILES]</b></td><td>[websvn:changedfilesbr]</td></tr>
+   [websvn-endtest]
+   [websvn-test:newfilesbr]
+   <tr><td class="row0" valign="top"><b>[lang:NEWFILES]</b></td><td>[websvn:newfilesbr]</td></tr>
+   [websvn-endtest]
+   [websvn-test:deletedfilesbr]
+   <tr><td class="row0" valign="top"><b>[lang:DELETEDFILES]</b></td><td>[websvn:deletedfilesbr]</td></tr>
+   [websvn-endtest]
+[websvn-endtest]
+</table>
+
+<p><hr>
+[websvn:curdirlinks] - [websvn:curdirloglink]
+[websvn-test:allowdownload]
+ | [websvn:curdirdllink]
+[websvn-endtest]
+<p>
+<table cellpadding="2px" cellspacing="0" width="100%">
+   <tr>
+      <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
+      <th class="HdrClmnEnd"><b>[lang:LOG]</b></td>
+   </tr>
+   [websvn-startlisting]
+   <tr>
+      <td style="border-right: 1px solid black" class="row[websvn:rowparity]">
+         [websvn-test:isDir]
+            <img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">   
+         [websvn-else]
+            <img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey//file.png" alt="[FILE]">
+         [websvn-endtest]      
+         [websvn:filelink]
+      </td>
+      <td class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
+   </tr>
+   [websvn-endlisting]
+</table>
+<hr>
