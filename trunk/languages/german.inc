@@ -34,8 +34,8 @@ $lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
 
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
 
-$lang["REVINFO"] = "Revision Information";
-$lang["GOYOUNGEST"] = "Go to most recent revision";
+$lang["REVINFO"] = "Revisions-Information";
+$lang["GOYOUNGEST"] = "Zur aktuellen Revision";                  
 $lang["LASTMOD"] = "Letzte &Auml;nderung";
 $lang["LOGMSG"] = "Logeintrag";
 $lang["CHANGES"] = "Änderungen";                                         
@@ -47,7 +47,9 @@ $lang["DELETEDFILES"] = "Gel&ouml;schte Dateien";
 $lang["VIEWLOG"] = "Log&nbsp;anzeigen";
 $lang["PATH"] = "Pfad";
 $lang["AUTHOR"] = "Autor";
+$lang["AGE"] = "Alter";                                                 
 $lang["LOG"] = "Log";
+$lang["CURDIR"] = "Aktuelles Verzeichnis";                                
 
 $lang["PREV"] = "Zur&uuml;ck";
 $lang["NEXT"] = "Weiter";
@@ -57,3 +59,16 @@ $lang["BADCMD"] = "Fehler beim Ausf&uuml;hren des Befehls";
    
 $lang["PROJECTS"] = "Subversion-Projekte";                       
 $lang["SERVER"] = "Subversion Server";                           
+
+$lang["YEAR"] = "Jahr";                                               
+$lang["YEARS"] = "Jahre";                                             
+$lang["MONTH"] = "Monat";                                             
+$lang["MONTHS"] = "Monate";                                           
+$lang["WEEK"] = "Woche";                                               
+$lang["WEEKS"] = "Wochen";                                             
+$lang["DAY"] = "Tag";                                                 
+$lang["DAYS"] = "Tage";                                               
+$lang["HOUR"] = "Stunde";                                               
+$lang["HOURS"] = "Stunden";                                             
+$lang["MINUTE"] = "Minute";                                           
+$lang["MINUTES"] = "Minuten";   
