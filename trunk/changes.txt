@@ -3,6 +3,8 @@ CHANGES
 1.36
 
 ADD: Log message search feature
+ADD: Diff display tries to display changed lines as changed, rather than
+     showing the line deleted then added.
 
 1.35
 
