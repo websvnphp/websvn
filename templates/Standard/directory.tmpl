@@ -16,37 +16,39 @@
 
 [websvn-test:showchanges]
    <p><b>[lang:CHANGES]:</b><br>
-   <center><table border=1 class="bordered" cellpadding=4>
-      <tr>
-         <th><center><b>[lang:NEWFILES]</b></center></th>
-         <th><center><b>[lang:CHANGEDFILES]</b></center></th>
-         <th><center><b>[lang:DELETEDFILES]</b></center></th>
-      </tr>
-      <tr>  
-         <td valign="top">
-         [websvn-test:newfilesbr]
-            [websvn:newfilesbr]
-         [websvn-else]
-            &nbsp;
-         [websvn-endtest]
-         </td>
-         <td valign="top">
-         [websvn-test:changedfilesbr]
-            [websvn:changedfilesbr]
-         [websvn-else]
-            &nbsp;
-         [websvn-endtest]
-         </td>
-         <td valign="top">
-         [websvn-test:deletedfilesbr]
-            [websvn:deletedfilesbr]
-         [websvn-else]
-            &nbsp;
-         [websvn-endtest]
-         </td>
-      </tr>
-   </table>
    <p>[websvn:hidechangeslink]
+   <p>
+      <center>
+      <table border=1 class="bordered" cellpadding=4>
+         <tr>
+            <th><center><b>[lang:NEWFILES]</b></center></th>
+            <th><center><b>[lang:CHANGEDFILES]</b></center></th>
+            <th><center><b>[lang:DELETEDFILES]</b></center></th>
+         </tr>
+         <tr>  
+            <td valign="top">
+            [websvn-test:newfilesbr]
+               [websvn:newfilesbr]
+            [websvn-else]
+               &nbsp;
+            [websvn-endtest]
+            </td>
+            <td valign="top">
+            [websvn-test:changedfilesbr]
+               [websvn:changedfilesbr]
+            [websvn-else]
+               &nbsp;
+            [websvn-endtest]
+            </td>
+            <td valign="top">
+            [websvn-test:deletedfilesbr]
+               [websvn:deletedfilesbr]
+            [websvn-else]
+               &nbsp;
+            [websvn-endtest]
+            </td>
+         </tr>
+      </table>
    </center>
 [websvn-endtest]
 

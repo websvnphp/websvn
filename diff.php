@@ -26,6 +26,7 @@
 
 require_once("include/setup.inc");
 require_once("include/svnlook.inc");
+require("include/utils.inc");
 require("include/template.inc");
 
 $context = 5;
@@ -106,6 +107,8 @@ $vars["prevrev"] = $prevrev;
 
 $vars["rev1"] = $history[0]["rev"];
 $vars["rev2"] = $prevrev;
+
+createDirLinks($rep, $ppath, $rev, $showchanged);
 
 $listing = array();
 
