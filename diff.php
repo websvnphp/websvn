@@ -112,7 +112,7 @@ if ($prevrev)
    fclose($fp);
    
    // Get the diff  output
-   $output = runCommand($config->diffCommandPath."diff -y -t -W 600 -w $oldtname $newtname");
+   $output = runCommand($config->diff." -y -t -W 600 -w $oldtname $newtname");
       
    // Remove our temporary files   
    unlink($oldtname);
