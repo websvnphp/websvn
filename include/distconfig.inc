@@ -145,9 +145,9 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // --- RSSFEED ---
 
-// Uncomment this line if you wish to have show RSS feed links
+// Uncomment this line if you wish to hide the RSS feed links
 //
-// $config->offerRSS();
+// $config->hideRSS();
 
 // --- MISCELLANOUS ---
 
