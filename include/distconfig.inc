@@ -77,4 +77,7 @@ $config = new Config;
 
 // Un comment this if you don't have the right to use it.  Be warned that you may need it however!
 set_time_limit(0);
+
+// Uncomment this line to turn off caching of repo information.  This will slow down your browsing.
+$config->setCachingOn();
 ?>

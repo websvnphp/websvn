@@ -76,38 +76,153 @@ Class SVNRepository
       
       $tree = array();
       
-      // Run the file list command
-      if ($files = popen($config->svnlook." tree $revstr ".$this->repPath." $path", "r"))
-      {      
-   		while (!feof($files))
-   		{
-   		   $entry = fgets($files);
-   		   
-   		   // If the line is a top-level entry, add it to the array
-   		   if (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ")
-   		   {
-   		      // Clear off whitespace, new lines etc.
-   		      $entry = transChars(trim($entry));
-   		      
-   		      // Add the entry to the tree
-   		      $tree[] = $entry;
-   		   }
-   		
-   		}
-   		
-   		pclose($files);
-                     
-         // Sort the entries into alphabetical order with the directories at the top of the list
-         usort($tree, "_dirSort");
-      }
-      else // An error occured
+      // Try to find a cached version of this revision of the repository
+      
+      if ($rev == 0)
       {
-         $output = transChars(shell_exec($config->svnlook." tree $revstr ".$this->repPath." $path 2>&1"));
-         if (!empty($output)) print "<p>".nl2br($output);
-         exit;
+         $head = runCommand($config->svnlook." youngest ".$this->repPath);
+         settype($head[0], "integer");
+         $rev = $head[0];
       }
       
-      return $tree;
+      $cachedname = strtr($this->repPath, ":/\\", "___");
+      $cachedname = ".".DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_$rev";
+      
+      if ($config->cacheResults && !file_exists($cachedname))
+      {
+         // Cache the directory layout
+         
+         exec($config->svnlook." tree $revstr ".$this->repPath." > $cachedname");
+      }
+      
+      if ($config->cacheResults && file_exists($cachedname))
+      {
+         if ($files = fopen($cachedname, "r"))
+         {
+            $state = 0; // Work out sub path
+            $finished = false;
+            $spc = " ";
+            if ($path == "")
+            {
+               $path = "/";
+               $spc = "";
+            }
+                  
+            while (!feof($files) && !$finished)
+            {
+               switch ($state)
+               {
+                  case 0: // Find the first string to search for
+                     
+                     // If there are no more subdirectories left, move on
+                     if ($path == "")
+                     {
+                        $state = 2;
+                        break;
+                     }
+                     
+                     $pos = strpos($path, "/");
+                     $searchpath = $spc.substr($path, 0, $pos + 1);
+                     $path = substr($path, $pos + 1);
+                     $spc .= " ";
+                     $state = 1;
+                     
+                     break;
+                     
+                  case 1: // Search for the path
+                     $line = fgets($files);
+                     if (strcmp(rtrim($line), $searchpath) == 0)
+                     {
+                        $state = 0;
+                     }
+                     break;
+                     
+                  case 2: // Count the number of spaces at the beginning of the path name
+                     $spaces = 0;
+                     while ($line{$spaces} == " ")
+                        $spaces++;
+                     $spaces++;
+                     $state = 3;
+                     break;
+                     
+                  case 3: // Find all the lines with $spaces before them
+                     $line = fgets($files);
+                     $ok = true;
+                     if (strlen($line) > $spaces)
+                     {
+                        for ($n = 0; $n < $spaces; $n++)
+                        {
+                           if ($line{$n} != " ")
+                           {
+                              $ok = false;
+                              break;
+                           }
+                        }
+                     }
+                     else
+                     {
+                        $ok = false;
+                     }
+                     
+                     // If there was a non-space, then we've finished our search
+                     if (!$ok)
+                     {
+                        $finished = true;
+                        break;
+                     }
+                     
+                     // If the aren't any more spaces afterwards, add this to the tree
+                     if ($line{$spaces} != " ")
+                     {
+                        $tree[] = trim($line);
+                     }
+                     break;
+               }
+            }
+
+            pclose($files);
+            
+            // Sort the entries into alphabetical order with the directories at the top of the list
+            usort($tree, "_dirSort");
+            
+            return $tree;
+         }
+      }
+      else // Still no cache file.  We'll do it the old fashion way
+      {
+         // Run the file list command
+         if ($files = popen($config->svnlook." tree $revstr ".$this->repPath." $path", "r"))
+         {      
+      		while (!feof($files))
+      		{
+      		   $entry = fgets($files);
+      		   
+      		   // If the line is a top-level entry, add it to the array
+      		   if (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ")
+      		   {
+      		      // Clear off whitespace, new lines etc.
+      		      $entry = transChars(trim($entry));
+      		      
+      		      // Add the entry to the tree
+      		      $tree[] = $entry;
+      		   }
+      		
+      		}
+      		
+      		pclose($files);
+                        
+            // Sort the entries into alphabetical order with the directories at the top of the list
+            usort($tree, "_dirSort");
+         }
+         else // An error occured
+         {
+            $output = transChars(shell_exec($config->svnlook." tree $revstr ".$this->repPath." $path 2>&1"));
+            if (!empty($output)) print "<p>".nl2br($output);
+            exit;
+         }
+         
+         return $tree;
+      }
    }
    
    function getLogDetails($path, $rev = 0)
@@ -116,9 +231,35 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
+      // Try to find a cached version of this revision of the repository
+      
+      if ($rev == 0)
+      {
+         $head = runCommand($config->svnlook." youngest ".$this->repPath);
+         settype($head[0], "integer");
+         $rev = $head[0];
+      }
+      
+      $cachedname = strtr($this->repPath, ":/\\", "___");
+      $cachedname = ".".DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_log_$rev";
+      
+      if ($config->cacheResults && !file_exists($cachedname))
+      {
+         // Cache the directory layout
+         
+         exec($config->svnlook." info $revstr ".$this->repPath." $path > $cachedname");
+      }
+      
       // Get the log info
-      $output = runCommand($config->svnlook." info $revstr ".$this->repPath." $path");
-                  
+      if ($config->cacheResults && file_exists($cachedname))
+      {
+         $output = transArray(file($cachedname));
+      }
+      else
+      {   
+         $output = runCommand($config->svnlook." info $revstr ".$this->repPath." $path");
+      }
+                     
       // Create a nice array to return
       $log["author"] = $output[0];
       $log["date"] = $output[1];
@@ -149,9 +290,34 @@ Class SVNRepository
       global $config;
       
       $revstr = _revStr($rev);
+         
+      // Try to find a cached version of this revision of the repository
       
-      // Get the log info
-      $output = runCommand($config->svnlook." changed $revstr ".$this->repPath);
+      if ($rev == 0)
+      {
+         $head = runCommand($config->svnlook." youngest ".$this->repPath);
+         settype($head[0], "integer");
+         $rev = $head[0];
+      }
+      
+      $cachedname = strtr($this->repPath, ":/\\", "___");
+      $cachedname = ".".DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_mods_$rev";
+      
+      if ($config->cacheResults && !file_exists($cachedname))
+      {
+         // Cache the directory layout
+         
+         exec($config->svnlook." changed $revstr ".$this->repPath." > $cachedname");
+      }
+      
+      if ($config->cacheResults && file_exists($cachedname))
+      {
+         $output = transArray(file($cachedname));
+      }
+      else
+      {
+        $output = runCommand($config->svnlook." changed $revstr ".$this->repPath);
+      }
            
       // Now create a nicer array from that
       $changes = array("added" => array(), "updated" => array(), "deleted" => array());
