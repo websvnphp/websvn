@@ -2,7 +2,7 @@
 WHY WebSVN?
 
 WebSVN offers a view onto your subversion repositories that's been designed
- to reflect the Subversion methodology. You can view the log of any file or
+to reflect the Subversion methodology. You can view the log of any file or
 directory and see a list of all the files changed, added or deleted in any
 given revision. You can also view the differences between 2 versions of a
 file so as to see exactly what was changed in a particular revision. 
@@ -12,6 +12,7 @@ WebSVN offers the following features:
 * Easy to use interface 
 * Highly customisable templating system 
 * Colourisation of file listings 
+* Log message searching
 * Fast browsing thanks to internal caching feature 
 * Apache MultiViews support 
 
@@ -42,7 +43,7 @@ from these locations:
 Diff/Sed/Gzip: http://www.cygwin.com/
 Enscript:      http://people.ssh.com/mtr/genscript/
 
-NOTE:
+CACHING
 
 In order to return results with a reasonable speed, WebSVN caches the results
 of it's requests to svnlook.  Under normal usage this works correctly since
