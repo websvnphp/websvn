@@ -32,6 +32,8 @@ $locwebsvnhttp = "/websvn";
 // Physical location of websvn directory
 $locwebsvnreal = "d:/websvn";
 
+chdir($locwebsvnreal);
+
 // --- DON'T CHANGE BELOW HERE ---
 
 ini_set("include_path", $locwebsvnreal);

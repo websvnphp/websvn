@@ -4,6 +4,8 @@ CHANGES
 
 NEW: Korean translation
 
+FIX: When using Multiviews, change to the WebSVN directory before executing
+     commands so that tempnam works.
 FIX: RSS feed now generates Content-Type header for XML so that IE can display
      the contents
 FIX: Diff and Blame didn't work properly for php files when enscript wasn't used
@@ -11,6 +13,9 @@ FIX: Use svn --non-interactive to ensure that svn doesn't prompt WebSVN for inpu
 FIX: Corrections to the French translation
 FIX: Display an explanatory message when the user hasn't configured any
      repository paths
+FIX: When using Multiviews, change to the WebSVN directory before executing
+     commands so that tempnam works.  This used to cause problems on some
+     systems when running diff and blame.
 
 1.50
 
