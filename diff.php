@@ -177,8 +177,8 @@ if ($prevrev)
       // Get each file's line
       if (!empty($output[$line]))
       {
-         $oldline = hardspace(rtrim(substr($output[$line], 0, 299)));
-         $newline = hardspace(rtrim(substr($output[$line], 301)));
+         $oldline = hardspace(htmlspecialchars(rtrim(substr($output[$line], 0, 299))));
+         $newline = hardspace(htmlspecialchars(rtrim(substr($output[$line], 301))));
       
          if ($oldline == "") $oldline = "&nbsp;";
          if ($newline == "") $newline = "&nbsp;";
