@@ -70,7 +70,7 @@ if ($log["rev"] < $youngest)
    echo "<a href=\"listing.php?rep=$rep&path=$path&sc=1\">${lang["GOHEAD"]}</a>";
 }
 echo "<p><b>${lang["LASTMOD"]}:</b> ${log['author']} - ${log['date']}";
-echo "<p><b>${lang["LOGMSG"]}:</b><br>".nl2br(htmlspecialchars($log['message']));
+echo "<p><b>${lang["LOGMSG"]}:</b><br>".nl2br($log['message']);
 echo "<p>";
 
 if (!$showchanged)
@@ -119,7 +119,7 @@ else
    echo "<p><a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=0\">${lang["HIDECHANGED"]}</a></center>";
 }
 
-echo "<p><hr><h1>$ppath&nbsp;- <font size=\"smaller\"><a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged\">${lang["VIEWLOG"]}</a></font></h1>";
+echo "<p><hr><h1>$ppath&nbsp;- <font size=\"smaller\"><a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a></font></h1>";
 
 echo "<table border=1 class=\"outlined\" width=\"100%\" cellpadding=2><tr><th><b>${lang["PATH"]}</b></td><th align=\"center\"><b>${lang["LOG"]}</b></td></tr>";
 
@@ -140,7 +140,11 @@ foreach($contents as $file)
       
    echo "<td>".fileLink("$path$file")."</td>";
    
-   echo "<td width=1><a href=\"log.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged\">${lang["VIEWLOG"]}</a></td>";
+   // The history command doesn't return with a trailing slash.  We need to remember here if the
+   // file is a directory or not! 
+   
+   $isDir = ($file{strlen($file) - 1} == "/"?1:0);
+   echo "<td width=1><a href=\"log.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a></td>";
    echo "</td>";
 }
 
