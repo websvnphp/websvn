@@ -34,6 +34,7 @@ $rev = @$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 $page = @$_REQUEST["page"];
 $all = (@$_REQUEST["all"] == 1)?1:0;
+$isDir = (@$_REQUEST["isdir"] == 1)?1:0;
 
 if (empty($page)) $page = 1;
 
@@ -57,8 +58,6 @@ else
 
 echo "<h1>$repname - Rev ${log["rev"]} - $ppath</h1>";
 echo "<p>";
-
-$isDir = $ppath{strlen($ppath) - 1} == "/";
    
 $history = $svnrep->getHistory($path, $rev);
 
@@ -94,19 +93,24 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
    
    $log = $svnrep->getLogDetails($path, $r["rev"]);
 
+   // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
+   $rpath = $r["path"];
+   if ($isDir && $rpath{strlen($rpath) - 1} != "/")
+      $rpath .= "/";
+
    // Find the parent path (or the whole path if it's already a directory)
-   $pos = strrpos($r["path"], "/");
-   $parent = substr($r["path"], 0, $pos + 1);
+   $pos = strrpos($rpath, "/");
+   $parent = substr($rpath, 0, $pos + 1);
 
    echo "<td valign=\"top\"><a href=\"listing.php?rep=$rep&path=$parent&rev=${r["rev"]}&sc=1\">${r["rev"]}</a></td>";
 
    if ($isDir)
-      echo "<td valign=\"top\"><a href=\"listing.php?rep=$rep&path=${r["path"]}&rev=${r["rev"]}&sc=$showchanged\">${r["path"]}</a></td>";
+      echo "<td valign=\"top\"><a href=\"listing.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a></td>";
    else
-      echo "<td valign=\"top\"><a href=\"filedetails.php?rep=$rep&path=${r["path"]}&rev=${r["rev"]}&sc=$showchanged\">${r["path"]}</a></td>";
+      echo "<td valign=\"top\"><a href=\"filedetails.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a></td>";
       
-   echo "<td valign=\"top\">".nl2br(htmlspecialchars($log["author"]))."</td>";
-   echo "<td valign=\"top\">".nl2br(htmlspecialchars($log["message"]))."</td>";
+   echo "<td valign=\"top\">".nl2br($log["author"])."</td>";
+   echo "<td valign=\"top\">".nl2br(($log["message"])."</td>";
    
    echo "</tr>";
 }
