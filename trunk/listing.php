@@ -168,8 +168,8 @@ foreach($contents as $file)
 }
 
 $vars["version"] = $version;
-parseTemplate("templates/header.tmpl", $vars, $listing);
-parseTemplate("templates/listing.tmpl", $vars, $listing);
-parseTemplate("templates/footer.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."listing.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
 
 ?>
