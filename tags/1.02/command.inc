@@ -1,0 +1,60 @@
+<?php
+
+// WebSVN - Subversion repository viewing via the web using PHP
+// Copyright (C) 2004 Tim Armes
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// --
+//
+// command.inc
+//
+// External command handling
+
+function transChars($str)
+{
+   global $config;
+   
+   if ($config->serverIsWindows)
+   {
+      //$output = iconv("cp850", "iso-8859-1", $ooutput]);
+      return strtr($str, "…‚‹“—–‡", "ΰιθκοξτωϋη");
+   }
+   
+   return $str;
+}
+
+function runCommand($cmd)
+{
+   global $lang;
+   
+   // Try to run the command normally
+   $output = shell_exec($cmd);
+   
+   // If there's no output, we'll assume that it hasn't worked
+   if (empty($output[0]))
+   {
+      echo "${lang["BADCMD"]}: <i><b>$cmd</b></i><br>";
+      
+      // Rerun the command, this time grabbing the error information
+      $output = transChars(shell_exec($cmd."  2>&1"));
+      if (!empty($output)) print "<p>".nl2br($output);
+      exit;
+   }   
+   
+   return transChars($output);
+}
+
+?>
