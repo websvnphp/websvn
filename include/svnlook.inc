@@ -445,6 +445,12 @@ Class SVNRepository
       $revstr = _revStr($rev);
       $path = quote($path);
       
+      // If there's no filename, we'll just deliver the contents as it is to the user
+      if ($filename == "")
+      {
+         passthru($config->svnlook." cat $revstr ".$this->repPath." $path");
+      }
+      
       // Get the file contents info
       
       $ext = strrchr($path, ".");
