@@ -110,7 +110,7 @@ class Bugtraq
                $issue  = trim(substr($issues, 0, $pos));
                $issues = substr($issues, $pos + 1);
                
-               $line .= "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">$issue</a>,";
+               $line .= "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">$issue</a>, ";
             }
             $line .= "<a href=\"".str_replace("%BUGID%", $issues, $this->urlstring)."\">".trim($issues)."</a>".$this->lastPart;
             
