@@ -8,6 +8,7 @@ ADD: MultiViews support.  You can now set up WebSVN to access the
       http://server/wsvn/repname/path/to/rep
 
 FIX: WebSVN should now function correctly (again) on non windows servers.
+FIX: First character of diff listing was missing
 
 1.20
 
