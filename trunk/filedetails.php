@@ -62,7 +62,7 @@ if (in_array($extn, $zipped))
 {
    $base = basename($path);
    header("Content-Type: application/x-gzip");
-   header("Content-Disposition: attachment; filename=$base.gz");
+   header("Content-Disposition: attachment; filename=".urlencode($base).".gz");
 
    // Get the file contents and pipe into gzip.  All this without creating
    // a temporary file.  Damn clever.
@@ -80,7 +80,7 @@ if (!empty($cont))
    
    header("Content-Type: $cont");
    //header("Content-Length: $size");
-   header("Content-Disposition: inline; filename=$base");
+   header("Content-Disposition: inline; filename=".urlencode($base));
    
    $svnrep->getFileContents($path, "", $rev);
    

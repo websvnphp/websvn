@@ -59,6 +59,18 @@ function _revStr($rev)
       return "";
 }
 
+// Function to encode a URL without encoding the /'s
+
+function encodepath($uri)
+{
+   $parts = explode('/', $uri);
+   for ($i = 0; $i < count($parts); $i++)
+   {
+     $parts[$i] = rawurlencode($parts[$i]);
+   }
+   return implode('/', $parts);
+}
+
 // The SVNRepositor Class
 
 Class SVNRepository
@@ -87,7 +99,7 @@ Class SVNRepository
          $rev = $head[0];
       }
       
-      $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+      $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
       $output = runCommand($config->svn." list $revstr ".quote("file:///".$path), true);
       
       foreach ($output as $entry)
@@ -358,7 +370,7 @@ Class SVNRepository
       if ($l == "php")
       {         
          // Output the file to the filename
-         $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
          $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
          @exec($cmd);
          
@@ -395,7 +407,7 @@ Class SVNRepository
             // Note that the sec command returns only the part of the file between <PRE> and </PRE>.
             // It's complicated because it's designed not to return those lines themselves.
          
-            $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
             $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." | ".
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
@@ -432,7 +444,7 @@ Class SVNRepository
          $tmp = tempnam("temp", "wsvn");
          
          // Output the file to a temporary file
-         $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
          $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $tmp", false);
          @exec($cmd);
          highlight_file($tmp);
@@ -442,7 +454,7 @@ Class SVNRepository
       {  
          if ($config->useEnscript)
          {
-            $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
             $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." | ".
                                 $config->enscript." --language=html ".
  								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
@@ -486,7 +498,7 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+      $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
       $cmd = quoteCommand($config->svn." blame $revstr ".quote("file:///".$path)." > $filename", false);
       
       @exec($cmd);
@@ -539,7 +551,7 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+      $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
       $cmd = quoteCommand($config->svn." export $revstr ".quote("file:///".$path)." $filename", false);
 
       @exec($cmd);
