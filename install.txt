@@ -15,6 +15,7 @@ WebSVN offers the following features:
 * Log message searching
 * Fast browsing thanks to internal caching feature 
 * Apache MultiViews support 
+* RSS feed support
 
 Since it's written using PHP, WebSVN is also very portable and easy to install.
 
@@ -42,6 +43,14 @@ from these locations:
 
 Diff/Sed/Gzip: http://www.cygwin.com/
 Enscript:      http://people.ssh.com/mtr/genscript/
+
+ACCENTED CHARACTERS
+
+WebSVN is designed to worked with accented characters.  To do this, it uses
+the iconv function.  This may not be installed on your system.  If you aren't
+getting the characters that you expect, make sure that the iconv module is
+being loaded in php.ini.  Windows users will need to copy the appropriate
+DLLs to the system directory (from the PHP installatio directory).
 
 CACHING
 
