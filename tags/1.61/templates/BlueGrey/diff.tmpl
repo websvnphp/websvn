@@ -1,0 +1,36 @@
+[websvn-test:noprev]
+No Previous Revision
+[websvn-else]
+
+   <div align="right">[websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+   <h2>[websvn:repname]</h2>
+   [websvn:curdirlinks] - [lang:DIFFREVS] <b>[websvn:rev2]</b> [lang:AND] <b>[websvn:rev1]</b>
+   <p>
+   
+   <p><center>
+   [websvn:showcompactlink]
+   [websvn:showalllink]
+   </center>
+   <p>
+   <table class="diff" width="100%" cellspacing="0">
+      <tr>
+         <th class="HdrClmnEnd" style="padding-bottom: 5px" width="50%" align="left"><b>[lang:REV] [websvn:rev2]</b></th>
+         <th rowspan=100000 width="5"></th>
+         <th class="HdrClmnEnd" style="padding-bottom: 5px" width="50%" align="left"><b>[lang:REV] [websvn:rev1]</b></th>
+      </tr>
+   
+      [websvn-startlisting]
+         [websvn-test:rev1lineno]
+            <tr>
+               <td width="50%" style="padding: 3px 0 3px 0" align="center" class="row1"><b>[lang:LINE] [websvn:rev1lineno]...</b></td>
+               <td width="50%" style="padding: 3px 0 3px 0" align="center" class="row1"><b>[lang:LINE] [websvn:rev2lineno]...</b></td>
+            <tr>
+         [websvn-else]
+            <tr><td class="[websvn:rev1diffclass]">[websvn:rev1line]</td>
+            <td class="[websvn:rev2diffclass]">[websvn:rev2line]</td></tr>
+         [websvn-endtest]
+      [websvn-endlisting]
+   
+   </table>
+[websvn-endtest]
+
