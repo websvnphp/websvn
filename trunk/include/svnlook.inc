@@ -87,164 +87,20 @@ Class SVNRepository
          $rev = $head[0];
       }
       
-      $cachedname = strtr($this->repPath, ":/\\", "___");
-      $cachedname = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_$rev";
+      $path = strtr($this->repPath."/".$path, DIRECTORY_SEPARATOR, "/");
       
-      if ($config->cacheResults && !file_exists($cachedname))
+      $output = runCommand($config->svn." list $revstr file:///".$path);
+      
+      foreach ($output as $entry)
       {
-         // Cache the directory layout
-         
-         $cmd = quoteCommand($config->svnlook." tree $revstr ".$this->repPath, false);
-         
-         if (($handle = popen($cmd, "r")) !== FALSE)
-         {
-            if (($output = gzopen($cachedname, "w")) !== FALSE)
-            {
-                  while (!feof($handle))
-            		{
-            		   $line = fgets($handle);
-            		   gzwrite($output, $line);
-            		}
-            		
-            	gzclose($output);
-            }
-         	pclose($handle);
-         }
+         if ($entry != "")
+            $tree[] = $entry;
       }
       
-      if ($config->cacheResults && file_exists($cachedname))
-      {
-         if ($files = gzopen($cachedname, "r"))
-         {
-            $state = 0; // Work out sub path
-            $finished = false;
-            $spc = "";
-            if ($path == "" || $path{0} != "/")
-            {
-               $path = "/".$path;
-            }
-                  
-            while (!gzeof($files) && !$finished)
-            {
-               switch ($state)
-               {
-                  case 0: // Find the first string to search for
-                     
-                     // If there are no more subdirectories left, move on
-                     if ($path == "")
-                     {
-                        $state = 2;
-                        break;
-                     }
-                     
-                     $pos = strpos($path, "/");
-                     $searchpath = $spc.substr($path, 0, $pos + 1);
-                     $path = substr($path, $pos + 1);
-                     $spc .= " ";
-                     $state = 1;
-                     
-                     break;
-                     
-                  case 1: // Search for the path
-                     $line = gzgets($files);
-                     if (strcmp(rtrim($line), $searchpath) == 0)
-                     {
-                        $state = 0;
-                     }
-                     break;
-                     
-                  case 2: // Count the number of spaces at the beginning of the path name
-                     $spaces = 0;
-                     while ($line{$spaces} == " ")
-                        $spaces++;
-                     $spaces++;
-                     $state = 3;
-                     break;
-                     
-                  case 3: // Find all the lines with $spaces before them
-                     $line = gzgets($files);
-                     $ok = true;
-                     if (strlen($line) > $spaces)
-                     {
-                        for ($n = 0; $n < $spaces; $n++)
-                        {
-                           if ($line{$n} != " ")
-                           {
-                              $ok = false;
-                              break;
-                           }
-                        }
-                     }
-                     else
-                     {
-                        $ok = false;
-                     }
-                     
-                     // If there was a non-space, then we've finished our search
-                     if (!$ok)
-                     {
-                        $finished = true;
-                        break;
-                     }
-                     
-                     // If the aren't any more spaces afterwards, add this to the tree
-                     if ($line{$spaces} != " ")
-                     {
-                        $tree[] = trim($line);
-                     }
-                     break;
-               }
-            }
-
-            gzclose($files);
-            
-            // Sort the entries into alphabetical order with the directories at the top of the list
-            usort($tree, "_dirSort");
-            
-            return $tree;
-         }
-      }
-      else // Still no cache file.  We'll do it the old fashion way
-      {
-         // Run the file list command
-         
-         $cmd = $config->svnlook." tree $revstr ".$this->repPath." $path";
-         $c = quoteCommand($cmd, false);
-         
-         if ($files = popen($c, "r"))
-         {      
-      		while (!feof($files))
-      		{
-      		   $entry = fgets($files);
-      		   
-      		   // If the line is a top-level entry, add it to the array
-      		   if (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ")
-      		   {
-      		      // Clear off whitespace, new lines etc.
-      		      $entry = transChars(trim($entry));
-      		      
-      		      // Add the entry to the tree
-      		      $tree[] = $entry;
-      		   }
-      		
-      		}
-      		
-      		pclose($files);
-                        
-            // Sort the entries into alphabetical order with the directories at the top of the list
-            usort($tree, "_dirSort");
-         }
-         else // An error occured
-         {
-            $c = quoteCommand($cmd, true);
-               
-            $output = transChars(shell_exec($c));
-            if (!empty($output)) print "<p>".nl2br($output);
-            exit;
-         }
-         
-         return $tree;
-      }
+      // Sort the entries into alphabetical order with the directories at the top of the list
+      usort($tree, "_dirSort");
+      
+      return $tree;
    }
    
    function getLogDetails($path, $rev = 0)

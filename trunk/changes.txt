@@ -12,6 +12,12 @@ NEW: The cached files are now compressed
 NEW: The project selection box shows the current project by default
 NEW: Swedish translation
 
+CHANGE: The extraction of the directory listings is now accomplished using
+        the svn command via file:/// access rather than svnlook.  This has
+        the advantage of being non-recursive, and thereby eliminates the need
+        for caching the entire directory listing, and is much quicker on
+        complex direcory structures. No more 50Mb directory caches!
+        
 FIX: Deleted directories are now viewable.
 FIX: SHOWALL was being redefined in the language files
 FIX: The directory listing view sometimes showed [lang:DELETEDFILES
