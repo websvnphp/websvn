@@ -52,7 +52,7 @@ echo "<h1>$repname - ${lang["REV"]} ${log["rev"]} - $ppath</h1>";
 echo "<p>";
 echo "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
 $contents = $svnrep->getFileContents($path, $rev);
-echo "<pre>$contents</pre>";
+echo "<pre>".htmlspecialchars($contents)."</pre>";
 
 include("templates/footer.php");
 
