@@ -142,6 +142,13 @@ Next, turn on Multiviews in the WebSVN config.inc file:
 
 $config->useMultiViews();
 
+Finally, Apache needs to know that you want to enable MultiViews for the root
+directory.  This can be done by including this line in the directory's
+.htaccess file (assuming that the appropriate AllowOverrides directive is set
+up):
+
+Options MultiViews
+
 If all has gone well, repositories should now by accessible by
 http://servername/wsvn/repname
 
