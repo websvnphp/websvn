@@ -39,7 +39,7 @@ Class Config
    var $multiViews = false;
    var $useEnscript = false;
 
-   var $templatePath = "./templates/standard/";
+   var $templatePath = "./templates/Standard/";
 
    // Default character encodings
    var $inputEnc = "";
