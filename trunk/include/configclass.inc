@@ -43,6 +43,7 @@ Class Config
    var $enscript ="enscript";
    var $sed = "sed";
    var $gzip = "gzip";
+   var $tar = "tar";
    
    // Other configuration items
    
@@ -50,6 +51,7 @@ Class Config
    var $cacheResults = false;
    var $multiViews = false;
    var $useEnscript = false;
+   var $allowDownload = false;
    var $rss = true;
    var $spaces = 8;
    var $refRepositoriesByNumber = false;
@@ -161,6 +163,18 @@ Class Config
       $this->rss = false;
    }
 
+   // allowDownload
+   //
+   // Allow download of tarballs
+   
+   function allowDownload()
+   {
+      global $vars;
+      
+      $this->allowDownload = true;
+      $vars["allowdownload"] = true;
+   }
+
    // getURL
    //
    // Get the URL to a path name based on the current config
@@ -221,8 +235,12 @@ Class Config
             case "rss":
                $fname = "rss.php";
                break;
+
+            case "dl":
+               $fname = "dl.php";
+               break;
          }
-         
+
          if ($this->refRepositoriesByNumber)
          {
             if ($rep == -1)
@@ -301,15 +319,24 @@ Class Config
       $this->setPath($this->sed, $path, "sed");
    }
    
-   // setGZipPath
+   // setTarPath
+   //
+   // Define the location of the tar command
+   
+   function setTarPath($path)
+   {
+      $this->setPath($this->tar, $path, "tar");
+   }
+   
+   // setGzipPath
    //
    // Define the location of the GZip command
    
-   function setGZipPath($path)
+   function setGzipPath($path)
    {
       $this->setPath($this->gzip, $path, "gzip");
    }
-
+   
    function setTemplatePath($path)
    {
       $lastchar = $path{strlen($path) - 1};
