@@ -96,7 +96,8 @@ if ($file = fopen($tfname, "r"))
 
             $listing[$index]["author"] = $author;
             
-            $listing[$index]["line"] = fgets($file);
+            $listing[$index]["line"] = hardspace(transChars(rtrim(fgets($file)), ($config->useEnscript)?false:true));
+            
             if (trim($listing[$index]["line"]) == "")
                $listing[$index]["line"] = "&nbsp;";
                
