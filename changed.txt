@@ -1,0 +1,10 @@
+CHANGES
+
+1.01
+
+FIX: Files with HTML content are now shown correcty
+FIX: The diff output had the revision lables the wrong way round
+
+1.00
+
+First Public Release
