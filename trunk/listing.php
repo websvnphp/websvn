@@ -90,37 +90,37 @@ else
    $changes = $svnrep->getChangedFiles($rev);
 
    $first = true;
+   $vars["newfilesbr"] = "";
    $vars["newfiles"] = "";
    foreach ($changes["added"] as $file)
    {
-      if (!$first) $vars["newfiles"] .= "<br>";
+      if (!$first) $vars["newfilesbr"] .= "<br>";
       $first = false;
-      $vars["newfiles"] .= fileLink("", $file);
+      $vars["newfilesbr"] .= fileLink("", $file);
+      $vars["newfiles"] .= " ".fileLink("", $file);
    }
-   if ($vars["newfiles"] == "")
-      $vars["newfiles"] = "&nbsp;";
       
    $first = true;
+   $vars["changedfilesbr"] = "";
    $vars["changedfiles"] = "";
    foreach ($changes["updated"] as $file)
    {
-      if (!$first) $vars["changedfiles"] .= "<br>";
+      if (!$first) $vars["changedfilesbr"] .= "<br>";
       $first = false;
-      $vars["changedfiles"] .= fileLink("", $file);
+      $vars["changedfilesbr"] .= fileLink("", $file);
+      $vars["changedfiles"] .= " ".fileLink("", $file);
    }
-   if ($vars["changedfiles"] == "")
-      $vars["changedfiles"] = "&nbsp;";
 
    $first = true;
+   $vars["deletedfilesbr"] = "";
    $vars["deletedfiles"] = "";
    foreach ($changes["deleted"] as $file)
    {
-      if (!$first) $vars["deletedfiles"] .= "<br>";
+      if (!$first) $vars["deletedfilesbr"] .= "<br>";
       $first = false;
-      $vars["deletedfiles"] .= $file;
+      $vars["deletedfilesbr"] .= $file;
+      $vars["deletedfiles"] .= " ".$file;
    }
-   if ($vars["deletedfiles"] == "")
-      $vars["deletedfiles"]= "&nbsp;";
 
    $vars["hidechangeslink"] = "<a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=0\">${lang["HIDECHANGED"]}</a>";
    
@@ -155,6 +155,7 @@ foreach($contents as $file)
    // file is a directory or not! 
    
    $isDir = ($file{strlen($file) - 1} == "/"?1:0);
+   $listing[$index]["isDir"] = $isDir;
    $listing[$index]["fileviewloglink"] = "<a href=\"log.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a>";
    
    $row = 1 - $row;
