@@ -107,7 +107,7 @@ $vars["repname"] = $repname;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 
-createDirLinks($rep, $ppath, $rev, $showchanged);
+createDirLinks($rep, $ppath, $passrev, $showchanged);
 
 $url = $config->getURL($rep, $path, "diff");
 
