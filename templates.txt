@@ -70,7 +70,6 @@ NOTE:  Controls MUST appear on there own line.
 VARIABLES
 ~~~~~~~~~
 
-
 Variables are written in the form [websvn:varname] where varname is the name of
 a variable passed to the template.  The control is replaced with the variable
 required.
@@ -78,6 +77,15 @@ required.
 The variables available are described below for each template.
 You may also access the language file using [lang:varname] is order to keep your
 templates international!
+
+Take special notice of the use of the locwebsvnhttp variable.  It should be used
+to locate other files and graphics that your templates need.  For example:
+
+<link href="[websvn:locwebsvnhttp]/templates/tmptname/styles.css" ...
+
+You may imagine that simply using . in place should work, however this isn't
+the case when MultiViews are turned on.  Using this variable gives you a way to
+access your template files in all cases.
 
 Variables defined for index.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -89,6 +97,7 @@ projlink - Link to the project
 Variables defined for directory.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+locwebsvnhttp - Root of websvn directory
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
@@ -124,6 +133,7 @@ isDir - true if the current file is a directory (use with [websvn-test:isDir]
 Variables defined for log.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+locwebsvnhttp - Root of websvn directory
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
@@ -141,6 +151,7 @@ revlog - Log message of revision
 Variables defined for file.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+locwebsvnhttp - Root of websvn directory
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
@@ -153,6 +164,7 @@ Note: Use commands [websvn-getlistingbr] or [websvn-getlisting] to display the
 Variables defined for diff.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+locwebsvnhttp - Root of websvn directory
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged

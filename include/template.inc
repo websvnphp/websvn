@@ -24,6 +24,7 @@
 // Templating system to allow advanced page customisation
 
 $ignore = false;
+$ignorestack = array();
 
 // parseCommand
 //
@@ -31,7 +32,7 @@ $ignore = false;
 
 function parseCommand($line, $vars)
 { 
-   global $ignore;
+   global $ignore, $ignorestack;
    
    // Check for test conditions      
    if (strncmp(trim($line), "[websvn-test:", 13) == 0)
@@ -39,7 +40,10 @@ function parseCommand($line, $vars)
       $line = trim($line);
       $var = substr($line, 13, -1);
       if (empty($vars[$var]))
+      {
+         array_push($ignorestack, $ignore);
          $ignore = true;
+      }
       return true;
    }
    
@@ -51,7 +55,7 @@ function parseCommand($line, $vars)
 
    if (strncmp(trim($line), "[websvn-endtest]", 16) == 0)
    {
-      $ignore = false;
+      $ignore = array_pop($ignorestack);
       return true;
    }
    
