@@ -5,6 +5,11 @@ CHANGES
 ADD: Comprehensive templating solution
 ADD: Show the age of a revision in the log view
 
+CHANGE: The youngest revision of the current directory is now shown by
+        default (as opposed to the head revision of the entire repository.
+        This means that clicking on a directory will show the lastest 
+        changes associated with it. A specific revision can still be
+        selected from a log view
 CHANGE: Only show the lead name when viewing directory contents
 
 FIX: Fixed error concerning use of pclose
