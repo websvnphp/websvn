@@ -5,6 +5,7 @@ CHANGES
 NEW: Directory displays are now shown in tree view (so that it's harder
      to get lost).  Many thanks to Brent Lu for this excellent patch.
      The prettiest result are available in the BlueGrey scheme.
+NEW: Comparison of entire directories
 NEW: Tarballs of directories may now be downloaded.
      Set $config->allowdownload(); in config.inc to allow this.
 NEW: New style 'Zinn' based on the templates created for
@@ -12,6 +13,8 @@ NEW: New style 'Zinn' based on the templates created for
 NEW: Traditional Chinese translation
      
 CHANGE: Style information removed from RSS feed
+CHANGE: Changed files are now hidden by defaut (since the directory
+        comparison link is far more useful)
 
 FIX: File listing sometimes failed when there were spaces in the filename
 FIX: Some setups wouldn't allow diff generations with enscript
