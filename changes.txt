@@ -6,6 +6,9 @@ ADD: Log message search feature
 ADD: Diff display tries to display changed lines as changed, rather than
      showing the line deleted then added.
 
+FIX: Problem surrounding the quoting of commands and command line arguments
+     on Windows machines.
+
 1.35
 
 ADD: You can now specify a list of file types (extensions) for files which
