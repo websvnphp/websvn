@@ -167,7 +167,7 @@ if ($prevrev)
                   else
                      $line = rtrim($nl);
                      
-                  $listing[$index]["rev1line"] = hardspace($line);
+                  $listing[$index]["rev2line"] = hardspace($line);
                   $curnline++;
                }
                else
