@@ -100,7 +100,7 @@ else
 $vars["action"] = "";
 $vars["author"] = $log['author'];
 $vars["date"] = $log['date'];
-$vars["log"] = nl2br($log['message']);
+$vars["log"] = create_anchors(nl2br($log['message']));
 $vars["rev"] = $log["rev"];
 $vars["path"] = $ppath;
 
