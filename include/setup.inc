@@ -48,6 +48,9 @@ if (!@$CONFIG)
       $locwebsvnreal = ".";
    
    $vars["locwebsvnhttp"] = $locwebsvnhttp;
+
+   // Make sure that the input locale is set up correctly
+   setlocale(LC_ALL, "");
    
    // Create the config
    $config = new Config;
