@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Subversion serveur</title>
+<title>WebSVN</title>
 <style>
 h1 { font-size: 30px; font-weight: normal; font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
 .highlight { color: #99007E; font-style: italic;  }
@@ -15,11 +15,11 @@ hr { color: #99007E; background-color: #99007E  }
    <table border=0 cellspacing=0 cellpadding=0>
       <tr>
          <td>
-            <h1>Subversion&nbsp;Server</h1>
+            <h1><?= $lang["SERVER"]; ?></h1>
          </td>
       </tr>
       <tr>
          <td align="center">
             <hr>
-            <br><h2>Subversion projects:</h2>
+            <br><h2><?= $lang["PROJECTS"]; ?>:</h2>
             <table border=0><tr><td><ul>

@@ -23,36 +23,38 @@
 //
 // English language strings
 
-$lang = array
-(
-   "NOREP" => "No repository given",
+$lang["NOREP"] = "No repository given";
 
-   "DIFFREVS" => "Diff between revs",
-   "AND" => "and",
-   "REV" => "Rev",
-   "LINE" => "Line",
-   "SHOWALL" => "Show entire file",
-   "SHOWCOMPACT" => "Only display areas with differences",
-   
-   "DIFFPREV" => "Diff with Previous",
-   
-   "GOHEAD" => "Go to head revision",
-   "LASTMOD" => "Last modification",
-   "LOGMSG" => "Log message",
-   "SHOWCHANGED" => "Show changed files",
-   "HIDECHANGED" => "Hide changed files",
-   "NEWFILES" => "New Files",
-   "CHANGEDFILES" => "Modified files",
-   "DELETEDFILES" => "Deleted files",
-   "VIEWLOG" => "View&nbsp;Log",
-   "PATH" => "Path",
-   "AUTHOR" => "Author",
-   "LOG" => "Log",
-   
-   "PREV" => "Prev",
-   "NEXT" => "Next",
-   "SHOWALL" => "Show All",
-   
-   "BADCMD" => "Error running this command",
-   "RETURNED" => "Returned"
-);
+$lang["DIFFREVS"] = "Diff between revs";
+$lang["AND"] = "and";
+$lang["REV"] = "Rev";
+$lang["LINE"] = "Line";
+$lang["SHOWALL"] = "Show entire file";
+$lang["SHOWCOMPACT"] = "Only display areas with differences";
+
+$lang["DIFFPREV"] = "Diff with Previous";
+
+$lang["GOHEAD"] = "Go to head revision";
+$lang["LASTMOD"] = "Last modification";
+$lang["LOGMSG"] = "Log message";
+$lang["CHANGES"] = "Changes";
+$lang["SHOWCHANGED"] = "Show changed files";
+$lang["HIDECHANGED"] = "Hide changed files";
+$lang["NEWFILES"] = "New Files";
+$lang["CHANGEDFILES"] = "Modified files";
+$lang["DELETEDFILES"] = "Deleted files";
+$lang["VIEWLOG"] = "View&nbsp;Log";
+$lang["PATH"] = "Path";
+$lang["AUTHOR"] = "Author";
+$lang["LOG"] = "Log";
+
+$lang["PREV"] = "Prev";
+$lang["NEXT"] = "Next";
+$lang["SHOWALL"] = "Show All";
+
+$lang["BADCMD"] = "Error running this command";
+$lang["RETURNED"] = "Returned";
+
+$lang["POWERED"] = "Powered by WebSVN";
+$lang["PROJECTS"] = "Subversion&nbsp;Projects";
+$lang["SERVER"] = "Subversion&nbsp;Server";

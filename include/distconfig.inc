@@ -28,6 +28,12 @@
 // Include the configuration class
 require("include/configclass.inc");
 
+// Define the language array
+$lang = array();
+
+// Include a default language file.
+require("languages/english.inc");
+
 // Create the config
 $config = new Config;
 
@@ -63,8 +69,9 @@ $config = new Config;
 
 // LANGUAGE SETUP
 
-// Uncomment ONLY the language file which you want
-include("languages/english.inc");
+// Uncomment ONLY the language file which you want.  If you want English then don't do anything here.
+//
+// include("languages/german.inc");
 
 // MISCELLANOUS
 
