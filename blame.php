@@ -70,7 +70,7 @@ if ($file = fopen($tfname, "r"))
    $svnrep->getBlameDetails($path, $tbname, $rev); 
    
    $ent = true;
-   if ((strrchr($path, ".") == '.php') || ($config->useEnscript))
+   if (('php' == $extEnscript[strrchr($path, ".")]) || ($config->useEnscript))
       $ent = false;
 
    if ($blame = fopen($tbname, "r"))      
