@@ -25,6 +25,7 @@
 
 require_once("include/setup.inc");
 require_once("include/svnlook.inc");
+require("include/utils.inc");
 require("include/template.inc");
 
 $rep = (int)@$_REQUEST["rep"];
@@ -102,6 +103,8 @@ $vars["action"] = $lang["LOG"];
 $vars["repname"] = $repname;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
+
+createDirLinks($rep, $ppath, $rev, $showchanged);
 
 $logurl = $config->getURL($rep, $path, "log");
 

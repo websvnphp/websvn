@@ -147,6 +147,7 @@ action - Action being performed ("Log")
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
+curdirlinks - List of the path of this directory with links to each one
 
 pagelinks - List of list to all the pages of the log
 showalllink - Link to show the entire log in one go
@@ -179,6 +180,7 @@ Variables defined for file.tmpl
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
+curdirlinks - List of the path of this directory with links to each one
 
 prevdifflink - Link to comparison with previous revision
 
@@ -195,6 +197,7 @@ charset - The charset requested by the user
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
+curdirlinks - List of the path of this directory with links to each one
 
 rev1 - Revision of the older file
 rev2 - Revision of the newer file

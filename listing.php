@@ -25,6 +25,7 @@
 
 require_once("include/setup.inc");
 require_once("include/svnlook.inc");
+require("include/utils.inc");
 require("include/template.inc");
 
 $rep = (int)@$_REQUEST["rep"];
@@ -156,18 +157,7 @@ else
    $vars["showchanges"] = true;
 }
 
-$subs = explode("/", $ppath);
-$sofar = "";
-$count = count($subs);
-$vars["curdirlinks"] = "";
-
-for ($n = 0; $n < $count - 2; $n++)
-{
-   $sofar .= $subs[$n]."/";
-   $sofarurl = $config->getURL($rep, $sofar, "dir");
-   $vars["curdirlinks"] .= "[<a href=\"${sofarurl}rev=$passrev&sc=$showchanged\">".$subs[$n]."/]</a> ";
-}
-$vars["curdirlinks"] .=  "[".$subs[$n]."/]";
+createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a>";
 
 $index = 0;
