@@ -175,7 +175,7 @@ if ($prevrev)
    		      {
                   $mod = $line{0};
                   
-                  $text = hardspace(htmlspecialchars(rtrim(substr($line, 2))));
+                  $text = hardspace(htmlspecialchars(rtrim(substr($line, 1))));
                   
                   switch ($mod)
                   {
