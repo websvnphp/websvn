@@ -33,16 +33,16 @@ $path = @$_REQUEST["path"];
 $rev = @$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
-function fileLink($file)
+function fileLink($path, $file)
 {
-   global $rep, $path, $rev, $showchanged;
+   global $rep, $rev, $showchanged;
    
    $isDir = $file{strlen($file) - 1} == "/";
 
    if ($isDir)
-      return "<a href=\"listing.php?rep=$rep&path=$file&rev=$rev&sc=$showchanged\">$file</a>";
+      return "<a href=\"listing.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged\">$file</a>";
    else
-      return "<a href=\"filedetails.php?rep=$rep&path=$file&rev=$rev&sc=$showchanged\">$file</a>";
+      return "<a href=\"filedetails.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged\">$file</a>";
 }
 
 // Make sure that we have a repository
@@ -91,7 +91,7 @@ else
    {
       if (!$first) echo "<br>";
       $first = false;
-      echo fileLink($file);
+      echo fileLink("", $file);
    }
    echo "</td>";
       
@@ -101,7 +101,7 @@ else
    {
       if (!$first) echo "<br>";
       $first = false;
-      echo fileLink($file);
+      echo fileLink("", $file);
    }
    echo "</td>";
 
@@ -138,7 +138,7 @@ foreach($contents as $file)
 {
    echo "<tr>";
       
-   echo "<td>".fileLink("$path$file")."</td>";
+   echo "<td>".fileLink($path, $file)."</td>";
    
    // The history command doesn't return with a trailing slash.  We need to remember here if the
    // file is a directory or not! 
