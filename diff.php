@@ -107,159 +107,211 @@ if ($prevrev)
    
    $file1cache = array();
 
-   if (!$all)
+   if ($all)
+      $context = 1;  // Setting the context to 0 makes diff generate the wrong line numbers!
+
+   // Open a pipe to the diff command with $context lines of context   
+   
+   $cmd = quoteCommand($config->diff." --ignore-all-space -U $context $oldtname $newtname", false);
+   
+   if ($all)
    {
-      // Open a pipe to the diff command with $context lines of context
+      $ofile = fopen($oldtname, "r");
+      $nfile = fopen($newtname, "r");      
+   }
+
+   if ($diff = popen($cmd, "r"))
+   {
+      // Ignore the 3 header lines
+	   $line = fgets($diff);
+	   $line = fgets($diff);
+
+      // Get the first real line
+	   $line = fgets($diff);
       
-      $cmd = quoteCommand($config->diff." --ignore-all-space -U $context $oldtname $newtname", false);
+      $index = 0;
+      $listing = array();
+      
+      $curoline = 1;
+      $curnline = 1;
+      
+		while (!feof($diff))
+		{  
+		   // Get the first line of this range
+		   sscanf($line, "@@ -%d", $oline);
+		   
+		   $line = substr($line, strpos($line, "+"));
+		   sscanf($line, "+%d", $nline);
+		   
+		   if ($all)
+		   {
+		      while ($curoline < $oline || $curnline < $nline)
+		      {
+		         $listing[$index]["rev1diffclass"] = "diff";
+               $listing[$index]["rev2diffclass"] = "diff";
+                     
+               if ($curoline < $oline)
+               {
+                  $nl = fgets($ofile);
+                  $listing[$index]["rev1line"] = hardspace(transChars(rtrim($nl), ($config->useEnscript)?false:true));
+                  $curoline++;
+               }
+               else
+                  $listing[$index]["rev1line"] = "&nbsp;";
+                  
+               if ($curnline < $nline)
+               {
+                  $nl = fgets($nfile);
+                  $listing[$index]["rev2line"] = hardspace(transChars(rtrim($nl), ($config->useEnscript)?false:true));
+                  $curnline++;
+               }
+               else
+                  $listing[$index]["rev2line"] = "&nbsp;";
+                  
+      		   $listing[$index]["rev1lineno"] = 0;
+      		   $listing[$index]["rev2lineno"] = 0;
 
-      if ($diff = popen($cmd, "r"))
-      {
-         // Ignore the 3 header lines
-  		   $line = fgets($diff);
-  		   $line = fgets($diff);
-
-         // Get the first real line
-  		   $line = fgets($diff);
-         
-         $index = 0;
-         $listing = array();
-         
-   		while (!feof($diff))
-   		{  
-   		   // Get the first line of this range
-   		   sscanf($line, "@@ -%d", $oline);
-   		   
-   		   $line = substr($line, strpos($line, "+"));
-   		   sscanf($line, "+%d", $nline);
-   		   
+		         $index++;
+		      }
+		   }
+		   else
+		   {
    		   // Output the line numbers
    		   $listing[$index]["rev1lineno"] = "$oline";
    		   $listing[$index]["rev2lineno"] = "$nline";
    		   $index++;
-   		   
-            $fin = false;
-            while (!feof($diff) && !$fin)
-            {          
-      		   $listing[$index]["rev1lineno"] = 0;
-      		   $listing[$index]["rev2lineno"] = 0;
-  
-   		      $line = fgets($diff);
-               if (!strncmp($line, "@@", 2))
-   		      {
-   		         $fin = true;
-   		      }
-   		      else
-   		      {
-                  $mod = $line{0};
-                  $text = hardspace(transChars(rtrim(substr($line, 1)), ($config->useEnscript)?false:true));
-                  if ($text == "") $text = "&nbsp;";
-                  
-                  switch ($mod)
-                  {
-                     case "-":
-                        $listing[$index]["rev1diffclass"] = "diffdeleted";
-                        $listing[$index]["rev2diffclass"] = "diff";
-                        
-                        $listing[$index]["rev1line"] = $text;
-                        $listing[$index]["rev2line"] = "&nbsp;";
-                        break;  
+		   }
+		   
+         $fin = false;
+         while (!feof($diff) && !$fin)
+         {          
+   		   $listing[$index]["rev1lineno"] = 0;
+   		   $listing[$index]["rev2lineno"] = 0;
 
-                     case "+":
-                        
-                        // Try to mark "changed" line sensibly
-                        if (!empty($listing[$index-1]) && empty($listing[$index-1]["rev1lineno"]) && $listing[$index-1]["rev1diffclass"] == "diffdeleted" && $listing[$index-1]["rev2diffclass"] == "diff")
-                        {
-                           $i = $index - 1;
-                           while (!empty($listing[$i-1]) && empty($listing[$i-1]["rev1lineno"]) && $listing[$i-1]["rev1diffclass"] == "diffdeleted" && $listing[$i-1]["rev2diffclass"] == "diff")
-                              $i--;
-                              
-                           $listing[$i]["rev1diffclass"] = "diffchanged";
-                           $listing[$i]["rev2diffclass"] = "diffchanged";
-                           $listing[$i]["rev2line"] = $text;
-                           
-                           // Don't increment the current index count
-                           $index--;
-                        }
-                        else
-                        {
-                           $listing[$index]["rev1diffclass"] = "diff";
-                           $listing[$index]["rev2diffclass"] = "diffadded";
-                           
-                           $listing[$index]["rev1line"] = "&nbsp;";
-                           $listing[$index]["rev2line"] = $text;
-                        }
-                        break;
-                        
-                     default:
-                        $listing[$index]["rev1diffclass"] = "diff";
-                        $listing[$index]["rev2diffclass"] = "diff";
-                        
-                        $listing[$index]["rev1line"] = $text;
-                        $listing[$index]["rev2line"] = $text;
-                        break;                         		
-                  }
-   		      }
-   		      
-   		      $index++;
-   		   }
-   		}   
-   		
-   		pclose($diff);   
-      }		   
-   }
-   else
-   {
-      $index = 0;
-      $listing = array();
-
-      // Get the diff  output
-      
-      $cmd = quoteCommand($config->diff." -y -t -W 600 -w $oldtname $newtname", false);
-      
-      if ($diff = popen($cmd, "r"))
-      {
-         while (!feof($diff))
-         {
-            $output = rtrim(fgets($diff));         
-          
-            // Get each file's line
-            if (!empty($output))
-            {
-               // Since we've asked for a 600 column output, the mod indicator is on the 300th or 301th column
-               // (I've no idea why it changes).
+		      $line = fgets($diff);
+            if (!strncmp($line, "@@", 2))
+		      {
+		         $fin = true;
+		      }
+		      else
+		      {
+               $mod = $line{0};
+               $text = hardspace(transChars(rtrim(substr($line, 1)), ($config->useEnscript)?false:true));
+               if ($text == "") $text = "&nbsp;";
                
-               $mod = "";
-               $len = strlen($output);
-               if ($len >= 300)
+               switch ($mod)
                {
-                  $mod = $output{299};
-                  if ($mod == " " && $len >= 301) $mod = $output{300};
-                  if ($mod == " " && $len >= 302) $mod = $output{301};
+                  case "-":
+                     $listing[$index]["rev1diffclass"] = "diffdeleted";
+                     $listing[$index]["rev2diffclass"] = "diff";
+                     
+                     $listing[$index]["rev1line"] = $text;
+                     $listing[$index]["rev2line"] = "&nbsp;";
+                     
+                     if ($all)
+                     {
+                        fgets($ofile);
+                        $curoline++;
+                     }
+                     
+                     break;  
+
+                  case "+":
+                     
+                     // Try to mark "changed" line sensibly
+                     if (!empty($listing[$index-1]) && empty($listing[$index-1]["rev1lineno"]) && $listing[$index-1]["rev1diffclass"] == "diffdeleted" && $listing[$index-1]["rev2diffclass"] == "diff")
+                     {
+                        $i = $index - 1;
+                        while (!empty($listing[$i-1]) && empty($listing[$i-1]["rev1lineno"]) && $listing[$i-1]["rev1diffclass"] == "diffdeleted" && $listing[$i-1]["rev2diffclass"] == "diff")
+                           $i--;
+                           
+                        $listing[$i]["rev1diffclass"] = "diffchanged";
+                        $listing[$i]["rev2diffclass"] = "diffchanged";
+                        $listing[$i]["rev2line"] = $text;
+                        
+                        if ($all)
+                        {
+                           fgets($nfile);
+                           $curnline++;
+                        }
+
+                        // Don't increment the current index count
+                        $index--;
+                     }
+                     else
+                     {
+                        $listing[$index]["rev1diffclass"] = "diff";
+                        $listing[$index]["rev2diffclass"] = "diffadded";
+                        
+                        $listing[$index]["rev1line"] = "&nbsp;";
+                        $listing[$index]["rev2line"] = $text;
+
+                        if ($all)
+                        {
+                           fgets($nfile);
+                           $curnline++;
+                        }
+                     }
+                     break;
+                     
+                  default:
+                     $listing[$index]["rev1diffclass"] = "diff";
+                     $listing[$index]["rev2diffclass"] = "diff";
+                     
+                     $listing[$index]["rev1line"] = $text;
+                     $listing[$index]["rev2line"] = $text;
+                     
+                     if ($all)
+                     {
+                        fgets($ofile);
+                        fgets($nfile);
+                        $curoline++;
+                        $curnline++;
+                     }
+
+                     break;                         		
                }
-      
-               $oldline = hardspace(transChars(rtrim(substr($output, 0, 299)), ($config->useEnscript)?false:true));
-               $newline = hardspace(transChars(substr($output, 302), ($config->useEnscript)?false:true));
-            
-               if ($oldline == "") $oldline = "&nbsp;";
-               if ($newline == "") $newline = "&nbsp;";
+		      }
+		      
+		      if (!$fin)
+		         $index++;
+		   }
+		}   
+		
+		// Output the rest of the files
+	   if ($all)
+	   {
+	      while (!feof($ofile) || !feof($nfile))
+	      {
+	         $listing[$index]["rev1diffclass"] = "diff";
+            $listing[$index]["rev2diffclass"] = "diff";
+                  
+            if (!feof($ofile))
+               $listing[$index]["rev1line"] = hardspace(transChars(rtrim(fgets($ofile)), ($config->useEnscript)?false:true));
+            else
+               $listing[$index]["rev1line"] = "&nbsp;";
                
-               $listing[$index]["rev1diffclass"] = "diff";
-               $listing[$index]["rev2diffclass"] = "diff";
+            if (!feof($nfile))
+               $listing[$index]["rev2line"] = hardspace(transChars(rtrim(fgets($nfile)), ($config->useEnscript)?false:true));
+            else
+               $listing[$index]["rev2line"] = "&nbsp;";
                
-               if ($mod == "<") $listing[$index]["rev1diffclass"] = "diffdeleted";
-               else if ($mod == ">") $listing[$index]["rev2diffclass"] ="diffadded";
-               else if ($mod == "|") $listing[$index]["rev1diffclass"] = $listing[$index]["rev2diffclass"] ="diffchanged";
-               
-               $listing[$index]["rev1line"] = $oldline;
-               $listing[$index]["rev2line"] = $newline;
-            }
-            
-            $index++;
-         }      
-      }
-   }
+   		   $listing[$index]["rev1lineno"] = 0;
+   		   $listing[$index]["rev2lineno"] = 0;
+
+	         $index++;
+	      }
+	   }
+		
+		pclose($diff);   
+   }		   
    
+   if ($all)
+   {
+      fclose($ofile);
+      fclose($nfile);      
+   }
+
    // Remove our temporary files   
    unlink($oldtname);
    unlink($newtname);
