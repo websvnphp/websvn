@@ -24,6 +24,7 @@
 // Show the differences between 2 revisions of a file.
 //
 
+require("config.inc");
 require("svnlook.inc");
 
 include("templates/header.php");

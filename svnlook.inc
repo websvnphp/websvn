@@ -26,8 +26,6 @@
 // These binding currently use svnlook to achieve their goal.  Once a proper SWIG binding has been
 // produces, there'll be an option to use those instead
 
-require("config.inc");
-
 // Function returns true if the give entry in a directory tree is at the top level
 
 function _topLevel($entry)

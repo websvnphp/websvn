@@ -21,12 +21,15 @@ interface that remains very stable between subversion releases.
 INSTALLATION
 
 Grab the source and stick it somewhere that your server can get to.  You
-obviously need to have PHP installed and working.  You'll also need diff
-(preferably the GNU version; for Windows users I'd recommend the Cygwin
-version) and svnlook.
+obviously need to have PHP installed and working.  Also note that WebSVN
+won't currently work in safe mode, due to the need to call svnlook.
+
+You'll also need diff (preferably the GNU version; for Windows users I'd
+recommend the Cygwin version) and svnlook available.
 
 Rename distconfig.inc as config.inc and then edit it as directed in the file
 itself.
+
 If everything has gone well, you should be able to view your projects by
 pointing your browser at the index.php file. For those of you wishing to
 customise the look and feel a little, you should change the templates as

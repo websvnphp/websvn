@@ -24,6 +24,7 @@
 // Configuration parameters
 
 require("command.inc");
+require("version.inc");
 
 Class Config
 {
