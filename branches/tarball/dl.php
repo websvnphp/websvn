@@ -173,7 +173,7 @@ if (mkdir($tmpname))
    if ($fp = @fopen("$arcname.tar.gz","rb"))
    {
       header("Content-Type: application/x-gzip");
-      //header("Content-Length: $size");
+      header("Content-Length: $size");
       header("Content-Disposition: attachment; filename=$arcname.tar.gz");
       @fpassthru($fp);
    }
