@@ -48,6 +48,7 @@ $lang["PATH"] = "Path";
 $lang["AUTHOR"] = "Author";
 $lang["AGE"] = "Age";
 $lang["LOG"] = "Log";
+$lang["CURDIR"] = "Current Directory";
 
 $lang["PREV"] = "Prev";
 $lang["NEXT"] = "Next";

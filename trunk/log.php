@@ -25,8 +25,7 @@
 
 require("include/config.inc");
 require("include/svnlook.inc");
-
-include("templates/header.php");
+require("include/template.inc");
 
 $rep = @$_REQUEST["rep"];
 $path = @$_REQUEST["path"];
@@ -56,9 +55,10 @@ if ($path == "" || $path{0} != "/")
 else
    $ppath = $path;
 
-echo "<h1>$repname - Rev ${log["rev"]} - $ppath</h1>";
-echo "<p>";
-   
+$vars["repname"] = $repname;
+$vars["rev"] = $log["rev"];
+$vars["path"] = $ppath;
+
 $history = $svnrep->getHistory($path, $rev);
 
 // Get the number of separate revisions
@@ -84,12 +84,13 @@ else
    if ($lastrevindex > $revisions - 1) $lastrevindex = $revisions - 1;
 }
 
-echo "<table border=1 class=\"outlined\" width=\"100%\" cellpadding=2><tr><th>${lang["REV"]}</th><th>${lang["PATH"]}</th><th>${lang["AUTHOR"]}</th><th>${lang["AGE"]}</th><th>${lang["LOGMSG"]}</th></tr>";
+$row = 0;
+$index = 0;
+$listing = array();
 
 for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
 {
    $r = $history[$n];
-   echo "<tr>";
    
    $log = $svnrep->getLogDetails($path, $r["rev"]);
 
@@ -102,41 +103,49 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
    $pos = strrpos($rpath, "/");
    $parent = substr($rpath, 0, $pos + 1);
 
-   echo "<td valign=\"top\"><a href=\"listing.php?rep=$rep&path=$parent&rev=${r["rev"]}&sc=1\">${r["rev"]}</a></td>";
+   $listing[$index]["revlink"] = "<a href=\"listing.php?rep=$rep&path=$parent&rev=${r["rev"]}&sc=1\">${r["rev"]}</a>";
 
    if ($isDir)
-      echo "<td valign=\"top\"><a href=\"listing.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a></td>";
+      $listing[$index]["revpathlink"] = "<a href=\"listing.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
    else
-      echo "<td valign=\"top\"><a href=\"filedetails.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a></td>";
+      $listing[$index]["revpathlink"] = "<a href=\"filedetails.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
       
-   echo "<td valign=\"top\">${log["author"]}</td>";
-   echo "<td valign=\"top\">${log["age"]}</td>";
-   echo "<td valign=\"top\">".nl2br($log["message"])."</td>";
-   
-   echo "</tr>";
+   $listing[$index]["revauthor"] = $log["author"];
+   $listing[$index]["revage"] = $log["age"];
+   $listing[$index]["revlog"] = $log["message"];
+   $listing[$index]["rowparity"] = "$row";;
+
+   $row = 1 - $row;
+   $index++;
 }
 
-echo "</table>";
+// Work out the paging options
 
-// Write out the paging options
+$vars["pagelinks"] = "";
+$vars["showalllink"] = "";
+
 if ($pages > 1)
 {
    $prev = $page - 1;
    $next = $page + 1;
    echo "<p><center>";
-   if ($page > 1) echo "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
+   if ($page > 1) $vars["pagelinks"] .= "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
    for ($p = 1; $p <= $pages; $p++)
    {
       if ($p != $page)
-         echo "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$p\">$p</a> "; 
+         $vars["pagelinks"].= "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$p\">$p</a> "; 
       else
-         echo "<b>$p </b>";
+         $vars["pagelinks"] .= "<b>$p </b>";
    }
-   if ($page < $pages) echo " <a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$next\">${lang["NEXT"]}&nbsp;></a>";   
-   echo "<p><a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
+   if ($page < $pages) $vars["pagelinks"] .=" <a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$next\">${lang["NEXT"]}&nbsp;></a>";   
+   
+   $vars["showalllink"] = "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
    echo "</center>";
 }
 
-include("templates/footer.php");
+$vars["version"] = $version;
+parseTemplate("templates/header.tmpl", $vars, $listing);
+parseTemplate("templates/log.tmpl", $vars, $listing);
+parseTemplate("templates/footer.tmpl", $vars, $listing);
 
 ?>

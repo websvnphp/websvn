@@ -26,8 +26,7 @@
 
 require("include/config.inc");
 require("include/svnlook.inc");
-
-include("templates/header.php");
+require("include/template.inc");
 
 $context = 5;
 
@@ -91,25 +90,29 @@ else
    $ppath = $path;
 
 $prevrev = @$history[1]["rev"];
+
+$vars["repname"] = $repname;
+$vars["rev"] = $log["rev"];
+$vars["path"] = $ppath;
+$vars["prevrev"] = $prevrev;
+
+$vars["rev1"] = $history[0]["rev"];
+$vars["rev2"] = $history[1]["rev"];
+
 if ($prevrev)
 {
-   echo "<h1>$repname - $ppath - ${lang["DIFFREVS"]} ".$history[0]["rev"]." ${lang["AND"]} ".$history[1]["rev"]."</h1>";
-   echo "<p>";
+   
    
    if (!$all)
    {
-      echo "<p><center><a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a></center>";
+      $vars["showalllink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
+      $vars["showcompactlink"] = "";
    }
    else
    {
-      echo "<p><center><a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=0\">${lang["SHOWCOMPACT"]}</a></center>";
+      $vars["showcompactlink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=0\">${lang["SHOWCOMPACT"]}</a>";
+      $vars["showalllink"] = "";
    }
-
-   echo "<p>";
-   
-   echo "<table class=\"diff\" width=\"100%\"><tr><td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[1]["rev"]."</b></td>".
-        "<td rowspan=100000 width=5></td>".
-        "<td style=\"padding-bottom: 5px\" width=\"50%\"><b>${lang["REV"]} ".$history[0]["rev"]."</b></td></tr>";
 
    // Get the contents of the two files
    $newtname = tempnam("temp", "");
@@ -132,6 +135,9 @@ if ($prevrev)
          // Get the first real line
   		   $line = fgets($diff);
          
+         $index = 0;
+         $listing = array();
+         
    		while (!feof($diff))
    		{  
    		   // Get the first line of this range
@@ -141,11 +147,15 @@ if ($prevrev)
    		   sscanf($line, "+%d", $nline);
    		   
    		   // Output the line numbers
-            echo "<tr><td style=\"padding: 3px 0 3px 0\" align=\"center\"><b>${lang["LINE"]} $oline...</b></td><td style=\"padding: 3px 0 3px 0\" align=\"center\"><b>${lang["LINE"]} $nline...</b></td></tr>";
-
+   		   $listing[$index]["rev1lineno"] = "$oline";
+   		   $listing[$index]["rev2lineno"] = "$nline";
+   		   $index++;
+   		   
             $fin = false;
             while (!feof($diff) && !$fin)
             {          
+      		   $listing[$index]["rev1lineno"] = 0;
+      		   $listing[$index]["rev2lineno"] = 0;
   
    		      $line = fgets($diff);
                if (!strncmp($line, "@@", 2))
@@ -155,27 +165,38 @@ if ($prevrev)
    		      else
    		      {
                   $mod = $line{0};
-                  $lclass = $rclass = "class=\"diff\"";
                   
                   $text = hardspace(htmlspecialchars(rtrim(substr($line, 2))));
                   
                   switch ($mod)
                   {
                      case "-":
-                        $lclass = "class=\"diffdeleted\"";
-                        echo "<tr><td $lclass>$text</td><td $rclass>&nbsp;</td>";
+                        $listing[$index]["rev1diffclass"] = "diffdeleted";
+                        $listing[$index]["rev2diffclass"] = "diff";
+                        
+                        $listing[$index]["rev1line"] = $text;
+                        $listing[$index]["rev2line"] = "&nbsp;";
                         break;  
 
                      case "+":
-                        $rclass = "class=\"diffadded\"";
-                        echo "<tr><td $lclass>&nbsp;</td><td $rclass>$text</td>";
+                        $listing[$index]["rev1diffclass"] = "diff";
+                        $listing[$index]["rev2diffclass"] = "diffadded";
+                        
+                        $listing[$index]["rev1line"] = "&nbsp;";
+                        $listing[$index]["rev2line"] = $text;
                         break;
                         
                      default:
-                        echo "<tr><td $lclass>$text</td><td $rclass>$text</td>";
+                        $listing[$index]["rev1diffclass"] = "diff";
+                        $listing[$index]["rev2diffclass"] = "diff";
+                        
+                        $listing[$index]["rev1line"] = $text;
+                        $listing[$index]["rev2line"] = $text;
                         break;                         		
                   }
    		      }
+   		      
+   		      $index++;
    		   }
    		}   
    		
@@ -184,6 +205,9 @@ if ($prevrev)
    }
    else
    {
+      $index = 0;
+      $listing = array();
+
       // Get the diff  output
       if ($diff = popen($config->diff." -y -t -W 600 -w $oldtname $newtname", "r"))
       {
@@ -212,13 +236,18 @@ if ($prevrev)
                if ($oldline == "") $oldline = "&nbsp;";
                if ($newline == "") $newline = "&nbsp;";
                
-               $lclass = $rclass = "class=\"diff\"";
-               if ($mod == "<") $lclass = "class=\"diffdeleted\"";
-               else if ($mod == ">") $rclass = "class=\"diffadded\"";
-               else if ($mod == "|") $lclass = $rclass = "class=\"diffchanged\"";
+               $listing[$index]["rev1diffclass"] = "diff";
+               $listing[$index]["rev2diffclass"] = "diff";
                
-               echo "<tr><td $lclass>$oldline</td><td $rclass>$newline</td></tr>\n";
+               if ($mod == "<") $listing[$index]["rev1diffclass"] = "diffdeleted";
+               else if ($mod == ">") $listing[$index]["rev2diffclass"] ="diffadded";
+               else if ($mod == "|") $listing[$index]["rev1diffclass"] = $listing[$index]["rev2diffclass"] ="diffchanged";
+               
+               $listing[$index]["rev1line"] = $oldline;
+               $listing[$index]["rev2line"] = $newline;
             }
+            
+            $index++;
          }      
       }
    }
@@ -226,11 +255,16 @@ if ($prevrev)
    // Remove our temporary files   
    unlink($oldtname);
    unlink($newtname);
-   
-   echo "</table>";
 }
 else
-   echo "No previous revision";
+{
+   $vars["noprev"] = 1;
+}
+
+$vars["version"] = $version;
+parseTemplate("templates/header.tmpl", $vars, $listing);
+parseTemplate("templates/diff.tmpl", $vars, $listing);
+parseTemplate("templates/footer.tmpl", $vars, $listing);
    
 include("templates/footer.php");
 

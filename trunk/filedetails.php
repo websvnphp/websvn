@@ -25,8 +25,7 @@
 
 require("include/config.inc");
 require("include/svnlook.inc");
-
-include("templates/header.php");
+require("include/template.inc");
 
 $rep = @$_REQUEST["rep"];
 $path = @$_REQUEST["path"];
@@ -49,13 +48,16 @@ if ($path{0} != "/")
 else
    $ppath = $path;
 
-echo "<h1>$repname - ${lang["REV"]} ${log["rev"]} - $ppath</h1>";
-echo "<p>";
-echo "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
-echo "<pre>";
-$svnrep->listFileContents($path, $rev);
-echo "</pre>";
+$vars["repname"] = $repname;
+$vars["rev"] = $log["rev"];
+$vars["path"] = $ppath;
+$vars["prevdifflink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
 
-include("templates/footer.php");
+$listing = array ();
+
+$vars["version"] = $version;
+parseTemplate("templates/header.tmpl", $vars, $listing);
+parseTemplate("templates/file.tmpl", $vars, $listing);
+parseTemplate("templates/footer.tmpl", $vars, $listing);
 
 ?>
