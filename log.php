@@ -144,8 +144,8 @@ if ($pages > 1)
 }
 
 $vars["version"] = $version;
-parseTemplate("templates/header.tmpl", $vars, $listing);
-parseTemplate("templates/log.tmpl", $vars, $listing);
-parseTemplate("templates/footer.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."log.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
 
 ?>

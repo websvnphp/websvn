@@ -56,8 +56,8 @@ $vars["prevdifflink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$sho
 $listing = array ();
 
 $vars["version"] = $version;
-parseTemplate("templates/header.tmpl", $vars, $listing);
-parseTemplate("templates/file.tmpl", $vars, $listing);
-parseTemplate("templates/footer.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."file.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
 
 ?>

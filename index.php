@@ -37,8 +37,8 @@ foreach ($projects as $index => $project)
 } 
 
 $vars["version"] = $version;
-parseTemplate("templates/header.tmpl", $vars, $listing);
-parseTemplate("templates/index.tmpl", $vars, $listing);
-parseTemplate("templates/footer.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."index.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
 
 ?>
