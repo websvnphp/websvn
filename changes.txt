@@ -2,6 +2,8 @@ CHANGES
 
 1.37
 
+ADD: Display a message when there are no results found
+
 CHANGE: Aesthetic changes to the BlueGrey scheme
 CHANGE: Sort entries more natrually
 
