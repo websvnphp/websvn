@@ -28,10 +28,10 @@ require("include/version.inc");
 
 Class Config
 {
-   var $svnlook;
-   var $diff;
-   var $enscript;
-   var $sed;
+   var $svnlook = "svnlook";
+   var $diff = "diff";
+   var $enscript ="enscript";
+   var $sed = "sed";
    
    var $serverIsWindows = false;
    var $cacheResults = false;
@@ -40,14 +40,15 @@ Class Config
 
    var $templatePath = "./templates/standard/";
 
+   // Default character encodings
+   var $inputEnc = "";
+   var $outputEnc;
+
    var $_repositories;
    
    function Config()
    {
-      $this->svnlook = "svnlook";
-      $this->diff = "diff";
-      $this->enscript = "enscript";
-      $this->sed = "sed";
+      $this->setOutputEncoding("ISO-8859-1");
    }
    
    function addRepository($name, $path)
@@ -82,6 +83,7 @@ Class Config
    function setServerIsWindows()
    {
       $this->serverIsWindows = true;
+      $this->setInputEncoding("CP850");
    }
 
    // setCachingOn
@@ -201,7 +203,6 @@ Class Config
       $this->setPath($this->diff, $path, "diff");
    }
 
-
    // setEnscriptPath
    //
    // Define the location of the enscript command
@@ -262,6 +263,24 @@ Class Config
             }
          }
          closedir($handle); 
+      }
+   }
+   
+   // Encoding functions
+   
+   function setInputEncoding($enc)
+   {
+      $this->inputEnc = $enc;
+   }
+
+   function setOutputEncoding($enc)
+   {
+      global $vars;
+      
+      if ($enc != "")
+      {
+         $this->outputEnc = $enc;
+         $vars["charset"] = $enc;
       }
    }
 }
