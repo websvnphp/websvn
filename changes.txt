@@ -13,6 +13,9 @@ NEW: The cached files are now compressed
 NEW: The project selection box shows the current project by default
 NEW: Swedish translation
 NEW: Japanese translation
+NEW: The install file explains how to set up permission based repository
+     access such that access via the web interface is the same as access
+     via a client (assuming Apache2).
 
 CHANGE: The extraction of the directory listings is now accomplished using
         the svn command via file:/// access rather than svnlook.  This has
