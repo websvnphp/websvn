@@ -26,6 +26,10 @@
 // These binding currently use svnlook to achieve their goal.  Once a proper SWIG binding has been
 // produces, there'll be an option to use those instead
 
+if (!@$SVNLOOK)
+{
+$SVNLOOK = true;
+
 // Function returns true if the give entry in a directory tree is at the top level
 
 function _topLevel($entry)
@@ -70,7 +74,7 @@ Class SVNRepository
    
    function dirContents($path, $rev = 0)
    {
-      global $config;
+      global $config, $locwebsvnreal;
       
       $revstr = _revStr($rev);
       
@@ -86,7 +90,7 @@ Class SVNRepository
       }
       
       $cachedname = strtr($this->repPath, ":/\\", "___");
-      $cachedname = ".".DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_$rev";
+      $cachedname = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_$rev";
       
       if ($config->cacheResults && !file_exists($cachedname))
       {
@@ -226,7 +230,7 @@ Class SVNRepository
    
    function getLogDetails($path, $rev = 0)
    {
-      global $config, $lang;
+      global $config, $lang, $locwebsvnreal;
       
       $revstr = _revStr($rev);
       
@@ -240,7 +244,7 @@ Class SVNRepository
       }
       
       $cachedname = strtr($this->repPath, ":/\\", "___");
-      $cachedname = ".".DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_log_$rev";
+      $cachedname = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_log_$rev";
       
       if ($config->cacheResults && !file_exists($cachedname))
       {
@@ -364,7 +368,7 @@ Class SVNRepository
    
    function getChangedFiles($rev = 0)
    {
-      global $config;
+      global $config, $locwebsvnreal;
       
       $revstr = _revStr($rev);
          
@@ -378,7 +382,7 @@ Class SVNRepository
       }
       
       $cachedname = strtr($this->repPath, ":/\\", "___");
-      $cachedname = ".".DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_mods_$rev";
+      $cachedname = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_mods_$rev";
       
       if ($config->cacheResults && !file_exists($cachedname))
       {
@@ -494,5 +498,7 @@ Class SVNRepository
          
       return $history;
    }
+}
+
 }
 ?>

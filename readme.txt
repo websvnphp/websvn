@@ -39,16 +39,16 @@ read templates.txt, which explains the highly configurable template system.
 NOTE:
 
 In order to return results with a reasonable speed, WebSVN caches the results
-of it's requests to svnlook.  Under normal usage this works correctly since it's
-not generally possible to change a revision with subversion.
+of it's requests to svnlook.  Under normal usage this works correctly since
+it's not generally possible to change a revision with subversion.
 
 That said, one case that may cause confusion is if someone changes the log
 message of a given revision.  WebSVN will have cached the previous log message
 and won't know that there's a new one available.  There are various solutions
 to this problem:
 
-1) Turn off caching in the config file.  This will severely impede the perfomance
-   of WebSVN.
+1) Turn off caching in the config file.  This will severely impede the
+   perfomance of WebSVN.
 
 2) Change the post-revprop-change hook so that is deletes the contents of the
    cache after any change to a revision property
@@ -56,6 +56,29 @@ to this problem:
 3) Only allow the administrator to change revision properties.  He can then
    delete the cache by hand should this occur.
 
+MULTIVIEWS
+
+You may choose to configure access to your repository via Apache's MultiView
+system. This will enable you to access a respositoy using a url such as:
+
+http://servername/wsvn/repname/path/in/repository
+
+To do this you must:
+
+- Place wsvn.php where you want to.  Normally you place it such that it's
+  accessible straight after the servername, as shown above.
+
+- Configure the parent directory of wsvn.php to use MultiViews (see Apache
+  docs).
+
+- Change config.php to include the line $config->useMultiViews();
+
+- Change the paths at the beginning of wsvn.php
+
+Now go to http://servername/wsvn/ and make sure that you get the index page.
+
+The repname part of the URL is the name given to it in the config.php file.
+For this reason you may wish to avoid putting spaces in the name.
 
 LICENCE
 

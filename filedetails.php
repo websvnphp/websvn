@@ -56,8 +56,10 @@ $youngest = $history[0]["rev"];
 if (empty($rev))
    $rev = $youngest;
 
+$url = $config->getURL($rep, $path, "file");
+
 if ($rev != $youngest)
-   $vars["goyoungestlink"] = "<a href=\"filedetails.php?rep=$rep&path=$path&sc=1\">${lang["GOYOUNGEST"]}</a>";
+   $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
 
@@ -65,7 +67,10 @@ else
 $vars["repname"] = $repname;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
-$vars["prevdifflink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+
+$url = $config->getURL($rep, $path, "diff");
+
+$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
 
 $listing = array ();
 

@@ -65,8 +65,10 @@ $vars["repname"] = $repname;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 
+$logurl = $config->getURL($rep, $path, "log");
+
 if ($rev != $youngest)
-   $vars["goyoungestlink"] = "<a href=\"log.php?rep=$rep&path=$path&sc=1\">${lang["GOYOUNGEST"]}</a>";
+   $vars["goyoungestlink"] = "<a href=\"${logurl}sc=1\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
 
@@ -114,12 +116,19 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
    $pos = strrpos($rpath, "/");
    $parent = substr($rpath, 0, $pos + 1);
 
-   $listing[$index]["revlink"] = "<a href=\"listing.php?rep=$rep&path=$parent&rev=${r["rev"]}&sc=1\">${r["rev"]}</a>";
+   $url = $config->getURL($rep, $parent, "dir");
+   $listing[$index]["revlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=1\">${r["rev"]}</a>";
 
    if ($isDir)
-      $listing[$index]["revpathlink"] = "<a href=\"listing.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
+   {
+      $url = $config->getURL($rep, $rpath, "dir"); 
+      $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
+   }
    else
-      $listing[$index]["revpathlink"] = "<a href=\"filedetails.php?rep=$rep&path=$rpath&rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
+   {
+      $url = $config->getURL($rep, $rpath, "file"); 
+      $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&sc=$showchanged\">$rpath</a>";
+   }
       
    $listing[$index]["revauthor"] = $log["author"];
    $listing[$index]["revage"] = $log["age"];
@@ -140,17 +149,18 @@ if ($pages > 1)
    $prev = $page - 1;
    $next = $page + 1;
    echo "<p><center>";
-   if ($page > 1) $vars["pagelinks"] .= "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
+      
+   if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&sc=$showchanged&page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
    for ($p = 1; $p <= $pages; $p++)
    {
       if ($p != $page)
-         $vars["pagelinks"].= "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$p\">$p</a> "; 
+         $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&sc=$showchanged&page=$p\">$p</a> "; 
       else
          $vars["pagelinks"] .= "<b>$p </b>";
    }
-   if ($page < $pages) $vars["pagelinks"] .=" <a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&page=$next\">${lang["NEXT"]}&nbsp;></a>";   
+   if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&sc=$showchanged&page=$next\">${lang["NEXT"]}&nbsp;></a>";   
    
-   $vars["showalllink"] = "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
+   $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
    echo "</center>";
 }
 
