@@ -302,6 +302,6 @@ foreach ($reps as $index => $trep)
 $vars["projects_select"] .= "</select>";
 
 $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
-$vars["projects_endform"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\"><input type=\"hidden\" name=\"op\" value=\"form\"></form>";   
+$vars["projects_endform"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\"><input type=\"hidden\" name=\"op\" value=\"form\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
 ?>
