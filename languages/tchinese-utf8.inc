@@ -59,6 +59,7 @@ $lang["AUTHOR"] = "ä½œè??";
 $lang["AGE"] = "?›´??•æ?????";
 $lang["LOG"] = "æ­·å²è¨˜é??";
 $lang["CURDIR"] = "?›®??ç›®???";
+$lang["TARBALL"] = "Tarball ? ¼å¼?";
 
 $lang["PREV"] = "ä¸Šä??ç­?";
 $lang["NEXT"] = "ä¸‹ä??ç­?";
@@ -91,3 +92,16 @@ $lang["HOURS"] = "å°æ?????";
 $lang["MINUTES"] = "?????˜å??";
 
 $lang["GO"] = "???";
+
+$lang["COMPAREPATHS"] = "æ¯”å?è·¯å¾?";
+$lang["COMPAREREVS"] = "æ¯”å?ä¿®è¨????";
+$lang["PROPCHANGES"] = "?”¹è®Šå±¬??? :";
+$lang["CONVFROM"] = "??™å?‹æ?”å?é¡¯ç¤ºå??????”¹è®Šè?‰æ?›è·¯å¾?";
+$lang["TO"] = "???";
+$lang["REVCOMP"] = "é¡›å?’æ?”å??";
+
+// The following are defined by some languages to stop unwanted line splitting
+// in the template files. 
+
+$lang["NOBR"] = "";
+$lang["ENDNOBR"] = "";

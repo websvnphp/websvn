@@ -59,6 +59,7 @@ $lang["AUTHOR"] = "作者";
 $lang["AGE"] = "更動時間";
 $lang["LOG"] = "歷史記錄";
 $lang["CURDIR"] = "目前目錄";
+$lang["TARBALL"] = "Tarball 格式";
 
 $lang["PREV"] = "上一筆";
 $lang["NEXT"] = "下一筆";
@@ -91,3 +92,17 @@ $lang["HOURS"] = "小時前";
 $lang["MINUTES"] = "分鐘前";
 
 $lang["GO"] = "到";
+
+$lang["COMPAREPATHS"] = "比對路徑";
+$lang["COMPAREREVS"] = "比對修訂版";
+$lang["PROPCHANGES"] = "改變屬性 :";
+$lang["CONVFROM"] = "這個比對顯示必需改變轉換路徑";
+$lang["TO"] = "到";
+$lang["REVCOMP"] = "顛倒比對";
+
+// The following are defined by some languages to stop unwanted line splitting
+// in the template files. 
+
+$lang["NOBR"] = "";
+$lang["ENDNOBR"] = "";
+
