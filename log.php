@@ -27,6 +27,7 @@ require_once("include/setup.inc");
 require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
+require_once("include/bugtraq.inc");
 
 $page = (int)@$_REQUEST["page"];
 $all = (@$_REQUEST["all"] == 1)?1:0;
@@ -109,6 +110,9 @@ if ($rev != $youngest)
    $vars["goyoungestlink"] = "<a href=\"${logurl}sc=1\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
+
+// We get the bugtraq variable just once based on the HEAD
+$bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
 $history = $svnrep->getHistory($path, $rev);
 
@@ -214,6 +218,10 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
       $listing[$index]["revlog"] = nl2br(create_anchors($log["message"]));
       $listing[$index]["rowparity"] = "$row";
 
+      // Look for bugtraq properties if asked
+      
+      $listing[$index]["revlog"] = $bugtraq->replaceIDs($listing[$index]["revlog"]);
+      
       $row = 1 - $row;
       $index++;
    }

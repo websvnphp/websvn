@@ -521,7 +521,13 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
-      return implode("\n",runCommand($config->svn." propget $property $revstr ".quote("file:///".$path), true));
+      $ret = runCommand($config->svn." propget $property $revstr ".quote("file:///".$path), true);
+      
+      // Remove the surplus newline
+      if (count($ret))
+         unset($ret[count($ret) - 1]);
+      
+      return implode("\n", $ret);
    }
 
   function getHistory($path, $rev = 0)
