@@ -23,14 +23,16 @@
 //
 // External command handling
 
-function transChars($str)
+function transChars($str, $doEnt = true)
 {
    global $config;
    
    if ($config->serverIsWindows)
    {
       //$output = iconv("cp850", "iso-8859-1", $ooutput]);
-      return htmlentities(strtr($str, "…‚‹“—–‡", "ΰιθκοξτωϋη"));
+      $str = strtr($str, "…‚‹“—–‡", "ΰιθκοξτωϋη");
+      if ($doEnt)
+         $str = htmlentities($str);
    }
    
    return $str;

@@ -7,10 +7,12 @@ ADD: MultiViews support.  You can now set up WebSVN to access the
      
       http://server/wsvn/repname/path/to/rep
 
+ADD: Colourisation support using Enscript
 ADD: [websvn-test] function can now be nested
 ADD: locwebsvnhttp variable added in template system
 ADD: Bluegrey scheme now has show/hide changed link
 
+FIX: Possible security hole with by abuse of popen
 FIX: WebSVN should now function correctly (again) on non windows servers.
 FIX: First character of diff listing was missing
 
