@@ -47,6 +47,7 @@ if (@$_REQUEST["selectproj"])
       $basedir = "/";
       
    $url = $config->getURL($rep, "/", "dir");
+   $url = html_entity_decode($url);
    
    if ($config->multiViews)
       redirect($url."sc=$showchanged");

@@ -35,8 +35,7 @@ if (!isset($rep))
    exit;
 }
 
-list ($repname, $reppath) = $config->getRepository($rep);
-$svnrep = new SVNRepository($reppath);
+$svnrep = new SVNRepository($rep->path);
 
 if ($path{0} != "/")
    $ppath = "/".$path;
@@ -57,11 +56,11 @@ $extn = strrchr($path, ".");
 // Check to see if we should serve it with a particular content-type.
 // The content-type could come from an svn:mime-type property on the
 // file, or from the $contentType array in setup.inc.
-if (!$config->ignoreSvnMimeTypes) 
+if (!$rep->getIgnoreSvnMimeTypes()) 
 {
   $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
 }
-if (!$config->ignoreWebSVNContentTypes) 
+if (!$rep->getIgnoreWebSVNContentTypes()) 
 {
   $setupContentType = @$contentType[$extn];
 }
@@ -125,7 +124,7 @@ else
 
 
 $vars["action"] = "";
-$vars["repname"] = $repname;
+$vars["repname"] = $rep->name;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 

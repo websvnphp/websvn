@@ -51,15 +51,7 @@ else
       $baseurl = "/";
 }
 
-// Make sure that we have a repository
-if (!isset($rep))
-{
-   echo $lang["NOREP"];
-   exit;
-}
-
-list ($repname, $reppath) = $config->getRepository($rep);
-$svnrep = new SVNRepository($reppath);
+$svnrep = new SVNRepository($rep->path);
 
 if ($path == "" || $path{0} != "/")
    $ppath = "/".$path;
@@ -76,7 +68,7 @@ $cachename = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cac
 
 $rss = new UniversalFeedCreator();
 $rss->useCached($cachename);
-$rss->title = $repname;
+$rss->title = $rep->name;
 $rss->description = "${lang["RSSFEEDTITLE"]} - $repname";
 $rss->link = getFullURL($baseurl.$listurl);
 $rss->syndicationURL = $rss->link;

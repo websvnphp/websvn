@@ -80,8 +80,7 @@ if (!isset($rep))
    exit;
 }
 
-list ($repname, $reppath) = $config->getRepository($rep);
-$svnrep = new SVNRepository($reppath);
+$svnrep = new SVNRepository($rep->path);
 
 $passrev = $rev;
 
@@ -98,7 +97,7 @@ else
    $ppath = $path;
 
 $vars["action"] = $lang["LOG"];
-$vars["repname"] = $repname;
+$vars["repname"] = $rep->name;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 
@@ -275,7 +274,6 @@ if ($pages > 1)
 $url = $config->getURL($rep, $path, "log");
 $vars["logsearch_form"] = "<form action=\"$url\" method=\"post\" name=\"logsearchform\">";
 
-$reps = $config->getRepositories();
 $vars["logsearch_inputbox"] = "<input name=\"search\" value=\"$search\">";
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";

@@ -154,7 +154,7 @@ $spacearray = array (
 
 function hardspace($s)
 {
-   global $spacearray, $config;
+   global $spacearray, $config, $rep;
 
    $len = strlen($s);
 
@@ -165,7 +165,7 @@ function hardspace($s)
 	      $numspaces += 1;
 	   else
 	      if ($s[$i] == "\t")
-	         $numspaces += $config->spaces;
+	         $numspaces += $rep->getExpandTabsBy();
 	      else
 	         break;
    }

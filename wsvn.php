@@ -79,6 +79,7 @@ if ($config->multiViews)
       
    $rep = $config->findRepository($name);
    createProjectSelectionForm();
+   $vars["allowdownload"] = $rep->getAllowDownload();
 
    // find the operation type
    $op = @$_REQUEST["op"];

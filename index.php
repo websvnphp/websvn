@@ -35,12 +35,12 @@ $vars["path"] = "";
 $projects = $config->getRepositories();
 $i = 0;
 $listing = array ();
-foreach ($projects as $index => $project)
+foreach ($projects as $project)
 {
-   $url = $config->getURL($index, "/", "dir");
+   $url = $config->getURL($project, "/", "dir");
 
    $listing[$i]["rowparity"] = $i % 2;
-   $listing[$i++]["projlink"] = "<a href=\"${url}sc=0\">${project["name"]}</a>";
+   $listing[$i++]["projlink"] = "<a href=\"${url}sc=0\">".$project->name."</a>";
 } 
 
 $vars["version"] = $version;

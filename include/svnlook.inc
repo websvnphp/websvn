@@ -68,10 +68,17 @@ function encodepath($uri)
    {
      $parts[$i] = rawurlencode($parts[$i]);
    }
-   return implode('/', $parts);
+   
+   $uri = implode('/', $parts);
+   
+   // Quick hack.  Subversion seems to have a bug surrounding the use of %3A instead of :
+   
+   $uri = str_replace("%3A" ,":", $uri);
+   
+   return $uri;
 }
 
-// The SVNRepositor Class
+// The SVNRepository Class
 
 Class SVNRepository
 {
