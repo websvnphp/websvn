@@ -30,9 +30,14 @@ Class Config
 {
    var $svnlook;
    var $diff;
+   var $enscript;
+   var $sed;
+   
    var $serverIsWindows = false;
    var $cacheResults = false;
    var $multiViews = false;
+   var $useEnscript = false;
+
    var $templatePath = "./templates/standard/";
 
    var $_repositories;
@@ -41,6 +46,8 @@ Class Config
    {
       $this->svnlook = "svnlook";
       $this->diff = "diff";
+      $this->enscript = "enscript";
+      $this->sed = "sed";
    }
    
    function addRepository($name, $path)
@@ -95,6 +102,15 @@ Class Config
       $this->multiViews = true;
    }
 
+   // useEnscript
+   //
+   // Use Enscript to colourise listings
+   
+   function useEnscript()
+   {
+      $this->useEnscript = true;
+   }
+
    // getURL
    //
    // Get the URL to a path name based on the current config
@@ -143,11 +159,11 @@ Class Config
       }
    }
 
-   // setSVNCommandPath
+   // setPath
    //
-   // Define the location of the svnlook command
+   // Set the location of the given path
    
-   function setSVNCommandPath($path)
+   function setPath(&$var, $path, $name)
    {
       $lastchar = $path{strlen($path) - 1};
       $isDir = ($lastchar == DIRECTORY_SEPARATOR ||
@@ -162,9 +178,18 @@ Class Config
       // On a windows machine we need to put spaces around the entire command
       // to allow for spaces in the path
       if ($this->serverIsWindows)
-         $this->svnlook = "\"${path}svnlook\"";
+         $var = "\"$path$name\"";
       else         
-         $this->svnlook = "${path}svnlook";
+         $var = "$path$name";
+   }
+
+   // setSVNCommandPath
+   //
+   // Define the location of the svnlook command
+   
+   function setSVNCommandPath($path)
+   {
+      $this->setPath($this->svnlook, $path, "svnlook");
    }
    
    // setDiffPath
@@ -173,27 +198,27 @@ Class Config
    
    function setDiffPath($path)
    {
-      $lastchar = $path{strlen($path) - 1};
-      $isDir = ($lastchar == DIRECTORY_SEPARATOR ||
-                $lastchar == "/" ||
-                $lastchar == "\\");
-       
-      if (!$isDir)
-      {
-         $path .= DIRECTORY_SEPARATOR;
-      }
-
-      // On a windows machine we need to put spaces around the entire command
-      // to allow for spaces in the path
-      if ($this->serverIsWindows)
-         $this->diff = "\"${path}diff\"";
-      else         
-         $this->diff = "${path}diff";
+      $this->setPath($this->diff, $path, "diff");
    }
 
-   // setSVNCommandPath
+
+   // setEnscriptPath
    //
-   // Define the location of the svnlook command
+   // Define the location of the enscript command
+   
+   function setEnscriptPath($path)
+   {
+      $this->setPath($this->enscript, $path, "enscript");
+   }
+
+   // setSedPath
+   //
+   // Define the location of the sed command
+   
+   function setSedPath($path)
+   {
+      $this->setPath($this->sed, $path, "sed");
+   }
    
    function setTemplatePath($path)
    {

@@ -56,6 +56,15 @@ to this problem:
 3) Only allow the administrator to change revision properties.  He can then
    delete the cache by hand should this occur.
 
+COLOURISATION
+
+You can few files with syntax colouring if you have Enscript 1.6 or higher 
+installed on your system.  You'll also need Sed.
+
+Simply set the paths in the config file and then uncomment the line:
+
+$config->useEnscript();
+
 MULTIVIEWS
 
 You may choose to configure access to your repository via Apache's MultiView

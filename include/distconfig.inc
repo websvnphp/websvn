@@ -64,6 +64,8 @@ $config = new Config;
 //
 // $config->setSVNCommandPath("Path/to/svnlook/ e.g. c:\\program files\\subversion\\bin");
 // $config->setDiffPath("Path/to/diff/command/");
+// $config->setEnscriptPath("Path/to/diff/command/");
+// $config->setSedPath("Path/to/diff/command/");
 
 // REPOSITORY SETUP
 
@@ -107,7 +109,13 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // Uncomment this if you don't have the right to use it.  Be warned that you may need it however!
 set_time_limit(0);
 
-// Uncomment this line to turn off caching of repo information.  This will slow down your browsing.
+// Uncomment this line if you want to use Enscript to colourise your file listings
+//
+// You'll need Enscript version 1.6 or higher AND Sed installed to use this feature. 
+// Set the paths above.
+// $config->useEnscript();
+
+// Comment this line to turn off caching of repo information.  This will slow down your browsing.
 $config->setCachingOn();
 
 }
