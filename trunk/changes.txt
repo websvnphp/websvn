@@ -17,6 +17,7 @@ NEW: Various configuration options may now be applied on a per project
 NEW: Support for using 'bugtraq' properties when display log entries.
      See http://svn.collab.net/repos/tortoisesvn/trunk/doc/issuetrackers.txt
 NEW: Traditional Chinese translation
+NEW: Spanish translation
      
 CHANGE: Style information removed from RSS feed
 CHANGE: Changed files are now hidden by defaut (since the directory
