@@ -33,7 +33,7 @@ $lang["DIFFREVS"] = "Diff between revs";
 $lang["AND"] = "and";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Line";
-$lang["SHOWALL"] = "Show entire file";
+$lang["SHOWENTIREFILE"] = "Show entire file";
 $lang["SHOWCOMPACT"] = "Only display areas with differences";
 
 $lang["DIFFPREV"] = "Diff with Previous";

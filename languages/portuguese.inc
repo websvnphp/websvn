@@ -33,7 +33,7 @@ $lang["DIFFREVS"] = "Diferen&ccedil;as entre revis&otilde;es";
 $lang["AND"] = "e";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Linha";
-$lang["SHOWALL"] = "Mostrar todo o ficheiro";
+$lang["SHOWENTIREFILE"] = "Mostrar todo o ficheiro";
 $lang["SHOWCOMPACT"] = "Mostrar apenas &aacute;reas com diferen&ccedil;as";
 
 $lang["DIFFPREV"] = "Diferen&ccedil;as com a anterior";

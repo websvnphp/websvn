@@ -29,7 +29,7 @@ $lang["DIFFREVS"] = "Vergleich zwischen Revisionen";
 $lang["AND"] = "und";
 $lang["REV"] = "Revision";
 $lang["LINE"] = "Zeile";
-$lang["SHOWALL"] = "Ganze Datei anzeigen";
+$lang["SHOWENTIREFILE"] = "Ganze Datei anzeigen";
 $lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
 
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
