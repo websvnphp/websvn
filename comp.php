@@ -29,11 +29,6 @@ require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
 
-$context = 5;
-
-$vars["action"] = $lang["DIFF"];
-$all = (@$_REQUEST["all"] == 1)?1:0;
-
 // Make sure that we have a repository
 if (!isset($rep))
 {
@@ -44,17 +39,19 @@ if (!isset($rep))
 list ($repname, $reppath) = $config->getRepository($rep);
 $svnrep = new SVNRepository($reppath);
 
-// Make sure that we've comp here from a sensible place
-if (@$_REQUEST["compare"] != 1) exit;
-
 // Retrieve the request information
-$path1 = @$_REQUEST["compare_file"][0];
-$rev1  = @$_REQUEST["compare_rev"][0];
-$path2 = @$_REQUEST["compare_file"][1];
-$rev2  = @$_REQUEST["compare_rev"][1];
+$path1 = @$_REQUEST["compare"][0];
+$path2 = @$_REQUEST["compare"][1];
+
+// Sanity check
+if (empty($path1) || empty($path2))
+   exit;
+
+list($path1, $rev1) = explode("@", $path1);
+list($path2, $rev2) = explode("@", $path2);
 
 $url = $config->getURL($rep, "", "comp");
-$vars["revlink"] = "<a href=\"${url}compare=1&amp;compare_rev%5B%5D=$rev2&amp;compare_rev%5B%5D=$rev1&amp;compare_file%5B%5D=".urlencode($path2)."&amp;compare_file%5B%5D=".urlencode($path1)."\">${lang["REVCOMP"]}</a>";
+$vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&amp;compare%5B%5D=".urlencode($path1)."@$rev1\">${lang["REVCOMP"]}</a>";
 
 
 if ($rev1 == 0) $rev1 = "HEAD";

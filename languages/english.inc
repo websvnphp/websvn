@@ -37,7 +37,7 @@ $lang["LINE"] = "Line";
 $lang["SHOWENTIREFILE"] = "Show entire file";
 $lang["SHOWCOMPACT"] = "Only display areas with differences";
 
-$lang["DIFFPREV"] = "Diff with Previous";
+$lang["DIFFPREV"] = "Compare with Previous";
 $lang["BLAME"] = "Blame";
 
 $lang["REVINFO"] = "Revision Information";
@@ -90,7 +90,8 @@ $lang["MINUTES"] = "minutes";
 
 $lang["GO"] = "Go";
 
-$lang["COMPARE"] = "Compare Paths";
+$lang["COMPAREPATHS"] = "Compare Paths";
+$lang["COMPAREREVS"] = "Compare Revisions";
 $lang["PROPCHANGES"] = "Property changes :";
 $lang["CONVFROM"] = "This comparison shows the changes necessary to convert path ";
 $lang["TO"] = "TO";

@@ -100,7 +100,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
 
       $listing[$index]["rowparity"] = ($index % 2)?"1":"0";
       
-      $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare_file[]\" value=\"".fileLink($path, $file, true)."\" onClick=\"checkCB(this)\">";
+      $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"".fileLink($path, $file, true)."@$passrev\" onClick=\"checkCB(this)\">";
       
       if (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file))
          $listing[$index]["filelink"] = "<b>".fileLink($path, $file)."</b>";
@@ -205,6 +205,7 @@ $dirurl = $config->getURL($rep, $path, "dir");
 $logurl = $config->getURL($rep, $path, "log");
 $rssurl = $config->getURL($rep, $path, "rss");
 $dlurl = $config->getURL($rep, $path, "dl");
+$compurl = $config->getURL($rep, "", "comp");
 
 if ($rev != $youngest && $youngest != -1)
    $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&amp;sc=1\">${lang["GOYOUNGEST"]}</a>";
@@ -273,6 +274,7 @@ else
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
+$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".urlencode($history[1]["path"])."@".$history[1]["rev"]."&amp;compare%5B%5D=".urlencode($history[0]["path"])."@".$history[0]["rev"]."\">${lang["DIFFPREV"]}</a>";
 
 if ($config->rss)
 {
@@ -285,8 +287,8 @@ if ($config->allowDownload)
 
 $url = $config->getURL($rep, "", "comp");
 $vars["compare_form"] = "<form action=\"$url\" method=\"get\" name=\"compareform\">";
-$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPARE"]}\">";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"compare\" value=\"1\"><input type=\"hidden\" name=\"compare_rev[0]\" value=\"$passrev\"><input type=\"hidden\" name=\"compare_rev[1]\" value=\"$passrev\"><input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
 $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);

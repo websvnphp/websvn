@@ -40,7 +40,7 @@ foreach ($projects as $index => $project)
    $url = $config->getURL($index, "/", "dir");
 
    $listing[$i]["rowparity"] = $i % 2;
-   $listing[$i++]["projlink"] = "<a href=\"${url}sc=1\">${project["name"]}</a>";
+   $listing[$i++]["projlink"] = "<a href=\"${url}sc=0\">${project["name"]}</a>";
 } 
 
 $vars["version"] = $version;
