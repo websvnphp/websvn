@@ -1,10 +1,21 @@
 CHANGES
 
-NEW: Polish translation
+1.62
 
+NEW: RSS feed can now list changed files
+NEW: Templates can now show an open folder icon
+NEW: Polish translation
+NEW: Dutch translation
+
+CHANGE: Window is scrolled to appropriate location when opening a new directory
+
+FIX: Allow repository names containing '/'
+FIX: Fixed sloppy HTML in diff templates
+FIX: Fix problems with the diff output
+FIX: Repositories on Windows network shares can now be accessed.
 FIX: Accented characters weren't shown correctly in the directory comparison
      view.
-FIX: Remove error one only one revision was available
+FIX: Remove error when only one revision was available
 
 1.61
 
