@@ -9,6 +9,8 @@ NEW: New style 'Zinn' based on the templates created for
      
 CHANGE: Style information removed from RSS feed
 
+FIX: Some setups wouldn't allow diff generations with enscript
+     enabled.
 FIX: Filenames are URL encoded correctly before calling svn file:///
 
 1.51
