@@ -178,7 +178,72 @@ if (!@$CONFIG)
    ".wrl" => "x-world/x-vrml" // VRML Worlds
 
    );
-   
+
+   // List of extensions recognised by enscript.
+
+   $extEnscript = array
+   (
+     ".ada"     => "ada",
+     ".adb"     => "ada",
+     ".ads"     => "ada",
+     ".awk"     => "awk",
+     ".c"       => "c",
+     ".c++"     => "cpp",
+     ".cc"      => "cpp",
+     ".cpp"     => "cpp",
+     ".csh"     => "csh",
+     ".cxx"     => "cpp",
+     ".diff"    => "diffu",
+     ".dpr"     => "delphi",
+     ".el"      => "elisp",
+     ".eps"     => "postscript",
+     ".f"       => "fortran",
+     ".for"     => "fortran",
+     ".gs"      => "haskell",
+     ".h"       => "c",
+     ".hpp"     => "cpp",
+     ".hs"      => "haskell",
+     ".htm"     => "html",
+     ".html"    => "html",
+     ".idl"     => "idl",
+     ".java"    => "java",
+     ".js"      => "javascript",
+     ".lgs"     => "haskell",
+     ".lhs"     => "haskell",
+     ".m"       => "objc",
+     ".m4"      => "m4",
+     ".man"     => "nroff",
+     ".nr"      => "nroff",
+     ".p"       => "pascal",
+     ".pas"     => "delphi",
+     ".patch"   => "diffu",
+     ".pkg"     => "sql", 
+     ".pl"      => "perl",
+     ".pm"      => "perl",
+     ".pp"      => "pascal",
+     ".ps"      => "postscript",
+     ".s"       => "asm",
+     ".scheme"  => "scheme",
+     ".scm"     => "scheme",
+     ".scr"     => "synopsys",
+     ".sh"      => "sh",
+     ".shtml"   => "html",
+     ".sql"     => "sql",
+     ".st"      => "states",
+     ".syn"     => "synopsys",
+     ".synth"   => "synopsys",
+     ".tcl"     => "tcl",
+     ".tex"     => "tex",
+     ".texi"    => "tex",
+     ".texinfo" => "tex",
+     ".v"       => "verilog",
+     ".vba"     => "vba",
+     ".vh"      => "verilog",
+     ".vhd"     => "vhdl",
+     ".vhdl"    => "vhdl",
+     ".py"      => "python"
+   );
+
    require("config.inc");
 }
 
