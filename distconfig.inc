@@ -23,6 +23,8 @@
 //
 // Configuration parameters
 
+require("command.inc");
+
 Class Config
 {
    var $adminCommandPath;

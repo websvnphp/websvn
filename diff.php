@@ -25,6 +25,7 @@
 //
 
 require("svnlook.inc");
+
 include("templates/header.php");
 
 $context = 5;
@@ -110,7 +111,7 @@ if ($prevrev)
    fclose($fp);
    
    // Get the diff  output
-   $output = shell_exec($config->diffCommandPath."diff -y -t -W 600 -w $oldtname $newtname");
+   $output = runCommand($config->diffCommandPath."diff -y -t -W 600 -w $oldtname $newtname");
       
    // Remove our temporary files   
    unlink($oldtname);
