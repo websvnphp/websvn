@@ -217,7 +217,7 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
       
       $listing[$index]["revauthor"] = $log["author"];
       $listing[$index]["revage"] = $log["age"];
-      $listing[$index]["revlog"] = create_anchors(nl2br($log["message"]));
+      $listing[$index]["revlog"] = nl2br(create_anchors($log["message"]));
       $listing[$index]["rowparity"] = "$row";
 
       $row = 1 - $row;

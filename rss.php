@@ -115,7 +115,7 @@ for ($n = 0; $n < $maxmessages; $n++)
  
    $url = $config->getURL($rep, $parent, "dir");
    
-   $desc = nl2br($log["message"]);
+   $desc = $log["message"];
    $item = new FeedItem();
    
    // For the title, we show the first 10 words of the description
@@ -144,7 +144,8 @@ for ($n = 0; $n < $maxmessages; $n++)
    
    $item->title = "$sdesc";
    $item->link = getFullURL($baseurl."${url}rev=${r["rev"]}&sc=$showchanged");
-   $item->description = $divbox.$divfont."${lang["REV"]} ${r["rev"]} - ${log["author"]} </span> ($files ${lang["FILESMODIFIED"]})</div><p>".create_anchors($desc)."</p>";
+   print $desc;
+   $item->description = $divbox.$divfont."${lang["REV"]} ${r["rev"]} - ${log["author"]} </span> ($files ${lang["FILESMODIFIED"]})</div><p>".nl2br(create_anchors($desc))."</p>";
    $item->date = $log["committime"];
    $item->author = $log["author"];
      
