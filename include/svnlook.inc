@@ -359,7 +359,6 @@ Class SVNRepository
       if ($filename == "")
       {
          $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
-         print $config->svn." cat $revstr ".quote("file:///".$path)." $pipe";
          passthru($config->svn." cat $revstr ".quote("file:///".$path)." $pipe");
          return;
       }
