@@ -24,6 +24,7 @@
 // English language strings
 
 $lang["NOREP"] = "No repository given";
+$lang["NOPATH"] = "Path not found";
 
 $lang["DIFFREVS"] = "Diff between revs";
 $lang["AND"] = "and";
