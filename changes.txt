@@ -8,6 +8,7 @@ Notes: Before installing this version you should delete all the existing
        wsvn.php has changed.  You should redo any appropriate configuration
        changes inside this file.
 
+NEW: Blame information for a file can now be viewed
 NEW: The cached files are now compressed
 NEW: The project selection box shows the current project by default
 NEW: Swedish translation

@@ -200,6 +200,10 @@ Class Config
                $fname = "diff.php";
                break;
 
+            case "blame":
+               $fname = "blame.php";
+               break;
+
             case "form":
                $fname = "form.php";
                break;

@@ -472,7 +472,22 @@ Class SVNRepository
       }
    }
 
-   function getHistory($path, $rev = 0)
+   // getBlameDetails
+   //
+   // Dump the blame content of a file to the given filename
+   
+   function getBlameDetails($path, $filename, $rev = 0)
+   {
+      global $config;
+      
+      $revstr = _revStr($rev);
+      
+      $path = strtr($this->repPath."/".$path, DIRECTORY_SEPARATOR, "/");   
+      $cmd = quoteCommand($config->svn." blame $revstr file:///$path > $filename", false);
+      @exec($cmd);
+  }
+
+  function getHistory($path, $rev = 0)
    {
       global $config;
       
