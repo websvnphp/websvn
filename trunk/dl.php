@@ -29,18 +29,10 @@ require_once("include/utils.inc");
 
 // Make sure that this operation is allowed
 
-if (!$config->allowDownload)
+if (!$rep->allowDownload())
    exit;
 
-// Make sure that we have a repository
-if (!isset($rep))
-{
-   echo $lang["NOREP"];
-   exit;
-}
-
-list ($repname, $reppath) = $config->getRepository($rep);
-$svnrep = new SVNRepository($reppath);
+$svnrep = new SVNRepository($rep->path);
 
 if ($path{0} != "/")
    $ppath = "/".$path;
@@ -65,7 +57,7 @@ if (mkdir($tmpname))
    $arcname = substr($path, 0, -1);
    $arcname = basename($arcname);
    if (empty($arcname))
-      $arcname = $repname;
+      $arcname = $rep->name;
 
    $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
    

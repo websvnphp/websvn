@@ -41,8 +41,7 @@ if (!isset($rep))
    exit;
 }
 
-list ($repname, $reppath) = $config->getRepository($rep);
-$svnrep = new SVNRepository($reppath);
+$svnrep = new SVNRepository($rep->path);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getHistory($path);
@@ -60,7 +59,7 @@ else
 
 $prevrev = @$history[1]["rev"];
 
-$vars["repname"] = $repname;
+$vars["repname"] = $rep->name;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 $vars["prevrev"] = $prevrev;
