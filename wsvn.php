@@ -63,21 +63,35 @@ if ($config->multiViews)
       exit;
    }
    
-   // Get the repository name
-   $pos = strpos($path, "/");
+   // Split the path into repository and path elements
+   // Note: we have to cope with the repository name
+   //       having a slash in it
 
-   if ($pos === false)
+   $found = false;
+
+   foreach ($config->getRepositories() as $rep)
    {
-      $name = substr($path, 0);
-      $path = "/";
-   }
-   else
-   {
+      $pos = strlen($rep->name);
+      if (strlen($path) < $pos)
+         next;
+         
       $name = substr($path, 0, $pos);
-      $path = substr($path, $pos);
+      if (strcasecmp($rep->name, $name) == 0)
+      {
+         $path = substr($path, $pos);
+         if ($path[0] == "/") {
+            $found = true;
+            break;
+         }
+      }
    }
-      
-   $rep = $config->findRepository($name);
+
+   if ($found == false)
+   {
+      include("$locwebsvnreal/index.php");
+      exit;
+   }
+
    createProjectSelectionForm();
    $vars["allowdownload"] = $rep->getAllowDownload();
 
