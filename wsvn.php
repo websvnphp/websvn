@@ -112,6 +112,10 @@ if ($config->multiViews)
          $file = "dl.php";
          break;
 
+      case "comp":
+         $file = "dl.php";
+         break;
+
       default:
          $file = "listing.php";
    }

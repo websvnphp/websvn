@@ -239,6 +239,10 @@ Class Config
             case "dl":
                $fname = "dl.php";
                break;
+
+            case "comp":
+               $fname = "comp.php";
+               break;
          }
 
          if ($this->refRepositoriesByNumber)
