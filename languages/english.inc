@@ -46,9 +46,13 @@ $lang = array
    "DELETEDFILES" => "Deleted files",
    "VIEWLOG" => "View&nbsp;Log",
    "PATH" => "Path",
+   "AUTHOR" => "Author",
    "LOG" => "Log",
    
    "PREV" => "Prev",
    "NEXT" => "Next",
-   "SHOWALL" => "Show All"
+   "SHOWALL" => "Show All",
+   
+   "BADCMD" => "Error running this command",
+   "RETURNED" => "Returned"
 );
