@@ -189,11 +189,29 @@ if ($prevrev)
                         break;  
 
                      case "+":
-                        $listing[$index]["rev1diffclass"] = "diff";
-                        $listing[$index]["rev2diffclass"] = "diffadded";
                         
-                        $listing[$index]["rev1line"] = "&nbsp;";
-                        $listing[$index]["rev2line"] = $text;
+                        // Try to mark "changed" line sensibly
+                        if (!empty($listing[$index-1]) && $listing[$index-1]["rev1diffclass"] == "diffdeleted" && $listing[$index-1]["rev2diffclass"] == "diff")
+                        {
+                           $i = $index - 1;
+                           while (!empty($listing[$i-1]) && $listing[$i-1]["rev1diffclass"] == "diffdeleted" && $listing[$i-1]["rev2diffclass"] == "diff")
+                              $i--;
+                              
+                           $listing[$i]["rev1diffclass"] = "diffchanged";
+                           $listing[$i]["rev2diffclass"] = "diffchanged";
+                           $listing[$i]["rev2line"] = $text;
+                           
+                           // Don't increment the current index count
+                           $index--;
+                        }
+                        else
+                        {
+                           $listing[$index]["rev1diffclass"] = "diff";
+                           $listing[$index]["rev2diffclass"] = "diffadded";
+                           
+                           $listing[$index]["rev1line"] = "&nbsp;";
+                           $listing[$index]["rev2line"] = $text;
+                        }
                         break;
                         
                      default:
