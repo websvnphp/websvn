@@ -481,10 +481,11 @@ Class SVNRepository
       }
       else
       {
-         if ($config->useEnscript && !empty($l))
+         if ($config->useEnscript)
          {
             $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
-                                $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+                                $config->enscript." --language=html ".
+								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename", false);
             @exec($cmd);
          }
@@ -527,10 +528,11 @@ Class SVNRepository
       }
       else
       {  
-         if ($config->useEnscript && !empty($l))
+         if ($config->useEnscript)
          {
             $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
-                                $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+                                $config->enscript." --language=html ".
+ 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' 2>&1", false);
                                   
             if (!($result = popen($cmd, "r")))

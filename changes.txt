@@ -2,6 +2,10 @@ CHANGES
 
 1.39
 
+CHANGE: In the human-readable date strings, display up to 119 minutes,
+        47 hours, 13 days or 23 months before moving up to the next
+        quantity, like ViewCVS.
+
 FIX: Links followed after viewing the contents of a file go to the 
      revision of the repository previously being viewed
 FIX: Paths with spaces are now correctly showed in the log view
@@ -10,10 +14,9 @@ FIX: Blank lines in the diff output are set to &nbsp; so the browser
 FIX: A blank author field is set to an &nbsp; cell.
 FIX: A year is 365 days, not 356.
 FIX: Base ages correctly upon GMT
+FIX: The diff output did not escape html entities when enscript was
+     enabled and the file extension was not recognised for enscript. 
 
-CHANGE: In the human-readable date strings, display up to 119 minutes,
-        47 hours, 13 days or 23 months before moving up to the next
-        quantity, like ViewCVS.
 1.38
 
 ADD: Templates can now define icons for particular file types
