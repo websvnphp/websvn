@@ -25,15 +25,20 @@
 
 require("include/config.inc");
 require("include/svnlook.inc");
-
-include("templates/indexheader.php");
+require("include/template.inc");
 
 $projects = $config->getRepositories();
+$i = 0;
+$vars = array();
+$listing = array ();
 foreach ($projects as $index => $project)
 {
-   echo "<li><b><a href=\"listing.php?rep=$index&sc=1\">${project["name"]}</b>";
+   $listing[$i++]["projlink"] = "<a href=\"listing.php?rep=$index&sc=1\">${project["name"]}</a>";
 } 
 
-include("templates/indexfooter.php");
+$vars["version"] = $version;
+parseTemplate("templates/header.tmpl", $vars, $listing);
+parseTemplate("templates/index.tmpl", $vars, $listing);
+parseTemplate("templates/footer.tmpl", $vars, $listing);
 
 ?>

@@ -25,8 +25,7 @@
 
 require("include/config.inc");
 require("include/svnlook.inc");
-
-include("templates/header.php");
+require("include/template.inc");
 
 $rep = @$_REQUEST["rep"];
 $path = @$_REQUEST["path"];
@@ -64,64 +63,80 @@ if ($path == "" || $path{0} != "/")
 else
    $ppath = $path;
 
-echo "<h1>$repname - ${lang["REV"]} ${log["rev"]}</h1>";
+$vars["repname"] = $repname;
+
 if ($log["rev"] < $youngest)
-{
-   echo "<a href=\"listing.php?rep=$rep&path=$path&sc=1\">${lang["GOHEAD"]}</a>";
-}
-echo "<p><b>${lang["LASTMOD"]}:</b> ${log['author']} - ${log['date']}";
-echo "<p><b>${lang["LOGMSG"]}:</b><br>".nl2br($log['message']);
-echo "<p>";
+   $vars["goheadlink"] = "<a href=\"listing.php?rep=$rep&path=$path&sc=1\">${lang["GOHEAD"]}</a>";
+else
+   $vars["goheadlink"] = "";
+
+$vars["author"] = $log['author'];
+$vars["date"] = $log['date'];
+$vars["log"] = $log['message'];
+$vars["rev"] = $log["rev"];
 
 if (!$showchanged)
 {
-   echo "<a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=1\">${lang["SHOWCHANGED"]}</a>";
+   $vars["showchangeslink"] = "<a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=1\">${lang["SHOWCHANGED"]}</a>";
+   $vars["hidechangeslink"] = "";
+
+   $vars["hidechanges"] = true;
+   $vars["showchanges"] = false;
 }
 else
 {
-   echo "<p><b>${lang["CHANGES"]}:</b><br>";
+   $vars["showchangeslink"] = "";
    
    $changes = $svnrep->getChangedFiles($rev);
-   
-   echo "<center><table border=1 class=\"bordered\" cellpadding=4><tr><td><center><b>${lang["NEWFILES"]}</b></center></td><td><center><b>${lang["CHANGEDFILES"]}</b></center></td><td><center><b>${lang["DELETEDFILES"]}</b></center></td></tr><tr>";
-   
-   echo "<td valign=\"top\">";
+
    $first = true;
+   $vars["newfiles"] = "";
    foreach ($changes["added"] as $file)
    {
-      if (!$first) echo "<br>";
+      if (!$first) $vars["newfiles"] .= "<br>";
       $first = false;
-      echo fileLink("", $file);
+      $vars["newfiles"] .= fileLink("", $file);
    }
-   echo "</td>";
       
-   echo "<td valign=\"top\">";
    $first = true;
+   $vars["changedfiles"] = "";
    foreach ($changes["updated"] as $file)
    {
-      if (!$first) echo "<br>";
+      if (!$first) $vars["changedfiles"] .= "<br>";
       $first = false;
-      echo fileLink("", $file);
+      $vars["changedfiles"] .= fileLink("", $file);
    }
-   echo "</td>";
 
-   echo "<td valign=\"top\">";
    $first = true;
+   $vars["deletedfiles"] = "";
    foreach ($changes["deleted"] as $file)
    {
-      if (!$first) echo "<br>";
+      if (!$first) $vars["changedfiles"] .= "<br>";
       $first = false;
-      echo $file;
+      $vars["changedfiles"] .= $file;
    }
-   echo "</td>";
 
-   echo "</tr></table>";
-   echo "<p><a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=0\">${lang["HIDECHANGED"]}</a></center>";
+   $vars["hidechangeslink"] = "<a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=0\">${lang["HIDECHANGED"]}</a>";
+   
+   $vars["hidechanges"] = false;
+   $vars["showchanges"] = true;
 }
 
-echo "<p><hr><h1>$ppath&nbsp;- <font size=\"smaller\"><a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a></font></h1>";
+$subs = explode("/", $ppath);
+$sofar = "";
+$count = count($subs);
+$vars["curdirlinks"] = "";
 
-echo "<table border=1 class=\"outlined\" width=\"100%\" cellpadding=2><tr><th><b>${lang["PATH"]}</b></td><th align=\"center\"><b>${lang["LOG"]}</b></td></tr>";
+for ($n = 0; $n < $count - 2; $n++)
+{
+   $sofar .= $subs[$n]."/";
+   $vars["curdirlinks"] .= "[<a href=\"listing.php?rep=$rep&path=$sofar&rev=$rev&sc=$showchanged\">".$subs[$n]."/]</a> ";
+}
+$vars["curdirlinks"] .=  "[".$subs[$n]."/]";
+$vars["curdirloglink"] = "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a>";
+
+$index = 0;
+$listing = array();
 
 // Give the user a chance to go back up the tree
 if ($ppath != "/")
@@ -130,26 +145,31 @@ if ($ppath != "/")
    $pos = strrpos(substr($ppath, 0, -1), "/");
    $parent = substr($ppath, 0, $pos + 1);
 
-   echo "<tr><td><a href=\"listing.php?rep=$rep&path=$parent&rev=$rev&sc=$showchanged\">../</a></td><td>&nbsp;</td></tr>";
+   $listing[$index]["filelink"] = "<a href=\"listing.php?rep=$rep&path=$parent&rev=$rev&sc=$showchanged\">../</a>";
+   $listing[$index]["fileviewloglink"] = "";
+   $index++;
 }
 
 // List each file in the current directory
+$row = 0;
 foreach($contents as $file)
 {
-   echo "<tr>";
-      
-   echo "<td>".fileLink($path, $file)."</td>";
-   
+   $listing[$index]["rowparity"] = "$row";
+   $listing[$index]["filelink"] = fileLink($path, $file);
+
    // The history command doesn't return with a trailing slash.  We need to remember here if the
    // file is a directory or not! 
    
    $isDir = ($file{strlen($file) - 1} == "/"?1:0);
-   echo "<td width=1><a href=\"log.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a></td>";
-   echo "</td>";
+   $listing[$index]["fileviewloglink"] = "<a href=\"log.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a>";
+   
+   $row = 1 - $row;
+   $index++;
 }
 
-echo "</table>";
-
-include("templates/footer.php");
+$vars["version"] = $version;
+parseTemplate("templates/header.tmpl", $vars, $listing);
+parseTemplate("templates/listing.tmpl", $vars, $listing);
+parseTemplate("templates/footer.tmpl", $vars, $listing);
 
 ?>
