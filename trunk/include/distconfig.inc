@@ -25,15 +25,13 @@
 
 // --- FOLLOW THE INSTRUCTIONS BELOW TO CONFIGURE YOUR SETUP ---
 
-// Define the configuration
-
 // --- PLATFORM CONFIGURATION ---
 
 // Uncomment the next line if your running a windows server
 //
 // $config->setServerIsWindows();
 
-// Configure these lines if your commands aren't on your path.   Spaces are allowed on Windows machines.
+// Configure these lines if your commands aren't on your path. 
 //
 // $config->setSVNCommandPath("Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin");
 // $config->setDiffPath("Path/to/diff/command/");
@@ -86,7 +84,10 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/japanese-utf8.inc"); // (FedoraCore/Max OS X/BeOS)
 
 // include("languages/korean-euc.inc"); 
-// include("languages/korean-utf8.inc"); 
+// include("languages/korean-utf8.inc");
+
+// include("languages/tchinese.inc"); 
+// include("languages/tchinese-utf8.inc");
 
 // By default, WebSVN tries to use the iconv module (if enabled) to convert log messages from your
 // system's character set to you default output encoding. If you find that your log messages aren't
