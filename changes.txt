@@ -12,7 +12,7 @@ ADD: Recognised non-text files are now delivered to the user as attachments.
      using WebSVN) is user configurable.
 ADD: File comparisons are now colourised based on the file extension
 
-CHANGE: Onlt the Enscript file extensions that the user wishes to override are
+CHANGE: Only the Enscript file extensions that the user wishes to override are
         now listed in the config file.
 
 1.32
