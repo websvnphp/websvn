@@ -30,7 +30,7 @@ $lang["DIFFREVS"] = "Diff&eacute;rences entre r&eacute;visions";
 $lang["AND"] = "et";
 $lang["REV"] = "R&eacute;vision";
 $lang["LINE"] = "Ligne";
-$lang["SHOWALL"] = "Afficher tout le fichier";
+$lang["SHOWENTIREFILE"] = "Afficher tout le fichier";
 $lang["SHOWCOMPACT"] = "Afficher seulement les passages|parties avec des diff&eacute;rences";
 
 $lang["DIFFPREV"] = "Diff&eacute;rence avec le Pr&eacute;c&eacute;dent";
