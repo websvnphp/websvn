@@ -27,6 +27,11 @@ require("include/setup.inc");
 require("include/svnlook.inc");
 require("include/template.inc");
 
+$vars["action"] = $lang["PROJECTS"];
+$vars["repname"] = "";
+$vars["rev"] = 0;
+$vars["path"] = "";
+
 $projects = $config->getRepositories();
 $i = 0;
 $listing = array ();

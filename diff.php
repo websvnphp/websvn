@@ -66,6 +66,7 @@ function hardspace($s)
   return $spaces.$s;
 }
 
+$vars["action"] = $lang["DIFF"];
 $rep = (int)@$_REQUEST["rep"];
 $path = escapeshellcmd(@$_REQUEST["path"]);
 $rev = (int)@$_REQUEST["rev"];

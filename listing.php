@@ -96,6 +96,7 @@ if ($rev != $youngest)
 else
    $vars["goyoungestlink"] = "";
 
+$vars["action"] = "";
 $vars["author"] = $log['author'];
 $vars["date"] = $log['date'];
 $vars["log"] = nl2br($log['message']);
