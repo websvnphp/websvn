@@ -1,4 +1,4 @@
- // correctly handle PNG transparency in Win IE 5.5 or higher.
+// correctly handle PNG transparency in Win IE 5.5 or higher.
  
 function correctPNG()
 {

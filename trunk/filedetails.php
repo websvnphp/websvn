@@ -58,10 +58,28 @@ if (empty($rev))
 
 $extn = strrchr($path, ".");
 $cont = @$contentType[$extn];
+
+// Check to see if the user has requested that this type be zipped and sent
+// to the browser as an attachment
+
+if (in_array($extn, $zipped))
+{
+   $base = basename($path);
+   header("Content-Type: application/x-gzip");
+   header("Content-Disposition: attachment; filename=$base.gz");
+
+   // Get the file contents and pipe into gzip.  All this without creating
+   // a temporary file.  Damn clever.
+   $svnrep->getFileContents($path, "", $rev, "| ".$config->gzip." -n -f");
+   
+   exit;
+}
+
+// If there's a MIME type associated with this format, then we deliver it
+// with this information 
+
 if (!empty($cont))
 {
-   // This file has an associated MIME Type.  We deliver it to the user
-   
    $base = basename($path);
    
    header("Content-Type: $cont");
@@ -72,32 +90,30 @@ if (!empty($cont))
    
    exit;
 }
+
+// There's no associated MIME type.  Show the file using WebSVN.
+
+$url = $config->getURL($rep, $path, "file");
+
+if ($rev != $youngest)
+   $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
 else
-{
-   // There's no associated MIME type.  Show the file using WebSVN.
-   
-   $url = $config->getURL($rep, $path, "file");
-   
-   if ($rev != $youngest)
-      $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
-   else
-      $vars["goyoungestlink"] = "";
-   
-   
-   $vars["action"] = "";
-   $vars["repname"] = $repname;
-   $vars["rev"] = $rev;
-   $vars["path"] = $ppath;
-   
-   $url = $config->getURL($rep, $path, "diff");
-   
-   $vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
-   
-   $listing = array ();
-   
-   $vars["version"] = $version;
-   parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
-   parseTemplate($config->templatePath."file.tmpl", $vars, $listing);
-   parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
-}
+   $vars["goyoungestlink"] = "";
+
+
+$vars["action"] = "";
+$vars["repname"] = $repname;
+$vars["rev"] = $rev;
+$vars["path"] = $ppath;
+
+$url = $config->getURL($rep, $path, "diff");
+
+$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+
+$listing = array ();
+
+$vars["version"] = $version;
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."file.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
 ?>

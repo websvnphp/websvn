@@ -32,6 +32,7 @@ Class Config
    var $diff = "diff";
    var $enscript ="enscript";
    var $sed = "sed";
+   var $gzip = "gzip";
    
    var $serverIsWindows = false;
    var $cacheResults = false;
@@ -244,6 +245,15 @@ Class Config
       $this->setPath($this->sed, $path, "sed");
    }
    
+   // setGZipPath
+   //
+   // Define the location of the GZip command
+   
+   function setGZipPath($path)
+   {
+      $this->setPath($this->gzip, $path, "gzip");
+   }
+
    function setTemplatePath($path)
    {
       $lastchar = $path{strlen($path) - 1};
