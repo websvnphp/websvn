@@ -79,6 +79,20 @@ You may imagine that simply using . in place should work, however this isn't
 the case when MultiViews are turned on.  Using this variable gives you a way to
 access your template files in all cases.
 
+Variables defined for in all scripts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+locwebsvnhttp - Root of websvn directory
+charset - The charset requested by the user
+
+projects_form - HTML <form> specification for the projects selection box
+projects_select - HTML <select>...</select> specification for the project
+                  options
+projects_endform - HTML </form> specification for the projects selection
+                   box (includes hidden field declaration)
+
+
+
 Variables defined for index.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -86,11 +100,9 @@ Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
 projlink - Link to the project
 
+
 Variables defined for directory.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-locwebsvnhttp - Root of websvn directory
-charset - The charset requested by the user
 
 repname - Name of the repository
 rev - Revision being viewed
@@ -124,12 +136,11 @@ fileviewloglink - Link to the log page for the file
 isDir - true if the current file is a directory (use with [websvn-test:isDir]
         to display icons) 
 
+
 Variables defined for log.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 action - Action being performed ("Log")
-locwebsvnhttp - Root of websvn directory
-charset - The charset requested by the user
 
 repname - Name of the repository
 rev - Revision being viewed
@@ -145,11 +156,9 @@ revauthor - Author of this revision
 revage - Age of revision
 revlog - Log message of revision
 
+
 Variables defined for file.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-locwebsvnhttp - Root of websvn directory
-charset - The charset requested by the user
 
 repname - Name of the repository
 rev - Revision being viewed
@@ -158,6 +167,7 @@ path - Path of item being logged
 prevdifflink - Link to comparison with previous revision
 
 Note: Use command [websvn-getlisting] to display the listing.
+
 
 Variables defined for diff.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
