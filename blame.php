@@ -94,7 +94,12 @@ if ($file = fopen($tfname, "r"))
 
             $listing[$index]["author"] = $author;
             
-            $listing[$index]["line"] = hardspace(transChars(rtrim(fgets($file)), $ent));
+            if ($ent)
+               $line = replaceEntities(rtrim(fgets($file)));
+            else
+               $line = rtrim(fgets($file));
+
+            $listing[$index]["line"] = hardspace($line);
             
             if (trim($listing[$index]["line"]) == "")
                $listing[$index]["line"] = "&nbsp;";

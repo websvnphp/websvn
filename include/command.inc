@@ -23,6 +23,18 @@
 //
 // External command handling
 
+function replaceEntities($str)
+{
+   global $config;
+   
+   if (version_compare(phpversion(), "4.1.0", "<"))
+      $str = htmlentities($str);
+   else
+      $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
+
+   return $str;
+}
+
 function transChars($str, $doEnt = true)
 {
    global $config;
@@ -38,13 +50,7 @@ function transChars($str, $doEnt = true)
       }
    }
    
-   if ($doEnt)
-   {
-      if (version_compare(phpversion(), "4.1.0", "<"))
-         $str = htmlentities($str);
-      else
-         $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
-   }
+   if ($doEnt) $str = replaceEntities($str);
 
    return $str;
 }
@@ -68,10 +74,7 @@ function transArray($arr)
          }
       }
 
-      if (version_compare(phpversion(), "4.1.0", "<"))
-         $narr[$key] = htmlentities(rtrim($value));
-      else
-         $narr[$key] = htmlentities(rtrim($value), ENT_COMPAT, $config->outputEnc);
+      $narr[$key] = replaceEntities($narr[$key]);
    }
       
    return $narr;
