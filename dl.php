@@ -29,7 +29,7 @@ require_once("include/utils.inc");
 
 // Make sure that this operation is allowed
 
-if (!$rep->allowDownload())
+if (!$rep->getAllowDownload())
    exit;
 
 $svnrep = new SVNRepository($rep->path);
