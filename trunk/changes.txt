@@ -1,5 +1,13 @@
 CHANGES
 
+1.02
+
+ADD: Improved command handling to report returned errors.  Considerably helps
+     initial installation problems.
+ADD: Show the author of each revision in the log view
+
+FIX: Removed the spurious &nsbp that some people were seeing
+
 1.01 (5 Feb 2004)
 
 FIX: Files with HTML content are now shown correcty
