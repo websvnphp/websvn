@@ -65,6 +65,9 @@ $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>"
 $lang["PROJECTS"] = "Subversion&nbsp;Projects";
 $lang["SERVER"] = "Subversion&nbsp;Server";
 
+$lang["SEARCHLOG"] = "Search log for";
+$lang["CLEARLOG"] = "Clear current search";
+
 $lang["YEAR"] = "year";
 $lang["YEARS"] = "years";
 $lang["MONTH"] = "month";

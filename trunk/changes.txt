@@ -1,5 +1,9 @@
 CHANGES
 
+1.36
+
+ADD: Log message search feature
+
 1.35
 
 ADD: You can now specify a list of file types (extensions) for files which
