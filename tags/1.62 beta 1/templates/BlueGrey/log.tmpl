@@ -1,0 +1,56 @@
+
+<div align="right">[websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+<p>
+<h2>[websvn:repname] - [lang:REV] [websvn:rev]</h2>
+[websvn:curdirlinks]<p>
+[websvn-test:goyoungestlink]
+[websvn:goyoungestlink]<p>
+[websvn-endtest]
+<hr>
+<center>
+[websvn:logsearch_form][lang:SEARCHLOG]: [websvn:logsearch_inputbox][websvn:logsearch_submit]
+[websvn-test:logsearch_clearloglink]
+<p><font size="-1">[websvn:logsearch_clearloglink]</font><p>
+[websvn-endtest]
+[websvn:logsearch_endform]
+</center>
+
+[websvn-test:logsearch_nomatches]
+   <center>[lang:NORESULTS]</center>
+[websvn-endtest]
+
+[websvn-test:logsearch_resultsfound]
+   [websvn:compare_form]
+      <table cellpadding="2px" cellspacing="0" width="100%">
+         <tr>
+            <th class="HdrClmn">[lang:REV]</th>
+            <th class="HdrClmn">[lang:PATH]</th>
+            <th class="HdrClmn">[lang:AUTHOR]</th>
+            <th class="HdrClmn">[lang:AGE]</th>
+            <th class="HdrClmnEnd">[lang:LOGMSG]</th>
+         </tr>
+      
+         [websvn-startlisting]
+         <tr>
+            <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]"><nobr>[websvn:compare_box][websvn:revlink]</nobr></td>
+            <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revpathlink]</td>
+            <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revauthor]</td>
+            <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revage]</td>
+            <td valign="top" class="row[websvn:rowparity]">[websvn:revlog]</td>
+         </tr>
+         [websvn-endlisting]
+      </table>
+      <p>
+      [websvn:compare_submit]  
+   [websvn:compare_endform]
+[websvn-endtest]
+
+[websvn-test:logsearch_nomorematches]
+   <p><center>[lang:NOMORERESULTS]</center>
+[websvn-endtest]
+      
+<p><center>[websvn:logsearch_moreresultslink]</center>
+
+<hr>
+<p><center>[websvn:pagelinks]<p>[websvn:showalllink]</center>
+   
