@@ -1,5 +1,16 @@
 CHANGES
 
+1.04
+
+Please note that the config file is now stored in include/
+
+FIX: Directories in the log view lacked their trailing slashes.
+FIX: Diff is now far more efficient with Apache's memory,
+     and shows the corrrect line numbers.
+FIX: setDiffPath now works.
+FIX: Bug introduced in 1.03 whereby the revision number always showed '1'
+     corrected.
+
 1.03
 
 Note that the config.inc file has completely changed in this release, in
