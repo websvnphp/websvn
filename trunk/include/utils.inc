@@ -66,4 +66,33 @@ function createDirLinks($rep, $path, $rev, $showchanged)
    }
 }
 
+// Create links out of http:// and mailto: tags
+
+function create_anchors($text)
+{
+   $ret = $text;
+
+   // Match correctly formed URLs that aren't already links
+	$ret = preg_replace("#\b(?<!href=\")([a-z]+?)://(\S*)([\w/]+)#i",
+	                    "<a href=\"\\1://\\2\\3\" target=\"_blank\">\\1://\\2\\3</a>",
+	                    $ret);
+	                    
+	// Now match anything beginning with www, as long as it's not //www since they were matched above                    
+	$ret = preg_replace("#\b(?<!//)www\.(\S*)([\w/]+)#i",
+	                    "<a href=\"http://www.\\1\\2\" target=\"_blank\">www.\\1\\2</a>",
+	                    $ret);
+
+	// Match email addresses
+	$ret = preg_replace("#\b([\w\-_.]+)@([\w\-.]+)\b#i",
+	                    "<a href=\"mailto:\\1@\\2\">\\1@\\2</a>",
+	                    $ret);
+   
+   // Replace any usernames
+	$ret = preg_replace("#\[:nom:([^\]]*)\]#e",
+	                    "username(0, trim(\"\\1\"))",
+	                    $ret);
+   
+	return ($ret);
+}
+
 ?>
