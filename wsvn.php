@@ -76,6 +76,7 @@ if ($config->multiViews)
    }
       
    $rep = $config->findRepository($name);
+   createProjectSelectionForm();
 
    // find the operation type
    $op = @$_REQUEST["op"];
