@@ -68,52 +68,57 @@ e-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locweb
  - [websvn:curdirrssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a>
 [websvn-endtest]
 <p>
-<table cellpadding="0px" cellspacing="0px" width="100%">
-   <tr>
-      <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
-      [websvn-test:allowdownload]
-         [websvn-test:curdirrsslink]
-            <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-            <th class="HdrClmn"><b>[lang:TARBALL]</b></th>
-            <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></th>
+[websvn:compare_form]
+   <table cellpadding="0px" cellspacing="0px" width="100%">
+      <tr>
+         <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
+         [websvn-test:allowdownload]
+            [websvn-test:curdirrsslink]
+               <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
+               <th class="HdrClmn"><b>[lang:TARBALL]</b></th>
+               <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></th>
+            [websvn-else]
+               <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
+               <th class="HdrClmnEnd"><b>[lang:TARBALL]</b></th>
+            [websvn-endtest]
          [websvn-else]
-            <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-            <th class="HdrClmnEnd"><b>[lang:TARBALL]</b></th>
+            [websvn-test:curdirrsslink]
+               <th class="HdrClmn"><b>[lang:LOG]</b></th>
+               <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></th>
+            [websvn-else]
+               <th class="HdrClmnEnd"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
+            [websvn-endtest]
          [websvn-endtest]
-      [websvn-else]
-         [websvn-test:curdirrsslink]
-            <th class="HdrClmn"><b>[lang:LOG]</b></th>
-            <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></th>
+      </tr>
+      [websvn-startlisting]
+      <tr>
+         <td valign="middle" style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">
+            [websvn:compare_box]
+            [websvn-treenode]
+            [websvn-icon]
+            [websvn:filelink]
+         </td>
+         [websvn-test:allowdownload]
+            [websvn-test:curdirrsslink]
+               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
+               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[websvn:fileviewdllink]</td>
+               <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
+            [websvn-else]
+               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
+               <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[websvn:fileviewdllink]</td>
+            [websvn-endtest]
          [websvn-else]
-            <th class="HdrClmnEnd"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-         [websvn-endtest]
-      [websvn-endtest]
-   </tr>
-   [websvn-startlisting]
-   <tr>
-      <td valign="middle" style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">
-         [websvn-treenode]
-         [websvn-icon]
-         [websvn:filelink]
-      </td>
-      [websvn-test:allowdownload]
-         [websvn-test:curdirrsslink]
-            <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
-            <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[websvn:fileviewdllink]</td>
-            <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
-         [websvn-else]
-            <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
-            <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[websvn:fileviewdllink]</td>
-         [websvn-endtest]
-      [websvn-else]
-         [websvn-test:curdirrsslink]
-            <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
-            <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
-         [websvn-else]
-            <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
-         [websvn-endtest]
-      [websvn-endtest]   
-   </tr>
-   [websvn-endlisting]
-</table>
+            [websvn-test:curdirrsslink]
+               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
+               <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
+            [websvn-else]
+               <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
+            [websvn-endtest]
+         [websvn-endtest]   
+      </tr>
+      [websvn-endlisting]
+   </table>
+<p>
+[websvn:compare_submit]  
+[websvn:compare_endform]
 <hr>

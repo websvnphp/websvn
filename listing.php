@@ -28,7 +28,7 @@ require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
 
-function fileLink($path, $file)
+function fileLink($path, $file, $returnjoin = false)
 {
    global $rep, $passrev, $showchanged, $config;
    
@@ -36,6 +36,9 @@ function fileLink($path, $file)
       $ppath = "/".$path;
    else
       $ppath = $path;
+
+   if ($returnjoin)
+      return $ppath.$file;
 
    $isDir = $file{strlen($file) - 1} == "/";
       
@@ -96,6 +99,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
       }   
 
       $listing[$index]["rowparity"] = ($index % 2)?"1":"0";
+      
+      $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare_file[]\" value=\"".fileLink($path, $file, true)."\" onClick=\"checkCB(this)\">";
       
       if (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file))
          $listing[$index]["filelink"] = "<b>".fileLink($path, $file)."</b>";
@@ -268,16 +273,22 @@ else
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
+
 if ($config->rss)
 {
    $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["RSSFEED"]}</a>";
    $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">";
 }
+
 if ($config->allowDownload)
    $vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
 
-$listing = array();
+$url = $config->getURL($rep, "", "comp");
+$vars["compare_form"] = "<form action=\"$url\" method=\"get\" name=\"compareform\">";
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPARE"]}\">";
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"compare\" value=\"1\"><input type=\"hidden\" name=\"compare_rev[0]\" value=\"$passrev\"><input type=\"hidden\" name=\"compare_rev[1]\" value=\"$passrev\"><input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
+$listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);
 
 $vars["version"] = $version;

@@ -86,3 +86,13 @@ TD.diff
    font-size: 11px;
    background-color: #F0F0F0;
 }
+
+DIV.newpath
+{
+   PADDING: 10px 10px 10px 10px;
+   BACKGROUND-COLOR: #d0d0ee
+}
+
+DIV.difflines
+{
+}
