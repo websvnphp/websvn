@@ -66,6 +66,7 @@
 
 $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
+// $config->setTemplatePath("$locwebsvnreal/templates/Zinn/");
 
 // --- LANGUAGE SETUP ---
 
