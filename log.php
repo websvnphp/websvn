@@ -155,10 +155,13 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
    {
       if ((empty($fromRev) || $fromRev > $r["rev"]))
       {
-         // Turn all the HTML entities into real characters.  Admittedly, we're assuming
-         // use of the ISO-8859-1 character set...
-         $msg = html_entity_decode($log["message"]);
+         // Turn all the HTML entities into real characters.  
          
+         if (version_compare(phpversion(), "4.1.0", "<"))
+            $msg = html_entity_decode($log["message"]);
+         else
+            $msg = html_entity_decode($log["message"], ENT_COMPAT, $config->outputEnc);
+                  
          // Make sure that each word in the search in also in the log
          foreach($words as $word)
          {
