@@ -63,6 +63,8 @@ function _revStr($rev)
 
 function encodepath($uri)
 {
+   global $config;
+
    $parts = explode('/', $uri);
    for ($i = 0; $i < count($parts); $i++)
    {
@@ -80,6 +82,13 @@ function encodepath($uri)
    
    $uri = str_replace("%3A" ,":", $uri);
    
+   // Correct for Window share names
+   if ( $config->serverIsWindows==true )
+   {
+      if ( substr($uri, 0,2)=="//" )
+         $uri="\\".substr($uri, 2, strlen($uri));
+   }
+
    return $uri;
 }
 
