@@ -53,12 +53,14 @@ Class Config
    var $rss = true;
    var $spaces = 8;
    var $refRepositoriesByNumber = false;
-
+  
    var $templatePath = "./templates/Standard/";
 
    // Default character encodings
    var $inputEnc = "";
    var $outputEnc;
+
+   var $quote = "'";
 
    var $_repositories;
    
@@ -113,6 +115,10 @@ Class Config
       if ($cp == 0) $cp = 850;
          
       $this->setInputEncoding("CP$cp");
+      
+      // On Windows machines, use double quotes around command line parameters
+      
+      $this->quote = '"';
    }
 
    // setCachingOn

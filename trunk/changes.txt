@@ -25,6 +25,8 @@ FIX: SHOWALL was being redefined in the language files
 FIX: The directory listing view sometimes showed [lang:DELETEDFILES
 FIX: Under Windows, links in the RSS output would start with "\" if WebSVN
      was installed in the server's root directory.
+FIX: Sed wouldn't work under all versions of Windows due to the use of single
+     quotes around the paramters
 
 1.40
 

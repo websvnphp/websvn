@@ -87,9 +87,8 @@ Class SVNRepository
          $rev = $head[0];
       }
       
-      $path = strtr($this->repPath."/".$path, DIRECTORY_SEPARATOR, "/");
-      
-      $output = runCommand($config->svn." list $revstr file:///".$path);
+      $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+      $output = runCommand($config->svn." list $revstr file:///".$path, true);
       
       foreach ($output as $entry)
       {
@@ -400,7 +399,7 @@ Class SVNRepository
             $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-                                $config->sed." -n '1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p}' > $filename", false);
+                                $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p}".$config->quote." > $filename", false);
             @exec($cmd);
          }
          else
@@ -447,7 +446,7 @@ Class SVNRepository
             $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
                                 $config->enscript." --language=html ".
  								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-                                $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' 2>&1", false);
+                                $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote." 2>&1", false);
                                   
             if (!($result = popen($cmd, "r")))
                return;
@@ -487,8 +486,9 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = strtr($this->repPath."/".$path, DIRECTORY_SEPARATOR, "/");   
+      $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
       $cmd = quoteCommand($config->svn." blame $revstr file:///$path > $filename", false);
+      
       @exec($cmd);
   }
 

@@ -85,7 +85,7 @@ function quoteCommand($cmd, $redirecterr)
    return $cmd;
 }
 
-function runCommand($cmd)
+function runCommand($cmd, $mayReturnNothing = false)
 {
    global $lang;
    
@@ -101,7 +101,7 @@ function runCommand($cmd)
 		while (!feof($handle))
 		{
 		   $line = fgets($handle);
-		   if ($firstline && $line == "")
+		   if ($firstline && $line == "" && !$mayReturnNothing)
 		   {
 		      $err = true;
 		   }
