@@ -1,5 +1,11 @@
 CHANGES
 
+1.41
+
+ADD: Swedish translation
+
+FIX: SHOWALL was being redefined in the language files
+
 1.40
 
 ADD: RSS feed support (thanks to Lübbe Onken for his work on this)
