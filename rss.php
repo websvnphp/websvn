@@ -134,7 +134,7 @@ for ($n = 0; $n < $maxmessages; $n++)
    if ($desc == "") $sdesc = "${lang["REV"]} ${r["rev"]}";
    
    $item->title = "$sdesc";
-   $item->link = getFullURL($baseurl."${url}rev=${r["rev"]}&sc=$showchanged");
+   $item->link = getFullURL($baseurl."${url}rev=${r["rev"]}&amp;sc=$showchanged");
    $item->description = $divbox.$divfont."${lang["REV"]} ${r["rev"]} - ${log["author"]} </span> ($files ${lang["FILESMODIFIED"]})</div><p>".nl2br(create_anchors($desc))."</p>";
    $item->date = $log["committime"];
    $item->author = $log["author"];
