@@ -17,6 +17,7 @@ FIX: Base ages correctly upon GMT
 FIX: The diff output did not escape html entities when enscript was
      enabled and the file extension was not recognised for enscript. 
 FIX: distconfig.inc has a few minor errors in the examples.
+FIX: It wasn't possible to call ParentPath multiple times
 
 1.38
 
