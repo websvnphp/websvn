@@ -3,6 +3,7 @@ CHANGES
 1.51
 
 NEW: Korean translation
+NEW: Russian translation
 
 FIX: Repositories may now have spaces in their path (eg: c:\my reps)
 FIX: Diff now works when the file name has changed between versions
