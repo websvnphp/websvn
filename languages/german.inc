@@ -35,7 +35,7 @@ $lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
 
 $lang["REVINFO"] = "Revision Information";
-$lang["GOHEAD"] = "Go to head revision";
+$lang["GOYOUNGEST"] = "Go to most recent revision";
 $lang["LASTMOD"] = "Letzte &Auml;nderung";
 $lang["LOGMSG"] = "Logeintrag";
 $lang["CHANGES"] = "Änderungen";                                         

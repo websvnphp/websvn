@@ -34,14 +34,14 @@ $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
 function fileLink($path, $file)
 {
-   global $rep, $rev, $showchanged;
+   global $rep, $passrev, $showchanged;
    
    $isDir = $file{strlen($file) - 1} == "/";
 
    if ($isDir)
-      return "<a href=\"listing.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged\">$file</a>";
+      return "<a href=\"listing.php?rep=$rep&path=$path$file&rev=$passrev&sc=$showchanged\">$file</a>";
    else
-      return "<a href=\"filedetails.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged\">$file</a>";
+      return "<a href=\"filedetails.php?rep=$rep&path=$path$file&rev=$passrev&sc=$showchanged\">$file</a>";
 }
 
 // Make sure that we have a repository
@@ -53,10 +53,19 @@ if (!isset($rep))
 
 list ($repname, $reppath) = $config->getRepository($rep);
 $svnrep = new SVNRepository($reppath);
+
+// Revision info to pass along chain
+$passrev = $rev;
+
+// If there's no revision info, go to the lastest revision for this path
+$history = $svnrep->getHistory($path);
+$youngest = $history[0]["rev"];
+
+if (empty($rev))
+   $rev = $youngest;
+
 $contents = $svnrep->dirContents($path, $rev);
 $log = $svnrep->getLogDetails($path, $rev);
-$youngest = $svnrep->getLogDetails($path);
-$youngest = $youngest["rev"];
 
 if ($path == "" || $path{0} != "/")
    $ppath = "/".$path;
@@ -65,19 +74,20 @@ else
 
 $vars["repname"] = $repname;
 
-if ($log["rev"] < $youngest)
-   $vars["goheadlink"] = "<a href=\"listing.php?rep=$rep&path=$path&sc=1\">${lang["GOHEAD"]}</a>";
+if ($rev != $youngest)
+   $vars["goyoungestlink"] = "<a href=\"listing.php?rep=$rep&path=$path&sc=1\">${lang["GOYOUNGEST"]}</a>";
 else
-   $vars["goheadlink"] = "";
+   $vars["goyoungestlink"] = "";
 
 $vars["author"] = $log['author'];
 $vars["date"] = $log['date'];
 $vars["log"] = nl2br($log['message']);
 $vars["rev"] = $log["rev"];
+$vars["path"] = $ppath;
 
 if (!$showchanged)
 {
-   $vars["showchangeslink"] = "<a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=1\">${lang["SHOWCHANGED"]}</a>";
+   $vars["showchangeslink"] = "<a href=\"listing.php?rep=$rep&path=$path&rev=$passrev&sc=1\">${lang["SHOWCHANGED"]}</a>";
    $vars["hidechangeslink"] = "";
 
    $vars["hidechanges"] = true;
@@ -122,7 +132,7 @@ else
       $vars["deletedfiles"] .= " ".$file;
    }
 
-   $vars["hidechangeslink"] = "<a href=\"listing.php?rep=$rep&path=$path&rev=$rev&sc=0\">${lang["HIDECHANGED"]}</a>";
+   $vars["hidechangeslink"] = "<a href=\"listing.php?rep=$rep&path=$path&rev=$passrev&sc=0\">${lang["HIDECHANGED"]}</a>";
    
    $vars["hidechanges"] = false;
    $vars["showchanges"] = true;
@@ -136,10 +146,10 @@ $vars["curdirlinks"] = "";
 for ($n = 0; $n < $count - 2; $n++)
 {
    $sofar .= $subs[$n]."/";
-   $vars["curdirlinks"] .= "[<a href=\"listing.php?rep=$rep&path=$sofar&rev=$rev&sc=$showchanged\">".$subs[$n]."/]</a> ";
+   $vars["curdirlinks"] .= "[<a href=\"listing.php?rep=$rep&path=$sofar&rev=$passrev&sc=$showchanged\">".$subs[$n]."/]</a> ";
 }
 $vars["curdirlinks"] .=  "[".$subs[$n]."/]";
-$vars["curdirloglink"] = "<a href=\"log.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a>";
+$vars["curdirloglink"] = "<a href=\"log.php?rep=$rep&path=$path&rev=$passrev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a>";
 
 $index = 0;
 $listing = array();
@@ -156,7 +166,7 @@ foreach($contents as $file)
    
    $isDir = ($file{strlen($file) - 1} == "/"?1:0);
    $listing[$index]["isDir"] = $isDir;
-   $listing[$index]["fileviewloglink"] = "<a href=\"log.php?rep=$rep&path=$path$file&rev=$rev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a>";
+   $listing[$index]["fileviewloglink"] = "<a href=\"log.php?rep=$rep&path=$path$file&rev=$passrev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a>";
    
    $row = 1 - $row;
    $index++;
