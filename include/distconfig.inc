@@ -125,16 +125,35 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 //
 // $zipped[] = ".dll";
 
-// WebSVN has a built in list of associations from file extension to MIME content type. (You can
-// view this list in setup.inc). By default, any extension clicked on via WebSVN that isn't
-// included in this list will be brought up as ASCII text in the browser window (although this
-// text may optionally be colourised.  See below). 
+// Subversion controlled files have an svn:mime-type property that can
+// be set on a file indicating its mime type. By default binary files
+// are set to the generic appcliation/octet-stream, and other files
+// don't have it set at all. WebSVN also has a built-in list of
+// associations from file extension to MIME content type. (You can
+// view this list in setup.inc).
 //
-// For any extension that has a MIME type defined, the file will be delivered to the user as an
-// attachment with the given MIME type (unless you've asked for it to be GZIP'd above).
+// Determining the content-type: By default, if the svn:mime-type
+// property exists and is different from application/octet-stream, it
+// is used. Otherwise, if the built-in list has a contentType entry
+// for the extension of the file, that is used. Otherwise, if the
+// svn:mime-type property exists has the generic binary value of
+// application/octet-stream, the file will be served as a binary
+// file. Otherwise, the file will be brought up as ASCII text in the
+// browser window (although this text may optionally be colourised.
+// See below).
 //
-// Following the examples below, you can add new associations, modify the default ones or even
-// delete them entirely (to show them in ASCII via WebSVN).
+// Uncomment this if you want to ignore any svn:mime-type property on your
+// files.
+//
+// $config->ignoreSvnMimeTypes();
+// 
+// Uncomment this if you want skip WebSVN's custom mime-type handling
+//
+// $config->ignoreWebSVNContentTypes();
+// 
+// Following the examples below, you can add new associations, modify
+// the default ones or even delete them entirely (to show them in
+// ASCII via WebSVN).
 
 // $contentType[".c"] = "plain/text"; // Create a new association
 // $contentType[".doc"] = "plain/text"; // Modify an existing one

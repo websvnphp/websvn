@@ -359,6 +359,7 @@ Class SVNRepository
       if ($filename == "")
       {
          $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+         print $config->svn." cat $revstr ".quote("file:///".$path)." $pipe";
          passthru($config->svn." cat $revstr ".quote("file:///".$path)." $pipe");
          return;
       }
@@ -506,6 +507,16 @@ Class SVNRepository
       
       @exec($cmd);
   }
+
+   function getProperty($path, $property, $rev = 0)
+   {
+      global $config;
+      
+      $revstr = _revStr($rev);
+      
+      $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+      return implode("\n",runCommand($config->svn." propget $property $revstr ".quote("file:///".$path), true));
+   }
 
   function getHistory($path, $rev = 0)
    {
