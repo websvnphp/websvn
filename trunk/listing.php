@@ -71,7 +71,6 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
    {
       $isDir = ($file{strlen($file) - 1} == "/"?1:0);
 
-      $listing[$index]["fileviewdllink"] = "&nbsp;";
       if ($isDir)
       {
          $listing[$index]["filetype"] = "dir";
@@ -81,6 +80,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
             $dlurl = $config->getURL($rep, $path.$file, "dl"); 
             $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
          }
+         else 
+            $listing[$index]["fileviewdllink"] = "&nbsp;";
       }
       else
       {
@@ -90,11 +91,16 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
             continue;
          }
          
+         $listing[$index]["fileviewdllink"] = "&nbsp;";
          $listing[$index]["filetype"] = strrchr($file, ".");
       }   
 
       $listing[$index]["rowparity"] = ($index % 2)?"1":"0";
-      $listing[$index]["filelink"] = fileLink($path, $file);
+      
+      if (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file))
+         $listing[$index]["filelink"] = "<b>".fileLink($path, $file)."</b>";
+      else
+         $listing[$index]["filelink"] = fileLink($path, $file);
 
       // The history command doesn't return with a trailing slash.  We need to remember here if the
       // file is a directory or not! 
