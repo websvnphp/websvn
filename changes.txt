@@ -1,5 +1,20 @@
 CHANGES
 
+1.33
+
+There are a few changes to the config file in this release.  Copy
+distconfig.inc to config.inc and redo any configuration changes that you
+had made.
+
+
+ADD: Recognised non-text files are now delivered to the user as attachments.
+     The list of files types to be sent back to the user (rather than displayed
+     using WebSVN) is user configurable.
+ADD: File comparisons are now colourised based on the file extension
+
+CHANGE: Onlt the Enscript file extensions that the user wishes to override are
+        now listed in the config file.
+
 1.32
 
 FIX: Links no longer functionned correctly when used in basic
@@ -15,7 +30,7 @@ FIX: Handle spaces in filenames
 1.30
 
 There are a few changes to the config file in this release.  Copy
-distconfig.inc to config.inc and redo and configuration changes that you
+distconfig.inc to config.inc and redo any configuration changes that you
 had made.
 
 ADD: MultiViews support.  You can now set up WebSVN to access the
@@ -49,7 +64,7 @@ FIX: Fixed error concerning use of pclose
 1.10/1.10a
 
 There are a few changes to the config file in this release.  Copy
-distconfig.inc to config.inc and redo and configuration changes that you
+distconfig.inc to config.inc and redo any configuration changes that you
 had made.
 
 ADD: WebSVN now caches information on the repositories.  Once a revision
