@@ -17,6 +17,7 @@ FIX: File listing sometimes failed when there were spaces in the filename
 FIX: Some setups wouldn't allow diff generations with enscript
      enabled.
 FIX: Filenames are URL encoded correctly before calling svn file:///
+FIX: Keywords weren't expanded in file view when enscript was disabled
 
 1.51
 
