@@ -113,7 +113,7 @@ if ($config->multiViews)
          break;
 
       case "comp":
-         $file = "dl.php";
+         $file = "comp.php";
          break;
 
       default:

@@ -36,22 +36,42 @@ if (!isset($rep))
    exit;
 }
 
+function checkRevision($rev)
+{
+   if (is_numeric($rev) && ((int)$rev > 0))
+      return $rev;
+      
+   $rev = strtoupper($rev);
+   
+   switch($rev)
+   {
+      case "HEAD":
+      case "PREV":
+      case "COMMITTED":
+         return $rev;
+   }
+   
+   return "HEAD";   
+}
+
 list ($repname, $reppath) = $config->getRepository($rep);
 $svnrep = new SVNRepository($reppath);
 
 // Retrieve the request information
 $path1 = @$_REQUEST["compare"][0];
 $path2 = @$_REQUEST["compare"][1];
+$rev1 = @$_REQUEST["compare_rev"][0];
+$rev2 = @$_REQUEST["compare_rev"][1];
 
-// Sanity check
-if (empty($path1) || empty($path2))
-   exit;
+// Some page links put the revision with the path...
+if (strpos($path1, "@")) list($path1, $rev1) = explode("@", $path1);
+if (strpos($path2, "@")) list($path2, $rev2) = explode("@", $path2);
 
-list($path1, $rev1) = explode("@", $path1);
-list($path2, $rev2) = explode("@", $path2);
+$rev1 = checkRevision($rev1);
+$rev2 = checkRevision($rev2);
 
 // Choose a sensible comparison order unless told not to
-if (!@$_REQUEST["manualorder"])
+if (!@$_REQUEST["manualorder"] && is_numeric($rev1) && is_numeric($rev2))
 {
    if ($rev1 > $rev2)
    {
@@ -69,9 +89,17 @@ if (!@$_REQUEST["manualorder"])
 $url = $config->getURL($rep, "", "comp");
 $vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&amp;compare%5B%5D=".urlencode($path1)."@$rev1&manualorder=1\">${lang["REVCOMP"]}</a>";
 
-
 if ($rev1 == 0) $rev1 = "HEAD";
 if ($rev2 == 0) $rev2 = "HEAD";
+
+$vars["action"] = $lang["PATHCOMPARISON"];
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
+$vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"$path1\">";
+$vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[0]\" value=\"$rev1\">";
+$vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"$path2\">";
+$vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\">";
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"manualorder\" value=\"1\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
 $vars["repname"] = $repname;
 $vars["path1"] = $path1;
@@ -88,8 +116,9 @@ $path2 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repPath.$path
 
 $debug = false;
 
-$cmd = quoteCommand($config->svn." diff -r$rev1:$rev2 ".quote("file:///".$path1)." ".quote("file:///".$path2), false);
-if ($debug) echo $cmd;
+$rawcmd = $config->svn." diff -r$rev1:$rev2 ".quote("file:///".$path1)." ".quote("file:///".$path2);
+$cmd = quoteCommand($rawcmd, true);
+if ($debug) echo "$cmd\n";
 
 function clearVars()
 {
@@ -111,7 +140,9 @@ if ($diff = popen($cmd, "r"))
    $indiffproper = false;
    $getLine = true;
    $node = null;
-      
+
+   $vars["success"] = true;
+
 	while (!feof($diff))
 	{
 	   if ($getLine)
@@ -119,7 +150,7 @@ if ($diff = popen($cmd, "r"))
       
       clearVars();	   
 	   $getLine = true;
-      if ($debug) print "$line<br>" ;	         
+      if ($debug) print "Line = '$line'<br>" ;	         
 	   if ($indiff)
 	   {
    	   // If we're in a diff proper, just set up the line
@@ -283,6 +314,17 @@ if ($diff = popen($cmd, "r"))
          
          continue;
       }
+      
+      // Check for error messages
+      if (strncmp(trim($line), "svn: ", 5) == 0)
+      {
+         $listing[$index++]["info"] = urldecode($line);
+         $vars["success"] = false;
+         continue;
+      }
+      
+      $listing[$index++]["info"] = $line;
+      
    }
       
    if ($node)
@@ -293,7 +335,6 @@ if ($diff = popen($cmd, "r"))
       
    if ($debug) print_r($listing);
 }		   
-
 
 $vars["version"] = $version;
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
