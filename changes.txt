@@ -1,5 +1,7 @@
 CHANGES
 
+1.61
+
 NEW: Multibyte encodings are considered when urlencoding path names
 
 CHANGE: The listing view will now always show the revision asked for
@@ -7,6 +9,8 @@ CHANGE: The listing view will now always show the revision asked for
         string for the latest modification to the current directory).
         This means the the parent directory structure won't change as you
         browse through old directories.
+
+FIX: A bug prevented downloading of tarballs from working
 
 1.60 
 
