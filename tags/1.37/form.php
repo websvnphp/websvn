@@ -1,0 +1,89 @@
+<?php
+
+// WebSVN - Subversion repository viewing via the web using PHP
+// Copyright (C) 2004 Tim Armes
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// --
+//
+// form.php
+//
+// Handling of WebSVN forms
+
+require_once("include/setup.inc");
+
+// Generic redirect handling
+
+function redirect($loc)
+{
+   $protocol = 'http';
+   
+   if (isset($_SERVER["HTTPS"]) && (strtolower($_SERVER["HTTPS"]) != "off"))
+   {
+   	$protocol = "https";
+   }
+   
+   $port = ":".$_SERVER["SERVER_PORT"];
+   if ((":80" == $port && "http" == $protocol) ||
+       (":443" == $port && "https" == $protocol)) 
+   {
+      $port = "";
+   }
+   
+   if (isset($_SERVER["HTTP_HOST"]))
+   {
+   	$host = $_SERVER["HTTP_HOST"];
+   }
+   else if (isset($_SERVER["SERVER_NAME"]))
+   {
+   	$host = $_SERVER["SERVER_NAME"].$port;
+   }
+   else if (isset($_SERVER["SERVER_ADDR"]))
+   {
+   	$host = $_SERVER["SERVER_ADDR"].$port;
+   }
+   else
+   {
+      print "Unable to redirect";
+      exit;
+   }
+   
+   $url	= $protocol . "://" . $host . $loc;
+   
+   header("Location: $url");
+   echo "<html><script language=\"JavaScript\" type=\"text/JavaScript\">window.location = \"$url\"</script></html>";
+}
+
+// Handle project selection
+
+if (@$_REQUEST["selectproj"])
+{
+   $rep = (int)@$_REQUEST["rep"];
+   
+   $basedir = dirname($_SERVER["PHP_SELF"]);
+   if ($basedir != "" && $basedir != DIRECTORY_SEPARATOR && $basedir != "\\" && $basedir != "/" )
+      $basedir .= "/";
+   
+   $url = $config->getURL($rep, "/", "dir");
+   
+   if ($config->multiViews)
+      redirect($url);
+   else
+      redirect($basedir.$url);   
+}
+
+
+?>
