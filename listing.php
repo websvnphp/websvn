@@ -292,7 +292,6 @@ else
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
-$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".urlencode($history[1]["path"])."@".$history[1]["rev"]."&amp;compare%5B%5D=".urlencode($history[0]["path"])."@".$history[0]["rev"]."\">${lang["DIFFPREV"]}</a>";
 if (isset($history[1]))
 	$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".urlencode($history[1]["path"])."@".$history[1]["rev"]."&amp;compare%5B%5D=".urlencode($history[0]["path"])."@".$history[0]["rev"]."\">${lang["DIFFPREV"]}</a>";
 else
