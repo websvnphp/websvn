@@ -4,7 +4,9 @@ CHANGES
 
 NEW: Tarballs of directories may now be downloaded.
      Set $config->allowdownload(); in config.inc
-
+NEW: New style 'Zinn' based on the templates created for
+     http://www.projectzinn.org/.  Thanks to Justin Doran.
+     
 CHANGE: Style information removed from RSS feed
 
 1.51
