@@ -125,18 +125,18 @@ Class SVNRepository
    {
       global $config, $lang, $locwebsvnreal;
       
-      $revstr = _revStr($rev);
-      $path = quote($path);
-      
-      // Try to find a cached version of this revision of the repository
-      
       if ($rev == 0)
       {
          $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
          settype($head[0], "integer");
          $rev = $head[0];
       }
+
+      $revstr = _revStr($rev);
+      $path = quote($path);
       
+      // Try to find a cached version of this revision of the repository
+            
       $cachedname = strtr($this->repPath, ":/\\", "___");
       $cachedname = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_log_$rev";
       
@@ -271,16 +271,16 @@ Class SVNRepository
    {
       global $config, $locwebsvnreal;
       
-      $revstr = _revStr($rev);
-         
-      // Try to find a cached version of this revision of the repository
-      
       if ($rev == 0)
       {
          $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
          settype($head[0], "integer");
          $rev = $head[0];
       }
+      
+      $revstr = _revStr($rev);
+         
+      // Try to find a cached version of this revision of the repository
       
       $cachedname = strtr($this->repPath, ":/\\", "___");
       $cachedname = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_mods_$rev";

@@ -180,7 +180,9 @@ $svnrep = new SVNRepository($rep->path);
 // Revision info to pass along chain
 $passrev = $rev;
 
-// If there's no revision info, go to the lastest revision for this path
+// Get the directory contents of the given revision, or HEAD if not defined
+$contents = $svnrep->dirContents($path, @$rev);
+
 $history = $svnrep->getHistory($path);
 
 if (!empty($history[0]))
@@ -188,11 +190,24 @@ if (!empty($history[0]))
 else
    $youngest = -1;
 
+// Unless otherwise specified, we get the log details of the latest change
 if (empty($rev))
-   $rev = $youngest;
+   $logrev = $youngest;
+else
+   $logrev = $rev;
 
-$contents = $svnrep->dirContents($path, $rev);
-$log = $svnrep->getLogDetails($path, $rev);
+$log = $svnrep->getLogDetails($path, $logrev);
+
+$headlog = $svnrep->getLogDetails($path);
+$headrev = $headlog["rev"];
+
+// If we're not looking at a specific revision, get the HEAD revision number
+// (the revision of the rest of the tree display)
+
+if (empty($rev))
+{
+   $rev = $headrev;
+}
 
 if ($path == "" || $path{0} != "/")
    $ppath = "/".$path;
@@ -207,7 +222,7 @@ $rssurl = $config->getURL($rep, $path, "rss");
 $dlurl = $config->getURL($rep, $path, "dl");
 $compurl = $config->getURL($rep, "", "comp");
 
-if ($rev != $youngest && $youngest != -1)
+if ($passrev != 0 && $passrev != $headrev && $youngest != -1)
    $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&amp;sc=1\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
@@ -218,7 +233,8 @@ $vars["action"] = "";
 $vars["author"] = $log['author'];
 $vars["date"] = $log['date'];
 $vars["log"] = nl2br($bugtraq->replaceIDs(create_anchors($log['message'])));
-$vars["rev"] = $log["rev"];
+$vars["rev"] = $rev;
+$vars["lastchangedrev"] = $logrev;
 $vars["path"] = $ppath;
 
 if (!$showchanged)

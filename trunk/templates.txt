@@ -161,6 +161,7 @@ path - Path of item being logged
 author - Author of current revision
 date - Date that revision was committed
 log - Log message of revision
+lastchangedrev - Revision of the last modification to current directory
 goyoungestlink - Link to head revision of repository
 
 showchanges - 1 if showing changes (for websvn-test)
