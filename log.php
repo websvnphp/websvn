@@ -28,10 +28,6 @@ require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
 
-$rep = (int)@$_REQUEST["rep"];
-$path = escapeshellcmd(@$_REQUEST["path"]);
-$rev = (int)@$_REQUEST["rev"];
-$showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 $page = (int)@$_REQUEST["page"];
 $all = (@$_REQUEST["all"] == 1)?1:0;
 $isDir = (@$_REQUEST["isdir"] == 1)?1:0;
@@ -40,13 +36,6 @@ $search = trim(@$_REQUEST["search"]);
 $words = explode(" ", $search);
 
 $fromRev = (int)@$_REQUEST["fr"];
-
-// Override the rep parameter with the repository name if it's available
-$repname = @$_REQUEST["repname"];
-if (isset($repname))
-{
-    $rep = $config->findRepository($repname);
-}
 
 // Max number of results to find at a time
 $numSearchResults = 10;

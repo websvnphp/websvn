@@ -266,6 +266,23 @@ $zipped = array ();
 
 require("config.inc");
 
+// Get the repository number
+
+$rep = (int)@$_REQUEST["rep"];
+
+// Override the rep parameter with the repository name if it's available
+$repname = @$_REQUEST["repname"];
+if (isset($repname))
+{
+    $rep = $config->findRepository($repname);
+}
+
+// Retrieve other standard parameters
+
+$path = escapeshellcmd(@$_REQUEST["path"]);
+$rev = (int)@$_REQUEST["rev"];
+$showchanged = (@$_REQUEST["sc"] == 1)?1:0;
+
 // Create the project change combo box
  
 $url = $config->getURL(-1, "", "form");
@@ -273,9 +290,14 @@ $vars["projects_form"] = "<form action=\"$url\" method=\"post\" name=\"projectfo
 
 $reps = $config->getRepositories();
 $vars["projects_select"] = "<select name=\"rep\">";
-foreach ($reps as $index => $rep)
+foreach ($reps as $index => $trep)
 {
-   $vars["projects_select"] .= "<option value=\"$index\">${rep["name"]}</option>";
+   if ($rep == $index)
+      $sel = "selected";
+   else
+      $sel = "";
+      
+   $vars["projects_select"] .= "<option value=\"$index\" $sel>${trep["name"]}</option>";
 }
 $vars["projects_select"] .= "</select>";
 
