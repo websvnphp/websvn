@@ -30,7 +30,7 @@ function transChars($str)
    if ($config->serverIsWindows)
    {
       //$output = iconv("cp850", "iso-8859-1", $ooutput]);
-      return strtr($str, "…‚‹“—–‡", "ΰιθκοξτωϋη");
+      return htmlentities(strtr($str, "…‚‹“—–‡", "ΰιθκοξτωϋη"));
    }
    
    return $str;
