@@ -84,7 +84,7 @@ else
    if ($lastrevindex > $revisions - 1) $lastrevindex = $revisions - 1;
 }
 
-echo "<table border=1 class=\"outlined\" width=\"100%\" cellpadding=2><tr><th>${lang["REV"]}</td><th>${lang["PATH"]}</td><th>${lang["LOGMSG"]}</td></tr>";
+echo "<table border=1 class=\"outlined\" width=\"100%\" cellpadding=2><tr><th>${lang["REV"]}</th><th>${lang["PATH"]}</th><th>${lang["AUTHOR"]}</th><th>${lang["LOGMSG"]}</th></tr>";
 
 for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
 {
@@ -104,6 +104,7 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
    else
       echo "<td valign=\"top\"><a href=\"filedetails.php?rep=$rep&path=${r["path"]}&rev=${r["rev"]}&sc=$showchanged\">${r["path"]}</a></td>";
       
+   echo "<td valign=\"top\">".nl2br(htmlspecialchars($log["author"]))."</td>";
    echo "<td valign=\"top\">".nl2br(htmlspecialchars($log["message"]))."</td>";
    
    echo "</tr>";
