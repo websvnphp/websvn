@@ -35,11 +35,16 @@ function cmpReps($a, $b)
 
 Class Config
 {
+   // Tool path locations
+
    var $svnlook = "svnlook";
+   var $svn = "svn";
    var $diff = "diff";
    var $enscript ="enscript";
    var $sed = "sed";
    var $gzip = "gzip";
+   
+   // Other configuration items
    
    var $serverIsWindows = false;
    var $cacheResults = false;
@@ -247,10 +252,11 @@ Class Config
 
    // setSVNCommandPath
    //
-   // Define the location of the svnlook command
+   // Define the location of the svn and svnlook commands
    
    function setSVNCommandPath($path)
    {
+      $this->setPath($this->svn, $path, "svn");
       $this->setPath($this->svnlook, $path, "svnlook");
    }
    
