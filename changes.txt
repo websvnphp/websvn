@@ -4,6 +4,7 @@ CHANGES
 
 NEW: Korean translation
 
+FIX: Repositories may now have spaces in their path (eg: c:\my reps)
 FIX: Diff now works when the file name has changed between versions
 FIX: RSS feed now generates Content-Type header for XML so that IE can display
      the contents

@@ -82,13 +82,13 @@ Class SVNRepository
       
       if ($rev == 0)
       {
-         $head = runCommand($config->svnlook." youngest ".$this->repPath);
+         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
          settype($head[0], "integer");
          $rev = $head[0];
       }
       
       $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
-      $output = runCommand($config->svn." list $revstr file:///".$path, true);
+      $output = runCommand($config->svn." list $revstr ".quote("file:///".$path), true);
       
       foreach ($output as $entry)
       {
@@ -113,7 +113,7 @@ Class SVNRepository
       
       if ($rev == 0)
       {
-         $head = runCommand($config->svnlook." youngest ".$this->repPath);
+         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
          settype($head[0], "integer");
          $rev = $head[0];
       }
@@ -125,7 +125,7 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         $cmd = quoteCommand($config->svnlook." info $revstr ".$this->repPath." $path", false);
+         $cmd = quoteCommand($config->svnlook." info $revstr ".quote($this->repPath)." $path", false);
 
          if (($handle = popen($cmd, "r")) !== FALSE)
          {
@@ -150,7 +150,7 @@ Class SVNRepository
       }
       else
       {   
-         $output = runCommand($config->svnlook." info $revstr ".$this->repPath." $path");
+         $output = runCommand($config->svnlook." info $revstr ".quote($this->repPath)." $path");
       }
                      
       // Create a nice array to return
@@ -240,7 +240,7 @@ Class SVNRepository
          $log["rev"] = $rev;
       else
       {
-         $head = runCommand($config->svnlook." youngest ".$this->repPath);
+         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
          settype($head[0], "integer");
          $log["rev"] = $head[0];
       }
@@ -258,7 +258,7 @@ Class SVNRepository
       
       if ($rev == 0)
       {
-         $head = runCommand($config->svnlook." youngest ".$this->repPath);
+         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
          settype($head[0], "integer");
          $rev = $head[0];
       }
@@ -270,7 +270,7 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         $cmd = quoteCommand($config->svnlook." changed $revstr ".$this->repPath, false);
+         $cmd = quoteCommand($config->svnlook." changed $revstr ".quote($this->repPath), false);
 
          if (($handle = popen($cmd, "r")) !== FALSE)
          {
@@ -294,7 +294,7 @@ Class SVNRepository
       }
       else
       {
-        $output = runCommand($config->svnlook." changed $revstr ".$this->repPath);
+        $output = runCommand($config->svnlook." changed $revstr ".quote($this->repPath));
       }
            
       // Now create a nicer array from that
@@ -346,7 +346,7 @@ Class SVNRepository
       // If there's no filename, we'll just deliver the contents as it is to the user
       if ($filename == "")
       {
-         passthru($config->svnlook." cat $revstr ".$this->repPath." $path $pipe");
+         passthru($config->svnlook." cat $revstr ".quote($this->repPath)." $path $pipe");
          return;
       }
       
@@ -359,7 +359,7 @@ Class SVNRepository
       {         
          // Output the file to the filename
          $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
-         $cmd = quoteCommand($config->svn." cat $revstr file:///$path > $filename", false);
+         $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
          @exec($cmd);
          
          // Get the file as a string (memory hogging, but we have no other options)
@@ -396,7 +396,7 @@ Class SVNRepository
             // It's complicated because it's designed not to return those lines themselves.
          
             $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
-            $cmd = quoteCommand($config->svn." cat $revstr file:///$path | ".
+            $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." | ".
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p}".$config->quote." > $filename", false);
@@ -404,7 +404,7 @@ Class SVNRepository
          }
          else
          {
-            $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path > $filename", false);
+            $cmd = quoteCommand($config->svnlook." cat $revstr ".quote($this->repPath)." $path > $filename", false);
             @exec($cmd);
          }
       }
@@ -433,7 +433,7 @@ Class SVNRepository
          
          // Output the file to a temporary file
          $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
-         $cmd = quoteCommand($config->svn." cat $revstr file:///$path > $tmp", false);
+         $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $tmp", false);
          @exec($cmd);
          highlight_file($tmp);
          unlink($tmp);
@@ -443,7 +443,7 @@ Class SVNRepository
          if ($config->useEnscript)
          {
             $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
-            $cmd = quoteCommand($config->svn." cat $revstr file:///$path | ".
+            $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." | ".
                                 $config->enscript." --language=html ".
  								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote." 2>&1", false);
@@ -453,7 +453,7 @@ Class SVNRepository
          }
          else
          {
-            $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path 2>&1", false);
+            $cmd = quoteCommand($config->svnlook." cat $revstr ".quote($this->repPath)." $path 2>&1", false);
             
             if (!($result = popen($cmd, "r")))
                return;
@@ -487,7 +487,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
-      $cmd = quoteCommand($config->svn." blame $revstr file:///$path > $filename", false);
+      $cmd = quoteCommand($config->svn." blame $revstr ".quote("file:///".$path)." > $filename", false);
       
       @exec($cmd);
   }
@@ -500,7 +500,7 @@ Class SVNRepository
       $path = quote($path);
       
       // Get the history info
-      $output = runCommand($config->svnlook." history $revstr ".$this->repPath." $path");
+      $output = runCommand($config->svnlook." history $revstr ".quote($this->repPath)." $path");
             
       // Now create a nicer array from that
       $history = array();
