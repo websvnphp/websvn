@@ -134,4 +134,55 @@ function getFullURL($loc)
    return $url;
 }
 
+// hardspace
+//
+// Replace the spaces at the front of a line with hard spaces
+
+$spacearray = array (
+0 => "",
+1 => "&nbsp;",
+2 => "&nbsp;&nbsp;",
+3 => "&nbsp;&nbsp;&nbsp;",
+4 => "&nbsp;&nbsp;&nbsp;&nbsp;",
+5 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+6 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+7 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+8 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+9 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+10 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+);
+
+function hardspace($s)
+{
+   global $spacearray, $config;
+
+   $len = strlen($s);
+
+   // Calculate the number of spaces to added (expanding tabs)
+   for ($i = 0, $numspaces = 0; $i < $len; $i++)
+   {
+      if ($s[$i] == " ")
+	      $numspaces += 1;
+	   else
+	      if ($s[$i] == "\t")
+	         $numspaces += $config->spaces;
+	      else
+	         break;
+   }
+   
+   // Strip the leading blanks
+   $s = substr($s, $i);
+
+   // Create a string of &nbsp;'s
+   $spaces = "";
+   while ($numspaces >= 10)
+   {
+     $spaces .= $spacearray[10];
+     $numspaces -= 10;
+   }
+   $spaces .= $spacearray[$numspaces];
+   
+   // Stick them together
+   return $spaces.$s;
+}
 ?>

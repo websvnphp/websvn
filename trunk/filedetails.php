@@ -25,8 +25,8 @@
 
 require_once("include/setup.inc");
 require_once("include/svnlook.inc");
-require("include/utils.inc");
-require("include/template.inc");
+require_once("include/utils.inc");
+require_once("include/template.inc");
 
 $rep = (int)@$_REQUEST["rep"];
 $path = escapeshellcmd(@$_REQUEST["path"]);
