@@ -77,7 +77,12 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
 
       if ($isDir)
       {
-         $listing[$index]["filetype"] = "dir";
+         $openDir = (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file));
+
+         if ($openDir)
+            $listing[$index]["filetype"] = "diropen";
+         else
+            $listing[$index]["filetype"] = "dir";
 
          if ($rep->getAllowDownload())
          {
@@ -103,7 +108,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
       
       $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"".fileLink($path, $file, true)."@$passrev\" onClick=\"checkCB(this)\">";
       
-      if (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file))
+      if ($openDir)
          $listing[$index]["filelink"] = "<b>".fileLink($path, $file)."</b>";
       else
          $listing[$index]["filelink"] = fileLink($path, $file);
