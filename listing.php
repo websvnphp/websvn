@@ -46,7 +46,7 @@ function fileLink($path, $file, $returnjoin = false)
    if ($isDir)
    {
       $url = $config->getURL($rep, $ppath.$file, "dir");
-      return "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">$file</a>";
+      return "<a name=\"${ppath}${file}\" href=\"${url}rev=$passrev&amp;sc=$showchanged#${ppath}${file}\">$file</a>";
    }
    else
    {
