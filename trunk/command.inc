@@ -40,21 +40,35 @@ function runCommand($cmd)
 {
    global $lang;
    
+   $output = array ();
+   $err = false;
+   
    // Try to run the command normally
-   $output = shell_exec($cmd);
-   
-   // If there's no output, we'll assume that it hasn't worked
-   if (empty($output[0]))
+   if ($handle = popen($cmd, "r"))
    {
-      echo "${lang["BADCMD"]}: <i><b>$cmd</b></i><br>";
-      
-      // Rerun the command, this time grabbing the error information
-      $output = transChars(shell_exec($cmd."  2>&1"));
-      if (!empty($output)) print "<p>".nl2br($output);
-      exit;
-   }   
+      $firstline = true;
+		while (!feof($handle))
+		{
+		   $line = fgets($handle);
+		   if ($firstline && $line == "")
+		   {
+		      $err = true;
+		   }
+		   $firstline = false;
+		   $output[] = transChars(rtrim($line));
+		}
+		
+		pclose($handle);
+		if (!$err)
+		   return $output;
+   }
+
+   echo "${lang["BADCMD"]}: <i><b>$cmd</b></i><br>";
    
-   return transChars($output);
+   // Rerun the command, this time grabbing the error information
+   $output = transChars(shell_exec($cmd."  2>&1"));
+   if (!empty($output)) print "<p>".nl2br($output);
+   exit;
 }
 
 ?>

@@ -83,11 +83,11 @@ Class SVNRepository
    		{
    		   $entry = fgets($files);
    		   
-   		   // If the line is a top-level entry, add it to array
+   		   // If the line is a top-level entry, add it to the array
    		   if (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ")
    		   {
    		      // Clear off whitespace, new lines etc.
-   		      $entry = trim($entry);
+   		      $entry = transChars(trim($entry));
    		      
    		      // Add the entry to the tree
    		      $tree[] = $entry;
@@ -118,10 +118,7 @@ Class SVNRepository
       
       // Get the log info
       $output = runCommand($config->svnlook." info $revstr ".$this->repPath." $path");
-      
-      // Split this data up into an array
-      $output = explode("\n", $output);
-            
+                  
       // Create a nice array to return
       $log["author"] = $output[0];
       $log["date"] = $output[1];
@@ -155,10 +152,7 @@ Class SVNRepository
       
       // Get the log info
       $output = runCommand($config->svnlook." changed $revstr ".$this->repPath);
-      
-      // Split this data up into an array
-      $output = explode("\n", $output);
-      
+           
       // Now create a nicer array from that
       $changes = array("added" => array(), "updated" => array(), "deleted" => array());
       
@@ -193,19 +187,17 @@ Class SVNRepository
    
    // getFileContents
    //
-   // Return the contents of a file into a variable
+   // Dump the content of a file to the given filename
    
-   function getFileContents($path, $rev = 0)
+   function getFileContents($path, $filename, $rev = 0)
    {
       global $config;
       
       $revstr = _revStr($rev);
       
       // Get the log info
-      $output = runCommand($config->svnlook." cat $revstr ".$this->repPath." $path");
-      
-      return $output;
-   }
+      exec($config->svnlook." cat $revstr ".$this->repPath." $path > $filename");
+  }
 
    // listFileContents
    //
@@ -237,10 +229,7 @@ Class SVNRepository
       
       // Get the history info
       $output = runCommand($config->svnlook." history $revstr ".$this->repPath." $path");
-      
-      // Split this data up into an array
-      $output = explode("\n", $output);
-      
+            
       // Now create a nicer array from that
       $history = array();
           
