@@ -286,7 +286,7 @@ if ($config->allowDownload)
    $vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
 
 $url = $config->getURL($rep, "", "comp");
-$vars["compare_form"] = "<form action=\"$url\" method=\"get\" name=\"compareform\">";
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";
 $vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 

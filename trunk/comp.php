@@ -50,8 +50,24 @@ if (empty($path1) || empty($path2))
 list($path1, $rev1) = explode("@", $path1);
 list($path2, $rev2) = explode("@", $path2);
 
+// Choose a sensible comparison order unless told not to
+if (!@$_REQUEST["manualorder"])
+{
+   if ($rev1 > $rev2)
+   {
+      $temppath = $path1;
+      $temprev = $rev1;
+      
+      $path1 = $path2;
+      $rev1 = $rev2;
+      
+      $path2 = $temppath;
+      $rev2 = $temprev;
+   }
+}
+
 $url = $config->getURL($rep, "", "comp");
-$vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&amp;compare%5B%5D=".urlencode($path1)."@$rev1\">${lang["REVCOMP"]}</a>";
+$vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&amp;compare%5B%5D=".urlencode($path1)."@$rev1&manualorder=1\">${lang["REVCOMP"]}</a>";
 
 
 if ($rev1 == 0) $rev1 = "HEAD";
