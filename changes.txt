@@ -1,5 +1,11 @@
 CHANGES
 
+CHANGE: The listing view will now always show the revision asked for
+        (HEAD by default), but the log message will show the log 
+        string for the latest modification to the current directory).
+        This means the the parent directory structure won't change as you
+        browse through old directories.
+
 1.60 
 
 NEW: Directory displays are now shown in tree view (so that it's harder
