@@ -279,7 +279,12 @@ if (isset($repname))
 
 // Retrieve other standard parameters
 
-$path = escapeshellcmd(@$_REQUEST["path"]);
+if (version_compare(phpversion(), "4.1.0", "<"))
+   $path = html_entity_decode(@$_REQUEST["path"]);
+else
+   $path = html_entity_decode(@$_REQUEST["path"], ENT_COMPAT, $config->outputEnc);
+
+$path = escapeshellcmd($path);
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
