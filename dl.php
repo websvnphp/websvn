@@ -67,7 +67,7 @@ if (mkdir($tmpname))
    if (empty($arcname))
       $arcname = $repname;
 
-   $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname);
+   $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
    
    // Create the tar file
    chdir($tmpname);
