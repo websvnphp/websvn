@@ -103,6 +103,7 @@ Class SVNLog
       {
          if ($entry->rev == $rev)
             return $index;
+
       }
    }
 }
@@ -299,12 +300,12 @@ function characterData($parser, $data)
          
          if ($data == $curLog->path)
          {
+            
             if ($debugxml) print "New path for comparison: '".$curLog->curEntry->curMod->copyfrom."'\n";
             $curLog->path = $curLog->curEntry->curMod->copyfrom;
          }
             
          break;
-      
    }
 }
 
@@ -328,7 +329,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       $tree = array();
-      
+     
       // Try to find a cached version of this revision of the repository
       
       $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
@@ -339,10 +340,10 @@ Class SVNRepository
          if ($entry != "")
             $tree[] = $entry;
       }
-      
+
       // Sort the entries into alphabetical order with the directories at the top of the list
       usort($tree, "_dirSort");
-      
+
       return $tree;
    }
    

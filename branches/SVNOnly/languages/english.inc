@@ -28,6 +28,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "No repository given";
 $lang["NOPATH"] = "Path not found";
+$lang["SUPPLYREP"] = "Please set up a repository path in include/config.inc using \$config->parentPath or \$config->addRepository<p>See the installation guide for more details";
 
 $lang["DIFFREVS"] = "Diff between revs";
 $lang["AND"] = "and";

@@ -81,6 +81,9 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/japanese-sjis.inc"); // (Windows)
 // include("languages/japanese-utf8.inc"); // (FedoraCore/Max OS X/BeOS)
 
+// include("languages/korean-euc.inc"); 
+// include("languages/korean-utf8.inc"); 
+
 // By default, WebSVN tries to use the iconv module (if enabled) to convert log messages from your
 // system's character set to you default output encoding. If you find that your log messages aren't
 // displayed correctly then you'll need to change the values here.

@@ -266,7 +266,14 @@ $zipped = array ();
 
 require("config.inc");
 
-// Get the repository number
+// Make sure that the user has set up a repository
+
+$reps = $config->getRepositories();
+if (empty($reps[0]))
+{
+   echo $lang["SUPPLYREP"];
+   exit;
+}
 
 $rep = (int)@$_REQUEST["rep"];
 
@@ -279,7 +286,12 @@ if (isset($repname))
 
 // Retrieve other standard parameters
 
-$path = escapeshellcmd(@$_REQUEST["path"]);
+if (version_compare(phpversion(), "4.1.0", "<"))
+   $path = html_entity_decode(@$_REQUEST["path"]);
+else
+   $path = html_entity_decode(@$_REQUEST["path"], ENT_COMPAT, $config->outputEnc);
+
+$path = escapeshellcmd($path);
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
@@ -293,7 +305,8 @@ function createProjectSelectionForm()
    
    $reps = $config->getRepositories();
    $vars["projects_select"] = "<select name=\"rep\">";
-   foreach ($reps as $index => $trep)
+   
+  foreach ($reps as $index => $trep)
    {
       if ($rep == $index)
          $sel = "selected";
@@ -302,6 +315,7 @@ function createProjectSelectionForm()
          
       $vars["projects_select"] .= "<option value=\"$index\" $sel>${trep["name"]}</option>";
    }
+   
    $vars["projects_select"] .= "</select>";
    
    $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";

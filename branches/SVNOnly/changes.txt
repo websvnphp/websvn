@@ -1,5 +1,23 @@
 CHANGES
 
+1.51
+
+NEW: Korean translation
+NEW: Russian translation
+
+FIX: Repositories may now have spaces in their path (eg: c:\my reps)
+FIX: Diff now works when the file name has changed between versions
+FIX: RSS feed now generates Content-Type header for XML so that IE can display
+     the contents
+FIX: Diff and Blame didn't work properly for php files when enscript wasn't used
+FIX: Use svn --non-interactive to ensure that svn doesn't prompt WebSVN for input
+FIX: Corrections to the French translation
+FIX: Display an explanatory message when the user hasn't configured any
+     repository paths
+FIX: When using Multiviews, change to the WebSVN directory before executing
+     commands so that tempnam works.  This used to cause problems on some
+     systems when running diff and blame.
+
 1.50
 
 Notes: Before installing this version you should delete all the existing
@@ -32,6 +50,8 @@ FIX: Under Windows, links in the RSS output would start with "\" if WebSVN
 FIX: Sed wouldn't work under all versions of Windows due to the use of single
      quotes around the paramters
 FIX: Improved character encoding support for log messages etc.
+FIX: Paths passed by URL are encoded
+FIX: Generated HTML code is strictly 4.01
 
 1.40
 

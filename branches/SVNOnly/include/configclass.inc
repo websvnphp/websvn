@@ -37,7 +37,7 @@ Class Config
 {
    // Tool path locations
 
-   var $svn = "svn";
+   var $svn = "svn --non-interactive";
    var $diff = "diff";
    var $enscript ="enscript";
    var $sed = "sed";
@@ -70,6 +70,10 @@ Class Config
    
    function addRepository($name, $path)
    {
+      if (($path{strlen($path) - 1} == DIRECTORY_SEPARATOR) ||
+          ($path{strlen($path) - 1} == "/"))
+         $path = substr($path, 0, -1);
+         
       $this->_repositories[] = array("name" => $name, "path" => $path);
    }
 
@@ -178,7 +182,7 @@ Class Config
             $url .= "/".$this->_repositories[$rep]["name"].$path;
             
             if ($op != "dir")
-               $url .= "?op=$op&";
+               $url .= "?op=$op&amp;";
             else
                $url .= "?";
          }
@@ -221,16 +225,16 @@ Class Config
          if ($this->refRepositoriesByNumber)
          {
             if ($rep == -1)
-               return $fname."?path=$path&";
+               return $fname."?path=".urlencode($path)."&amp;";
             else
-               return $fname."?rep=$rep&path=$path&";
+               return $fname."?rep=$rep&amp;path=".urlencode($path)."&amp;";
          }
          else
          {
             if ($rep == -1)
-               return $fname."?path=$path&";
+               return $fname."?path=".urlencode($path)."&amp;";
             else
-               return $fname."?repname=".$this->_repositories[$rep]["name"]."&path=$path&";
+               return $fname."?repname=".$this->_repositories[$rep]["name"]."&amp;path=".urlencode($path)."&amp;";
          }
       }
    }
@@ -266,6 +270,7 @@ Class Config
    function setSVNCommandPath($path)
    {
       $this->setPath($this->svn, $path, "svn");
+
    }
    
    // setDiffPath

@@ -77,22 +77,26 @@ if ($prevrev)
    
    if (!$all)
    {
-      $vars["showalllink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&all=1\">${lang["SHOWENTIREFILE"]}</a>";
+      $vars["showalllink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;all=1\">${lang["SHOWENTIREFILE"]}</a>";
       $vars["showcompactlink"] = "";
    }
    else
    {
-      $vars["showcompactlink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&all=0\">${lang["SHOWCOMPACT"]}</a>";
+      $vars["showcompactlink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;all=0\">${lang["SHOWCOMPACT"]}</a>";
       $vars["showalllink"] = "";
    }
 
    // Get the contents of the two files
    $newtname = tempnam("temp", "");
-   $new = $svnrep->getFileContents($path, $newtname, $rev);
+   $new = $svnrep->getFileContents($history->entries[$revindex]->path, $newtname, $rev);
 
    $oldtname = tempnam("temp", "");
-   $old = $svnrep->getFileContents($path, $oldtname, $prevrev);
-   
+   $old = $svnrep->getFileContents($history->entries[$revindex + 1]->path, $oldtname, $prevrev);
+      
+   $ent = true;
+   if ((strrchr($path, ".") == '.php') || ($config->useEnscript))
+      $ent = false;
+
    $file1cache = array();
 
    if ($all)
@@ -141,7 +145,7 @@ if ($prevrev)
                if ($curoline < $oline)
                {
                   $nl = fgets($ofile);
-                  $listing[$index]["rev1line"] = hardspace(transChars(rtrim($nl), ($config->useEnscript)?false:true));
+                  $listing[$index]["rev1line"] = hardspace(transChars(rtrim($nl), $ent));
                   $curoline++;
                }
                else
@@ -150,7 +154,7 @@ if ($prevrev)
                if ($curnline < $nline)
                {
                   $nl = fgets($nfile);
-                  $listing[$index]["rev2line"] = hardspace(transChars(rtrim($nl), ($config->useEnscript)?false:true));
+                  $listing[$index]["rev2line"] = hardspace(transChars(rtrim($nl), $ent));
                   $curnline++;
                }
                else
@@ -184,7 +188,7 @@ if ($prevrev)
 		      else
 		      {
                $mod = $line{0};
-               $text = hardspace(transChars(rtrim(substr($line, 1)), ($config->useEnscript)?false:true));
+               $text = hardspace(transChars(rtrim(substr($line, 1)), $ent));
                if ($text == "") $text = "&nbsp;";
                
                switch ($mod)
@@ -275,12 +279,12 @@ if ($prevrev)
             $listing[$index]["rev2diffclass"] = "diff";
                   
             if (!feof($ofile))
-               $listing[$index]["rev1line"] = hardspace(transChars(rtrim(fgets($ofile)), ($config->useEnscript)?false:true));
+               $listing[$index]["rev1line"] = hardspace(transChars(rtrim(fgets($ofile)), $ent));
             else
                $listing[$index]["rev1line"] = "&nbsp;";
                
             if (!feof($nfile))
-               $listing[$index]["rev2line"] = hardspace(transChars(rtrim(fgets($nfile)), ($config->useEnscript)?false:true));
+               $listing[$index]["rev2line"] = hardspace(transChars(rtrim(fgets($nfile)), $ent));
             else
                $listing[$index]["rev2line"] = "&nbsp;";
                
