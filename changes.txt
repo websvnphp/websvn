@@ -5,6 +5,8 @@ CHANGES
 FIX: Links followed after viewing the contents of a file go to the 
      revision of the repository previously being viewed
 FIX: Paths with spaces are now correctly showed in the log view
+FIX: Blank lines in the diff output are set to &nbsp; so the browser
+     won't compress them
 
 1.38
 
