@@ -36,7 +36,7 @@ $locwebsvnreal = "d:/websvn";
 
 ini_set("include_path", $locwebsvnreal);
 
-require("include/config.inc");
+require("include/setup.inc");
 require("include/svnlook.inc");
 
 if (!isset($_REQUEST["sc"]))
