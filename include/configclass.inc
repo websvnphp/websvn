@@ -271,6 +271,11 @@ Class Config
       $this->templatePath = $path;
    }
 
+   function cmpReps($a, $b)
+   {
+      return strcasecmp($a["name"], $b["name"]);
+   }
+
    // parentPath
    //
    // Automatically set up the repositories based on a parent path
@@ -300,12 +305,8 @@ Class Config
 
       // Sort the repositories into alphabetical order
       
-      function cmpReps($a, $b)
-      {
-         return strcasecmp($a["name"], $b["name"]);
-      }
-
-      usort($this->_repositories, "cmpReps");
+      if (!empty($this->_repositories))
+         usort($this->_repositories, "cmpReps");
    }
    
    // Encoding functions
