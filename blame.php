@@ -77,6 +77,10 @@ if ($file = fopen($tfname, "r"))
    $tbname = tempnam("temp", "");
    $svnrep->getBlameDetails($path, $tbname, $rev); 
    
+   $ent = true;
+   if ((strrchr($path, ".") == '.php') || ($config->useEnscript))
+      $ent = false;
+
    if ($blame = fopen($tbname, "r"))      
    {
       // Create an array of version/author/line
@@ -98,7 +102,7 @@ if ($file = fopen($tfname, "r"))
 
             $listing[$index]["author"] = $author;
             
-            $listing[$index]["line"] = hardspace(transChars(rtrim(fgets($file)), ($config->useEnscript)?false:true));
+            $listing[$index]["line"] = hardspace(transChars(rtrim(fgets($file)), $ent));
             
             if (trim($listing[$index]["line"]) == "")
                $listing[$index]["line"] = "&nbsp;";
