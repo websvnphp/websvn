@@ -1,0 +1,68 @@
+
+<div align="right">[websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+<h1>[websvn:repname]</h1>
+<p><b>[lang:PATH]:</b> [websvn:path]
+<br><b>[lang:REV]:</b> [websvn:rev]
+[websvn-test:goyoungestlink]
+ - [websvn:goyoungestlink]
+[websvn-endtest]
+<br><b>[lang:LASTMOD]:</b> [websvn:author] - [websvn:date]
+<br><b>[lang:LOGMSG]:</b><br>
+[websvn:log]
+<p>
+[websvn-test:hidechanges]
+   <p>[websvn:showchangeslink]
+[websvn-endtest]
+
+[websvn-test:showchanges]
+   <p><b>[lang:CHANGES]:</b><br>
+   <center><table border=1 class="bordered" cellpadding=4>
+      <tr>
+         <th><center><b>[lang:NEWFILES]</b></center></th>
+         <th><center><b>[lang:CHANGEDFILES]</b></center></th>
+         <th><center><b>[lang:DELETEDFILES]</b></center></th>
+      </tr>
+      <tr>  
+         <td valign="top">
+         [websvn-test:newfilesbr]
+            [websvn:newfilesbr]
+         [websvn-else]
+            &nbsp;
+         [websvn-endtest]
+         </td>
+         <td valign="top">
+         [websvn-test:changedfilesbr]
+            [websvn:changedfilesbr]
+         [websvn-else]
+            &nbsp;
+         [websvn-endtest]
+         </td>
+         <td valign="top">
+         [websvn-test:deletedfilesbr]
+            [websvn:deletedfilesbr]
+         [websvn-else]
+            &nbsp;
+         [websvn-endtest]
+         </td>
+      </tr>
+   </table>
+   <p>[websvn:hidechangeslink]
+   </center>
+[websvn-endtest]
+
+<p><hr>
+<b>[lang:CURDIR]:</b> [websvn:curdirlinks] - [websvn:curdirloglink]
+<p>
+<table class="outlined" width="100%" cellpadding=2>
+   <tr>
+      <th width="100%"><b>Path</b></th>
+      <th><b>Log</b></td>
+   </tr>
+   [websvn-startlisting]
+   <tr>
+      <td class="[websvn:rowparity]">[websvn:filelink]</td>
+      <td class="[websvn:rowparity]">[websvn:fileviewloglink]</td>
+   </tr>
+   [websvn-endlisting]
+</table>
+
