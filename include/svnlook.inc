@@ -358,7 +358,8 @@ Class SVNRepository
       // If there's no filename, we'll just deliver the contents as it is to the user
       if ($filename == "")
       {
-         passthru($config->svnlook." cat $revstr ".quote($this->repPath)." $path $pipe");
+         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+         passthru($config->svn." cat $revstr ".quote("file:///".$path)." $pipe");
          return;
       }
       
@@ -416,7 +417,8 @@ Class SVNRepository
          }
          else
          {
-            $cmd = quoteCommand($config->svnlook." cat $revstr ".quote($this->repPath)." $path > $filename", false);
+            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+            $cmd = quoteCommand(config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
             @exec($cmd);
          }
       }
