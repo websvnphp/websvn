@@ -26,18 +26,18 @@
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
-$lang["NOREP"] = "Pas de repository|r&eacute;f&eacute;rentiel";
+$lang["NOREP"] = "Pas de repository";
 $lang["NOPATH"] = "Fichier ou r&eacute;pertoire non trouv&eacute;";
 
-$lang["DIFFREVS"] = "Diff&eacute;rences entre r&eacute;visions";
+$lang["DIFFREVS"] = "Diff&eacute;rences entre les r&eacute;visions";
 $lang["AND"] = "et";
 $lang["REV"] = "R&eacute;vision";
 $lang["LINE"] = "Ligne";
 $lang["SHOWENTIREFILE"] = "Afficher tout le fichier";
-$lang["SHOWCOMPACT"] = "Afficher seulement les passages|parties avec des diff&eacute;rences";
+$lang["SHOWCOMPACT"] = "Afficher seulement les passages avec des diff&eacute;rences";
 
-$lang["DIFFPREV"] = "Diff&eacute;rence avec le Pr&eacute;c&eacute;dent";
-$lang["BLAME"] = "Condamne";
+$lang["DIFFPREV"] = "Diff&eacute;rence avec le pr&eacute;c&eacute;dent";
+$lang["BLAME"] = "Responsabilit&eacute;";
 
 $lang["REVINFO"] = "Information sur la R&eacute;vision";
 $lang["GOYOUNGEST"] = "Aller &agrave; la R&eacute;vision la plus r&eacute;cente";
@@ -46,13 +46,13 @@ $lang["LOGMSG"] = "Message de Log";
 $lang["CHANGES"] = "Changements";
 $lang["SHOWCHANGED"] = "Montrer les fichiers modifi&eacute;s";
 $lang["HIDECHANGED"] = "Cacher les fichiers modifi&eacute;s";
-$lang["NEWFILES"] = "Nouveaux Fichiers";
+$lang["NEWFILES"] = "Nouveaux fichiers";
 $lang["CHANGEDFILES"] = "Fichier(s) modifi&eacute;(s)";
 $lang["DELETEDFILES"] = "Fichier(s) effac&eacute;(s)";
-$lang["VIEWLOG"] = "Afficher&nbsp;Log";
+$lang["VIEWLOG"] = "Afficher&nbsp;le&nbsp;Log";
 $lang["PATH"] = "Chemin";
 $lang["AUTHOR"] = "Auteur";
-$lang["AGE"] = "Mil&eacute;sime|Ancienet&eacute;";
+$lang["AGE"] = "Anciennet&eacute;";
 $lang["LOG"] = "Log";
 $lang["CURDIR"] = "R&eacute;pertoire courant";
 
@@ -72,12 +72,12 @@ $lang["MORERESULTS"] = "Trouver plus de r&eacute;ponses...";
 $lang["NORESULTS"] = "Il n'y a pas de r&eacute;ponse &agrave; votre recherche dans les Logs";
 $lang["NOMORERESULTS"] = "Il n'y a pas plus de r&eacute;ponses &agrave; votre recherche";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "fichier(s) modifié(s)"; 
+$lang["RSSFEEDTITLE"] = "Fil RSS de WebSVN"; 
+$lang["FILESMODIFIED"] = "fichier(s) modifi&aecute;(s)"; 
 $lang["RSSFEED"] = "RSS"; 
 
-$lang["LINENO"] = "Ligne";
-$lang["BLAMEFOR"] = "Condamne pour revision";
+$lang["LINENO"] = "Ligne num&eacute;ro";
+$lang["BLAMEFOR"] = "Dernier responsable";
 
 $lang["YEARS"] = "ann&eacute;es";
 $lang["MONTHS"] = "mois";
@@ -87,3 +87,4 @@ $lang["HOURS"] = "heures";
 $lang["MINUTES"] = "minutes";
 
 $lang["GO"] = "Go";
+
