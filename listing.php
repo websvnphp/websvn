@@ -217,7 +217,7 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 $vars["action"] = "";
 $vars["author"] = $log['author'];
 $vars["date"] = $log['date'];
-$vars["log"] = $bugtraq->replaceIDs(nl2br(create_anchors($log['message'])));
+$vars["log"] = nl2br($bugtraq->replaceIDs(create_anchors($log['message'])));
 $vars["rev"] = $log["rev"];
 $vars["path"] = $ppath;
 
@@ -277,6 +277,10 @@ else
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
 $vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".urlencode($history[1]["path"])."@".$history[1]["rev"]."&amp;compare%5B%5D=".urlencode($history[0]["path"])."@".$history[0]["rev"]."\">${lang["DIFFPREV"]}</a>";
+if (isset($history[1]))
+	$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".urlencode($history[1]["path"])."@".$history[1]["rev"]."&amp;compare%5B%5D=".urlencode($history[0]["path"])."@".$history[0]["rev"]."\">${lang["DIFFPREV"]}</a>";
+else
+	$vars["curdircomplink"] = "";
  
 if ($rep->getHideRss())
 {

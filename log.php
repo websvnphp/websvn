@@ -215,12 +215,8 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
       
       $listing[$index]["revauthor"] = $log["author"];
       $listing[$index]["revage"] = $log["age"];
-      $listing[$index]["revlog"] = nl2br(create_anchors($log["message"]));
+      $listing[$index]["revlog"] = nl2br($bugtraq->replaceIDs(create_anchors($log["message"])));
       $listing[$index]["rowparity"] = "$row";
-
-      // Look for bugtraq properties if asked
-      
-      $listing[$index]["revlog"] = $bugtraq->replaceIDs($listing[$index]["revlog"]);
       
       $row = 1 - $row;
       $index++;
