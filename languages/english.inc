@@ -77,3 +77,5 @@ $lang["HOUR"] = "hour";
 $lang["HOURS"] = "hours";
 $lang["MINUTE"] = "minute";
 $lang["MINUTES"] = "minutes";
+
+$lang["GO"] = "Go";

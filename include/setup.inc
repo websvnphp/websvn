@@ -254,7 +254,26 @@ if (!@$CONFIG)
      ".py"      => "python"
    );
 
+   // Get the user's personalised config
+   
    require("config.inc");
+   
+   // Create the project change combo box
+    
+   $url = $config->getURL(-1, "", "form");
+   $vars["projects_form"] = "<form action=\"$url\" method=\"post\" name=\"projectform\">";
+   
+   $reps = $config->getRepositories();
+   $vars["projects_select"] = "<select name=\"rep\">";
+   foreach ($reps as $index => $rep)
+   {
+      $vars["projects_select"] .= "<option value=\"$index\">${rep["name"]}</option>";
+   }
+   $vars["projects_select"] .= "</select>";
+   $vars["projects_select"] .= "</select>";
+
+   $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
+   $vars["projects_endform"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\"><input type=\"hidden\" name=\"op\" value=\"form\"></form>";   
 }
 
 ?>
