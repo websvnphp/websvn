@@ -262,9 +262,9 @@ else
 }
 
 $vars["version"] = $version;
-parseTemplate("templates/header.tmpl", $vars, $listing);
-parseTemplate("templates/diff.tmpl", $vars, $listing);
-parseTemplate("templates/footer.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."diff.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
    
 include("templates/footer.php");
 

@@ -67,6 +67,11 @@ $config = new Config;
 //
 // $config->parentPath("Path/to/parent (e.g. c:\\svn)");
 
+// TEMPLATE SETUP
+
+// Uncomment ONLY the display file that you want.  
+$config->setTemplatePath("./templates/standard/");
+
 // LANGUAGE SETUP
 
 // Uncomment ONLY the language file which you want.  If you want English then don't do anything here.

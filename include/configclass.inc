@@ -32,6 +32,7 @@ Class Config
    var $diff;
    var $serverIsWindows = false;
    var $cacheResults = false;
+   var $templatePath = "./templates/standard/";
 
    var $_repositories;
    
@@ -120,6 +121,27 @@ Class Config
          $this->diff = "\"${path}diff\"";
       else         
          $this->diff = "${path}diff";
+   }
+
+   // setSVNCommandPath
+   //
+   // Define the location of the svnlook command
+   
+   function setTemplatePath($path)
+   {
+      $lastchar = $path{strlen($path) - 1};
+      $isDir = ($lastchar == DIRECTORY_SEPARATOR ||
+                $lastchar == "/" ||
+                $lastchar == "\\");
+     
+      if (!$isDir)
+      {
+         $path .= DIRECTORY_SEPARATOR;
+      }
+
+      // On a windows machine we need to put spaces around the entire command
+      // to allow for spaces in the path
+      $this->templatePath = $path;
    }
 
    // parentPath
