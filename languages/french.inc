@@ -23,6 +23,9 @@
 //
 // French language strings
 
+$lang["LOG"] = "Log";
+$lang["DIFF"] = "Diff";
+
 $lang["NOREP"] = "Pas de repository|r&eacute;f&eacute;rentiel";
 $lang["NOPATH"] = "Fichier ou r&eacute;pertoire non trouv&eacute;";
 
@@ -34,6 +37,7 @@ $lang["SHOWENTIREFILE"] = "Afficher tout le fichier";
 $lang["SHOWCOMPACT"] = "Afficher seulement les passages|parties avec des diff&eacute;rences";
 
 $lang["DIFFPREV"] = "Diff&eacute;rence avec le Pr&eacute;c&eacute;dent";
+$lang["BLAME"] = "Condamne";
 
 $lang["REVINFO"] = "Information sur la R&eacute;vision";
 $lang["GOYOUNGEST"] = "Aller &agrave; la R&eacute;vision la plus r&eacute;cente";
@@ -67,6 +71,13 @@ $lang["CLEARLOG"] = "Effacer la recherche courante";
 $lang["MORERESULTS"] = "Trouver plus de r&eacute;ponses...";
 $lang["NORESULTS"] = "Il n'y a pas de r&eacute;ponse &agrave; votre recherche dans les Logs";
 $lang["NOMORERESULTS"] = "Il n'y a pas plus de r&eacute;ponses &agrave; votre recherche";
+
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
+$lang["FILESMODIFIED"] = "fichier(s) modifié(s)"; 
+$lang["RSSFEED"] = "RSS"; 
+
+$lang["LINENO"] = "Ligne";
+$lang["BLAMEFOR"] = "Condamne pour revision";
 
 $lang["YEARS"] = "ann&eacute;es";
 $lang["MONTHS"] = "mois";
