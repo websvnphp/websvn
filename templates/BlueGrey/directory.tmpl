@@ -12,14 +12,20 @@
 <tr><td class="row0" valign="top"><b>[lang:AUTHOR]</b></td><td>[websvn:author]</td></tr>
 <tr><td class="row0" valign="top"><b>[lang:LASTMOD]</b></td><td>[websvn:date]</td></tr>
 <tr><td class="row0" valign="top"><b>[lang:LOGMSG]</b></td><td>[websvn:log]</td></tr>
-[websvn-test:changedfilesbr]
-<tr><td class="row0" valign="top"><b>[lang:CHANGEDFILES]</b></td><td>[websvn:changedfilesbr]</td></tr>
-[websvn-endtest]
-[websvn-test:newfilesbr]
-<tr><td class="row0" valign="top"><b>[lang:NEWFILES]</b></td><td>[websvn:newfilesbr]</td></tr>
-[websvn-endtest]
-[websvn-test:deletedfilesbr]
-<tr><td class="row0" valign="top"><b>[lang:DELETEDFILES]</b></td><td>[websvn:deletedfilesbr]</td></tr>
+[websvn-test:hidechanges]
+   <tr><td class="row0" valign="top">&nbsp;</td><td>([websvn:showchangeslink])</td></tr>
+[websvn-else]
+[websvn:showchangeslink]
+   <tr><td class="row0" valign="top">&nbsp;</td><td>([websvn:hidechangeslink])</td></tr>
+   [websvn-test:changedfilesbr]
+   <tr><td class="row0" valign="top"><b>[lang:CHANGEDFILES]</b></td><td>[websvn:changedfilesbr]</td></tr>
+   [websvn-endtest]
+   [websvn-test:newfilesbr]
+   <tr><td class="row0" valign="top"><b>[lang:NEWFILES]</b></td><td>[websvn:newfilesbr]</td></tr>
+   [websvn-endtest]
+   [websvn-test:deletedfilesbr]
+   <tr><td class="row0" valign="top"><b>[lang:DELETEDFILES]</b></td><td>[websvn:deletedfilesbr]</td></tr>
+   [websvn-endtest]
 [websvn-endtest]
 </table>
 

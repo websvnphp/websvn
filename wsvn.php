@@ -20,17 +20,19 @@
 // --
 //
 
-// Configure these variable...
+// --- CONFIGURE THESE VARIABLES ---
 
 // Location of websvn directory via HTTP
+//
+// e.g.  For http://servername/websvn use /websvn
 $locwebsvnhttp = "/websvn";  
 
-// Physical of websvn directory
+// Physical location of websvn directory
 $locwebsvnreal = "d:/websvn";
 
-ini_set("include_path", $locwebsvnreal);
-
 // --- DON'T CHANGE BELOW HERE ---
+
+ini_set("include_path", $locwebsvnreal);
 
 require("include/config.inc");
 require("include/svnlook.inc");
@@ -84,4 +86,9 @@ if ($config->multiViews)
    
    // Now include the file that handles it
    include("$locwebsvnreal/$file");
+}
+else
+{
+   print "<p>MultiViews must be configured in config.inc in order to use this file";
+   exit;
 }
