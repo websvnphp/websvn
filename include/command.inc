@@ -31,10 +31,11 @@ function transChars($str, $doEnt = true)
    {
       //$output = iconv("cp850", "iso-8859-1", $ooutput]);
       $str = strtr($str, "…‚Šˆ‹Œ“—–‡", "àéèêïîôùûç");
-      if ($doEnt)
-         $str = htmlentities($str);
    }
-   
+
+   if ($doEnt)
+      $str = htmlentities($str);
+      
    return $str;
 }
 
