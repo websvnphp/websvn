@@ -266,6 +266,4 @@ parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."diff.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
    
-include("templates/footer.php");
-
 ?>
