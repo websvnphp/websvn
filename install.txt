@@ -38,11 +38,11 @@ pointing your browser at the index.php file.
 For those of you wishing to customise the look and feel a little, you should
 read templates.txt, which explains the highly configurable template system.
 
-Windows users - note that some of the features, offered by WebSVN, when
+Windows users - note that some of the features offered by WebSVN, when
 enabled, require the use of various external programs.  They can be downloaded
 from these locations:
 
-Diff/Sed/Gzip: http://www.cygwin.com/
+Diff/Sed/Gzip/Tar: http://www.cygwin.com/
 Enscript:      http://people.ssh.com/mtr/genscript/
 
 ACCENTED CHARACTERS
