@@ -1,9 +1,17 @@
 <div align="right">[websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
 <h2>[websvn:repname]</h2>
 <p>
-[lang:CONVFROM] <b>[websvn:path1] ([lang:REV] [websvn:rev1])</b> [lang:TO] <b>[websvn:path2] ([lang:REV] [websvn:rev2])</b>
-<p>
-[websvn:revlink]
+[websvn:compare_form]
+<table>
+   <tr><td>[lang:COMPPATH]&nbsp</td><td>[websvn:compare_path1input] [lang:REV] [websvn:compare_rev1input]</td></tr>
+   <tr><td>[lang:WITHPATH]</td><td>[websvn:compare_path2input] [lang:REV] [websvn:compare_rev2input]</td></tr>
+</table>
+[websvn:compare_submit]
+[websvn:compare_endform]
+<hr>
+   <p>[lang:CONVFROM] <b>[websvn:path1] ([lang:REV] [websvn:rev1])</b> [lang:TO] <b>[websvn:path2] ([lang:REV] [websvn:rev2])</b>
+   <p>
+   [websvn:revlink]
 <p>
 
 [websvn-startlisting]

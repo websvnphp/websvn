@@ -90,12 +90,15 @@ $lang["MINUTES"] = "minutes";
 
 $lang["GO"] = "Go";
 
+$lang["PATHCOMPARISON"] = "Path Comparison";
 $lang["COMPAREPATHS"] = "Compare Paths";
 $lang["COMPAREREVS"] = "Compare Revisions";
 $lang["PROPCHANGES"] = "Property changes :";
 $lang["CONVFROM"] = "This comparison shows the changes necessary to convert path ";
 $lang["TO"] = "TO";
 $lang["REVCOMP"] = "Reverse comparison";
+$lang["COMPPATH"] = "Compare Path:";
+$lang["WITHPATH"] = "With Path:";
 
 // The following are defined by some languages to stop unwanted line splitting
 // in the template files. 
