@@ -90,6 +90,8 @@ Variables defined for directory.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 locwebsvnhttp - Root of websvn directory
+charset - The charset requested by the user
+
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
@@ -126,6 +128,8 @@ Variables defined for log.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 locwebsvnhttp - Root of websvn directory
+charset - The charset requested by the user
+
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
@@ -144,6 +148,8 @@ Variables defined for file.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 locwebsvnhttp - Root of websvn directory
+charset - The charset requested by the user
+
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
@@ -156,6 +162,8 @@ Variables defined for diff.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 locwebsvnhttp - Root of websvn directory
+charset - The charset requested by the user
+
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
