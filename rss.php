@@ -58,6 +58,8 @@ else
    $baseurl = dirname($_SERVER["PHP_SELF"]);
    if ($baseurl != "" && $baseurl != DIRECTORY_SEPARATOR && $baseurl != "\\" && $baseurl != "/" )
       $baseurl .= "/";
+   else
+      $baseurl = "/";
 }
 
 // Make sure that we have a repository

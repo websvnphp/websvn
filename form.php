@@ -45,7 +45,9 @@ if (@$_REQUEST["selectproj"])
    $basedir = dirname($_SERVER["PHP_SELF"]);
    if ($basedir != "" && $basedir != DIRECTORY_SEPARATOR && $basedir != "\\" && $basedir != "/" )
       $basedir .= "/";
-   
+   else
+      $basedir = "/";
+      
    $url = $config->getURL($rep, "/", "dir");
    
    if ($config->multiViews)
