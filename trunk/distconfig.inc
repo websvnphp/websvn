@@ -54,12 +54,12 @@ $config = new Config;
 //
 // To configure the repositories by hand, copy the line below, uncomment it and replace the name and path
 //
-// $config->addRepository("NameToDisplay", "Path/to/repository (e.g. c:\svn\proj)");
+// $config->addRepository("NameToDisplay", "Path/to/repository (e.g. c:\\svn\\proj)");
 //
 // To use the parent path method, uncomment the newt line and and replace the path with your one.  You
 // can call the function several times if you have several parent paths.
 //
-// $config->parentPath("Path/to/parent (e.g. c:\svn\)");
+// $config->parentPath("Path/to/parent (e.g. c:\\svn)");
 
 // LANGUAGE SETUP
 
