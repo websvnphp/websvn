@@ -92,7 +92,8 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         @exec($config->svnlook." tree $revstr ".$this->repPath." > $cachedname");
+         $cmd = quoteCommand($config->svnlook." tree $revstr ".$this->repPath." > $cachedname", false);
+         @exec($cmd);
       }
       
       if ($config->cacheResults && file_exists($cachedname))
@@ -190,7 +191,11 @@ Class SVNRepository
       else // Still no cache file.  We'll do it the old fashion way
       {
          // Run the file list command
-         if ($files = popen($config->svnlook." tree $revstr ".$this->repPath." $path", "r"))
+         
+         $cmd = $config->svnlook." tree $revstr ".$this->repPath." $path";
+         $c = quoteCommand($cmd, false);
+         
+         if ($files = popen($c, "r"))
          {      
       		while (!feof($files))
       		{
@@ -215,7 +220,9 @@ Class SVNRepository
          }
          else // An error occured
          {
-            $output = transChars(shell_exec($config->svnlook." tree $revstr ".$this->repPath." $path 2>&1"));
+            $c = quoteCommand($cmd, true);
+               
+            $output = transChars(shell_exec($c));
             if (!empty($output)) print "<p>".nl2br($output);
             exit;
          }
@@ -247,7 +254,8 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         @exec($config->svnlook." info $revstr ".$this->repPath." $path > $cachedname");
+         $cmd = quoteCommand($config->svnlook." info $revstr ".$this->repPath." $path > $cachedname", false);
+         @exec($cmd);
       }
       
       // Get the log info
@@ -385,7 +393,8 @@ Class SVNRepository
       {
          // Cache the directory layout
          
-         @exec($config->svnlook." changed $revstr ".$this->repPath." > $cachedname");
+         $cmd = quoteCommand($config->svnlook." changed $revstr ".$this->repPath." > $cachedname", false);
+         @exec($cmd);
       }
       
       if ($config->cacheResults && file_exists($cachedname))
@@ -455,13 +464,15 @@ Class SVNRepository
 
       if ($config->useEnscript && !empty($l))
       {
-         @exec($config->svnlook." cat $revstr ".$this->repPath." $path | ".
-               $config->enscript." --color --language=html --pretty-print=$l -o - | ".
-               $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename");
+         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+                             $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+                             $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename", false);
+         @exec($cmd);
       }
       else
       {
-         @exec($config->svnlook." cat $revstr ".$this->repPath." $path > $filename");
+         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path > $filename", false);
+         @exec($cmd);
       }
   }
 
@@ -485,14 +496,18 @@ Class SVNRepository
         
       if ($config->useEnscript && !empty($l))
       {
-         if (!($result = popen($config->svnlook." cat $revstr ".$this->repPath." $path | ".
-                               $config->enscript." --color --language=html --pretty-print=$l -o - | ".
-                               $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' 2>&1", "r")))
+         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+                             $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+                             $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' 2>&1", false);
+                               
+         if (!($result = popen($cmd, "r")))
             return;
       }
       else
       {
-         if (!($result = popen($config->svnlook." cat $revstr ".$this->repPath." $path 2>&1", "r")))
+         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path 2>&1", false);
+         
+         if (!($result = popen($cmd, "r")))
             return;
            
          $pre = true;
