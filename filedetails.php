@@ -23,7 +23,7 @@
 //
 // Simply lists the contents of a file
 
-require("include/config.inc");
+require("include/setup.inc");
 require("include/svnlook.inc");
 require("include/template.inc");
 

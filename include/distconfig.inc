@@ -23,33 +23,6 @@
 //
 // Configuration parameters
 
-if (!@$CONFIG)
-{
-$CONFIG = true;
-
-// --- DON'T CHANGE THIS PART ---
-
-// Include the configuration class
-require("include/configclass.inc");
-
-// Define the language array
-$lang = array();
-
-// Include a default language file.
-require("languages/english.inc");
-
-// Set up svnlocwebsvn
-if (empty($locwebsvnhttp))
-   $locwebsvnhttp = ".";
-
-if (empty($locwebsvnreal))
-   $locwebsvnreal = ".";
-
-$vars["locwebsvnhttp"] = $locwebsvnhttp;
-
-// Create the config
-$config = new Config;
-
 // --- FOLLOW THE INSTRUCTIONS BELOW TO CONFIGURE YOUR SETUP ---
 
 // Define the configuration
@@ -87,7 +60,7 @@ $config = new Config;
 // Uncomment ONLY the display file that you want.  
 
 $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
-//$config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
+// $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
 
 // LANGUAGE SETUP
 
@@ -104,7 +77,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // Note: The websvn directory will need to have Multiviews turned on in Apache, and you'll need to configure
 //       wsvn.php
 
-//$config->useMultiViews();
+// $config->useMultiViews();
 
 // Uncomment this if you don't have the right to use it.  Be warned that you may need it however!
 set_time_limit(0);
@@ -118,7 +91,8 @@ $config->setCachingOn();
 //
 // You'll need Enscript version 1.6 or higher AND Sed installed to use this feature. 
 // Set the path above.
-$config->useEnscript();
+//
+// $config->useEnscript();
 
 // List of extensions recognised by enscript.  Remove or change the extension => language
 // bindings as needed.
@@ -186,5 +160,4 @@ $extensions = array
   ".py"      => "python"
 );
 
-}
 ?>

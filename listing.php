@@ -23,7 +23,7 @@
 //
 // Show the listing for the given repository/path/revision
 
-require("include/config.inc");
+require("include/setup.inc");
 require("include/svnlook.inc");
 require("include/template.inc");
 
