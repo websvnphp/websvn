@@ -44,7 +44,7 @@ function _dirSort($e1, $e2)
    if ($isDir1 && !$isDir2) return -1;
    if ($isDir2 && !$isDir1) return 1;
    
-   return strcmp($e1, $e2);
+   return strnatcasecmp($e1, $e2);
 }
 
 // Return the revision string to pass to a command
@@ -432,9 +432,9 @@ Class SVNRepository
       
       // Sort each array alphabetically
       
-      sort($changes["added"]);
-      sort($changes["deleted"]);
-      sort($changes["updated"]);
+      natcasesort($changes["added"]);
+      natcasesort($changes["deleted"]);
+      natcasesort($changes["updated"]);
     
       return $changes;              
    }
