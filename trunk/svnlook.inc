@@ -173,6 +173,10 @@ Class SVNRepository
       return $changes;              
    }
    
+   // getFileContents
+   //
+   // Return the contents of a file into a variable
+   
    function getFileContents($path, $rev = 0)
    {
       global $config;
@@ -183,6 +187,28 @@ Class SVNRepository
       $output = runCommand($config->svnlook." cat $revstr ".$this->repPath." $path");
       
       return $output;
+   }
+
+   // listFileContents
+   //
+   // Print the contents of a file without filling up Apache's memory
+   
+   function listFileContents($path, $rev = 0)
+   {
+      global $config;
+      
+      $revstr = _revStr($rev);
+      
+      // Get the log info
+      if (!($result = popen($config->svnlook." cat $revstr ".$this->repPath." $path 2>&1", "r")))
+         return;
+      
+		while (!feof($result))
+		{
+			print(transChars(fgets($result, 1000)));
+		}
+		
+		pclose($result);
    }
 
    function getHistory($path, $rev = 0)
