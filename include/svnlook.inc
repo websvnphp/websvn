@@ -101,11 +101,10 @@ Class SVNRepository
          {
             $state = 0; // Work out sub path
             $finished = false;
-            $spc = " ";
-            if ($path == "")
+            $spc = "";
+            if ($path == "" || $path{0} != "/")
             {
-               $path = "/";
-               $spc = "";
+               $path = "/".$path;
             }
                   
             while (!feof($files) && !$finished)
