@@ -176,7 +176,7 @@ Class Config
          
          if ($rep != -1)
          {
-            $url .= "/".$this->_repositories[$rep]["name"].urlencode($path);
+            $url .= "/".$this->_repositories[$rep]["name"].$path;
             
             if ($op != "dir")
                $url .= "?op=$op&";
