@@ -127,6 +127,7 @@ isDir - true if the current file is a directory (use with [websvn-test:isDir]
 Variables defined for log.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+action - Action being performed ("Log")
 locwebsvnhttp - Root of websvn directory
 charset - The charset requested by the user
 
@@ -161,6 +162,7 @@ Note: Use command [websvn-getlisting] to display the listing.
 Variables defined for diff.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+action - Action being performed ("Diff")
 locwebsvnhttp - Root of websvn directory
 charset - The charset requested by the user
 
