@@ -60,15 +60,9 @@ $lang["BADCMD"] = "Fehler beim Ausf&uuml;hren des Befehls";
 $lang["PROJECTS"] = "Subversion-Projekte";                       
 $lang["SERVER"] = "Subversion Server";                           
 
-$lang["YEAR"] = "Jahr";                                               
 $lang["YEARS"] = "Jahre";                                             
-$lang["MONTH"] = "Monat";                                             
 $lang["MONTHS"] = "Monate";                                           
-$lang["WEEK"] = "Woche";                                               
 $lang["WEEKS"] = "Wochen";                                             
-$lang["DAY"] = "Tag";                                                 
 $lang["DAYS"] = "Tage";                                               
-$lang["HOUR"] = "Stunde";                                               
 $lang["HOURS"] = "Stunden";                                             
-$lang["MINUTE"] = "Minute";                                           
 $lang["MINUTES"] = "Minuten";   
