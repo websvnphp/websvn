@@ -69,7 +69,7 @@ if ($log["rev"] < $youngest)
    echo "<a href=\"listing.php?rep=$rep&path=$path&sc=1\">${lang["GOHEAD"]}</a>";
 }
 echo "<p><b>${lang["LASTMOD"]}:</b> ${log['author']} - ${log['date']}";
-echo "<p><b>${lang["LOGMSG"]}:</b><br>".nl2br($log['message']);
+echo "<p><b>${lang["LOGMSG"]}:</b><br>".nl2br(htmlspecialchars($log['message']));
 echo "<p>";
 
 if (!$showchanged)
