@@ -24,44 +24,13 @@
 // Handling of WebSVN forms
 
 require_once("include/setup.inc");
+require_once("include/utils.inc");
 
 // Generic redirect handling
 
 function redirect($loc)
 {
-   $protocol = 'http';
-   
-   if (isset($_SERVER["HTTPS"]) && (strtolower($_SERVER["HTTPS"]) != "off"))
-   {
-   	$protocol = "https";
-   }
-   
-   $port = ":".$_SERVER["SERVER_PORT"];
-   if ((":80" == $port && "http" == $protocol) ||
-       (":443" == $port && "https" == $protocol)) 
-   {
-      $port = "";
-   }
-   
-   if (isset($_SERVER["HTTP_HOST"]))
-   {
-   	$host = $_SERVER["HTTP_HOST"];
-   }
-   else if (isset($_SERVER["SERVER_NAME"]))
-   {
-   	$host = $_SERVER["SERVER_NAME"].$port;
-   }
-   else if (isset($_SERVER["SERVER_ADDR"]))
-   {
-   	$host = $_SERVER["SERVER_ADDR"].$port;
-   }
-   else
-   {
-      print "Unable to redirect";
-      exit;
-   }
-   
-   $url	= $protocol . "://" . $host . $loc;
+   $url= getFullURL($loc);
    
    header("Location: $url");
    echo "<html><script language=\"JavaScript\" type=\"text/JavaScript\">window.location = \"$url\"</script></html>";
