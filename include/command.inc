@@ -50,7 +50,14 @@ function transArray($arr)
          $narr[$key] = htmlentities(strtr(rtrim($value), "…‚Šˆ‹Œ“—–‡", "àéèêïîôùûç"));
       }
    }
-   
+   else
+   {
+      foreach ($arr as $key => $value)
+      {
+         $narr[$key] = htmlentities(rtrim($value));
+      }
+   }
+      
    return $narr;
 }
 
