@@ -38,7 +38,7 @@ Class Config
    // Tool path locations
 
    var $svnlook = "svnlook";
-   var $svn = "svn";
+   var $svn = "svn --non-interactive";
    var $diff = "diff";
    var $enscript ="enscript";
    var $sed = "sed";
