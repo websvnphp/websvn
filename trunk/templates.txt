@@ -29,8 +29,9 @@ WebSVN controls.  There are two control types, commands and variables.
 COMMANDS
 ~~~~~~~~
 
+NOTE:  Commands MUST appear on their own line.
 
-There are a few commands available:
+---
 
 [websvn-test:varname]
 ...
@@ -52,12 +53,44 @@ the controls is repeated for each item in the list
 
 ---
 
+[websvn-defineicons] (used in directory.tmpl only)
+...
+[websvn-enddefineicons]
+...
+[websvn-icon]
+
+These commands are used to display certain icons next to certain file types in
+the directory view.
+
+The [websvn-defineicons] block should contain a line for each file type,
+defining the HTML to be used for that file type.  To define the HTML for a
+particular extension use the syntax:
+
+.<extension>=<HTML code>
+
+There are also two special filetypes:
+
+dir=<HTML code> is used for directory icons
+*=<HTML code> is used for all filetypes which have no other definition
+
+Example from the BlueGrey scheme:
+
+[websvn-defineicons]
+dir=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
+*=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
+.c=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
+.h=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
+[websvn-enddefineicons]
+
+Inside the [websvn-startlisting] block, the command [websvn-icon] will output
+the HTML code defined for the type of the current file.
+
+---
+
 [websvn-getlisting] (used in file.tmpl only)
  
 Get the contents of the file being viewed and output it exactly (surrounded
 with <PRE> .. </PRE>).
-
-NOTE:  Controls MUST appear on there own line.
 
 VARIABLES
 ~~~~~~~~~

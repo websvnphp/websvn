@@ -1,6 +1,11 @@
 CHANGES
 
+ADD: Templates can now define icons for particular file types
+     (see BlueGrey scheme for an example)
 ADD: Display php files with syntax highlighting
+ADD: Improve site navigation with links to each directory level on all
+     pages.
+
 
 1.37
 
