@@ -1,11 +1,11 @@
 CHANGES
 
-1.41
+1.50
 
 Notes: Before installing this version you should delete all the existing
        cache files.
        
-       wsvn.php has changed.  You should redo and appropriate configuration
+       wsvn.php has changed.  You should redo any appropriate configuration
        changes inside this file.
 
 NEW: The cached files are now compressed
