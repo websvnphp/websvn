@@ -443,7 +443,6 @@ Class SVNRepository
       global $config, $extensions;
       
       $revstr = _revStr($rev);
-      $path = quote($path);
       
       // If there's no filename, we'll just deliver the contents as it is to the user
       if ($filename == "")
@@ -456,6 +455,8 @@ Class SVNRepository
       $ext = strrchr($path, ".");
       $l = @$extensions[$ext];
         
+      $path = quote($path);
+
       if ($config->useEnscript && !empty($l))
       {
          exec($config->svnlook." cat $revstr ".$this->repPath." $path | ".
