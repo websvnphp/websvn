@@ -1,5 +1,7 @@
 CHANGES
 
+FIX: Handle spaces in filenames
+
 1.30
 
 There are a few changes to the config file in this release.  Copy

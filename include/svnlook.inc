@@ -77,6 +77,7 @@ Class SVNRepository
       global $config, $locwebsvnreal;
       
       $revstr = _revStr($rev);
+      $path = quote($path);
       
       $tree = array();
       
@@ -233,6 +234,7 @@ Class SVNRepository
       global $config, $lang, $locwebsvnreal;
       
       $revstr = _revStr($rev);
+      $path = quote($path);
       
       // Try to find a cached version of this revision of the repository
       
@@ -405,7 +407,8 @@ Class SVNRepository
       
       foreach ($output as $changed)
       {
-         list($mod, $name) = sscanf($changed, "%c   %s");
+         $mod = $changed{0};
+         $name = substr($changed, 4);
          
          switch ($mod)
          {
@@ -441,6 +444,7 @@ Class SVNRepository
       global $config, $extensions;
       
       $revstr = _revStr($rev);
+      $path = quote($path);
       
       // Get the file contents info
       
@@ -469,6 +473,7 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       $pre = false;
+      $path = quote($path);
       
       // Get the file contents info
       
@@ -510,6 +515,7 @@ Class SVNRepository
       global $config;
       
       $revstr = _revStr($rev);
+      $path = quote($path);
       
       // Get the history info
       $output = runCommand($config->svnlook." history $revstr ".$this->repPath." $path");
