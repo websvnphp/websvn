@@ -1,5 +1,9 @@
 CHANGES
 
+1.31/1.31a
+
+FIX: Direcory view had disappeared!
+FIX: Included missing file setup.inc
 FIX: Handle spaces in filenames
 
 1.30

@@ -1,22 +1,21 @@
 
 WHY WebSVN?
 
-WebSVN offers a view onto your subversion repositories that's been designed to
-reflect the Subversion methodology.  You can view the log of any file or
+WebSVN offers a view onto your subversion repositories that's been designed
+ to reflect the Subversion methodology. You can view the log of any file or
 directory and see a list of all the files changed, added or deleted in any
-given revision.  You can also view the differences between 2 versions of a file
-so as to see exactly what was changed in a particular revision.
+given revision. You can also view the differences between 2 versions of a
+file so as to see exactly what was changed in a particular revision. 
 
-WebSVN isn't a feature laden product, but it does offer a clean, easy to use
-interface, that should provide most users with all the functionality they need
-from a read-only web interface onto their Subversion repositories.
+WebSVN offers the following features: 
+
+* Easy to use interface 
+* Highly customisable templating system 
+* Colourisation of file listings 
+* Fast browsing thanks to internal caching feature 
+* Apache MultiViews support 
 
 Since it's written using PHP, WebSVN is also very portable and easy to install.
-The disadvantage of PHP is that there are currently no SVN/PHP bindings.  Until
-these become available WebSVN will use the svnlook command to analyse
-repositories.  Although this may slightly limit the performance, I've found that
-in practice the speed is perfectly adequate and that svnlook provides a
-interface that remains very stable between subversion releases.
 
 INSTALLATION
 
