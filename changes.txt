@@ -1,5 +1,8 @@
 CHANGES
 
+FIX: Really make sure that we redirect to the right place when using the
+     drop-down box to select projects.
+
 1.36
 
 ADD: Log message search feature
@@ -20,7 +23,7 @@ CHANGE: Files delived with a MIME Content type are now sent as "inline".
         a save box only if they can't be displayed in this mannor.
 
 FIX: Detect use of the HTTPS protocol when using the drop-down box to
-     select projects.
+     select projects. (-- FIX INCORRECT. USE v1.36 -- )
 FIX: The PNGs in the BlueGrey style are now transparent under Internet
      Explorer 5.5 and higher.
 
