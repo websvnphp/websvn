@@ -19,21 +19,9 @@
 //
 // --
 //
-// index.php
+// version.inc
 //
-// Main page.  Lists all the projects
+// Version information
 
-require("config.inc");
-require("svnlook.inc");
-
-include("templates/indexheader.php");
-
-$projects = $config->getRepositories();
-foreach ($projects as $index => $project)
-{
-   echo "<li><b><a href=\"listing.php?rep=$index&sc=1\">${project["name"]}</b>";
-} 
-
-include("templates/indexfooter.php");
-
+$version = "1.02";
 ?>
