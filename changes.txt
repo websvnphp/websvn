@@ -1,5 +1,11 @@
 CHANGES
 
+1.39
+
+FIX: Links followed after viewing the contents of a file go to the 
+     revision of the repository previously being viewed
+FIX: Paths with spaces are now correctly showed in the log view
+
 1.38
 
 ADD: Templates can now define icons for particular file types
