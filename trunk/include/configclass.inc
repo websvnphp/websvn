@@ -47,6 +47,7 @@ Class Config
    var $useEnscript = false;
    var $rss = false;
    var $spaces = 8;
+   var $refRepositoriesByNumber = false;
 
    var $templatePath = "./templates/Standard/";
 
@@ -203,7 +204,20 @@ Class Config
                break;
          }
          
-         return $fname."?rep=$rep&path=$path&";
+         if ($this->refRepositoriesByNumber)
+         {
+            if ($rep == -1)
+               return $fname."?path=$path&";
+            else
+               return $fname."?rep=$rep&path=$path&";
+         }
+         else
+         {
+            if ($rep == -1)
+               return $fname."?path=$path&";
+            else
+               return $fname."?repname=".$this->_repositories[$rep]["name"]."&path=$path&";
+         }
       }
    }
 
@@ -349,6 +363,13 @@ Class Config
    function expandTabsBy($sp)
    {
       $this->spaces = $sp;
+   }
+   
+   // Misc settings
+   
+   function setRepositoryAccessByNumber()
+   {
+      $this->refRepositoriesByNumber = true;
    }
 }
 ?>

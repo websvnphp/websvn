@@ -41,6 +41,13 @@ $words = explode(" ", $search);
 
 $fromRev = (int)@$_REQUEST["fr"];
 
+// Override the rep parameter with the repository name if it's available
+$repname = @$_REQUEST["repname"];
+if (isset($repname))
+{
+    $rep = $config->findRepository($repname);
+}
+
 // Max number of results to find at a time
 $numSearchResults = 10;
 

@@ -160,5 +160,10 @@ $config->setCachingOn();
 // Number of spaces to expand tabs to in diff/listing view
 $config->expandTabsBy(8);
 
+// WebSVN URLs now use the repository names rather than internal numbers.  This means that
+// bookmarks remain the same when new projects are added.  In the unlikely event that you have
+// multiple projects with the same name, uncomment this line to return to the previous system
+//
+// $config->setRepositoryAccessByNumber();
 
 ?>

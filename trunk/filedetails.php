@@ -33,6 +33,13 @@ $path = escapeshellcmd(@$_REQUEST["path"]);
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
+// Override the rep parameter with the repository name if it's available
+$repname = @$_REQUEST["repname"];
+if (isset($repname))
+{
+    $rep = $config->findRepository($repname);
+}
+
 // Make sure that we have a repository
 if (!isset($rep))
 {
