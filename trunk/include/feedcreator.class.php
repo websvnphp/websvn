@@ -23,6 +23,8 @@ GNU General Public License for more details: <http://www.gnu.org/licenses/gpl.tx
 
 Changelog:
 
+Modification for WebSVN:  The main description link wasn't put through htmlspecialcharacters
+
 v1.6    05-10-04
     added stylesheet to RSS 1.0 feeds
     fixed generator comment (thanks Kevin L. Papendick and Tanguy Pruvot)
