@@ -1,5 +1,8 @@
 CHANGES
 
+FIX: Accented characters weren't shown correctly in the directory comparison
+     view.
+
 1.61
 
 NEW: Multibyte encodings are considered when urlencoding path names
