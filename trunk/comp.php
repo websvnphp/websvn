@@ -102,6 +102,7 @@ $vars["path2"] = $path2;
 $vars["rev1"] = $rev1;
 $vars["rev2"] = $rev2;
 
+$noinput = empty($path1) && empty($path2);
 $listing = array();
 
 // Generate the diff listing
@@ -110,9 +111,12 @@ $path2 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repPath.$path
 
 $debug = false;
 
-$rawcmd = $config->svn." diff -r$rev1:$rev2 ".quote("file:///".$path1)." ".quote("file:///".$path2);
-$cmd = quoteCommand($rawcmd, true);
-if ($debug) echo "$cmd\n";
+if (!$noinput)
+{
+   $rawcmd = $config->svn." diff -r$rev1:$rev2 ".quote("file:///".$path1)." ".quote("file:///".$path2);
+   $cmd = quoteCommand($rawcmd, true);
+   if ($debug) echo "$cmd\n";
+}
 
 function clearVars()
 {
@@ -127,208 +131,213 @@ function clearVars()
    $listing[$index]["properties"] = null;
 }	   
 
-if ($diff = popen($cmd, "r"))
+$vars["success"] = false;
+
+if (!$noinput)
 {
-   $index = 0;
-   $indiff = false;
-   $indiffproper = false;
-   $getLine = true;
-   $node = null;
-
-   $vars["success"] = true;
-
-	while (!feof($diff))
-	{
-	   if ($getLine)
-	      $line = fgets($diff);
-      
-      clearVars();	   
-	   $getLine = true;
-      if ($debug) print "Line = '$line'<br>" ;	         
-	   if ($indiff)
-	   {
-   	   // If we're in a diff proper, just set up the line
-   	   if ($indiffproper)
+   if ($diff = popen($cmd, "r"))
+   {
+      $index = 0;
+      $indiff = false;
+      $indiffproper = false;
+      $getLine = true;
+      $node = null;
+   
+      $vars["success"] = true;
+   
+   	while (!feof($diff))
+   	{
+   	   if ($getLine)
+   	      $line = fgets($diff);
+         
+         clearVars();	   
+   	   $getLine = true;
+         if ($debug) print "Line = '$line'<br>" ;	         
+   	   if ($indiff)
    	   {
-      	   if ($line[0] == " " || $line[0] == "+" || $line[0] == "-")
+      	   // If we're in a diff proper, just set up the line
+      	   if ($indiffproper)
       	   {
-      	      switch ($line[0])
-      	      {
-      	         case " ":
-      	            $listing[$index]["diffclass"] = "diff";
-      	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
-      	            if (empty($subline)) $subline = "&nbsp;";
-      	            $listing[$index++]["line"] = $subline;
-                     if ($debug) print "Including as diff: $subline<br>";
-      	            break;
+         	   if ($line[0] == " " || $line[0] == "+" || $line[0] == "-")
+         	   {
+         	      switch ($line[0])
+         	      {
+         	         case " ":
+         	            $listing[$index]["diffclass"] = "diff";
+         	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
+         	            if (empty($subline)) $subline = "&nbsp;";
+         	            $listing[$index++]["line"] = $subline;
+                        if ($debug) print "Including as diff: $subline<br>";
+         	            break;
+         	   
+         	         case "+":
+         	            $listing[$index]["diffclass"] = "diffadded";
+         	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
+         	            if (empty($subline)) $subline = "&nbsp;";
+         	            $listing[$index++]["line"] = $subline;
+                        if ($debug) print "Including as added: $subline<br>";
+         	            break;
+         
+         	         case "-":
+         	            $listing[$index]["diffclass"] = "diffdeleted";
+         	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
+         	            if (empty($subline)) $subline = "&nbsp;";
+         	            $listing[$index++]["line"] = $subline;
+                        if ($debug) print "Including as removed: $subline<br>";
+         	            break;
+         	      }
+         	      
+         	      continue;
+         	   }
+         	   else
+         	   {
+         	      $indiffproper = false;
+         	      $listing[$index++]["enddifflines"] = true;
+         	      $getLine = false;
+                  if ($debug) print "Ending lines<br>";
+         	      continue;
+         	   }
+      	   }
       	   
-      	         case "+":
-      	            $listing[$index]["diffclass"] = "diffadded";
-      	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
-      	            if (empty($subline)) $subline = "&nbsp;";
-      	            $listing[$index++]["line"] = $subline;
-                     if ($debug) print "Including as added: $subline<br>";
-      	            break;
-      
-      	         case "-":
-      	            $listing[$index]["diffclass"] = "diffdeleted";
-      	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
-      	            if (empty($subline)) $subline = "&nbsp;";
-      	            $listing[$index++]["line"] = $subline;
-                     if ($debug) print "Including as removed: $subline<br>";
-      	            break;
-      	      }
-      	      
-      	      continue;
-      	   }
-      	   else
-      	   {
-      	      $indiffproper = false;
-      	      $listing[$index++]["enddifflines"] = true;
-      	      $getLine = false;
-               if ($debug) print "Ending lines<br>";
-      	      continue;
-      	   }
-   	   }
-   	   
-   	   // Check for the start of a new diff area
-   	   if (!strncmp($line, "@@", 2))
-         {
-            $pos = strpos($line, "+");
-            $posline = substr($line, $pos); 
-      	   sscanf($posline, "+%d,%d", $sline, $eline);
-                     if ($debug) print "sline = '$sline', eline = '$eline'<br>";      	   
-      	   // Check that this isn't a file deletion
-      	   if ($sline == 0 && $eline == 0)
-      	   {
-      	      $line = fgets($diff);
-               if ($debug) print "Ignoring: $line<br>" ;	         
-      	      while ($line[0] == " " || $line[0] == "+" || $line[0] == "-")
-               {
-      	         $line = fgets($diff);
+      	   // Check for the start of a new diff area
+      	   if (!strncmp($line, "@@", 2))
+            {
+               $pos = strpos($line, "+");
+               $posline = substr($line, $pos); 
+         	   sscanf($posline, "+%d,%d", $sline, $eline);
+                        if ($debug) print "sline = '$sline', eline = '$eline'<br>";      	   
+         	   // Check that this isn't a file deletion
+         	   if ($sline == 0 && $eline == 0)
+         	   {
+         	      $line = fgets($diff);
                   if ($debug) print "Ignoring: $line<br>" ;	         
-               }      	
-                        
-      	      $getLine = false;
-               if ($debug) print "Unignoring previous - marking as deleted<b>";
-               $listing[$index++]["info"] = "File Deleted";
-      	   }
-      	   else
-      	   {
-      	      $listing[$index++]["difflines"] = $line;
-      	      $indiffproper = true;
-      	   }
-      	   
-      	   continue;
-      	}
-      	else
-      	{
-      	   $indiff = false;
-            if ($debug) print "Ending diff";
-      	}
-      }
-      
-	   // Check for a new node entry
-      if (strncmp(trim($line), "Index: ", 7) == 0)
-      {
-         // End the current node
-         if ($node)
-         {
-            $listing[$index++]["endpath"] = true;
-            clearVars();
-         }
-            
-         $node = trim($line);
-         $node = substr($node, 7);
-   
-         $listing[$index]["newpath"] = $node;
-         if ($debug) echo "Creating node $node<br>";
-         
-         // Skip past the line of ='s
-         $line = fgets($diff);
-         if ($debug) print "Skipping: $line<br>" ;	         
-        
-         // Check for a file addition
-         $line = fgets($diff);
-         if ($debug) print "Examining: $line<br>" ;	         
-         if (strpos($line, "(revision 0)"))
-            $listing[$index]["info"] = "New file";
-         
-         if (strncmp(trim($line), "Cannot display:", 15) == 0)
-         {
-            $index++;
-            clearVars();
-            $listing[$index++]["info"] = $line;
-            continue;
+         	      while ($line[0] == " " || $line[0] == "+" || $line[0] == "-")
+                  {
+         	         $line = fgets($diff);
+                     if ($debug) print "Ignoring: $line<br>" ;	         
+                  }      	
+                           
+         	      $getLine = false;
+                  if ($debug) print "Unignoring previous - marking as deleted<b>";
+                  $listing[$index++]["info"] = "File Deleted";
+         	   }
+         	   else
+         	   {
+         	      $listing[$index++]["difflines"] = $line;
+         	      $indiffproper = true;
+         	   }
+         	   
+         	   continue;
+         	}
+         	else
+         	{
+         	   $indiff = false;
+               if ($debug) print "Ending diff";
+         	}
          }
          
-         // Skip second file info
-         $line = fgets($diff);
-         if ($debug) print "Skipping: $line<br>" ;	         
-         
-         $indiff = true;
-         $index++;
-         
-         continue;
-      }
-   
-      if (strncmp(trim($line), "Property changes on: ", 21) == 0)
-      {
-         $propnode = trim($line);
-         $propnode = substr($propnode, 21);
-         
-         if ($debug) print "Properties on $propnode (cur node $ $node)";
-         if ($propnode != $node)
+   	   // Check for a new node entry
+         if (strncmp(trim($line), "Index: ", 7) == 0)
          {
+            // End the current node
             if ($node)
             {
                $listing[$index++]["endpath"] = true;
                clearVars();
             }
                
-            $node = $propnode;
-
-            $listing[$index++]["newpath"] = $node;
-            clearVars();
+            $node = trim($line);
+            $node = substr($node, 7);
+      
+            $listing[$index]["newpath"] = $node;
+            if ($debug) echo "Creating node $node<br>";
+            
+            // Skip past the line of ='s
+            $line = fgets($diff);
+            if ($debug) print "Skipping: $line<br>" ;	         
+           
+            // Check for a file addition
+            $line = fgets($diff);
+            if ($debug) print "Examining: $line<br>" ;	         
+            if (strpos($line, "(revision 0)"))
+               $listing[$index]["info"] = "New file";
+            
+            if (strncmp(trim($line), "Cannot display:", 15) == 0)
+            {
+               $index++;
+               clearVars();
+               $listing[$index++]["info"] = $line;
+               continue;
+            }
+            
+            // Skip second file info
+            $line = fgets($diff);
+            if ($debug) print "Skipping: $line<br>" ;	         
+            
+            $indiff = true;
+            $index++;
+            
+            continue;
          }
-         
-         $listing[$index++]["properties"] = true;
-         clearVars();
-         if ($debug) echo "Creating node $node<br>";
-
-         // Skip the row of underscores
-         $line = fgets($diff);
-         if ($debug) print "Skipping: $line<br>" ;	     
-         
-         while ($line = trim(fgets($diff)))
+      
+         if (strncmp(trim($line), "Property changes on: ", 21) == 0)
          {
-            $listing[$index++]["info"] = $line;
+            $propnode = trim($line);
+            $propnode = substr($propnode, 21);
+            
+            if ($debug) print "Properties on $propnode (cur node $ $node)";
+            if ($propnode != $node)
+            {
+               if ($node)
+               {
+                  $listing[$index++]["endpath"] = true;
+                  clearVars();
+               }
+                  
+               $node = $propnode;
+   
+               $listing[$index++]["newpath"] = $node;
+               clearVars();
+            }
+            
+            $listing[$index++]["properties"] = true;
             clearVars();
+            if ($debug) echo "Creating node $node<br>";
+   
+            // Skip the row of underscores
+            $line = fgets($diff);
+            if ($debug) print "Skipping: $line<br>" ;	     
+            
+            while ($line = trim(fgets($diff)))
+            {
+               $listing[$index++]["info"] = $line;
+               clearVars();
+            }
+            
+            continue;
          }
          
-         continue;
+         // Check for error messages
+         if (strncmp(trim($line), "svn: ", 5) == 0)
+         {
+            $listing[$index++]["info"] = urldecode($line);
+            $vars["success"] = false;
+            continue;
+         }
+         
+         $listing[$index++]["info"] = $line;
+         
       }
-      
-      // Check for error messages
-      if (strncmp(trim($line), "svn: ", 5) == 0)
-      {
-         $listing[$index++]["info"] = urldecode($line);
-         $vars["success"] = false;
-         continue;
+         
+      if ($node)
+      { 
+         clearVars();
+         $listing[$index++]["endpath"] = true;
       }
-      
-      $listing[$index++]["info"] = $line;
-      
-   }
-      
-   if ($node)
-   { 
-      clearVars();
-      $listing[$index++]["endpath"] = true;
-   }
-      
-   if ($debug) print_r($listing);
-}		   
+         
+      if ($debug) print_r($listing);
+   }		   
+}
 
 $vars["version"] = $version;
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
