@@ -10,6 +10,8 @@ NEW: Swedish translation
 FIX: Deleted directories are now viewable.
 FIX: SHOWALL was being redefined in the language files
 FIX: The directory listing view sometimes showed [lang:DELETEDFILES
+FIX: Links in the RSS output would start with \ if WebSVN was installed
+     in the root directory of the server under Windows.
 
 1.40
 
