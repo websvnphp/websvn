@@ -72,6 +72,8 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // Uncomment ONLY the language file which you want.  If you want English then don't do anything here.
 //
 // include("languages/german.inc");
+// include("languages/french.inc");
+// include("languages/portuguese.inc");
 
 // By default, WebSVN tries to use the iconv module (if enabled) to convert log messages from your
 // system's character set to you default output encoding. If you find that your log messages aren't
