@@ -1,5 +1,17 @@
 CHANGES
 
+1.10
+
+There are a few changes to the config file in this release.  Copy
+distconfig.inc to config.inc and redo and configuration changes that you
+had made.
+
+ADD: WebSVN now caches information on the repositories.  Once a revision
+     has been viewed subsequent revisions use the cached infomation to 
+     display the directory structure.  This significantly improves the
+     browsing speed.
+ADD: German language file (thanks to Stephan Stapel)
+
 1.04/1.04a
 
 Please note that the config file is now stored in include/
