@@ -111,7 +111,7 @@ createDirLinks($rep, $ppath, $passrev, $showchanged);
 
 $url = $config->getURL($rep, $path, "diff");
 
-$vars["prevdifflink"] = "<a href=\"${url}rev=$rev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&sc=$showchanged\">${lang["DIFFPREV"]}</a>";
 
 $listing = array ();
 
