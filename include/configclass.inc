@@ -31,6 +31,7 @@ Class Config
    var $svnlook;
    var $diff;
    var $serverIsWindows = false;
+   var $cacheResults = false;
 
    var $_repositories;
    
@@ -62,6 +63,15 @@ Class Config
    function setServerIsWindows()
    {
       $this->serverIsWindows = true;
+   }
+
+   // setServerIsWindows
+   //
+   // The server is running on Windows
+   
+   function setCachingOn()
+   {
+      $this->cacheResults = true;
    }
 
    // setSVNCommandPath
