@@ -56,11 +56,19 @@ dir=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.pn
 
 <p><hr>
 [websvn:curdirlinks] - [websvn:curdirloglink]
+[websvn-test:curdirrsslink]
+ - [websvn:curdirrssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14"></a>
+[websvn-endtest]
 <p>
 <table cellpadding="2px" cellspacing="0" width="100%">
    <tr>
       <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
+      [websvn-test:curdirrsslink]
+      <th class="HdrClmn"><b>[lang:LOG]</b></td>
+      <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></td>
+      [websvn-else]
       <th class="HdrClmnEnd"><b>[lang:LOG]</b></td>
+      [websvn-endtest]
    </tr>
    [websvn-startlisting]
    <tr>
@@ -68,7 +76,12 @@ dir=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.pn
          [websvn-icon]
          [websvn:filelink]
       </td>
+      [websvn-test:curdirrsslink]
+      <td style="border-right: 1px solid black" class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
+      <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/xml.gif" width="36" height="14"></a></td>
+      [websvn-else]
       <td class="row[websvn:rowparity]">[websvn:fileviewloglink]</td>
+      [websvn-endtest]
    </tr>
    [websvn-endlisting]
 </table>

@@ -2,12 +2,14 @@ CHANGES
 
 1.40
 
-ADD: Transatlation for French and Portuguese
+ADD: RSS feed support (thanks to Lübbe Onken for his work on this)
+ADD: Translatations for French and Portuguese
 ADD: .exe is recognised by default as haivng content-type
      application/x-msdownload
 ADD: Recognised links are now 'linkified' in the log messages
 
 FIX: Removed the revision 0 that has appeared in the previous version
+FIX: Repositories were not sorted alphabetically when using ParentPath
 
 1.39
 
