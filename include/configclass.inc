@@ -41,11 +41,13 @@ Class Repository
    var $path;
    
    // Local configuration options must start off unset
+   
    var $allowDownload;
    var $rss;
    var $spaces;
    var $ignoreSvnMimeTypes;
    var $ignoreWebSVNContentTypes;
+   var $bugtraq;
    
    function Repository($name, $path)
    {
@@ -157,6 +159,28 @@ Class Repository
          
       return $config->ignoreWebSVNContentTypes;
    }
+   
+   // Issue Tracking
+   
+   function useBugtraqProperties()
+   {
+      $this->bugtraq = true;
+   }
+
+   function ignoreBugtraqProperties()
+   {
+      $this->bugtraq = false;
+   }
+
+   function getBugtraq()
+   {
+      global $config;
+
+      if (isset($this->bugtraq))
+         return $this->bugtraq;
+         
+      return $config->bugtraq;
+   }
 }
 
 // The general configuration class
@@ -182,7 +206,7 @@ Class Config
    var $allowDownload = false;
    var $rss = true;
    var $spaces = 8;
-   var $refRepositoriesByNumber = false;
+   var $bugtraq = false;
   
    var $templatePath = "./templates/Standard/";
 
@@ -548,5 +572,9 @@ Class Config
       $this->ignoreWebSVNContentTypes = true;
    }
 
+   function useBugtraqProperties()
+   {
+      $this->bugtraq = true;
+   }
 }
 ?>

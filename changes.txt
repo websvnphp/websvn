@@ -14,6 +14,8 @@ NEW: File delivery now looks at the defined Mime-Type.  Thanks to
      Peter Valdemar Mørch for this patch.
 NEW: Various configuration options may now be applied on a per project
      basis.  Look in distconfig for instructions.
+NEW: Support for using 'bugtraq' properties when display log entries.
+     See http://svn.collab.net/repos/tortoisesvn/trunk/doc/issuetrackers.txt
 NEW: Traditional Chinese translation
      
 CHANGE: Style information removed from RSS feed
