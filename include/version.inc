@@ -23,5 +23,5 @@
 //
 // Version information
 
-$version = "1.38";
+$version = "1.39";
 ?>
