@@ -593,7 +593,7 @@ Class SVNRepository
             continue;  
             
          $record = trim($record);
-         list($rev, $path) = sscanf($record, "%d   %s");
+         list($rev, $path) = split(" ", $record, 2);
          if ($rev)
             $history[] = array("rev" => $rev, "path" => $path);
       }
