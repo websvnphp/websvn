@@ -35,7 +35,7 @@ $ignorelevel = 0;
 //
 // Parse a special command
 
-function parseCommand($line, $vars)
+function parseCommand($line, $vars, $handle)
 { 
    global $ignore, $ignorestack, $ignorelevel;
    
@@ -94,6 +94,60 @@ function parseCommand($line, $vars)
       return true;
    }
    
+   if (strncmp(trim($line), "[websvn-defineicons]", 19) == 0)
+   {
+      global $icons;
+      
+      if (!isset($icons))
+         $icons = array();
+      
+      // Read all the lines until we reach the end of the definition, storing
+      // each one...
+      
+      if (!$ignore)
+      {
+         while (!feof($handle))
+         {
+            $line = trim(fgets($handle));
+             
+            if (strncmp($line, "[websvn-enddefineicons]", 22) == 0)
+            {
+               return true; 
+            }
+               
+            $eqsign = strpos($line, "=");
+            
+            $match = substr($line, 0, $eqsign);
+            $def = substr($line, $eqsign + 1);
+            
+            $icons[$match] = $def;
+         }
+      }
+      
+      return true;
+   }
+
+   if (strncmp(trim($line), "[websvn-icon]", 13) == 0)
+   {
+      global $icons, $vars;
+   
+      if (!$ignore)
+      {
+         // The current filetype should be defined my $vars["filetype"]
+      
+         if (!empty($icons[$vars["filetype"]]))
+         {
+            echo parseTags($icons[$vars["filetype"]], $vars);
+         }
+         else if (!empty($icons["*"]))
+         {
+            echo parseTags($icons["*"], $vars);
+         }
+      }
+      
+      return true;
+   }
+      
    return false;
 }
 
@@ -103,7 +157,7 @@ function parseCommand($line, $vars)
 
 function parseTemplate($template, $vars, $listing)
 {
-   global $ignore;
+   global $ignore, $vars;
    
    if (!is_file($template))
    {
@@ -139,7 +193,7 @@ function parseTemplate($template, $vars, $listing)
                // Output the list item
                foreach ($listLines as $line)
                {
-                  if (!parseCommand($line, $vars))
+                  if (!parseCommand($line, $vars, $handle))
                   {
                      if (!$ignore)
                         print parseTags($line, $vars);
@@ -153,7 +207,7 @@ function parseTemplate($template, $vars, $listing)
                $listLines[] = $line;
          }
       }
-      else if (parseCommand($line, $vars))
+      else if (parseCommand($line, $vars, $handle))
       {
          continue;
       }
