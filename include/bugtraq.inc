@@ -112,7 +112,7 @@ class Bugtraq
                
                $line .= "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">$issue</a>, ";
             }
-            $line .= "<a href=\"".str_replace("%BUGID%", $issues, $this->urlstring)."\">".trim($issues)."</a>".$this->lastPart;
+            $line .= "<a href=\"".str_replace("%BUGID%", trim($issues), $this->urlstring)."\">".trim($issues)."</a>".$this->lastPart;
             
             return $logmsg.$line;
          }
