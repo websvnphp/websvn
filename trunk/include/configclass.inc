@@ -23,8 +23,8 @@
 //
 // General class for handling configuration options
 
-require("command.inc");
-require("version.inc");
+require("include/command.inc");
+require("include/version.inc");
 
 Class Config
 {
