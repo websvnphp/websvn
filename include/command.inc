@@ -47,7 +47,7 @@ function transArray($arr)
       foreach ($arr as $key => $value)
       {
          //$output = iconv("cp850", "iso-8859-1", $ooutput]);
-         $narr[$key] = htmlentities(strtr($value, "…‚‹“—–‡", "ΰιθκοξτωϋη"));
+         $narr[$key] = htmlentities(strtr(rtrim($value), "…‚‹“—–‡", "ΰιθκοξτωϋη"));
       }
    }
    
