@@ -74,20 +74,38 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      // Get complete tree for given path and revision 
-      $tree = runCommand($config->svnlook." tree $revstr ".$this->repPath." $path");
+      $tree = array();
       
-      // Split this data up into an array
-      $tree = explode("\n", $tree);
-      
-      // Remove all but the top level entries 
-      $tree = array_filter($tree, "_topLevel");
-      
-      // Sort the entries into alphabetical order with the directories at the top of the list
-      usort($tree, "_dirSort");
-      
-      // Remove all the trailing spaces
-      $tree = array_map("trim", $tree);
+      // Run the file list command
+      if ($files = popen($config->svnlook." tree $revstr ".$this->repPath." $path", "r"))
+      {      
+   		while (!feof($files))
+   		{
+   		   $entry = fgets($files);
+   		   
+   		   // If the line is a top-level entry, add it to array
+   		   if (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ")
+   		   {
+   		      // Clear off whitespace, new lines etc.
+   		      $entry = trim($entry);
+   		      
+   		      // Add the entry to the tree
+   		      $tree[] = $entry;
+   		   }
+   		
+   		}
+   		
+   		pclose($files);
+                     
+         // Sort the entries into alphabetical order with the directories at the top of the list
+         usort($tree, "_dirSort");
+      }
+      else // An error occured
+      {
+         $output = transChars(shell_exec($config->svnlook." tree $revstr ".$this->repPath." $path 2>&1"));
+         if (!empty($output)) print "<p>".nl2br($output);
+         exit;
+      }
       
       return $tree;
    }
