@@ -4,6 +4,7 @@ CHANGES
 
 ADD: Better support for internationalisation
      (Template writers:  Please note the use of the new variable 'charset')
+ADD: More useful info in browser titles with the standard templates
 
 FIX: Accented characters should now be displayed correctly (I hope).
 FIX: HTML files now display correcly on all machines

@@ -84,6 +84,7 @@ else
       $vars["goyoungestlink"] = "";
    
    
+   $vars["action"] = "";
    $vars["repname"] = $repname;
    $vars["rev"] = $rev;
    $vars["path"] = $ppath;

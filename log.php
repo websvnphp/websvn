@@ -61,6 +61,7 @@ if ($path == "" || $path{0} != "/")
 else
    $ppath = $path;
 
+$vars["action"] = $lang["LOG"];
 $vars["repname"] = $repname;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
