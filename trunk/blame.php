@@ -94,7 +94,7 @@ if ($file = fopen($tfname, "r"))
             $listing[$index]["lineno"] = $index + 1;
             
             $url = $config->getURL($rep, $parent, "dir");
-            $listing[$index]["revision"] = "<a href=\"${url}rev=$revision&sc=1\">$revision</a>";
+            $listing[$index]["revision"] = "<a href=\"${url}rev=$revision&amp;sc=1\">$revision</a>";
 
             $listing[$index]["author"] = $author;
             

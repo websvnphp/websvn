@@ -78,12 +78,12 @@ if ($prevrev)
    
    if (!$all)
    {
-      $vars["showalllink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&all=1\">${lang["SHOWENTIREFILE"]}</a>";
+      $vars["showalllink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;all=1\">${lang["SHOWENTIREFILE"]}</a>";
       $vars["showcompactlink"] = "";
    }
    else
    {
-      $vars["showcompactlink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&all=0\">${lang["SHOWCOMPACT"]}</a>";
+      $vars["showcompactlink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;all=0\">${lang["SHOWCOMPACT"]}</a>";
       $vars["showalllink"] = "";
    }
 

@@ -42,12 +42,12 @@ function fileLink($path, $file)
    if ($isDir)
    {
       $url = $config->getURL($rep, $ppath.$file, "dir");
-      return "<a href=\"${url}rev=$passrev&sc=$showchanged\">$file</a>";
+      return "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">$file</a>";
    }
    else
    {
       $url = $config->getURL($rep, $ppath.$file, "file");
-      return "<a href=\"${url}rev=$passrev&sc=$showchanged\">$file</a>";
+      return "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">$file</a>";
    }
 }
 
@@ -90,7 +90,7 @@ $logurl = $config->getURL($rep, $path, "log");
 $rssurl = $config->getURL($rep, $path, "rss");
 
 if ($rev != $youngest && $youngest != -1)
-   $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&sc=1\">${lang["GOYOUNGEST"]}</a>";
+   $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&amp;sc=1\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
 
@@ -103,7 +103,7 @@ $vars["path"] = $ppath;
 
 if (!$showchanged)
 {
-   $vars["showchangeslink"] = "<a href=\"${dirurl}rev=$passrev&sc=1\">${lang["SHOWCHANGED"]}</a>";
+   $vars["showchangeslink"] = "<a href=\"${dirurl}rev=$passrev&amp;sc=1\">${lang["SHOWCHANGED"]}</a>";
    $vars["hidechangeslink"] = "";
 
    $vars["hidechanges"] = true;
@@ -148,18 +148,18 @@ else
       $vars["deletedfiles"] .= " ".$file;
    }
 
-   $vars["hidechangeslink"] = "<a href=\"${dirurl}rev=$passrev&sc=0\">${lang["HIDECHANGED"]}</a>";
+   $vars["hidechangeslink"] = "<a href=\"${dirurl}rev=$passrev&amp;sc=0\">${lang["HIDECHANGED"]}</a>";
    
    $vars["hidechanges"] = false;
    $vars["showchanges"] = true;
 }
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
-$vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a>";
+$vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
 if ($config->rss)
 {
-   $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&sc=$showchanged&isdir=1\">${lang["RSSFEED"]}</a>";
-   $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&sc=$showchanged&isdir=1\">";
+   $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["RSSFEED"]}</a>";
+   $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">";
 }
 
 $index = 0;
@@ -188,13 +188,13 @@ foreach($contents as $file)
    }   
          
    $fileurl = $config->getURL($rep, $path.$file, "log");
-   $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a>";
+   $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
    
    $rssurl = $config->getURL($rep, $path.$file, "rss");
    if ($config->rss)
    {
-      $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&sc=$showchanged&isdir=$isDir\">${lang["RSSFEED"]}</a>";
-      $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&sc=$showchanged&isdir=$isDir\">";
+      $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["RSSFEED"]}</a>";
+      $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">";
    }
    
    $row = 1 - $row;
