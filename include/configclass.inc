@@ -32,6 +32,7 @@ Class Config
    var $diff;
    var $serverIsWindows = false;
    var $cacheResults = false;
+   var $multiViews = false;
    var $templatePath = "./templates/standard/";
 
    var $_repositories;
@@ -57,6 +58,16 @@ Class Config
       return $this->_repositories;
    }
 
+   function findRepository($name)
+   {
+      foreach ($this->_repositories as $index => $rep)
+      {
+         if (strcasecmp($rep["name"], $name) == 0)
+            return $index;
+      }
+      return 0;
+   }
+
    // setServerIsWindows
    //
    // The server is running on Windows
@@ -66,13 +77,70 @@ Class Config
       $this->serverIsWindows = true;
    }
 
-   // setServerIsWindows
+   // setCachingOn
    //
-   // The server is running on Windows
+   // Set result caching on
    
    function setCachingOn()
    {
       $this->cacheResults = true;
+   }
+
+   // useMultiViews
+   //
+   // Use MultiViews to access the repository
+   
+   function useMultiViews()
+   {
+      $this->multiViews = true;
+   }
+
+   // getURL
+   //
+   // Get the URL to a path name based on the current config
+   
+   function getURL($rep, $path, $op)
+   {  
+      $base = $_SERVER["SCRIPT_NAME"];
+      
+      if ($this->multiViews)
+      {
+         // Remove the .php
+         $base = substr($base, 0, -4);
+         
+         if ($path{0} != "/") $path = "/".$path;
+               
+         $url =  $base ."/".$this->_repositories[$rep]["name"].$path;
+         if ($op != "dir")
+            $url .= "?op=$op&";
+         else
+            $url .= "?";
+            
+         return $url;
+      }
+      else
+      {
+         switch ($op)
+         {
+            case "dir":
+               $fname = "listing.php";
+               break;
+               
+            case "file":
+               $fname = "filedetails.php";
+               break;
+
+            case "log":
+               $fname = "log.php";
+               break;
+
+            case "diff":
+               $fname = "diff.php";
+               break;
+         }
+         
+         return dirname($base)."/".$fname."?rep=$rep&path=$path&";
+      }
    }
 
    // setSVNCommandPath

@@ -1,5 +1,12 @@
 CHANGES
 
+1.30
+
+ADD: MultiViews support.  You can now set up WebSVN to access the
+     repositories using a URL such as:
+     
+      http://server/wsvn/repname/path/to/rep
+
 1.20
 
 ADD: Comprehensive templating solution

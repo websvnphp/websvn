@@ -29,11 +29,12 @@ require("include/template.inc");
 
 $projects = $config->getRepositories();
 $i = 0;
-$vars = array();
 $listing = array ();
 foreach ($projects as $index => $project)
 {
-   $listing[$i++]["projlink"] = "<a href=\"listing.php?rep=$index&sc=1\">${project["name"]}</a>";
+   $url = $config->getURL($index, "/", "dir");
+
+   $listing[$i++]["projlink"] = "<a href=\"${url}sc=1\">${project["name"]}</a>";
 } 
 
 $vars["version"] = $version;

@@ -110,16 +110,16 @@ $listing = array();
 
 if ($prevrev)
 {
-   
+   $url = $config->getURL($rep, $path, "diff");
    
    if (!$all)
    {
-      $vars["showalllink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
+      $vars["showalllink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&all=1\">${lang["SHOWALL"]}</a>";
       $vars["showcompactlink"] = "";
    }
    else
    {
-      $vars["showcompactlink"] = "<a href=\"diff.php?rep=$rep&path=$path&rev=$rev&sc=$showchanged&all=0\">${lang["SHOWCOMPACT"]}</a>";
+      $vars["showcompactlink"] = "<a href=\"${url}rev=$rev&sc=$showchanged&all=0\">${lang["SHOWCOMPACT"]}</a>";
       $vars["showalllink"] = "";
    }
 
