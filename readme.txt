@@ -36,6 +36,27 @@ pointing your browser at the index.php file.
 For those of you wishing to customise the look and feel a little, you should
 read templates.txt, which explains the highly configurable template system.
 
+NOTE:
+
+In order to return results with a reasonable speed, WebSVN caches the results
+of it's requests to svnlook.  Under normal usage this works correctly since it's
+not generally possible to change a revision with subversion.
+
+That said, one case that may cause confusion is if someone changes the log
+message of a given revision.  WebSVN will have cached the previous log message
+and won't know that there's a new one available.  There are various solutions
+to this problem:
+
+1) Turn off caching in the config file.  This will severely impede the perfomance
+   of WebSVN.
+
+2) Change the post-revprop-change hook so that is deletes the contents of the
+   cache after any change to a revision property
+
+3) Only allow the administrator to change revision properties.  He can then
+   delete the cache by hand should this occur.
+
+
 LICENCE
 
 GNU Public licence.
