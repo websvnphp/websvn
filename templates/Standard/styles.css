@@ -78,3 +78,9 @@ TABLE.diff
 {
    border-collapse: collapse;
 }
+
+DIV.newpath
+{
+   padding: 5px 5px 5px 5px;
+   border: solid 2px #99007E;
+}
