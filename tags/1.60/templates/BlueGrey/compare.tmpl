@@ -1,0 +1,55 @@
+<div align="right">[websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+<h2>[websvn:repname]</h2>
+<p>
+[websvn:compare_form]
+<table>
+   <tr><td>[lang:COMPPATH]&nbsp</td><td>[websvn:compare_path1input] [lang:REV] [websvn:compare_rev1input]</td></tr>
+   <tr><td>[lang:WITHPATH]</td><td>[websvn:compare_path2input] [lang:REV] [websvn:compare_rev2input]</td></tr>
+</table>
+[websvn:compare_submit]
+[websvn:compare_endform]
+<hr>
+   <p>[lang:CONVFROM] <b>[websvn:path1] ([lang:REV] [websvn:rev1])</b> [lang:TO] <b>[websvn:path2] ([lang:REV] [websvn:rev2])</b>
+   <p>
+   [websvn:revlink]
+<p>
+
+[websvn-startlisting]
+   [websvn-test:newpath]
+      <p>
+      <div class="newpath">
+         <b>[websvn:newpath]</b><br>
+   [websvn-endtest]
+
+   [websvn-test:info]
+      [websvn:info]<br>
+   [websvn-endtest]
+
+   [websvn-test:difflines]
+      <div class="difflines">
+         <p>
+         [websvn:difflines]<br>
+         <table class="diff" cellspacing="0">
+   [websvn-endtest]
+   
+   [websvn-test:diffclass]
+            <tr><td class="[websvn:diffclass]">[websvn:line]</td></tr>
+   [websvn-endtest]
+
+   [websvn-test:enddifflines]
+         </table>
+      </div>
+   [websvn-endtest]
+
+   [websvn-test:endpath]
+      </div>
+      <p><hr>
+   [websvn-endtest]
+
+   [websvn-test:properties]
+      <p><i>[lang:PROPCHANGES]</i><p>
+   [websvn-endtest]
+
+[websvn-endlisting]
+</table>
+
