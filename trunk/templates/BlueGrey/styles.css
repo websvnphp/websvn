@@ -51,6 +51,18 @@ A:hover
    background-color: #E0E0E0;
 }
 
+.CatClmn1
+{
+    BORDER-RIGHT: black 1px solid;
+    BACKGROUND-COLOR: #d0d0ee
+}
+
+.CatClmn0
+{
+    BORDER-RIGHT: black 1px solid;
+    BACKGROUND-COLOR: #e0e0ff
+}
+
 TD.diffdeleted
 {
    font-size: 11px;
