@@ -157,5 +157,8 @@ set_time_limit(0);
 // Comment this line to turn off caching of repo information.  This will slow down your browsing.
 $config->setCachingOn();
 
+// Number of spaces to expand tabs to in diff/listing view
+$config->expandTabsBy(8);
+
 
 ?>

@@ -26,46 +26,10 @@
 
 require_once("include/setup.inc");
 require_once("include/svnlook.inc");
-require("include/utils.inc");
-require("include/template.inc");
+require_once("include/utils.inc");
+require_once("include/template.inc");
 
 $context = 5;
-
-// hardspace
-//
-// Replace the spaces at the front of a line with hard spaces
-
-$spacearray = array (
-0 => "",
-1 => "&nbsp;",
-2 => "&nbsp;&nbsp;",
-3 => "&nbsp;&nbsp;&nbsp;",
-4 => "&nbsp;&nbsp;&nbsp;&nbsp;",
-5 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-6 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-7 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-8 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-9 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-10 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-);
-
-function hardspace($s)
-{
-  global $spacearray;
-
-  $len = strlen($s);
-  $s = ltrim($s);
-  $numspaces = $len - strlen($s);
-  $spaces = "";
-  while ($numspaces >= 10)
-  {
-     $spaces .= $spacearray[10];
-     $numspaces -= 10;
-  }
-  $spaces .= $spacearray[$numspaces];
-
-  return $spaces.$s;
-}
 
 $vars["action"] = $lang["DIFF"];
 $rep = (int)@$_REQUEST["rep"];
