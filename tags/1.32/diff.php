@@ -24,7 +24,7 @@
 // Show the differences between 2 revisions of a file.
 //
 
-require("include/config.inc");
+require("include/setup.inc");
 require("include/svnlook.inc");
 require("include/template.inc");
 
@@ -135,7 +135,7 @@ if ($prevrev)
    if (!$all)
    {
       // Open a pipe to the diff command with $context lines of context
-      if ($diff = popen($config->diff." -U $context $oldtname $newtname", "r"))
+      if ($diff = popen($config->diff." --ignore-space-change -U $context $oldtname $newtname", "r"))
       {
          // Ignore the 3 header lines
   		   $line = fgets($diff);

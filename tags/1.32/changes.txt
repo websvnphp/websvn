@@ -4,6 +4,7 @@ CHANGES
 
 FIX: Links no longer functionned correctly when used in basic
      (non-multiviews) mode.
+FIX: Stop diff from comparing space changes
 
 1.31
 
