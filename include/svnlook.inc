@@ -405,22 +405,25 @@ Class SVNRepository
       
       foreach ($output as $changed)
       {
-         $mod = $changed{0};
-         $name = substr($changed, 4);
-         
-         switch ($mod)
+         if ((trim($changed) != "")
          {
-            case "A":
-               $changes["added"][] = $name;
-               break;
-               
-            case "U":
-               $changes["updated"][] = $name;
-               break;
-
-            case "D":
-               $changes["deleted"][] = $name;
-               break;
+            $mod = $changed{0};
+            $name = substr($changed, 4);
+            
+            switch ($mod)
+            {
+               case "A":
+                  $changes["added"][] = $name;
+                  break;
+                  
+               case "U":
+                  $changes["updated"][] = $name;
+                  break;
+   
+               case "D":
+                  $changes["deleted"][] = $name;
+                  break;
+            }
          }
       }
       
