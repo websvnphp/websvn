@@ -2,6 +2,10 @@ CHANGES
 
 1.30
 
+There are a few changes to the config file in this release.  Copy
+distconfig.inc to config.inc and redo and configuration changes that you
+had made.
+
 ADD: MultiViews support.  You can now set up WebSVN to access the
      repositories using a URL such as:
      
