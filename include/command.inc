@@ -27,12 +27,17 @@ function transChars($str, $doEnt = true)
 {
    global $config;
    
-   if ($config->serverIsWindows)
+   // Try to convert the messages based on the locale information
+   if ($config->inputEnc && $config->outputEnc)
    {
-      //$output = iconv("cp850", "iso-8859-1", $ooutput]);
-      $str = strtr($str, "…‚Šˆ‹Œ“—–‡", "àéèêïîôùûç");
+      if (function_exists("iconv"))
+      {
+         $output = iconv($config->inputEnc, $config->outputEnc, $str);
+         if (!empty($output))
+            $str = $output;
+      }
    }
-
+   
    if ($doEnt)
       $str = htmlentities($str);
       
@@ -45,20 +50,20 @@ function transArray($arr)
    
    $narr = array();
    
-   if ($config->serverIsWindows)
+   foreach ($arr as $key => $value)
    {
-      foreach ($arr as $key => $value)
+      // Try to convert the messages based on the locale information
+      if ($config->inputEnc && $config->outputEnc)
       {
-         //$output = iconv("cp850", "iso-8859-1", $ooutput]);
-         $narr[$key] = htmlentities(strtr(rtrim($value), "…‚Šˆ‹Œ“—–‡", "àéèêïîôùûç"));
-      }
-   }
-   else
-   {
-      foreach ($arr as $key => $value)
-      {
-         $narr[$key] = htmlentities(rtrim($value));
-      }
+         if (function_exists("iconv"))
+         {
+            $output = iconv($config->inputEnc, $config->outputEnc, $value);
+            if (!empty($output))
+               $value = $output;
+         }
+         }
+
+      $narr[$key] = htmlentities(rtrim($value));
    }
       
    return $narr;
