@@ -53,34 +53,6 @@ if (empty($rev))
 
 $extn = strrchr($path, ".");
 
-// Check to see if we should serve it with a particular content-type.
-// The content-type could come from an svn:mime-type property on the
-// file, or from the $contentType array in setup.inc.
-if (!$rep->getIgnoreSvnMimeTypes()) 
-{
-  $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
-}
-if (!$rep->getIgnoreWebSVNContentTypes()) 
-{
-  $setupContentType = @$contentType[$extn];
-}
-// Use this set of priorities when establishing what content-type to
-// actually use.
-if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') 
-{
-  $cont = $svnMimeType;
-}
-else if (!empty($setupContentType))
-{
-  $cont = $setupContentType;
-} 
-else if (!empty($svnMimeType))
-{
-  // It now is equal to application/octet-stream due to logic
-  // above....
-  $cont = $svnMimeType;
-}
-
 // Check to see if the user has requested that this type be zipped and sent
 // to the browser as an attachment
 
@@ -95,6 +67,38 @@ if (in_array($extn, $zipped))
    $svnrep->getFileContents($path, "", $rev, "| ".$config->gzip." -n -f");
    
    exit;
+}
+
+// Check to see if we should serve it with a particular content-type.
+// The content-type could come from an svn:mime-type property on the
+// file, or from the $contentType array in setup.inc.
+
+if (!$rep->getIgnoreSvnMimeTypes()) 
+{
+  $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
+}
+
+if (!$rep->getIgnoreWebSVNContentTypes()) 
+{
+  $setupContentType = @$contentType[$extn];
+}
+
+// Use this set of priorities when establishing what content-type to
+// actually use.
+
+if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') 
+{
+  $cont = $svnMimeType;
+}
+else if (!empty($setupContentType))
+{
+  $cont = $setupContentType;
+} 
+else if (!empty($svnMimeType))
+{
+  // It now is equal to application/octet-stream due to logic
+  // above....
+  $cont = $svnMimeType;
 }
 
 // If there's a MIME type associated with this format, then we deliver it
@@ -121,7 +125,6 @@ if ($rev != $youngest)
    $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
-
 
 $vars["action"] = "";
 $vars["repname"] = $rep->name;

@@ -145,7 +145,14 @@ if ($prevrev)
                if ($curoline < $oline)
                {
                   $nl = fgets($ofile);
-                  $listing[$index]["rev1line"] = hardspace(transChars(rtrim($nl), $ent));
+                  
+                  if ($ent)
+                     $line = replaceEntities(rtrim($nl));
+                  else
+                     $line = rtrim($nl);
+                     
+                  $listing[$index]["rev1line"] = hardspace($line);
+
                   $curoline++;
                }
                else
@@ -154,7 +161,13 @@ if ($prevrev)
                if ($curnline < $nline)
                {
                   $nl = fgets($nfile);
-                  $listing[$index]["rev2line"] = hardspace(transChars(rtrim($nl), $ent));
+
+                  if ($ent)
+                     $line = replaceEntities(rtrim($nl));
+                  else
+                     $line = rtrim($nl);
+                     
+                  $listing[$index]["rev1line"] = hardspace($line);
                   $curnline++;
                }
                else
@@ -188,7 +201,15 @@ if ($prevrev)
 		      else
 		      {
                $mod = $line{0};
-               $text = hardspace(transChars(rtrim(substr($line, 1)), $ent));
+
+               if ($ent)
+                  $line = replaceEntities(rtrim(substr($line, 1)));
+               else
+                  $line = rtrim(substr($line, 1));
+                  
+               $listing[$index]["rev1line"] = hardspace($line);
+
+               $text = hardspace($line);
                if ($text == "") $text = "&nbsp;";
                
                switch ($mod)
@@ -278,13 +299,23 @@ if ($prevrev)
 	         $listing[$index]["rev1diffclass"] = "diff";
             $listing[$index]["rev2diffclass"] = "diff";
                   
+            if ($ent)
+               $line = replaceEntities(rtrim(fgets($ofile)));
+            else
+               $line = rtrim(fgets($ofile));
+
             if (!feof($ofile))
-               $listing[$index]["rev1line"] = hardspace(transChars(rtrim(fgets($ofile)), $ent));
+               $listing[$index]["rev1line"] = hardspace($line);
             else
                $listing[$index]["rev1line"] = "&nbsp;";
                
+            if ($ent)
+               $line = replaceEntities(rtrim(fgets($nfile)));
+            else
+               $line = rtrim(fgets($nfile));
+
             if (!feof($nfile))
-               $listing[$index]["rev2line"] = hardspace(transChars(rtrim(fgets($nfile)), $ent));
+               $listing[$index]["rev2line"] = hardspace($line);
             else
                $listing[$index]["rev2line"] = "&nbsp;";
                
