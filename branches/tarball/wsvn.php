@@ -90,6 +90,10 @@ if ($config->multiViews)
          $file = "diff.php";
          break;
 
+      case "dl":
+         $file = "dl.php";
+         break;
+
       default:
          $file = "listing.php";
    }

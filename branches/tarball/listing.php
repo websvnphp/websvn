@@ -90,6 +90,7 @@ $vars["repname"] = $repname;
 
 $dirurl = $config->getURL($rep, $path, "dir");
 $logurl = $config->getURL($rep, $path, "log");
+$dlurl = $config->getURL($rep, $path, "dl");
 
 if ($rev != $youngest)
    $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&sc=1\">${lang["GOYOUNGEST"]}</a>";
@@ -168,6 +169,7 @@ for ($n = 0; $n < $count - 2; $n++)
 }
 $vars["curdirlinks"] .=  "[".$subs[$n]."/]";
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&sc=$showchanged&isdir=1\">${lang["VIEWLOG"]}</a>";
+$vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&isdir=1\">${lang["DOWNLOAD"]}</a>";
 
 $index = 0;
 $listing = array();
@@ -186,7 +188,7 @@ foreach($contents as $file)
    $listing[$index]["isDir"] = $isDir;
    $fileurl = $config->getURL($rep, $path.$file, "log");
    $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&sc=$showchanged&isdir=$isDir\">${lang["VIEWLOG"]}</a>";
-   
+  
    $row = 1 - $row;
    $index++;
 }

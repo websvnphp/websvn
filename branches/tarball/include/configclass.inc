@@ -32,12 +32,15 @@ Class Config
    var $diff;
    var $enscript;
    var $sed;
+   var $tar;
+   var $gzip;
    
    var $serverIsWindows = false;
    var $cacheResults = false;
    var $multiViews = false;
    var $useEnscript = false;
-
+   var $allowDownload = false;
+  
    var $templatePath = "./templates/standard/";
 
    var $_repositories;
@@ -48,6 +51,8 @@ Class Config
       $this->diff = "diff";
       $this->enscript = "enscript";
       $this->sed = "sed";
+      $this->tar = "tar";
+      $this->gzip = "gzip";
    }
    
    function addRepository($name, $path)
@@ -111,6 +116,18 @@ Class Config
       $this->useEnscript = true;
    }
 
+   // allowDownload
+   //
+   // Allow download of tarballs
+   
+   function allowDownload()
+   {
+      global $vars;
+      
+      $this->allowDownload = true;
+      $vars["allowdownload"] = true;
+   }
+
    // getURL
    //
    // Get the URL to a path name based on the current config
@@ -153,7 +170,11 @@ Class Config
             case "diff":
                $fname = "diff.php";
                break;
-         }
+
+            case "dl":
+               $fname = "dl.php";
+               break;
+        }
          
          return $fname."?rep=$rep&path=$path&";
       }
@@ -218,6 +239,24 @@ Class Config
    function setSedPath($path)
    {
       $this->setPath($this->sed, $path, "sed");
+   }
+   
+   // setTarPath
+   //
+   // Define the location of the tar command
+   
+   function setTarPath($path)
+   {
+      $this->setPath($this->tar, $path, "tar");
+   }
+   
+   // setGzipPath
+   //
+   // Define the location of the GWip command
+   
+   function setGzipPath($path)
+   {
+      $this->setPath($this->gzip, $path, "gzip");
    }
    
    function setTemplatePath($path)

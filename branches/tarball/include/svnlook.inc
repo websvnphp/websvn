@@ -61,7 +61,7 @@ function _revStr($rev)
       return "";
 }
 
-// The SVNRepositor Class
+// The SVNRepository Class
 
 Class SVNRepository
 {
@@ -72,7 +72,7 @@ Class SVNRepository
       $this->repPath = $repPath;
    }
    
-   function dirContents($path, $rev = 0)
+   function dirContents($path, $rev = 0, $recursive = false)
    {
       global $config, $locwebsvnreal;
       
@@ -175,7 +175,11 @@ Class SVNRepository
                      }
                      
                      // If the aren't any more spaces afterwards, add this to the tree
-                     if ($line{$spaces} != " ")
+                     if ($recursive)
+                     {
+                        $tree[] = rtrim($line);
+                     }
+                     else if ($line{$spaces} != " ")
                      {
                         $tree[] = trim($line);
                      }
@@ -186,7 +190,8 @@ Class SVNRepository
             fclose($files);
             
             // Sort the entries into alphabetical order with the directories at the top of the list
-            usort($tree, "_dirSort");
+            if (!$recursive)
+               usort($tree, "_dirSort");
             
             return $tree;
          }
@@ -200,22 +205,30 @@ Class SVNRepository
       		{
       		   $entry = fgets($files);
       		   
-      		   // If the line is a top-level entry, add it to the array
-      		   if (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ")
+      		   if ($recursive)
       		   {
-      		      // Clear off whitespace, new lines etc.
-      		      $entry = transChars(trim($entry));
-      		      
-      		      // Add the entry to the tree
-      		      $tree[] = $entry;
+      		      if (strlen($entry) > 1 && $entry{0} == " ")
+      		         $tree[] = transChars(rtrim($entry));
       		   }
-      		
+      		   else
+      		   {
+         		   // If the line is a top-level entry, add it to the array
+         		   if (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ")
+         		   {
+         		      // Clear off whitespace, new lines etc.
+         		      $entry = transChars(trim($entry));
+         		      
+         		      // Add the entry to the tree
+         		      $tree[] = $entry;
+         		   }
+      		   }
       		}
       		
       		pclose($files);
                         
             // Sort the entries into alphabetical order with the directories at the top of the list
-            usort($tree, "_dirSort");
+            if (!$recursive)
+               usort($tree, "_dirSort");
          }
          else // An error occured
          {
@@ -438,19 +451,20 @@ Class SVNRepository
    //
    // Dump the content of a file to the given filename
    
-   function getFileContents($path, $filename, $rev = 0)
+   function getFileContents($path, $filename, $rev = 0, $exact = false)
    {
       global $config, $extensions;
       
       $revstr = _revStr($rev);
-      $path = quote($path);
       
       // Get the file contents info
       
       $ext = strrchr($path, ".");
       $l = @$extensions[$ext];
+      
+      $path = quote($path);
         
-      if ($config->useEnscript && !empty($l))
+      if ($config->useEnscript && !empty($l) && !$exact)
       {
          exec($config->svnlook." cat $revstr ".$this->repPath." $path | ".
               $config->enscript." --color --language=html --pretty-print=$l -o - | ".

@@ -113,6 +113,9 @@ deletedfiles - list of the deleted files separated by spaces
 
 curdirlinks - List of the path of this directory with links to each one
 curdirloglink - Link to the log view of current directory
+curdirdllink - Link to the download link of current directory
+
+allowdownload - True if downloading has been configured
 
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
