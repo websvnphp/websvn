@@ -219,7 +219,7 @@ if (!$noinput)
                            
          	      $getLine = false;
                   if ($debug) print "Unignoring previous - marking as deleted<b>";
-                  $listing[$index++]["info"] = "File Deleted";
+                  $listing[$index++]["info"] = $lang["FILEDELETED"];
          	   }
          	   else
          	   {
@@ -260,7 +260,7 @@ if (!$noinput)
             $line = fgets($diff);
             if ($debug) print "Examining: $line<br>" ;	         
             if (strpos($line, "(revision 0)"))
-               $listing[$index]["info"] = "New file";
+               $listing[$index]["info"] = $lang["FILEADDED"];
             
             if (strncmp(trim($line), "Cannot display:", 15) == 0)
             {
