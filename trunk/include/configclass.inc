@@ -58,6 +58,11 @@ Class Config
   
    var $templatePath = "./templates/Standard/";
 
+   // Disgard any svn:mime-type properties on files.
+   var $ignoreSvnMimeTypes = false;
+   // If you only want to rely on svn:mime-type settings in the repository
+   var $ignoreWebSVNContentTypes = false;
+
    // Default character encodings
    var $inputEnc = "";
    var $outputEnc;
@@ -422,5 +427,16 @@ Class Config
    {
       $this->refRepositoriesByNumber = true;
    }
+
+   function ignoreSvnMimeTypes()
+   {
+      $this->ignoreSvnMimeTypes = true;
+   }
+
+   function ignoreWebSVNContentTypes()
+   {
+      $this->ignoreWebSVNContentTypes = true;
+   }
+
 }
 ?>
