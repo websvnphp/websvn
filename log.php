@@ -23,8 +23,8 @@
 //
 // Show the logs for the given path
 
-require("config.inc");
-require("svnlook.inc");
+require("include/config.inc");
+require("include/svnlook.inc");
 
 include("templates/header.php");
 
