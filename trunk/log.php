@@ -196,6 +196,7 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
       $parent = substr($rpath, 0, $pos + 1);
    
       $url = $config->getURL($rep, $parent, "dir");
+      $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@${r["rev"]}\" onClick=\"checkCB(this)\">";
       $listing[$index]["revlink"] = "<a href=\"${url}rev=${r["rev"]}&amp;sc=1\">${r["rev"]}</a>";
    
       if ($isDir)
@@ -292,6 +293,11 @@ if ($search != "")
 }
 else
    $vars["logsearch_clearloglink"] = "";
+
+$url = $config->getURL($rep, "", "comp");
+$vars["compare_form"] = "<form action=\"$url\" method=\"get\" name=\"compareform\">";
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREREVS"]}\">";
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
 $vars["version"] = $version;
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
