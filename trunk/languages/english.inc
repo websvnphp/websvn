@@ -37,6 +37,7 @@ $lang["SHOWENTIREFILE"] = "Show entire file";
 $lang["SHOWCOMPACT"] = "Only display areas with differences";
 
 $lang["DIFFPREV"] = "Diff with Previous";
+$lang["BLAME"] = "Blame";
 
 $lang["REVINFO"] = "Revision Information";
 $lang["GOYOUNGEST"] = "Go to most recent revision";
@@ -74,6 +75,9 @@ $lang["NOMORERESULTS"] = "There are no more logs matching your query";
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
 $lang["FILESMODIFIED"] = "file(s) modified"; 
 $lang["RSSFEED"] = "RSS feed"; 
+
+$lang["LINENO"] = "Line No.";
+$lang["BLAMEFOR"] = "Blame information for rev";
 
 $lang["YEARS"] = "years";
 $lang["MONTHS"] = "months";

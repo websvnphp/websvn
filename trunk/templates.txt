@@ -21,6 +21,7 @@ directory.tmpl - Listing of a directory
 log.tmple - Log of a directory or file
 file.tmpl - Contents of a text file
 diff.tmpl - Differences between text files
+blame.tmpl - Blame information for a file
 
 Each template file should be written in HTML, but is allowed to contain certain
 WebSVN controls.  There are two control types, commands and variables.
@@ -219,6 +220,7 @@ path - Path of item being logged
 curdirlinks - List of the path of this directory with links to each one
 
 prevdifflink - Link to comparison with previous revision
+blamelink - Link to the blame information for this file
 
 Note: Use command [websvn-getlisting] to display the listing.
 
@@ -253,3 +255,20 @@ rev2diffclass / rev2diffclass - Class name of the diff block used for colouring
                                     *diffdeleted
 rev1line / rev2line - The line under comparison
 
+Variables defined for blame.tmpl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+locwebsvnhttp - Root of websvn directory
+charset - The charset requested by the user
+
+repname - Name of the repository
+rev - Revision being viewed
+path - Path of item being logged
+curdirlinks - List of the path of this directory with links to each one
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+lineno - Line number of the line
+revision - Revision in which the line changed
+author - Last author to modify the line
+line - The line itself
