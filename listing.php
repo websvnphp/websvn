@@ -72,7 +72,7 @@ else
 
 $vars["author"] = $log['author'];
 $vars["date"] = $log['date'];
-$vars["log"] = $log['message'];
+$vars["log"] = nl2br($log['message']);
 $vars["rev"] = $log["rev"];
 
 if (!$showchanged)
