@@ -79,7 +79,7 @@ if (!$showchanged)
 }
 else
 {
-   echo "<p><b>Changes :</b><br>";
+   echo "<p><b>${lang["CHANGES"]}:</b><br>";
    
    $changes = $svnrep->getChangedFiles($rev);
    
