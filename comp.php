@@ -102,7 +102,7 @@ $vars["path2"] = $path2;
 $vars["rev1"] = $rev1;
 $vars["rev2"] = $rev2;
 
-$noinput = empty($path1) && empty($path2);
+$noinput = empty($path1) || empty($path2);
 $listing = array();
 
 // Generate the diff listing
