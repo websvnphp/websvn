@@ -1,0 +1,104 @@
+CHANGES
+
+1.32
+
+FIX: Links no longer functionned correctly when used in basic
+     (non-multiviews) mode.
+FIX: Stop diff from comparing space changes
+
+1.31
+
+FIX: Direcory view had disappeared!
+FIX: Included missing file setup.inc
+FIX: Handle spaces in filenames
+
+1.30
+
+There are a few changes to the config file in this release.  Copy
+distconfig.inc to config.inc and redo and configuration changes that you
+had made.
+
+ADD: MultiViews support.  You can now set up WebSVN to access the
+     repositories using a URL such as:
+     
+      http://server/wsvn/repname/path/to/rep
+
+ADD: Colourisation support using Enscript
+ADD: [websvn-test] function can now be nested
+ADD: locwebsvnhttp variable added in template system
+ADD: Bluegrey scheme now has show/hide changed link
+
+FIX: Possible security hole with by abuse of popen
+FIX: WebSVN should now function correctly (again) on non windows servers.
+FIX: First character of diff listing was missing
+
+1.20
+
+ADD: Comprehensive templating solution
+ADD: Show the age of a revision in the log view
+
+CHANGE: The youngest revision of the current directory is now shown by
+        default (as opposed to the head revision of the entire repository.
+        This means that clicking on a directory will show the lastest 
+        changes associated with it. A specific revision can still be
+        selected from a log view
+CHANGE: Only show the lead name when viewing directory contents
+
+FIX: Fixed error concerning use of pclose
+
+1.10/1.10a
+
+There are a few changes to the config file in this release.  Copy
+distconfig.inc to config.inc and redo and configuration changes that you
+had made.
+
+ADD: WebSVN now caches information on the repositories.  Once a revision
+     has been viewed subsequent revisions use the cached infomation to 
+     display the directory structure.  This significantly improves the
+     browsing speed.
+ADD: German language file (thanks to Stephan Stapel)
+
+1.04/1.04a
+
+Please note that the config file is now stored in include/
+
+FIX: Directories in the log view lacked their trailing slashes.
+FIX: Diff is now far more efficient with Apache's memory,
+     and shows the corrrect line numbers.
+FIX: setDiffPath now works.
+FIX: Bug introduced in 1.03 whereby the revision number always showed '1'
+     corrected.
+
+Note that you can't view logs with 1.04!  Use 1.04a.
+
+1.03
+
+Note that the config.inc file has completely changed in this release, in
+order to make it more "future proof" and resiliant.  You'll need to copy
+distconfig.inc to config.inc redo the appropriate changes are described.
+
+ADD: A 'ParentPath' can now be specified, rather than having to specify the
+     directories by hand.
+
+FIX: Rewrite of the file list code.  Should now be quite a bit faster
+FIX: Use a more memory efficient algorithm to list file contents
+FIX: Spaces in Windows path to svnlook and diff are now handled properly
+FIX: Calls to external commands such as svnlook no longer require Windows
+     style line endings.
+
+1.02
+
+ADD: Improved command handling to report returned errors.  Considerably helps
+     initial installation problems.
+ADD: Show the author of each revision in the log view
+
+FIX: Removed the spurious &nsbp that some people were seeing
+
+1.01 (5 Feb 2004)
+
+FIX: Files with HTML content are now shown correcty
+FIX: The diff output had the revision lables the wrong way round
+
+1.00 (4 Feb 2004)
+
+First Public Release
