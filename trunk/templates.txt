@@ -74,6 +74,7 @@ particular extension use the syntax:
 There are also some special filetypes:
 
 dir=<HTML code> is used for directory icons
+diropen=<HTML code> is used for open directory icons
 *=<HTML code> is used for all filetypes which have no other definition
 
 i-node - | shaped node of the tree view
@@ -85,6 +86,7 @@ Example from the BlueGrey scheme:
 
 [websvn-defineicons]
 dir=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
+diropen=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder-open.png" alt="[FOLDER]">
 *=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
 .c=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
 .h=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
