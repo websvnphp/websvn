@@ -99,6 +99,8 @@ $lang["TO"] = "TO";
 $lang["REVCOMP"] = "Reverse comparison";
 $lang["COMPPATH"] = "Compare Path:";
 $lang["WITHPATH"] = "With Path:";
+$lang["FILEDELETED"] = "File deleted";
+$lang["FILEADDED"] = "New file";
 
 // The following are defined by some languages to stop unwanted line splitting
 // in the template files. 
