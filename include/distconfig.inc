@@ -67,10 +67,11 @@ $config = new Config;
 //
 // $config->parentPath("Path/to/parent (e.g. c:\\svn)");
 
-// TEMPLATE SETUP
+// LOOK AND FEEL
 
 // Uncomment ONLY the display file that you want.  
-$config->setTemplatePath("./templates/standard/");
+$config->setTemplatePath("./templates/Standard/");
+//$config->setTemplatePath("./templates/BlueGrey/");
 
 // LANGUAGE SETUP
 

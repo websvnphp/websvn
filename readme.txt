@@ -31,11 +31,10 @@ Rename distconfig.inc as config.inc and then edit it as directed in the file
 itself.
 
 If everything has gone well, you should be able to view your projects by
-pointing your browser at the index.php file. For those of you wishing to
-customise the look and feel a little, you should change the templates as
-appropriate.  The templates are currently very basic, but you should be able to
-do a lot of modifications by simply changing the page header and footer and
-playing with the stylesheet.
+pointing your browser at the index.php file.
+
+For those of you wishing to customise the look and feel a little, you should
+read templates.txt, which explains the highly configurable template system.
 
 LICENCE
 
