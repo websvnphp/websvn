@@ -1,5 +1,7 @@
 CHANGES
 
+NEW: Multibyte encodings are considered when urlencoding path names
+
 CHANGE: The listing view will now always show the revision asked for
         (HEAD by default), but the log message will show the log 
         string for the latest modification to the current directory).
