@@ -37,6 +37,7 @@ $lang["SHOWENTIREFILE"] = "Visa hela filen";
 $lang["SHOWCOMPACT"] = "Visa bara omr&aring;den med skillnader";
 
 $lang["DIFFPREV"] = "Diff mot f&ouml;reg&aring;ende";
+$lang["BLAME"] = "Ansvarig";
 
 $lang["REVINFO"] = "Revisionsinformation";
 $lang["GOYOUNGEST"] = "G&aring; till senaste revision";
@@ -57,6 +58,7 @@ $lang["CURDIR"] = "Nuvarande folder";
 
 $lang["PREV"] = "F&ouml;reg.";
 $lang["NEXT"] = "N&auml;sta";
+$lang["SHOWALL"] = "Visa alla";
 
 $lang["BADCMD"] = "Fel vid k&ouml;rning av kommande";
 
@@ -73,6 +75,9 @@ $lang["NOMORERESULTS"] = "Det finns inga fler loggar i din s&ouml;kning";
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
 $lang["FILESMODIFIED"] = "fil(er) &auml;ndrade"; 
 $lang["RSSFEED"] = "RSS"; 
+
+$lang["LINENO"] = "Radnr.";
+$lang["BLAMEFOR"] = "Ansvariginformation f&ouml;r rev";
 
 $lang["YEARS"] = "&aring;r";
 $lang["MONTHS"] = "m&aring;nader";
