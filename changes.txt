@@ -1,6 +1,15 @@
 CHANGES
 
-1.10
+1.20
+
+ADD: Comprehensive templating solution
+ADD: Show the age of a revision in the log view
+
+CHANGE: Only show the lead name when viewing directory contents
+
+FIX: Fixed error concerning use of pclose
+
+1.10/1.10a
 
 There are a few changes to the config file in this release.  Copy
 distconfig.inc to config.inc and redo and configuration changes that you

@@ -34,6 +34,7 @@ $lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
 
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
 
+$lang["REVINFO"] = "Revision Information";
 $lang["GOHEAD"] = "Go to head revision";
 $lang["LASTMOD"] = "Letzte &Auml;nderung";
 $lang["LOGMSG"] = "Logeintrag";
@@ -53,8 +54,6 @@ $lang["NEXT"] = "Weiter";
 $lang["SHOWALL"] = "Alles anzeigen";
 
 $lang["BADCMD"] = "Fehler beim Ausf&uuml;hren des Befehls";
-$lang["RETURNED"] = "Returned";
    
-$lang["POWERED"] = "Powered by WebSVN";                               
 $lang["PROJECTS"] = "Subversion-Projekte";                       
 $lang["SERVER"] = "Subversion Server";                           
