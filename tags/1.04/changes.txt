@@ -1,6 +1,6 @@
 CHANGES
 
-1.04
+1.04/1.04a
 
 Please note that the config file is now stored in include/
 
@@ -10,6 +10,8 @@ FIX: Diff is now far more efficient with Apache's memory,
 FIX: setDiffPath now works.
 FIX: Bug introduced in 1.03 whereby the revision number always showed '1'
      corrected.
+
+Note that you can't view logs with 1.04!  Use 1.04a.
 
 1.03
 
