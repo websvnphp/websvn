@@ -143,6 +143,12 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 //
 // $extEnscript[".pas"] = "pascal";
 
+// --- RSSFEED ---
+
+// Uncomment this line if you wish to have show RSS feed links
+//
+// $config->offerRSS();
+
 // --- MISCELLANOUS ---
 
 // Uncomment this if you don't have the right to use it.  Be warned that you may need it however!
