@@ -33,18 +33,7 @@ require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
 
-$rep = (int)@$_REQUEST["rep"];
-$path = escapeshellcmd(@$_REQUEST["path"]);
-$showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 $isDir = (@$_REQUEST["isdir"] == 1)?1:0;
-$rev = (int)@$_REQUEST["rev"];
-
-// Override the rep parameter with the repository name if it's available
-$repname = @$_REQUEST["repname"];
-if (isset($repname))
-{
-    $rep = $config->findRepository($repname);
-}
 
 $maxmessages = 20;
 

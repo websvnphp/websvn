@@ -39,9 +39,7 @@ function redirect($loc)
 // Handle project selection
 
 if (@$_REQUEST["selectproj"])
-{
-   $rep = (int)@$_REQUEST["rep"];
-   
+{   
    $basedir = dirname($_SERVER["PHP_SELF"]);
    if ($basedir != "" && $basedir != DIRECTORY_SEPARATOR && $basedir != "\\" && $basedir != "/" )
       $basedir .= "/";
