@@ -360,7 +360,8 @@ Class SVNRepository
       if ($l == "php")
       {         
          // Output the file to the filename
-         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path > $filename", false);
+         $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+         $cmd = quoteCommand($config->svn." cat $revstr file:///$path > $filename", false);
          @exec($cmd);
          
          // Get the file as a string (memory hogging, but we have no other options)
@@ -396,7 +397,8 @@ Class SVNRepository
             // Note that the sec command returns only the part of the file between <PRE> and </PRE>.
             // It's complicated because it's designed not to return those lines themselves.
          
-            $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+            $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+            $cmd = quoteCommand($config->svn." cat $revstr file:///$path | ".
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p}".$config->quote." > $filename", false);
@@ -434,7 +436,8 @@ Class SVNRepository
          $tmp = tempnam("temp", "wsvn");
          
          // Output the file to a temporary file
-         $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path > $tmp", false);
+         $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+         $cmd = quoteCommand($config->svn." cat $revstr file:///$path > $tmp", false);
          @exec($cmd);
          highlight_file($tmp);
          unlink($tmp);
@@ -443,7 +446,8 @@ Class SVNRepository
       {  
          if ($config->useEnscript)
          {
-            $cmd = quoteCommand($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+            $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+            $cmd = quoteCommand($config->svn." cat $revstr file:///$path | ".
                                 $config->enscript." --language=html ".
  								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote." 2>&1", false);

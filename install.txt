@@ -51,7 +51,7 @@ WebSVN is designed to worked with accented characters.  To do this, it uses
 the iconv function.  This may not be installed on your system.  If you aren't
 getting the characters that you expect, make sure that the iconv module is
 being loaded in php.ini.  Windows users will need to copy the appropriate
-DLLs to the system directory (from the PHP installatio directory).
+DLLs to the system directory (from the PHP installation directory).
 
 CACHING
 
@@ -212,6 +212,20 @@ Require valid-user
 
 Note the use of the / after /wsvn/ in the location directive.  If you use
 <Location /wsvn> then you won't be able to access the index.
+
+COMMON PROBLEMS
+
+1) On a Windows machine, this error is reported:
+
+Warning: shell_exec(): Unable to execute
+
+If you experience this problem, you need to give IUSR_<machinename> execute
+permissions on %systemroot%\system32\cmd.exe. Under most systems, the file will
+be C:\WINDOWS\system32\cmd.exe.
+
+Right-click on the file, choose properties, and on the security tab click
+the "Add" button. Add the IUSR_<machinename> user, and then select the
+"read" and "read & execute" boxes.
 
 LICENCE
 
