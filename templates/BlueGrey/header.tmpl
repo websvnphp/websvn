@@ -15,74 +15,48 @@
             - [websvn:action]
          [websvn-endtest]
          [websvn-test:rev2]
-            - [lang:REV] [websvn:rev1] [lang:AND] [websvn:rev2] -
+            [websvn-test:path2]
+               - [websvn:path1] [lang:REV] [websvn:rev1] [lang:AND] [websvn:path2] [lang:REV] [websvn:rev2]
+            [websvn-else]
+               - [lang:REV] [websvn:rev1] [lang:AND] [websvn:rev2]
+            [websvn-endtest]
          [websvn-else]
             [websvn-test:rev]
-               - [lang:REV] [websvn:rev] -
+               - [lang:REV] [websvn:rev]
             [websvn-endtest]
          [websvn-endtest]
-         [websvn:path]
+         [websvn-test:path]
+            - [websvn:path]
+         [websvn-endtest]
       </title>
 
-   <script>
-      function setSubmit()
-      {
-         if (document.getElementById('comparesubmit'))
+      <script>
+         function checkCB(chBox)
          {
             count = 0
-            f = document.getElementById('compareform')
+            first = null
+            f = chBox.form
             for (i = 0 ; i < f.elements.length ; i++)
             if (f.elements[i].type == 'checkbox' && f.elements[i].checked)
             {
+               if (first == null && f.elements[i] != chBox)
+                  first = f.elements[i]
                count += 1
             }
             
-            if (count == 2)
+            if (count > 2) 
             {
-               document.getElementById('comparesubmit').disabled = false
-            }
-            else
-            {
-               document.getElementById('comparesubmit').disabled = true
+               first.checked = false
+               count -= 1
             }
          }
-      }   
-   
-      function checkCB(chBox)
-      {
-         count = 0
-         first = null
-         f = chBox.form
-         for (i = 0 ; i < f.elements.length ; i++)
-         if (f.elements[i].type == 'checkbox' && f.elements[i].checked)
-         {
-            if (first == null && f.elements[i] != chBox)
-               first = f.elements[i]
-            count += 1
-         }
-         
-         if (count > 2) 
-         {
-            first.checked = false
-            count -= 1
-         }
-         
-         if (count == 2)
-         {
-            if (document.getElementById('comparesubmit') != null) document.getElementById('comparesubmit').disabled = false
-         }
-         else
-         {
-            if (document.getElementById('comparesubmit') != null) document.getElementById('comparesubmit').disabled = true
-         }
-      }
-   </script>
+      </script>
 
    </head>
-   <body onload="setSubmit()">
+   <body>
 
-   <div style="text-align: center">
-     <a href="http://subversion.tigris.org/"><img style="border: 0; width: 468px; height: 64px" src="[websvn:locwebsvnhttp]/templates/BlueGrey/subversion.png" alt="Subversion" /></a>
-   </div>
-   
-   <hr>
+      <div style="text-align: center">
+        <a href="http://subversion.tigris.org/"><img style="border: 0; width: 468px; height: 64px" src="[websvn:locwebsvnhttp]/templates/BlueGrey/subversion.png" alt="Subversion" /></a>
+      </div>
+      
+      <hr>

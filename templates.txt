@@ -306,13 +306,22 @@ line - The line itself
 Variables defined for compare.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+action - Action being performed ("Path Comparison")
 repname - Name of the repository
 path1 - First path being compared 
 rev1 - Revision of first path
 path2 - Second path being compared 
 rev2 - Revision of second path
 
+success = true if the comparison succeeded
+
 revlink - Link to reverse comparison
+
+compare_form - HTML <form> specification for the comparison form
+compare_path1input/compare_path2input - HTML specifications for the path input areas
+compare_rev1input/compare_rev2input - HTML specifications for the revision input areas                                        
+compare_submit - HTML <input> specification for the comparison button
+compare_endform - HTML </form> specification for the comparison form
 
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 

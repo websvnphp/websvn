@@ -161,11 +161,18 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // --- TARBALLS ---
 
-// Uncomment this line to offer a tarball download option onto your repositories
-//
 // You need tar and gzip installed on your system.  Set the paths above if necessary
 //
+// Uncomment the line below to offer a tarball download option across all your
+// repositories.
+//
 // $config->allowDownload();
+//
+// To change the global option for individual repositories, uncomment and replicate
+// the required line below (replacing 'myrep' for the name of the repository to be changed).
+
+// $config->findRepository("myrep")->allowDownload(); // Specifically allow downloading for 'myrep'
+// $config->findRepository("myrep")->disallowDownload(); // Specifically disallow downloading for 'myrep'
 
 // --- COLOURISATION ---
 
@@ -186,9 +193,15 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // --- RSSFEED ---
 
-// Uncomment this line if you wish to hide the RSS feed links
+// Uncomment this line if you wish to hide the RSS feed links across all repositories
 //
 // $config->hideRSS();
+//
+// To change the global option for individual repositories, uncomment and replicate
+// the required line below (replacing 'myrep' for the name of the repository to be changed).
+
+// $config->findRepository("myrep")->hideRSS(); // Specifically hide RSS links for 'myrep'
+// $config->findRepository("myrep")->showRSS(); // Specifically show RSS links for 'myrep'
 
 // --- MISCELLANOUS ---
 
@@ -198,9 +211,17 @@ set_time_limit(0);
 // Comment this line to turn off caching of repo information.  This will slow down your browsing.
 $config->setCachingOn();
 
-// Number of spaces to expand tabs to in diff/listing view
+// Number of spaces to expand tabs to in diff/listing view across all repositories
+
 $config->expandTabsBy(8);
 
+// $config->findRepository("myrep")->expandTabsBy(3); // Expand Tabs by 3 for repository 'myrep'
+
+// To change the global option for individual repositories, uncomment and replicate
+// the required line below (replacing 'myrep' for the name of the repository to be changed).
+
+// $config->findRepository("myrep")->hideRSS(); // Specifically hide RSS links for 'myrep'
+// $config->findRepository("myrep")->showRSS(); // Specifically show RSS links for 'myrep'
 // WebSVN URLs now use the repository names rather than internal numbers.  This means that
 // bookmarks remain the same when new projects are added.  In the unlikely event that you have
 // multiple projects with the same name, uncomment this line to return to the previous system
