@@ -528,5 +528,21 @@ Class SVNRepository
          
       return $history;
    }
+
+   // exportDirectory
+   //
+   // Exports the directory to the given location
+   
+   function exportDirectory($path, $filename, $rev = 0)
+   {
+      global $config;
+      
+      $revstr = _revStr($rev);
+      
+      $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+      $cmd = quoteCommand($config->svn." export $revstr ".quote("file:///".$path)." $filename", false);
+
+      @exec($cmd);
+  }
 }
 ?>

@@ -108,6 +108,10 @@ if ($config->multiViews)
          $file = "rss.php";
          break;
       
+      case "dl":
+         $file = "dl.php";
+         break;
+
       default:
          $file = "listing.php";
    }

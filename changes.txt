@@ -1,6 +1,9 @@
 CHANGES
 
-1.52 
+1.60 
+
+NEW: Tarballs of directories may now be downloaded.
+     Set $config->allowdownload(); in config.inc
 
 CHANGE: Style information removed from RSS feed
 

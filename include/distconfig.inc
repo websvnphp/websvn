@@ -135,6 +135,14 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $contentType[".doc"] = "plain/text"; // Modify an existing one
 // unset($contentType[".m"] // Remove a default association
 
+// --- TARBALLS ---
+
+// Uncomment this line to offer a tarball download option onto your repositories
+//
+// You need tar and gzip installed on your system.  Set the paths above if necessary
+//
+// $config->allowDownload();
+
 // --- COLOURISATION ---
 
 // Uncomment this line if you want to use Enscript to colourise your file listings
