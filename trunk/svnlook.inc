@@ -137,8 +137,8 @@ Class SVNRepository
       else
       {
          $head = runCommand($config->svnlook." youngest ".$this->repPath);
-         settype($head, "integer");
-         $log["rev"] = $head;
+         settype($head[0], "integer");
+         $log["rev"] = $head[0];
       }
        
       return $log;
