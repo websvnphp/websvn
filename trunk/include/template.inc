@@ -59,15 +59,6 @@ function parseCommand($line, $vars)
       return true;
    }
    
-   // Special case for listing....
-   if (strncmp(trim($line), "[websvn-getlistingbr]", 21) == 0)
-   {
-      global $path, $rev, $svnrep;
-   
-      $svnrep->listFileContents($path, 1, $rev);
-      return true;
-   }
-
    if (strncmp(trim($line), "[websvn-getlisting]", 19) == 0)
    {
       global $path, $rev, $svnrep;

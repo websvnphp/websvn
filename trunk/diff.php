@@ -175,7 +175,7 @@ if ($prevrev)
    		      {
                   $mod = $line{0};
                   
-                  $text = hardspace(htmlspecialchars(rtrim(substr($line, 1))));
+                  $text = hardspace(transChars(rtrim(substr($line, 1)), ($config->useEnscript)?false:true));
                   
                   switch ($mod)
                   {
@@ -239,8 +239,8 @@ if ($prevrev)
                   if ($mod == " " && $len >= 302) $mod = $output{301};
                }
       
-               $oldline = hardspace(htmlspecialchars(rtrim(substr($output, 0, 299))));
-               $newline = hardspace(htmlspecialchars(rtrim(substr($output, 302))));
+               $oldline = hardspace(transChars(rtrim(substr($output, 0, 299)), ($config->useEnscript)?false:true));
+               $newline = hardspace(transChars(rtrim(substr($output, 302)), ($config->useEnscript)?false:true));
             
                if ($oldline == "") $oldline = "&nbsp;";
                if ($newline == "") $newline = "&nbsp;";

@@ -26,6 +26,70 @@
 // These binding currently use svnlook to achieve their goal.  Once a proper SWIG binding has been
 // produces, there'll be an option to use those instead
 
+// List of extensions recognised by enscript
+$extensions = array
+(
+  ".ada"     => "ada",
+  ".adb"     => "ada",
+  ".ads"     => "ada",
+  ".awk"     => "awk",
+  ".c"       => "c",
+  ".c++"     => "cpp",
+  ".cc"      => "cpp",
+  ".cpp"     => "cpp",
+  ".csh"     => "csh",
+  ".cxx"     => "cpp",
+  ".diff"    => "diffu",
+  ".dpr"     => "delphi",
+  ".el"      => "elisp",
+  ".eps"     => "postscript",
+  ".f"       => "fortran",
+  ".for"     => "fortran",
+  ".gs"      => "haskell",
+  ".h"       => "c",
+  ".hpp"     => "cpp",
+  ".hs"      => "haskell",
+  ".htm"     => "html",
+  ".html"    => "html",
+  ".idl"     => "idl",
+  ".java"    => "java",
+  ".js"      => "javascript",
+  ".lgs"     => "haskell",
+  ".lhs"     => "haskell",
+  ".m"       => "objc",
+  ".m4"      => "m4",
+  ".man"     => "nroff",
+  ".nr"      => "nroff",
+  ".p"       => "pascal",
+  ".pas"     => "delphi",
+  ".patch"   => "diffu",
+  ".pkg"     => "sql", 
+  ".pl"      => "perl",
+  ".pm"      => "perl",
+  ".pp"      => "pascal",
+  ".ps"      => "postscript",
+  ".s"       => "asm",
+  ".scheme"  => "scheme",
+  ".scm"     => "scheme",
+  ".scr"     => "synopsys",
+  ".sh"      => "sh",
+  ".shtml"   => "html",
+  ".sql"     => "sql",
+  ".st"      => "states",
+  ".syn"     => "synopsys",
+  ".synth"   => "synopsys",
+  ".tcl"     => "tcl",
+  ".tex"     => "tex",
+  ".texi"    => "tex",
+  ".texinfo" => "tex",
+  ".v"       => "verilog",
+  ".vba"     => "vba",
+  ".vh"      => "verilog",
+  ".vhd"     => "vhdl",
+  ".vhdl"    => "vhdl",
+  ".py"      => "python"
+);
+
 if (!@$SVNLOOK)
 {
 $SVNLOOK = true;
@@ -438,12 +502,25 @@ Class SVNRepository
    
    function getFileContents($path, $filename, $rev = 0)
    {
-      global $config;
+      global $config, $extensions;
       
       $revstr = _revStr($rev);
       
-      // Get the log info
-      exec($config->svnlook." cat $revstr ".$this->repPath." $path > $filename");
+      // Get the file contents info
+      
+      $ext = strrchr($path, ".");
+      $l = @$extensions[$ext];
+        
+      if ($config->useEnscript && !empty($l))
+      {
+         exec($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+              $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+              $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' > $filename");
+      }
+      else
+      {
+         exec($config->svnlook." cat $revstr ".$this->repPath." $path > $filename");
+      }
   }
 
    // listFileContents
@@ -452,19 +529,42 @@ Class SVNRepository
    
    function listFileContents($path, $br, $rev = 0)
    {
-      global $config;
+      global $config, $extensions;
       
       $revstr = _revStr($rev);
+      $pre = false;
       
-      // Get the log info
-      if (!($result = popen($config->svnlook." cat $revstr ".$this->repPath." $path 2>&1", "r")))
-         return;
+      // Get the file contents info
       
+      $ext = strrchr($path, ".");
+      $l = @$extensions[$ext];
+        
+      if ($config->useEnscript && !empty($l))
+      {
+         if (!($result = popen($config->svnlook." cat $revstr ".$this->repPath." $path | ".
+                               $config->enscript." --color --language=html --pretty-print=$l -o - | ".
+                               $config->sed." -n '/^<PRE.$/,/^<\\/PRE.$/p' 2>&1", "r")))
+            return;
+      }
+      else
+      {
+         if (!($result = popen($config->svnlook." cat $revstr ".$this->repPath." $path 2>&1", "r")))
+            return;
+           
+         $pre = true;
+      }
+       
+      if ($pre)
+         echo "<PRE>";
+         
 		while (!feof($result))
 		{
-			print(transChars(fgets($result, 1000)));
+			print(transChars(fgets($result, 1024), $pre));
 			if ($br) echo "<br>";
 		}
+
+      if ($pre)
+         echo "</PRE>";
 		
 		pclose($result);
    }

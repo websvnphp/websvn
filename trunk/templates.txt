@@ -54,16 +54,8 @@ the controls is repeated for each item in the list
 
 [websvn-getlisting] (used in file.tmpl only)
  
-Get the contents of the file being viewed and output it exactly
-
----
-
-[websvn-getlistingbr] (used in file.tmpl only)
-
-Get the contents of the file being viewed and output it with a <br> after each
-line.
-
----
+Get the contents of the file being viewed and output it exactly (surrounded
+with <PRE> .. </PRE>).
 
 NOTE:  Controls MUST appear on there own line.
 
@@ -158,8 +150,7 @@ path - Path of item being logged
 
 prevdifflink - Link to comparison with previous revision
 
-Note: Use commands [websvn-getlistingbr] or [websvn-getlisting] to display the
-      listing.
+Note: Use command [websvn-getlisting] to display the listing.
 
 Variables defined for diff.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
