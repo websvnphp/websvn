@@ -89,10 +89,10 @@ if ($prevrev)
 
    // Get the contents of the two files
    $newtname = tempnam("temp", "");
-   $new = $svnrep->getFileContents($path, $newtname, $history[0]["rev"]);
+   $new = $svnrep->getFileContents($history[0]["path"], $newtname, $history[0]["rev"]);
 
    $oldtname = tempnam("temp", "");
-   $old = $svnrep->getFileContents($path, $oldtname, $history[1]["rev"]);
+   $old = $svnrep->getFileContents($history[1]["path"], $oldtname, $history[1]["rev"]);
    
    $ent = true;
    if ((strrchr($path, ".") == '.php') || ($config->useEnscript))
