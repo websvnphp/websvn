@@ -261,7 +261,85 @@ Class SVNRepository
                      
       // Create a nice array to return
       $log["author"] = $output[0];
-      $log["date"] = $output[1];
+      
+      $date = $output[1];
+      $log["date"] = $date;
+
+      sscanf($date, "%d-%d-%d %d:%d:%d", $y, $mo, $d, $h, $m, $s);
+      
+      // Get this time (as GMT) in seconds
+      $committime = mktime($h ,$m, $s, $mo, $d, $y, 0);
+      
+      // Get the number of seconds since the commit
+      $agesecs = time() - $committime;
+      if ($agesecs < 0) $agesecs = 0;
+      
+      // Now create a nice human readable age based on these figures
+      $years = floor($agesecs / (60*60*24*356));
+      $agesecs -= $years * (60*60*24*356);
+      if ($years > 0)
+      {
+         if ($years == 1)
+            $log["age"] = "1&nbsp;${lang["YEAR"]}";
+         else
+            $log["age"] = "$years&nbsp;${lang["YEARS"]}";         
+      }
+      else
+      {
+         $months = floor($agesecs / (60*60*24*356/12));
+         $agesecs -= $months * (60*60*24*356/12);
+         if ($months > 0)
+         {
+            if ($months == 1)
+               $log["age"] = "1&nbsp;${lang["MONTH"]}";
+            else
+               $log["age"] = "$months&nbsp;${lang["MONTHS"]}";
+         }
+         else
+         {
+            $weeks = floor($agesecs / (60*60*24*7));
+            $agesecs -= $weeks * (60*60*24*7);
+            if ($weeks > 0)
+            {
+               if ($weeks == 1)
+                  $log["age"] = "1&nbsp;${lang["WEEK"]}";
+               else
+                  $log["age"] = "$weeks&nbsp;${lang["WEEKS"]}";
+            }
+            else
+            {              
+               $days = floor($agesecs / (60*60*24));
+               $agesecs -= $days * (60*60*24);
+               if ($days > 0)
+               {
+                  if ($days == 1)
+                     $log["age"] = "1&nbsp;${lang["DAY"]}";
+                  else
+                      $log["age"] = "$days&nbsp;${lang["DAYS"]}";
+               }
+               else
+               { 
+                  $hours = floor($agesecs / (60*60));
+                  $agesecs -= $hours * (60*60*24);
+                  if ($hours > 0)
+                  {
+                     if ($hours == 1)
+                        $log["age"] = "1&nbsp;${lang["HOUR"]}";
+                     else
+                        $log["age"] = "$hours&nbsp;${lang["HOURS"]}";
+                  }
+                  else
+                  { 
+                     $minutes = floor($agesecs / 60);
+                     if ($minutes == 1)
+                        $log["age"] = "1&nbsp;${lang["MINUTE"]}";
+                     else
+                        $log["age"] = "$minutes&nbsp;${lang["MINUTES"]}";
+                  }
+               }
+            }
+         }
+      }
       
       $log["message"] = $output[3]; 
       $pos = 4;
