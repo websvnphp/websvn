@@ -1,5 +1,11 @@
 CHANGES
 
+1.40
+
+ADD: Transatlation for French and Portuguese
+ADD: .exe is recognised by default as haivng content-type
+     application/x-msdownload
+
 1.39
 
 CHANGE: In the human-readable date strings, display up to 119 minutes,
