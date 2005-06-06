@@ -120,7 +120,6 @@ $contentType = array (
 ".sh" => "application/x-sh", // Bourne shell script
 ".sit" => "application/x-stuffit", // Stiffut Archive
 ".tcl" => "application/x-tcl", // TCL script
-".tex" => "application/x-tex", // TeX source
 ".texinfo" => "application/x-texinfo", // Texinfo (Emacs)
 ".texi" => "application/x-texinfo", // Texinfo (Emacs)
 ".t" => "application/x-troff", // Troff
