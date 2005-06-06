@@ -256,7 +256,7 @@ else
 {
    $vars["showchangeslink"] = "";
    
-   $changes = $svnrep->getChangedFiles($rev);
+   $changes = $svnrep->getChangedFiles($logrev);
 
    $first = true;
    $vars["newfilesbr"] = "";
