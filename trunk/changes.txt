@@ -4,6 +4,7 @@ CHANGE: Tex file are no longer delivered as binary by defaut, but displayed by e
 CHANGE: The last modified files display now shows the most recently modified  files of
         the current directory
 
+FIX: Sometimes files delivered (as opposed to disaplyed) by WebSVN were empty
 
 1.62
 
