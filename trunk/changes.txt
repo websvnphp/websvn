@@ -1,5 +1,10 @@
 CHANGES
 
+CHANGE: Tex file are no longer delivered as binary by defaut, but displayed by enscript
+CHANGE: The last modified files display now shows the most recently modified  files of
+        the current directory
+
+
 1.62
 
 NEW: RSS feed can now list changed files
