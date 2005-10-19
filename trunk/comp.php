@@ -113,7 +113,7 @@ $debug = false;
 
 if (!$noinput)
 {
-   $rawcmd = $config->svn." diff -r $rev1:$rev2 --old=".quote("file:///".$path1)." --new=".quote("file:///".$path2);
+   $rawcmd = $config->svn." diff ".quote("file:///".$path1."@".$rev1)." ".quote("file:///".$path2."@".$rev2);
    $cmd = quoteCommand($rawcmd, true);
    if ($debug) echo "$cmd\n";
 }
