@@ -76,7 +76,13 @@ if (mkdir($tmpname))
       header("Content-Type: application/x-gzip");
       header("Content-Length: $size");
       header("Content-Disposition: attachment; filename=".$rep->name."-$arcname.tar.gz");
-      @fpassthru($fp);
+
+      // Use a loop to transfer the data  4KB at a time.
+      while(!feof($fp))
+      {
+         echo fread($fp, 4096);
+         ob_flush();
+      }
    }
    else
    {
