@@ -254,6 +254,7 @@ curdirlinks - List of the path of this directory with links to each one
 
 prevdifflink - Link to comparison with previous revision
 blamelink - Link to the blame information for this file
+fileviewloglink - Link to the log page for the file
 
 Note: Use command [websvn-getlisting] to display the listing.
 
@@ -307,7 +308,7 @@ author - Last author to modify the line
 line - The line itself
 
 Variables defined for compare.tmpl
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 action - Action being performed ("Path Comparison")
 repname - Name of the repository
