@@ -70,7 +70,7 @@ $rss = new UniversalFeedCreator();
 $rss->useCached($cachename);
 $rss->title = $rep->name;
 $rss->description = "${lang["RSSFEEDTITLE"]} - $repname";
-$rss->link = getFullURL($baseurl.$listurl);
+$rss->link = html_entity_decode(getFullURL($baseurl.$listurl));
 $rss->syndicationURL = $rss->link;
 
 //$divbox = "<div>";
@@ -126,7 +126,7 @@ for ($n = 0; $n < $maxmessages; $n++)
    if ($desc == "") $sdesc = "${lang["REV"]} ${r["rev"]}";
    
    $item->title = "$sdesc";
-   $item->link = getFullURL($baseurl."${url}rev=${r["rev"]}&amp;sc=$showchanged");
+   $item->link = html_entity_decode(getFullURL($baseurl."${url}rev=${r["rev"]}&amp;sc=$showchanged"));
    $item->description = "<div><strong>${lang["REV"]} ${r["rev"]} - ${log["author"]}</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
    if ($showchanged) {
      foreach ($changes["added"] as $file) {
