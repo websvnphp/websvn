@@ -31,6 +31,7 @@ class Bugtraq
 {
    var $msgstring;
    var $urlstring;
+   var $logregex;
    
    var $firstPart;
    var $firstPartLen;
@@ -48,17 +49,24 @@ class Bugtraq
          $pos = strrpos($path, "/");
          $parent = substr($path, 0, $pos + 1);
       
-         while ((empty($this->msgstring) || empty($this->urlstring)) && (strpos($parent, "/") !== false))
+         $enoughdata = false;
+         while(!$enoughdata && (strpos($parent, "/") !== false))
          {
             if (empty($this->msgstring)) $this->msgstring = $svnrep->getProperty($parent, 'bugtraq:message');
+            if (empty($this->logregex)) $this->logregex = $svnrep->getProperty($parent, 'bugtraq:logregex');
             if (empty($this->urlstring)) $this->urlstring = $svnrep->getProperty($parent, 'bugtraq:url');
                   
             $parent = substr($parent, 0, -1);        // Remove the trailing slash
             $pos = strrpos($parent, "/");            // Find the last trailing slash
-            $parent = substr($parent, 0, $pos + 1);  // Find the previous parent directory      
+            $parent = substr($parent, 0, $pos + 1);  // Find the previous parent directory
+            $enoughdata = ((!empty($this->msgstring) || !empty($this->logregex)) && !empty($this->urlstring));   
          }
          
-         if (!empty($this->msgstring) && !empty($this->urlstring))
+         if ($enoughdata && !empty($this->logregex))
+         {
+            $this->propsfound = true;
+         }
+         else if ($enoughdata && !empty($this->msgstring))
          {
             $this->msgstring = trim($this->msgstring);
             $this->urlstring = trim($this->urlstring);
@@ -79,7 +87,33 @@ class Bugtraq
 
    function replaceIDs($message)
    {
-      if ($this->propsfound)
+      if ($this->propsfound && $this->logregex)
+      {
+         $logmsg  = $message;
+         $message = rtrim($message);
+         $line = "";
+         $allissues = "";
+         
+         if (ereg($this->logregex, $message, $regs))       
+         {
+           $allissues = $regs[1];
+           $issues = $regs[1];
+           
+            // Add each reference to the first part of the line
+            while ($pos = strpos($issues, ","))
+            {
+               $issue  = trim(substr($issues, 0, $pos));
+               $issues = substr($issues, $pos + 1);
+               
+               $line .= "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">$issue</a>, ";
+            }
+            $line .= "<a href=\"".str_replace("%BUGID%", trim($issues), $this->urlstring)."\">".trim($issues)."</a>";
+
+            return ereg_replace($allissues, $line, $logmsg);
+         }
+         return $logmsg;
+      }
+      else if ($this->propsfound)
       {
          $logmsg  = "";
          $message = rtrim($message);
