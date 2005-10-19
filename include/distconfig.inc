@@ -80,6 +80,10 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/swedish.inc");
 // include("languages/dutch.inc");
 // include("languages/russian.inc");
+// include("languages/dansih.inc");
+// include("languages/finnish.inc");
+// include("languages/turkish.inc");
+
 
 // include("languages/polish-iso8859-2.inc");
 // include("languages/polish-utf8.inc");
@@ -95,6 +99,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // include("languages/tchinese.inc"); 
 // include("languages/tchinese-utf8.inc");
+// include("languages/schinese-utf8.inc");
 
 // By default, WebSVN tries to use the iconv module (if enabled) to convert log messages from your
 // system's character set to you default output encoding. If you find that your log messages aren't
