@@ -190,7 +190,7 @@ Class Config
    // Tool path locations
 
    var $svnlook = "svnlook";
-   var $svn = "svn --non-interactive";
+   var $svn = "svn --non-interactive --config-dir /tmp";
    var $diff = "diff";
    var $enscript ="enscript";
    var $sed = "sed";
@@ -410,7 +410,7 @@ Class Config
    //
    // Set the location of the given path
    
-   function setPath(&$var, $path, $name)
+   function setPath(&$var, $path, $name, $params = "")
    {
       $lastchar = $path{strlen($path) - 1};
       $isDir = ($lastchar == DIRECTORY_SEPARATOR ||
@@ -428,6 +428,8 @@ Class Config
          $var = "\"$path$name\"";
       else         
          $var = "$path$name";
+         
+      $var .= " ".$params;
    }
 
    // setSVNCommandPath
@@ -436,7 +438,7 @@ Class Config
    
    function setSVNCommandPath($path)
    {
-      $this->setPath($this->svn, $path, "svn");
+      $this->setPath($this->svn, $path, "svn", "--non-interactive --config-dir /tmp");
       $this->setPath($this->svnlook, $path, "svnlook");
    }
    
