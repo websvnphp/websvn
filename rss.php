@@ -58,6 +58,10 @@ if ($path == "" || $path{0} != "/")
 else
    $ppath = $path;
 
+// Make sure that the user has full access to the specified directory
+if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, false))
+   exit;
+
 $url = $config->getURL($rep, $path, "log");
 $listurl = $config->getURL($rep, $path, "dir");
 

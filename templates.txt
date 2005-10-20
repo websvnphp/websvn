@@ -144,7 +144,8 @@ projects_submit - HTML <input> specification for the projects selection GO
 projects_endform - HTML </form> specification for the projects selection
                    box (includes hidden field declarations)
 
-
+noaccess - True if the user should be blocked from accessing this page due
+           to insufficient access rights.
 
 Variables defined for index.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,6 +158,8 @@ rowparity - Parity of the row (0 or 1).  Used to generate striped tables
 Variables defined for directory.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+restricted - True if the users has restricted access to this directory (to
+             allow access to a readable directory lower down only)
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
