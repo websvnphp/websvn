@@ -191,74 +191,15 @@ Class SVNRepository
       
       $date = $output[1];
       $log["date"] = $date;
+            
+      $log['committime'] = strtotime($date);
+      $curtime = time();
 
-      sscanf($date, "%d-%d-%d %d:%d:%d %d", $y, $mo, $d, $h, $m, $s, $offset);
-      
-      // Remove the offset to get the time in GMT
-      $h -= $offset / 100;
-      
-      // Get the commit time as seconds.  Note that the mktime function assumes that the time being
-      // passed to it is a local time - it will therefore subtract/add the required number of hours
-      // to make it GMT.  Since we already have the time in GMT we first add the localtime offset to
-      // get the commit time in local time.  The offset calculated above already handles the summer
-      // time case, so we tell mktime not to take this into account.
-      
-      $lt = gettimeofday();
-      $minwest = $lt["minuteswest"];
-      $committime = mktime($h ,$m - $minwest, $s, $mo, $d, $y, 0);
-      $log["committime"] = $committime;
-      
-      // Get the current time (as GMT)
-      $t = localtime(time(), 1);
-      $curtime = mktime($t["tm_hour"],  $t["tm_min"], $t["tm_sec"], $t["tm_mon"] + 1, $t["tm_mday"], $t["tm_year"] + 1900, $t["tm_isdst"]);
-      
       // Get the number of seconds since the commit
-      $agesecs = $curtime - $committime;
+      $agesecs = $curtime - $log['committime'];
       if ($agesecs < 0) $agesecs = 0;
       
-      // Now create a nice human readable age based on these figures
-      $years = floor($agesecs / (60*60*24*365));
-      if ($years > 1)
-      {
-         $log["age"] = "$years&nbsp;${lang["YEARS"]}";         
-      }
-      else
-      {
-         $months = floor($agesecs / (60*60*24*365/12));
-         if ($months > 1)
-         {
-            $log["age"] = "$months&nbsp;${lang["MONTHS"]}";
-         }
-         else
-         {
-            $weeks = floor($agesecs / (60*60*24*7));
-            if ($weeks > 1)
-            {
-               $log["age"] = "$weeks&nbsp;${lang["WEEKS"]}";
-            }
-            else
-            {              
-               $days = floor($agesecs / (60*60*24));
-               if ($days > 1)
-               {
-                  $log["age"] = "$days&nbsp;${lang["DAYS"]}";
-               }
-               else
-               { 
-                  $hours = floor($agesecs / (60*60));
-                  if ($hours > 1)
-                  {
-                     $log["age"] = "$hours&nbsp;${lang["HOURS"]}";
-                  }
-                  else
-                  { 
-                     $minutes = floor($agesecs / 60);
-                     $log["age"] = "$minutes&nbsp;${lang["MINUTES"]}";
-                  }
-               }
-            }
-         }
-      }
+      $log['age'] = datetimeFormatDuration($agesecs, true, true);
       
       $log["message"] = $output[3]; 
       $pos = 4;
