@@ -67,15 +67,18 @@ $listurl = $config->getURL($rep, $path, "dir");
 
 $history = $svnrep->getHistory($path, $rev);
 
-$cachename = strtr($svnrep->repPath, ":/\\", "___");
-$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachename."_rssfeed";
+// Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
+$cachename = strtr(getFullURL($listurl), ":/\\?", "____");
+$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachename.@$_REQUEST["rev"]."_rssfeed.xml";
 
 $rss = new UniversalFeedCreator();
-$rss->useCached($cachename);
+$rss->useCached("RSS2.0", $cachename);
 $rss->title = $rep->name;
 $rss->description = "${lang["RSSFEEDTITLE"]} - $repname";
 $rss->link = html_entity_decode(getFullURL($baseurl.$listurl));
 $rss->syndicationURL = $rss->link;
+$rss->xslStyleSheet = ""; //required for UniversalFeedCreator since 1.7
+$rss->cssStyleSheet = ""; //required for UniversalFeedCreator since 1.7
 
 //$divbox = "<div>";
 //$divfont = "<span>";
@@ -150,6 +153,9 @@ for ($n = 0; $n < $maxmessages; $n++)
 }
 
 // valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML
+
+// Save the feed
+$rss->saveFeed("RSS2.0",$cachename, false);
 header("Content-Type: text/xml");
 echo $rss->createFeed("RSS2.0");
 
