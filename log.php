@@ -199,16 +199,17 @@ for ($n = $firstrevindex; $n <= $lastrevindex; $n++)
       $parent = substr($rpath, 0, $pos + 1);
    
       $url = $config->getURL($rep, $parent, "dir");
-      $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@${r["rev"]}\" onClick=\"checkCB(this)\">";
       $listing[$index]["revlink"] = "<a href=\"${url}rev=${r["rev"]}&amp;sc=1\">${r["rev"]}</a>";
    
       if ($isDir)
       {
+         $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@${r["rev"]}\" onClick=\"checkCB(this)\">";
          $url = $config->getURL($rep, $rpath, "dir"); 
          $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&amp;sc=$showchanged\">$rpath</a>";
       }
       else
       {
+         $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$rpath@${r["rev"]}\" onClick=\"checkCB(this)\">";
          $url = $config->getURL($rep, $rpath, "file"); 
          $listing[$index]["revpathlink"] = "<a href=\"${url}rev=${r["rev"]}&amp;sc=$showchanged\">$rpath</a>";
       }
