@@ -188,6 +188,37 @@ function showTreeDir($svnrep, $path, $rev, $listing)
 
 }
 
+// findIndexInHistory
+//
+// Find the current rev's index in history array
+// note: this is required for "compare to previous" links from any rev #
+
+function findIndexInHistory($rev,$getPrevious = false)
+{
+	global $history;
+	
+	foreach($history as $index => $historyItem)
+	{
+		if(intval($historyItem['rev']) == intval($rev))
+		{
+			return $index;
+		}
+		else if (intval($historyItem['rev']) < intval($rev))
+		{
+			if ($getPrevious)
+			{
+				return $index+1;
+			}
+			else
+			{
+				return $index;
+			}
+		}
+	}
+	
+   return null;
+}
+
 // Make sure that we have a repository
 if (!isset($rep))
 {
@@ -312,11 +343,26 @@ else
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
-if (isset($history[1]))
+
+if ($rev != $headrev)
+{
+	$indexCurrent = findIndexInHistory($rev);
+	$indexPrevious = findIndexInHistory($rev,true);
+	
+	$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".
+	 						        urlencode($history[$indexCurrent]["path"])."@".$history[$indexCurrent]["rev"].
+							        "&amp;compare%5B%5D=".urlencode($history[$indexPrevious]["path"])."@".$history[$indexPrevious]["rev"].
+							        "\">${lang["DIFFPREV"]}</a>";
+}
+else if (isset($history[1]))
+{
 	$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".urlencode($history[1]["path"])."@".$history[1]["rev"]."&amp;compare%5B%5D=".urlencode($history[0]["path"])."@".$history[0]["rev"]."\">${lang["DIFFPREV"]}</a>";
+}
 else
+{
 	$vars["curdircomplink"] = "";
- 
+} 
+
 if ($rep->getHideRss())
 {
    $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["RSSFEED"]}</a>";
