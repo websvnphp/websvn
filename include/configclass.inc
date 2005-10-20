@@ -342,7 +342,11 @@ Class Config
       if ($this->multiViews)
       {
          // Remove the .php
-         $base = substr($base, 0, -4);
+         if (eregi(".php$", $base)) 
+>        {
+>           // Remove the .php
+>           $base = substr($base, 0, -4);
+>        }      
          
          if ($path && $path{0} != "/") $path = "/".$path;
                
