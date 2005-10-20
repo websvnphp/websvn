@@ -302,6 +302,10 @@ $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\
 $vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
 $vars["version"] = $version;
+
+if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, false))
+   $vars["noaccess"] = true;
+
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."log.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);

@@ -23,5 +23,5 @@
 //
 // Version information
 
-$version = "1.62 beta 1";
+$version = "1.7 beta 1";
 ?>

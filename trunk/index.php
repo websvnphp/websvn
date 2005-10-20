@@ -25,7 +25,7 @@
 
 require_once("include/setup.inc");
 require_once("include/svnlook.inc");
-require("include/template.inc");
+require_once("include/template.inc");
 
 $vars["action"] = $lang["PROJECTS"];
 $vars["repname"] = "";
@@ -37,10 +37,13 @@ $i = 0;
 $listing = array ();
 foreach ($projects as $project)
 {
-   $url = $config->getURL($project, "/", "dir");
-
-   $listing[$i]["rowparity"] = $i % 2;
-   $listing[$i++]["projlink"] = "<a href=\"${url}sc=0\">".$project->name."</a>";
+   if (empty($config->auth) || $config->auth->hasReadAccess($project->name, "/", true))
+   {
+      $url = $config->getURL($project, "/", "dir");
+   
+      $listing[$i]["rowparity"] = $i % 2;
+      $listing[$i++]["projlink"] = "<a href=\"${url}sc=0\">".$project->name."</a>";
+   }
 } 
 
 $vars["version"] = $version;

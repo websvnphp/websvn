@@ -126,6 +126,15 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // $config->useMultiViews();
 
+// --- ACCESS RIGHTS ---
+
+// Uncomment this line if you want to use your Subversion access file to control access
+// rights via WebSVN.  For this to work, you'll need to set up the same Apache based authentication
+// to the WebSVN (or wsvn) directory as you have for Subversion itself.  More information can be 
+// found in install.txt
+
+// $config->useAuthenticationFile("/path/to/accessfile");
+
 // --- FILE CONTENT ---
 //
 // You may wish certain file types to be GZIP'd and delieved to the user when clicked apon.

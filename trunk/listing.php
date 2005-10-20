@@ -72,86 +72,99 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
    $loop = 0;
    $last_index = 0;
    $openDir = false;
+   $fullaccess = (empty($config->auth) || $config->auth->hasReadAccess($rep->name, $path, false));
    
    foreach($contents as $file)
    {
       $isDir = ($file{strlen($file) - 1} == "/"?1:0);
+      $access = false;
 
       if ($isDir)
       {
-         $openDir = (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file));
-
-         if ($openDir)
-            $listing[$index]["filetype"] = "diropen";
-         else
-            $listing[$index]["filetype"] = "dir";
-
-         if ($rep->getAllowDownload())
+         if (empty($config->auth) || $config->auth->hasReadAccess($rep->name, $path.$file, true))
          {
-            $dlurl = $config->getURL($rep, $path.$file, "dl"); 
-            $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
+            $access = true;
+            $openDir = (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file));
+   
+            if ($openDir)
+               $listing[$index]["filetype"] = "diropen";
+            else
+               $listing[$index]["filetype"] = "dir";
+   
+            if ($rep->getAllowDownload())
+            {
+               $dlurl = $config->getURL($rep, $path.$file, "dl"); 
+               $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
+            }
+            else 
+               $listing[$index]["fileviewdllink"] = "&nbsp;";
          }
-         else 
+      }
+      else
+      {
+         if ($fullaccess)
+         {
+            $access = true;
+            if ($level != $limit)
+            {
+               // List directories only, skip all files
+               continue;
+            }
+            
             $listing[$index]["fileviewdllink"] = "&nbsp;";
+            $listing[$index]["filetype"] = strrchr($file, ".");
+         }   
       }
-      else
+      
+      if ($access)
       {
-         if ($level != $limit)
-         {
-            // List directories only, skip all files
-            continue;
-         }
+         $listing[$index]["rowparity"] = ($index % 2)?"1":"0";
          
-         $listing[$index]["fileviewdllink"] = "&nbsp;";
-         $listing[$index]["filetype"] = strrchr($file, ".");
-      }   
-
-      $listing[$index]["rowparity"] = ($index % 2)?"1":"0";
+         $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"".fileLink($path, $file, true)."@$passrev\" onClick=\"checkCB(this)\">";
+         
+         if ($openDir)
+            $listing[$index]["filelink"] = "<b>".fileLink($path, $file)."</b>";
+         else
+            $listing[$index]["filelink"] = fileLink($path, $file);
+   
+         // The history command doesn't return with a trailing slash.  We need to remember here if the
+         // file is a directory or not! 
       
-      $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"".fileLink($path, $file, true)."@$passrev\" onClick=\"checkCB(this)\">";
+         $listing[$index]["isDir"] = $isDir;
       
-      if ($openDir)
-         $listing[$index]["filelink"] = "<b>".fileLink($path, $file)."</b>";
-      else
-         $listing[$index]["filelink"] = fileLink($path, $file);
-
-      // The history command doesn't return with a trailing slash.  We need to remember here if the
-      // file is a directory or not! 
-   
-      $listing[$index]["isDir"] = $isDir;
-   
-      $listing[$index]["level"] = $level;
-      $listing[$index]["node"] = 0; // t-node
-   
-      $fileurl = $config->getURL($rep, $path.$file, "log");
-      $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
-   
-      $rssurl = $config->getURL($rep, $path.$file, "rss");
-      if ($rep->getHideRss())
-      {
-         $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["RSSFEED"]}</a>";
-         $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">";
-      }
-   
-      $index++;
-      $loop++;
-      $last_index = $index;
-
-      if (($level != $limit) && ($isDir))
-      {
-         if (!strcmp($subs[$level + 1]."/", $file))
+         $listing[$index]["level"] = $level;
+         $listing[$index]["node"] = 0; // t-node
+      
+         $fileurl = $config->getURL($rep, $path.$file, "log");
+         $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
+      
+         $rssurl = $config->getURL($rep, $path.$file, "rss");
+         if ($rep->getHideRss())
          {
-            $listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $listing, $index);
-            $index = count($listing);
+            $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["RSSFEED"]}</a>";
+            $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">";
          }
-      }      
-    }
+      
+         $index++;
+         $loop++;
+         $last_index = $index;
+   
+         if (($level != $limit) && ($isDir))
+         {
+            if (!strcmp($subs[$level + 1]."/", $file))
+            {
+               $listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $listing, $index);
+               $index = count($listing);
+            }
+         }      
 
-    if ($last_index != 0)
-    {
-       $listing[$last_index - 1]["node"] = 1; // l-node
-    }
-
+         if ($last_index != 0)
+         {
+            $listing[$last_index - 1]["node"] = 1; // l-node
+         }
+      }
+   }
+   
    return $listing;
 }
 
@@ -237,12 +250,12 @@ else
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
 $vars["action"] = "";
-$vars["author"] = $log['author'];
-$vars["date"] = $log['date'];
-$vars["log"] = nl2br($bugtraq->replaceIDs(create_anchors($log['message'])));
 $vars["rev"] = $rev;
-$vars["lastchangedrev"] = $logrev;
 $vars["path"] = $ppath;
+$vars["lastchangedrev"] = $logrev;
+$vars["date"] = $log['date'];
+$vars["author"] = $log['author'];
+$vars["log"] = nl2br($bugtraq->replaceIDs(create_anchors($log['message'])));
 
 if (!$showchanged)
 {
@@ -322,6 +335,12 @@ $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);
 
 $vars["version"] = $version;
+
+if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, true))
+   $vars["noaccess"] = true;
+
+if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, false))
+   $vars["restricted"] = true;
 
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."directory.tmpl", $vars, $listing);

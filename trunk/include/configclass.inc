@@ -23,8 +23,9 @@
 //
 // General class for handling configuration options
 
-require("include/command.inc");
-require("include/version.inc");
+require_once("include/command.inc");
+require_once("include/auth.inc");
+require_once("include/version.inc");
 
 // Auxillary function used to sort repositories by name
 
@@ -48,6 +49,7 @@ Class Repository
    var $ignoreSvnMimeTypes;
    var $ignoreWebSVNContentTypes;
    var $bugtraq;
+   var $auth;
    
    function Repository($name, $path)
    {
@@ -577,6 +579,17 @@ Class Config
    function useBugtraqProperties()
    {
       $this->bugtraq = true;
+   }
+   
+   function useAuthenticationFile($file)
+   {
+      if (is_readable($file))
+         $this->auth = new Authentication($file);
+      else
+      {
+         echo "Unable to read authentication file '$file'";
+         exit;
+      }
    }
 }
 ?>
