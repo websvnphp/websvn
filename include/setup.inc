@@ -117,7 +117,6 @@ $contentType = array (
 ".latex" => "application/x-latex", // LaTeX source
 ".nc" => "application/x-netcdf", // Unidata netCDF
 ".cdf" => "application/x-netcdf", // Unidata netCDF
-".sh" => "application/x-sh", // Bourne shell script
 ".sit" => "application/x-stuffit", // Stiffut Archive
 ".tcl" => "application/x-tcl", // TCL script
 ".texinfo" => "application/x-texinfo", // Texinfo (Emacs)
