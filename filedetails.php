@@ -145,6 +145,10 @@ $vars["blamelink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">${lang[
 $listing = array ();
 
 $vars["version"] = $version;
+
+if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, false))
+   $vars["noaccess"] = true;
+
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."file.tmpl", $vars, $listing);
 parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);

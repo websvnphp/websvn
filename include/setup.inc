@@ -307,12 +307,15 @@ function createProjectSelectionForm()
    
    foreach ($reps as $trep)
    {
-      if ($rep->name == $trep->name)
-         $sel = "selected";
-      else
-         $sel = "";
-         
-      $vars["projects_select"] .= "<option value=\"".$trep->name."\" $sel>".$trep->name."</option>";
+      if (empty($config->auth) || $config->auth->hasReadAccess($trep->name, "/", true))
+      {
+         if ($rep->name == $trep->name)
+            $sel = "selected";
+         else
+            $sel = "";
+            
+         $vars["projects_select"] .= "<option value=\"".$trep->name."\" $sel>".$trep->name."</option>";
+      }
    }
    
    $vars["projects_select"] .= "</select>";

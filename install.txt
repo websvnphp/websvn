@@ -106,16 +106,7 @@ Now go to http://servername/wsvn/ and make sure that you get the index page.
 The repname part of the URL is the name given to it in the config.inc file.
 For this reason you may wish to avoid putting spaces in the name.
 
-AUTHENTICATION AND MULTIVIEW WALK-THROUGH
-
-You may wish to provide an authentication mechanism for WebSVN.  One obvious
-solution is to protect the entire WebSVN directory with some form of Apache
-authentication mechanism, but that doesn't allow for per repository
-authentication.
-
-This walkthrough gives an example of setting up per repository authentication
-that's based on the same authentication requirements as you define for the 
-Subversion access itself.  You'll need to be using Apache.
+MULTIVIEWS EXAMPLE
 
 First, you must get the Multiviews option working.  In my set up, my Apache
 directory root is set to a location on my harddrive:
@@ -150,6 +141,7 @@ up):
 
 Options MultiViews
 
+
 If all has gone well, repositories should now by accessible by
 http://servername/wsvn/repname
 
@@ -159,59 +151,51 @@ add another directive to the .htaccess file:
 
 DirectoryIndex wsvn.php
 
-We are now in a position where each repository has it's own URL location.
-To configure authentication we can use the same method as for controlling
-access to the svn repositories themselves.  Here's an example using SSPI:
+ACCESS RIGHTS AND AUTHENTICATION
 
-<Location /wsvn/myproj>
-SVNPath C:\svn\myproj
+You may wish to provide an authentication mechanism for WebSVN.  One obvious
+solution is to protect the entire WebSVN directory with some form of Apache
+authentication mechanism, but that doesn't allow for per repository
+authentication.
+
+WebSVN provides and access rights mechanism that uses your SVN access file to
+control read access to the repository.  This means that you only have to 
+maintain one file to define both Subversion and WebSVN access rights.
+
+For this to work, you need to configure your authentication method to the /WebSVN/
+(or /wsvn/) directory.  This should be the same authentication as you use for 
+the svn repositories themselves.  Here's an example using SSPI:
+
+<Location /WebSVN/>
 AuthType SSPI
 SSPIAuth On
 SSPIAuthoritative On
-SSPIDomain MYDOMAIN
+SSPIDomain IMAJEMAIL
 SSPIOfferBasic On
-AuthzSVNAccessFile c:\svn\myaccessfile.txt
 Require valid-user
 </Location>
 
-Here, I protect just the 'myproj' project, now accessed using
-http://servername/wsvn/myproj
+Note the use of the / after /WebSVN/ in the location directive.  If you use
+<Location /WebSVN> then you won't be able to access the index.
 
-To get the AuthzSVNAccessFile directive working, you have to have the SVNPath
-directive pointing to the real SVN repository.  Do NOT include the DAV
-directive.
+You should change /WebSVN/ to /wsvn/ if your using multiviews.
 
-The authenticaion now works as for the repository access via SVN.  Very nice!
+Also note that you shouldn't use the AuthzSVNAccessFile command to define the
+access file.
 
-Newer versions of subversion allow use of the SVNParentPath directive with
-AuthzSVNAccessFile , making for an even nicer set up.  Here's an example:
+Now that you've defined your authentication, you'll be asked for your user name
+and password in order to access the WebSVN directory.  All that's left is to
+configure WebSVN to use your Subversion access file to control access.  Add this
+line to your config.inc file:
 
-<Location /svn>
-DAV svn
-SVNParentPath C:\svn
-AuthType SSPI
-SSPIAuth On
-SSPIAuthoritative On
-SSPIDomain MYDOMAIN
-SSPIOfferBasic On
-AuthzSVNAccessFile c:\svn\accessfile.txt
-Require valid-user
-</Location>		
+$config->useAuthenticationFile("/path/to/accessfile");
 
-<Location /wsvn/>
-SVNParentPath C:\svn
-AuthType SSPI
-SSPIAuth On
-SSPIAuthoritative On
-SSPIDomain MYDOMAIN
-SSPIOfferBasic On
-AuthzSVNAccessFile c:\svn\accessfile.txt
-Satisfy Any
-Require valid-user
-</Location>	
+Note that if your access file gives read access to, for example, path /a/b/c/ but
+not to /a/b/, then the user will be given restricted access to /a/b/ in order to 
+reach /a/b/c/.  The user will not be able to see any other files or directories in
+/a or /a/b/.
 
-Note the use of the / after /wsvn/ in the location directive.  If you use
-<Location /wsvn> then you won't be able to access the index.
+You should read the Subversion book for information on the access file format.
 
 COMMON PROBLEMS
 

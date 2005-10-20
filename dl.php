@@ -32,6 +32,9 @@ require_once("include/utils.inc");
 if (!$rep->getAllowDownload())
    exit;
 
+if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, false))
+   exit;
+
 $svnrep = new SVNRepository($rep->path);
 
 if ($path{0} != "/")
