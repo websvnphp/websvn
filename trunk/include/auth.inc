@@ -101,6 +101,9 @@ class Authentication
    function hasReadAccess($repos, $path, $checkSubFolders = false)
    {
       $access = UNDEFINED;
+      
+      if ($path{0} != "/")
+         $path = "/$path";
   
       // If were told to, we should check sub folders of the path to see if there's
       // a read access below this level.  This is used to display the folders needed
