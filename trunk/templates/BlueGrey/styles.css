@@ -66,19 +66,19 @@ A:hover
 TD.diffdeleted
 {
    font-size: 11px;
-   background-color: red;
+   ackground-color: #ff8888;
 }
 
 TD.diffchanged
 {
    font-size: 11px;
-   background-color: yellow;
+   background-color: #ffff88;
 }
 
 TD.diffadded
 {
    font-size: 11px;
-   background-color: green;
+   background-color: #88ff88;
 }
 
 TD.diff
@@ -96,3 +96,4 @@ DIV.newpath
 DIV.difflines
 {
 }
+
