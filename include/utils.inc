@@ -185,4 +185,66 @@ function hardspace($s)
    // Stick them together
    return $spaces.$s;
 }
+
+
+// datetimeFormatDuration
+//
+// Formats a duration of seconds for display.
+//
+// $seconds the number of seconds until something
+// $nbsp true if spaces should be replaced by nbsp
+// $skipSeconds true if seconds should be omitted
+//
+// return the formatted duration (e.g. @c "8h  6m  1s")
+
+function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
+{
+   global $lang;
+   
+	if ($seconds < 0)
+	{
+		$seconds = -$seconds;
+		$neg = true;
+	}
+	else
+		$neg = false;
+
+	$qty = array();
+
+	$qty[] = (int)($seconds / (60 * 60 * 24));
+	$seconds %= 60 * 60 * 24;
+
+	$qty[] = (int)($seconds / (60 * 60));
+	$seconds %= 60 * 60;
+
+	$qty[] = (int)($seconds / 60);
+	$qty[] = (int)($seconds % 60);
+
+	$text = "";
+	$names = $lang["DAYLETTER"].$lang["HOURLETTER"].$lang["MINUTELETTER"];
+	if (!$skipSeconds) $names .= $lang["SECONDLETTER"];
+
+	$any = false;
+	for ($i = 0; $i < strlen($names); $i++)
+		// If a "higher valued" time slot had a value or this time slot
+		// has a value or this is the very last entry (i.e. all values
+		// are 0 and we still want to print seconds)
+		if ($any || $qty[$i] || $i == sizeof($qty) - 1)
+		{
+			$any = true;
+
+			if ($i)
+				$text .= sprintf("%2d", $qty[$i]);
+			else
+				$text .= $qty[$i];
+
+			$text .= "{$names{$i}} ";
+		}
+
+	$text = trim($text);
+	if ($neg)
+		$text = "-$text";
+
+	return $nbsp ? str_replace(" ", "&nbsp;", $text) : $text;
+}
 ?>

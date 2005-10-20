@@ -83,12 +83,10 @@ $lang["RSSFEED"] = "RSS feed";
 $lang["LINENO"] = "Line No.";
 $lang["BLAMEFOR"] = "Blame information for rev";
 
-$lang["YEARS"] = "years";
-$lang["MONTHS"] = "months";
-$lang["WEEKS"] = "weeks";
-$lang["DAYS"] = "days";
-$lang["HOURS"] = "hours";
-$lang["MINUTES"] = "minutes";
+$lang["DAYLETTER"] = "d";
+$lang["HOURLETTER"] = "h";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Go";
 
