@@ -1,10 +1,31 @@
 CHANGES
 
+1.70 beta 1
+
+NEW: Access rights module (Finally!) - see install.txt for details
+NEW: Added language file for Danish, Finnish, Turkish, Norwegian and Simplified Chinese
+NEW: The "View Log" link is now available for templates to use from the file view
+NEW: Added bugtraq:logregex support
+
+CHANGE: Ages are now displayed with higher resolution
+CHANGE: Update German translation
 CHANGE: Tex file are no longer delivered as binary by defaut, but displayed by enscript
 CHANGE: The last modified files display now shows the most recently modified  files of
         the current directory
+CHANGE: Improve diff colours of Blue Grey Scheme for better readability
 
+FIX: File version can be compared via the log display (as oppoed to just directories)
+FIX: Corrected RSS encoding issue
+FIX: Corrected bug whereby diff lines would be displayed twice
+FIX: svn: Can't check path '/root/.subversion': Permission denied
 FIX: Sometimes files delivered (as opposed to disaplyed) by WebSVN were empty
+FIX: Fix problem with large tarball delivery
+FIX: Compare with previous always used HEAD
+FIX. .sh file are now viewable
+FIX: Allow special characters in repository names
+FIX: It wasn't possible to go into a module if another module starts with the same name.
+FIX: Remove hard-coded timezone from the RSS feed creator.
+
 
 1.62
 
