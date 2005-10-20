@@ -343,10 +343,10 @@ Class Config
       {
          // Remove the .php
          if (eregi(".php$", $base)) 
->        {
->           // Remove the .php
->           $base = substr($base, 0, -4);
->        }      
+         {
+            // Remove the .php
+            $base = substr($base, 0, -4);
+         }      
          
          if ($path && $path{0} != "/") $path = "/".$path;
                
