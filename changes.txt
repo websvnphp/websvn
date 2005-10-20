@@ -22,11 +22,11 @@ FIX: svn: Can't check path '/root/.subversion': Permission denied
 FIX: Sometimes files delivered (as opposed to disaplyed) by WebSVN were empty
 FIX: Fix problem with large tarball delivery
 FIX: Compare with previous always used HEAD
-FIX. .sh file are now viewable
+FIX. .sh files are now viewable
 FIX: Allow special characters in repository names
 FIX: It wasn't possible to go into a module if another module starts with the same name.
 FIX: Remove hard-coded timezone from the RSS feed creator.
-
+FIX: Caching of RSS feeds wasn't working
 
 1.62
 
