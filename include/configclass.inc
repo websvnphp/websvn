@@ -19,7 +19,7 @@
 //
 // --
 //
-// configclass.inc
+// configclass.inc4
 //
 // General class for handling configuration options
 
@@ -408,7 +408,7 @@ Class Config
          if ($rep == -1)
             return $fname."?path=".urlencode($path)."&amp;";
          else
-            return $fname."?repname=".$rep->name."&amp;path=".urlencode($path)."&amp;";
+            return $fname."?repname=".urlencode($rep->name)."&amp;path=".urlencode($path)."&amp;";
       }
    }
 
