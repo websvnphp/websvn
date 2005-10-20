@@ -73,14 +73,15 @@ if ($config->multiViews)
    {
       $pos = strlen($rep->name);
       if (strlen($path) < $pos)
-         next;
+         continue;
          
       $name = substr($path, 0, $pos);
       if (strcasecmp($rep->name, $name) == 0)
       {
-         $path = substr($path, $pos);
-         if ($path[0] == "/") {
+         $tpath = substr($path, $pos);
+         if ($tpath[0] == "/") {
             $found = true;
+            $path = $tpath;
             break;
          }
       }
