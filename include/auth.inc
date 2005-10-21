@@ -158,13 +158,13 @@ class Authentication
             }
              
             // If we've not got a match, remove the sub directory and start again
-            if ($access != ALLOW)
+            if ($access == UNDEFINED)
             {
                if ($path == "/") break;
                $path = substr($path, 0, strrpos(substr($path, 0, -1), "/") + 1);
             }
                                           
-         } while ($access != ALLOW && $path != "");
+         } while ($access == UNDEFINED && $path != "");
       }
       
       return $access == ALLOW;
