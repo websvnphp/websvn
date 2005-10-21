@@ -28,6 +28,204 @@
 
 require_once("include/utils.inc");
 
+//
+// --- Classes for retaining log information ---
+//
+
+$debugxml = false;
+
+Class SVNMod
+{
+   var $action = "";
+   var $copyfrom = "";
+   var $copyrev = "";
+   var $path = "";
+}
+
+Class SVNLogEntry
+{
+   var $rev = 1;
+   var $author = "";
+   var $date = "";
+   var $committime;
+   var $age = "";
+   var $msg = "";
+   var $path = "";
+   
+   var $mods;
+   var $curMod;
+}
+
+Class SVNLog
+{
+   var $entries; // Array of entries
+   var $curEntry; // Current entry
+   
+   var $path = ""; // Temporary variable used to trace path history
+   
+   // findEntry 
+   //
+   // Return the entry for a given revision
+   
+   function findEntry($rev)
+   {
+      foreach ($this->entries as $index => $entry)
+      {
+         if ($entry->rev == $rev)
+            return $index;
+
+      }
+   }
+}
+
+//
+// --- XML parsing functions---
+//
+
+$curLog = 0;
+$curTag = "";
+
+function startElement($parser, $name, $attrs)
+{
+    global $curLog, $curTag, $debugxml;
+
+    switch ($name)
+    {
+       case "LOGENTRY":
+         if ($debugxml) print "Creating new log entry\n";
+         $curLog->curEntry = new SVNLogEntry;
+         $curLog->curEntry->mods = array();
+         
+         $curLog->curEntry->path = $curLog->path;
+         
+         if (sizeof($attrs))
+         {
+            while (list($k, $v) = each($attrs))
+            {
+               switch ($k)
+               {
+                  case "REVISION":
+                     if ($debugxml) print "Revision $v\n";
+                     $curLog->curEntry->rev = $v;
+                     break;
+               }
+            }
+         }
+         break;
+      
+      case "PATH":
+         if ($debugxml) print "Creating new path\n";
+         $curLog->curEntry->curMod = new SVNMod;
+         
+         if (sizeof($attrs))
+         {
+            while (list($k, $v) = each($attrs))
+            {
+               switch ($k)
+               {
+                  case "ACTION":
+                     if ($debugxml) print "Action $v\n";
+                     $curLog->curEntry->curMod->action = $v;
+                     break;
+
+                  case "COPYFROM-PATH":
+                     if ($debugxml) print "Copy from: $v\n";
+                     $curLog->curEntry->curMod->copyfrom = $v;
+                     break;
+
+                  case "COPYFROM-REV":
+                     $curLog->curEntry->curMod->copyrev = $v;
+                     break;
+               }
+            }
+         }
+         
+         $curTag = $name;  
+         break;
+            
+      default:
+         $curTag = $name;        
+         break;
+   }
+}
+
+function endElement($parser, $name) 
+{
+    global $curLog, $debugxml;
+
+    switch ($name)
+    {
+      case "LOGENTRY":
+         if ($debugxml) print "Ending new log entry\n";
+         $curLog->entries[] = $curLog->curEntry;
+         break;
+
+      case "PATH":
+         if ($debugxml) print "Ending path\n";
+         $curLog->curEntry->mods[] = $curLog->curEntry->curMod;
+         break;
+    }
+    
+    $curTag = "";
+}
+
+function characterData($parser, $data)
+{
+   global $curLog, $curTag, $lang, $debugxml;
+
+   $data = trim($data);
+   if (empty($data))
+      return;
+         
+   $data = utf8_decode($data);
+   
+   switch ($curTag)
+   {
+      case "AUTHOR":
+         if ($debugxml) print "Author: $data\n";
+         $curLog->curEntry->author .= $data;
+         break;
+
+      case "DATE":
+         if ($debugxml) print "Date: $data\n";
+         
+         sscanf($data, "%d-%d-%dT%d:%d:%d.", $y, $mo, $d, $h, $m, $s);
+         
+         $curLog->curEntry->date = "$y-$mo-$d $h:$m:$s";
+                  
+         $committime = strtotime($curLog->curEntry->date);
+         $curLog->curEntry->committime = $committime;
+         $curtime = time();
+   
+         // Get the number of seconds since the commit
+         $agesecs = $curtime - $committime;
+         if ($agesecs < 0) $agesecs = 0;
+         
+         $curLog->curEntry->age = datetimeFormatDuration($agesecs, true, true);
+      
+         break;
+
+      case "MSG":
+         if ($debugxml) print "Msg: '$data'\n";
+         $curLog->curEntry->msg .= $data;
+         break;
+         
+      case "PATH":
+         if ($debugxml) print "Path name: '$data'\n";
+         $curLog->curEntry->curMod->path .= $data;
+         
+         if ($data == $curLog->path)
+         {
+            
+            if ($debugxml) print "New path for comparison: '".$curLog->curEntry->curMod->copyfrom."'\n";
+            $curLog->path = $curLog->curEntry->curMod->copyfrom;
+         }
+            
+         break;
+   }
+}
+
+
 // Function returns true if the give entry in a directory tree is at the top level
 
 function _topLevel($entry)
@@ -539,6 +737,65 @@ Class SVNRepository
       $cmd = quoteCommand($config->svn." export $revstr ".quote("file:///".$path)." $filename", false);
 
       @exec($cmd);
-  }
+   }
+  
+   function getLog($path, $brev = "", $erev = 1, $quiet = false, $limit = 2)
+   {
+      global $config, $curLog;
+      
+      $xml_parser = xml_parser_create("UTF-8");
+      xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
+      xml_set_element_handler($xml_parser, "startElement", "endElement");
+      xml_set_character_data_handler($xml_parser, "characterData");
+
+      // Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
+      // the trailing slash from the path for comparison purposes
+      
+      if ($path{strlen($path) - 1} == "/" && $path != "/")
+         $path = substr($path, 0, -1);
+      
+      $curLog = new SVNLog;
+      $curLog->entries = array();
+      $curLog->path = $path;
+      
+      $revStr = "";
+      
+      if ($brev && $erev)
+         $revStr = "-r$brev:$erev";
+      else if ($brev)
+         $revStr = "-r$brev:1";      
+      
+      if ($limit != 0)
+         $revStr .= " --limit $limit";
+         
+      // Get the log info
+      $path = str_replace(array(" ", DIRECTORY_SEPARATOR), array("%20", "/"), $this->repPath.$path);
+      $info = "--verbose";
+      if ($quiet)
+         $info = "--quiet";
+      $cmd = quoteCommand($config->svn." log --xml $info $revStr ".quote("file:///".$path), false);
+      
+      if ($handle = popen($cmd, "r"))
+      {
+         $firstline = true;
+   		while (!feof($handle))
+   		{
+   		   $line = fgets($handle);
+            if (!xml_parse($xml_parser, $line, feof($handle)))
+            {
+              die(sprintf("XML error: %s at line %d column %d byte %d<br>cmd: $cmd<nr>",
+                          xml_error_string(xml_get_error_code($xml_parser)),
+                          xml_get_current_line_number($xml_parser),
+                          xml_get_current_column_number($xml_parser),
+                          xml_get_current_byte_index($xml_parser)));
+            }
+   		}
+		
+		   pclose($handle);
+      }
+            
+      xml_parser_free($xml_parser);
+      return $curLog;
+   }  
 }
 ?>

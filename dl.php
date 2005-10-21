@@ -43,8 +43,8 @@ else
    $ppath = $path;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getHistory($path);
-$youngest = $history[0]["rev"];
+$history = $svnrep->getLog($path, "", "", true);
+$youngest = $history->entries[0]->rev;
 
 if (empty($rev))
    $rev = $youngest;

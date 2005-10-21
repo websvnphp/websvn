@@ -44,27 +44,27 @@ if (!isset($rep))
 $svnrep = new SVNRepository($rep->path);
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getHistory($path);
-$youngest = $history[0]["rev"];
+$history = $svnrep->getLog($path, "", "", true);
+$youngest = $history->entries[0]->rev;
 
 if (empty($rev))
    $rev = $youngest;
 
-$history = $svnrep->getHistory($path, $rev);
+$history = $svnrep->getLog($path, $rev);
 
 if ($path{0} != "/")
    $ppath = "/".$path;
 else
    $ppath = $path;
 
-$prevrev = @$history[1]["rev"];
+$prevrev = @$history->entries[1]->rev;
 
 $vars["repname"] = $rep->name;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 $vars["prevrev"] = $prevrev;
 
-$vars["rev1"] = $history[0]["rev"];
+$vars["rev1"] = $history->entries[0]->rev;
 $vars["rev2"] = $prevrev;
 
 createDirLinks($rep, $ppath, $rev, $showchanged);
@@ -88,10 +88,10 @@ if ($prevrev)
 
    // Get the contents of the two files
    $newtname = tempnam("temp", "");
-   $new = $svnrep->getFileContents($history[0]["path"], $newtname, $history[0]["rev"]);
+   $new = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev);
 
    $oldtname = tempnam("temp", "");
-   $old = $svnrep->getFileContents($history[1]["path"], $oldtname, $history[1]["rev"]);
+   $old = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev);
    
    $ent = true;
    if (('php' == $extEnscript[strrchr($path, ".")]) || ($config->useEnscript))
