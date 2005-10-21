@@ -1,5 +1,14 @@
 CHANGES
 
+
+1.70 beta 2
+
+CHANGE: WebSVN no longer requires the entire revision history when accessing a directory,
+        resulting in a faster access for large repositories
+
+FIX: The new access rights module didn't always hide directories
+FIX: Tree icons have beeb fixed (broken in 1.70 beta 1)
+
 1.70 beta 1
 
 NEW: Access rights module (Finally!) - see install.txt for details
@@ -13,6 +22,8 @@ CHANGE: Tex file are no longer delivered as binary by defaut, but displayed by e
 CHANGE: The last modified files display now shows the most recently modified  files of
         the current directory
 CHANGE: Improve diff colours of Blue Grey Scheme for better readability
+CHANGE: WebSVN no longer requires the entire revision history when accessing a directory,
+        resulting in a faster access for large repositories
 
 FIX: Directories containing accents weren't always displayed
 FIX: File version can be compared via the log display (as oppoed to just directories)
