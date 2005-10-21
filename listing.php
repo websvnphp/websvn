@@ -158,13 +158,14 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
             }
          }      
 
-         if ($last_index != 0)
-         {
-            $listing[$last_index - 1]["node"] = 1; // l-node
-         }
       }
    }
-   
+
+   if ($last_index != 0)
+   {
+      $listing[$last_index - 1]["node"] = 1; // l-node
+   }
+
    return $listing;
 }
 
@@ -188,37 +189,6 @@ function showTreeDir($svnrep, $path, $rev, $listing)
 
 }
 
-// findIndexInHistory
-//
-// Find the current rev's index in history array
-// note: this is required for "compare to previous" links from any rev #
-
-function findIndexInHistory($rev,$getPrevious = false)
-{
-	global $history;
-	
-	foreach($history as $index => $historyItem)
-	{
-		if(intval($historyItem['rev']) == intval($rev))
-		{
-			return $index;
-		}
-		else if (intval($historyItem['rev']) < intval($rev))
-		{
-			if ($getPrevious)
-			{
-				return $index+1;
-			}
-			else
-			{
-				return $index;
-			}
-		}
-	}
-	
-   return null;
-}
-
 // Make sure that we have a repository
 if (!isset($rep))
 {
@@ -234,10 +204,11 @@ $passrev = $rev;
 // Get the directory contents of the given revision, or HEAD if not defined
 $contents = $svnrep->dirContents($path, @$rev);
 
-$history = $svnrep->getHistory($path);
+// If there's no revision info, go to the lastest revision for this path
+$history = $svnrep->getLog($path, "", "", true);
 
-if (!empty($history[0]))
-   $youngest = $history[0]["rev"];
+if (!empty($history->entries[0]))
+   $youngest = $history->entries[0]->rev;
 else
    $youngest = -1;
 
@@ -346,17 +317,15 @@ $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&am
 
 if ($rev != $headrev)
 {
-	$indexCurrent = findIndexInHistory($rev);
-	$indexPrevious = findIndexInHistory($rev,true);
-	
-	$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".
-	 						        urlencode($history[$indexCurrent]["path"])."@".$history[$indexCurrent]["rev"].
-							        "&amp;compare%5B%5D=".urlencode($history[$indexPrevious]["path"])."@".$history[$indexPrevious]["rev"].
-							        "\">${lang["DIFFPREV"]}</a>";
+   $history = $svnrep->getLog($path, $rev, "", false);
 }
-else if (isset($history[1]))
+
+if (isset($history->entries[1]->rev))
 {
-	$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".urlencode($history[1]["path"])."@".$history[1]["rev"]."&amp;compare%5B%5D=".urlencode($history[0]["path"])."@".$history[0]["rev"]."\">${lang["DIFFPREV"]}</a>";
+	$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".
+	 						        urlencode($history->entries[1]->path)."@".$history->entries[1]->rev.
+							        "&amp;compare%5B%5D=".urlencode($history->entries[0]->path)."@".$history->entries[0]->rev.
+							        "\">${lang["DIFFPREV"]}</a>";
 }
 else
 {

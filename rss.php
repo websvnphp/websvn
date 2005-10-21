@@ -65,7 +65,8 @@ if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, fa
 $url = $config->getURL($rep, $path, "log");
 $listurl = $config->getURL($rep, $path, "dir");
 
-$history = $svnrep->getHistory($path, $rev);
+// If there's no revision info, go to the lastest revision for this path
+$history = $svnrep->getLog($path, $rev, "", true, 20);
 
 // Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
 $cachename = strtr(getFullURL($listurl), ":/\\?", "____");
@@ -83,19 +84,16 @@ $rss->cssStyleSheet = ""; //required for UniversalFeedCreator since 1.7
 //$divbox = "<div>";
 //$divfont = "<span>";
 
-if ($maxmessages > count($history))
-   $maxmessages = count($history);
-
-for ($n = 0; $n < $maxmessages; $n++)
+foreach ($history->entries as $r)
 {
-   $r = $history[$n];
+   $thisrev = $r->rev;
    
-   $log = $svnrep->getLogDetails($path, $r["rev"]);
-   $changes = $svnrep->getChangedFiles($r["rev"]);
+   $log = $svnrep->getLogDetails($path, $r->rev);
+   $changes = $svnrep->getChangedFiles($r->rev);
    $files = count($changes["added"]) + count($changes["deleted"]) + count($changes["updated"]);
 
    // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
-   $rpath = $r["path"];
+   $rpath = $r->path;
    if ($isDir && $rpath{strlen($rpath) - 1} != "/")
       $rpath .= "/";
    
@@ -130,11 +128,11 @@ for ($n = 0; $n < $maxmessages; $n++)
       $sdesc = $desc;
    }
    
-   if ($desc == "") $sdesc = "${lang["REV"]} ${r["rev"]}";
+   if ($desc == "") $sdesc = "${lang["REV"]} $thisrev";
    
    $item->title = "$sdesc";
-   $item->link = html_entity_decode(getFullURL($baseurl."${url}rev=${r["rev"]}&amp;sc=$showchanged"));
-   $item->description = "<div><strong>${lang["REV"]} ${r["rev"]} - ${log["author"]}</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
+   $item->link = html_entity_decode(getFullURL($baseurl."${url}rev=$thisrev&amp;sc=$showchanged"));
+   $item->description = "<div><strong>${lang["REV"]} $thisrev - ${log["author"]}</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
    if ($showchanged) {
      foreach ($changes["added"] as $file) {
        $item->description .= "+ $file<br>";
@@ -146,8 +144,8 @@ for ($n = 0; $n < $maxmessages; $n++)
        $item->description .= "- $file<br>";
      }
    }
-   $item->date = $log["committime"];
-   $item->author = $log["author"];
+   $item->date = $r->committime;
+   $item->author = $r->author;
      
    $rss->addItem($item);
 }
