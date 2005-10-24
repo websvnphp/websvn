@@ -44,6 +44,9 @@ Class Repository
    // Local configuration options must start off unset
    
    var $allowDownload;
+   var $minDownloadLevel;
+   var $allowedExceptions = array();
+   var $disallowedExceptions = array();
    var $rss;
    var $spaces;
    var $ignoreSvnMimeTypes;
@@ -95,7 +98,7 @@ Class Repository
    {
       $this->allowDownload = false;
    }
-
+   
    function getAllowDownload()
    {
       global $config;
@@ -105,6 +108,78 @@ Class Repository
          
       return $config->allowDownload;
    }
+
+   function setMinDownloadLevel($level)
+   {
+      $this->minDownloadLevel = $level;
+   }
+
+   function getMinDownloadLevel()
+   {
+      global $config;
+
+      if (isset($this->minDownloadLevel))
+         return $this->minDownloadLevel;
+         
+      return $config->minDownloadLevel;
+   }
+   
+   function addAllowedDownloadException($path)
+   {
+      if ($path{strlen($path) - 1} != "/")
+         $path .= "/";
+         
+      $this->allowedExceptions[] = $path;
+   }
+   
+   function addDisallowedDownloadException($path)
+   {
+      if ($path{strlen($path) - 1} != "/")
+         $path .= "/";
+         
+      $this->disallowedExceptions[] = $path;
+   }
+
+   function isDownloadAllowed($path)
+   {
+      global $config;
+      
+      // Check global download option
+      if (!$this->getAllowDownload())
+         return false;
+      
+      // Check with access module
+      if (!empty($config->auth) && !$config->auth->hasUnrestrictedReadAccess($this->name, $path))
+         return false;
+         
+      $subs = explode("/", $path);
+      $level = count($subs) - 2;
+      if ($level >= $this->getMinDownloadLevel())
+      {
+         // Level OK, search for disallowed exceptions
+         
+         if ($config->findException($path, $this->disallowedExceptions))
+            return false;
+            
+         if ($config->findException($path, $config->disallowedExceptions))
+            return false;
+            
+         return true;
+      }
+      else
+      {
+         // Level not OK, search for disallowed exceptions
+
+         if ($config->findException($path, $this->allowedExceptions))
+            return true;
+            
+         if ($config->findException($path, $config->allowedExceptions))
+            return true;
+            
+         return false;
+      }
+   }
+
 
    // Tab expansion
    
@@ -211,6 +286,9 @@ Class Config
    var $multiViews = false;
    var $useEnscript = false;
    var $allowDownload = false;
+   var $minDownloadLevel = 0;
+   var $allowedExceptions = array();
+   var $disallowedExceptions = array();
    var $rss = true;
    var $spaces = 8;
    var $bugtraq = false;
@@ -336,6 +414,38 @@ Class Config
       $this->allowDownload = true;
    }
 
+   function setMinDownloadLevel($level)
+   {
+      $this->minDownloadLevel = $level;
+   }
+
+   function addAllowedDownloadException($path)
+   {
+      if ($path{strlen($path) - 1} != "/")
+         $path .= "/";
+         
+      $this->allowedExceptions[] = $path;
+   }
+   
+   function addDisallowedDownloadException($path)
+   {
+      if ($path{strlen($path) - 1} != "/")
+         $path .= "/";
+         
+      $this->disallowedExceptions[] = $path;
+   }
+   
+   function findException($path, $exceptions)
+   {
+      foreach ($exceptions As $key => $exc)
+      {
+         if (strncmp($exc, $path, strlen($exc)) == 0)
+            return true;
+      }
+      
+      return false;
+   }
+   
    // getURL
    //
    // Get the URL to a path name based on the current config

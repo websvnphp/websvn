@@ -201,6 +201,41 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->findRepository("myrep")->allowDownload(); // Specifically allow downloading for 'myrep'
 // $config->findRepository("myrep")->disallowDownload(); // Specifically disallow downloading for 'myrep'
 
+// You can also choose the minimum directory level from which you'll allow downloading.
+// A value of zero will allow downloading from the root.  1 will allow downloding of directories
+// in the root, etc.
+//
+// If your project is arranged with trunk, tags and branches at the root level, then a value of 2 
+// would allow the downloading of directories within branches/tags while disallowing the download
+// of the entire branches or tags directories.  This would also stop downloading of the trunk, but
+// see after for path exceptions.
+//
+// Change the line below to set the download level across all your repositories.
+
+$config->setMinDownloadLevel(2);
+
+// To change the level for individual repositories, uncomment and replicate
+// the required line below (replacing 'myrep' for the name of the repository to be changed).
+
+// $config->findRepository("myrep")->setMinDownloadLevel(2); 
+
+// Finally, you may add or remove certain directories (and their contents) either globally
+// or on a per repository basis.  Uncomment and copy the following lines as necessary.  Note
+// that the these are searched in the order than you give them until a match is made (with the
+// exception that all the per repository exceptions are tested before the global ones).  This means
+// that you must disallow /a/b/c/ before you allow /a/b/ otherwise the allowed match on /a/b/ will
+// stop any further searching, thereby allowing downloads on /a/b/c/. 
+
+// Global exceptions possibilties:
+//
+// $config->addAllowedDownloadException("/path/to/allowed/directory/");
+// $config->addDisAllowedDownloadException("/path/to/disallowed/directory/");
+//
+// Per repository exception possibilties:
+//
+// $config->findRepository("myrep")->addAllowedDownloadException("/path/to/allowed/directory/");
+// $config->findRepository("myrep")->addDisAllowedDownloadException("/path/to/disallowed/directory/");
+
 // --- COLOURISATION ---
 
 // Uncomment this line if you want to use Enscript to colourise your file listings

@@ -169,6 +169,48 @@ class Authentication
       
       return $access == ALLOW;
    }
-}
+   
+   // hasUnrestrictedReadAccess
+   //
+   // Returns true if the user has read access to the given path and too
+   // all subfolders
+   
+   function hasUnrestrictedReadAccess($repos, $path)
+   {
+      // First make sure that we have full read access at this level
+      
+      if (!$this->hasReadAccess($repos, $path, false))
+         return false;
+         
+      // Now check to see if there is a sub folder that's protected
+      
+      $sections = $this->rights->getSections();
+      
+      foreach($sections As $section => $accessers)
+      {
+         $qualified = $repos.":".$path;
+         $len = strlen($qualified);
+         $access = UNDEFINED;
+         
+         if ($len < strlen($section) && strncmp($section, $qualified, strlen($qualified)) == 0)
+         {
+            $access = $this->inList($accessers, $this->user);
+         }
 
+         if ($access != DENY)
+         {
+            $len = strlen($path);
+            if ($len < strlen($section) && strncmp($section, $path, strlen($qualified)) == 0)
+            {
+               $access = $this->inList($accessers, $this->user);
+            }
+         }
+         
+         if ($access == DENY)
+            return false;
+      }
+      
+      return true;
+   }
+}
 ?>
