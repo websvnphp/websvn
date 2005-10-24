@@ -50,6 +50,7 @@ Class Repository
    var $ignoreWebSVNContentTypes;
    var $bugtraq;
    var $auth;
+   
    var $subversionMajorVersion = "";
    var $subversionMinorVersion = "";
    
@@ -204,6 +205,7 @@ Class Config
    
    // Other configuration items
    
+   var $treeView = true;
    var $serverIsWindows = false;
    var $cacheResults = false;
    var $multiViews = false;
@@ -600,6 +602,16 @@ Class Config
       }
    }
    
+   function useTreeView()
+   {
+      $this->treeView = true;
+   }
+   
+   function useFlatView()
+   {
+      $this->treeView = false;
+   }
+
    // setSubversionMajorVersion
    //
    // Set subversion major version

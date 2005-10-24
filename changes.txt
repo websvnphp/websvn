@@ -1,9 +1,12 @@
 CHANGES
 
-1.7 beta 2.1
+1.70 beta 3
+
+NEW: WebSVN may now be configured to display a flat view rather than a tree view
 
 FIX: Only use --limit option on svn  1.2 or greater
 FIX: Correct spelling of "danish" in distconfig
+FIX: Fix RSS, previously broken 1.7 beta 1
 
 1.70 beta 2
 

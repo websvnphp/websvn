@@ -63,11 +63,17 @@
 
 // --- LOOK AND FEEL ---
 //
-// Uncomment ONLY the display file that you want.  
+// Uncomment ONLY the template file that you want.  
 
 $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
 // $config->setTemplatePath("$locwebsvnreal/templates/Zinn/");
+
+// By default, WebSVN displays a tree view onto the current directory.  You can however
+// choose to display a flat view of the current directory only, which may make the display
+// load faster.  Uncomment this line if you want that.
+
+// $config->useFlatView();
 
 // --- LANGUAGE SETUP ---
 
