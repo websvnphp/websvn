@@ -80,7 +80,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/swedish.inc");
 // include("languages/dutch.inc");
 // include("languages/russian.inc");
-// include("languages/dansih.inc");
+// include("languages/danish.inc");
 // include("languages/finnish.inc");
 // include("languages/turkish.inc");
 // include("languages/norwegian.inc");
