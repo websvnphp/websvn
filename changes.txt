@@ -1,5 +1,9 @@
 CHANGES
 
+1.70 beta 4
+
+FIX: Diff had been broken by 1.70 beta 2
+
 1.70 beta 3
 
 NEW: WebSVN may now be configured to display a flat view rather than a tree view

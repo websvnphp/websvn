@@ -214,7 +214,7 @@ function characterData($parser, $data)
          if ($debugxml) print "Path name: '$data'\n";
          $curLog->curEntry->curMod->path .= $data;
          
-         if ($data == $curLog->path)
+         if ($data == $curLog->path && $curLog->curEntry->curMod->action == "A")
          {
             
             if ($debugxml) print "New path for comparison: '".$curLog->curEntry->curMod->copyfrom."'\n";
@@ -773,6 +773,7 @@ Class SVNRepository
       $info = "--verbose";
       if ($quiet)
          $info = "--quiet";
+
       $cmd = quoteCommand($config->svn." log --xml $info $revStr ".quote("file:///".$path), false);
       
       if ($handle = popen($cmd, "r"))
