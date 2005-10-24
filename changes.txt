@@ -2,6 +2,8 @@ CHANGES
 
 1.70 beta 4
 
+NEW: The log display may now be filtered to show a range of revisions
+
 FIX: Diff had been broken by 1.70 beta 2
 
 1.70 beta 3

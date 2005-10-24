@@ -11,10 +11,13 @@
    [websvn-endtest]
    
    <center>
-   [websvn:logsearch_form][lang:SEARCHLOG]: [websvn:logsearch_inputbox][websvn:logsearch_submit]
-   [websvn-test:logsearch_clearloglink]
-   <p><font size="-1">[websvn:logsearch_clearloglink]</font><p>
-   [websvn-endtest]
+   [websvn:logsearch_form]
+      <b>[lang:FILTER]</b><p>
+      [lang:STARTLOG]:[websvn:logsearch_startbox] [lang:ENDLOG]:[websvn:logsearch_endbox] [lang:SEARCHLOG]:[websvn:logsearch_inputbox]
+      [websvn:logsearch_submit]
+      [websvn-test:logsearch_clearloglink]
+         <p><font size="-1">[websvn:logsearch_clearloglink]</font><p>
+      [websvn-endtest]
    [websvn:logsearch_endform]
    </center>
    
@@ -22,6 +25,10 @@
       <center>[lang:NORESULTS]</center>
    [websvn-endtest]
    
+   [websvn-test:error]
+      <center>[websvn:error]</center>
+   [websvn-endtest]
+
    [websvn-test:logsearch_resultsfound]
       [websvn:compare_form]
          <table border=1 class="outlined" width="100%" cellpadding=2>
