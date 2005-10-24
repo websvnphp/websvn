@@ -93,8 +93,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
                $listing[$index]["filetype"] = "diropen";
             else
                $listing[$index]["filetype"] = "dir";
-   
-            if ($rep->getAllowDownload())
+
+            if ($rep->isDownloadAllowed($path.$file))
             {
                $dlurl = $config->getURL($rep, $path.$file, "dl"); 
                $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
@@ -345,9 +345,15 @@ if ($rep->getHideRss())
    $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">";
 }
 
-if ($rep->getAllowDownload())
-   $vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
+// Set up the tarball link
 
+$subs = explode("/", $path);
+$level = count($subs) - 2;
+if ($rep->isDownloadAllowed($path))
+   $vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
+else
+   $vars["curdirdllink"] = "";
+   
 $url = $config->getURL($rep, "", "comp");
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";

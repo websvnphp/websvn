@@ -3,8 +3,13 @@ CHANGES
 1.70 beta 4
 
 NEW: The log display may now be filtered to show a range of revisions
+NEW: You can now have control over the specification of directories that can or
+     cannot be tarball'ed.  Tarballing can be turned on only after a certain directory
+     depth and directories can be allow/disallowed on a per directory/repository basis.
 
 FIX: Diff had been broken by 1.70 beta 2
+FIX: Download of tarballs is prohibited if the user doesn't have read access to the directory
+     AND all of its subdirectories
 
 1.70 beta 3
 
