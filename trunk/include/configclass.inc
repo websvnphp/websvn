@@ -50,6 +50,8 @@ Class Repository
    var $ignoreWebSVNContentTypes;
    var $bugtraq;
    var $auth;
+   var $subversionMajorVersion = "";
+   var $subversionMinorVersion = "";
    
    function Repository($name, $path)
    {
@@ -193,6 +195,7 @@ Class Config
 
    var $svnlook = "svnlook";
    var $svn = "svn --non-interactive --config-dir /tmp";
+   var $svn_noparams = "svn"; 
    var $diff = "diff";
    var $enscript ="enscript";
    var $sed = "sed";
@@ -445,6 +448,7 @@ Class Config
    function setSVNCommandPath($path)
    {
       $this->setPath($this->svn, $path, "svn", "--non-interactive --config-dir /tmp");
+      $this->setPath($this->svn_noparams, $path, "svn");
       $this->setPath($this->svnlook, $path, "svnlook");
    }
    
@@ -594,6 +598,24 @@ Class Config
          echo "Unable to read authentication file '$file'";
          exit;
       }
+   }
+   
+   // setSubversionMajorVersion
+   //
+   // Set subversion major version
+   
+   function setSubversionMajorVersion($subversionMajorVersion)
+   {
+      $this->subversionMajorVersion = $subversionMajorVersion;
+   }
+
+   // setSubversionMinorVersion
+   //
+   // Set subversion minor version
+   
+   function setSubversionMinorVersion($subversionMinorVersion)
+   {
+      $this->subversionMinorVersion = $subversionMinorVersion;
    }
 }
 ?>

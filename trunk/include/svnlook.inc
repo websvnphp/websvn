@@ -764,8 +764,8 @@ Class SVNRepository
          $revStr = "-r$brev:$erev";
       else if ($brev)
          $revStr = "-r$brev:1";      
-      
-      if ($limit != 0)
+
+      if (($config->subversionMajorVersion > 1 || $config->subversionMinorVersion >=2) && $limit != 0)
          $revStr .= " --limit $limit";
          
       // Get the log info
@@ -796,6 +796,23 @@ Class SVNRepository
             
       xml_parser_free($xml_parser);
       return $curLog;
-   }  
+   }     
 }
+
+function initSvnVersion(&$major, &$minor)
+{
+   global $config;
+   
+   $ret = runCommand($config->svn_noparams." --version", false);
+
+   if (preg_match("~([0-9]?)\.([0-9]?)\.([0-9]?)~",$ret[0],$matches))
+   {
+      $major = $matches[1];
+      $minor = $matches[2];
+   }
+   
+   $config->setSubversionMajorVersion($major);
+   $config->setSubversionMinorVersion($minor);
+}
+
 ?>
