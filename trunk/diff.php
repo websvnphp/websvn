@@ -232,7 +232,7 @@ if ($prevrev)
                   case "+":
                      
                      // Try to mark "changed" line sensibly
-                     if (!empty($listing[$index-1]) && empty($listing[$index-1]["rev1lineno"]) && $listing[$index-1]["rev1diffclass"] == "diffdeleted" && $listing[$index-1]["rev2diffclass"] == "diff")
+                     if (!empty($listing[$index-1]) && empty($listing[$index-1]["rev1lineno"]) && @$listing[$index-1]["rev1diffclass"] == "diffdeleted" && @$listing[$index-1]["rev2diffclass"] == "diff")
                      {
                         $i = $index - 1;
                         while (!empty($listing[$i-1]) && empty($listing[$i-1]["rev1lineno"]) && $listing[$i-1]["rev1diffclass"] == "diffdeleted" && $listing[$i-1]["rev2diffclass"] == "diff")
