@@ -33,6 +33,7 @@ require_once("include/svnlook.inc");
 
 // Define the language array
 $lang = array();
+$langNames = array();
 
 // Include a default language file.
 require("languages/english.inc");
@@ -51,6 +52,33 @@ setlocale(LC_ALL, "");
 
 // Create the config
 $config = new Config;
+
+// Create the language choice list
+//$user_defaultLang = $lang["LANGUAGENAME"];
+//$user_defaultFile = "";
+
+if (0 && $handle = opendir('languages'))
+{
+    // Read the language name for each language.
+    while (false !== ($file = readdir($handle)))
+    {
+        if ($file{0} != ".")
+        {
+           require("languages/$file");
+           $langNames[] = $lang["LANGUAGENAME"];
+           if ($lang["LANGUAGENAME"] == $user_defaultLang)
+            $user_defaultFile = $file;
+        }
+    }
+
+    closedir($handle);
+    
+    // Reload the default language
+    if ($user_defaultFile != "")
+      require("languages/$user_defaultFile");
+    else
+      require("languages/english.inc");
+}
 
 // Set up the default character encodings
 if (function_exists("iconv_get_encoding"))

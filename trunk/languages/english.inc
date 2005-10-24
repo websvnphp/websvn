@@ -65,13 +65,17 @@ $lang["NEXT"] = "Next";
 $lang["SHOWALL"] = "Show All";
 
 $lang["BADCMD"] = "Error running this command";
+$lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;Projects";
 $lang["SERVER"] = "Subversion&nbsp;Server";
 
-$lang["SEARCHLOG"] = "Search log for";
-$lang["CLEARLOG"] = "Clear current search";
+$lang["FILTER"] = "Filtering Options";
+$lang["STARTLOG"] = "From rev";
+$lang["ENDLOG"] = "To rev";
+$lang["SEARCHLOG"] = "Search for";
+$lang["CLEARLOG"] = "Clear current filter";
 $lang["MORERESULTS"] = "Find more matches...";
 $lang["NORESULTS"] = "There are no logs matching your query";
 $lang["NOMORERESULTS"] = "There are no more logs matching your query";

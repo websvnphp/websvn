@@ -35,8 +35,9 @@ $isDir = (@$_REQUEST["isdir"] == 1)?1:0;
 $dosearch = (@$_REQUEST["logsearch"] == 1)?1:0;
 $search = trim(@$_REQUEST["search"]);
 $words = explode(" ", $search);
-
 $fromRev = (int)@$_REQUEST["fr"];
+$startrev = strtoupper(trim(@$_REQUEST["sr"]));
+$endrev = strtoupper(trim(@$_REQUEST["er"]));
 
 // Max number of results to find at a time
 $numSearchResults = 10;
@@ -114,166 +115,172 @@ else
 // We get the bugtraq variable just once based on the HEAD
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
-$history = $svnrep->getLog($path, $rev, 1, true, 0);
+if ($startrev != "HEAD") $startrev = (int)$startrev;
+if (empty($startrev)) $startrev = $rev;
+if (empty($endrev)) $endrev = 1;
 
-// Get the number of separate revisions
-$revisions = count($history->entries);
-
-if ($all)
-{
-   $firstrevindex = 0;
-   $lastrevindex = $revisions - 1;
-   $pages = 1;
-}
-else
-{
-   // Calculate the number of pages
-   $pages = floor($revisions / $maxperpage);
-   if (($revisions % $maxperpage) > 0) $pages++;
-   
-   if ($page > $pages) $page = $pages;
-   
-   // Word out where to start and stop
-   $firstrevindex = ($page - 1) * $maxperpage;
-   $lastrevindex = $firstrevindex + $maxperpage - 1;
-   if ($lastrevindex > $revisions - 1) $lastrevindex = $revisions - 1;
-}
-
-$history = $svnrep->getLog($path, $history->entries[$firstrevindex ]->rev,  $history->entries[$lastrevindex]->rev, false, 0);
-
-$row = 0;
-$index = 0;
-$listing = array();
-$found = false;
-
-foreach ($history->entries as $r)
-{
-   // Assume a good match
-   $match = true;
-   $thisrev = $r->rev;
-      
-   // Check the log for the search words, if searching
-   if ($dosearch)
-   {
-      if ((empty($fromRev) || $fromRev > $thisrev))
-      {
-         // Turn all the HTML entities into real characters.  
-         
-         if (version_compare(phpversion(), "4.1.0", "<"))
-            $msg = html_entity_decode($r->msg);
-         else
-            $msg = html_entity_decode($r->msg, ENT_COMPAT, $config->outputEnc);
-                  
-         // Make sure that each word in the search in also in the log
-         foreach($words as $word)
-         {
-            if (strpos(strtolower(removeAccents($msg)), $word) === false)
-            {
-               $match = false;
-               break;
-            }
-         }
-         
-         if ($match)
-         {
-            $numSearchResults--;
-            $found = true;
-         }
-      }
-      else
-         $match = false;
-   }
-   
-   if ($match)
-   {
-      // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
-      $rpath = $r->path;
-
-      if (empty($rpath))
-         $rpath = "/";
-      else if ($isDir && $rpath{strlen($rpath) - 1} != "/")
-         $rpath .= "/";
-   
-      // Find the parent path (or the whole path if it's already a directory)
-      $pos = strrpos($rpath, "/");
-      $parent = substr($rpath, 0, $pos + 1);
-   
-      $url = $config->getURL($rep, $parent, "dir");
-      $listing[$index]["revlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=1\">$thisrev</a>";
-   
-      if ($isDir)
-      {
-         $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@$thisrev\" onClick=\"checkCB(this)\">";
-         $url = $config->getURL($rep, $rpath, "dir"); 
-         $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=$showchanged\">$rpath</a>";
-      }
-      else
-      {
-         $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$rpath@$thisrev\" onClick=\"checkCB(this)\">";
-         $url = $config->getURL($rep, $rpath, "file"); 
-         $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=$showchanged\">$rpath</a>";
-      }
-      
-      $listing[$index]["revauthor"] = $r->author;
-      $listing[$index]["revage"] = $r->age;
-      $listing[$index]["revlog"] = nl2br($bugtraq->replaceIDs(create_anchors($r->msg)));
-      $listing[$index]["rowparity"] = "$row";
-      
-      $row = 1 - $row;
-      $index++;
-   }
-   
-   // If we've reached the search limit, stop here...
-   if (!$numSearchResults)
-   {
-      $url = $config->getURL($rep, $path, "log");
-      $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&amp;&sc=$showchanged&amp;isdir=$isDir&logsearch=1&search=$search&fr=$thisrev\">${lang["MORERESULTS"]}</a>";
-      break;
-   }
-   else
-      $vars["logsearch_moreresultslink"] = "";
-}
-
-$vars["logsearch_resultsfound"] = true;
-
-if ($dosearch && !$found)
-{
-   if ($fromRev == 0)
-   {
-      $vars["logsearch_nomatches"] = true;
-      $vars["logsearch_resultsfound"] = false;
-   }
-   else
-      $vars["logsearch_nomorematches"] = true;
-}
-else if ($dosearch && $numSearchResults > 0)
-{
-   $vars["logsearch_nomorematches"] = true;
-}
-
-// Work out the paging options
-
+$history = $svnrep->getLog($path, $startrev, $endrev, true, 0);
+$vars["logsearch_moreresultslink"] = "";
 $vars["pagelinks"] = "";
 $vars["showalllink"] = "";
+$listing = array();
 
-if ($pages > 1)
+if (!empty($history))
 {
-   $prev = $page - 1;
-   $next = $page + 1;
-   echo "<p><center>";
-      
-   if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&amp;sc=$showchanged&amp;page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
-   for ($p = 1; $p <= $pages; $p++)
-   {
-      if ($p != $page)
-         $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sc=$showchanged&amp;page=$p\">$p</a> "; 
-      else
-         $vars["pagelinks"] .= "<b>$p </b>";
-   }
-   if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sc=$showchanged&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
+   // Get the number of separate revisions
+   $revisions = count($history->entries);
    
-   $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sc=$showchanged&amp;all=1\">${lang["SHOWALL"]}</a>";
-   echo "</center>";
+   if ($all)
+   {
+      $firstrevindex = 0;
+      $lastrevindex = $revisions - 1;
+      $pages = 1;
+   }
+   else
+   {
+      // Calculate the number of pages
+      $pages = floor($revisions / $maxperpage);
+      if (($revisions % $maxperpage) > 0) $pages++;
+      
+      if ($page > $pages) $page = $pages;
+      
+      // Word out where to start and stop
+      $firstrevindex = ($page - 1) * $maxperpage;
+      $lastrevindex = $firstrevindex + $maxperpage - 1;
+      if ($lastrevindex > $revisions - 1) $lastrevindex = $revisions - 1;
+   }
+   
+   $history = $svnrep->getLog($path, $history->entries[$firstrevindex ]->rev,  $history->entries[$lastrevindex]->rev, false, 0);
+   
+   $row = 0;
+   $index = 0;
+   $listing = array();
+   $found = false;
+   
+   foreach ($history->entries as $r)
+   {
+      // Assume a good match
+      $match = true;
+      $thisrev = $r->rev;
+         
+      // Check the log for the search words, if searching
+      if ($dosearch)
+      {
+         if ((empty($fromRev) || $fromRev > $thisrev))
+         {
+            // Turn all the HTML entities into real characters.  
+            
+            if (version_compare(phpversion(), "4.1.0", "<"))
+               $msg = html_entity_decode($r->msg);
+            else
+               $msg = html_entity_decode($r->msg, ENT_COMPAT, $config->outputEnc);
+                     
+            // Make sure that each word in the search in also in the log
+            foreach($words as $word)
+            {
+               if (strpos(strtolower(removeAccents($msg)), $word) === false)
+               {
+                  $match = false;
+                  break;
+               }
+            }
+            
+            if ($match)
+            {
+               $numSearchResults--;
+               $found = true;
+            }
+         }
+         else
+            $match = false;
+      }
+      
+      if ($match)
+      {
+         // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
+         $rpath = $r->path;
+   
+         if (empty($rpath))
+            $rpath = "/";
+         else if ($isDir && $rpath{strlen($rpath) - 1} != "/")
+            $rpath .= "/";
+      
+         // Find the parent path (or the whole path if it's already a directory)
+         $pos = strrpos($rpath, "/");
+         $parent = substr($rpath, 0, $pos + 1);
+      
+         $url = $config->getURL($rep, $parent, "dir");
+         $listing[$index]["revlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=1\">$thisrev</a>";
+      
+         if ($isDir)
+         {
+            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@$thisrev\" onClick=\"checkCB(this)\">";
+            $url = $config->getURL($rep, $rpath, "dir"); 
+            $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=$showchanged\">$rpath</a>";
+         }
+         else
+         {
+            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$rpath@$thisrev\" onClick=\"checkCB(this)\">";
+            $url = $config->getURL($rep, $rpath, "file"); 
+            $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=$showchanged\">$rpath</a>";
+         }
+         
+         $listing[$index]["revauthor"] = $r->author;
+         $listing[$index]["revage"] = $r->age;
+         $listing[$index]["revlog"] = nl2br($bugtraq->replaceIDs(create_anchors($r->msg)));
+         $listing[$index]["rowparity"] = "$row";
+         
+         $row = 1 - $row;
+         $index++;
+      }
+      
+      // If we've reached the search limit, stop here...
+      if (!$numSearchResults)
+      {
+         $url = $config->getURL($rep, $path, "log");
+         $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&amp;&sc=$showchanged&amp;isdir=$isDir&logsearch=1&search=$search&fr=$thisrev\">${lang["MORERESULTS"]}</a>";
+         break;
+      }         
+   }
+   
+   $vars["logsearch_resultsfound"] = true;
+   
+   if ($dosearch && !$found)
+   {
+      if ($fromRev == 0)
+      {
+         $vars["logsearch_nomatches"] = true;
+         $vars["logsearch_resultsfound"] = false;
+      }
+      else
+         $vars["logsearch_nomorematches"] = true;
+   }
+   else if ($dosearch && $numSearchResults > 0)
+   {
+      $vars["logsearch_nomorematches"] = true;
+   }
+   
+   // Work out the paging options
+      
+   if ($pages > 1)
+   {
+      $prev = $page - 1;
+      $next = $page + 1;
+      echo "<p><center>";
+         
+      if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
+      for ($p = 1; $p <= $pages; $p++)
+      {
+         if ($p != $page)
+            $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;page=$p\">$p</a> "; 
+         else
+            $vars["pagelinks"] .= "<b>$p </b>";
+      }
+      if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
+      
+      $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;all=1\">${lang["SHOWALL"]}</a>";
+      echo "</center>";
+   }
 }
 
 // Create the project change combo box
@@ -281,6 +288,8 @@ if ($pages > 1)
 $url = $config->getURL($rep, $path, "log");
 $vars["logsearch_form"] = "<form action=\"$url\" method=\"post\" name=\"logsearchform\">";
 
+$vars["logsearch_startbox"] = "<input name=\"sr\" size=\"5\" value=\"$startrev\">";
+$vars["logsearch_endbox"  ] = "<input name=\"er\" size=\"5\" value=\"$endrev\">";
 $vars["logsearch_inputbox"] = "<input name=\"search\" value=\"$search\">";
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
@@ -291,13 +300,8 @@ $vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"
                              "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\">".
                              "</form>";   
 
-if ($search != "")
-{
-   $url = $config->getURL($rep, $path, "log");
-   $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
-}
-else
-   $vars["logsearch_clearloglink"] = "";
+$url = $config->getURL($rep, $path, "log");
+$vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
 
 $url = $config->getURL($rep, "", "comp");
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";

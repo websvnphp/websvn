@@ -216,6 +216,7 @@ repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
 curdirlinks - List of the path of this directory with links to each one
+error - Error message when results not available
 
 pagelinks - List of list to all the pages of the log
 showalllink - Link to show the entire log in one go
