@@ -86,12 +86,7 @@ function create_anchors($text)
 	$ret = preg_replace("#\b([\w\-_.]+)@([\w\-.]+)\b#i",
 	                    "<a href=\"mailto:\\1@\\2\">\\1@\\2</a>",
 	                    $ret);
-   
-   // Replace any usernames
-	$ret = preg_replace("#\[:nom:([^\]]*)\]#e",
-	                    "username(0, trim(\"\\1\"))",
-	                    $ret);
-   
+      
 	return ($ret);
 }
 

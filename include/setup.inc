@@ -28,7 +28,8 @@
 // User changes should be done in config.ini
 
 // Include the configuration class
-require("include/configclass.inc");
+require_once("include/configclass.inc");
+require_once("include/svnlook.inc");
 
 // Define the language array
 $lang = array();
@@ -263,6 +264,10 @@ $zipped = array ();
 // Get the user's personalised config
 
 require("config.inc");
+
+// Set up the version info
+
+initSvnVersion($major,$minor);
 
 // Make sure that the user has set up a repository
 
