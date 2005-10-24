@@ -55,11 +55,14 @@ function fileLink($path, $file, $returnjoin = false)
    }
 }
 
-function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
+function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $treeview = true)
 {
    global $rep, $passrev, $showchanged, $config, $lang;
 
    $path = "";
+
+   if (!$treeview)
+      $level = $limit;
 
    for ($n = 0; $n <= $level; $n++)
    {
@@ -132,7 +135,11 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
       
          $listing[$index]["isDir"] = $isDir;
       
-         $listing[$index]["level"] = $level;
+         if ($treeview)
+            $listing[$index]["level"] = $level;
+         else
+            $listing[$index]["level"] = 0;
+
          $listing[$index]["node"] = 0; // t-node
       
          $fileurl = $config->getURL($rep, $path.$file, "log");
@@ -161,7 +168,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
       }
    }
 
-   if ($last_index != 0)
+   if ($last_index != 0 && $treeview)
    {
       $listing[$last_index - 1]["node"] = 1; // l-node
    }
@@ -171,7 +178,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index)
 
 function showTreeDir($svnrep, $path, $rev, $listing)
 {
-   global $vars;
+   global $vars, $config;
 
    $subs = explode("/", $path);
 
@@ -185,7 +192,7 @@ function showTreeDir($svnrep, $path, $rev, $listing)
       $vars["last_i_node"][$n] = FALSE;
    }
 
-   return showDirFiles($svnrep, $subs, 0, $limit, $rev, $listing, 0);
+   return showDirFiles($svnrep, $subs, 0, $limit, $rev, $listing, 0, $config->treeView);
 
 }
 
