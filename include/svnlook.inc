@@ -741,7 +741,7 @@ Class SVNRepository
   
    function getLog($path, $brev = "", $erev = 1, $quiet = false, $limit = 2)
    {
-      global $config, $curLog;
+      global $config, $curLog, $vars, $lang;
       
       $xml_parser = xml_parser_create("UTF-8");
       xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
@@ -784,11 +784,20 @@ Class SVNRepository
    		   $line = fgets($handle);
             if (!xml_parse($xml_parser, $line, feof($handle)))
             {
-              die(sprintf("XML error: %s at line %d column %d byte %d<br>cmd: $cmd<nr>",
-                          xml_error_string(xml_get_error_code($xml_parser)),
-                          xml_get_current_line_number($xml_parser),
-                          xml_get_current_column_number($xml_parser),
-                          xml_get_current_byte_index($xml_parser)));
+               if (xml_get_error_code($xml_parser) != 5)
+               {               
+                  die(sprintf("XML error: %s (%d) at line %d column %d byte %d<br>cmd: $cmd<nr>",
+                              xml_error_string(xml_get_error_code($xml_parser)),
+                              xml_get_error_code($xml_parser),
+                              xml_get_current_line_number($xml_parser),
+                              xml_get_current_column_number($xml_parser),
+                              xml_get_current_byte_index($xml_parser)));
+               }
+               else
+               {
+                  $vars["error"] = $lang["UNKNOWNREVISION"];
+                  return 0;
+               }
             }
    		}
 		
