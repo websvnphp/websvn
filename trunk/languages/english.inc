@@ -23,6 +23,9 @@
 //
 // English language strings
 
+// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
+$lang["LANGUAGENAME"] = "English";
+
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
@@ -68,7 +71,7 @@ $lang["BADCMD"] = "Error running this command";
 $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Projects";
+$lang["PROJECTS"] = "Subversion&nbsp;Repositories";
 $lang["SERVER"] = "Subversion&nbsp;Server";
 
 $lang["FILTER"] = "Filtering Options";

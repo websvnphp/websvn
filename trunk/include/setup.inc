@@ -53,38 +53,10 @@ setlocale(LC_ALL, "");
 // Create the config
 $config = new Config;
 
-// Create the language choice list
-//$user_defaultLang = $lang["LANGUAGENAME"];
-//$user_defaultFile = "";
-
-if (0 && $handle = opendir('languages'))
-{
-    // Read the language name for each language.
-    while (false !== ($file = readdir($handle)))
-    {
-        if ($file{0} != ".")
-        {
-           require("languages/$file");
-           $langNames[] = $lang["LANGUAGENAME"];
-           if ($lang["LANGUAGENAME"] == $user_defaultLang)
-            $user_defaultFile = $file;
-        }
-    }
-
-    closedir($handle);
-    
-    // Reload the default language
-    if ($user_defaultFile != "")
-      require("languages/$user_defaultFile");
-    else
-      require("languages/english.inc");
-}
-
 // Set up the default character encodings
 if (function_exists("iconv_get_encoding"))
 {
   $config->setInputEncoding(iconv_get_encoding("input_encoding"));
-  $config->setOutputEncoding(iconv_get_encoding("input_encoding"));   
 }
 
 // Set up the default content-type extension handling
@@ -297,6 +269,75 @@ require("config.inc");
 
 initSvnVersion($major,$minor);
 
+// Get the language choice as defained as the default by config.inc
+$user_defaultLang = $lang["LANGUAGENAME"];
+
+// Override this with the user choice if there is one, and memorise the setting
+// as a cookie (since we don't have user accounts, we can't store the setting
+// anywhere else).  We try to memorise a permanant cookie and a per session cookie
+// in case the user's disabled permanant ones.
+
+if (!empty($_REQUEST["langchoice"]))
+{
+   $user_defaultLang = $_REQUEST["langchoice"];
+   setcookie("storedlang", $_REQUEST["langchoice"], time()+(3600*24*356*10), "/");
+   setcookie("storedsesslang", $_REQUEST["langchoice"]);
+}
+else // Try to read an existing cookie if there is one
+{
+   if (!empty($_COOKIE["storedlang"])) $user_defaultLang = $_COOKIE["storedlang"];
+   else if (!empty($_COOKIE["storedsesslang"])) $user_defaultLang = $_COOKIE["storedsesslang"];
+}
+   
+$user_defaultFile = "";
+if ($handle = opendir('languages'))
+{
+   // Read the language name for each language.
+   while (false !== ($file = readdir($handle)))
+   {
+      if ($file{0} != ".")
+      {
+         $lang["LANGUAGENAME"] = "";
+         require("languages/$file");
+         if ($lang["LANGUAGENAME"] != "")
+         {
+            $langNames[] = $lang["LANGUAGENAME"];
+            if ($lang["LANGUAGENAME"] == $user_defaultLang)
+               $user_defaultFile = $file;
+         }
+      }
+   }
+
+   closedir($handle);
+    
+   // Reload english to get untraslated strings
+   require("languages/english.inc");
+   
+   // Reload the default language
+   if ($user_defaultFile != "")
+      require("languages/$user_defaultFile");
+      
+   $url = getParameterisedSelfUrl(true);
+   $vars["lang_form"] = "<form action=\"$url\" method=\"post\" name=\"langform\">";
+   $vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";
+   
+   reset($langNames);
+   foreach ($langNames as $name)
+   {
+      $sel = "";
+      if ($name == $user_defaultLang) $sel = "selected";
+      $vars["lang_select"] .= "<option value=\"$name\" $sel>$name</option>";
+   }
+   
+   $vars["lang_select"] .= "</select>";
+   $vars["lang_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
+   $vars["lang_endform"] = "</form>";   
+}
+
+// Set up headers
+
+header("Content-type: text/html; charset=".$config->outputEnc);
+
 // Make sure that the user has set up a repository
 
 $reps = $config->getRepositories();
@@ -317,10 +358,7 @@ else
    
 // Retrieve other standard parameters
 
-if (version_compare(phpversion(), "4.1.0", "<"))
-   $path = html_entity_decode(@$_REQUEST["path"]);
-else
-   $path = html_entity_decode(@$_REQUEST["path"], ENT_COMPAT, $config->outputEnc);
+$path = @$_REQUEST["path"];
 
 $path = escapeshellcmd($path);
 $rev = (int)@$_REQUEST["rev"];
@@ -369,5 +407,11 @@ if ($rep)
    $vars["allowdownload"] = $rep->getAllowDownload();
    $vars["repname"] = $rep->name;
 }
+
+// As of version 1.70 the output encoding is forced to be UTF-8, since this is the output
+// encoding returned by svn log --xml.  This is good, since we are no longer reliant on PHP's
+// rudimentary conversions.
+
+$vars["charset"] = "UTF-8";
 
 ?>

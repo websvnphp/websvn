@@ -158,7 +158,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
    
          if (($level != $limit) && ($isDir))
          {
-            if (!strcmp(htmlentities($subs[$level + 1],ENT_QUOTES,$config->outputEnc)."/", $file))
+            if (!strcmp(htmlentities($subs[$level + 1],ENT_QUOTES)."/", $file))
             {
                $listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $listing, $index);
                $index = count($listing);
@@ -225,10 +225,11 @@ if (empty($rev))
 else
    $logrev = $rev;
 
-$log = $svnrep->getLogDetails($path, $logrev);
+$logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
+$logEntry = $logEntry->entries[0];
 
-$headlog = $svnrep->getLogDetails($path);
-$headrev = $headlog["rev"];
+$headlog = $svnrep->getLog("/", "", "", true, 1);
+$headrev = $headlog->entries[0]->rev;
 
 // If we're not looking at a specific revision, get the HEAD revision number
 // (the revision of the rest of the tree display)
@@ -262,9 +263,9 @@ $vars["action"] = "";
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 $vars["lastchangedrev"] = $logrev;
-$vars["date"] = $log['date'];
-$vars["author"] = $log['author'];
-$vars["log"] = nl2br($bugtraq->replaceIDs(create_anchors($log['message'])));
+$vars["date"] = $logEntry->date;
+$vars["author"] = $logEntry->author;
+$vars["log"] = nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg)));
 
 if (!$showchanged)
 {
@@ -278,41 +279,46 @@ else
 {
    $vars["showchangeslink"] = "";
    
-   $changes = $svnrep->getChangedFiles($logrev);
+   $changes = $logEntry->mods;
+   
+   $firstAdded = true;
+   $firstModded = true;
+   $firstDeleted = true;
 
-   $first = true;
    $vars["newfilesbr"] = "";
    $vars["newfiles"] = "";
-   foreach ($changes["added"] as $file)
-   {
-      if (!$first) $vars["newfilesbr"] .= "<br>";
-      $first = false;
-      $vars["newfilesbr"] .= fileLink("", $file);
-      $vars["newfiles"] .= " ".fileLink("", $file);
-   }
-      
-   $first = true;
    $vars["changedfilesbr"] = "";
    $vars["changedfiles"] = "";
-   foreach ($changes["updated"] as $file)
-   {
-      if (!$first) $vars["changedfilesbr"] .= "<br>";
-      $first = false;
-      $vars["changedfilesbr"] .= fileLink("", $file);
-      $vars["changedfiles"] .= " ".fileLink("", $file);
-   }
-
-   $first = true;
    $vars["deletedfilesbr"] = "";
    $vars["deletedfiles"] = "";
-   foreach ($changes["deleted"] as $file)
-   {
-      if (!$first) $vars["deletedfilesbr"] .= "<br>";
-      $first = false;
-      $vars["deletedfilesbr"] .= $file;
-      $vars["deletedfiles"] .= " ".$file;
-   }
 
+   foreach ($changes as $file)
+   {
+      switch ($file->action)
+      {
+         case "A":
+            if (!$firstAdded) $vars["newfilesbr"] .= "<br>";
+            $firstAdded = false;
+            $vars["newfilesbr"] .= fileLink("", $file->path);
+            $vars["newfiles"] .= " ".fileLink("", $file->path);
+            break;
+                     
+         case "M":
+            if (!$firstModded) $vars["changedfilesbr"] .= "<br>";
+            $firstModded = false;
+            $vars["changedfilesbr"] .= fileLink("", $file->path);
+            $vars["changedfiles"] .= " ".fileLink("", $file->path);
+            break;
+
+         case "D":
+            if (!$firstDeleted) $vars["deletedfilesbr"] .= "<br>";
+            $firstDeleted = false;
+            $vars["deletedfilesbr"] .= fileLink("", $file->path);
+            $vars["deletedfiles"] .= " ".fileLink("", $file->path);
+            break;
+      }
+   }
+      
    $vars["hidechangeslink"] = "<a href=\"${dirurl}rev=$passrev&amp;sc=0\">${lang["HIDECHANGED"]}</a>";
    
    $vars["hidechanges"] = false;

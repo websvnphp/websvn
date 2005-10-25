@@ -242,4 +242,43 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 
 	return $nbsp ? str_replace(" ", "&nbsp;", $text) : $text;
 }
+
+// getParameterisedSelfUrl
+//
+// Get the relative URL (PHP_SELF) with GET and POST data
+
+function getParameterisedSelfUrl($params = true)
+{
+   $url = basename($_SERVER['PHP_SELF']);
+   $sep = "?";
+
+   // Sometimes the .php isn't on the end.  Damn strange...
+
+   if (strchr($url, '.') === false)
+      $url .= ".php";
+
+   if ($params)
+   {
+     $arr = $_GET + $_POST;
+     while (list($k,$v) = each($arr))
+     {
+        if (is_array($v))
+        {
+           foreach ($v As $key => $value)
+           {
+              $url .= "$sep$k"."[".$key."]"."=$value";
+              $sep = "&";
+           }
+        }
+        else
+         $url .= "$sep$k=$v";
+
+        $sep = "&";
+     }
+   }
+
+   $url .= $sep;
+
+   return $url;
+}
 ?>

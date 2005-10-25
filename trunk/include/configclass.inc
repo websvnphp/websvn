@@ -300,7 +300,7 @@ Class Config
 
    // Default character encodings
    var $inputEnc = "";
-   var $outputEnc;
+   var $outputEnc = "UTF-8";
 
    var $quote = "'";
 
@@ -308,7 +308,6 @@ Class Config
    
    function Config()
    {
-      $this->setOutputEncoding("ISO-8859-1");
    }
    
    function addRepository($name, $path)
@@ -664,17 +663,6 @@ Class Config
    function setInputEncoding($enc)
    {
       $this->inputEnc = $enc;
-   }
-
-   function setOutputEncoding($enc)
-   {
-      global $vars;
-      
-      if ($enc != "")
-      {
-         $this->outputEnc = $enc;
-         $vars["charset"] = $enc;
-      }
    }
    
    // Tab expansion functions

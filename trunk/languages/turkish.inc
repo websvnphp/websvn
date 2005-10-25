@@ -24,6 +24,9 @@
 // Turkish language strings
 // by Barış Metin <baris@uludag.org.tr>
 
+// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
+$lang["LANGUAGENAME"] = "Turkish";
+
 $lang["LOG"] = "Kayıt";
 $lang["DIFF"] = "Fark";
 
