@@ -30,18 +30,18 @@ function replaceEntities($str)
    if (version_compare(phpversion(), "4.1.0", "<"))
       $str = htmlentities($str);
    else
-      $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
+      $str = htmlentities($str, ENT_COMPAT);
 
    return $str;
 }
 
-function transChars($str, $doEnt = true)
+function toOutputEncoding($str)
 {
    global $config;
    
    // Try to convert the messages based on the locale information
    if ($config->inputEnc && $config->outputEnc)
-   {
+   {     
       if (function_exists("iconv"))
       {
          $output = @iconv($config->inputEnc, $config->outputEnc, $str);
@@ -49,35 +49,26 @@ function transChars($str, $doEnt = true)
             $str = $output;
       }
    }
-   
-   if ($doEnt) $str = replaceEntities($str);
 
    return $str;
 }
 
-function transArray($arr)
+function toInputEncoding($str)
 {
    global $config;
    
-   $narr = array();
-   
-   foreach ($arr as $key => $value)
-   {
-      // Try to convert the messages based on the locale information
-      if ($config->inputEnc && $config->outputEnc)
+   // Try to convert the messages based on the locale information
+   if ($config->inputEnc && $config->outputEnc)
+   {     
+      if (function_exists("iconv"))
       {
-         if (function_exists("iconv"))
-         {
-            $output = @iconv($config->inputEnc, $config->outputEnc, $value);
-            if (!empty($output))
-               $value = $output;
-         }
+         $output = @iconv($config->outputEnc, $config->inputEnc, $str);
+         if (!empty($output))
+            $str = $output;
       }
-
-      $narr[$key] = replaceEntities(rtrim($value));
    }
-      
-   return $narr;
+
+   return $str;
 }
 
 function quoteCommand($cmd, $redirecterr)
@@ -117,7 +108,7 @@ function runCommand($cmd, $mayReturnNothing = false)
 		      $err = true;
 		   }
 		   $firstline = false;
-		   $output[] = transChars(rtrim($line));
+		   $output[] = toOutputEncoding(rtrim($line));
 		}
 		
 		pclose($handle);
@@ -131,7 +122,7 @@ function runCommand($cmd, $mayReturnNothing = false)
 
    $c = quoteCommand($cmd, true);
 
-   $output = transChars(shell_exec($c));
+   $output = toOutputEncoding(shell_exec($c));
    if (!empty($output)) print "<p>".nl2br($output);
    exit;
 }

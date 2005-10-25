@@ -23,6 +23,9 @@
 //
 // Swedish language strings
 
+// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
+$lang["LANGUAGENAME"] = "Swedish";
+
 $lang["LOG"] = "Logg";
 $lang["DIFF"] = "Skillnad";
 

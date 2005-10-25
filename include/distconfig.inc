@@ -77,6 +77,19 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // --- LANGUAGE SETUP ---
 
+// By default, WebSVN tries to use the iconv module (if enabled) to convert messages from your
+// system's character set to you default output encoding. If you find that your log messages aren't
+// displayed correctly then you'll need to change the values here.
+
+// $config->setInputEncoding("iso-8859-1");  // Encoding of log messages returned by svnlook on your system
+
+// Note for Windows users:  To enable iconv you'll need to enable the extension in your php.ini file 
+// AND copy iconv.dll (not php_iconv.dll) to your Windows system folder.  In most cases the correct
+// encoding is set when you call $config->setServerIsWindows();.  
+
+// Note for *nix users.  You'll need to have iconv compiled into your binary.  The default input and
+// output encodings are taken from your locale informations.  Override these if they aren't correct.
+
 // Uncomment ONLY the language file which you want.  If you want English then don't do anything here.
 //
 // include("languages/german.inc");
@@ -85,18 +98,20 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/portuguese.inc");
 // include("languages/swedish.inc");
 // include("languages/dutch.inc");
-// include("languages/russian.inc");
 // include("languages/danish.inc");
 // include("languages/finnish.inc");
 // include("languages/turkish.inc");
 // include("languages/norwegian.inc");
+
+// The following languages will only be available if the output encoding is set accordingly above.
+
+// include("languages/russian-win1251.inc");
 
 // include("languages/polish-iso8859-2.inc");
 // include("languages/polish-utf8.inc");
 // include("languages/polish-win1250.inc");
 
 // include("languages/japanese-euc.inc");  // (Almost Unix/Linux/BSD)
-// include("languages/japanese-jis.inc");  // (ISO-2022-JP)
 // include("languages/japanese-sjis.inc"); // (Windows)
 // include("languages/japanese-utf8.inc"); // (FedoraCore/Max OS X/BeOS)
 
@@ -105,21 +120,8 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // include("languages/tchinese.inc"); 
 // include("languages/tchinese-utf8.inc");
+
 // include("languages/schinese-utf8.inc");
-
-// By default, WebSVN tries to use the iconv module (if enabled) to convert log messages from your
-// system's character set to you default output encoding. If you find that your log messages aren't
-// displayed correctly then you'll need to change the values here.
-
-// $config->setInputEncoding("iso-8859-1");  // Encoding of log messages returned by svnlook on your system
-// $config->setOutputEncoding("iso-8859-1"); // Encoding of resulting web page
-
-// Note for Windows users:  To enable iconv you'll need to enable the extension in your php.ini file 
-// AND copy iconv.dll (not php_iconv.dll) to your Windows system folder.  In most cases the correct
-// encoding is set when you call $config->setServerIsWindows();.  
-
-// Note for *nix users.  You'll need to have iconv compiled into your binary.  The default input and
-// output encodings are taken from your locale informations.  Override these if they aren't correct.
 
 // --- MULTIVIEWS ---
 
