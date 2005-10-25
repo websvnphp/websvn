@@ -144,6 +144,11 @@ projects_submit - HTML <input> specification for the projects selection GO
 projects_endform - HTML </form> specification for the projects selection
                    box (includes hidden field declarations)
 
+lang_form - HTML <form> specification for the language selection box
+lang_select - HTML <select>...</select> specification for the language options
+lang_submit - HTML <input> specification for the language selection GO button
+lang_endform - HTML </form> specification for the language selection box
+
 noaccess - True if the user should be blocked from accessing this page due
            to insufficient access rights.
 

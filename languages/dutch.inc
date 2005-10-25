@@ -26,6 +26,9 @@
 // By David Gartner david A.T net2ftp D-O-T com
 // Comments welcome.
 
+// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
+$lang["LANGUAGENAME"] = "Dutch";
+
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 

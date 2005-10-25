@@ -23,8 +23,10 @@
 //
 // German language strings
 
-$lang["DIFF"] = "Diff";
+// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
+$lang["LANGUAGENAME"] = "German";
 
+$lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";

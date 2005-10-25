@@ -170,11 +170,6 @@ if (!empty($history))
          {
             // Turn all the HTML entities into real characters.  
             
-            if (version_compare(phpversion(), "4.1.0", "<"))
-               $msg = html_entity_decode($r->msg);
-            else
-               $msg = html_entity_decode($r->msg, ENT_COMPAT, $config->outputEnc);
-                     
             // Make sure that each word in the search in also in the log
             foreach($words as $word)
             {

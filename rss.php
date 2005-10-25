@@ -66,7 +66,8 @@ $url = $config->getURL($rep, $path, "log");
 $listurl = $config->getURL($rep, $path, "dir");
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $rev, "", true, 20);
+$history = $svnrep->getLog($path, $rev, "", false, 20);
+$youngest = $history->entries[0]->rev;
 
 // Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
 $cachename = strtr(getFullURL($listurl), ":/\\?", "____");
@@ -87,10 +88,8 @@ $rss->cssStyleSheet = ""; //required for UniversalFeedCreator since 1.7
 foreach ($history->entries as $r)
 {
    $thisrev = $r->rev;
-   
-   $log = $svnrep->getLogDetails($path, $r->rev);
-   $changes = $svnrep->getChangedFiles($r->rev);
-   $files = count($changes["added"]) + count($changes["deleted"]) + count($changes["updated"]);
+   $changes = $r->mods;
+   $files = count($changes);
 
    // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
    $rpath = $r->path;
@@ -103,7 +102,7 @@ foreach ($history->entries as $r)
  
    $url = $config->getURL($rep, $parent, "dir");
    
-   $desc = $log["message"];
+   $desc = $r->msg;
    $item = new FeedItem();
    
    // For the title, we show the first 10 words of the description
@@ -132,18 +131,31 @@ foreach ($history->entries as $r)
    
    $item->title = "$sdesc";
    $item->link = html_entity_decode(getFullURL($baseurl."${url}rev=$thisrev&amp;sc=$showchanged"));
-   $item->description = "<div><strong>${lang["REV"]} $thisrev - ${log["author"]}</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
-   if ($showchanged) {
-     foreach ($changes["added"] as $file) {
-       $item->description .= "+ $file<br>";
-     }
-     foreach ($changes["updated"] as $file) {
-       $item->description .= "~ $file<br>";
-     }
-     foreach ($changes["deleted"] as $file) {
-       $item->description .= "- $file<br>";
-     }
+   $item->description = "<div><strong>${lang["REV"]} $thisrev - ".$r->author."</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
+
+   if ($showchanged)
+   {
+      foreach ($changes as $file)
+      {
+         switch ($file->action)
+         {
+            case "A":
+               $item->description .= "+ ".$file->path."<br>";  
+               break;
+                                     
+            case "M":
+               $item->description .= "~ ".$file->path."<br>";  
+               break;
+                                     
+   
+            case "D":
+               $item->description .= "-".$file->path."<br>";  
+               break;
+                                     
+         }
+      }
    }
+
    $item->date = $r->committime;
    $item->author = $r->author;
      
