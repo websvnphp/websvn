@@ -23,46 +23,55 @@
 //
 // External command handling
 
-function replaceEntities($str)
+// replaceEntities
+//
+// Replace character codes with HTML entities for display purposes.
+// This routine assumes that the character encoding of the string is
+// that of the local system (i.e., it's a string returned from a command
+// line command).
+
+function replaceEntities($str, $rep)
 {
    global $config;
+   
+   // Ideally, we'd do this:
+   //
+   // $str = htmlentities($str, ENT_COMPAT, $config->inputEnc);
+   //
+   // However, htmlentities is very limited in it's ability to process
+   // character encodings.  We have to rely on something more powerful.
    
    if (version_compare(phpversion(), "4.1.0", "<"))
+   {
+      // In this case, we can't do any better than assume that the
+      // input encoding is ISO-8859-1.
+      
       $str = htmlentities($str);
-   else
-      $str = htmlentities($str, ENT_COMPAT);
-
-   return $str;
-}
-
-function toOutputEncoding($str)
-{
-   global $config;
-   
-   // Try to convert the messages based on the locale information
-   if ($config->inputEnc && $config->outputEnc)
-   {     
-      if (function_exists("iconv"))
-      {
-         $output = @iconv($config->inputEnc, $config->outputEnc, $str);
-         if (!empty($output))
-            $str = $output;
-      }
    }
+   else
+   {
+      $str = toOutputEncoding($str, $rep->getContentEncoding());
 
+      // $str is now encoded as UTF-8.
+      $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
+   }
+   
    return $str;
 }
 
-function toInputEncoding($str)
+function toOutputEncoding($str, $inputEncoding = "")
 {
    global $config;
+   
+   if (empty($inputEncoding))
+      $inputEncoding = $config->inputEnc;
    
    // Try to convert the messages based on the locale information
    if ($config->inputEnc && $config->outputEnc)
    {     
       if (function_exists("iconv"))
       {
-         $output = @iconv($config->outputEnc, $config->inputEnc, $str);
+         $output = @iconv($inputEncoding, $config->outputEnc, $str);
          if (!empty($output))
             $str = $output;
       }

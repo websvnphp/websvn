@@ -203,7 +203,7 @@ if (!isset($rep))
    exit;
 }
 
-$svnrep = new SVNRepository($rep->path);
+$svnrep = new SVNRepository($rep);
 
 // Revision info to pass along chain
 $passrev = $rev;

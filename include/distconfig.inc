@@ -77,11 +77,28 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // --- LANGUAGE SETUP ---
 
-// By default, WebSVN tries to use the iconv module (if enabled) to convert messages from your
-// system's character set to you default output encoding. If you find that your log messages aren't
-// displayed correctly then you'll need to change the values here.
+// WebSVN uses the iconv module to convert messages from your system's character set to the
+// UTF-8 output encoding. If you find that your log messages aren't displayed correctly then
+// you'll need to change the value here.
+//
+// You may also specify the character encoding of the repository contents if different from
+// the system encoding. This is typically the case for windows users, whereby the command
+// line returns, for example, CP850 encoded strings, whereas the source files are encoded
+// as iso-8859-1 by Windows based text editors.  When display text file, WebSVN will convert
+// them from the content encoding to the output encoding (UTF-8).
+//
+// WebSVN does its best to automate all this, so only use the following if it doesn't work
+// "out of the box". Uncomment and change one of the examples below.
+//
+// $config->setInputEncoding("CP850");  // Encoding of result returned by svn command line, etc.
+// $config->setInputEncoding("CP850", "iso-8859-1");  // A second parameter can be used to define
+                                                      // the default content encoding of all your
+                                                      // repositories
 
-// $config->setInputEncoding("iso-8859-1");  // Encoding of log messages returned by svnlook on your system
+// You may also specify a content encoding on a per repository basis.  Uncomment and copy this
+// line as necessary.
+//
+// $config->findRepository("myrep")->setContentEncoding("MyEnc"); 
 
 // Note for Windows users:  To enable iconv you'll need to enable the extension in your php.ini file 
 // AND copy iconv.dll (not php_iconv.dll) to your Windows system folder.  In most cases the correct

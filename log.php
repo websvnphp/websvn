@@ -82,7 +82,7 @@ if (!isset($rep))
    exit;
 }
 
-$svnrep = new SVNRepository($rep->path);
+$svnrep = new SVNRepository($rep);
 
 $passrev = $rev;
 

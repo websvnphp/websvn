@@ -29,7 +29,7 @@ require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
 
-$svnrep = new SVNRepository($rep->path);
+$svnrep = new SVNRepository($rep);
 
 function checkRevision($rev)
 {
@@ -49,7 +49,7 @@ function checkRevision($rev)
    return "HEAD";   
 }
 
-$svnrep = new SVNRepository($rep->path);
+$svnrep = new SVNRepository($rep);
 
 // Retrieve the request information
 $path1 = @$_REQUEST["compare"][0];
@@ -164,7 +164,7 @@ if (!$noinput)
          	      {
          	         case " ":
          	            $listing[$index]["diffclass"] = "diff";
-         	            $subline = replaceEntities(rtrim(substr($line, 1))); 
+         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as diff: $subline<br>";
@@ -172,7 +172,7 @@ if (!$noinput)
          	   
          	         case "+":
          	            $listing[$index]["diffclass"] = "diffadded";
-         	            $subline = replaceEntities(rtrim(substr($line, 1))); 
+         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as added: $subline<br>";
@@ -180,7 +180,7 @@ if (!$noinput)
          
          	         case "-":
          	            $listing[$index]["diffclass"] = "diffdeleted";
-         	            $subline = replaceEntities(rtrim(substr($line, 1))); 
+         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as removed: $subline<br>";

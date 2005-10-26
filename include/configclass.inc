@@ -53,6 +53,7 @@ Class Repository
    var $ignoreWebSVNContentTypes;
    var $bugtraq;
    var $auth;
+   var $contentEnc;
    
    var $subversionMajorVersion = "";
    var $subversionMinorVersion = "";
@@ -261,6 +262,23 @@ Class Repository
          
       return $config->bugtraq;
    }
+   
+   // Encodings
+   
+   function setContentEncoding($contentEnc)
+   {
+      $this->contentEnc = $contentEnc;
+   }
+
+   function getContentEncoding()
+   {
+      global $config;
+
+      if (isset($this->contentEnc))
+         return $this->contentEnc;
+         
+      return $config->contentEnc;
+   }
 }
 
 // The general configuration class
@@ -299,8 +317,9 @@ Class Config
    var $ignoreWebSVNContentTypes = false;
 
    // Default character encodings
-   var $inputEnc = "";
-   var $outputEnc = "UTF-8";
+   var $inputEnc = "";        // Encoding of output returned from command line
+   var $contentEnc = "";      // Encoding of repository content
+   var $outputEnc = "UTF-8";  // Encoding of web page.  Now forced to UTF-8
 
    var $quote = "'";
 
@@ -359,7 +378,9 @@ Class Config
       // Use the most sensible default value if that failed
       if ($cp == 0) $cp = 850;
          
-      $this->setInputEncoding("CP$cp");
+      // We assume, as a default, that the encoding of the repository contents is
+      // in iso-8859-1, to be compatible with compilers and the like.
+      $this->setInputEncoding("CP$cp", "iso-8859-1");
       
       // On Windows machines, use double quotes around command line parameters
       
@@ -660,9 +681,14 @@ Class Config
    
    // Encoding functions
    
-   function setInputEncoding($enc)
+   function setInputEncoding($systemEnc, $contentEnc = "")
    {
-      $this->inputEnc = $enc;
+      $this->inputEnc = $systemEnc;
+      
+      if ($contentEnc == "")
+         $this->contentEnc = $systemEnc;
+      else
+         $this->contentEnc = $contentEnc;
    }
    
    // Tab expansion functions

@@ -35,7 +35,7 @@ if (!isset($rep))
    exit;
 }
 
-$svnrep = new SVNRepository($rep->path);
+$svnrep = new SVNRepository($rep);
 
 if ($path{0} != "/")
    $ppath = "/".$path;
