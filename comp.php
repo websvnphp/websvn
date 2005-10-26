@@ -341,8 +341,7 @@ if (!$noinput)
 
 $vars["version"] = $version;
 
-if (!empty($config->auth) &&
-      (!$config->auth->hasReadAccess($rep->name, $path1, false) || !$config->auth->hasReadAccess($rep->name, $path2, false)))
+if (!$rep->hasReadAccess($path1, false) || !$rep->hasReadAccess($path2, false))
    $vars["noaccess"] = true;
 
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);

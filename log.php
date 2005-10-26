@@ -320,7 +320,7 @@ $vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><i
 
 $vars["version"] = $version;
 
-if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, false))
+if (!$rep->hasReadAccess($rep, $path, false))
    $vars["noaccess"] = true;
 
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
