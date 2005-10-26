@@ -359,8 +359,6 @@ else
 // Retrieve other standard parameters
 
 $path = @$_REQUEST["path"];
-
-$path = escapeshellcmd($path);
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 

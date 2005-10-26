@@ -41,7 +41,7 @@ if (!isset($rep))
    exit;
 }
 
-$svnrep = new SVNRepository($rep->path);
+$svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", true);
@@ -147,7 +147,7 @@ if ($prevrev)
                   $nl = fgets($ofile);
                   
                   if ($ent)
-                     $line = replaceEntities(rtrim($nl));
+                     $line = replaceEntities(rtrim($nl), $rep);
                   else
                      $line = rtrim($nl);
                      
@@ -163,7 +163,7 @@ if ($prevrev)
                   $nl = fgets($nfile);
 
                   if ($ent)
-                     $line = replaceEntities(rtrim($nl));
+                     $line = replaceEntities(rtrim($nl), $rep);
                   else
                      $line = rtrim($nl);
                      
@@ -203,7 +203,7 @@ if ($prevrev)
                $mod = $line{0};
 
                if ($ent)
-                  $line = replaceEntities(rtrim(substr($line, 1)));
+                  $line = replaceEntities(rtrim(substr($line, 1)), $rep);
                else
                   $line = rtrim(substr($line, 1));
                   
@@ -300,7 +300,7 @@ if ($prevrev)
             $listing[$index]["rev2diffclass"] = "diff";
                   
             if ($ent)
-               $line = replaceEntities(rtrim(fgets($ofile)));
+               $line = replaceEntities(rtrim(fgets($ofile)), $rep);
             else
                $line = rtrim(fgets($ofile));
 
@@ -310,7 +310,7 @@ if ($prevrev)
                $listing[$index]["rev1line"] = "&nbsp;";
                
             if ($ent)
-               $line = replaceEntities(rtrim(fgets($nfile)));
+               $line = replaceEntities(rtrim(fgets($nfile)), $rep);
             else
                $line = rtrim(fgets($nfile));
 

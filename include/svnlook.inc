@@ -296,11 +296,11 @@ function encodepath($uri)
 
 Class SVNRepository
 {
-   var $repPath;
+   var $repConfig;
    
-   function SVNRepository($repPath)
+   function SVNRepository($repConfig)
    {
-      $this->repPath = $repPath;
+      $this->repConfig = $repConfig;
    }
    
    function dirContents($path, $rev = 0)
@@ -313,12 +313,12 @@ Class SVNRepository
            
       if ($rev == 0)
       {
-         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
+         $head = runCommand($config->svnlook." youngest ".quote($this->repConfig->path));
          settype($head[0], "integer");
          $rev = $head[0];
       }
       
-      $path = encodepath($this->repPath.$path);
+      $path = encodepath($this->repConfig->path.$path);
       $output = runCommand($config->svn." list $revstr ".quote("file:///".$path), true);
       
       foreach ($output as $entry)
@@ -346,7 +346,7 @@ Class SVNRepository
       // If there's no filename, we'll just deliver the contents as it is to the user
       if ($filename == "")
       {
-         $path = encodepath($this->repPath.$path);
+         $path = encodepath($this->repConfig->path.$path);
          passthru($config->svn." cat $revstr file:///".rawurlencode($path)." $pipe");
          return;
       }
@@ -359,7 +359,7 @@ Class SVNRepository
       if ($l == "php")
       {         
          // Output the file to the filename
-         $path = encodepath($this->repPath.$path);
+         $path = encodepath($this->repConfig->path.$path);
          $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
          @exec($cmd);
          
@@ -396,7 +396,7 @@ Class SVNRepository
             // Note that the sec command returns only the part of the file between <PRE> and </PRE>.
             // It's complicated because it's designed not to return those lines themselves.
          
-            $path = encodepath($this->repPath.$path);
+            $path = encodepath($this->repConfig->path.$path);
             $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." | ".
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
@@ -405,7 +405,7 @@ Class SVNRepository
          }
          else
          {
-            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
             $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
             @exec($cmd);
          }
@@ -434,7 +434,7 @@ Class SVNRepository
          $tmp = tempnam("temp", "wsvn");
          
          // Output the file to a temporary file
-         $path = encodepath($this->repPath.$path);
+         $path = encodepath($this->repConfig->path.$path);
          $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $tmp", false);
          @exec($cmd);
          highlight_file($tmp);
@@ -444,7 +444,7 @@ Class SVNRepository
       {  
          if ($config->useEnscript)
          {
-            $path = encodepath($this->repPath.$path);
+            $path = encodepath($this->repConfig->path.$path);
             $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." | ".
                                 $config->enscript." --language=html ".
  								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
@@ -455,7 +455,7 @@ Class SVNRepository
          }
          else
          {
-            $path = encodepath($this->repPath.$path);
+            $path = encodepath($this->repConfig->path.$path);
             $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." 2>&1", false);
             
             if (!($result = popen($cmd, "r")))
@@ -470,7 +470,7 @@ Class SVNRepository
    		while (!feof($result))
    		{
    		   $line = fgets($result, 1024);
-   		   if ($pre) $line = replaceEntities($line);
+   		   if ($pre) $line = replaceEntities($line, $this->repConfig);
    		   
    		   print hardspace($line);
    		}
@@ -492,7 +492,7 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = encodepath($this->repPath.$path);
+      $path = encodepath($this->repConfig->path.$path);
       $cmd = quoteCommand($config->svn." blame $revstr ".quote("file:///".$path)." > $filename", false);
       
       @exec($cmd);
@@ -504,7 +504,7 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = encodepath($this->repPath.$path);
+      $path = encodepath($this->repConfig->path.$path);
       $ret = runCommand($config->svn." propget $property $revstr ".quote("file:///".$path), true);
       
       // Remove the surplus newline
@@ -524,7 +524,7 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = encodepath($this->repPath.$path);
+      $path = encodepath($this->repConfig->path.$path);
       $cmd = quoteCommand($config->svn." export $revstr ".quote("file:///".$path)." $filename", false);
 
       @exec($cmd);
@@ -560,7 +560,7 @@ Class SVNRepository
          $revStr .= " --limit $limit";
          
       // Get the log info
-      $path = encodepath($this->repPath.$path);
+      $path = encodepath($this->repConfig->path.$path);
       $info = "--verbose";
       if ($quiet)
          $info = "--quiet";
