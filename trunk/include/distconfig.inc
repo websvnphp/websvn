@@ -143,7 +143,12 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // to the WebSVN (or wsvn) directory as you have for Subversion itself.  More information can be 
 // found in install.txt
 
-// $config->useAuthenticationFile("/path/to/accessfile");
+// $config->useAuthenticationFile("/path/to/accessfile"); // Global access file
+
+// You may also specify a per repository access file by uncommenting and copying the following
+// line as necessary.
+
+// $config->findRepository("myrep")->useAuthenticationFile("/path/to/accessfile"); 
 
 // --- FILE CONTENT ---
 //

@@ -375,7 +375,7 @@ function createProjectSelectionForm()
    
    foreach ($reps as $trep)
    {
-      if (empty($config->auth) || $config->auth->hasReadAccess($trep->name, "/", true))
+      if ($trep->hasReadAccess("/", true))
       {
          if ($rep->name == $trep->name)
             $sel = "selected";

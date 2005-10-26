@@ -2,6 +2,8 @@ CHANGES
 
 1.7 beta 5
 
+NEW: Access rights files can now be specified on a per repository basis
+
 CHANGE: Further improvements have been made to character encoding handling.  In particular,
         it is now possible to specify the encoding of the repository contents separately 
         from the system encoding.  This is the case for windows users, whereby the command
@@ -18,6 +20,7 @@ FIX: Correct problem with download of tarballs containing special characters
 FIX: Improve time display
 FIX: Remove non-UTF8 language options from distconfig.inc
 FIX: Fix recent bug whereby the log messages would contain unnecessary blank lines
+FIX: Access right file section groups without a trailing / are no correctly treated
 
 1.70 beta 4
 

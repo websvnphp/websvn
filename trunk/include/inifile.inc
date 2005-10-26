@@ -45,6 +45,16 @@ class IniFile
                if ($str{0} == '[') // Found a section name heading
                {
                   $cursection = strtolower(substr($str, 1, strlen($str) - 2));
+
+                  if (($str{strlen($str) - 2} == "/") || ($str == "[groups]"))
+                  {
+                     $cursection = strtolower(substr($str, 1, strlen($str) - 2));
+                  }
+                  else
+                  {
+                     $cursection = strtolower(substr($str, 1, strlen($str) - 2))."/";
+                  }
+
                   $first = true;
                }
                else

@@ -150,7 +150,7 @@ Class Repository
          return false;
       
       // Check with access module
-      if (!empty($config->auth) && !$config->auth->hasUnrestrictedReadAccess($this->name, $path))
+      if (!$this->hasUnrestrictedReadAccess($path))
          return false;
          
       $subs = explode("/", $path);
@@ -279,6 +279,53 @@ Class Repository
          
       return $config->contentEnc;
    }
+   
+   function useAuthenticationFile($file)
+   {
+      if (is_readable($file))
+         $this->auth = new Authentication($file);
+      else
+      {
+         echo "Unable to read authentication file '$file'";
+         exit;
+      }
+   }
+
+   function hasReadAccess($path, $checkSubFolders = false)
+   {
+      global $config;
+
+      if (isset($this->auth))
+         $a = $this->auth;
+      else
+         $a = $config->auth;
+         
+      if (!empty($a))
+      {
+         return $a->hasReadAccess($this->name, $path, $checkSubFolders);
+      }
+      
+      // No auth file - free access...
+      return true;
+   }
+
+   function hasUnrestrictedReadAccess($path)
+   {
+      global $config;
+
+      if (isset($this->auth))
+         $a = $this->auth;
+      else
+         $a = $config->auth;
+         
+      if (!empty($a))
+      {
+         return $a->hasUnrestrictedReadAccess($this->name, $path);
+      }
+      
+      // No auth file - free access...
+      return true;
+   }
 }
 
 // The general configuration class
@@ -310,7 +357,8 @@ Class Config
    var $rss = true;
    var $spaces = 8;
    var $bugtraq = false;
-  
+   var $auth = "";
+     
    var $templatePath = "./templates/Standard/";
 
    var $ignoreSvnMimeTypes = false;
