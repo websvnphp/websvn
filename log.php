@@ -38,9 +38,10 @@ $words = explode(" ", $search);
 $fromRev = (int)@$_REQUEST["fr"];
 $startrev = strtoupper(trim(@$_REQUEST["sr"]));
 $endrev = strtoupper(trim(@$_REQUEST["er"]));
+$max = @$_REQUEST["max"];
 
 // Max number of results to find at a time
-$numSearchResults = 10;
+$numSearchResults = 15;
 
 if ($search == "")
    $dosearch = false;   
@@ -119,7 +120,20 @@ if ($startrev != "HEAD") $startrev = (int)$startrev;
 if (empty($startrev)) $startrev = $rev;
 if (empty($endrev)) $endrev = 1;
 
-$history = $svnrep->getLog($path, $startrev, $endrev, true, 0);
+if (empty($_REQUEST["max"]))
+{
+   if (empty($_REQUEST["logsearch"]))
+      $max = 30;
+   else
+      $max = 0;
+}
+else
+{
+   $max = (int)$max;
+   if ($max < 0) $max = 30;
+}
+
+$history = $svnrep->getLog($path, $startrev, $endrev, true, $max);
 $vars["logsearch_moreresultslink"] = "";
 $vars["pagelinks"] = "";
 $vars["showalllink"] = "";
@@ -285,6 +299,7 @@ $vars["logsearch_form"] = "<form action=\"$url\" method=\"post\" name=\"logsearc
 
 $vars["logsearch_startbox"] = "<input name=\"sr\" size=\"5\" value=\"$startrev\">";
 $vars["logsearch_endbox"  ] = "<input name=\"er\" size=\"5\" value=\"$endrev\">";
+$vars["logsearch_maxbox"  ] = "<input name=\"max\" size=\"5\" value=\"".($max==0?"":$max)."\">";
 $vars["logsearch_inputbox"] = "<input name=\"search\" value=\"$search\">";
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
