@@ -77,6 +77,7 @@ $lang["SERVER"] = "Subversion&nbsp;Server";
 $lang["FILTER"] = "Filtering Options";
 $lang["STARTLOG"] = "From rev";
 $lang["ENDLOG"] = "To rev";
+$lang["MAXLOG"] = "Max revs";
 $lang["SEARCHLOG"] = "Search for";
 $lang["CLEARLOG"] = "Clear current filter";
 $lang["MORERESULTS"] = "Find more matches...";

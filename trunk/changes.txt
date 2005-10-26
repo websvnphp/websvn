@@ -9,7 +9,15 @@ CHANGE: Further improvements have been made to character encoding handling.  In 
         encoded as iso-8859-1.  Now, when displaying text files, WebSVN will convert them
         from the content encoding to the output encoding (UTF-8).
 
+CHANGE: Update Danish translation
+CHANGE: The log display has a "max number of revisions to show" fiter option, which defaults
+        to 30.  This significantly improves performance of the log display.
+
 FIX: It wasn't possible to display the contents of a file which had brackets in the name.
+FIX: Correct problem with download of tarballs containing special characters
+FIX: Improve time display
+FIX: Remove non-UTF8 language options from distconfig.inc
+FIX: Fix recent bug whereby the log messages would contain unnecessary blank lines
 
 1.70 beta 4
 

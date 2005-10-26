@@ -32,7 +32,7 @@ require_once("include/utils.inc");
 // --- Classes for retaining log information ---
 //
 
-$debugxml = false;;
+$debugxml = false;
 
 Class SVNMod
 {
@@ -151,7 +151,7 @@ function startElement($parser, $name, $attrs)
 
 function endElement($parser, $name) 
 {
-    global $curLog, $debugxml;
+    global $curLog, $debugxml, $curTag;
 
     switch ($name)
     {
@@ -163,6 +163,11 @@ function endElement($parser, $name)
       case "PATH":
          if ($debugxml) print "Ending path\n";
          $curLog->curEntry->mods[] = $curLog->curEntry->curMod;
+         break;
+
+      case "MSG":
+         $curLog->curEntry->msg = trim($curLog->curEntry->msg);
+         if ($debugxml) print "Completed msg = '".$curLog->curEntry->msg."'\n";
          break;
     }
     
@@ -187,6 +192,12 @@ function characterData($parser, $data)
          if (empty($data)) return;
          
          sscanf($data, "%d-%d-%dT%d:%d:%d.", $y, $mo, $d, $h, $m, $s);
+         
+         $mo = substr("00".$mo, -2);
+         $d =  substr("00".$d, -2);
+         $h =  substr("00".$h, -2);
+         $m =  substr("00".$m, -2);
+         $s =  substr("00".$s, -2);
          
          $curLog->curEntry->date = "$y-$mo-$d $h:$m:$s";
                   

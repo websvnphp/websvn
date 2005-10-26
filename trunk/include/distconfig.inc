@@ -107,7 +107,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // Note for *nix users.  You'll need to have iconv compiled into your binary.  The default input and
 // output encodings are taken from your locale informations.  Override these if they aren't correct.
 
-// Uncomment ONLY the language file which you want.  If you want English then don't do anything here.
+// Uncomment the default language.  If you want English then don't do anything here.
 //
 // include("languages/german.inc");
 // include("languages/french.inc");
@@ -119,26 +119,11 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/finnish.inc");
 // include("languages/turkish.inc");
 // include("languages/norwegian.inc");
-
-// The following languages will only be available if the output encoding is set accordingly above.
-
-// include("languages/russian-win1251.inc");
-
-// include("languages/polish-iso8859-2.inc");
-// include("languages/polish-utf8.inc");
-// include("languages/polish-win1250.inc");
-
-// include("languages/japanese-euc.inc");  // (Almost Unix/Linux/BSD)
-// include("languages/japanese-sjis.inc"); // (Windows)
-// include("languages/japanese-utf8.inc"); // (FedoraCore/Max OS X/BeOS)
-
-// include("languages/korean-euc.inc"); 
-// include("languages/korean-utf8.inc");
-
-// include("languages/tchinese.inc"); 
-// include("languages/tchinese-utf8.inc");
-
-// include("languages/schinese-utf8.inc");
+// include("languages/polish.inc");
+// include("languages/japanese.inc");
+// include("languages/korean.inc");
+// include("languages/tchinese.inc");
+// include("languages/schinese.inc");
 
 // --- MULTIVIEWS ---
 
@@ -299,7 +284,7 @@ $config->setMinDownloadLevel(2);
 
 // --- MISCELLANOUS ---
 
-// Uncomment this if you don't have the right to use it.  Be warned that you may need it however!
+// Comment out this if you don't have the right to use it.  Be warned that you may need it however!
 set_time_limit(0);
 
 // Comment this line to turn off caching of repo information.  This will slow down your browsing.
