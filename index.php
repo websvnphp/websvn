@@ -37,7 +37,7 @@ $i = 0;
 $listing = array ();
 foreach ($projects as $project)
 {
-   if (empty($config->auth) || $config->auth->hasReadAccess($project->name, "/", true))
+   if ($rep->hasReadAccess("/", true))
    {
       $url = $config->getURL($project, "/", "dir");
    

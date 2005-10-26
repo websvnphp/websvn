@@ -75,7 +75,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
    $loop = 0;
    $last_index = 0;
    $openDir = false;
-   $fullaccess = (empty($config->auth) || $config->auth->hasReadAccess($rep->name, $path, false));
+   $fullaccess = $rep->hasReadAccess($path, false);
    
    foreach($contents as $file)
    {
@@ -84,7 +84,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 
       if ($isDir)
       {
-         if (empty($config->auth) || $config->auth->hasReadAccess($rep->name, $path.$file, true))
+         if ($rep->hasReadAccess($path.$file, true))
          {
             $access = true;
             $openDir = (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file));
@@ -370,10 +370,10 @@ $listing = showTreeDir($svnrep, $path, $rev, $listing);
 
 $vars["version"] = $version;
 
-if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, true))
+if (!$rep->hasReadAccess($path, true))
    $vars["noaccess"] = true;
 
-if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, false))
+if (!$rep->hasReadAccess($path, false))
    $vars["restricted"] = true;
 
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);

@@ -119,7 +119,7 @@ unlink($tbname);
 
 $vars["version"] = $version;
 
-if (!empty($config->auth) && !$config->auth->hasReadAccess($rep->name, $path, false))
+if (!$rep->hasReadAccess($path, false))
    $vars["noaccess"] = true;
 
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
