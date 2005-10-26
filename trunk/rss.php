@@ -51,7 +51,7 @@ else
       $baseurl = "/";
 }
 
-$svnrep = new SVNRepository($rep->path);
+$svnrep = new SVNRepository($rep);
 
 if ($path == "" || $path{0} != "/")
    $ppath = "/".$path;

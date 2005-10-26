@@ -1,5 +1,16 @@
 CHANGES
 
+1.7 beta 5
+
+CHANGE: Further improvements have been made to character encoding handling.  In particular,
+        it is now possible to specify the encoding of the repository contents separately 
+        from the system encoding.  This is the case for windows users, whereby the command
+        line tools typically returning CP850 encoded strings, whereas the source files are
+        encoded as iso-8859-1.  Now, when displaying text files, WebSVN will convert them
+        from the content encoding to the output encoding (UTF-8).
+
+FIX: It wasn't possible to display the contents of a file which had brackets in the name.
+
 1.70 beta 4
 
 NEW: The log display may now be filtered to show a range of revisions

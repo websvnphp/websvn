@@ -31,7 +31,7 @@ require_once("include/template.inc");
 
 $vars["action"] = $lang["BLAME"];
 
-$svnrep = new SVNRepository($rep->path);
+$svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", true);
@@ -95,7 +95,7 @@ if ($file = fopen($tfname, "r"))
             $listing[$index]["author"] = $author;
             
             if ($ent)
-               $line = replaceEntities(rtrim(fgets($file)));
+               $line = replaceEntities(rtrim(fgets($file)), $rep);
             else
                $line = rtrim(fgets($file));
 
