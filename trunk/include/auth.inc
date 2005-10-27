@@ -23,7 +23,7 @@
 //
 // Handle reading and interpretation of an SVN auth file
 
-require_once("include/inifile.inc");
+require_once("include/accessfile.inc");
 
 define("UNDEFINED", 0);
 define("ALLOW", 1);
