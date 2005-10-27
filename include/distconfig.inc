@@ -52,12 +52,19 @@
 // them by hand, in which case you can give each one the name of your choice, or you use the
 // parent path function, in which case the name of the directory is used as the repository name.
 //
-// To configure the repositories by hand, copy the line below, uncomment it and replace the name and path
+// Performance is much better on local repositories (e.g. accessed by file:///).  However, you
+// can also provide an interface onto a remote repository.  In this case you should supply the 
+// username and password needed to access it.
 //
-// $config->addRepository("NameToDisplay", "Path/to/repository (e.g. c:\\svn\\proj)");
+// To configure the repositories by hand, copy the appropriate line below, uncomment it and
+// replace the name and URL of your repository.
+//
+// $config->addRepository("NameToDisplay", "URL to repository (e.g. file:///c:/svn/proj)");
+// $config->addRepository("NameToDisplay", "URL (e.g. http://path/to/rep)", "username", "password");
 //
 // To use the parent path method, uncomment the newt line and and replace the path with your one.  You
-// can call the function several times if you have several parent paths.
+// can call the function several times if you have several parent paths.  Note that in this case the
+// path is a filesystem path
 //
 // $config->parentPath("Path/to/parent (e.g. c:\\svn)");
 
