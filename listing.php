@@ -318,8 +318,8 @@ else
          case "D":
             if (!$firstDeleted) $vars["deletedfilesbr"] .= "<br>";
             $firstDeleted = false;
-            $vars["deletedfilesbr"] .= fileLink("", $file->path);
-            $vars["deletedfiles"] .= " ".fileLink("", $file->path);
+            $vars["deletedfilesbr"] .= $file->path;
+            $vars["deletedfiles"] .= " ".$file->path;
             break;
       }
    }

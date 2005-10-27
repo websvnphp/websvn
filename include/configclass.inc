@@ -57,10 +57,7 @@ Class Repository
    var $bugtraq;
    var $auth;
    var $contentEnc;
-   
-   var $subversionMajorVersion = "";
-   var $subversionMinorVersion = "";
-   
+      
    function Repository($name, $svnName, $path, $username = "", $password = "")
    {
       $this->name = $name;
@@ -377,6 +374,9 @@ Class Config
 
    var $ignoreSvnMimeTypes = false;
    var $ignoreWebSVNContentTypes = false;
+
+   var $subversionMajorVersion = "";
+   var $subversionMinorVersion = "";
 
    // Default character encodings
    var $inputEnc = "";        // Encoding of output returned from command line
