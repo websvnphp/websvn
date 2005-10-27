@@ -1,5 +1,14 @@
 CHANGES
 
+1.7 beta 6
+
+Note: the $config->addRepository command now takes a URL and not a filesystem path!
+
+NEW: WebSVN can now host remote repositories!
+
+FIX: The access rights handling didn't work if you had give a repository a display name
+     different from it's "real" svn name.
+
 1.7 beta 5
 
 NEW: Access rights files can now be specified on a per repository basis

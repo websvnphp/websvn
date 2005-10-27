@@ -39,7 +39,10 @@ function cmpReps($a, $b)
 Class Repository
 {
    var $name;
+   var $svnName;
    var $path;
+   var $username;
+   var $password;
    
    // Local configuration options must start off unset
    
@@ -58,12 +61,23 @@ Class Repository
    var $subversionMajorVersion = "";
    var $subversionMinorVersion = "";
    
-   function Repository($name, $path)
+   function Repository($name, $svnName, $path, $username = "", $password = "")
    {
       $this->name = $name;
+      $this->svnName = $svnName;
       $this->path = $path;
+      $this->username = $username;
+      $this->password = $password;
    }
    
+   function svnParams()
+   {
+      if (!empty($this->username))
+         return " --username ".$this->username." --password ".$this->password." ";
+      else
+         return " ";
+   }
+
    // Local configuration accessors
       
    // RSS Feed
@@ -302,7 +316,7 @@ Class Repository
          
       if (!empty($a))
       {
-         return $a->hasReadAccess($this->name, $path, $checkSubFolders);
+         return $a->hasReadAccess($this->svnName, $path, $checkSubFolders);
       }
       
       // No auth file - free access...
@@ -320,7 +334,7 @@ Class Repository
          
       if (!empty($a))
       {
-         return $a->hasUnrestrictedReadAccess($this->name, $path);
+         return $a->hasUnrestrictedReadAccess($this->svnName, $path);
       }
       
       // No auth file - free access...
@@ -377,13 +391,15 @@ Class Config
    {
    }
    
-   function addRepository($name, $path)
+   function addRepository($name, $url, $username = "", $password = "")
    {
-      if (($path{strlen($path) - 1} == DIRECTORY_SEPARATOR) ||
-          ($path{strlen($path) - 1} == "/"))
-         $path = substr($path, 0, -1);
+      $url = str_replace(DIRECTORY_SEPARATOR, "/", $url);
+      
+      if ($url{strlen($url) - 1} == "/")
+         $url = substr($url, 0, -1);
          
-      $this->_repositories[] = new Repository($name, $path);
+      $svnName = substr($url, strrpos($url, "/") + 1); 
+      $this->_repositories[] = new Repository($name, $svnName, $url, $username, $password);
    }
 
    function getRepository($rep)
@@ -714,7 +730,7 @@ Class Config
                if (is_dir($path.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR."db"))
                {
                   // We add the repository to the list
-                  $this->addRepository($file, $path.DIRECTORY_SEPARATOR.$file);
+                  $this->addRepository($file, "file:///".$path.DIRECTORY_SEPARATOR.$file);
                }
             }
          }
