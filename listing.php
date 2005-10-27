@@ -212,7 +212,7 @@ $passrev = $rev;
 $contents = $svnrep->dirContents($path, @$rev);
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, "", "", true);
+$history = $svnrep->getLog($path, "", "", false);
 
 if (!empty($history->entries[0]))
    $youngest = $history->entries[0]->rev;
@@ -225,8 +225,13 @@ if (empty($rev))
 else
    $logrev = $rev;
 
-$logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
-$logEntry = $logEntry->entries[0];
+if ($logrev != $rev)
+{
+   $logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
+   $logEntry = $logEntry->entries[0];
+}
+else
+   $logEntry = $history->entries[0];
 
 $headlog = $svnrep->getLog("/", "", "", true, 1);
 $headrev = $headlog->entries[0]->rev;
