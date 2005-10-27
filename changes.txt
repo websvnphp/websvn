@@ -8,6 +8,7 @@ NEW: WebSVN can now host remote repositories!
 
 FIX: The access rights handling didn't work if you had give a repository a display name
      different from it's "real" svn name.
+FIX: The deleted file list no longer links to non-existant files!
 
 1.7 beta 5
 
