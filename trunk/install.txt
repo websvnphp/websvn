@@ -178,7 +178,7 @@ Require valid-user
 Note the use of the / after /WebSVN/ in the location directive.  If you use
 <Location /WebSVN> then you won't be able to access the index.
 
-You should change /WebSVN/ to /wsvn/ if your using multiviews.
+You should change /WebSVN/ to /wsvn/ if you're using multiviews.
 
 Also note that you shouldn't use the AuthzSVNAccessFile command to define the
 access file.
