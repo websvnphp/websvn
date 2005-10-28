@@ -313,7 +313,7 @@ $vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"
 $url = $config->getURL($rep, $path, "log");
 $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
 
-$url = $config->getURL($rep, "", "comp");
+$url = $config->getURL($rep, "/", "comp");
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREREVS"]}\">";
 $vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
