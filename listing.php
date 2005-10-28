@@ -255,7 +255,7 @@ $dirurl = $config->getURL($rep, $path, "dir");
 $logurl = $config->getURL($rep, $path, "log");
 $rssurl = $config->getURL($rep, $path, "rss");
 $dlurl = $config->getURL($rep, $path, "dl");
-$compurl = $config->getURL($rep, "", "comp");
+$compurl = $config->getURL($rep, "/", "comp");
 
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1)
    $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&amp;sc=1\">${lang["GOYOUNGEST"]}</a>";
