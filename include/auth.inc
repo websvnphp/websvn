@@ -33,27 +33,14 @@ class Authentication
 {
    var $rights;
    var $user;
-   var $groups;
+   var $usersGroups = array();
    
    function Authentication($accessfile)
    {
       $this->rights = new IniFile();
       $this->rights->readIniFile($accessfile);
       $this->setUsername("");
-      
-      // Get the members of each group organised into arrays
-      $allgroups = $this->rights->getValues("groups");
-      if (!empty($allgroups))
-      {
-         foreach($allgroups As $gname => $memberslist)
-         {
-            $members = split(",", $memberslist);
-            foreach($members as $key => $member)
-               $members[$key] = trim($member);
-               
-            $this->groups[$gname] = $members;
-         }
-      }
+      $this->identifyGroups();
    }
    
 	// setUsername($username)
@@ -73,6 +60,20 @@ class Authentication
 		}
 	}
 
+   // identifyGroups()
+   //
+   // Checks to see which groups the user belongs to
+
+   function identifyGroups()
+   {
+      $this->usersGroups[] = "*";
+      foreach ($this->rights->getValues("groups") as $group => $names)
+      {
+         if (in_array(strtolower($this->user), preg_split('/\s*,\s*/', $names)))
+           $this->usersGroups[] = "@" . $group;
+      }
+   }
+
    // inList
    //
    // Check if the user is in the given list and return their read status
@@ -85,18 +86,9 @@ class Authentication
       foreach($accessors As $key => $rights)
       {
          $keymatch = false;
-    
-         if ($key == "*")
+  
+         if (in_array($key, $this->usersGroups) || !strcmp($key, strtolower($user)))
             $keymatch = true;
-         else if (!strcmp($key, strtolower($user)))
-            $keymatch = true;
-         else if ($key{0} == '@')
-         {
-            $group = substr($key, 1);
-            if (!empty($this->groups[$group]) &&
-                in_array(strtolower($user), $this->groups[$group]))
-               $keymatch = true;
-         }
       
          if ($keymatch)
          {
