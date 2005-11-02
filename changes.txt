@@ -1,5 +1,10 @@
 CHANGES
 
+CHANGE: The syntax for the per repository configurations has changed.  It's now much simpler and
+        will work on all versions of PHP
+
+FIX: Various bug fixes for the access rights module
+
 1.7 beta 6
 
 Note: the $config->addRepository command now takes a URL and not a filesystem path!
