@@ -249,13 +249,21 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 
 function getParameterisedSelfUrl($params = true)
 {
-   $url = basename($_SERVER['PHP_SELF']);
+   global $config;
    $sep = "?";
 
-   // Sometimes the .php isn't on the end.  Damn strange...
+   if ($config->multiViews)
+   {
+      $url = preg_replace("/\.php/", "", $_SERVER['PHP_SELF'], 1);
+   }
+   else
+   {
+      $url = basename($_SERVER['PHP_SELF']);
 
-   if (strchr($url, '.') === false)
-      $url .= ".php";
+      // Sometimes the .php isn't on the end.  Damn strange...
+      if (strchr($url, '.') === false)
+         $url .= ".php";   
+   }
 
    if ($params)
    {
