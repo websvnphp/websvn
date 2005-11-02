@@ -676,7 +676,7 @@ Class Config
    function setSVNCommandPath($path)
    {
       $this->setPath($this->svn, $path, "svn", "--non-interactive --config-dir /tmp");
-      $this->setPath($this->svn_noparams, $path, "svn");
+      $this->setPath($this->svn_noparams, $path, "svn", " --config-dir /tmp");
       $this->setPath($this->svnlook, $path, "svnlook");
    }
    
