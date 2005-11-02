@@ -33,12 +33,27 @@ class Authentication
 {
    var $rights;
    var $user;
+   var $groups;
    
    function Authentication($accessfile)
    {
       $this->rights = new IniFile();
       $this->rights->readIniFile($accessfile);
       $this->setUsername("");
+      
+      // Get the members of each group organised into arrays
+      $allgroups = $this->rights->getValues("groups");
+      if (!empty($allgroups))
+      {
+         foreach($allgroups As $gname => $memberslist)
+         {
+            $members = split(",", $memberslist);
+            foreach($members as $key => $member)
+               $members[$key] = trim($member);
+               
+            $this->groups[$gname] = $members;
+         }
+      }
    }
    
 	// setUsername($username)
@@ -65,6 +80,8 @@ class Authentication
    
    function inList($accessors, $user)
    {
+      $output = UNDEFINED;
+
       foreach($accessors As $key => $rights)
       {
          $keymatch = false;
@@ -76,9 +93,8 @@ class Authentication
          else if ($key{0} == '@')
          {
             $group = substr($key, 1);
-            $members = $this->rights->getValue("groups", $group);
-            $members = ",".$members.",";
-            if (strpos($members, ",".strtolower($user).",") !== false)
+            if (!empty($this->groups[$group]) &&
+                in_array(strtolower($user), $this->groups[$group]))
                $keymatch = true;
          }
       
@@ -86,12 +102,12 @@ class Authentication
          {
             if (strpos($rights, "r") !== false)
                return ALLOW;
-            else
-               return DENY;
+             else
+               $output = DENY;
          }
       }
       
-      return UNDEFINED;
+      return $output;
    }
    
    // hasReadAccess
@@ -126,7 +142,7 @@ class Authentication
             if ($access != ALLOW)
             {
                $len = strlen($path);
-               if ($len < strlen($section) && strncmp($section, $path, strlen($qualified)) == 0)
+               if ($len < strlen($section) && strncmp($section, $path, strlen($path)) == 0)
                {
                   $access = $this->inList($accessers, $this->user);
                }
