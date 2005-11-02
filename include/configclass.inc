@@ -419,7 +419,9 @@ Class Config
          if (strcasecmp($rep->name, $name) == 0)
             return $rep;
       }
-      return null;
+      
+      print "ERROR: Unable to find repository '$name'";
+      exit;
    }
 
    // setServerIsWindows
@@ -482,41 +484,71 @@ Class Config
    //
    // Use Enscript to colourise listings
    
-   function hideRSS()
+   function hideRSS($myrep = 0)
    {
-      $this->rss = false;
+      if (empty($myrep))
+         $this->rss = false;
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->hideRSS();
+      }
    }
 
    // allowDownload
    //
    // Allow download of tarballs
    
-   function allowDownload()
+   function allowDownload($myrep = 0)
    {
       global $vars;
       
-      $this->allowDownload = true;
+      if (empty($myrep))
+         $this->allowDownload = true;
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->allowDownload();
+      }
    }
 
-   function setMinDownloadLevel($level)
+   function setMinDownloadLevel($level, $myrep = 0)
    {
-      $this->minDownloadLevel = $level;
+      if (empty($myrep))
+         $this->minDownloadLevel = $level;
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->setMinDownloadLevel($level);
+      }
    }
 
-   function addAllowedDownloadException($path)
+   function addAllowedDownloadException($path, $myrep = 0)
    {
       if ($path{strlen($path) - 1} != "/")
          $path .= "/";
          
-      $this->allowedExceptions[] = $path;
+      if (empty($myrep))
+         $this->allowedExceptions[] = $path;
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->addAllowedDownloadException($path);
+      }
    }
    
-   function addDisallowedDownloadException($path)
+   function addDisallowedDownloadException($path, $myrep = 0)
    {
       if ($path{strlen($path) - 1} != "/")
          $path .= "/";
          
-      $this->disallowedExceptions[] = $path;
+      if (empty($myrep))
+         $this->disallowedExceptions[] = $path;
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->addDisallowedDownloadException($path);
+      }
    }
    
    function findException($path, $exceptions)
@@ -745,21 +777,36 @@ Class Config
    
    // Encoding functions
    
-   function setInputEncoding($systemEnc, $contentEnc = "")
+   function setInputEncoding($systemEnc)
    {
       $this->inputEnc = $systemEnc;
       
-      if ($contentEnc == "")
+      if (!isset($this->contentEnc))
          $this->contentEnc = $systemEnc;
-      else
+   }
+   
+   function setContentEncoding($contentEnc, $myrep = 0)
+   {      
+      if (empty($myrep))
          $this->contentEnc = $contentEnc;
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->setContentEncoding($contentEnc);
+      }
    }
    
    // Tab expansion functions
    
-   function expandTabsBy($sp)
+   function expandTabsBy($sp, $myrep = 0)
    {
-      $this->spaces = $sp;
+      if (empty($myrep))
+         $this->spaces = $sp;
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->expandTabsBy($sp);
+      }
    }
    
    // Misc settings
@@ -774,19 +821,33 @@ Class Config
       $this->ignoreWebSVNContentTypes = true;
    }
 
-   function useBugtraqProperties()
+   function useBugtraqProperties($myrep = 0)
    {
-      $this->bugtraq = true;
-   }
-   
-   function useAuthenticationFile($file)
-   {
-      if (is_readable($file))
-         $this->auth = new Authentication($file);
+      if (empty($myrep))
+         $this->bugtraq = true;
       else
       {
-         echo "Unable to read authentication file '$file'";
-         exit;
+         $repo =& $this->findRepository($myrep);
+         $repo->useBugtraqProperties();
+      }
+   }
+   
+   function useAuthenticationFile($file, $myrep = 0)
+   {
+      if (empty($myrep))
+      {
+         if (is_readable($file))
+            $this->auth = new Authentication($file);
+         else
+         {
+            echo "Unable to read authentication file '$file'";
+            exit;
+         }
+      }
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->useAuthenticationFile($file);
       }
    }
    

@@ -98,14 +98,12 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // "out of the box". Uncomment and change one of the examples below.
 //
 // $config->setInputEncoding("CP850");  // Encoding of result returned by svn command line, etc.
-// $config->setInputEncoding("CP850", "iso-8859-1");  // A second parameter can be used to define
-                                                      // the default content encoding of all your
-                                                      // repositories
+// $config->setContentEncoding("iso-8859-1");  // Content encoding of all your repositories                                          // repositories
 
 // You may also specify a content encoding on a per repository basis.  Uncomment and copy this
 // line as necessary.
 //
-// $config->findRepository("myrep")->setContentEncoding("MyEnc"); 
+// $config->setContentEncoding("iso-8859-1", "MyEnc"); 
 
 // Note for Windows users:  To enable iconv you'll need to enable the extension in your php.ini file 
 // AND copy iconv.dll (not php_iconv.dll) to your Windows system folder.  In most cases the correct
@@ -155,7 +153,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // You may also specify a per repository access file by uncommenting and copying the following
 // line as necessary.
 
-// $config->findRepository("myrep")->useAuthenticationFile("/path/to/accessfile"); 
+// $config->useAuthenticationFile("/path/to/accessfile", "myrep"); // Access file for myrep
 
 // --- FILE CONTENT ---
 //
@@ -214,8 +212,8 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
 
-// $config->findRepository("myrep")->allowDownload(); // Specifically allow downloading for 'myrep'
-// $config->findRepository("myrep")->disallowDownload(); // Specifically disallow downloading for 'myrep'
+// $config->allowDownload("myrep"); // Specifically allow downloading for 'myrep'
+// $config->disallowDownload("myrep"); // Specifically disallow downloading for 'myrep'
 
 // You can also choose the minimum directory level from which you'll allow downloading.
 // A value of zero will allow downloading from the root.  1 will allow downloding of directories
@@ -233,7 +231,7 @@ $config->setMinDownloadLevel(2);
 // To change the level for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
 
-// $config->findRepository("myrep")->setMinDownloadLevel(2); 
+// $config->setMinDownloadLevel(2, "myrep"); 
 
 // Finally, you may add or remove certain directories (and their contents) either globally
 // or on a per repository basis.  Uncomment and copy the following lines as necessary.  Note
@@ -249,8 +247,8 @@ $config->setMinDownloadLevel(2);
 //
 // Per repository exception possibilties:
 //
-// $config->findRepository("myrep")->addAllowedDownloadException("/path/to/allowed/directory/");
-// $config->findRepository("myrep")->addDisAllowedDownloadException("/path/to/disallowed/directory/");
+// $config->addAllowedDownloadException("/path/to/allowed/directory/", "myrep");
+// $config->addDisAllowedDownloadException("/path/to/disallowed/directory/", "myrep");
 
 // --- COLOURISATION ---
 
@@ -278,8 +276,8 @@ $config->setMinDownloadLevel(2);
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
 
-// $config->findRepository("myrep")->hideRSS(); // Specifically hide RSS links for 'myrep'
-// $config->findRepository("myrep")->showRSS(); // Specifically show RSS links for 'myrep'
+// $config->hideRSS("myrep"); // Specifically hide RSS links for 'myrep'
+// $config->showRSS("myrep"); // Specifically show RSS links for 'myrep'
 
 // --- BUGTRAQ ---
 
@@ -291,8 +289,8 @@ $config->setMinDownloadLevel(2);
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
 
-// $config->findRepository("myrep")->useBugtraqProperties(); // Specifically use bugtraq properties for 'myrep'
-// $config->findRepository("myrep")->ignoreBugtraqProperties(); // Specifically ignore bugtraq properties for 'myrep'
+// $config->useBugtraqProperties("myrep"); // Specifically use bugtraq properties for 'myrep'
+// $config->ignoreBugtraqProperties("myrep"); // Specifically ignore bugtraq properties for 'myrep'
 
 // --- MISCELLANOUS ---
 
@@ -309,5 +307,5 @@ $config->expandTabsBy(8);
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
 
-// $config->findRepository("myrep")->expandTabsBy(3); // Expand Tabs by 3 for repository 'myrep'
+// $config->expandTabsBy(3, "myrep"); // Expand Tabs by 3 for repository 'myrep'
 ?>
