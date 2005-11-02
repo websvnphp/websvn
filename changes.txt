@@ -4,6 +4,7 @@ CHANGE: The syntax for the per repository configurations has changed.  It's now 
         will work on all versions of PHP
 
 FIX: Various bug fixes for the access rights module
+FIX: Language choice selection with MultiViews enabled didn't work
 
 1.7 beta 6
 
