@@ -95,7 +95,7 @@ if ($prevrev)
    
    $ent = true;
    $extension = strrchr(basename($path), ".");
-   if (($extension && ('php' == $extEnscript[$extension])) || ($config->useEnscript))
+   if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript))
       $ent = false;
 
    $file1cache = array();
