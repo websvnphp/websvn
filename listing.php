@@ -38,20 +38,28 @@ function fileLink($path, $file, $returnjoin = false)
    else
       $ppath = $path;
 
-   if ($returnjoin)
-      return $ppath.$file;
+   if ($ppath{strlen($ppath)-1} != "/")
+      $ppath .= "/";
+   
+   if ($file{0} == "/")
+      $pfile = substr($file, 1);
+   else
+      $pfile = $file;
 
-   $isDir = $file{strlen($file) - 1} == "/";
+   if ($returnjoin)
+      return $ppath.$pfile;
+
+   $isDir = $pfile{strlen($pfile) - 1} == "/";
       
    if ($isDir)
    {
-      $url = $config->getURL($rep, $ppath.$file, "dir");
-      return "<a name=\"${ppath}${file}\" href=\"${url}rev=$passrev&amp;sc=$showchanged#${ppath}${file}\">$file</a>";
+      $url = $config->getURL($rep, $ppath.$pfile, "dir");
+      return "<a name=\"${ppath}${pfile}\" href=\"${url}rev=$passrev&amp;sc=$showchanged#${ppath}${pfile}\">$pfile</a>";
    }
    else
    {
-      $url = $config->getURL($rep, $ppath.$file, "file");
-      return "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">$file</a>";
+      $url = $config->getURL($rep, $ppath.$pfile, "file");
+      return "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">$pfile</a>";
    }
 }
 
