@@ -94,7 +94,8 @@ if ($prevrev)
    $old = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev);
    
    $ent = true;
-   if (('php' == $extEnscript[strrchr($path, ".")]) || ($config->useEnscript))
+   $extension = strrchr(basename($path), ".");
+   if (($extension && ('php' == $extEnscript[$extension])) || ($config->useEnscript))
       $ent = false;
 
    $file1cache = array();
