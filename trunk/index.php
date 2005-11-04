@@ -32,19 +32,75 @@ $vars["repname"] = "";
 $vars["rev"] = 0;
 $vars["path"] = "";
 
-$projects = $config->getRepositories();
-$i = 0;
-$listing = array ();
-foreach ($projects as $project)
+// Sort the repositories by group
+$config->sortByGroup();
+
+if ($config->flatIndex)
 {
-   if ($rep->hasReadAccess("/", true))
-   {
-      $url = $config->getURL($project, "/", "dir");
+   // Create the flat view
    
-      $listing[$i]["rowparity"] = $i % 2;
-      $listing[$i++]["projlink"] = "<a href=\"${url}sc=0\">".$project->name."</a>";
-   }
-} 
+   $projects = $config->getRepositories();
+   $i = 0;
+   $listing = array ();
+   foreach ($projects as $project)
+   {
+      if ($project->hasReadAccess("/", true))
+      {
+         $url = $config->getURL($project, "/", "dir");
+      
+         $listing[$i]["rowparity"] = $i % 2;
+         $listing[$i++]["projlink"] = "<a href=\"${url}sc=0\">".$project->getDisplayName()."</a>";
+      }
+   } 
+   $vars["flatview"] = true;
+   $vars["treeview"] = false;   
+}
+else
+{
+   // Create the tree view
+   
+   $projects = $config->getRepositories();
+   reset($projects);
+   $i = 0;
+   $listing = array ();
+   $curgroup = NULL;
+   $parity = 0;
+   foreach ($projects as $project)
+   {
+      if ($project->hasReadAccess("/", true))
+      {
+         $listing[$i]["rowparity"] = $parity % 2;
+         $url = $config->getURL($project, "/", "dir");
+         if ($curgroup != $project->group)
+         {
+            if (!empty($curgroup))
+               $listing[$i]["listitem"] = "</div>\n";  // Close the switchcontent div
+            else
+               $listing[$i]["listitem"] = "";
+
+            $listing[$i]["isprojlink"] = false;
+            $listing[$i]["isgrouphead"] = true;
+            
+            $curgroup = $project->group;
+            $listing[$i++]["listitem"] .= "<div class=\"groupname\" onClick=\"expandcontent(this, '$curgroup');\" style=\"cursor:hand; cursor:pointer\"><div class=\"a\"><span class=\"showstate\"></span>$curgroup</div></div>\n<div id=\"$curgroup\" class=\"switchcontent\">";
+         }
+
+         $parity++;       
+         $listing[$i]["isgrouphead"] = false;
+         $listing[$i]["isprojlink"] = true;
+         $listing[$i++]["listitem"] = "<a href=\"${url}sc=0\">".$project->name."</a>\n";
+      }
+   } 
+
+   if (!empty($curgroup))
+   $listing[$i]["isprojlink"] = false;
+   $listing[$i]["isgrouphead"] = false;
+   $listing[$i]["listitem"] = "</div>";  // Close the switchcontent div
+
+   $vars["flatview"] = false;
+   $vars["treeview"] = true;   
+   $vars["opentree"] = $config->openTree;
+}
 
 $vars["version"] = $version;
 parseTemplate($config->templatePath."header.tmpl", $vars, $listing);

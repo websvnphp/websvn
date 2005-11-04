@@ -100,7 +100,7 @@ else
    $ppath = $path;
 
 $vars["action"] = $lang["LOG"];
-$vars["repname"] = $rep->name;
+$vars["repname"] = $rep->getDisplayName();
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 

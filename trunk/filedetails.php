@@ -127,7 +127,7 @@ else
    $vars["goyoungestlink"] = "";
 
 $vars["action"] = "";
-$vars["repname"] = $rep->name;
+$vars["repname"] = $rep->getDisplayName();
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 
