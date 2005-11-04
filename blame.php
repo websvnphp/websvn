@@ -49,7 +49,7 @@ else
 $pos = strrpos($ppath, "/");
 $parent = substr($ppath, 0, $pos + 1);
 
-$vars["repname"] = $rep->name;
+$vars["repname"] = $rep->getDisplayName();
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 

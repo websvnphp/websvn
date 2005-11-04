@@ -71,12 +71,12 @@ if ($config->multiViews)
 
    foreach ($config->getRepositories() as $rep)
    {
-      $pos = strlen($rep->name);
+      $pos = strlen($rep->getDisplayName());
       if (strlen($path) < $pos)
          continue;
          
       $name = substr($path, 0, $pos);
-      if (strcasecmp($rep->name, $name) == 0)
+      if (strcasecmp($rep->getDisplayName(), $name) == 0)
       {
          $tpath = substr($path, $pos);
          if ($tpath[0] == "/") {

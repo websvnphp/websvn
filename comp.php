@@ -86,7 +86,7 @@ $vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&am
 if ($rev1 == 0) $rev1 = "HEAD";
 if ($rev2 == 0) $rev2 = "HEAD";
 
-$vars["repname"] = $rep->name;
+$vars["repname"] = $rep->getDisplayName();
 $vars["action"] = $lang["PATHCOMPARISON"];
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"$path1\">";

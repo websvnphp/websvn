@@ -75,7 +75,7 @@ $cachename = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cac
 
 $rss = new UniversalFeedCreator();
 $rss->useCached("RSS2.0", $cachename);
-$rss->title = $rep->name;
+$rss->title = $rep->getDisplayName();
 $rss->description = "${lang["RSSFEEDTITLE"]} - $repname";
 $rss->link = html_entity_decode(getFullURL($baseurl.$listurl));
 $rss->syndicationURL = $rss->link;

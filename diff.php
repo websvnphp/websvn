@@ -59,7 +59,7 @@ else
 
 $prevrev = @$history->entries[1]->rev;
 
-$vars["repname"] = $rep->name;
+$vars["repname"] = $rep->getDisplayName();
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 $vars["prevrev"] = $prevrev;

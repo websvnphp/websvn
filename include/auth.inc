@@ -82,7 +82,6 @@ class Authentication
    function inList($accessors, $user)
    {
       $output = UNDEFINED;
-
       foreach($accessors As $key => $rights)
       {
          $keymatch = false;
@@ -109,7 +108,6 @@ class Authentication
    function hasReadAccess($repos, $path, $checkSubFolders = false)
    {
       $access = UNDEFINED;
-      
       if ($path{0} != "/")
          $path = "/$path";
   

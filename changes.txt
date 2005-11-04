@@ -1,5 +1,8 @@
 CHANGES
 
+NEW: Projects may now be assigned to groups, to simplify the index view
+NEW: The index may be displayed as a tree of groups
+
 CHANGE: The syntax for the per repository configurations has changed.  It's now much simpler and
         will work on all versions of PHP
 

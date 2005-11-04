@@ -27,11 +27,27 @@ require_once("include/command.inc");
 require_once("include/auth.inc");
 require_once("include/version.inc");
 
-// Auxillary function used to sort repositories by name
+// Auxillary functions used to sort repositories by name/group
 
 function cmpReps($a, $b)
 {
+   // First, sort by group
+   $g = strcasecmp($a->group, $b->group);
+   if ($g)
+      return $g;
+   
+   // Same group? Sort by name
    return strcasecmp($a->name, $b->name);
+}
+
+function cmpGroups($a, $b)
+{
+   // First, sort by group
+   $g = strcasecmp($a->group, $b->group);
+   if ($g)
+      return $g;
+   
+   return 0;
 }
 
 // A Repository configuration class
@@ -41,6 +57,7 @@ Class Repository
    var $name;
    var $svnName;
    var $path;
+   var $group;
    var $username;
    var $password;
    
@@ -58,15 +75,24 @@ Class Repository
    var $auth;
    var $contentEnc;
       
-   function Repository($name, $svnName, $path, $username = "", $password = "")
+   function Repository($name, $svnName, $path, $group = NULL, $username = NULL, $password = NULL)
    {
       $this->name = $name;
       $this->svnName = $svnName;
       $this->path = $path;
+      $this->group = $group;
       $this->username = $username;
       $this->password = $password;
    }
-   
+
+   function getDisplayName()
+   {
+      if(!empty($this->group))
+         return $this->group.".".$this->name;
+      else
+         return $this->name;
+   }
+
    function svnParams()
    {
       if (!empty($this->username))
@@ -357,6 +383,8 @@ Class Config
    // Other configuration items
    
    var $treeView = true;
+   var $flatIndex = true;
+   var $openTree = false;
    var $serverIsWindows = false;
    var $cacheResults = false;
    var $multiViews = false;
@@ -391,7 +419,7 @@ Class Config
    {
    }
    
-   function addRepository($name, $url, $username = "", $password = "")
+   function addRepository($name, $url, $group = NULL, $username = NULL, $password = NULL)
    {
       $url = str_replace(DIRECTORY_SEPARATOR, "/", $url);
       
@@ -399,12 +427,7 @@ Class Config
          $url = substr($url, 0, -1);
          
       $svnName = substr($url, strrpos($url, "/") + 1); 
-      $this->_repositories[] = new Repository($name, $svnName, $url, $username, $password);
-   }
-
-   function getRepository($rep)
-   {
-      return $this->_repositories[$rep];
+      $this->_repositories[] = new Repository($name, $svnName, $url, $group, $username, $password);
    }
 
    function getRepositories()
@@ -416,7 +439,7 @@ Class Config
    {
       foreach ($this->_repositories as $index => $rep)
       {
-         if (strcasecmp($rep->name, $name) == 0)
+         if (strcasecmp($rep->getDisplayName(), $name) == 0)
             return $rep;
       }
       
@@ -585,7 +608,7 @@ Class Config
          
          if ($rep != -1)
          {
-            $url .= "/".$rep->name.$path;
+            $url .= "/".$rep->getDisplayName().$path;
             
             if ($op != "dir")
                $url .= "?op=$op&amp;";
@@ -639,7 +662,7 @@ Class Config
          if ($rep == -1)
             return $fname."?path=".urlencode($path)."&amp;";
          else
-            return $fname."?repname=".urlencode($rep->name)."&amp;path=".urlencode($path)."&amp;";
+            return $fname."?repname=".urlencode($rep->getDisplayName())."&amp;path=".urlencode($path)."&amp;";
       }
    }
 
@@ -746,7 +769,7 @@ Class Config
    //
    // Automatically set up the repositories based on a parent path
    
-   function parentPath($path)
+   function parentPath($path, $group = NULL)
    {
       if ($handle = opendir($path))
       {
@@ -762,7 +785,7 @@ Class Config
                if (is_dir($path.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR."db"))
                {
                   // We add the repository to the list
-                  $this->addRepository($file, "file:///".$path.DIRECTORY_SEPARATOR.$file);
+                  $this->addRepository($file, "file:///".$path.DIRECTORY_SEPARATOR.$file, $group);
                }
             }
          }
@@ -861,6 +884,12 @@ Class Config
       $this->treeView = false;
    }
 
+   function useTreeIndex($open)
+   {
+      $this->flatIndex = false;
+      $this->openTree = $open;
+   }
+
    // setSubversionMajorVersion
    //
    // Set subversion major version
@@ -877,6 +906,14 @@ Class Config
    function setSubversionMinorVersion($subversionMinorVersion)
    {
       $this->subversionMinorVersion = $subversionMinorVersion;
+   }
+   
+   // Sort the repostories
+   
+   function sortByGroup()
+   {
+      if (!empty($this->_repositories))
+      usort($this->_repositories, "cmpGroups");
    }
 }
 ?>
