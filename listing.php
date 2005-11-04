@@ -233,7 +233,7 @@ if (empty($rev))
 else
    $logrev = $rev;
 
-if ($logrev != $rev)
+if ($logrev != $youngest)
 {
    $logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
    $logEntry = $logEntry->entries[0];
