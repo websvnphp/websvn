@@ -52,15 +52,26 @@
 // them by hand, in which case you can give each one the name of your choice, or you use the
 // parent path function, in which case the name of the directory is used as the repository name.
 //
+// In all cases, you may optionally supply a group name to the repositories.  This is useful in the
+// case that you need to separate your projects.  Grouped Repositories are referred to using the
+// convention GroupName.RepositoryName
+//
 // Performance is much better on local repositories (e.g. accessed by file:///).  However, you
 // can also provide an interface onto a remote repository.  In this case you should supply the 
 // username and password needed to access it.
 //
 // To configure the repositories by hand, copy the appropriate line below, uncomment it and
 // replace the name and URL of your repository.
+
+// Local repositories (without and with optional group):
 //
 // $config->addRepository("NameToDisplay", "URL to repository (e.g. file:///c:/svn/proj)");
-// $config->addRepository("NameToDisplay", "URL (e.g. http://path/to/rep)", "username", "password");
+// $config->addRepository("NameToDisplay", "URL to repository (e.g. file:///c:/svn/proj)", "group");
+//
+// Remote repositories (without and with optional group):
+//
+// $config->addRepository("NameToDisplay", "URL (e.g. http://path/to/rep)", NULL, "username", "password");
+// $config->addRepository("NameToDisplay", "URL (e.g. http://path/to/rep)", "group", "username", "password");
 //
 // To use the parent path method, uncomment the newt line and and replace the path with your one.  You
 // can call the function several times if you have several parent paths.  Note that in this case the
@@ -75,6 +86,13 @@
 $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
 // $config->setTemplatePath("$locwebsvnreal/templates/Zinn/");
+
+// The index page containing the projects may either be displayed as a flat view (the default),
+// where grouped repositories are displayed as "GroupName.RepName" or as a tree view.
+// In the case of a tree view, you may choose whether the entire tree is open by default.
+
+// $config->useTreeIndex(false); // Tree index, closed by default
+// $config->useTreeIndex(true);  // Tree index, open by default
 
 // By default, WebSVN displays a tree view onto the current directory.  You can however
 // choose to display a flat view of the current directory only, which may make the display
@@ -151,7 +169,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->useAuthenticationFile("/path/to/accessfile"); // Global access file
 
 // You may also specify a per repository access file by uncommenting and copying the following
-// line as necessary.
+// line as necessary.  Use the convention "groupname.myrep" if your repository is in a group.
 
 // $config->useAuthenticationFile("/path/to/accessfile", "myrep"); // Access file for myrep
 
@@ -211,6 +229,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 //
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Use the convention "groupname.myrep" if your repository is in a group.
 
 // $config->allowDownload("myrep"); // Specifically allow downloading for 'myrep'
 // $config->disallowDownload("myrep"); // Specifically disallow downloading for 'myrep'
@@ -230,6 +249,7 @@ $config->setMinDownloadLevel(2);
 
 // To change the level for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Use the convention "groupname.myrep" if your repository is in a group.
 
 // $config->setMinDownloadLevel(2, "myrep"); 
 
@@ -246,6 +266,7 @@ $config->setMinDownloadLevel(2);
 // $config->addDisAllowedDownloadException("/path/to/disallowed/directory/");
 //
 // Per repository exception possibilties:
+// Use the convention "groupname.myrep" if your repository is in a group.
 //
 // $config->addAllowedDownloadException("/path/to/allowed/directory/", "myrep");
 // $config->addDisAllowedDownloadException("/path/to/disallowed/directory/", "myrep");
@@ -275,6 +296,7 @@ $config->setMinDownloadLevel(2);
 //
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Use the convention "groupname.myrep" if your repository is in a group.
 
 // $config->hideRSS("myrep"); // Specifically hide RSS links for 'myrep'
 // $config->showRSS("myrep"); // Specifically show RSS links for 'myrep'
@@ -288,6 +310,7 @@ $config->setMinDownloadLevel(2);
 //
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Use the convention "groupname.myrep" if your repository is in a group.
 
 // $config->useBugtraqProperties("myrep"); // Specifically use bugtraq properties for 'myrep'
 // $config->ignoreBugtraqProperties("myrep"); // Specifically ignore bugtraq properties for 'myrep'
@@ -306,6 +329,7 @@ $config->expandTabsBy(8);
 
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Use the convention "groupname.myrep" if your repository is in a group.
 
 // $config->expandTabsBy(3, "myrep"); // Expand Tabs by 3 for repository 'myrep'
 ?>

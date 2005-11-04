@@ -257,7 +257,7 @@ if ($path == "" || $path{0} != "/")
 else
    $ppath = $path;
 
-$vars["repname"] = $rep->name;
+$vars["repname"] = $rep->getDisplayName();
 
 $dirurl = $config->getURL($rep, $path, "dir");
 $logurl = $config->getURL($rep, $path, "log");

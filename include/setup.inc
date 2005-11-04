@@ -377,12 +377,12 @@ function createProjectSelectionForm()
    {
       if ($trep->hasReadAccess("/", true))
       {
-         if ($rep->name == $trep->name)
+         if ($rep->getDisplayName() == $trep->getDisplayName())
             $sel = "selected";
          else
             $sel = "";
             
-         $vars["projects_select"] .= "<option value=\"".$trep->name."\" $sel>".$trep->name."</option>";
+         $vars["projects_select"] .= "<option value=\"".$trep->getDisplayName()."\" $sel>".$trep->getDisplayName()."</option>";
       }
    }
    
@@ -403,7 +403,7 @@ if (!$config->multiViews)
 if ($rep)
 {
    $vars["allowdownload"] = $rep->getAllowDownload();
-   $vars["repname"] = $rep->name;
+   $vars["repname"] = $rep->getDisplayName();
 }
 
 // As of version 1.70 the output encoding is forced to be UTF-8, since this is the output
@@ -411,5 +411,4 @@ if ($rep)
 // rudimentary conversions.
 
 $vars["charset"] = "UTF-8";
-
 ?>

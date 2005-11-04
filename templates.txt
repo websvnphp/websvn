@@ -155,10 +155,21 @@ noaccess - True if the user should be blocked from accessing this page due
 Variables defined for index.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Used in [websvn-startlisting] ... [websvn-endlisting] block:
+treeview - true if the index should be displayed as a tree of grouped projects
+flatview - true if the index should be displayed as a simple list of projects
+opentree - true if the tree viewed should be open by default
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block of a flat view:
 
 projlink - Link to the project
 rowparity - Parity of the row (0 or 1).  Used to generate striped tables
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block of a tree view:
+
+isprojlink - This item is a project link
+isgrouphead - This item is a group name
+rowparity - Parity of the row (0 or 1).  Used to generate striped tables
+listitem - The item to display
 
 Variables defined for directory.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
