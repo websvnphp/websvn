@@ -1,13 +1,16 @@
 CHANGES
 
+2.7 beta 7
+
 NEW: Projects may now be assigned to groups, to simplify the index view
-NEW: The index may be displayed as a tree of groups
+NEW: The index may be displayed as a collapsable tree of groups
 
 CHANGE: The syntax for the per repository configurations has changed.  It's now much simpler and
         will work on all versions of PHP
 
 FIX: Various bug fixes for the access rights module
 FIX: Language choice selection with MultiViews enabled didn't work
+FIX: Various small bugs introduced during 2.0 development
 
 1.7 beta 6
 
