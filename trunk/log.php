@@ -187,7 +187,7 @@ if (!empty($history))
             // Make sure that each word in the search in also in the log
             foreach($words as $word)
             {
-               if (strpos(strtolower(removeAccents($msg)), $word) === false)
+               if (strpos(strtolower(removeAccents($r->msg)), $word) === false)
                {
                   $match = false;
                   break;
@@ -277,17 +277,17 @@ if (!empty($history))
       $next = $page + 1;
       echo "<p><center>";
          
-      if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
+      if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;max=$max&amp;page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
       for ($p = 1; $p <= $pages; $p++)
       {
          if ($p != $page)
-            $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;page=$p\">$p</a> "; 
+            $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;max=$max&amp;page=$p\">$p</a> "; 
          else
             $vars["pagelinks"] .= "<b>$p </b>";
       }
-      if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
+      if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;max=$max&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
       
-      $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;all=1\">${lang["SHOWALL"]}</a>";
+      $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;all=1&amp;max=$max\">${lang["SHOWALL"]}</a>";
       echo "</center>";
    }
 }
