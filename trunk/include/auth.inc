@@ -67,10 +67,14 @@ class Authentication
    function identifyGroups()
    {
       $this->usersGroups[] = "*";
-      foreach ($this->rights->getValues("groups") as $group => $names)
+
+      if (is_array($this->rights->getValues("groups")))
       {
-         if (in_array(strtolower($this->user), preg_split('/\s*,\s*/', $names)))
-           $this->usersGroups[] = "@" . $group;
+         foreach ($this->rights->getValues("groups") as $group => $names)
+         {
+            if (in_array(strtolower($this->user), preg_split('/\s*,\s*/', $names)))
+              $this->usersGroups[] = "@" . $group;
+         }
       }
    }
 
