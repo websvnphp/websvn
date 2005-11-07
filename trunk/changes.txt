@@ -1,6 +1,12 @@
 CHANGES
 
-2.7 beta 7
+2.00 beta 8
+
+CHANGE: Remove path comparison boxes when using the flat view display
+
+FIX: Fix warnings when using an access file that didn't define a groups section
+
+2.00 beta 7
 
 NEW: Projects may now be assigned to groups, to simplify the index view
 NEW: The index may be displayed as a collapsable tree of groups
@@ -12,7 +18,7 @@ FIX: Various bug fixes for the access rights module
 FIX: Language choice selection with MultiViews enabled didn't work
 FIX: Various small bugs introduced during 2.0 development
 
-1.7 beta 6
+2.00 beta 6
 
 Note: the $config->addRepository command now takes a URL and not a filesystem path!
 
@@ -23,7 +29,7 @@ FIX: The access rights handling didn't work if you had give a repository a displ
 FIX: The deleted file list no longer links to non-existant files!
 FIX: Neaten the directory display when the download/compare links aren't available
 
-1.7 beta 5
+2.00 beta 5
 
 NEW: Access rights files can now be specified on a per repository basis
 
@@ -45,7 +51,7 @@ FIX: Remove non-UTF8 language options from distconfig.inc
 FIX: Fix recent bug whereby the log messages would contain unnecessary blank lines
 FIX: Access right file section groups without a trailing / are no correctly treated
 
-1.70 beta 4
+2.00 beta 4
 
 NEW: The log display may now be filtered to show a range of revisions
 NEW: You can now have control over the specification of directories that can or
@@ -61,7 +67,7 @@ FIX: Download of tarballs is prohibited if the user doesn't have read access to 
      AND all of its subdirectories
 FIX: The character set type is now sent in the HTTP header.  No need to hack the Apache config
 
-1.70 beta 3
+2.00 beta 3
 
 NEW: WebSVN may now be configured to display a flat view rather than a tree view
 
@@ -69,7 +75,7 @@ FIX: Only use --limit option on svn  1.2 or greater
 FIX: Correct spelling of "danish" in distconfig
 FIX: Fix RSS, previously broken 1.7 beta 1
 
-1.70 beta 2
+2.00 beta 2
 
 CHANGE: WebSVN no longer requires the entire revision history when accessing a directory,
         resulting in a faster access for large repositories
@@ -77,7 +83,7 @@ CHANGE: WebSVN no longer requires the entire revision history when accessing a d
 FIX: The new access rights module didn't always hide directories
 FIX: Tree icons have been fixed (broken in 1.70 beta 1)
 
-1.70 beta 1
+2.00 beta 1
 
 NEW: Access rights module (Finally!) - see install.txt for details
 NEW: Added language file for Danish, Finnish, Turkish, Norwegian and Simplified Chinese

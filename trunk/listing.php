@@ -131,7 +131,10 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       {
          $listing[$index]["rowparity"] = ($index % 2)?"1":"0";
          
-         $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"".fileLink($path, $file, true)."@$passrev\" onClick=\"checkCB(this)\">";
+         if ($treeview)
+            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"".fileLink($path, $file, true)."@$passrev\" onClick=\"checkCB(this)\">";
+         else
+            $listing[$index]["compare_box"] = "";
          
          if ($openDir)
             $listing[$index]["filelink"] = "<b>".fileLink($path, $file)."</b>";
@@ -374,6 +377,7 @@ else
    $vars["curdirdllink"] = "";
    
 $url = $config->getURL($rep, "/", "comp");
+
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";
 $vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
