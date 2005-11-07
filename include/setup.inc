@@ -295,7 +295,7 @@ if ($handle = opendir('languages'))
    // Read the language name for each language.
    while (false !== ($file = readdir($handle)))
    {
-      if ($file{0} != ".")
+      if ($file{0} != "." && !is_dir("languages".DIRECTORY_SEPARATOR.$file))
       {
          $lang["LANGUAGENAME"] = "";
          require("languages/$file");
