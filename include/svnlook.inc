@@ -225,13 +225,28 @@ function characterData($parser, $data)
 
          $curLog->curEntry->curMod->path .= $data;
          
-         if ($data == $curLog->path && $curLog->curEntry->curMod->action == "A")
+         // The XML returned when a file is renamed/branched in inconsistant.  In the case
+         // of a branch, the path information doesn't include the leafname.  In the case of
+         // a rename, it does.  Ludicrous.
+         
+         $pos = strrpos($curLog->path, "/");
+         $curpath = substr($curLog->path, 0, $pos);
+         $leafname = substr($curLog->path, $pos + 1);
+         
+         if ($curLog->curEntry->curMod->action == "A")
          {
-            
-            if ($debugxml) print "New path for comparison: '".$curLog->curEntry->curMod->copyfrom."'\n";
-            $curLog->path = $curLog->curEntry->curMod->copyfrom;
-         }
-            
+            if ($debugxml) print "Examining added path '".$curLog->curEntry->curMod->copyfrom."' - Current path = '$curpath', leafname = '$leafname'\n";
+            if ($data == $curLog->path)  // For directories and renames
+            {               
+               if ($debugxml) print "New path for comparison: '".$curLog->curEntry->curMod->copyfrom."'\n";
+               $curLog->path = $curLog->curEntry->curMod->copyfrom;
+            }
+            else if ($data == $curpath || $data == $curpath."/")  // Logs of files that have moved due to branching
+            {
+               if ($debugxml) print "New path for comparison: '".$curLog->curEntry->curMod->copyfrom."/$leafname'\n";
+               $curLog->path = $curLog->curEntry->curMod->copyfrom."/$leafname";               
+            }
+         }   
          break;
    }
 }
