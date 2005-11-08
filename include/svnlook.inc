@@ -535,7 +535,7 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." export $revstr ".$this->repConfig->svnParams().quote($path)." $filename", false);
+      $cmd = quoteCommand($config->svn." export $revstr ".$this->repConfig->svnParams().quote($path)." ".quote($filename), false);
 
       @exec($cmd);
    }
