@@ -63,10 +63,10 @@ if (mkdir($tmpname))
    
    // Create the tar file
    chdir($tmpname);
-   exec($config->tar." -cf $arcname.tar $arcname");
+   exec($config->tar." -cf ".quote("$arcname.tar")." ".quote($arcname));
    
    // ZIP it up
-   exec($config->gzip." $arcname.tar");
+   exec($config->gzip." ".quote("$arcname.tar"));
    $size = filesize("$arcname.tar.gz");
 
    // Give the file to the browser
