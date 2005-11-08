@@ -610,7 +610,7 @@ Class Config
          {
             $url .= "/".$rep->getDisplayName().$path;
             
-            if ($op != "dir")
+            if ($op != "dir" && $op != "file")
                $url .= "?op=$op&amp;";
             else
                $url .= "?";
