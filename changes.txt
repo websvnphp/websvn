@@ -3,7 +3,10 @@ CHANGES
 2.00 beta 8
 
 CHANGE: Remove path comparison boxes when using the flat view display
-
+CHANGE: Tidy up URLs generated from the listing view (Remove default parameters).
+CHANGE: wsvn now selectes either the listing or file view automatically when the op parameter
+        isn't present.  This allows for nicer URLS (eg. /http://example.com/wsvn/repo1/myfile.doc)
+        
 FIX: Fix warnings when using an access file that didn't define a groups section
 
 2.00 beta 7

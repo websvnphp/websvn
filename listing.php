@@ -29,6 +29,17 @@ require_once("include/utils.inc");
 require_once("include/template.inc");
 require_once("include/bugtraq.inc");
 
+function removeURLSeparator($url)
+{
+   if ($url[strlen($url)-1] == "?" || $url[strlen($url)-1] == "&")
+      $url = substr($url, 0, -1);
+
+   if (substr($url, -5) == "&amp;")
+      $url = substr($url, 0, -5);
+
+   return $url;
+}
+
 function fileLink($path, $file, $returnjoin = false)
 {
    global $rep, $passrev, $showchanged, $config;
@@ -51,16 +62,26 @@ function fileLink($path, $file, $returnjoin = false)
 
    $isDir = $pfile{strlen($pfile) - 1} == "/";
       
+   if ($passrev) $passrevstr = "rev=$passrev&amp;"; else $passrevstr = "";
+   if ($showchanged) $showchangedstr = "sc=$showchanged"; else $showchangedstr = "";
+
    if ($isDir)
    {
       $url = $config->getURL($rep, $ppath.$pfile, "dir");
-      return "<a name=\"${ppath}${pfile}\" href=\"${url}rev=$passrev&amp;sc=$showchanged#${ppath}${pfile}\">$pfile</a>";
+      $url = "<a name=\"${ppath}${pfile}\" href=\"${url}$passrevstr$showchangedstr";
+      $url = removeURLSeparator($url);
+      if ($config->treeView) $url .= "#${ppath}${pfile}";
+      $url .= "\">$pfile</a>";
    }
    else
    {
       $url = $config->getURL($rep, $ppath.$pfile, "file");
-      return "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">$pfile</a>";
+      $url .= $passrevstr.$showchangedstr;
+      $url = removeURLSeparator($url);
+      $url = "<a href=\"${url}\">$pfile</a>";
    }
+
+   return $url;
 }
 
 function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $treeview = true)
