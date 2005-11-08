@@ -9,6 +9,7 @@ CHANGE: wsvn now selectes either the listing or file view automatically when the
         
 FIX: Fix warnings when using an access file that didn't define a groups section
 FIX: Fix tarballing of directories with spaces
+FIX: Path history information in the log view of a file was incorrect.
 
 2.00 beta 7
 
