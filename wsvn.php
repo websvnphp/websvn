@@ -133,7 +133,10 @@ if ($config->multiViews)
          break;
 
       default:
-         $file = "listing.php";
+         if ($path[strlen($path) - 1] == "/")
+            $file = "listing.php";
+         else
+            $file = "filedetails.php";
    }
    
    // Now include the file that handles it
