@@ -435,7 +435,7 @@ Class Config
       return $this->_repositories;
    }
 
-   function findRepository($name)
+   function &findRepository($name)
    {
       foreach ($this->_repositories as $index => $rep)
       {
