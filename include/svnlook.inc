@@ -372,7 +372,7 @@ Class SVNRepository
       if ($filename == "")
       {
          $path = encodepath($this->repConfig->path.$path);
-         passthru($config->svn." cat $revstr ".$this->repConfig->svnParams().rawurlencode($path)." $pipe");
+         passthru($config->svn." cat $revstr ".$this->repConfig->svnParams().quote($path)." $pipe");
          return;
       }
       
