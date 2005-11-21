@@ -439,7 +439,7 @@ Class Config
    {
       foreach ($this->_repositories as $index => $rep)
       {
-         if (strcasecmp($rep->getDisplayName(), $name) == 0)
+         if (strcmp($rep->getDisplayName(), $name) == 0)
             return $rep;
       }
       
