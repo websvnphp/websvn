@@ -373,7 +373,7 @@ Class Config
 
    var $svnlook = "svnlook";
    var $svn = "svn --non-interactive --config-dir /tmp";
-   var $svn_noparams = "svn"; 
+   var $svn_noparams = "svn --config-dir /tmp"; 
    var $diff = "diff";
    var $enscript ="enscript";
    var $sed = "sed";
