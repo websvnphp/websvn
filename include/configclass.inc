@@ -771,7 +771,7 @@ Class Config
    
    function parentPath($path, $group = NULL)
    {
-      if ($handle = opendir($path))
+      if ($handle = @opendir($path))
       {
          // For each file...
          while (false !== ($file = readdir($handle)))
