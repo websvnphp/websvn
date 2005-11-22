@@ -48,7 +48,7 @@ class IniFile
             
          if ($str{0} == '[')
          {
-             $cursection = strtolower(substr($line, 1, strlen($str) - 2));
+             $cursection = strtolower(substr($str, 1, strlen($str) - 2));
              if (!($str{strlen($str) - 2} == '/' or $str == '[groups]')) $cursection .= '/';
              $first = true;
          }
