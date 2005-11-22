@@ -25,67 +25,54 @@
 
 class IniFile
 {
-   var $sections;
+   private $sections;
    
-   function readIniFile($name)
+   public function __construct()
+   {
+   $this->sections = array();
+   }
+   
+   public function readIniFile ($name)
    {
       $contents = file($name);
-      $cursection = "";
+      $cursection = '';
       $first = true;
       
-      $this->sections = array();
-      
-      for ($line = 0; $line < sizeof($contents); $line++)
+      foreach ($contents as $str)
       {
-         $str = trim($contents[$line]);
-         if (!empty($str))
+         $str = trim($str);
+         if (empty($str)) continue;
+         
+         if ($str{0} == '#' or $str{0} == "'")
+            continue;
+            
+         if ($str{0} == '[')
          {
-            if ($str{0} != "#" && $str{0} != "'") // Ignore comments
-            {
-               if ($str{0} == '[') // Found a section name heading
-               {
-                  $cursection = strtolower(substr($str, 1, strlen($str) - 2));
-
-                  if (($str{strlen($str) - 2} == "/") || ($str == "[groups]"))
-                  {
-                     $cursection = strtolower(substr($str, 1, strlen($str) - 2));
-                  }
-                  else
-                  {
-                     $cursection = strtolower(substr($str, 1, strlen($str) - 2))."/";
-                  }
-
-                  $first = true;
-               }
-               else
-               {
-                  if ($cursection != "")
-                  {
-                     if ($first)
-                        $this->sections[$cursection] = array();
-                     
-                     $parts = split("=", $str);
-   
-                     $this->sections[$cursection][strtolower(trim($parts[0]))] = strtolower(trim($parts[1]));
-                     $first = false;
-                  }
-               }
-            }
+             $cursection = strtolower(substr($line, 1, strlen($str) - 2));
+             if (!($str{strlen($str) - 2} == '/' or $str == '[groups]')) $cursection .= '/';
+             $first = true;
+         }
+         elseif (!empty($cursection))
+         {
+             if ($first === true) $this->sections[$cursection] = array();
+             list ($key, $val) = split('=', $str);
+             $this->sections[$cursection][strtolower(trim($key))] = strtolower(trim($val));
+             $first = false;
          }
       }
    }
-   
-   function getSections()
+
+   public function &getSections()
    {
-      return @$this->sections;
+      return $this->sections;
    }
 
-   function getValues($section)
+   public function &getValues($section)
    {
       return @$this->sections[strtolower($section)];
    }
 
-   function getValue($section,$key)
+   public function getValue($section, $key)
    {
       return @$this->sections[strtolower($section)][strtolower($key)];
    }
