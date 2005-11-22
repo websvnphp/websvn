@@ -89,12 +89,12 @@ if ($rev2 == 0) $rev2 = "HEAD";
 $vars["repname"] = $rep->getDisplayName();
 $vars["action"] = $lang["PATHCOMPARISON"];
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
-$vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"$path1\">";
-$vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[0]\" value=\"$rev1\">";
-$vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"$path2\">";
-$vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\">";
-$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"manualorder\" value=\"1\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
+$vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"$path1\" />";
+$vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[0]\" value=\"$rev1\" />";
+$vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"$path2\" />";
+$vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\" />";
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"manualorder\" value=\"1\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
 
 $vars["path1"] = $path1;
 $vars["path2"] = $path2;
@@ -152,7 +152,7 @@ if (!$noinput)
          
          clearVars();	   
    	   $getLine = true;
-         if ($debug) print "Line = '$line'<br>" ;	         
+         if ($debug) print "Line = '$line'<br />" ;	         
    	   if ($indiff)
    	   {
       	   // If we're in a diff proper, just set up the line
@@ -167,7 +167,7 @@ if (!$noinput)
          	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
-                        if ($debug) print "Including as diff: $subline<br>";
+                        if ($debug) print "Including as diff: $subline<br />";
          	            break;
          	   
          	         case "+":
@@ -175,7 +175,7 @@ if (!$noinput)
          	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
-                        if ($debug) print "Including as added: $subline<br>";
+                        if ($debug) print "Including as added: $subline<br />";
          	            break;
          
          	         case "-":
@@ -183,7 +183,7 @@ if (!$noinput)
          	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
-                        if ($debug) print "Including as removed: $subline<br>";
+                        if ($debug) print "Including as removed: $subline<br />";
          	            break;
          	      }
          	      
@@ -194,7 +194,7 @@ if (!$noinput)
          	      $indiffproper = false;
          	      $listing[$index++]["enddifflines"] = true;
          	      $getLine = false;
-                  if ($debug) print "Ending lines<br>";
+                  if ($debug) print "Ending lines<br />";
          	      continue;
          	   }
       	   }
@@ -205,16 +205,16 @@ if (!$noinput)
                $pos = strpos($line, "+");
                $posline = substr($line, $pos); 
          	   sscanf($posline, "+%d,%d", $sline, $eline);
-                        if ($debug) print "sline = '$sline', eline = '$eline'<br>";      	   
+                        if ($debug) print "sline = '$sline', eline = '$eline'<br />";      	   
          	   // Check that this isn't a file deletion
          	   if ($sline == 0 && $eline == 0)
          	   {
          	      $line = fgets($diff);
-                  if ($debug) print "Ignoring: $line<br>" ;	         
+                  if ($debug) print "Ignoring: $line<br />" ;	         
          	      while ($line[0] == " " || $line[0] == "+" || $line[0] == "-")
                   {
          	         $line = fgets($diff);
-                     if ($debug) print "Ignoring: $line<br>" ;	         
+                     if ($debug) print "Ignoring: $line<br />" ;	         
                   }      	
                            
          	      $getLine = false;
@@ -250,15 +250,15 @@ if (!$noinput)
             $node = substr($node, 7);
       
             $listing[$index]["newpath"] = $node;
-            if ($debug) echo "Creating node $node<br>";
+            if ($debug) echo "Creating node $node<br />";
             
             // Skip past the line of ='s
             $line = fgets($diff);
-            if ($debug) print "Skipping: $line<br>" ;	         
+            if ($debug) print "Skipping: $line<br />" ;	         
            
             // Check for a file addition
             $line = fgets($diff);
-            if ($debug) print "Examining: $line<br>" ;	         
+            if ($debug) print "Examining: $line<br />" ;	         
             if (strpos($line, "(revision 0)"))
                $listing[$index]["info"] = $lang["FILEADDED"];
             
@@ -272,7 +272,7 @@ if (!$noinput)
             
             // Skip second file info
             $line = fgets($diff);
-            if ($debug) print "Skipping: $line<br>" ;	         
+            if ($debug) print "Skipping: $line<br />" ;	         
             
             $indiff = true;
             $index++;
@@ -302,11 +302,11 @@ if (!$noinput)
             
             $listing[$index++]["properties"] = true;
             clearVars();
-            if ($debug) echo "Creating node $node<br>";
+            if ($debug) echo "Creating node $node<br />";
    
             // Skip the row of underscores
             $line = fgets($diff);
-            if ($debug) print "Skipping: $line<br>" ;	     
+            if ($debug) print "Skipping: $line<br />" ;	     
             
             while ($line = trim(fgets($diff)))
             {

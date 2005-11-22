@@ -223,13 +223,13 @@ if (!empty($history))
       
          if ($isDir)
          {
-            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@$thisrev\" onClick=\"checkCB(this)\">";
+            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@$thisrev\" onclick=\"checkCB(this)\" />";
             $url = $config->getURL($rep, $rpath, "dir"); 
             $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=$showchanged\">$rpath</a>";
          }
          else
          {
-            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$rpath@$thisrev\" onClick=\"checkCB(this)\">";
+            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$rpath@$thisrev\" onclick=\"checkCB(this)\" />";
             $url = $config->getURL($rep, $rpath, "file"); 
             $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=$showchanged\">$rpath</a>";
          }
@@ -295,19 +295,21 @@ if (!empty($history))
 // Create the project change combo box
  
 $url = $config->getURL($rep, $path, "log");
+# XXX: forms don't have the name attribute, but _everything_ has the id attribute,
+#      so what you're trying to do (if anything?) should be done via that ~J
 $vars["logsearch_form"] = "<form action=\"$url\" method=\"post\" name=\"logsearchform\">";
 
-$vars["logsearch_startbox"] = "<input name=\"sr\" size=\"5\" value=\"$startrev\">";
-$vars["logsearch_endbox"  ] = "<input name=\"er\" size=\"5\" value=\"$endrev\">";
-$vars["logsearch_maxbox"  ] = "<input name=\"max\" size=\"5\" value=\"".($max==0?"":$max)."\">";
-$vars["logsearch_inputbox"] = "<input name=\"search\" value=\"$search\">";
+$vars["logsearch_startbox"] = "<input name=\"sr\" size=\"5\" value=\"$startrev\" />";
+$vars["logsearch_endbox"  ] = "<input name=\"er\" size=\"5\" value=\"$endrev\" />";
+$vars["logsearch_maxbox"  ] = "<input name=\"max\" size=\"5\" value=\"".($max==0?"":$max)."\" />";
+$vars["logsearch_inputbox"] = "<input name=\"search\" value=\"$search\" />";
 
-$vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
-$vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\">".
-                             "<input type=\"hidden\" name=\"op\" value=\"log\">".
-                             "<input type=\"hidden\" name=\"rev\" value=\"$rev\">".
-                             "<input type=\"hidden\" name=\"sc\" value=\"$showchanged\">".
-                             "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\">".
+$vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
+$vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\" />".
+                             "<input type=\"hidden\" name=\"op\" value=\"log\" />".
+                             "<input type=\"hidden\" name=\"rev\" value=\"$rev\" />".
+                             "<input type=\"hidden\" name=\"sc\" value=\"$showchanged\" />".
+                             "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\" />".
                              "</form>";   
 
 $url = $config->getURL($rep, $path, "log");
@@ -315,8 +317,8 @@ $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&
 
 $url = $config->getURL($rep, "/", "comp");
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
-$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREREVS"]}\">";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREREVS"]}\" />";
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
 
 $vars["version"] = $version;
 
