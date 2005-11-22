@@ -27,9 +27,9 @@ class IniFile
 {
    private $sections;
    
-   public function __construct()
+   public function IniFile()
    {
-   $this->sections = array();
+      $this->sections = array();
    }
    
    public function readIniFile ($name)
