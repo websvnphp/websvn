@@ -140,16 +140,16 @@ foreach ($history->entries as $r)
          switch ($file->action)
          {
             case "A":
-               $item->description .= "+ ".$file->path."<br>";  
+               $item->description .= "+ ".$file->path."<br />";  
                break;
                                      
             case "M":
-               $item->description .= "~ ".$file->path."<br>";  
+               $item->description .= "~ ".$file->path."<br />";  
                break;
                                      
    
             case "D":
-               $item->description .= "-".$file->path."<br>";  
+               $item->description .= "-".$file->path."<br />";  
                break;
                                      
          }
@@ -166,7 +166,7 @@ foreach ($history->entries as $r)
 
 // Save the feed
 $rss->saveFeed("RSS2.0",$cachename, false);
-header("Content-Type: text/xml");
+header("Content-Type: application/xml");
 echo $rss->createFeed("RSS2.0");
 
 ?>
