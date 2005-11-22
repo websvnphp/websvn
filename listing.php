@@ -68,7 +68,7 @@ function fileLink($path, $file, $returnjoin = false)
    if ($isDir)
    {
       $url = $config->getURL($rep, $ppath.$pfile, "dir");
-      $url = "<a name=\"${ppath}${pfile}\" href=\"${url}$passrevstr$showchangedstr";
+      $url = "<a id='$ppath$pfile' href=\"${url}$passrevstr$showchangedstr";
       $url = removeURLSeparator($url);
       if ($config->treeView) $url .= "#${ppath}${pfile}";
       $url .= "\">$pfile</a>";
@@ -153,7 +153,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
          $listing[$index]["rowparity"] = ($index % 2)?"1":"0";
          
          if ($treeview)
-            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"".fileLink($path, $file, true)."@$passrev\" onClick=\"checkCB(this)\">";
+            $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"".fileLink($path, $file, true)."@$passrev\" onclick=\"checkCB(this)\" />";
          else
             $listing[$index]["compare_box"] = "";
          
@@ -334,21 +334,21 @@ else
       switch ($file->action)
       {
          case "A":
-            if (!$firstAdded) $vars["newfilesbr"] .= "<br>";
+            if (!$firstAdded) $vars["newfilesbr"] .= "<br />";
             $firstAdded = false;
             $vars["newfilesbr"] .= fileLink("", $file->path);
             $vars["newfiles"] .= " ".fileLink("", $file->path);
             break;
                      
          case "M":
-            if (!$firstModded) $vars["changedfilesbr"] .= "<br>";
+            if (!$firstModded) $vars["changedfilesbr"] .= "<br />";
             $firstModded = false;
             $vars["changedfilesbr"] .= fileLink("", $file->path);
             $vars["changedfiles"] .= " ".fileLink("", $file->path);
             break;
 
          case "D":
-            if (!$firstDeleted) $vars["deletedfilesbr"] .= "<br>";
+            if (!$firstDeleted) $vars["deletedfilesbr"] .= "<br />";
             $firstDeleted = false;
             $vars["deletedfilesbr"] .= $file->path;
             $vars["deletedfiles"] .= " ".$file->path;
@@ -400,8 +400,8 @@ else
 $url = $config->getURL($rep, "/", "comp");
 
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
-$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
 
 $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);

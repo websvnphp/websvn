@@ -32,8 +32,14 @@ function redirect($loc)
 {
    $url= getFullURL($loc);
    
+   # technically, a die(header('Location: '.$url)); would suffice for all web browsers... ~J
    header("Location: $url");
-   echo "<html><script language=\"JavaScript\" type=\"text/JavaScript\">window.location = \"$url\"</script></html>";
+   echo "<html>\n <head>\n  <title>Redirecting...</title>\n  <meta http-equiv='refresh' content='0; url=$url' />
+  <script type='application/x-javascript'><![CDATA[ window.location.href = '$url'; ]]></script>
+ </head>
+ <body>
+  <p>If you are not automatically redirected, please click <a href='$url'>here</a> to continue.</p>
+ </body>\n</html>";
 }
 
 // Handle project selection
