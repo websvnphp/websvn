@@ -67,7 +67,7 @@ class IniFile
       return $this->sections;
    }
 
-   public function &getValues($section)
+   public function getValues($section)
    {
       return @$this->sections[strtolower($section)];
    }
