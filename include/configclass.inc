@@ -606,7 +606,7 @@ Class Config
                
          $url =  $base;
          
-         if ($rep != -1)
+         if (is_object($rep))
          {
             $url .= "/".$rep->getDisplayName().$path;
             
