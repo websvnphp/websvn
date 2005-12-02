@@ -25,14 +25,14 @@
 
 class IniFile
 {
-   private $sections;
+   var $sections;
    
-   public function IniFile()
+   function IniFile()
    {
       $this->sections = array();
    }
    
-   public function readIniFile ($name)
+   function readIniFile ($name)
    {
       $contents = file($name);
       $cursection = '';
@@ -62,17 +62,17 @@ class IniFile
       }
    }
 
-   public function &getSections()
+   function &getSections()
    {
       return $this->sections;
    }
 
-   public function getValues($section)
+   function getValues($section)
    {
       return @$this->sections[strtolower($section)];
    }
 
-   public function getValue($section, $key)
+   function getValue($section, $key)
    {
       return @$this->sections[strtolower($section)][strtolower($key)];
    }
