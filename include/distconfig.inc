@@ -137,6 +137,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/spanish.inc");
 // include("languages/portuguese.inc");
 // include("languages/swedish.inc");
+// include("languages/slovenian.inc");
 // include("languages/dutch.inc");
 // include("languages/danish.inc");
 // include("languages/finnish.inc");
