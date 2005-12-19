@@ -166,8 +166,8 @@ Class Repository
       if (isset($this->rss))
          return $this->rss;
          
-      return $config->rss;
-   }
+      return $config->getHideRSS(); 
+  }
    
    // Download
    
@@ -188,7 +188,7 @@ Class Repository
       if (isset($this->allowDownload))
          return $this->allowDownload;
          
-      return $config->allowDownload;
+      return $config->getAllowDownload();
    }
 
    function setMinDownloadLevel($level)
@@ -203,7 +203,7 @@ Class Repository
       if (isset($this->minDownloadLevel))
          return $this->minDownloadLevel;
          
-      return $config->minDownloadLevel;
+      return $config->getMinDownloadLevel();
    }
    
    function addAllowedDownloadException($path)
@@ -277,7 +277,7 @@ Class Repository
       if (isset($this->spaces))
          return $this->spaces;
          
-      return $config->spaces;
+      return $config->getExpandTabsBy();
    }
 
    // Mime Type Handing
@@ -299,7 +299,7 @@ Class Repository
       if (isset($this->ignoreSvnMimeTypes))
          return $this->ignoreSvnMimeTypes;
          
-      return $config->ignoreSvnMimeTypes;
+      return $config->getIgnoreSvnMimeTypes();
    }
 
    function ignoreWebSVNContentTypes()
@@ -319,7 +319,7 @@ Class Repository
       if (isset($this->ignoreWebSVNContentTypes))
          return $this->ignoreWebSVNContentTypes;
          
-      return $config->ignoreWebSVNContentTypes;
+      return $config->getIgnoreWebSVNContentTypes();
    }
    
    // Issue Tracking
@@ -341,7 +341,7 @@ Class Repository
       if (isset($this->bugtraq))
          return $this->bugtraq;
          
-      return $config->bugtraq;
+      return $config->getBugtraq();
    }
    
    // Encodings
@@ -358,33 +358,29 @@ Class Repository
       if (isset($this->contentEnc))
          return $this->contentEnc;
          
-      return $config->contentEnc;
+      return $config->getContentEnc();
    }
    
    function useAuthenticationFile($file)
    {
       if (is_readable($file))
-         $this->auth = new Authentication($file);
+         $this->auth =& new Authentication($file);
       else
-      {
-         echo "Unable to read authentication file '$file'";
-         exit;
-      }
+         die('Unable to read authentication file "'.$file.'"');
    }
 
    function hasReadAccess($path, $checkSubFolders = false)
    {
       global $config;
 
+      $a = null;
       if (isset($this->auth))
-         $a = $this->auth;
+         $a =& $this->auth;
       else
-         $a = $config->auth;
+         $a =& $config->getAuth();
          
       if (!empty($a))
-      {
          return $a->hasReadAccess($this->svnName, $path, $checkSubFolders);
-      }
       
       // No auth file - free access...
       return true;
@@ -394,15 +390,14 @@ Class Repository
    {
       global $config;
 
+      $a = null;
       if (isset($this->auth))
-         $a = $this->auth;
+         $a =& $this->auth;
       else
-         $a = $config->auth;
+         $a =& $config->getAuth();
          
       if (!empty($a))
-      {
          return $a->hasUnrestrictedReadAccess($this->svnName, $path);
-      }
       
       // No auth file - free access...
       return true;
@@ -529,6 +524,11 @@ Class Config
       $this->cacheResults = true;
    }
 
+   function isCachingOn()
+   {
+      return $this->cacheResults;
+   }
+
    // useMultiViews
    //
    // Use MultiViews to access the repository
@@ -538,6 +538,11 @@ Class Config
       $this->multiViews = true;
    }
 
+   function getUseMultiViews()
+   {
+      return $this->multiViews;
+   }
+
    // useEnscript
    //
    // Use Enscript to colourise listings
@@ -545,6 +550,11 @@ Class Config
    function useEnscript()
    {
       $this->useEnscript = true;
+   }
+
+   function getUseEnscript()
+   {
+      return $this->useEnscript;
    }
 
    // offerRSS
@@ -562,14 +572,17 @@ Class Config
       }
    }
 
+   function getHideRSS()
+   {
+      return $this->rss;
+   }
+
    // allowDownload
    //
    // Allow download of tarballs
    
    function allowDownload($myrep = 0)
    {
-      global $vars;
-      
       if (empty($myrep))
          $this->allowDownload = true;
       else
@@ -577,6 +590,22 @@ Class Config
          $repo =& $this->findRepository($myrep);
          $repo->allowDownload();
       }
+   }
+
+   function disallowDownload($myrep = 0)
+   {
+      if (empty($myrep))
+         $this->allowDownload = false;
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->disallowDownload();
+      }
+   }
+
+   function getAllowDownload()
+   {
+      return $this->allowDownload;
    }
 
    function setMinDownloadLevel($level, $myrep = 0)
@@ -588,6 +617,11 @@ Class Config
          $repo =& $this->findRepository($myrep);
          $repo->setMinDownloadLevel($level);
       }
+   }
+
+   function getMinDownloadLevel()
+   {
+      return $this->minDownloadLevel;
    }
 
    function addAllowedDownloadException($path, $myrep = 0)
@@ -602,6 +636,21 @@ Class Config
          $repo =& $this->findRepository($myrep);
          $repo->addAllowedDownloadException($path);
       }
+   }
+
+   function getSvnCommand()
+   {
+      return $this->svn;
+   }
+
+   function getCleanSvnCommand()
+   {
+      return $this->svn_noparams;
+   }
+
+   function getSvnlookCommand()
+   {
+      return $this->svnlook;
    }
    
    function addDisallowedDownloadException($path, $myrep = 0)
@@ -756,6 +805,11 @@ Class Config
       $this->setPath($this->diff, $path, "diff");
    }
 
+   function getDiffCommand()
+   {
+      return $this->diff;
+   }
+
    // setEnscriptPath
    //
    // Define the location of the enscript command
@@ -763,6 +817,11 @@ Class Config
    function setEnscriptPath($path)
    {
       $this->setPath($this->enscript, $path, "enscript");
+   }
+
+   function getEnscriptCommand()
+   {
+      return $this->enscript;
    }
 
    // setSedPath
@@ -774,6 +833,11 @@ Class Config
       $this->setPath($this->sed, $path, "sed");
    }
    
+   function getSedCommand()
+   {
+      return $this->sed;
+   }
+
    // setTarPath
    //
    // Define the location of the tar command
@@ -783,6 +847,11 @@ Class Config
       $this->setPath($this->tar, $path, "tar");
    }
    
+   function getTarCommand()
+   {
+      return $this->tar;
+   }
+
    // setGzipPath
    //
    // Define the location of the GZip command
@@ -792,6 +861,11 @@ Class Config
       $this->setPath($this->gzip, $path, "gzip");
    }
    
+   function getGzipCommand()
+   {
+      return $this->gzip;
+   }
+
    function setTemplatePath($path)
    {
       $lastchar = $path{strlen($path) - 1};
@@ -807,6 +881,11 @@ Class Config
       // On a windows machine we need to put spaces around the entire command
       // to allow for spaces in the path
       $this->templatePath = $path;
+   }
+
+   function getTemplatePath()
+   {
+      return $this->templatePath;
    }
 
    // parentPath
@@ -852,6 +931,11 @@ Class Config
          $this->contentEnc = $systemEnc;
    }
    
+   function getInputEncoding()
+   {
+      return $this->inputEnc;
+   }
+
    function setContentEncoding($contentEnc, $myrep = 0)
    {      
       if (empty($myrep))
@@ -863,6 +947,11 @@ Class Config
       }
    }
    
+   function getContentEncoding()
+   {
+      return $this->contentEnc;
+   }
+
    // Tab expansion functions
    
    function expandTabsBy($sp, $myrep = 0)
@@ -876,6 +965,11 @@ Class Config
       }
    }
    
+   function getExpandTabsBy()
+   {
+      return $this->spaces;
+   }
+
    // Misc settings
    
    function ignoreSvnMimeTypes()
@@ -883,9 +977,19 @@ Class Config
       $this->ignoreSvnMimeTypes = true;
    }
 
+   function getIgnoreSvnMimeTypes()
+   {
+      return $this->ignoreSvnMimeTypes;
+   }
+
    function ignoreWebSVNContentTypes()
    {
       $this->ignoreWebSVNContentTypes = true;
+   }
+
+   function getIgnoreWebSVNContentTypes()
+   {
+      return $this->ignoreWebSVNContentTypes;
    }
 
    function useBugtraqProperties($myrep = 0)
@@ -899,6 +1003,11 @@ Class Config
       }
    }
    
+   function getBugtraq()
+   {
+      return $this->bugtraq;
+   }
+
    function useAuthenticationFile($file, $myrep = 0)
    {
       if (empty($myrep))
@@ -918,11 +1027,21 @@ Class Config
       }
    }
    
+   function &getAuth()
+   {
+       return $this->auth;
+   }
+
    function useTreeView()
    {
       $this->treeView = true;
    }
    
+   function getUseTreeView()
+   {
+      return $this->treeView;
+   }
+
    function useFlatView()
    {
       $this->treeView = false;
@@ -934,6 +1053,16 @@ Class Config
       $this->openTree = $open;
    }
 
+   function getUseFlatIndex()
+   {
+      return $this->flatIndex;
+   }
+
+   function getOpenTree()
+   {
+      return $this->openTree;
+   }
+
    // setSubversionMajorVersion
    //
    // Set subversion major version
@@ -941,6 +1070,11 @@ Class Config
    function setSubversionMajorVersion($subversionMajorVersion)
    {
       $this->subversionMajorVersion = $subversionMajorVersion;
+   }
+
+   function getSubversionMajorVersion()
+   {
+      return $this->subversionMajorVersion;
    }
 
    // setSubversionMinorVersion
@@ -952,6 +1086,11 @@ Class Config
       $this->subversionMinorVersion = $subversionMinorVersion;
    }
    
+   function getSubversionMinorVersion()
+   {
+      return $this->subversionMinorVersion;
+   }
+
    // Sort the repostories
    //
    // This function sorts the repositories by group name.  The contents of the
