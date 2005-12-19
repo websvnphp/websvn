@@ -103,8 +103,8 @@ else
 }
 
 $vars["version"] = $version;
-parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."index.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
+parseTemplate($config->getTemplatePath()."header.tmpl", $vars, $listing);
+parseTemplate($config->getTemplatePath()."index.tmpl", $vars, $listing);
+parseTemplate($config->getTemplatePath()."footer.tmpl", $vars, $listing);
 
 ?>

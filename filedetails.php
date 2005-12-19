@@ -149,7 +149,8 @@ $vars["version"] = $version;
 if (!$rep->hasReadAccess($path, false))
    $vars["noaccess"] = true;
 
-parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."file.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."file.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing); ?>
+
 ?>
