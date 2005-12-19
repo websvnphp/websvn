@@ -344,8 +344,8 @@ $vars["version"] = $version;
 if (!$rep->hasUnrestrictedReadAccess($path1) || !$rep->hasUnrestrictedReadAccess($path2, false))
    $vars["noaccess"] = true;
 
-parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."compare.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."compare.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
    
 ?>

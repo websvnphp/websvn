@@ -118,6 +118,7 @@ Class Repository
    var $bugtraq;
    var $auth;
    var $contentEnc;
+   var $templatePath;
       
    function Repository($name, $svnName, $path, $group = NULL, $username = NULL, $password = NULL)
    {
@@ -262,6 +263,27 @@ Class Repository
       }
    }
 
+   // Templates
+
+   function setTemplatePath($path)
+   {
+      $lastchar = substr($path, -1, 1);
+      if (!($lastchar == DIRECTORY_SEPARATOR ||
+            $lastchar == '/' ||
+            $lastchar == '\\'))
+         $path .= DIRECTORY_SEPARATOR;
+
+      $this->templatePath = $path;
+   }
+
+   function getTemplatePath()
+   {
+      global $config;
+      if (!empty($this->templatePath))
+         return $this->templatePath;
+      else
+         return $config->getTemplatePath();
+   }
 
    // Tab expansion
    
@@ -866,21 +888,25 @@ Class Config
       return $this->gzip;
    }
 
-   function setTemplatePath($path)
+   // Templates
+        
+   function setTemplatePath($path, $myrep = 0)
    {
-      $lastchar = $path{strlen($path) - 1};
-      $isDir = ($lastchar == DIRECTORY_SEPARATOR ||
-                $lastchar == "/" ||
-                $lastchar == "\\");
-     
-      if (!$isDir)
+      if (empty($myrep))
       {
+          $lastchar = substr($path, -1, 1);
+          if (!($lastchar == DIRECTORY_SEPARATOR ||
+                $lastchar == '/' ||
+                $lastchar == '\\'))
          $path .= DIRECTORY_SEPARATOR;
-      }
 
-      // On a windows machine we need to put spaces around the entire command
-      // to allow for spaces in the path
-      $this->templatePath = $path;
+         $this->templatePath = $path;
+      }
+      else
+      {
+         $repo =& $this->findRepository($myrep);
+         $repo->setTemplatePath($path);
+      }
    }
 
    function getTemplatePath()
