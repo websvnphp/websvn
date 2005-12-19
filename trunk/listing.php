@@ -414,8 +414,8 @@ if (!$rep->hasReadAccess($path, true))
 if (!$rep->hasReadAccess($path, false))
    $vars["restricted"] = true;
 
-parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."directory.tmpl", $vars, $listing);
-parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."directory.tmpl", $vars, $listing);
+parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
 
 ?>
