@@ -318,7 +318,7 @@ if ($handle = opendir('languages'))
       require("languages/$user_defaultFile");
       
    $url = getParameterisedSelfUrl(true);
-   $vars["lang_form"] = "<form action=\"$url\" method=\"post\" name=\"langform\">";
+   $vars["lang_form"] = "<form action=\"$url\" method=\"post\" id=\"langform\">";
    $vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";
    
    reset($langNames);
@@ -368,7 +368,7 @@ function createProjectSelectionForm()
    global $config, $vars, $rep, $lang, $showchanged;
    
    $url = $config->getURL(-1, "", "form");
-   $vars["projects_form"] = "<form action=\"$url\" method=\"post\" name=\"projectform\">";
+   $vars["projects_form"] = "<form action=\"$url\" method=\"post\" id=\"projectform\">";
    
    $reps = $config->getRepositories();
    $vars["projects_select"] = "<select name=\"repname\" onchange=\"javascript:this.form.submit();\">";
