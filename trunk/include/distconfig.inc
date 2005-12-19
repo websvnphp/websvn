@@ -288,6 +288,8 @@ $config->setMinDownloadLevel(2);
 // Here you should add and other extensions not already listed or redefine the default ones. eg:
 //
 // $extEnscript[".pas"] = "pascal";
+//
+// Note that extensions are case sensitive.
 
 // --- RSSFEED ---
 
