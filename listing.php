@@ -68,9 +68,13 @@ function fileLink($path, $file, $returnjoin = false)
    if ($isDir)
    {
       $url = $config->getURL($rep, $ppath.$pfile, "dir");
-      $url = "<a id='$ppath$pfile' href=\"${url}$passrevstr$showchangedstr";
+
+      // XHTML doesn't allow slashes in IDs ~J
+      $id = str_replace('/', '_', $ppath.$pfile);
+      $url = "<a id='$id' href=\"${url}$passrevstr$showchangedstr";
+
       $url = removeURLSeparator($url);
-      if ($config->treeView) $url .= "#${ppath}${pfile}";
+      if ($config->treeView) $url .= "#$id";
       $url .= "\">$pfile</a>";
    }
    else
