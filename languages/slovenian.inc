@@ -37,16 +37,16 @@ $lang["SUPPLYREP"] = "Prosim nastavi pot do skladišča v include/config.inc z \
 
 $lang["DIFFREVS"] = "Razlika med različicama";
 $lang["AND"] = "in";
-$lang["REV"] = "Razl";
+$lang["REV"] = "Različica";
 $lang["LINE"] = "Vrstica";
-$lang["SHOWENTIREFILE"] = "Prikazi celo datoteko";
-$lang["SHOWCOMPACT"] = "Prikaľi samo področja z razlikami";
+$lang["SHOWENTIREFILE"] = "Prikaži celo datoteko";
+$lang["SHOWCOMPACT"] = "Prikaži samo področja z razlikami";
 
 $lang["DIFFPREV"] = "Primerjaj s prejšno";
 $lang["BLAME"] = "Blame";
 
 $lang["REVINFO"] = "Informacija o različici";
-$lang["GOYOUNGEST"] = "Skoci na zadnjo različico";
+$lang["GOYOUNGEST"] = "Skoči na zadnjo različico";
 $lang["LASTMOD"] = "Zadnje spremembe";
 $lang["LOGMSG"] = "Opombe";
 $lang["CHANGES"] = "Spremembe";
@@ -76,9 +76,9 @@ $lang["SERVER"] = "Subversion&nbsp;strežnik";
 
 
 $lang["FILTER"] = "Možnosti filtriranja";
-$lang["STARTLOG"] = "Od razl";
-$lang["ENDLOG"] = "Do razl";
-$lang["MAXLOG"] = "Max razl";
+$lang["STARTLOG"] = "Od različice";
+$lang["ENDLOG"] = "Do različice";
+$lang["MAXLOG"] = "Max različic";
 $lang["SEARCHLOG"] = "Išči po opombah";
 $lang["CLEARLOG"] = "Pobriši trenutno iskanje";
 $lang["MORERESULTS"] = "Poišči še...";
@@ -89,7 +89,7 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "datotek spremenjenih"; 
 $lang["RSSFEED"] = "RSS feed"; 
 
-$lang["LINENO"] = "Vrstica st.";
+$lang["LINENO"] = "Vrstica št.";
 $lang["BLAMEFOR"] = "Blame informacije za različico";
 
 //$lang["YEARS"] = "let";
@@ -125,4 +125,5 @@ $lang["ENDNOBR"] = "";
 
 // $lang["NOBR"] = "<nobr>";
 // $lang["ENDNOBR"] = "</nobr>";
+
 
