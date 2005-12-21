@@ -380,7 +380,7 @@ Class Repository
       if (isset($this->contentEnc))
          return $this->contentEnc;
          
-      return $config->getContentEnc();
+      return $config->getContentEncoding();
    }
    
    function useAuthenticationFile($file)
