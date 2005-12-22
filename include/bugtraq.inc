@@ -44,7 +44,7 @@ class Bugtraq
    function Bugtraq($rep, $svnrep, $path)
    {
       global $config;
-            
+ 
       if ($rep->getBugtraq())
       {
          $pos = strrpos($path, "/");
@@ -65,19 +65,14 @@ class Bugtraq
             $enoughdata = ((!empty($this->msgstring) || !empty($this->logregex)) && !empty($this->urlstring));   
          }
          
-         if ($enoughdata && !empty($this->logregex))
-         {
-            $this->propsfound = true;
-         }
-         else if ($enoughdata && !empty($this->msgstring))
-         {
-            $this->msgstring = trim($this->msgstring);
-            $this->urlstring = trim($this->urlstring);
+         $this->msgstring = trim(@$this->msgstring);
+         $this->urlstring = trim(@$this->urlstring);
             
+         if ($enoughdata && !empty($this->msgstring))
             $this->initPartInfo();
                         
+         if ($enoughdata)
             $this->propsfound = true;
-         }
       }
    }
    
@@ -90,7 +85,7 @@ class Bugtraq
          $this->firstPartLen = strlen($this->firstPart);
          $this->lastPart = substr($this->msgstring, $bugidpos + 7);
          $this->lastPartLen = strlen($this->lastPart);
-      }
+      }  
    }
 
    function replaceIDs($message)
@@ -125,8 +120,8 @@ class Bugtraq
          }
 
          // Make sure that our line really is an issue tracker message
-         
-         if (((strncmp($bugLine, $this->firstPart, $this->firstPartLen) == 0) || (($offset !== false) && ($logmsg == ""))) &&
+
+         if (((strncmp($bugLine, $this->firstPart, $this->firstPartLen) == 0)) &&
              strcmp(substr($bugLine, -$this->lastPartLen, $this->lastPartLen), $this->lastPart) == 0)
          {
             // Get the issues list
@@ -153,7 +148,7 @@ class Bugtraq
          }
       
          // Now replace all other instances of bug IDs that match the regex
-      
+
          if ($this->logregex)
          {
             $message = rtrim($message);
@@ -202,8 +197,8 @@ class Bugtraq
                      $addedOffset = 0;
                      for ($match = 0; $match < $numMatches; $match++)
                      {
-                        $issue = $matches[$match][0][0];
-                        $issueOffset = $matches[$match][0][1];
+                        $issue = $matches[$match][1][0];
+                        $issueOffset = $matches[$match][1][1];
 
                         $issueLink = "<a href=\"".str_replace("%BUGID%", $issue, $this->urlstring)."\">".$issue."</a>";
                         $replacement = substr_replace($replacement, $issueLink, $issueOffset + $addedOffset, strlen($issue));                     
@@ -328,6 +323,16 @@ function test_bugtraq()
                               "This is a test message that refers to issue #123 and\n".
                               "issues #456, #654 and #321.\n".
                               "BugID: 789, 101112");
+
+   echo nl2br($res)."<p>";
+
+   $tester->setUpVars("Test: %BUGID%",
+                      "http://bugtracker/?id=%BUGID%",
+                      "\s*[Cc]ases*\s*[IDs]*\s*[#: ]+((\d+[ ,:;#]*)+)\n(\d+)",
+                      true);
+   
+   $res = $tester->replaceIDs("Cosmetic change\n".
+                              "CaseIDs: 48");
 
    echo nl2br($res)."<p>";
 }
