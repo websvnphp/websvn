@@ -389,6 +389,7 @@ else
 if ($rep->getHideRss())
 {
    $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["RSSFEED"]}</a>";
+   $vars["curdirrsshref"] = "${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1";
    $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">";
 }
 
