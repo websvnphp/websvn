@@ -202,6 +202,7 @@ curdirlinks - List of the path of this directory with links to each one
 curdirloglink - Link to the log view of current directory
 curdirrsslink - Link to the RSS feed for the current directory
 curdirrssanchor - The <a href=...> tag to the RSS feed for the current directory
+curdirrsshref - URL of the feed for the current directory (without anchor tag)
 curdirdllink - Link to the tarball of current directory
 curdircomplink - Link to comparison with previously changed revision
 
