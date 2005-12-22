@@ -229,9 +229,17 @@ function characterData($parser, $data)
          // of a branch, the path information doesn't include the leafname.  In the case of
          // a rename, it does.  Ludicrous.
          
-         $pos = strrpos($curLog->path, "/");
-         $curpath = substr($curLog->path, 0, $pos);
-         $leafname = substr($curLog->path, $pos + 1);
+         if (!empty($curLog->path))
+         {
+            $pos = strrpos($curLog->path, "/");
+            $curpath = substr($curLog->path, 0, $pos);
+            $leafname = substr($curLog->path, $pos + 1);
+         }
+         else
+         {
+            $curpath = "";
+            $leafname = "";
+         }
          
          if ($curLog->curEntry->curMod->action == "A")
          {
