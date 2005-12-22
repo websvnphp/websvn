@@ -1,6 +1,7 @@
 CHANGES
 
 NEW: Template files may now be specified on a per repository basis
+CHANGE: Bugtraq handling has been updated to account for the latest spec.
 
 2.00 beta 8
 
