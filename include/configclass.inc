@@ -501,7 +501,11 @@ Class Config
       foreach ($this->_repositories as $index => $rep)
       {
          if (strcmp($rep->getDisplayName(), $name) == 0)
-            return $rep;
+         {
+            // XXX: hacks like this should be conditional based on PHP version
+            $repref =& $this->_repositories[$index];
+            return $repref;
+         }
       }
       
       print "ERROR: Unable to find repository '$name'";
