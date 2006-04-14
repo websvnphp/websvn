@@ -151,6 +151,5 @@ if (!$rep->hasReadAccess($path, false))
 
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."file.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing); ?>
-
+parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
 ?>
