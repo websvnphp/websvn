@@ -38,9 +38,11 @@ $langNames = array();
 // Include a default language file.
 require("languages/english.inc");
 
-// Set up svnlocwebsvn
+// Set up locwebsvnhttp
+// Note: we will use nothing in MultiViews mode so that the URLs use the root
+//       directory by default.
 if (empty($locwebsvnhttp))
-   $locwebsvnhttp = ".";
+   $locwebsvnhttp = defined('WSVN_MULTIVIEWS') ? '' : '.';
 
 if (empty($locwebsvnreal))
    $locwebsvnreal = ".";
