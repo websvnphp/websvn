@@ -199,7 +199,7 @@ function characterData($parser, $data)
          $m =  substr("00".$m, -2);
          $s =  substr("00".$s, -2);
          
-         $curLog->curEntry->date = "$y-$mo-$d $h:$m:$s";
+         $curLog->curEntry->date = "$y-$mo-$d $h:$m:$s GMT";
                   
          $committime = strtotime($curLog->curEntry->date);
          $curLog->curEntry->committime = $committime;
