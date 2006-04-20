@@ -88,10 +88,10 @@ if ($prevrev)
 
    // Get the contents of the two files
    $newtname = tempnam("temp", "");
-   $new = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev);
+   $new = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, "", true);
 
    $oldtname = tempnam("temp", "");
-   $old = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev);
+   $old = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, "", true);
    
    $ent = true;
    $extension = strrchr(basename($path), ".");

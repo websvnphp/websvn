@@ -7,6 +7,8 @@ NEW: Add RSS 'alternate' <link> elements to the HTML headers in
 
 CHANGE: Bugtraq handling has been updated to account for the latest spec.
 
+FIX: Syntax highlighting across lines has been fixed (Issue 85)
+
 2.00 beta 8
 
 CHANGE: Remove path comparison boxes when using the flat view display
