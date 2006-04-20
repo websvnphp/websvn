@@ -59,7 +59,7 @@ $listing = array();
 
 // Get the contents of the file
 $tfname = tempnam("temp", "");
-$svnrep->getFileContents($path, $tfname, $rev);
+$svnrep->getFileContents($path, $tfname, $rev, "", true);
 
 $filecache = array();
 
