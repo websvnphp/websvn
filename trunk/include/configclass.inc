@@ -526,7 +526,7 @@ Class Config
       if ($cp = @shell_exec("CHCP"))
       {
          $cp = trim(substr($cp, strpos($cp, ":") + 1));
-         settype($sp, "integer");
+         settype($cp, "integer");
       }
       
       // Use the most sensible default value if that failed
