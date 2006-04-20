@@ -366,11 +366,67 @@ Class SVNRepository
       return $tree;
    }
    
+   // highlightLine
+   //
+   // Distill line-spanning syntax highlighting so that each line can stand alone
+   // (when invoking on the first line, $attributes should be an empty array)
+   // Invoked to make sure all open syntax highlighting tags (<font>, <i>, <b>, etc.)
+   // are closed at the end of each line and re-opened on the next line
+   
+   function highlightLine($line, &$attributes)
+   {
+      $hline = "";
+      
+      // Apply any highlighting in effect from the previous line
+      foreach($attributes as $attr)
+      {
+        $hline.=$attr['text'];
+      }
+
+      // append the new line
+      $hline.=$line;
+
+      // update attributes
+      for ($line = strstr($line, "<"); $line; $line = strstr(substr($line,1), "<"))
+      {
+         // if this closes a tag, remove most recent corresponding opener
+         if (substr($line,1,1) == "/")
+         {
+            $tagNamLen = strcspn($line, "> \t", 2);
+            $tagNam = substr($line,2,$tagNamLen);
+            foreach(array_reverse(array_keys($attributes)) as $k)
+            {
+               if ($attributes[$k]['tag'] == $tagNam)
+               {
+                  unset($attributes[$k]);
+                  break;
+               }
+            }
+         }
+         else
+         // if this opens a tag, add it to the list
+         {
+            $tagNamLen = strcspn($line, "> \t", 1);
+            $tagNam = substr($line,1,$tagNamLen);
+            $tagLen = strcspn($line, ">") + 1;
+            $attributes[] = array('tag' => $tagNam, 'text' => substr($line,0,$tagLen));
+         }
+      }
+
+      // close any still-open tags
+      foreach(array_reverse($attributes) as $attr)
+      {
+         $hline.="</".$attr['tag'].">";
+      }
+
+      return($hline);
+   }
+
    // getFileContents
    //
    // Dump the content of a file to the given filename
    
-   function getFileContents($path, $filename, $rev = 0, $pipe = "")
+   function getFileContents($path, $filename, $rev = 0, $pipe = "", $perLineHighlighting = false)
    {
       global $config, $extEnscript;
       
@@ -412,11 +468,29 @@ Class SVNRepository
             
             $content = explode("<br />", $content);
             
-            foreach ($content as $line)
+            if ($perLineHighlighting)
             {
-               fputs($f, rtrim($line)."\n");
-            }
+               // If we need each line independently highlighted (e.g. for diff or blame)
+               //  hen we'll need to filter the output of the highlighter
+               // to make sure tags like <font>, <i> or <b> don't span lines
             
+               // $attributes is used to remember what highlighting attributes 
+               // are in effect from one line to the next
+               $attributes = array(); // start with no attributes in effect
+            
+               foreach ($content as $line)
+               {
+                   fputs($f, $this->highlightLine(rtrim($line),$attributes)."\n");
+               }
+            }
+            else
+            {
+               foreach ($content as $line)
+               {
+                  fputs($f, rtrim($line)."\n");
+               }
+            }
+
             fclose($f);
          }         
       }
