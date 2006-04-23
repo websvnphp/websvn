@@ -133,52 +133,43 @@ function getFullURL($loc)
 //
 // Replace the spaces at the front of a line with hard spaces
 
-$spacearray = array (
-0 => "",
-1 => "&nbsp;",
-2 => "&nbsp;&nbsp;",
-3 => "&nbsp;&nbsp;&nbsp;",
-4 => "&nbsp;&nbsp;&nbsp;&nbsp;",
-5 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-6 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-7 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-8 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-9 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-10 => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-);
+# XXX: this is an unnecessary function; you can prevent whitespace from being
+#      trimmed via CSS (use the "white-space: pre;" properties). ~J
+# in the meantime, here's an improved function
 
 function hardspace($s)
 {
-   global $spacearray, $config, $rep;
+   global $rep;
 
-   $len = strlen($s);
+   // Expand tabs to configured shiftwidth
+   $sw = $rep->getExpandTabsBy();
 
-   // Calculate the number of spaces to added (expanding tabs)
-   for ($i = 0, $numspaces = 0; $i < $len; $i++)
+   // Replace spaces and tabs with no-break spaces (which is unnecessary as I
+   // mentioned above ~J)
+   // To do this, we walk through and copy the string, replacing whitespace as necessary
+   $str = '';
+   for ($i = 0; $i < strlen($s); $i++)
    {
-      if ($s[$i] == " ")
-	      $numspaces += 1;
-	   else
-	      if ($s[$i] == "\t")
-	         $numspaces += $rep->getExpandTabsBy();
-	      else
-	         break;
-   }
-   
-   // Strip the leading blanks
-   $s = substr($s, $i);
+      # it might be better to copy chunks of the non-whitespace string at a time
+      # by skipping $i to the next whitespace position, but something tells me
+      # that won't help much ~J
+      switch ($s{$i})
+      {
+         case ' ':
+            $str .= '&nbsp;';
+            break;
 
-   // Create a string of &nbsp;'s
-   $spaces = "";
-   while ($numspaces >= 10)
-   {
-     $spaces .= $spacearray[10];
-     $numspaces -= 10;
+         case "\t":
+            $str .= str_repeat('&nbsp;', ($sw - (($i+1) % $sw)));
+            break;
+
+         default:
+            $str .= $s{$i};
+            break;
+      }
    }
-   $spaces .= $spacearray[$numspaces];
-   
-   // Stick them together
-   return $spaces.$s;
+
+   return $str;
 }
 
 
