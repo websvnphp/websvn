@@ -4,6 +4,7 @@ NEW: Template files may now be specified on a per repository basis
 NEW: Add RSS 'alternate' <link> elements to the HTML headers in
      directory listings. This lets you, for example, easily create a
      'live bookmark' in Firefox to monitor commits to a particular SVN path.
+NEW: Russian translation.
 
 CHANGE: Bugtraq handling has been updated to account for the latest spec.
 
