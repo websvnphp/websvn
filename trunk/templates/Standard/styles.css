@@ -1,85 +1,84 @@
-
 body
 {
-   font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
+   font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif;
    background-color: white;
    margin: 20px;
    padding: 0px
 }
 
-H1
+h1
 { 
    color: #99007E;
    font-size: 30px;
    font-weight: normal;
-   font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
+   font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif;
    text-decoration: none;
 }
 
-HR { color: #99007E; background-color: #99007E  }
+hr { color: #99007E; background-color: #99007E  }
 
 .highlight { color: #99007E; font-style: italic;  }
 
-TABLE.bordered, TABLE.outlined, TABLE.blame
+table.bordered, table.outlined, table.blame
 {
    border-collapse: collapse;
    border: solid 2px #99007E;
 }
 
-.bordered TD, .bordered TH
+.bordered td, .bordered th
 {
    border: solid 2px #99007E;
 }
 
-.outlined TD
+.outlined td
 {
    padding: 0px 5px 0px 5px;
 }
 
-.outlined TH, .blame TH
+.outlined th, .blame th
 {
    padding: 5px 5px 5px 5px;
    font-weight: bold;
    border: solid 2px #99007E;
 }
 
-.outlined TD, .blame TD
+.outlined td, .blame td
 {
    padding: 1px 5px 1px 5px;
    border-right: solid 2px #99007E;
    border-bottom: solid 1px #F0F0F0;
 }
 
-TD.diffdeleted
+td.diffdeleted
 {
    font-size: 11px;
    background-color: red;
 }
 
-TD.diffchanged
+td.diffchanged
 {
    font-size: 11px;
    background-color: yellow;
 }
 
-TD.diffadded
+td.diffadded
 {
    font-size: 11px;
    background-color: green;
 }
 
-TD.diff
+td.diff
 {
    font-size: 11px;
    background-color: #D0D0D0;
 }
 
-TABLE.diff
+table.diff
 {
    border-collapse: collapse;
 }
 
-DIV.newpath
+div.newpath
 {
    padding: 5px 5px 5px 5px;
    border: solid 2px #99007E;
@@ -91,3 +90,4 @@ DIV.newpath
 .groupname { padding-left: 0px; text-indent: -25px; margin: 3px 0 3px 0;}  
 .switchcontent { margin: 3px 0 0 20px; }
 
+code { white-space: pre-wrap; }

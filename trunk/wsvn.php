@@ -1,4 +1,5 @@
 <?php
+# vim:et:ts=3:sts=3:sw=3:
 
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004 Tim Armes
@@ -28,10 +29,12 @@
 //
 // Note that wsvn.php need not be in the /websvn directory (and normally isn't).
 // If you want to use the root server directory, just use a blank string ('').
-$locwebsvnhttp = "/websvn";  
+#$locwebsvnhttp = "/websvn";  
+$locwebsvnhttp = '';
 
 // Physical location of websvn directory
-$locwebsvnreal = "d:/websvn";
+#$locwebsvnreal = "d:/websvn";
+$locwebsvnreal = '/home/junx/docs/wsvn';
 
 chdir($locwebsvnreal);
 
