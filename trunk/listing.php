@@ -1,4 +1,5 @@
 <?php
+# vim:et:ts=3:sts=3:sw=3:
 
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004 Tim Armes
@@ -31,13 +32,7 @@ require_once("include/bugtraq.inc");
 
 function removeURLSeparator($url)
 {
-   if ($url[strlen($url)-1] == "?" || $url[strlen($url)-1] == "&")
-      $url = substr($url, 0, -1);
-
-   if (substr($url, -5) == "&amp;")
-      $url = substr($url, 0, -5);
-
-   return $url;
+   return preg_replace('#(\?|&(amp;)?)$#', '', $url);
 }
 
 function fileLink($path, $file, $returnjoin = false)
