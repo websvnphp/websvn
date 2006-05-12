@@ -1,4 +1,5 @@
 <?php
+# vim:et:ts=3:sts=3:sw=3:
 
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004 Tim Armes
@@ -68,6 +69,7 @@ function createDirLinks($rep, $path, $rev, $showchanged)
 
 // Create links out of http:// and mailto: tags
 
+# TODO: the target="_blank" nonsense should be optional (or specified by the template)
 function create_anchors($text)
 {
    $ret = $text;
@@ -135,10 +137,12 @@ function getFullURL($loc)
 
 # XXX: this is an unnecessary function; you can prevent whitespace from being
 #      trimmed via CSS (use the "white-space: pre;" properties). ~J
-# in the meantime, here's an improved function
+# in the meantime, here's an improved function (does nothing)
 
 function hardspace($s)
 {
+   return '<code>'.$s.'</code>';
+   /*
    global $rep;
 
    // Expand tabs to configured shiftwidth
@@ -170,6 +174,7 @@ function hardspace($s)
    }
 
    return $str;
+   */
 }
 
 
@@ -234,18 +239,51 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 	return $nbsp ? str_replace(" ", "&nbsp;", $text) : $text;
 }
 
+// http_build_query
+//
+// Yay for PHP5 compatibility!  This is for PHP4.
+// See <http://php.net/http_build_query> for details
+// This function is based on the one presented at
+// <http://us2.php.net/http_build_query#57480>
+
+if (!function_exists('http_build_query'))
+{
+   function http_build_query(&$formdata, $numeric_prefix = null, $parent_key = null)
+   {
+      $data = array();
+      # casting as an array would assumingly transform an object into an array, right?
+      foreach ((array) $formdata as $key => $val)
+      {
+         $tmp_key = urlencode(is_int($key) ? $numeric_prefix.$key : $key);
+         // Make this a sub-array if called recursively
+         if (!empty($parent_key))
+         {
+            $tmp_key = $parent_key.'['.$tmp_key.']';
+         }
+         // Call recursively if $val is an array or object
+         $data[] = (is_array($val) or is_object($val))
+            ? http_build_query($val, $numeric_prefix, $tmp_key)
+            : $tmp_key.'='.urlencode($val);
+      }
+      // Respect the user's PHP settings
+      $separator = ini_get('arg_separator.output');
+      if (empty($separator)) $separator = '&amp;'; // preventing error
+      return implode($separator, $data);
+   }
+}
+
 // getParameterisedSelfUrl
 //
 // Get the relative URL (PHP_SELF) with GET and POST data
 
 function getParameterisedSelfUrl($params = true)
 {
-   global $config;
-   $sep = "?";
+   $url = null;
 
    if ($config->multiViews)
    {
-      $url = preg_replace("/\.php/", "", $_SERVER['PHP_SELF'], 1);
+      // Get rid of the file's name
+      $url = preg_replace('/\.php/', '', $_SERVER['PHP_SELF'], 1);
    }
    else
    {
@@ -253,30 +291,16 @@ function getParameterisedSelfUrl($params = true)
 
       // Sometimes the .php isn't on the end.  Damn strange...
       if (strchr($url, '.') === false)
-         $url .= ".php";   
+         $url .= '.php';   
    }
 
    if ($params)
    {
-     $arr = $_GET + $_POST;
-     while (list($k,$v) = each($arr))
-     {
-        if (is_array($v))
-        {
-           foreach ($v As $key => $value)
-           {
-              $url .= "$sep$k"."[".$key."]"."=$value";
-              $sep = "&";
-           }
-        }
-        else
-         $url .= "$sep$k=$v";
-
-        $sep = "&";
-     }
+      $arr = $_GET + $_POST;
+      # XXX: the point of HTTP POST is that URIs have a set size limit, so POST
+      #      data is typically too large to bother with; why include it?
+      $url .= '?'.http_build_query($arr);
    }
-
-   $url .= $sep;
 
    return $url;
 }

@@ -1,4 +1,5 @@
 <?php
+# vim:et:ts=3:sts=3:sw=3:
 
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004 Tim Armes
@@ -23,5 +24,5 @@
 //
 // Version information
 
-$version = "2.0 release candidate 1";
+$version = "2.0rc2";
 ?>
