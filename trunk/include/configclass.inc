@@ -461,6 +461,7 @@ Class Config
    var $auth = "";
      
    var $templatePath = "./templates/Standard/";
+   var $phpCompatPath = './include/PHP/Compat.php';
 
    var $ignoreSvnMimeTypes = false;
    var $ignoreWebSVNContentTypes = false;
@@ -503,7 +504,6 @@ Class Config
       {
          if (strcmp($rep->getDisplayName(), $name) == 0)
          {
-            // XXX: hacks like this should be conditional based on PHP version
             $repref =& $this->_repositories[$index];
             return $repref;
          }
@@ -792,7 +792,7 @@ Class Config
    
    function setPath(&$var, $path, $name, $params = "")
    {
-      $lastchar = $path{strlen($path) - 1};
+      $lastchar = substr($path, -1, 1);
       $isDir = ($lastchar == DIRECTORY_SEPARATOR ||
                 $lastchar == "/" ||
                 $lastchar == "\\");
@@ -917,6 +917,18 @@ Class Config
    function getTemplatePath()
    {
       return $this->templatePath;
+   }
+
+   // PHP Compat file (from PEAR)
+
+   function setPHPCompatPath($path)
+   {
+      $this->setPath($this->phpCompatPath, $path, 'Compat.php');
+   }
+
+   function getPHPCompatFile()
+   {
+      return trim($this->phpCompatPath);
    }
 
    // parentPath
