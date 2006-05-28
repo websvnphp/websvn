@@ -155,6 +155,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // include("languages/tchinese.inc");
 // include("languages/schinese.inc");
 // include 'languages/russian.inc';
+// include 'languages/japanese.inc';
 
 // --- MULTIVIEWS ---
 
