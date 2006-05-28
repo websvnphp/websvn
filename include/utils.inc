@@ -24,6 +24,8 @@
 //
 // General utility commands
 
+require_once 'php5compat.inc';
+
 // createDirLinks
 //
 // Create a list of links to the current path that'll be available from the template
@@ -142,39 +144,6 @@ function getFullURL($loc)
 function hardspace($s)
 {
    return '<code>'.$s.'</code>';
-   /*
-   global $rep;
-
-   // Expand tabs to configured shiftwidth
-   $sw = $rep->getExpandTabsBy();
-
-   // Replace spaces and tabs with no-break spaces (which is unnecessary as I
-   // mentioned above ~J)
-   // To do this, we walk through and copy the string, replacing whitespace as necessary
-   $str = '';
-   for ($i = 0; $i < strlen($s); $i++)
-   {
-      # it might be better to copy chunks of the non-whitespace string at a time
-      # by skipping $i to the next whitespace position, but something tells me
-      # that won't help much ~J
-      switch ($s{$i})
-      {
-         case ' ':
-            $str .= '&nbsp;';
-            break;
-
-         case "\t":
-            $str .= str_repeat('&nbsp;', ($sw - (($i+1) % $sw)));
-            break;
-
-         default:
-            $str .= $s{$i};
-            break;
-      }
-   }
-
-   return $str;
-   */
 }
 
 
@@ -237,39 +206,6 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 		$text = "-$text";
 
 	return $nbsp ? str_replace(" ", "&nbsp;", $text) : $text;
-}
-
-// http_build_query
-//
-// Yay for PHP5 compatibility!  This is for PHP4.
-// See <http://php.net/http_build_query> for details
-// This function is based on the one presented at
-// <http://us2.php.net/http_build_query#57480>
-
-if (!function_exists('http_build_query'))
-{
-   function http_build_query(&$formdata, $numeric_prefix = null, $parent_key = null)
-   {
-      $data = array();
-      # casting as an array would assumingly transform an object into an array, right?
-      foreach ((array) $formdata as $key => $val)
-      {
-         $tmp_key = urlencode(is_int($key) ? $numeric_prefix.$key : $key);
-         // Make this a sub-array if called recursively
-         if (!empty($parent_key))
-         {
-            $tmp_key = $parent_key.'['.$tmp_key.']';
-         }
-         // Call recursively if $val is an array or object
-         $data[] = (is_array($val) or is_object($val))
-            ? http_build_query($val, $numeric_prefix, $tmp_key)
-            : $tmp_key.'='.urlencode($val);
-      }
-      // Respect the user's PHP settings
-      $separator = ini_get('arg_separator.output');
-      if (empty($separator)) $separator = '&amp;'; // preventing error
-      return implode($separator, $data);
-   }
 }
 
 // getParameterisedSelfUrl

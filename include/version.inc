@@ -24,5 +24,5 @@
 //
 // Version information
 
-$version = "2.0rc2";
+$version = "2.1";
 ?>
