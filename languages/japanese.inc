@@ -19,7 +19,7 @@
 //
 // --
 //
-// japanese-utf8.inc
+// japanese.inc
 // Translatior: BEPPU Masamichi
 //
 // Japanese(UTF-8) language strings
@@ -32,6 +32,10 @@ $lang["DIFF"] = "差分";
 
 $lang["NOREP"] = "リポジトリが指定されていません";
 $lang["NOPATH"] = "パスが見付かりません";
+
+$lang["RESTRICTED"] = "アクセスが制限されています";
+$lang["SUPPLYREP"] = "ファイル include/config.inc 内に \$config->parentPath もしくは \$config->addRepository を使用してリポジトリパスを設定してください。<p>詳しくはインストールガイドを参照してください。";
+
 
 $lang["DIFFREVS"] = "リビジョン間の差分";
 $lang["AND"] = "と";
@@ -59,17 +63,23 @@ $lang["AUTHOR"] = "修正者";
 $lang["AGE"] = "無修正時間";
 $lang["LOG"] = "ログ";
 $lang["CURDIR"] = "カレントディレクトリ";
+$lang["TARBALL"] = "Tarball";
 
 $lang["PREV"] = "前";
 $lang["NEXT"] = "次";
 $lang["SHOWALL"] = "全て表示";
 
 $lang["BADCMD"] = "コマンド実行中のエラー";
+$lang["UNKNOWNREVISION"] = "指定のリビジョンがありません";
 
 $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;プロジェクト一覧";
+$lang["PROJECTS"] = "Subversion&nbsp;リポジトリ一覧";
 $lang["SERVER"] = "Subversion&nbsp;サーバ";
 
+$lang["FILTER"] = "フィルタオプション";
+$lang["STARTLOG"] = "開始リビジョン";
+$lang["ENDLOG"] = "終了リビジョン";
+$lang["MAXLOG"] = "最大リビジョン数";
 $lang["SEARCHLOG"] = "ログを検索";
 $lang["CLEARLOG"] = "検索条件をクリアする";
 $lang["MORERESULTS"] = "検索条件を絞り込む";
@@ -89,11 +99,29 @@ $lang["WEEKS"] = "週間";
 $lang["DAYS"] = "日間";
 $lang["HOURS"] = "時間";
 $lang["MINUTES"] = "分";
+$lang["DAYLETTER"] = "日間";
+$lang["HOURLETTER"] = "時間";
+$lang["MINUTELETTER"] = "分";
+$lang["SECONDLETTER"] = "秒";
 
 $lang["GO"] = "GO";
+
+$lang["PATHCOMPARISON"] = "パス比較";
+$lang["COMPAREPATHS"] = "パス比較";
+$lang["COMPAREREVS"] = "リビジョン比較";
+$lang["PROPCHANGES"] = "プロパティ変更：";
+$lang["CONVFROM"] = "この比較は次の2つのパス配下すべてのファイルの比較をします。比較対象パス：";
+$lang["TO"] = "と";
+$lang["REVCOMP"] = "逆比較";
+$lang["COMPPATH"] = "比較元パス：";
+$lang["WITHPATH"] = "比較先パス：";
+$lang["FILEDELETED"] = "ファイル削除";
+$lang["FILEADDED"] = "新規ファイル";
+
 
 // The following are defined by some languages to stop unwanted line splitting
 // in the template files. 
 
 $lang["NOBR"] = "<nobr>";
 $lang["ENDNOBR"] = "</nobr>";
+
