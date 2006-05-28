@@ -35,7 +35,7 @@ $all = (@$_REQUEST["all"] == 1)?1:0;
 $isDir = (@$_REQUEST["isdir"] == 1)?1:0;
 $dosearch = (@$_REQUEST["logsearch"] == 1)?1:0;
 $search = trim(@$_REQUEST["search"]);
-$words = explode(" ", $search);
+$words = preg_split('#\s+#', $search);
 $fromRev = (int)@$_REQUEST["fr"];
 $startrev = strtoupper(trim(@$_REQUEST["sr"]));
 $endrev = strtoupper(trim(@$_REQUEST["er"]));
@@ -66,14 +66,14 @@ foreach ($words as $index => $word)
    $words[$index] = strtolower(removeAccents($word));
    
    // Remove empty string introduced by multiple spaces
-   if ($words[$index] == "")
+   if (empty($words[$index]))
       unset($words[$index]);
 }
 
 if (empty($page)) $page = 1;
 
 // If searching, display all the results
-if ($dosearch) $all = true;
+$all = (bool) $dosearch;
 
 $maxperpage = 20;
 
@@ -95,10 +95,10 @@ $youngest = $history->entries[0]->rev;
 if (empty($rev))
    $rev = $youngest;
 
+// make sure path is prefixed by a /
+$ppath = $path;
 if ($path == "" || $path{0} != "/")
    $ppath = "/".$path;
-else
-   $ppath = $path;
 
 $vars["action"] = $lang["LOG"];
 $vars["repname"] = $rep->getDisplayName();
