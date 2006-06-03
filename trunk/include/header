@@ -1,4 +1,4 @@
-# vim:et:ts=3:sts=3:sw=3:
+# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright © 2004-2006 Tim Armes, Matt Sicker

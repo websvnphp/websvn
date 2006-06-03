@@ -1,8 +1,8 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:
+# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Tim Armes
+// Copyright © 2004-2006 Tim Armes, Matt Sicker
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,18 +30,24 @@
 
 class Bugtraq
 {
+   // {{{ Properties
+
    var $msgstring;
    var $urlstring;
    var $logregex;
    var $append;
-   
+
    var $firstPart;
    var $firstPartLen;
    var $lastPart;
    var $lastPartLen;
-   
+
    var $propsfound = false;
-   
+
+   // }}}
+
+   // {{{ __construct($rep, $svnrep, $path)
+
    function Bugtraq($rep, $svnrep, $path)
    {
       global $config;
@@ -76,6 +82,10 @@ class Bugtraq
             $this->propsfound = true;
       }
    }
+
+   // }}}
+
+   // {{{ initPartInfo()
    
    function initPartInfo()
    {
@@ -88,6 +98,10 @@ class Bugtraq
          $this->lastPartLen = strlen($this->lastPart);
       }  
    }
+
+   // }}}
+
+   // {{{ replaceIDs($message)
 
    function replaceIDs($message)
    {
@@ -215,6 +229,9 @@ class Bugtraq
 
       return $message;
    }
+
+   // }}}
+
 }
 
 // The BugtraqTestable class is a derived class that is used to test the matching
@@ -223,11 +240,17 @@ class Bugtraq
 
 class BugtraqTestable extends Bugtraq
 {
+   // {{{ __construct()
+
    function BugtraqTestable()
    {
       // This constructor serves to assure that the parent constructor is not
       // called.
    }
+
+   // }}}
+
+   // {{{ setUpVars($message, $url, $regex, $append)
 
    function setUpVars($message, $url, $regex, $append)
    {
@@ -239,26 +262,46 @@ class BugtraqTestable extends Bugtraq
 
       $this->initPartInfo();
    }
+
+   // }}}
+
+   // {{{ setMessage($message)
    
    function setMessage($message)
    {
       $this->msgstring = $message;
    }
 
+   // }}}
+
+   // {{{ setUrl($url)
+
    function setUrl($url)
    {
       $this->urlstring = $url;
    }
+
+   // }}}
+
+   // {{{ setRegex($regex)
 
    function setRegEx($regex)
    {
       $this->logregex = $regex;
    }
 
+   // }}}
+
+   // {{{ setAppend($append)
+
    function setAppend($append)
    {
       $this->append = $append;
    }
+
+   // }}}
+
+   // {{{ printVars()
    
    function printVars()
    {
@@ -272,7 +315,11 @@ class BugtraqTestable extends Bugtraq
       echo "lastPart = ".$this->lastPart."\n";
       echo "lastPartLen = ".$this->lastPartLen."\n";
    }
+
+   // }}}
 }
+
+// {{{ test_bugtraq()
 
 function test_bugtraq()
 {
@@ -337,5 +384,7 @@ function test_bugtraq()
 
    echo nl2br($res)."<p>";
 }
+
+// }}}
 
 ?>

@@ -1,8 +1,8 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:
+# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Tim Armes
+// Copyright © 2004-2006 Tim Armes, Matt Sicker
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@ require_once("include/version.inc");
 
 // Auxillary functions used to sort repositories by name/group
 
+// {{{ cmpReps($a, $b)
+
 function cmpReps($a, $b)
 {
    // First, sort by group
@@ -41,6 +43,10 @@ function cmpReps($a, $b)
    return strcasecmp($a->name, $b->name);
 }
 
+// }}}
+
+// {{{ cmpGroups($a, $b)
+
 function cmpGroups($a, $b)
 {
    $g = strcasecmp($a->group, $b->group);
@@ -49,6 +55,10 @@ function cmpGroups($a, $b)
    
    return 0;
 }
+
+// }}}
+
+// {{{ mergesort(&$array, [$cmp_function])
 
 function mergesort(&$array, $cmp_function = 'strcmp')
 {
@@ -95,10 +105,14 @@ function mergesort(&$array, $cmp_function = 'strcmp')
    return;
 }
 
+// }}}
+
 // A Repository configuration class
 
 Class Repository
 {
+   // {{{ Properties
+
    var $name;
    var $svnName;
    var $path;
@@ -120,7 +134,11 @@ Class Repository
    var $auth;
    var $contentEnc;
    var $templatePath;
-      
+
+   // }}}
+
+   // {{{ __construct($name, $svnName, $path, [$group, [$username, [$password]]])
+
    function Repository($name, $svnName, $path, $group = NULL, $username = NULL, $password = NULL)
    {
       $this->name = $name;
@@ -131,6 +149,10 @@ Class Repository
       $this->password = $password;
    }
 
+   // }}}
+
+   // {{{ getDisplayName()
+
    function getDisplayName()
    {
       if(!empty($this->group))
@@ -138,6 +160,10 @@ Class Repository
       else
          return $this->name;
    }
+
+   // }}}
+
+   // {{{ svnParams
 
    function svnParams()
    {
@@ -147,9 +173,11 @@ Class Repository
          return " ";
    }
 
+   // }}}
+
    // Local configuration accessors
       
-   // RSS Feed
+   // {{{ RSS Feed
    
    function hideRSS()
    {
@@ -169,9 +197,11 @@ Class Repository
          return $this->rss;
          
       return $config->getHideRSS(); 
-  }
+   }
+
+   // }}}
    
-   // Download
+   // {{{ Download
    
    function allowDownload()
    {
@@ -264,7 +294,9 @@ Class Repository
       }
    }
 
-   // Templates
+   // }}}
+
+   // {{{ Templates
 
    function setTemplatePath($path)
    {
@@ -286,7 +318,9 @@ Class Repository
          return $config->getTemplatePath();
    }
 
-   // Tab expansion
+   // }}}
+
+   // {{{ Tab expansion
    
    function expandTabsBy($sp)
    {
@@ -303,7 +337,9 @@ Class Repository
       return $config->getExpandTabsBy();
    }
 
-   // Mime Type Handing
+   // }}}
+
+   // {{{ MIME-Type Handing
    
    function ignoreSvnMimeTypes()
    {
@@ -344,8 +380,10 @@ Class Repository
          
       return $config->getIgnoreWebSVNContentTypes();
    }
+
+   // }}}
    
-   // Issue Tracking
+   // {{{ Issue Tracking
    
    function useBugtraqProperties()
    {
@@ -366,8 +404,10 @@ Class Repository
          
       return $config->getBugtraq();
    }
+
+   // }}}
    
-   // Encodings
+   // {{{ Encodings
    
    function setContentEncoding($contentEnc)
    {
@@ -425,12 +465,17 @@ Class Repository
       // No auth file - free access...
       return true;
    }
+
+   // }}}
+
 }
 
 // The general configuration class
 
 Class Config
 {
+   // {{{ Properties
+
    // Tool path locations
 
    var $svnlook = "svnlook";
@@ -477,10 +522,18 @@ Class Config
    var $quote = "'";
 
    var $_repositories;
-   
+
+   // }}}
+
+   // {{{ __construct()
+
    function Config()
    {
    }
+
+   // }}}
+
+   // {{{ Repository configuration
    
    function addRepository($name, $url, $group = NULL, $username = NULL, $password = NULL)
    {
@@ -513,7 +566,9 @@ Class Config
       exit;
    }
 
-   // setServerIsWindows
+   // }}}
+
+   // {{{ setServerIsWindows
    //
    // The server is running on Windows
    
@@ -542,6 +597,10 @@ Class Config
       $this->quote = '"';
    }
 
+   // }}}
+
+   // {{{ Caching
+
    // setCachingOn
    //
    // Set result caching on
@@ -555,6 +614,10 @@ Class Config
    {
       return $this->cacheResults;
    }
+
+   // }}}
+
+   // {{{ MultiViews
 
    // useMultiViews
    //
@@ -570,6 +633,10 @@ Class Config
       return $this->multiViews;
    }
 
+   // }}}
+
+   // {{{ Enscript
+
    // useEnscript
    //
    // Use Enscript to colourise listings
@@ -583,6 +650,10 @@ Class Config
    {
       return $this->useEnscript;
    }
+
+   // }}}
+
+   // {{{ RSS
 
    // offerRSS
    //
@@ -603,6 +674,10 @@ Class Config
    {
       return $this->rss;
    }
+
+   // }}}
+
+   // {{{ Downloads
 
    // allowDownload
    //
@@ -665,21 +740,6 @@ Class Config
       }
    }
 
-   function getSvnCommand()
-   {
-      return $this->svn;
-   }
-
-   function getCleanSvnCommand()
-   {
-      return $this->svn_noparams;
-   }
-
-   function getSvnlookCommand()
-   {
-      return $this->svnlook;
-   }
-   
    function addDisallowedDownloadException($path, $myrep = 0)
    {
       if ($path{strlen($path) - 1} != "/")
@@ -705,7 +765,9 @@ Class Config
       return false;
    }
    
-   // getURL
+   // }}}
+
+   // {{{ getURL
    //
    // Get the URL to a path name based on the current config
    
@@ -786,6 +848,10 @@ Class Config
       }
    }
 
+   // }}}
+
+   // {{{ Paths and Commands
+
    // setPath
    //
    // Set the location of the given path
@@ -821,6 +887,21 @@ Class Config
       $this->setPath($this->svn, $path, "svn", "--non-interactive --config-dir /tmp");
       $this->setPath($this->svn_noparams, $path, "svn", " --config-dir /tmp");
       $this->setPath($this->svnlook, $path, "svnlook");
+   }
+   
+   function getSvnCommand()
+   {
+      return $this->svn;
+   }
+
+   function getCleanSvnCommand()
+   {
+      return $this->svn_noparams;
+   }
+
+   function getSvnlookCommand()
+   {
+      return $this->svnlook;
    }
    
    // setDiffPath
@@ -931,7 +1012,9 @@ Class Config
       return trim($this->phpCompatPath);
    }
 
-   // parentPath
+   // }}}
+
+   // {{{ parentPath
    //
    // Automatically set up the repositories based on a parent path
    
@@ -963,8 +1046,10 @@ Class Config
       if (!empty($this->_repositories))
          usort($this->_repositories, "cmpReps");
    }
+
+   // }}}
    
-   // Encoding functions
+   // {{{ Encoding functions
    
    function setInputEncoding($systemEnc)
    {
@@ -995,7 +1080,9 @@ Class Config
       return $this->contentEnc;
    }
 
-   // Tab expansion functions
+   // }}}
+
+   // {{{ Tab expansion functions
    
    function expandTabsBy($sp, $myrep = 0)
    {
@@ -1013,7 +1100,9 @@ Class Config
       return $this->spaces;
    }
 
-   // Misc settings
+   // }}}
+
+   // {{{ Misc settings
    
    function ignoreSvnMimeTypes()
    {
@@ -1134,7 +1223,9 @@ Class Config
       return $this->subversionMinorVersion;
    }
 
-   // Sort the repostories
+   // }}}
+
+   // {{{ Sort the repostories
    //
    // This function sorts the repositories by group name.  The contents of the
    // group are left in there original order, which will either be sorted if the
@@ -1150,5 +1241,7 @@ Class Config
       if (!empty($this->_repositories))
       mergesort($this->_repositories, "cmpGroups");
    }
+
+   // }}}
 }
 ?>
