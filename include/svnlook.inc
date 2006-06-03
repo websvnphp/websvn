@@ -29,29 +29,27 @@
 
 require_once("include/utils.inc");
 
-//
-// --- Classes for retaining log information ---
-//
+// {{{ Classes for retaining log information ---
 
 $debugxml = false;
 
 Class SVNMod
 {
-   var $action = "";
-   var $copyfrom = "";
-   var $copyrev = "";
-   var $path = "";
+   var $action = '';
+   var $copyfrom = '';
+   var $copyrev = '';
+   var $path = '';
 }
 
 Class SVNLogEntry
 {
    var $rev = 1;
-   var $author = "";
-   var $date = "";
+   var $author = '';
+   var $date = '';
    var $committime;
-   var $age = "";
-   var $msg = "";
-   var $path = "";
+   var $age = '';
+   var $msg = '';
+   var $path = '';
    
    var $mods;
    var $curMod;
@@ -62,7 +60,7 @@ Class SVNLog
    var $entries; // Array of entries
    var $curEntry; // Current entry
    
-   var $path = ""; // Temporary variable used to trace path history
+   var $path = ''; // Temporary variable used to trace path history
    
    // findEntry 
    //
@@ -79,12 +77,14 @@ Class SVNLog
    }
 }
 
-//
-// --- XML parsing functions---
-//
+// }}}
+
+// {{{ XML parsing functions---
 
 $curLog = 0;
-$curTag = "";
+$curTag = '';
+
+// {{{ startElement
 
 function startElement($parser, $name, $attrs)
 {
@@ -150,6 +150,10 @@ function startElement($parser, $name, $attrs)
    }
 }
 
+// }}}
+
+// {{{ endElement
+
 function endElement($parser, $name) 
 {
     global $curLog, $debugxml, $curTag;
@@ -174,6 +178,10 @@ function endElement($parser, $name)
     
     $curTag = "";
 }
+
+// }}}
+
+// {{{ characterData
 
 function characterData($parser, $data)
 {
@@ -260,6 +268,9 @@ function characterData($parser, $data)
    }
 }
 
+// }}}
+
+// }}}
 
 // Function returns true if the give entry in a directory tree is at the top level
 
@@ -292,9 +303,11 @@ function _revStr($rev)
       return "";
 }
 
+// {{{ encodePath
+
 // Function to encode a URL without encoding the /'s
 
-function encodepath($uri)
+function encodePath($uri)
 {
    global $config;
 
@@ -327,6 +340,8 @@ function encodepath($uri)
    return $uri;
 }
 
+// }}}
+
 // The SVNRepository Class
 
 Class SVNRepository
@@ -338,6 +353,8 @@ Class SVNRepository
       $this->repConfig = $repConfig;
    }
    
+   // {{{ dirContents
+
    function dirContents($path, $rev = 0)
    {
       global $config, $locwebsvnreal;
@@ -366,8 +383,10 @@ Class SVNRepository
       
       return $tree;
    }
+
+   // }}}
    
-   // highlightLine
+   // {{{ highlightLine
    //
    // Distill line-spanning syntax highlighting so that each line can stand alone
    // (when invoking on the first line, $attributes should be an empty array)
@@ -423,7 +442,9 @@ Class SVNRepository
       return($hline);
    }
 
-   // getFileContents
+   // }}}
+
+   // {{{ getFileContents
    //
    // Dump the content of a file to the given filename
    
@@ -518,9 +539,11 @@ Class SVNRepository
             @exec($cmd);
          }
       }
-  }
+   }
 
-   // listFileContents
+   // }}}
+
+   // {{{ listFileContents
    //
    // Print the contents of a file without filling up Apache's memory
    
@@ -590,7 +613,9 @@ Class SVNRepository
       }
    }
 
-   // getBlameDetails
+   // }}}
+
+   // {{{ getBlameDetails
    //
    // Dump the blame content of a file to the given filename
    
@@ -604,7 +629,11 @@ Class SVNRepository
       $cmd = quoteCommand($config->svn." blame $revstr ".$this->repConfig->svnParams().quote($path)." > $filename", false);
       
       @exec($cmd);
-  }
+   }
+
+   // }}}
+
+   // {{{ getProperty
 
    function getProperty($path, $property, $rev = 0)
    {
@@ -622,7 +651,9 @@ Class SVNRepository
       return implode("\n", $ret);
    }
 
-   // exportDirectory
+   // }}}
+
+   // {{{ exportDirectory
    //
    // Exports the directory to the given location
    
@@ -637,6 +668,10 @@ Class SVNRepository
 
       @exec($cmd);
    }
+
+   // }}}
+
+   // {{{ getLog
   
    function getLog($path, $brev = "", $erev = 1, $quiet = false, $limit = 2)
    {
@@ -700,14 +735,18 @@ Class SVNRepository
                }
             }
    		}
-		
 		   pclose($handle);
       }
-            
+
       xml_parser_free($xml_parser);
       return $curLog;
-   }     
+   }
+
+   // }}}
+
 }
+
+// {{{ initSvnVersion
 
 function initSvnVersion(&$major, &$minor)
 {
@@ -724,5 +763,7 @@ function initSvnVersion(&$major, &$minor)
    $config->setSubversionMajorVersion($major);
    $config->setSubversionMinorVersion($minor);
 }
+
+// }}}
 
 ?>
