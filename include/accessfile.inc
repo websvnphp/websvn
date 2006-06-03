@@ -1,8 +1,8 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:
+# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Tim Armes
+// Copyright © 2004-2006 Tim Armes, Matt Sicker
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 //
 // --
 //
-// inifile.inc
+// accessfile.inc
 //
 // Read a .ini style file
 
@@ -28,11 +28,17 @@ class IniFile
 {
    var $sections;
    
+   // {{{ __construct
+
    function IniFile()
    {
       $this->sections = array();
    }
+
+   // }}}
    
+   // {{{ readIniFile
+
    function readIniFile ($name)
    {
       $contents = file($name);
@@ -63,20 +69,34 @@ class IniFile
       }
    }
 
+   // }}}
+
+   // {{{ getSections
+
    function &getSections()
    {
       return $this->sections;
    }
+
+   // }}}
+
+   // {{{ getValues
 
    function getValues($section)
    {
       return @$this->sections[strtolower($section)];
    }
 
+   // }}}
+
+   // {{{ getValue
+
    function getValue($section, $key)
    {
       return @$this->sections[strtolower($section)][strtolower($key)];
    }
+
+   // }}}
 }   
 
 ?>

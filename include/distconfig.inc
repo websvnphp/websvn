@@ -1,8 +1,8 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:
+# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Tim Armes
+// Copyright © 2004-2006 Tim Armes, Matt Sicker
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 // --- FOLLOW THE INSTRUCTIONS BELOW TO CONFIGURE YOUR SETUP ---
 
-// --- PLATFORM CONFIGURATION ---
+// {{{ PLATFORM CONFIGURATION ---
 
 // Uncomment the next line if your running a windows server
 //
@@ -34,20 +34,22 @@
 
 // Configure these lines if your commands aren't on your path. 
 //
-// $config->setSVNCommandPath("Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin");
-// $config->setDiffPath("Path/to/diff/command/");
+// $config->setSVNCommandPath('Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin');
+// $config->setDiffPath('Path/to/diff/command/');
 
 // For syntax colouring, if option enabled...
-// $config->setEnscriptPath("Path/to/enscript/command/");
-// $config->setSedPath("Path/to/sed/command/");
+// $config->setEnscriptPath('Path/to/enscript/command/');
+// $config->setSedPath('Path/to/sed/command/');
 
 // For delivered tarballs, if option enabled...
-// $config->setTarPath("Path/to/tar/command/");
+// $config->setTarPath('Path/to/tar/command/');
 
 // For delivered GZIP'd files and tarballs, if option enabled...
-// $config->setGZipPath("Path/to/gzip/command/");
+// $config->setGZipPath('Path/to/gzip/command/');
 
-// --- REPOSITORY SETUP ---
+// }}}
+
+// {{{ REPOSITORY SETUP ---
 
 // There are 2 methods for defining the repositiories available on the system.  Either you list
 // them by hand, in which case you can give each one the name of your choice, or you use the
@@ -66,21 +68,23 @@
 
 // Local repositories (without and with optional group):
 //
-// $config->addRepository("NameToDisplay", "URL to repository (e.g. file:///c:/svn/proj)");
-// $config->addRepository("NameToDisplay", "URL to repository (e.g. file:///c:/svn/proj)", "group");
+// $config->addRepository('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)');
+// $config->addRepository('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)', 'group');
 //
 // Remote repositories (without and with optional group):
 //
-// $config->addRepository("NameToDisplay", "URL (e.g. http://path/to/rep)", NULL, "username", "password");
-// $config->addRepository("NameToDisplay", "URL (e.g. http://path/to/rep)", "group", "username", "password");
+// $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', NULL, 'username', 'password');
+// $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'group', 'username', 'password');
 //
 // To use the parent path method, uncomment the newt line and and replace the path with your one.  You
 // can call the function several times if you have several parent paths.  Note that in this case the
 // path is a filesystem path
 //
-// $config->parentPath("Path/to/parent (e.g. c:\\svn)");
+// $config->parentPath('Path/to/parent (e.g. c:\\svn)');
 
-// --- LOOK AND FEEL ---
+// }}}
+
+// {{{ LOOK AND FEEL ---
 //
 // Uncomment ONLY the template file that you want.  
 
@@ -91,7 +95,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // You may also specify a per repository template file by uncommenting and changing the following
 // line as necessary.  Use the convention "groupname.myrep" if your repository is in a group.
 
-// $config->setTemplatePath("$locwebsvnreal/templates/Standard/", "myrep"); // Access file for myrep
+// $config->setTemplatePath('$locwebsvnreal/templates/Standard/', 'myrep'); // Access file for myrep
 
 // The index page containing the projects may either be displayed as a flat view (the default),
 // where grouped repositories are displayed as "GroupName.RepName" or as a tree view.
@@ -106,7 +110,9 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // $config->useFlatView();
 
-// --- LANGUAGE SETUP ---
+// }}}
+
+// {{{ LANGUAGE SETUP ---
 
 // WebSVN uses the iconv module to convert messages from your system's character set to the
 // UTF-8 output encoding. If you find that your log messages aren't displayed correctly then
@@ -121,13 +127,13 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // WebSVN does its best to automate all this, so only use the following if it doesn't work
 // "out of the box". Uncomment and change one of the examples below.
 //
-// $config->setInputEncoding("CP850");  // Encoding of result returned by svn command line, etc.
-// $config->setContentEncoding("iso-8859-1");  // Content encoding of all your repositories                                          // repositories
+// $config->setInputEncoding('CP850');  // Encoding of result returned by svn command line, etc.
+// $config->setContentEncoding('iso-8859-1');  // Content encoding of all your repositories                                          // repositories
 
 // You may also specify a content encoding on a per repository basis.  Uncomment and copy this
 // line as necessary.
 //
-// $config->setContentEncoding("iso-8859-1", "MyEnc"); 
+// $config->setContentEncoding('iso-8859-1', 'MyEnc'); 
 
 // Note for Windows users:  To enable iconv you'll need to enable the extension in your php.ini file 
 // AND copy iconv.dll (not php_iconv.dll) to your Windows system folder.  In most cases the correct
@@ -138,26 +144,28 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // Uncomment the default language.  If you want English then don't do anything here.
 //
-// include("languages/german.inc");
-// include("languages/french.inc");
-// include("languages/spanish.inc");
-// include("languages/portuguese.inc");
-// include("languages/swedish.inc");
-// include("languages/slovenian.inc");
-// include("languages/dutch.inc");
-// include("languages/danish.inc");
-// include("languages/finnish.inc");
-// include("languages/turkish.inc");
-// include("languages/norwegian.inc");
-// include("languages/polish.inc");
-// include("languages/japanese.inc");
-// include("languages/korean.inc");
-// include("languages/tchinese.inc");
-// include("languages/schinese.inc");
+// include('languages/german.inc');
+// include('languages/french.inc');
+// include('languages/spanish.inc');
+// include('languages/portuguese.inc');
+// include('languages/swedish.inc');
+// include('languages/slovenian.inc');
+// include('languages/dutch.inc');
+// include('languages/danish.inc');
+// include('languages/finnish.inc');
+// include('languages/turkish.inc');
+// include('languages/norwegian.inc');
+// include('languages/polish.inc');
+// include('languages/japanese.inc');
+// include('languages/korean.inc');
+// include('languages/tchinese.inc');
+// include('languages/schinese.inc');
 // include 'languages/russian.inc';
 // include 'languages/japanese.inc';
 
-// --- MULTIVIEWS ---
+// }}}
+
+// {{{ MULTIVIEWS ---
 
 // Uncomment this line if you want to use MultiView to access the repository by, for example:
 //
@@ -168,21 +176,25 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // $config->useMultiViews();
 
-// --- ACCESS RIGHTS ---
+// }}}
+
+// {{{ ACCESS RIGHTS ---
 
 // Uncomment this line if you want to use your Subversion access file to control access
 // rights via WebSVN.  For this to work, you'll need to set up the same Apache based authentication
 // to the WebSVN (or wsvn) directory as you have for Subversion itself.  More information can be 
 // found in install.txt
 
-// $config->useAuthenticationFile("/path/to/accessfile"); // Global access file
+// $config->useAuthenticationFile('/path/to/accessfile'); // Global access file
 
 // You may also specify a per repository access file by uncommenting and copying the following
-// line as necessary.  Use the convention "groupname.myrep" if your repository is in a group.
+// line as necessary.  Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->useAuthenticationFile("/path/to/accessfile", "myrep"); // Access file for myrep
+// $config->useAuthenticationFile('/path/to/accessfile', 'myrep'); // Access file for myrep
 
-// --- FILE CONTENT ---
+// }}}
+
+// {{{ FILE CONTENT ---
 //
 // You may wish certain file types to be GZIP'd and delieved to the user when clicked apon.
 // This is useful for binary files and the like that don't display well in a browser window!
@@ -191,7 +203,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // If you'd rather that the files were delivered uncompressed with the associated MIME type,
 // then read below.
 //
-// $zipped[] = ".dll";
+// $zipped[] = '.dll';
 
 // Subversion controlled files have an svn:mime-type property that can
 // be set on a file indicating its mime type. By default binary files
@@ -223,11 +235,13 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // the default ones or even delete them entirely (to show them in
 // ASCII via WebSVN).
 
-// $contentType[".c"] = "plain/text"; // Create a new association
-// $contentType[".doc"] = "plain/text"; // Modify an existing one
-// unset($contentType[".m"] // Remove a default association
+// $contentType['.c'] = 'plain/text'; // Create a new association
+// $contentType['.doc'] = 'plain/text'; // Modify an existing one
+// unset($contentType['.m'] // Remove a default association
 
-// --- TARBALLS ---
+// }}}
+
+// {{{ TARBALLS ---
 
 // You need tar and gzip installed on your system.  Set the paths above if necessary
 //
@@ -238,10 +252,10 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 //
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
-// Use the convention "groupname.myrep" if your repository is in a group.
+// Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->allowDownload("myrep"); // Specifically allow downloading for 'myrep'
-// $config->disallowDownload("myrep"); // Specifically disallow downloading for 'myrep'
+// $config->allowDownload('myrep'); // Specifically allow downloading for 'myrep'
+// $config->disallowDownload('myrep'); // Specifically disallow downloading for 'myrep'
 
 // You can also choose the minimum directory level from which you'll allow downloading.
 // A value of zero will allow downloading from the root.  1 will allow downloding of directories
@@ -258,9 +272,9 @@ $config->setMinDownloadLevel(2);
 
 // To change the level for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
-// Use the convention "groupname.myrep" if your repository is in a group.
+// Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->setMinDownloadLevel(2, "myrep"); 
+// $config->setMinDownloadLevel(2, 'myrep'); 
 
 // Finally, you may add or remove certain directories (and their contents) either globally
 // or on a per repository basis.  Uncomment and copy the following lines as necessary.  Note
@@ -271,16 +285,18 @@ $config->setMinDownloadLevel(2);
 
 // Global exceptions possibilties:
 //
-// $config->addAllowedDownloadException("/path/to/allowed/directory/");
-// $config->addDisAllowedDownloadException("/path/to/disallowed/directory/");
+// $config->addAllowedDownloadException('/path/to/allowed/directory/');
+// $config->addDisAllowedDownloadException('/path/to/disallowed/directory/');
 //
 // Per repository exception possibilties:
-// Use the convention "groupname.myrep" if your repository is in a group.
+// Use the convention 'groupname.myrep' if your repository is in a group.
 //
-// $config->addAllowedDownloadException("/path/to/allowed/directory/", "myrep");
-// $config->addDisAllowedDownloadException("/path/to/disallowed/directory/", "myrep");
+// $config->addAllowedDownloadException('/path/to/allowed/directory/', 'myrep');
+// $config->addDisAllowedDownloadException('/path/to/disallowed/directory/', 'myrep');
 
-// --- COLOURISATION ---
+// }}}
+
+// {{{ COLOURISATION ---
 
 // Uncomment this line if you want to use Enscript to colourise your file listings
 //
@@ -295,11 +311,13 @@ $config->setMinDownloadLevel(2);
 //
 // Here you should add and other extensions not already listed or redefine the default ones. eg:
 //
-// $extEnscript[".pas"] = "pascal";
+// $extEnscript['.pas'] = 'pascal';
 //
 // Note that extensions are case sensitive.
 
-// --- RSSFEED ---
+// }}}
+
+// {{{ RSSFEED ---
 
 // Uncomment this line if you wish to hide the RSS feed links across all repositories
 //
@@ -307,12 +325,14 @@ $config->setMinDownloadLevel(2);
 //
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
-// Use the convention "groupname.myrep" if your repository is in a group.
+// Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->hideRSS("myrep"); // Specifically hide RSS links for 'myrep'
-// $config->showRSS("myrep"); // Specifically show RSS links for 'myrep'
+// $config->hideRSS('myrep'); // Specifically hide RSS links for 'myrep'
+// $config->showRSS('myrep'); // Specifically show RSS links for 'myrep'
 
-// --- BUGTRAQ ---
+// }}}
+
+// {{{ BUGTRAQ ---
 
 // Uncomment this line if you wish to use bugtraq: properties to show links to your BugTracker
 // from the log messages.
@@ -321,12 +341,14 @@ $config->setMinDownloadLevel(2);
 //
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
-// Use the convention "groupname.myrep" if your repository is in a group.
+// Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->useBugtraqProperties("myrep"); // Specifically use bugtraq properties for 'myrep'
-// $config->ignoreBugtraqProperties("myrep"); // Specifically ignore bugtraq properties for 'myrep'
+// $config->useBugtraqProperties('myrep'); // Specifically use bugtraq properties for 'myrep'
+// $config->ignoreBugtraqProperties('myrep'); // Specifically ignore bugtraq properties for 'myrep'
 
-// --- MISCELLANOUS ---
+// }}}
+
+// {{{ MISCELLANEOUS ---
 
 // Comment out this if you don't have the right to use it.  Be warned that you may need it however!
 set_time_limit(0);
@@ -340,12 +362,14 @@ $config->expandTabsBy(8);
 
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
-// Use the convention "groupname.myrep" if your repository is in a group.
+// Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->expandTabsBy(3, "myrep"); // Expand Tabs by 3 for repository 'myrep'
+// $config->expandTabsBy(3, 'myrep'); // Expand Tabs by 3 for repository 'myrep'
 
 // For installations without PHP5, a copy of PEAR's PHP Compat library is included.
 // If you have your own version of Compat you wish to use, go ahead and specify here.
 
 // $config->setPHPCompatPath('/usr/share/php/PHP/');
+
+// }}}
 ?>

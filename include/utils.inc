@@ -1,8 +1,8 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:
+# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Tim Armes
+// Copyright © 2004-2006 Tim Armes, Matt Sicker
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 #require_once 'php5compat.inc';
 
-// createDirLinks
+// {{{ createDirLinks
 //
 // Create a list of links to the current path that'll be available from the template
 
@@ -69,6 +69,10 @@ function createDirLinks($rep, $path, $rev, $showchanged)
    }
 }
 
+// }}}
+
+// {{{ create_anchors
+//
 // Create links out of http:// and mailto: tags
 
 # TODO: the target="_blank" nonsense should be optional (or specified by the template)
@@ -93,6 +97,10 @@ function create_anchors($text)
       
 	return ($ret);
 }
+
+// }}}
+
+// {{{ getFullURL
 
 function getFullURL($loc)
 {
@@ -133,7 +141,9 @@ function getFullURL($loc)
    return $url;
 }
 
-// hardspace
+// }}}
+
+// {{{ hardspace
 //
 // Replace the spaces at the front of a line with hard spaces
 
@@ -146,8 +156,9 @@ function hardspace($s)
    return '<code>'.$s.'</code>';
 }
 
+// }}}
 
-// datetimeFormatDuration
+// {{{ datetimeFormatDuration
 //
 // Formats a duration of seconds for display.
 //
@@ -208,7 +219,9 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 	return $nbsp ? str_replace(" ", "&nbsp;", $text) : $text;
 }
 
-// getParameterisedSelfUrl
+// }}}
+
+// {{{ getParameterisedSelfUrl
 //
 // Get the relative URL (PHP_SELF) with GET and POST data
 
@@ -240,4 +253,7 @@ function getParameterisedSelfUrl($params = true)
 
    return $url;
 }
+
+// }}}
+
 ?>
