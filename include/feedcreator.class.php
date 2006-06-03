@@ -1,5 +1,6 @@
 <?php
-# vim:et:ts=4:sts=4:sw=4:
+# vim:et:ts=4:sts=4:sw=4:fdm=marker:
+# {{{ Info
 /***************************************************************************
 
 FeedCreator class v1.6
@@ -119,6 +120,7 @@ while ($data = mysql_fetch_object($res)) {
 // MBOX, OPML, ATOM0.3
 echo $rss->saveFeed("RSS1.0", "news/feed.xml");
 
+# }}}
 
 ***************************************************************************
 *          A little setup                                                 *
@@ -138,6 +140,8 @@ define("FEEDCREATOR_VERSION", "FeedCreator 1.6");
 * @since 1.3
 */
 class FeedItem {
+    # {{{ Properties
+
     /**
      * Mandatory attributes of an item.
      */
@@ -175,6 +179,8 @@ class FeedItem {
 
     // on hold
     // var $source;
+
+    # }}}
 }
 
 
@@ -185,6 +191,8 @@ class FeedItem {
 * @since 1.3
 */
 class FeedImage {
+    # {{{ Properties
+
     /**
      * Mandatory attributes of an image.
      */
@@ -194,6 +202,8 @@ class FeedImage {
      * Optional attributes of an image.
      */
     var $width, $height, $description;
+
+    # }}}
 }
 
 
@@ -209,6 +219,7 @@ class FeedImage {
 class UniversalFeedCreator extends FeedCreator {
     var $_feed;
     
+    # {{{ _setFormat
     function _setFormat($format) {
         switch (strtoupper($format)) {
             
@@ -258,7 +269,9 @@ class UniversalFeedCreator extends FeedCreator {
             }
         }
     }
+    # }}}
     
+    # {{{ createFeed
     /**
      * Creates a syndication feed based on the items previously added.
      *
@@ -271,9 +284,9 @@ class UniversalFeedCreator extends FeedCreator {
         $this->_setFormat($format);
         return $this->_feed->createFeed();
     }
-    
-    
-    
+    # }}}
+
+    # {{{ saveFeed
     /**
      * Saves this feed as a file on the local disk. After the file is saved, an HTTP redirect
      * header may be sent to redirect the use to the newly created file.
@@ -288,6 +301,7 @@ class UniversalFeedCreator extends FeedCreator {
         $this->_setFormat($format);
         $this->_feed->saveFeed($filename, $displayContents);
     }
+    # }}}
 
 }
 
@@ -301,33 +315,34 @@ class UniversalFeedCreator extends FeedCreator {
 * @since 1.4
 */
 class FeedCreator {
+    # {{{ Properties
 
     /**
      * Mandatory attributes of a feed.
      */
     var $title, $description, $link;
-    
-    
+
+
     /**
      * Optional attributes of a feed.
      */
     var $syndicationURL, $image, $language, $copyright, $pubDate, $lastBuildDate, $editor, $editorEmail, $webmaster, $category, $docs, $ttl, $rating, $skipHours, $skipDays;
-    
-    
+
+
     /**
      * @access private
      */
     var $items = Array();
-    
-    
+
+
     /**
      * This feed's MIME content type.
      * @since 1.4
      * @access private
      */
     var $contentType = "text/xml";
-    
-    
+
+
     /**
      * Any additional elements to include as an assiciated array. All $key => $value pairs
      * will be included unencoded in the feed in the form
@@ -337,8 +352,10 @@ class FeedCreator {
      * the FeedCreator class used.
      */
     var $additionalElements = Array();
-   
+
+    # }}}
     
+    # {{{ addItem
     /**
      * Adds an FeedItem to the feed.
      *
@@ -348,8 +365,9 @@ class FeedCreator {
     function addItem($item) {
         $this->items[] = $item;
     }
-    
-    
+    # }}}
+
+    # {{{ iTrunc
     /**
      * Truncates a string to a certain length at the most sensible point.
      * First, if there's a '.' character near the end of the string, the string is truncated after this character.
@@ -388,8 +406,9 @@ class FeedCreator {
         return substr($string,0,$length-4)." ...";
             
     }
-    
-    
+    # }}}
+
+    # {{{ _createGeneratorComment
     /**
      * Creates a comment indicating the generator of this feed.
      * The format of this comment seems to be recognized by
@@ -398,8 +417,9 @@ class FeedCreator {
     function _createGeneratorComment() {
         return "<!-- generator=\"".FEEDCREATOR_VERSION."\" -->\n";
     }
-    
-    
+    # }}}
+
+    # {{{ _createAdditionalElements
     /**
      * Creates a string containing all additional elements specified in
      * $additionalElements.
@@ -416,8 +436,9 @@ class FeedCreator {
         }
         return $ae;
     }
-    
-    
+    # }}}
+
+    # {{{ createFeed
     /**
      * Builds the feed's text.
      * @abstract
@@ -425,7 +446,9 @@ class FeedCreator {
      */
     function createFeed() {
     }
-    
+    # }}}
+
+    # {{{ _generateFilename
     /**
      * Generate a filename for the feed cache file. The result will be $_SERVER["PHP_SELF"] with the extension changed to .xml.
      * For example:
@@ -446,8 +469,9 @@ class FeedCreator {
         $fileInfo = pathinfo($_SERVER["PHP_SELF"]);
         return substr($fileInfo["basename"],0,-(strlen($fileInfo["extension"])+1)).".xml";
     }
-    
-    
+    # }}}
+
+    # {{{ _redirect
     /**
      * @since 1.4
      * @access private
@@ -471,7 +495,9 @@ class FeedCreator {
         readfile($filename, "r");
         die();
     }
-    
+    # }}}
+
+    # {{{ useCached
     /**
      * Turns on caching and checks if there is a recent version of this feed in the cache.
      * If there is, an HTTP redirect header is sent.
@@ -491,8 +517,9 @@ class FeedCreator {
             $this->_redirect($filename);
         }
     }
-    
-    
+    # }}}
+
+    # {{{ saveFeed
     /**
      * Saves this feed as a file on the local disk. After the file is saved, a redirect
      * header may be sent to redirect the user to the newly created file.
@@ -516,6 +543,7 @@ class FeedCreator {
             echo "<br /><b>Error creating feed file, please check write permissions.</b><br />";
         }
     }
+    # }}}
 }
 
 
@@ -525,7 +553,8 @@ class FeedCreator {
 */
 class FeedDate {
     var $unix;
-    
+
+    # {{{ __construct
     /**
      * Creates a new instance of FeedDate representing a given date.
      * Accepts RFC 822, ISO 8601 date formats as well as unix time stamps.
@@ -577,7 +606,9 @@ class FeedDate {
         }
         $this->unix = 0;
     }
+    # }}}
 
+    # {{{ rfc822
     /**
      * Gets the date stored in this FeedDate as an RFC 822 date.
      *
@@ -586,7 +617,9 @@ class FeedDate {
     function rfc822() {
        return gmdate("r",$this->unix);
     }
-    
+    # }}}
+
+    # {{{ iso8601
     /**
      * Gets the date stored in this FeedDate as an ISO 8601 date.
      *
@@ -597,7 +630,9 @@ class FeedDate {
         $date = substr($date,0,22) . ':' . substr($date,-2);
         return $date;
     }
-    
+    # }}}
+
+    # {{{ unix
     /**
      * Gets the date stored in this FeedDate as unix time stamp.
      *
@@ -606,6 +641,7 @@ class FeedDate {
     function unix() {
         return $this->unix;
     }
+    # }}}
 }
 
 
@@ -618,6 +654,7 @@ class FeedDate {
 */
 class RSSCreator10 extends FeedCreator {
 
+    # {{{ createFeed
     /**
      * Builds the RSS feed's text. The feed will be compliant to RDF Site Summary (RSS) 1.0.
      * The feed will contain all items previously added in the same order.
@@ -681,6 +718,7 @@ class RSSCreator10 extends FeedCreator {
         $feed.= "</rdf:RDF>\n";
         return $feed;
     }
+    # }}}
 }
 
 
@@ -700,11 +738,14 @@ class RSSCreator091 extends FeedCreator {
      */
     var $RSSVersion;
 
+    # {{{ __construct
     function RSSCreator091() {
         $this->_setRSSVersion("0.91");
         $this->contentType = "application/rss+xml";
     }
-    
+    # }}}
+
+    # {{{ _setRSSVersion
     /**
      * Sets this RSS feed's version number.
      * @access private
@@ -712,7 +753,9 @@ class RSSCreator091 extends FeedCreator {
     function _setRSSVersion($version) {
         $this->RSSVersion = $version;
     }
+    # }}}
 
+    # {{{ createFeed
     /**
      * Builds the RSS feed's text. The feed will be compliant to RDF Site Summary (RSS) 1.0.
      * The feed will contain all items previously added in the same order.
@@ -817,6 +860,7 @@ class RSSCreator091 extends FeedCreator {
         $feed.= "</rss>\n";
         return $feed;
     }
+    # }}}
 }
 
 
@@ -830,10 +874,12 @@ class RSSCreator091 extends FeedCreator {
 */
 class RSSCreator20 extends RSSCreator091 {
 
+    # {{{ __construct
     function RSSCreator20() {
         parent::_setRSSVersion("2.0");
     }
-    
+    # }}}
+
 }
 
 
@@ -846,7 +892,8 @@ class RSSCreator20 extends RSSCreator091 {
 * @author Scott Reynen <scott@randomchaos.com> and Kai Blankenhorn <kaib@bitfolge.de>
 */
 class PIECreator01 extends FeedCreator {
-    
+
+    # {{{ createFeed
     function createFeed() {
         $feed = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         $feed.= "<feed version=\"0.1\" xmlns=\"http://example.com/newformat#\">\n";
@@ -878,6 +925,7 @@ class PIECreator01 extends FeedCreator {
         $feed.= "</feed>\n";
         return $feed;
     }
+    # }}}
 }
 
 
@@ -899,10 +947,13 @@ class PIECreator01 extends FeedCreator {
 */
 class AtomCreator03 extends FeedCreator {
 
+    # {{{ __construct
     function AtomCreator03() {
         $this->contentType = "application/atom+xml";
     }
-    
+    # }}}
+
+    # {{{ createFeed
     function createFeed() {
         $feed = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         $feed.= $this->_createGeneratorComment();
@@ -953,6 +1004,7 @@ class AtomCreator03 extends FeedCreator {
         $feed.= "</feed>\n";
         return $feed;
     }
+    # }}}
 }
 
 
@@ -965,10 +1017,13 @@ class AtomCreator03 extends FeedCreator {
 */
 class MBOXCreator extends FeedCreator {
 
+    # {{{ __construct
     function MBOXCreator() {
         $this->contentType = "text/plain";
     }
-    
+    # }}}
+
+    # {{{ qp_enc
     function qp_enc($input = "", $line_max = 76) {
         $hex = array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
         $lines = preg_split("/(?:\r\n|\r|\n)/", $input);
@@ -998,8 +1053,9 @@ class MBOXCreator extends FeedCreator {
         }
         return trim($output);
     }
-    
+    # }}}
 
+    # {{{ createFeed
     /**
      * Builds the MBOX contents.
      * @return    string    the feed's complete text
@@ -1029,7 +1085,9 @@ class MBOXCreator extends FeedCreator {
         }
         return $feed;
     }
-    
+    # }}}
+
+    # {{{ _generateFilename
     /**
      * Generate a filename for the feed cache file. Overridden from FeedCreator to prevent XML data types.
      * @return string the feed cache filename
@@ -1040,6 +1098,7 @@ class MBOXCreator extends FeedCreator {
         $fileInfo = pathinfo($_SERVER["PHP_SELF"]);
         return substr($fileInfo["basename"],0,-(strlen($fileInfo["extension"])+1)).".mbox";
     }
+    # }}}
 }
 
 
@@ -1052,6 +1111,7 @@ class MBOXCreator extends FeedCreator {
 */
 class OPMLCreator extends FeedCreator {
     
+    # {{{ createFeed
     function createFeed() {     
         $feed = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         $feed.= $this->_createGeneratorComment();
@@ -1087,6 +1147,7 @@ class OPMLCreator extends FeedCreator {
         $feed.= "</opml>\n";
         return $feed;
     }
+    # }}}
 }
 
 ?>

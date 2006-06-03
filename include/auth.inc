@@ -1,8 +1,8 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:
+# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Tim Armes
+// Copyright © 2004-2006 Tim Armes, Matt Sicker
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@ class Authentication
    var $user;
    var $usersGroups = array();
    
+   // {{{ __construct
+
    function Authentication($accessfile)
    {
       $this->rights = new IniFile();
@@ -43,8 +45,10 @@ class Authentication
       $this->setUsername("");
       $this->identifyGroups();
    }
+
+   // }}}
    
-	// setUsername($username)
+	// {{{ setUsername($username)
 	//
 	// Set the username if it is given, or
 	// get the user of the current http session
@@ -61,7 +65,9 @@ class Authentication
 		}
 	}
 
-   // identifyGroups()
+   // }}}
+
+   // {{{ identifyGroups()
    //
    // Checks to see which groups the user belongs to
 
@@ -79,7 +85,9 @@ class Authentication
       }
    }
 
-   // inList
+   // }}}
+
+   // {{{ inList
    //
    // Check if the user is in the given list and return their read status
    // if they are (UNDEFINED, ALLOW or DENY)
@@ -105,8 +113,10 @@ class Authentication
       
       return $output;
    }
+
+   // }}}
    
-   // hasReadAccess
+   // {{{ hasReadAccess
    //
    // Returns true if the user has read access to the given path
    
@@ -180,8 +190,10 @@ class Authentication
       
       return $access == ALLOW;
    }
+
+   // }}}
    
-   // hasUnrestrictedReadAccess
+   // {{{ hasUnrestrictedReadAccess
    //
    // Returns true if the user has read access to the given path and too
    // all subfolders
@@ -223,5 +235,8 @@ class Authentication
       
       return true;
    }
+
+   // }}}
+
 }
 ?>

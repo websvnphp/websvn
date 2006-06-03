@@ -1,8 +1,8 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:
+# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Tim Armes
+// Copyright © 2004-2006 Tim Armes, Matt Sicker
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 //
 // External command handling
 
-// replaceEntities
+// {{{ replaceEntities
 //
 // Replace character codes with HTML entities for display purposes.
 // This routine assumes that the character encoding of the string is
@@ -60,6 +60,10 @@ function replaceEntities($str, $rep)
    return $str;
 }
 
+// }}}
+
+// {{{ toOutputEncoding
+
 function toOutputEncoding($str, $inputEncoding = "")
 {
    global $config;
@@ -81,6 +85,10 @@ function toOutputEncoding($str, $inputEncoding = "")
    return $str;
 }
 
+// }}}
+
+// {{{ quoteCommand
+
 function quoteCommand($cmd, $redirecterr)
 {
    global $config;
@@ -97,6 +105,10 @@ function quoteCommand($cmd, $redirecterr)
    return $cmd;
 }
 
+// }}}
+
+// {{{ runCommand
+
 function runCommand($cmd, $mayReturnNothing = false)
 {
    global $lang;
@@ -107,13 +119,13 @@ function runCommand($cmd, $mayReturnNothing = false)
    $c = quoteCommand($cmd, false);
       
    // Try to run the command normally
-   if ($handle = popen($c, "r"))
+   if ($handle = popen($c, 'r'))
    {
       $firstline = true;
 		while (!feof($handle))
 		{
 		   $line = fgets($handle);
-		   if ($firstline && $line == "" && !$mayReturnNothing)
+		   if ($firstline && empty($line) && !$mayReturnNothing)
 		   {
 		      $err = true;
 		   }
@@ -126,18 +138,21 @@ function runCommand($cmd, $mayReturnNothing = false)
 		   return $output;
    }
 
-   echo "${lang["BADCMD"]}: <i><b>$cmd</b></i><br>";
+   echo '<p>',$lang['BADCMD'],': <code>',$cmd,'</code></p>';
    
    // Rerun the command, this time grabbing the error information
 
    $c = quoteCommand($cmd, true);
 
    $output = toOutputEncoding(shell_exec($c));
-   if (!empty($output)) print "<p>".nl2br($output);
+   if (!empty($output))
+      echo '<p>',nl2br($output),'</p>';
    exit;
 }
 
-// quote
+// }}}
+
+// {{{ quote
 //
 // Quote a string to send to the command line
 
@@ -150,5 +165,7 @@ function quote($str)
    else
       return escapeshellarg($str);      
 }
+
+// }}}
 
 ?>
