@@ -24,5 +24,5 @@
 //
 // Version information
 
-$version = '2.1';
+$version = '2.1 alpha 1';
 ?>
