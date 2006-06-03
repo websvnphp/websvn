@@ -24,7 +24,7 @@
 //
 // General utility commands
 
-require_once 'php5compat.inc';
+#require_once 'php5compat.inc';
 
 // createDirLinks
 //

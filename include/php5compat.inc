@@ -1,5 +1,7 @@
 <?php
 
+if (version_compare(phpversion(), '5.0.0', 'lt')) {
+
 # XXX: these includes shouldn't be necessary!
 require_once 'include/configclass.inc';
 $config = new Config;
@@ -19,4 +21,5 @@ foreach ($funcs as $fn) {
        error_log('Could not load function `'.$fn.'\' as required by PHP Compat.');
 }
 
+}
 ?>
