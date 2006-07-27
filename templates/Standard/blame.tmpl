@@ -3,25 +3,22 @@
 [websvn:curdirlinks] - <h2> [lang:BLAMEFOR] [websvn:rev]</h2>
 <p>
 
-[websvn-test:noaccess]
-   [lang:NOACCESS]
-[websvn-else]
-   <table border="1" class="blame" width="100%">
+<table border="1" class="blame" width="100%">
+   <tr>
+      <th style="padding-bottom: 5px" align="left"><b>[lang:LINENO]</b></th>
+      <th style="padding-bottom: 5px" align="left"><b>[lang:REV]</b></th>
+      <th style="padding-bottom: 5px" align="left"><b>[lang:AUTHOR]</b></th>
+      <th style="padding-bottom: 5px" align="left"><b>[lang:LINE]</b></th>
+   </tr>
+
+   [websvn-startlisting]
       <tr>
-         <th style="padding-bottom: 5px" align="left"><b>[lang:LINENO]</b></th>
-         <th style="padding-bottom: 5px" align="left"><b>[lang:REV]</b></th>
-         <th style="padding-bottom: 5px" align="left"><b>[lang:AUTHOR]</b></th>
-         <th style="padding-bottom: 5px" align="left"><b>[lang:LINE]</b></th>
+         <td>[websvn:lineno]</td>
+         <td>[websvn:revision]</td>
+         <td>[websvn:author]</td>
+         <td>[websvn:line]</td>
       </tr>
-   
-      [websvn-startlisting]
-         <tr>
-            <td>[websvn:lineno]</td>
-            <td>[websvn:revision]</td>
-            <td>[websvn:author]</td>
-            <td>[websvn:line]</td>
-         </tr>
-      [websvn-endlisting]
-   
-   </table>
-[websvn-endtest]
+   [websvn-endlisting]
+
+</table>
+

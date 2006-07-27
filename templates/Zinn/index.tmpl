@@ -1,34 +1,15 @@
-[websvn-test:flatview]
-   <table border=0 cellspacing=0 cellpadding=0 align="center">
-      <tr>
-         <td align="center">
-            <br><h1>[lang:PROJECTS]:</h1>
-            <p><hr><p>
-            <table width="100%" class="outlined" cellpadding="2">
-               [websvn-startlisting]
-                  <tr><td>[websvn:projlink]</td></tr>
-               [websvn-endlisting]
-            </table>
-         </td>
-      </tr>
-   </table>
-[websvn-else]
-   <table border=0 cellspacing=0 cellpadding=0 align="center">
-      <tr>
-         <td align="center">
-            <br><h2>[lang:PROJECTS]:</h2>
-            <table border=0>
-               <tr><td>
-                  [websvn-startlisting]
-                     [websvn-test:isprojlink]
-                        <div>[websvn:listitem]</div>
-                     [websvn-else]
-                        [websvn:listitem]
-                     [websvn-endtest]
-                  [websvn-endlisting]
-               </td></tr>
-            </table>
-         </td>
-      </tr>
-   </table>
-[websvn-endtest]
+
+<table border=0 cellspacing=0 cellpadding=0 align="center">
+   <tr>
+      <td align="center">
+         <br><h1>[lang:PROJECTS]:</h1>
+         <p><hr><p>
+         <table width="100%" class="outlined" cellpadding="2">
+            [websvn-startlisting]
+               <tr><td>[websvn:projlink]</td></tr>
+            [websvn-endlisting]
+         </table>
+      </td>
+   </tr>
+</table>
+  

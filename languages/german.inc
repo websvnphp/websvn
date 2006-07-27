@@ -23,14 +23,7 @@
 //
 // German language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "German";
-
-$lang["DIFF"] = "Diff";
-
 $lang["NOREP"] = "Kein Repository angegeben.";
-$lang["NOPATH"] = "Pfad nicht gefunden";
-$lang["SUPPLYREP"] = "Bitte den Repository Pfad in include/config.inc mit \$config->parentPath oder \$config->addRepository konfigurieren.<p>Genauere Informationen sind in der Installationsanleitung";
 
 $lang["DIFFREVS"] = "Vergleich zwischen Revisionen";
 $lang["AND"] = "und";
@@ -40,13 +33,12 @@ $lang["SHOWENTIREFILE"] = "Ganze Datei anzeigen";
 $lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
 
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
-$lang["BLAME"] = "Blame";
 
-$lang["REVINFO"] = "Revisionsinformation";
+$lang["REVINFO"] = "Revisions-Information";
 $lang["GOYOUNGEST"] = "Zur aktuellen Revision";                  
 $lang["LASTMOD"] = "Letzte &Auml;nderung";
 $lang["LOGMSG"] = "Logeintrag";
-$lang["CHANGES"] = "&Auml;nderungen";                                         
+$lang["CHANGES"] = "Änderungen";                                         
 $lang["SHOWCHANGED"] = "Ge&auml;nderte Dateien anzeigen";
 $lang["HIDECHANGED"] = "Ge&auml;nderte Dateien verstecken";
 $lang["NEWFILES"] = "Neue Dateien";
@@ -57,8 +49,7 @@ $lang["PATH"] = "Pfad";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Alter";                                                 
 $lang["LOG"] = "Log";
-$lang["CURDIR"] = "Aktuelles Verzeichnis";   
-$lang["TARBALL"] = "Archiv Download";                         
+$lang["CURDIR"] = "Aktuelles Verzeichnis";                                
 
 $lang["PREV"] = "Zur&uuml;ck";
 $lang["NEXT"] = "Weiter";
@@ -66,36 +57,8 @@ $lang["SHOWALL"] = "Alles anzeigen";
 
 $lang["BADCMD"] = "Fehler beim Ausf&uuml;hren des Befehls";
    
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion-Projekte";                       
-$lang["SERVER"] = "Subversion Server";   
-
-$lang["SEARCHLOG"] = "Suche im Log nach";
-$lang["CLEARLOG"] = "Aktuelle Suche l&ouml;schen";
-$lang["MORERESULTS"] = "Weitere Ergebnisse finden...";
-$lang["NORESULTS"] = "Es wurden keine Treffer erzielt";
-$lang["NOMORERESULTS"] = "Keine weiteren Treffer f&uuml;r diese Suche";    
-
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "Ver&auml;nderte Dateien"; 
-$lang["RSSFEED"] = "RSS feed";
- 
-$lang["LINENO"] = "Nr.";
-$lang["BLAMEFOR"] = "Blame Information f&uuml; Rev.";
-
-$lang["GO"] = "Los";
-
-$lang["PATHCOMPARISON"] = "Pfadvergleich";
-$lang["COMPAREPATHS"] = "Vergleiche Pfade";
-$lang["COMPAREREVS"] = "Vergleiche Revisionen";
-$lang["PROPCHANGES"] = "Ge&auml;nderte Eigenschaften :";
-$lang["CONVFROM"] = "Dieser Vergleich zeigt die &Auml;nderungen zwischen ";
-$lang["TO"] = "und";
-$lang["REVCOMP"] = "Revisionen vertauschen";
-$lang["COMPPATH"] = "Vergleiche Pfad:";
-$lang["WITHPATH"] = "Mit Pfad:";
-$lang["FILEDELETED"] = "Datei gel&ouml;scht";
-$lang["FILEADDED"] = "Neue Datei";
+$lang["SERVER"] = "Subversion Server";                           
 
 $lang["YEARS"] = "Jahre";                                             
 $lang["MONTHS"] = "Monate";                                           
@@ -103,7 +66,3 @@ $lang["WEEKS"] = "Wochen";
 $lang["DAYS"] = "Tage";                                               
 $lang["HOURS"] = "Stunden";                                             
 $lang["MINUTES"] = "Minuten";   
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";
-

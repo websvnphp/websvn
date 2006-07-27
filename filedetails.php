@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -36,7 +35,7 @@ if (!isset($rep))
    exit;
 }
 
-$svnrep = new SVNRepository($rep);
+$svnrep = new SVNRepository($rep->path);
 
 if ($path{0} != "/")
    $ppath = "/".$path;
@@ -46,8 +45,8 @@ else
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, "", "", true);
-$youngest = $history->entries[0]->rev;
+$history = $svnrep->getHistory($path);
+$youngest = $history[0]["rev"];
 
 if (empty($rev))
    $rev = $youngest;
@@ -128,14 +127,11 @@ else
    $vars["goyoungestlink"] = "";
 
 $vars["action"] = "";
-$vars["repname"] = $rep->getDisplayName();
+$vars["repname"] = $rep->name;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
-
-$url = $config->getURL($rep, $path, "log");
-$vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged&isdir=0\">${lang["VIEWLOG"]}</a>";
 
 $url = $config->getURL($rep, $path, "diff");
 $vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
@@ -146,11 +142,7 @@ $vars["blamelink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">${lang[
 $listing = array ();
 
 $vars["version"] = $version;
-
-if (!$rep->hasReadAccess($path, false))
-   $vars["noaccess"] = true;
-
-parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."file.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."file.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
 ?>

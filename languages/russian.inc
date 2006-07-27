@@ -21,102 +21,70 @@
 //
 // russian.inc
 //
-// Russian language strings
-// by Alexey Chumakov <alex@chumakov.ru>
-// UTF-8 encoding
+// Russian language strings (win1251)
+// 
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Russian";
+$lang["LOG"] = "��������";
+$lang["DIFF"] = "���������";
 
-$lang["LOG"] = "Журнал";
-$lang["DIFF"] = "Различия";
+$lang["NOREP"] = "����������� �� �����";
+$lang["NOPATH"] = "���� �� ������";
 
-$lang["NOREP"] = "Не задано хранилище";
-$lang["NOPATH"] = "Путь не найден";
-$lang["NOACCESS"] = "Для чтения этого каталога у вас нет нужных прав";
-$lang["RESTRICTED"] = "Ограниченный доступ";
-$lang["SUPPLYREP"] = "Пожалуйста, настройте путь к хранилищу в include/config.inc, пользуясь \$config->parentPath или \$config->addRepository<p>Дополнительные сведения приведены в руководстве по установке ";
+$lang["DIFFREVS"] = "��������� �������";
+$lang["AND"] = "�";
+$lang["REV"] = "���.";
+$lang["LINE"] = "������";
+$lang["SHOWENTIREFILE"] = "�������� ����� ����";
+$lang["SHOWCOMPACT"] = "���������� ������ ������� � ����������";
 
-$lang["DIFFREVS"] = "Различия между редакциями";
-$lang["AND"] = "и";
-$lang["REV"] = "Редакция";
-$lang["LINE"] = "Строка";
-$lang["SHOWENTIREFILE"] = "показать весь файл";
-$lang["SHOWCOMPACT"] = "показать только места с различиями";
+$lang["DIFFPREV"] = "��������� � ����������";
+$lang["BLAME"] = "Blame";
 
-$lang["DIFFPREV"] = "сравнить с предыдущей";
-$lang["BLAME"] = "авторство";
+$lang["REVINFO"] = "���������� � �������";
+$lang["GOYOUNGEST"] = "���� � ��������� �������";
+$lang["LASTMOD"] = "��������� ���������";
+$lang["LOGMSG"] = "��������������� ���������";
+$lang["CHANGES"] = "���������";
+$lang["SHOWCHANGED"] = "����� ������������ �����";
+$lang["HIDECHANGED"] = "������ ������������ �����";
+$lang["NEWFILES"] = "����� �����";
+$lang["CHANGEDFILES"] = "���������� �����";
+$lang["DELETEDFILES"] = "��������� �����";
+$lang["VIEWLOG"] = "��������&nbsp;��������";
+$lang["PATH"] = "����";
+$lang["AUTHOR"] = "�����";
+$lang["AGE"] = "�������";
+$lang["LOG"] = "��������";
+$lang["CURDIR"] = "������� �������";
 
-$lang["REVINFO"] = "Сведения о редакции";
-$lang["GOYOUNGEST"] = "перейти к новейшей редакции";
-$lang["LASTMOD"] = "Последнее изменение";
-$lang["LOGMSG"] = "Запись в журнале";
-$lang["CHANGES"] = "Изменения";
-$lang["SHOWCHANGED"] = "показать измененные файлы";
-$lang["HIDECHANGED"] = "скрыть измененные файлы";
-$lang["NEWFILES"] = "Новые файлы";
-$lang["CHANGEDFILES"] = "Измененные файлы";
-$lang["DELETEDFILES"] = "Удаленные файлы";
-$lang["VIEWLOG"] = "открыть&nbsp;журнал";
-$lang["PATH"] = "Путь";
-$lang["AUTHOR"] = "Автор";
-$lang["AGE"] = "Давность";
-$lang["LOG"] = "Журнал";
-$lang["CURDIR"] = "Текущий каталог";
-$lang["TARBALL"] = "Архив";
+$lang["PREV"] = "����.";
+$lang["NEXT"] = "����.";
+$lang["SHOWALL"] = "�������� ��";
 
-$lang["PREV"] = "пред.";
-$lang["NEXT"] = "след.";
-$lang["SHOWALL"] = "показать все";
+$lang["BADCMD"] = "������ ���������� ���� ��������";
 
-$lang["BADCMD"] = "Ошибка при выполнении этой команды";
-$lang["UNKNOWNREVISION"] = "Редакция не найдена";
+$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["PROJECTS"] = "Subversion&nbsp;Projects";
+$lang["SERVER"] = "Subversion&nbsp;Server";
 
-$lang["POWERED"] = "Работает на <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
-$lang["PROJECTS"] = "Хранилища Subversion&nbsp;";
-$lang["SERVER"] = "Сервер Subversion&nbsp;";
+$lang["SEARCHLOG"] = "������ log for";
+$lang["CLEARLOG"] = "�������� ������� �����";
+$lang["MORERESULTS"] = "������ ��� ����������...";
+$lang["NORESULTS"] = "There are no logs matching your query";
+$lang["NOMORERESULTS"] = "There are no more logs matching your query";
 
-$lang["FILTER"] = "Параметры фильтрации";
-$lang["STARTLOG"] = "От редакции";
-$lang["ENDLOG"] = "До редакции";
-$lang["MAXLOG"] = "Макс. редакций";
-$lang["SEARCHLOG"] = "искать";
-$lang["CLEARLOG"] = "очистить текущий фильтр";
-$lang["MORERESULTS"] = "найти еще совпадения...";
-$lang["NORESULTS"] = "Нет записей, совпадающих с вашим запросом";
-$lang["NOMORERESULTS"] = "Больше нет записей, совпадающих с вашим запросом";
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
+$lang["FILESMODIFIED"] = "�����(�) ��������"; 
+$lang["RSSFEED"] = "RSS feed"; 
 
-$lang["RSSFEEDTITLE"] = "RSS-канал WebSVN"; 
-$lang["FILESMODIFIED"] = "файл(ов) изменено"; 
-$lang["RSSFEED"] = "канал RSS"; 
+$lang["LINENO"] = "������ #.";
+$lang["BLAMEFOR"] = "Blame information for rev";
 
-$lang["LINENO"] = "№ строки";
-$lang["BLAMEFOR"] = "Сведения об авторстве для редакции ";
+$lang["YEARS"] = "���";
+$lang["MONTHS"] = "�����";
+$lang["WEEKS"] = "������";
+$lang["DAYS"] = "����";
+$lang["HOURS"] = "���";
+$lang["MINUTES"] = "������";
 
-$lang["DAYLETTER"] = "д";
-$lang["HOURLETTER"] = "ч";
-$lang["MINUTELETTER"] = "м";
-$lang["SECONDLETTER"] = "с";
-
-$lang["GO"] = "Перейти";
-
-$lang["PATHCOMPARISON"] = "Сравнение путей";
-$lang["COMPAREPATHS"] = "cравнить пути";
-$lang["COMPAREREVS"] = "Сравнить редакции";
-$lang["PROPCHANGES"] = "Изменения свойств :";
-$lang["CONVFROM"] = "Такое сравнение показывает изменения, нужные для для преобразования пути ";
-$lang["TO"] = "В";
-$lang["REVCOMP"] = "обратное сравнение";
-$lang["COMPPATH"] = "Сравнить путь:";
-$lang["WITHPATH"] = "С путем:";
-$lang["FILEDELETED"] = "Файл удален";
-$lang["FILEADDED"] = "Новый файл";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";
-
-//$lang["NOBR"] = "<nobr>";
-//$lang["ENDNOBR"] = "</nobr>";
+$lang["GO"] = "Go";

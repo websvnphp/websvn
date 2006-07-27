@@ -6,7 +6,6 @@
       <!--[if gte IE 5.5000]>
       <script type="text/javascript" src="[websvn:locwebsvnhttp]/templates/BlueGrey/png.js"></script>
       <![endif]-->
-      <script type="text/javascript" src="[websvn:locwebsvnhttp]/templates/BlueGrey/collapse.js"></script>
       <title>
          WebSVN
          [websvn-test:repname]
@@ -31,7 +30,7 @@
          [websvn-endtest]
       </title>
 
-      <script type="text/javascript">
+      <script>
          function checkCB(chBox)
          {
             count = 0
@@ -51,24 +50,13 @@
                count -= 1
             }
          }
-         
-         [websvn-test:opentree]
-            expandonload = true
-         [websvn-endtest]
       </script>
-
-      [websvn-test:curdirrsslink]
-         <link rel="alternate" type="application/rss+xml" title="WebSVN RSS" href="[websvn:curdirrsshref]">
-      [websvn-endtest]
 
    </head>
    <body>
-      <table width="100%" border="0">
-         <tr>
-            <td width="33%">&nbsp;</td>
-            <td width="33%" align="center"><a href="http://subversion.tigris.org/"><img style="border: 0; width: 468px; height: 64px" src="[websvn:locwebsvnhttp]/templates/BlueGrey/subversion.png" alt="Subversion" /></a></td>
-            <td width="33%"><div style="float: right">[websvn:lang_form][websvn:lang_select][websvn:lang_submit][websvn:lang_endform]</div></td>
-         </tr>
-      </table>
+
+      <div style="text-align: center">
+        <a href="http://subversion.tigris.org/"><img style="border: 0; width: 468px; height: 64px" src="[websvn:locwebsvnhttp]/templates/BlueGrey/subversion.png" alt="Subversion" /></a>
+      </div>
       
       <hr>

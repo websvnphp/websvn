@@ -8,67 +8,55 @@
       </td>
    </tr>
 </table>
-
-[websvn-test:noaccess]
-   [lang:NOACCESS]
-[websvn-else]
-   <b>[lang:PATH]:</b> [websvn:path]
-   <br><b>[lang:REV]:</b> [websvn:rev]
-   <p><hr>
-   <b>[lang:CURDIR]:</b> [websvn:curdirlinks]<br><br>
-   [websvn-test:goyoungestlink]
-   [websvn:goyoungestlink]<p>
-   [websvn-endtest]
-   
-   <center>
-   [websvn:logsearch_form]
-      <b>[lang:FILTER]</b><p>
-      [lang:STARTLOG]:[websvn:logsearch_startbox] [lang:ENDLOG]:[websvn:logsearch_endbox] [lang:MAXLOG]:[websvn:logsearch_maxbox] [lang:SEARCHLOG]:[websvn:logsearch_inputbox]
-      [websvn:logsearch_submit]
-      [websvn-test:logsearch_clearloglink]
-         <p><font size="-1">[websvn:logsearch_clearloglink]</font><p>
-      [websvn-endtest]
-   [websvn:logsearch_endform]
-   </center>
-   
-   [websvn-test:logsearch_nomatches]
-      <center>[lang:NORESULTS]</center>
-   [websvn-endtest]
-   
-   [websvn-test:error]
-      <center>[websvn:error]</center>
-   [websvn-endtest]
-
-   [websvn-test:logsearch_resultsfound]
-      [websvn:compare_form]
-         <table border=1 class="outlined" width="100%" cellpadding=2>
-            <tr>
-               <th>[lang:REV]</th>
-               <th>[lang:PATH]</th>
-               <th>[lang:AUTHOR]</th>
-               <th>[lang:AGE]</th>
-               <th>[lang:LOGMSG]</th>
-            </tr>
-         
-            [websvn-startlisting]
-            <tr>
-               <td valign="top" class="[websvn:rowparity]"><nobr>[websvn:compare_box][websvn:revlink]</nobr></td>
-               <td valign="top" class="[websvn:rowparity]">[websvn:revpathlink]</td>
-               <td valign="top" class="[websvn:rowparity]">[websvn:revauthor]</td>
-               <td valign="top" class="[websvn:rowparity]">[websvn:revage]</td>
-               <td valign="top" class="[websvn:rowparity]">[websvn:revlog]</td>
-            </tr>
-            [websvn-endlisting]
-         </table>
-         <p>
-         [websvn:compare_submit]  
-      [websvn:compare_endform]
-   [websvn-endtest]
-      
-   [websvn-test:logsearch_nomorematches]
-      <p><center>[lang:NOMORERESULTS]</center>
-   [websvn-endtest]
-   
-   <p><center>[websvn:logsearch_moreresultslink]</center>
-   <p><center>[websvn:pagelinks]<p>[websvn:showalllink]</center>
+<b>[lang:PATH]:</b> [websvn:path]
+<br><b>[lang:REV]:</b> [websvn:rev]
+<p><hr>
+<b>[lang:CURDIR]:</b> [websvn:curdirlinks]<br><br>
+[websvn-test:goyoungestlink]
+[websvn:goyoungestlink]<p>
 [websvn-endtest]
+
+<center>
+[websvn:logsearch_form][lang:SEARCHLOG]: [websvn:logsearch_inputbox][websvn:logsearch_submit]
+[websvn-test:logsearch_clearloglink]
+<p><font size="-1">[websvn:logsearch_clearloglink]</font><p>
+[websvn-endtest]
+[websvn:logsearch_endform]
+</center>
+
+[websvn-test:logsearch_nomatches]
+   <center>[lang:NORESULTS]</center>
+[websvn-endtest]
+
+[websvn-test:logsearch_resultsfound]
+   [websvn:compare_form]
+      <table border=1 class="outlined" width="100%" cellpadding=2>
+         <tr>
+            <th>[lang:REV]</th>
+            <th>[lang:PATH]</th>
+            <th>[lang:AUTHOR]</th>
+            <th>[lang:AGE]</th>
+            <th>[lang:LOGMSG]</th>
+         </tr>
+      
+         [websvn-startlisting]
+         <tr>
+            <td valign="top" class="[websvn:rowparity]"><nobr>[websvn:compare_box][websvn:revlink]</nobr></td>
+            <td valign="top" class="[websvn:rowparity]">[websvn:revpathlink]</td>
+            <td valign="top" class="[websvn:rowparity]">[websvn:revauthor]</td>
+            <td valign="top" class="[websvn:rowparity]">[websvn:revage]</td>
+            <td valign="top" class="[websvn:rowparity]">[websvn:revlog]</td>
+         </tr>
+         [websvn-endlisting]
+      </table>
+      <p>
+      [websvn:compare_submit]  
+   [websvn:compare_endform]
+[websvn-endtest]
+   
+[websvn-test:logsearch_nomorematches]
+   <p><center>[lang:NOMORERESULTS]</center>
+[websvn-endtest]
+
+<p><center>[websvn:logsearch_moreresultslink]</center>
+<p><center>[websvn:pagelinks]<p>[websvn:showalllink]</center>

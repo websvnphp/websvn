@@ -24,83 +24,81 @@
 // Traditional Chinese language strings
 // 
 // Author: Yuan-Chung Hsiao <ychsiao@ychsiao.idv.tw>
+//
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Traditional Chinese";
+$lang["LOG"] = "���v�O��";
+$lang["DIFF"] = "���";
 
-$lang["LOG"] = "歷史記錄";
-$lang["DIFF"] = "比對";
+$lang["NOREP"] = "�S���ɮ׮w";
+$lang["NOPATH"] = "�䤣����|";
+$lang["SUPPLYREP"] = "�Цbinclude/config.inc���]�w�ɮ׮w��m�� \$config->parentPath �� \$config->addRepository<p>��ԲӪ����e�Ш��w�ˤ�U";
 
-$lang["NOREP"] = "沒有檔案庫";
-$lang["NOPATH"] = "找不到路徑";
-$lang["SUPPLYREP"] = "請在include/config.inc中設定檔案庫位置為 \$config->parentPath 或 \$config->addRepository<p>更詳細的內容請見安裝手冊";
+$lang["DIFFREVS"] = "���P���������t��";
+$lang["AND"] = "�P";
+$lang["REV"] = "�׭q����";
+$lang["LINE"] = "��";
+$lang["SHOWALL"] = "��ܧ��㪺�ɮ�";
+$lang["SHOWCOMPACT"] = "�u��ܤ��P�B";
 
-$lang["DIFFREVS"] = "不同版本間的差異";
-$lang["AND"] = "與";
-$lang["REV"] = "修訂版號";
-$lang["LINE"] = "行";
-$lang["SHOWALL"] = "顯示完整的檔案";
-$lang["SHOWCOMPACT"] = "只顯示不同處";
+$lang["DIFFPREV"] = "�P�e�@�������";
+$lang["BLAME"] = "���d";
 
-$lang["DIFFPREV"] = "與前一版次比較";
-$lang["BLAME"] = "譴責";
+$lang["REVINFO"] = "�׭q������T";
+$lang["GOYOUNGEST"] = "��̷s���׭q";
+$lang["LASTMOD"] = "�̫���";
+$lang["LOGMSG"] = "�T���O��";
+$lang["CHANGES"] = "����";
+$lang["SHOWCHANGED"] = "��ܤw�ܰ��ɮ�";
+$lang["HIDECHANGED"] = "���äw�ܰ��ɮ�";
+$lang["NEWFILES"] = "�s�ɮ�";
+$lang["CHANGEDFILES"] = "�w�ܰ��ɮ�";
+$lang["DELETEDFILES"] = "�w�R���ɮ�";
+$lang["VIEWLOG"] = "�ݾ��v�O��";
+$lang["PATH"] = "���|";
+$lang["AUTHOR"] = "�@��";
+$lang["AGE"] = "��ʮɶ�";
+$lang["LOG"] = "���v�O��";
+$lang["CURDIR"] = "�ثe�ؿ�";
+$lang["TARBALL"] = "Tarball �榡";
 
-$lang["REVINFO"] = "修訂版次資訊";
-$lang["GOYOUNGEST"] = "到最新的修訂";
-$lang["LASTMOD"] = "最後更動";
-$lang["LOGMSG"] = "訊息記錄";
-$lang["CHANGES"] = "改變";
-$lang["SHOWCHANGED"] = "顯示已變動檔案";
-$lang["HIDECHANGED"] = "隱藏已變動檔案";
-$lang["NEWFILES"] = "新檔案";
-$lang["CHANGEDFILES"] = "已變動檔案";
-$lang["DELETEDFILES"] = "已刪除檔案";
-$lang["VIEWLOG"] = "看歷史記錄";
-$lang["PATH"] = "路徑";
-$lang["AUTHOR"] = "作者";
-$lang["AGE"] = "更動時間";
-$lang["LOG"] = "歷史記錄";
-$lang["CURDIR"] = "目前目錄";
-$lang["TARBALL"] = "Tarball 格式";
+$lang["PREV"] = "�W�@��";
+$lang["NEXT"] = "�U�@��";
+$lang["SHOWALL"] = "��ܥ���";
 
-$lang["PREV"] = "上一筆";
-$lang["NEXT"] = "下一筆";
-$lang["SHOWALL"] = "顯示全部";
+$lang["BADCMD"] = "������~";
 
-$lang["BADCMD"] = "執行錯誤";
-
-$lang["POWERED"] = "採用 <a href=\"http://websvn.tigris.org/\">WebSVN</a>架設";
-$lang["PROJECTS"] = "Subversion&nbsp;專案";
+$lang["POWERED"] = "�ĥ� <a href=\"http://websvn.tigris.org/\">WebSVN</a>�[�]";
+$lang["PROJECTS"] = "Subversion&nbsp;�M��";
 $lang["SERVER"] = "Subversion&nbsp;Server";
 
-$lang["SEARCHLOG"] = "搜尋記錄內容";
-$lang["CLEARLOG"] = "清除目前搜尋";
-$lang["MORERESULTS"] = "找到更多的符合的...";
-$lang["NORESULTS"] = "查詢結果並沒有符合的紀錄";
-$lang["NOMORERESULTS"] = "沒有更多紀錄符合你的查詢";
+$lang["SEARCHLOG"] = "�j�M�O�����e";
+$lang["CLEARLOG"] = "�M���ثe�j�M";
+$lang["MORERESULTS"] = "����h���ŦX��...";
+$lang["NORESULTS"] = "�d�ߵ��G�èS���ŦX������";
+$lang["NOMORERESULTS"] = "�S����h�����ŦX�A���d��";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "個檔案變動"; 
+$lang["FILESMODIFIED"] = "���ɮ��ܰ�"; 
 $lang["RSSFEED"] = "RSS feed"; 
 
-$lang["LINENO"] = "行";
-$lang["BLAMEFOR"] = "版本譴責資訊";
+$lang["LINENO"] = "��";
+$lang["BLAMEFOR"] = "�������d��T";
 
-$lang["YEARS"] = "年前";
-$lang["MONTHS"] = "月前";
-$lang["WEEKS"] = "週前";
-$lang["DAYS"] = "日前";
-$lang["HOURS"] = "小時前";
-$lang["MINUTES"] = "分鐘前";
+$lang["YEARS"] = "�~�e";
+$lang["MONTHS"] = "��e";
+$lang["WEEKS"] = "�g�e";
+$lang["DAYS"] = "��e";
+$lang["HOURS"] = "�p�ɫe";
+$lang["MINUTES"] = "�����e";
 
-$lang["GO"] = "到";
+$lang["GO"] = "��";
 
-$lang["COMPAREPATHS"] = "比對路徑";
-$lang["COMPAREREVS"] = "比對修訂版";
-$lang["PROPCHANGES"] = "改變屬性 :";
-$lang["CONVFROM"] = "這個比對顯示必需改變轉換路徑";
-$lang["TO"] = "到";
-$lang["REVCOMP"] = "顛倒比對";
+$lang["COMPAREPATHS"] = "�����|";
+$lang["COMPAREREVS"] = "���׭q��";
+$lang["PROPCHANGES"] = "�����ݩ� :";
+$lang["CONVFROM"] = "�o�Ӥ����ܥ��ݧ����ഫ���|";
+$lang["TO"] = "��";
+$lang["REVCOMP"] = "�A�ˤ��";
 
 // The following are defined by some languages to stop unwanted line splitting
 // in the template files. 

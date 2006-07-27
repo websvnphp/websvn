@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,70 +23,62 @@
 //
 // External command handling
 
-// {{{ replaceEntities
-//
-// Replace character codes with HTML entities for display purposes.
-// This routine assumes that the character encoding of the string is
-// that of the local system (i.e., it's a string returned from a command
-// line command).
-
-function replaceEntities($str, $rep)
+function replaceEntities($str)
 {
    global $config;
    
-   // Ideally, we'd do this:
-   //
-   // $str = htmlentities($str, ENT_COMPAT, $config->inputEnc);
-   //
-   // However, htmlentities is very limited in it's ability to process
-   // character encodings.  We have to rely on something more powerful.
-   
    if (version_compare(phpversion(), "4.1.0", "<"))
-   {
-      // In this case, we can't do any better than assume that the
-      // input encoding is ISO-8859-1.
-      
       $str = htmlentities($str);
-   }
    else
-   {
-      $str = toOutputEncoding($str, $rep->getContentEncoding());
-
-      // $str is now encoded as UTF-8.
       $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
-   }
-   
+
    return $str;
 }
 
-// }}}
-
-// {{{ toOutputEncoding
-
-function toOutputEncoding($str, $inputEncoding = "")
+function transChars($str, $doEnt = true)
 {
    global $config;
    
-   if (empty($inputEncoding))
-      $inputEncoding = $config->inputEnc;
-   
    // Try to convert the messages based on the locale information
    if ($config->inputEnc && $config->outputEnc)
-   {     
+   {
       if (function_exists("iconv"))
       {
-         $output = @iconv($inputEncoding, $config->outputEnc, $str);
+         $output = @iconv($config->inputEnc, $config->outputEnc, $str);
          if (!empty($output))
             $str = $output;
       }
    }
+   
+   if ($doEnt) $str = replaceEntities($str);
 
    return $str;
 }
 
-// }}}
+function transArray($arr)
+{
+   global $config;
+   
+   $narr = array();
+   
+   foreach ($arr as $key => $value)
+   {
+      // Try to convert the messages based on the locale information
+      if ($config->inputEnc && $config->outputEnc)
+      {
+         if (function_exists("iconv"))
+         {
+            $output = @iconv($config->inputEnc, $config->outputEnc, $value);
+            if (!empty($output))
+               $value = $output;
+         }
+      }
 
-// {{{ quoteCommand
+      $narr[$key] = replaceEntities(rtrim($value));
+   }
+      
+   return $narr;
+}
 
 function quoteCommand($cmd, $redirecterr)
 {
@@ -105,10 +96,6 @@ function quoteCommand($cmd, $redirecterr)
    return $cmd;
 }
 
-// }}}
-
-// {{{ runCommand
-
 function runCommand($cmd, $mayReturnNothing = false)
 {
    global $lang;
@@ -119,18 +106,18 @@ function runCommand($cmd, $mayReturnNothing = false)
    $c = quoteCommand($cmd, false);
       
    // Try to run the command normally
-   if ($handle = popen($c, 'r'))
+   if ($handle = popen($c, "r"))
    {
       $firstline = true;
 		while (!feof($handle))
 		{
 		   $line = fgets($handle);
-		   if ($firstline && empty($line) && !$mayReturnNothing)
+		   if ($firstline && $line == "" && !$mayReturnNothing)
 		   {
 		      $err = true;
 		   }
 		   $firstline = false;
-		   $output[] = toOutputEncoding(rtrim($line));
+		   $output[] = transChars(rtrim($line));
 		}
 		
 		pclose($handle);
@@ -138,21 +125,18 @@ function runCommand($cmd, $mayReturnNothing = false)
 		   return $output;
    }
 
-   echo '<p>',$lang['BADCMD'],': <code>',$cmd,'</code></p>';
+   echo "${lang["BADCMD"]}: <i><b>$cmd</b></i><br>";
    
    // Rerun the command, this time grabbing the error information
 
    $c = quoteCommand($cmd, true);
 
-   $output = toOutputEncoding(shell_exec($c));
-   if (!empty($output))
-      echo '<p>',nl2br($output),'</p>';
+   $output = transChars(shell_exec($c));
+   if (!empty($output)) print "<p>".nl2br($output);
    exit;
 }
 
-// }}}
-
-// {{{ quote
+// quote
 //
 // Quote a string to send to the command line
 
@@ -165,7 +149,5 @@ function quote($str)
    else
       return escapeshellarg($str);      
 }
-
-// }}}
 
 ?>

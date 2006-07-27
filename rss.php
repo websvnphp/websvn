@@ -1,8 +1,10 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
+//
+// RSS feed initial version by Lübbe Onken
+// Modifications for the first official RSS feed release by Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -49,48 +51,44 @@ else
       $baseurl = "/";
 }
 
-$svnrep = new SVNRepository($rep);
+$svnrep = new SVNRepository($rep->path);
 
 if ($path == "" || $path{0} != "/")
    $ppath = "/".$path;
 else
    $ppath = $path;
 
-// Make sure that the user has full access to the specified directory
-if (!$rep->hasReadAccess($path, false))
-   exit;
-
 $url = $config->getURL($rep, $path, "log");
 $listurl = $config->getURL($rep, $path, "dir");
 
-// If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $rev, "", false, 20);
-$youngest = $history->entries[0]->rev;
+$history = $svnrep->getHistory($path, $rev);
 
-// Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
-$cachename = strtr(getFullURL($listurl), ":/\\?", "____");
-$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachename.@$_REQUEST["rev"]."_rssfeed.xml";
+$cachename = strtr($svnrep->repPath, ":/\\", "___");
+$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachename."_rssfeed";
 
 $rss = new UniversalFeedCreator();
-$rss->useCached("RSS2.0", $cachename);
-$rss->title = $rep->getDisplayName();
+$rss->useCached($cachename);
+$rss->title = $rep->name;
 $rss->description = "${lang["RSSFEEDTITLE"]} - $repname";
-$rss->link = html_entity_decode(getFullURL($baseurl.$listurl));
+$rss->link = getFullURL($baseurl.$listurl);
 $rss->syndicationURL = $rss->link;
-$rss->xslStyleSheet = ""; //required for UniversalFeedCreator since 1.7
-$rss->cssStyleSheet = ""; //required for UniversalFeedCreator since 1.7
 
 //$divbox = "<div>";
 //$divfont = "<span>";
 
-foreach ($history->entries as $r)
+if ($maxmessages > count($history))
+   $maxmessages = count($history);
+
+for ($n = 0; $n < $maxmessages; $n++)
 {
-   $thisrev = $r->rev;
-   $changes = $r->mods;
-   $files = count($changes);
+   $r = $history[$n];
+   
+   $log = $svnrep->getLogDetails($path, $r["rev"]);
+   $changes = $svnrep->getChangedFiles($r["rev"]);
+   $files = count($changes["added"]) + count($changes["deleted"]) + count($changes["updated"]);
 
    // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
-   $rpath = $r->path;
+   $rpath = $r["path"];
    if ($isDir && $rpath{strlen($rpath) - 1} != "/")
       $rpath .= "/";
    
@@ -100,7 +98,7 @@ foreach ($history->entries as $r)
  
    $url = $config->getURL($rep, $parent, "dir");
    
-   $desc = $r->msg;
+   $desc = $log["message"];
    $item = new FeedItem();
    
    // For the title, we show the first 10 words of the description
@@ -125,46 +123,19 @@ foreach ($history->entries as $r)
       $sdesc = $desc;
    }
    
-   if ($desc == "") $sdesc = "${lang["REV"]} $thisrev";
+   if ($desc == "") $sdesc = "${lang["REV"]} ${r["rev"]}";
    
    $item->title = "$sdesc";
-   $item->link = html_entity_decode(getFullURL($baseurl."${url}rev=$thisrev&amp;sc=$showchanged"));
-   $item->description = "<div><strong>${lang["REV"]} $thisrev - ".$r->author."</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
-
-   if ($showchanged)
-   {
-      foreach ($changes as $file)
-      {
-         switch ($file->action)
-         {
-            case "A":
-               $item->description .= "+ ".$file->path."<br />";  
-               break;
-                                     
-            case "M":
-               $item->description .= "~ ".$file->path."<br />";  
-               break;
-                                     
-   
-            case "D":
-               $item->description .= "-".$file->path."<br />";  
-               break;
-                                     
-         }
-      }
-   }
-
-   $item->date = $r->committime;
-   $item->author = $r->author;
+   $item->link = getFullURL($baseurl."${url}rev=${r["rev"]}&amp;sc=$showchanged");
+   $item->description = "<div><strong>${lang["REV"]} ${r["rev"]} - ${log["author"]}</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
+   $item->date = $log["committime"];
+   $item->author = $log["author"];
      
    $rss->addItem($item);
 }
 
 // valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML
-
-// Save the feed
-$rss->saveFeed("RSS2.0",$cachename, false);
-header("Content-Type: application/xml");
+header("Content-Type: text/xml");
 echo $rss->createFeed("RSS2.0");
 
 ?>

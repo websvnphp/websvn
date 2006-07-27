@@ -74,7 +74,6 @@ particular extension use the syntax:
 There are also some special filetypes:
 
 dir=<HTML code> is used for directory icons
-diropen=<HTML code> is used for open directory icons
 *=<HTML code> is used for all filetypes which have no other definition
 
 i-node - | shaped node of the tree view
@@ -86,7 +85,6 @@ Example from the BlueGrey scheme:
 
 [websvn-defineicons]
 dir=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
-diropen=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder-open.png" alt="[FOLDER]">
 *=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
 .c=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
 .h=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
@@ -144,38 +142,19 @@ projects_submit - HTML <input> specification for the projects selection GO
 projects_endform - HTML </form> specification for the projects selection
                    box (includes hidden field declarations)
 
-lang_form - HTML <form> specification for the language selection box
-lang_select - HTML <select>...</select> specification for the language options
-lang_submit - HTML <input> specification for the language selection GO button
-lang_endform - HTML </form> specification for the language selection box
 
-noaccess - True if the user should be blocked from accessing this page due
-           to insufficient access rights.
 
 Variables defined for index.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-treeview - true if the index should be displayed as a tree of grouped projects
-flatview - true if the index should be displayed as a simple list of projects
-opentree - true if the tree viewed should be open by default
-
-Used in [websvn-startlisting] ... [websvn-endlisting] block of a flat view:
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
 
 projlink - Link to the project
 rowparity - Parity of the row (0 or 1).  Used to generate striped tables
 
-Used in [websvn-startlisting] ... [websvn-endlisting] block of a tree view:
-
-isprojlink - This item is a project link
-isgrouphead - This item is a group name
-rowparity - Parity of the row (0 or 1).  Used to generate striped tables
-listitem - The item to display
-
 Variables defined for directory.tmpl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-restricted - True if the users has restricted access to this directory (to
-             allow access to a readable directory lower down only)
 repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
@@ -202,7 +181,6 @@ curdirlinks - List of the path of this directory with links to each one
 curdirloglink - Link to the log view of current directory
 curdirrsslink - Link to the RSS feed for the current directory
 curdirrssanchor - The <a href=...> tag to the RSS feed for the current directory
-curdirrsshref - URL of the feed for the current directory (without anchor tag)
 curdirdllink - Link to the tarball of current directory
 curdircomplink - Link to comparison with previously changed revision
 
@@ -233,7 +211,6 @@ repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
 curdirlinks - List of the path of this directory with links to each one
-error - Error message when results not available
 
 pagelinks - List of list to all the pages of the log
 showalllink - Link to show the entire log in one go
@@ -275,7 +252,6 @@ curdirlinks - List of the path of this directory with links to each one
 
 prevdifflink - Link to comparison with previous revision
 blamelink - Link to the blame information for this file
-fileviewloglink - Link to the log page for the file
 
 Note: Use command [websvn-getlisting] to display the listing.
 
@@ -329,7 +305,7 @@ author - Last author to modify the line
 line - The line itself
 
 Variables defined for compare.tmpl
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 action - Action being performed ("Path Comparison")
 repname - Name of the repository

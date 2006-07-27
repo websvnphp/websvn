@@ -23,16 +23,11 @@
 //
 // English language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "English";
-
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "No repository given";
 $lang["NOPATH"] = "Path not found";
-$lang["NOACCESS"] = "You do not have the necessary permissions to read this directory";
-$lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "Please set up a repository path in include/config.inc using \$config->parentPath or \$config->addRepository<p>See the installation guide for more details";
 
 $lang["DIFFREVS"] = "Diff between revs";
@@ -68,18 +63,13 @@ $lang["NEXT"] = "Next";
 $lang["SHOWALL"] = "Show All";
 
 $lang["BADCMD"] = "Error running this command";
-$lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Repositories";
+$lang["PROJECTS"] = "Subversion&nbsp;Projects";
 $lang["SERVER"] = "Subversion&nbsp;Server";
 
-$lang["FILTER"] = "Filtering Options";
-$lang["STARTLOG"] = "From rev";
-$lang["ENDLOG"] = "To rev";
-$lang["MAXLOG"] = "Max revs";
-$lang["SEARCHLOG"] = "Search for";
-$lang["CLEARLOG"] = "Clear current filter";
+$lang["SEARCHLOG"] = "Search log for";
+$lang["CLEARLOG"] = "Clear current search";
 $lang["MORERESULTS"] = "Find more matches...";
 $lang["NORESULTS"] = "There are no logs matching your query";
 $lang["NOMORERESULTS"] = "There are no more logs matching your query";
@@ -91,10 +81,12 @@ $lang["RSSFEED"] = "RSS feed";
 $lang["LINENO"] = "Line No.";
 $lang["BLAMEFOR"] = "Blame information for rev";
 
-$lang["DAYLETTER"] = "d";
-$lang["HOURLETTER"] = "h";
-$lang["MINUTELETTER"] = "m";
-$lang["SECONDLETTER"] = "s";
+$lang["YEARS"] = "years";
+$lang["MONTHS"] = "months";
+$lang["WEEKS"] = "weeks";
+$lang["DAYS"] = "days";
+$lang["HOURS"] = "hours";
+$lang["MINUTES"] = "minutes";
 
 $lang["GO"] = "Go";
 

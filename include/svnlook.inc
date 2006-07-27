@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,253 +23,10 @@
 //
 // Svn bindings
 //
-// These binding currently use the svn command line to achieve their goal.  Once a proper
-// SWIG binding has been produced for PHP, there'll be an option to use that instead.
+// These binding currently use svnlook to achieve their goal.  Once a proper SWIG binding has been
+// produces, there'll be an option to use those instead
 
 require_once("include/utils.inc");
-
-// {{{ Classes for retaining log information ---
-
-$debugxml = false;
-
-Class SVNMod
-{
-   var $action = '';
-   var $copyfrom = '';
-   var $copyrev = '';
-   var $path = '';
-}
-
-Class SVNLogEntry
-{
-   var $rev = 1;
-   var $author = '';
-   var $date = '';
-   var $committime;
-   var $age = '';
-   var $msg = '';
-   var $path = '';
-   
-   var $mods;
-   var $curMod;
-}
-
-Class SVNLog
-{
-   var $entries; // Array of entries
-   var $curEntry; // Current entry
-   
-   var $path = ''; // Temporary variable used to trace path history
-   
-   // findEntry 
-   //
-   // Return the entry for a given revision
-   
-   function findEntry($rev)
-   {
-      foreach ($this->entries as $index => $entry)
-      {
-         if ($entry->rev == $rev)
-            return $index;
-
-      }
-   }
-}
-
-// }}}
-
-// {{{ XML parsing functions---
-
-$curLog = 0;
-$curTag = '';
-
-// {{{ startElement
-
-function startElement($parser, $name, $attrs)
-{
-    global $curLog, $curTag, $debugxml;
-
-    switch ($name)
-    {
-       case "LOGENTRY":
-         if ($debugxml) print "Creating new log entry\n";
-         $curLog->curEntry = new SVNLogEntry;
-         $curLog->curEntry->mods = array();
-         
-         $curLog->curEntry->path = $curLog->path;
-         
-         if (sizeof($attrs))
-         {
-            while (list($k, $v) = each($attrs))
-            {
-               switch ($k)
-               {
-                  case "REVISION":
-                     if ($debugxml) print "Revision $v\n";
-                     $curLog->curEntry->rev = $v;
-                     break;
-               }
-            }
-         }
-         break;
-      
-      case "PATH":
-         if ($debugxml) print "Creating new path\n";
-         $curLog->curEntry->curMod = new SVNMod;
-         
-         if (sizeof($attrs))
-         {
-            while (list($k, $v) = each($attrs))
-            {
-               switch ($k)
-               {
-                  case "ACTION":
-                     if ($debugxml) print "Action $v\n";
-                     $curLog->curEntry->curMod->action = $v;
-                     break;
-
-                  case "COPYFROM-PATH":
-                     if ($debugxml) print "Copy from: $v\n";
-                     $curLog->curEntry->curMod->copyfrom = $v;
-                     break;
-
-                  case "COPYFROM-REV":
-                     $curLog->curEntry->curMod->copyrev = $v;
-                     break;
-               }
-            }
-         }
-         
-         $curTag = $name;  
-         break;
-            
-      default:
-         $curTag = $name;        
-         break;
-   }
-}
-
-// }}}
-
-// {{{ endElement
-
-function endElement($parser, $name) 
-{
-    global $curLog, $debugxml, $curTag;
-
-    switch ($name)
-    {
-      case "LOGENTRY":
-         if ($debugxml) print "Ending new log entry\n";
-         $curLog->entries[] = $curLog->curEntry;
-         break;
-
-      case "PATH":
-         if ($debugxml) print "Ending path\n";
-         $curLog->curEntry->mods[] = $curLog->curEntry->curMod;
-         break;
-
-      case "MSG":
-         $curLog->curEntry->msg = trim($curLog->curEntry->msg);
-         if ($debugxml) print "Completed msg = '".$curLog->curEntry->msg."'\n";
-         break;
-    }
-    
-    $curTag = "";
-}
-
-// }}}
-
-// {{{ characterData
-
-function characterData($parser, $data)
-{
-   global $curLog, $curTag, $lang, $debugxml;
-
-   switch ($curTag)
-   {
-      case "AUTHOR":
-         if ($debugxml) print "Author: $data\n";
-         if (empty($data)) return;
-         $curLog->curEntry->author .= htmlentities($data, ENT_COMPAT, "UTF-8");
-         break;
-
-      case "DATE":
-         if ($debugxml) print "Date: $data\n";
-         $data = trim($data);
-         if (empty($data)) return;
-         
-         sscanf($data, "%d-%d-%dT%d:%d:%d.", $y, $mo, $d, $h, $m, $s);
-         
-         $mo = substr("00".$mo, -2);
-         $d =  substr("00".$d, -2);
-         $h =  substr("00".$h, -2);
-         $m =  substr("00".$m, -2);
-         $s =  substr("00".$s, -2);
-         
-         $curLog->curEntry->date = "$y-$mo-$d $h:$m:$s GMT";
-                  
-         $committime = strtotime($curLog->curEntry->date);
-         $curLog->curEntry->committime = $committime;
-         $curtime = time();
-   
-         // Get the number of seconds since the commit
-         $agesecs = $curtime - $committime;
-         if ($agesecs < 0) $agesecs = 0;
-         
-         $curLog->curEntry->age = datetimeFormatDuration($agesecs, true, true);
-      
-         break;
-
-      case "MSG":
-         if ($debugxml) print "Msg: '$data'\n";
-         $curLog->curEntry->msg .= htmlentities($data, ENT_COMPAT, "UTF-8");
-         break;
-         
-      case "PATH":
-         if ($debugxml) print "Path name: '$data'\n";
-         $data = trim($data);
-         if (empty($data)) return;
-
-         $curLog->curEntry->curMod->path .= $data;
-         
-         // The XML returned when a file is renamed/branched in inconsistant.  In the case
-         // of a branch, the path information doesn't include the leafname.  In the case of
-         // a rename, it does.  Ludicrous.
-         
-         if (!empty($curLog->path))
-         {
-            $pos = strrpos($curLog->path, "/");
-            $curpath = substr($curLog->path, 0, $pos);
-            $leafname = substr($curLog->path, $pos + 1);
-         }
-         else
-         {
-            $curpath = "";
-            $leafname = "";
-         }
-         
-         if ($curLog->curEntry->curMod->action == "A")
-         {
-            if ($debugxml) print "Examining added path '".$curLog->curEntry->curMod->copyfrom."' - Current path = '$curpath', leafname = '$leafname'\n";
-            if ($data == $curLog->path)  // For directories and renames
-            {               
-               if ($debugxml) print "New path for comparison: '".$curLog->curEntry->curMod->copyfrom."'\n";
-               $curLog->path = $curLog->curEntry->curMod->copyfrom;
-            }
-            else if ($data == $curpath || $data == $curpath."/")  // Logs of files that have moved due to branching
-            {
-               if ($debugxml) print "New path for comparison: '".$curLog->curEntry->curMod->copyfrom."/$leafname'\n";
-               $curLog->path = $curLog->curEntry->curMod->copyfrom."/$leafname";               
-            }
-         }   
-         break;
-   }
-}
-
-// }}}
-
-// }}}
 
 // Function returns true if the give entry in a directory tree is at the top level
 
@@ -303,16 +59,10 @@ function _revStr($rev)
       return "";
 }
 
-// {{{ encodePath
-
 // Function to encode a URL without encoding the /'s
 
-function encodePath($uri)
+function encodepath($uri)
 {
-   global $config;
-
-   $uri = str_replace(DIRECTORY_SEPARATOR, "/", $uri);
-
    $parts = explode('/', $uri);
    for ($i = 0; $i < count($parts); $i++)
    {
@@ -330,31 +80,20 @@ function encodePath($uri)
    
    $uri = str_replace("%3A" ,":", $uri);
    
-   // Correct for Window share names
-   if ( $config->serverIsWindows==true )
-   {
-      if ( substr($uri, 0,2)=="//" )
-         $uri="\\".substr($uri, 2, strlen($uri));
-   }
-
    return $uri;
 }
-
-// }}}
 
 // The SVNRepository Class
 
 Class SVNRepository
 {
-   var $repConfig;
+   var $repPath;
    
-   function SVNRepository($repConfig)
+   function SVNRepository($repPath)
    {
-      $this->repConfig = $repConfig;
+      $this->repPath = $repPath;
    }
    
-   // {{{ dirContents
-
    function dirContents($path, $rev = 0)
    {
       global $config, $locwebsvnreal;
@@ -362,15 +101,18 @@ Class SVNRepository
       $revstr = _revStr($rev);
       
       $tree = array();
-           
+      
+      // Try to find a cached version of this revision of the repository
+      
       if ($rev == 0)
       {
-         $headlog = $this->getLog("/", "", "", true, 1);
-         $rev = $headlog->entries[0]->rev;
+         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
+         settype($head[0], "integer");
+         $rev = $head[0];
       }
       
-      $path = encodepath($this->repConfig->path.$path);
-      $output = runCommand($config->svn." list $revstr ".$this->repConfig->svnParams().quote($path), true);
+      $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+      $output = runCommand($config->svn." list $revstr ".quote("file:///".$path), true);
       
       foreach ($output as $entry)
       {
@@ -383,72 +125,243 @@ Class SVNRepository
       
       return $tree;
    }
-
-   // }}}
    
-   // {{{ highlightLine
-   //
-   // Distill line-spanning syntax highlighting so that each line can stand alone
-   // (when invoking on the first line, $attributes should be an empty array)
-   // Invoked to make sure all open syntax highlighting tags (<font>, <i>, <b>, etc.)
-   // are closed at the end of each line and re-opened on the next line
-   
-   function highlightLine($line, &$attributes)
+   function getLogDetails($path, $rev = 0)
    {
-      $hline = "";
+      global $config, $lang, $locwebsvnreal;
       
-      // Apply any highlighting in effect from the previous line
-      foreach($attributes as $attr)
+      if ($rev == 0)
       {
-        $hline.=$attr['text'];
+         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
+         settype($head[0], "integer");
+         $rev = $head[0];
       }
 
-      // append the new line
-      $hline.=$line;
-
-      // update attributes
-      for ($line = strstr($line, "<"); $line; $line = strstr(substr($line,1), "<"))
+      $revstr = _revStr($rev);
+      $path = quote($path);
+      
+      // Try to find a cached version of this revision of the repository
+            
+      $cachedname = strtr($this->repPath, ":/\\", "___");
+      $cachedname = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_log_$rev";
+      
+      if ($config->cacheResults && !file_exists($cachedname))
       {
-         // if this closes a tag, remove most recent corresponding opener
-         if (substr($line,1,1) == "/")
+         // Cache the directory layout
+         
+         $cmd = quoteCommand($config->svnlook." info $revstr ".quote($this->repPath)." $path", false);
+
+         if (($handle = popen($cmd, "r")) !== FALSE)
          {
-            $tagNamLen = strcspn($line, "> \t", 2);
-            $tagNam = substr($line,2,$tagNamLen);
-            foreach(array_reverse(array_keys($attributes)) as $k)
+            if (($output = gzopen($cachedname, "w")) !== FALSE)
             {
-               if ($attributes[$k]['tag'] == $tagNam)
+                  while (!feof($handle))
+            		{
+            		   $line = fgets($handle);
+            		   gzwrite($output, $line);
+            		}
+            		
+            	gzclose($output);
+            }
+         	pclose($handle);
+         }
+      }
+      
+      // Get the log info
+      if ($config->cacheResults && file_exists($cachedname))
+      {
+         $output = transArray(gzfile($cachedname));
+      }
+      else
+      {   
+         $output = runCommand($config->svnlook." info $revstr ".quote($this->repPath)." $path");
+      }
+                     
+      // Create a nice array to return
+      $log["author"] = ($output[0] ? $output[0] : "&nbsp;");
+      
+      $date = $output[1];
+      $log["date"] = $date;
+
+      sscanf($date, "%d-%d-%d %d:%d:%d %d", $y, $mo, $d, $h, $m, $s, $offset);
+      
+      // Remove the offset to get the time in GMT
+      $h -= $offset / 100;
+      
+      // Get the commit time as seconds.  Note that the mktime function assumes that the time being
+      // passed to it is a local time - it will therefore subtract/add the required number of hours
+      // to make it GMT.  Since we already have the time in GMT we first add the localtime offset to
+      // get the commit time in local time.  The offset calculated above already handles the summer
+      // time case, so we tell mktime not to take this into account.
+      
+      $lt = gettimeofday();
+      $minwest = $lt["minuteswest"];
+      $committime = mktime($h ,$m - $minwest, $s, $mo, $d, $y, 0);
+      $log["committime"] = $committime;
+      
+      // Get the current time (as GMT)
+      $t = localtime(time(), 1);
+      $curtime = mktime($t["tm_hour"],  $t["tm_min"], $t["tm_sec"], $t["tm_mon"] + 1, $t["tm_mday"], $t["tm_year"] + 1900, $t["tm_isdst"]);
+      
+      // Get the number of seconds since the commit
+      $agesecs = $curtime - $committime;
+      if ($agesecs < 0) $agesecs = 0;
+      
+      // Now create a nice human readable age based on these figures
+      $years = floor($agesecs / (60*60*24*365));
+      if ($years > 1)
+      {
+         $log["age"] = "$years&nbsp;${lang["YEARS"]}";         
+      }
+      else
+      {
+         $months = floor($agesecs / (60*60*24*365/12));
+         if ($months > 1)
+         {
+            $log["age"] = "$months&nbsp;${lang["MONTHS"]}";
+         }
+         else
+         {
+            $weeks = floor($agesecs / (60*60*24*7));
+            if ($weeks > 1)
+            {
+               $log["age"] = "$weeks&nbsp;${lang["WEEKS"]}";
+            }
+            else
+            {              
+               $days = floor($agesecs / (60*60*24));
+               if ($days > 1)
                {
-                  unset($attributes[$k]);
-                  break;
+                  $log["age"] = "$days&nbsp;${lang["DAYS"]}";
+               }
+               else
+               { 
+                  $hours = floor($agesecs / (60*60));
+                  if ($hours > 1)
+                  {
+                     $log["age"] = "$hours&nbsp;${lang["HOURS"]}";
+                  }
+                  else
+                  { 
+                     $minutes = floor($agesecs / 60);
+                     $log["age"] = "$minutes&nbsp;${lang["MINUTES"]}";
+                  }
                }
             }
          }
-         else
-         // if this opens a tag, add it to the list
+      }
+      
+      $log["message"] = $output[3]; 
+      $pos = 4;
+      while (isset($output[$pos]))
+      {
+         $log["message"] .= "\n".$output[$pos];
+         $pos++;
+      }
+            
+      // If we're working on the head, get the head revision
+      if ($rev > 0)
+         $log["rev"] = $rev;
+      else
+      {
+         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
+         settype($head[0], "integer");
+         $log["rev"] = $head[0];
+      }
+       
+      return $log;
+   }
+   
+   function getChangedFiles($rev = 0)
+   {
+      global $config, $locwebsvnreal;
+      
+      if ($rev == 0)
+      {
+         $head = runCommand($config->svnlook." youngest ".quote($this->repPath));
+         settype($head[0], "integer");
+         $rev = $head[0];
+      }
+      
+      $revstr = _revStr($rev);
+         
+      // Try to find a cached version of this revision of the repository
+      
+      $cachedname = strtr($this->repPath, ":/\\", "___");
+      $cachedname = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachedname."_mods_$rev";
+      
+      if ($config->cacheResults && !file_exists($cachedname))
+      {
+         // Cache the directory layout
+         
+         $cmd = quoteCommand($config->svnlook." changed $revstr ".quote($this->repPath), false);
+
+         if (($handle = popen($cmd, "r")) !== FALSE)
          {
-            $tagNamLen = strcspn($line, "> \t", 1);
-            $tagNam = substr($line,1,$tagNamLen);
-            $tagLen = strcspn($line, ">") + 1;
-            $attributes[] = array('tag' => $tagNam, 'text' => substr($line,0,$tagLen));
+            if (($output = gzopen($cachedname, "w")) !== FALSE)
+            {
+                  while (!feof($handle))
+            		{
+            		   $line = fgets($handle);
+            		   gzwrite($output, $line);
+            		}
+            		
+            	gzclose($output);
+            }
+         	pclose($handle);
          }
       }
-
-      // close any still-open tags
-      foreach(array_reverse($attributes) as $attr)
+      
+      if ($config->cacheResults && file_exists($cachedname))
       {
-         $hline.="</".$attr['tag'].">";
+         $output = transArray(gzfile($cachedname));
       }
-
-      return($hline);
+      else
+      {
+        $output = runCommand($config->svnlook." changed $revstr ".quote($this->repPath));
+      }
+           
+      // Now create a nicer array from that
+      $changes = array("added" => array(), "updated" => array(), "deleted" => array());
+      
+      foreach ($output as $changed)
+      {
+         if (trim($changed) != "")
+         {
+            $mod = $changed{0};
+            $name = substr($changed, 4);
+            
+            switch ($mod)
+            {
+               case "A":
+                  $changes["added"][] = $name;
+                  break;
+                  
+               case "U":
+                  $changes["updated"][] = $name;
+                  break;
+   
+               case "D":
+                  $changes["deleted"][] = $name;
+                  break;
+            }
+         }
+      }
+      
+      // Sort each array alphabetically
+      
+      natcasesort($changes["added"]);
+      natcasesort($changes["deleted"]);
+      natcasesort($changes["updated"]);
+    
+      return $changes;              
    }
-
-   // }}}
-
-   // {{{ getFileContents
+   
+   // getFileContents
    //
    // Dump the content of a file to the given filename
    
-   function getFileContents($path, $filename, $rev = 0, $pipe = "", $perLineHighlighting = false)
+   function getFileContents($path, $filename, $rev = 0, $pipe = "")
    {
       global $config, $extEnscript;
       
@@ -457,8 +370,8 @@ Class SVNRepository
       // If there's no filename, we'll just deliver the contents as it is to the user
       if ($filename == "")
       {
-         $path = encodepath($this->repConfig->path.$path);
-         passthru(quoteCommand($config->svn." cat $revstr ".$this->repConfig->svnParams().quote($path)." $pipe", false));
+         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+         passthru($config->svn." cat $revstr ".quote("file:///".$path)." $pipe");
          return;
       }
       
@@ -470,8 +383,8 @@ Class SVNRepository
       if ($l == "php")
       {         
          // Output the file to the filename
-         $path = encodepath($this->repConfig->path.$path);
-         $cmd = quoteCommand($config->svn." cat $revstr ".$this->repConfig->svnParams().quote($path)." > $filename", false);
+         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+         $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
          @exec($cmd);
          
          // Get the file as a string (memory hogging, but we have no other options)
@@ -490,29 +403,11 @@ Class SVNRepository
             
             $content = explode("<br />", $content);
             
-            if ($perLineHighlighting)
+            foreach ($content as $line)
             {
-               // If we need each line independently highlighted (e.g. for diff or blame)
-               //  hen we'll need to filter the output of the highlighter
-               // to make sure tags like <font>, <i> or <b> don't span lines
-            
-               // $attributes is used to remember what highlighting attributes 
-               // are in effect from one line to the next
-               $attributes = array(); // start with no attributes in effect
-            
-               foreach ($content as $line)
-               {
-                   fputs($f, $this->highlightLine(rtrim($line),$attributes)."\n");
-               }
+               fputs($f, rtrim($line)."\n");
             }
-            else
-            {
-               foreach ($content as $line)
-               {
-                  fputs($f, rtrim($line)."\n");
-               }
-            }
-
+            
             fclose($f);
          }         
       }
@@ -525,8 +420,8 @@ Class SVNRepository
             // Note that the sec command returns only the part of the file between <PRE> and </PRE>.
             // It's complicated because it's designed not to return those lines themselves.
          
-            $path = encodepath($this->repConfig->path.$path);
-            $cmd = quoteCommand($config->svn." cat $revstr ".$this->repConfig->svnParams().quote($path)." | ".
+            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+            $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." | ".
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $filename", false);
@@ -534,16 +429,14 @@ Class SVNRepository
          }
          else
          {
-            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
-            $cmd = quoteCommand($config->svn." cat $revstr ".$this->repConfig->svnParams().quote($path)." > $filename", false);
+            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+            $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $filename", false);
             @exec($cmd);
          }
       }
-   }
+  }
 
-   // }}}
-
-   // {{{ listFileContents
+   // listFileContents
    //
    // Print the contents of a file without filling up Apache's memory
    
@@ -565,8 +458,8 @@ Class SVNRepository
          $tmp = tempnam("temp", "wsvn");
          
          // Output the file to a temporary file
-         $path = encodepath($this->repConfig->path.$path);
-         $cmd = quoteCommand($config->svn." cat $revstr ".$this->repConfig->svnParams().quote($path)." > $tmp", false);
+         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+         $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." > $tmp", false);
          @exec($cmd);
          highlight_file($tmp);
          unlink($tmp);
@@ -575,8 +468,8 @@ Class SVNRepository
       {  
          if ($config->useEnscript)
          {
-            $path = encodepath($this->repConfig->path.$path);
-            $cmd = quoteCommand($config->svn." cat $revstr ".$this->repConfig->svnParams().quote($path)." | ".
+            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+            $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." | ".
                                 $config->enscript." --language=html ".
  								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote." 2>&1", false);
@@ -586,8 +479,8 @@ Class SVNRepository
          }
          else
          {
-            $path = encodepath($this->repConfig->path.$path);
-            $cmd = quoteCommand($config->svn." cat $revstr ".$this->repConfig->svnParams().quote($path)." 2>&1", false);
+            $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+            $cmd = quoteCommand($config->svn." cat $revstr ".quote("file:///".$path)." 2>&1", false);
             
             if (!($result = popen($cmd, "r")))
                return;
@@ -601,7 +494,7 @@ Class SVNRepository
    		while (!feof($result))
    		{
    		   $line = fgets($result, 1024);
-   		   if ($pre) $line = replaceEntities($line, $this->repConfig);
+   		   if ($pre) $line = replaceEntities($line);
    		   
    		   print hardspace($line);
    		}
@@ -613,9 +506,7 @@ Class SVNRepository
       }
    }
 
-   // }}}
-
-   // {{{ getBlameDetails
+   // getBlameDetails
    //
    // Dump the blame content of a file to the given filename
    
@@ -625,15 +516,11 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." blame $revstr ".$this->repConfig->svnParams().quote($path)." > $filename", false);
+      $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+      $cmd = quoteCommand($config->svn." blame $revstr ".quote("file:///".$path)." > $filename", false);
       
       @exec($cmd);
-   }
-
-   // }}}
-
-   // {{{ getProperty
+  }
 
    function getProperty($path, $property, $rev = 0)
    {
@@ -641,8 +528,8 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = encodepath($this->repConfig->path.$path);
-      $ret = runCommand($config->svn." propget $property $revstr ".$this->repConfig->svnParams().quote($path), true);
+      $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+      $ret = runCommand($config->svn." propget $property $revstr ".quote("file:///".$path), true);
       
       // Remove the surplus newline
       if (count($ret))
@@ -651,9 +538,44 @@ Class SVNRepository
       return implode("\n", $ret);
    }
 
-   // }}}
+  function getHistory($path, $rev = 0)
+   {
+      global $config;
+      
+      $revstr = _revStr($rev);
+      $path = quote($path);
+      
+      // Get the history info
+      $output = runCommand($config->svnlook." history $revstr ".quote($this->repPath)." $path");
+            
+      // Now create a nicer array from that
+      $history = array();
+          
+      $line = 0;
+      foreach ($output as $record)
+      {  
+         $line++;
+         
+         // Skip header info
+         if ($line < 3)
+            continue;  
+            
+         $record = trim($record);
+         if ($record != "")
+         {
+            list($rev, $path) = split(" ", $record, 2);
+            if ($rev)
+            {
+               $path = trim($path);
+               $history[] = array("rev" => $rev, "path" => $path);
+            }
+         }
+      }
+         
+      return $history;
+   }
 
-   // {{{ exportDirectory
+   // exportDirectory
    //
    // Exports the directory to the given location
    
@@ -663,107 +585,10 @@ Class SVNRepository
       
       $revstr = _revStr($rev);
       
-      $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." export $revstr ".$this->repConfig->svnParams().quote($path)." ".quote($filename), false);
+      $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repPath.$path));
+      $cmd = quoteCommand($config->svn." export $revstr ".quote("file:///".$path)." $filename", false);
 
       @exec($cmd);
-   }
-
-   // }}}
-
-   // {{{ getLog
-  
-   function getLog($path, $brev = "", $erev = 1, $quiet = false, $limit = 2)
-   {
-      global $config, $curLog, $vars, $lang;
-      
-      $xml_parser = xml_parser_create("UTF-8");
-      xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
-      xml_set_element_handler($xml_parser, "startElement", "endElement");
-      xml_set_character_data_handler($xml_parser, "characterData");
-
-      // Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
-      // the trailing slash from the path for comparison purposes
-      
-      if ($path{strlen($path) - 1} == "/" && $path != "/")
-         $path = substr($path, 0, -1);
-      
-      $curLog = new SVNLog;
-      $curLog->entries = array();
-      $curLog->path = $path;
-      
-      $revStr = "";
-      
-      if ($brev && $erev)
-         $revStr = "-r$brev:$erev";
-      else if ($brev)
-         $revStr = "-r$brev:1";      
-
-      if (($config->subversionMajorVersion > 1 || $config->subversionMinorVersion >=2) && $limit != 0)
-         $revStr .= " --limit $limit";
-         
-      // Get the log info
-      $path = encodepath($this->repConfig->path.$path);
-      $info = "--verbose";
-      if ($quiet)
-         $info = "--quiet";
-         
-      $cmd = quoteCommand($config->svn." log --xml $info $revStr ".$this->repConfig->svnParams().quote($path), false);
-
-      if ($handle = popen($cmd, "r"))
-      {
-         $firstline = true;
-   		while (!feof($handle))
-   		{
-   		   $line = fgets($handle);
-   		   if (!xml_parse($xml_parser, $line, feof($handle)))
-            {
-               if (xml_get_error_code($xml_parser) != 5)
-               {               
-                  die(sprintf("XML error: %s (%d) at line %d column %d byte %d<br>cmd: %s<nr>",
-                              xml_error_string(xml_get_error_code($xml_parser)),
-                              xml_get_error_code($xml_parser),
-                              xml_get_current_line_number($xml_parser),
-                              xml_get_current_column_number($xml_parser),
-                              xml_get_current_byte_index($xml_parser),
-                              $cmd));
-               }
-               else
-               {
-                  $vars["error"] = $lang["UNKNOWNREVISION"];
-                  return 0;
-               }
-            }
-   		}
-		   pclose($handle);
-      }
-
-      xml_parser_free($xml_parser);
-      return $curLog;
-   }
-
-   // }}}
-
+  }
 }
-
-// {{{ initSvnVersion
-
-function initSvnVersion(&$major, &$minor)
-{
-   global $config;
-   
-   $ret = runCommand($config->svn_noparams." --version", false);
-
-   if (preg_match("~([0-9]?)\.([0-9]?)\.([0-9]?)~",$ret[0],$matches))
-   {
-      $major = $matches[1];
-      $minor = $matches[2];
-   }
-   
-   $config->setSubversionMajorVersion($major);
-   $config->setSubversionMinorVersion($minor);
-}
-
-// }}}
-
 ?>

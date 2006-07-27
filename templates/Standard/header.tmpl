@@ -3,8 +3,7 @@
    <head>
 		<meta http-equiv="content-type" content="text/html;charset=[websvn:charset]">
 	   <link href="[websvn:locwebsvnhttp]/templates/Standard/styles.css" rel="stylesheet" media="screen">
-      <script type="text/javascript" src="[websvn:locwebsvnhttp]/templates/Standard/collapse.js"></script>
-      <script type="text/javascript">
+      <script>
          function checkCB(chBox)
          {
             count = 0
@@ -23,11 +22,6 @@
                first.checked = false
                count -= 1
             }
-
-            [websvn-test:opentree]
-               expandonload = true
-            [websvn-endtest]
-
          }
       </script>
       <title>
@@ -54,20 +48,10 @@
          [websvn-endtest]
       </title>
 
-      [websvn-test:curdirrsslink]
-         <link rel="alternate" type="application/rss+xml" title="WebSVN RSS" href="[websvn:curdirrsshref]">
-      [websvn-endtest]
-
    </head>
    <body>
-      <table width="100%" border="0">
-         <tr>
-            <td width="33%">&nbsp;</td>
-            <td width="33%" align="center"><h1>[lang:SERVER]</h1></td>
-            <td width="33%"><div style="float: right">[websvn:lang_form][websvn:lang_select][websvn:lang_submit][websvn:lang_endform]</div></td>
-         </tr>
-      </table>
-
+      <center>
+         <h1>[lang:SERVER]</h1>
+      </center>
       <hr>
       <p>
-      

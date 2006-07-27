@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -33,14 +32,8 @@ function redirect($loc)
 {
    $url= getFullURL($loc);
    
-   # technically, a die(header('Location: '.$url)); would suffice for all web browsers... ~J
    header("Location: $url");
-   echo "<html>\n <head>\n  <title>Redirecting...</title>\n  <meta http-equiv='refresh' content='0; url=$url' />
-  <script type='application/x-javascript'><![CDATA[ window.location.href = '$url'; ]]></script>
- </head>
- <body>
-  <p>If you are not automatically redirected, please click <a href='$url'>here</a> to continue.</p>
- </body>\n</html>";
+   echo "<html><script language=\"JavaScript\" type=\"text/JavaScript\">window.location = \"$url\"</script></html>";
 }
 
 // Handle project selection

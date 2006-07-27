@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,10 +29,10 @@ require_once("include/utils.inc");
 
 // Make sure that this operation is allowed
 
-if (!$rep->isDownloadAllowed($path))
+if (!$rep->getAllowDownload())
    exit;
 
-$svnrep = new SVNRepository($rep);
+$svnrep = new SVNRepository($rep->path);
 
 if ($path{0} != "/")
    $ppath = "/".$path;
@@ -41,8 +40,8 @@ else
    $ppath = $path;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, "", "", true);
-$youngest = $history->entries[0]->rev;
+$history = $svnrep->getHistory($path);
+$youngest = $history[0]["rev"];
 
 if (empty($rev))
    $rev = $youngest;
@@ -64,10 +63,10 @@ if (mkdir($tmpname))
    
    // Create the tar file
    chdir($tmpname);
-   exec($config->tar." -cf ".quote("$arcname.tar")." ".quote($arcname));
+   exec($config->tar." -cf $arcname.tar $arcname");
    
    // ZIP it up
-   exec($config->gzip." ".quote("$arcname.tar"));
+   exec($config->gzip." $arcname.tar");
    $size = filesize("$arcname.tar.gz");
 
    // Give the file to the browser
@@ -76,13 +75,8 @@ if (mkdir($tmpname))
    {
       header("Content-Type: application/x-gzip");
       header("Content-Length: $size");
-      header("Content-Disposition: attachment; filename=\"".$rep->name."-$arcname.tar.gz\"");
-      // Use a loop to transfer the data  4KB at a time.
-      while(!feof($fp))
-      {
-         echo fread($fp, 4096);
-         ob_flush();
-      }
+      header("Content-Disposition: attachment; filename=$arcname.tar.gz");
+      @fpassthru($fp);
    }
    else
    {

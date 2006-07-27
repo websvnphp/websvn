@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,9 +19,6 @@
 //
 // --
 //
-// wsvn.php
-//
-// Glue for MultiViews
 
 // --- CONFIGURE THESE VARIABLES ---
 
@@ -31,22 +27,14 @@
 // e.g.  For http://servername/websvn use /websvn
 //
 // Note that wsvn.php need not be in the /websvn directory (and normally isn't).
-// If you want to use the root server directory, just use a blank string ('').
-#$locwebsvnhttp = "/websvn";  
-$locwebsvnhttp = '';
+$locwebsvnhttp = "/websvn";  
 
 // Physical location of websvn directory
-#$locwebsvnreal = "d:/websvn";
-$locwebsvnreal = '/home/junx/docs/wsvn';
+$locwebsvnreal = "d:/websvn";
 
 chdir($locwebsvnreal);
 
 // --- DON'T CHANGE BELOW HERE ---
-
-// this tells files that we are in multiviews if they are unable to access
-// the $config variable
-if (!defined('WSVN_MULTIVIEWS'))
-   define('WSVN_MULTIVIEWS', 1);
 
 ini_set("include_path", $locwebsvnreal);
 
@@ -75,36 +63,21 @@ if ($config->multiViews)
       exit;
    }
    
-   // Split the path into repository and path elements
-   // Note: we have to cope with the repository name
-   //       having a slash in it
+   // Get the repository name
+   $pos = strpos($path, "/");
 
-   $found = false;
-
-   foreach ($config->getRepositories() as $rep)
+   if ($pos === false)
    {
-      $pos = strlen($rep->getDisplayName());
-      if (strlen($path) < $pos)
-         continue;
-         
+      $name = substr($path, 0);
+      $path = "/";
+   }
+   else
+   {
       $name = substr($path, 0, $pos);
-      if (strcasecmp($rep->getDisplayName(), $name) == 0)
-      {
-         $tpath = substr($path, $pos);
-         if ($tpath[0] == "/") {
-            $found = true;
-            $path = $tpath;
-            break;
-         }
-      }
+      $path = substr($path, $pos);
    }
-
-   if ($found == false)
-   {
-      include("$locwebsvnreal/index.php");
-      exit;
-   }
-
+      
+   $rep = $config->findRepository($name);
    createProjectSelectionForm();
    $vars["allowdownload"] = $rep->getAllowDownload();
 
@@ -145,10 +118,7 @@ if ($config->multiViews)
          break;
 
       default:
-         if ($path[strlen($path) - 1] == "/")
-            $file = "listing.php";
-         else
-            $file = "filedetails.php";
+         $file = "listing.php";
    }
    
    // Now include the file that handles it

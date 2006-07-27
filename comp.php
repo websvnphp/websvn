@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,7 +29,7 @@ require_once("include/svnlook.inc");
 require_once("include/utils.inc");
 require_once("include/template.inc");
 
-$svnrep = new SVNRepository($rep);
+$svnrep = new SVNRepository($rep->path);
 
 function checkRevision($rev)
 {
@@ -50,7 +49,7 @@ function checkRevision($rev)
    return "HEAD";   
 }
 
-$svnrep = new SVNRepository($rep);
+$svnrep = new SVNRepository($rep->path);
 
 // Retrieve the request information
 $path1 = @$_REQUEST["compare"][0];
@@ -81,21 +80,21 @@ if (!@$_REQUEST["manualorder"] && is_numeric($rev1) && is_numeric($rev2))
    }
 }
 
-$url = $config->getURL($rep, "/", "comp");
+$url = $config->getURL($rep, "", "comp");
 $vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&amp;compare%5B%5D=".urlencode($path1)."@$rev1&manualorder=1\">${lang["REVCOMP"]}</a>";
 
 if ($rev1 == 0) $rev1 = "HEAD";
 if ($rev2 == 0) $rev2 = "HEAD";
 
-$vars["repname"] = $rep->getDisplayName();
+$vars["repname"] = $rep->name;
 $vars["action"] = $lang["PATHCOMPARISON"];
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
-$vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"$path1\" />";
-$vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[0]\" value=\"$rev1\" />";
-$vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"$path2\" />";
-$vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\" />";
-$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"manualorder\" value=\"1\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
+$vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"$path1\">";
+$vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[0]\" value=\"$rev1\">";
+$vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"$path2\">";
+$vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\">";
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\">";
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\"><input type=\"hidden\" name=\"manualorder\" value=\"1\"><input type=\"hidden\" name=\"sc\" value=\"$showchanged\"></form>";   
 
 $vars["path1"] = $path1;
 $vars["path2"] = $path2;
@@ -107,14 +106,14 @@ $noinput = empty($path1) || empty($path2);
 $listing = array();
 
 // Generate the diff listing
-$path1 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repConfig->path.$path1));
-$path2 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repConfig->path.$path2));
+$path1 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repPath.$path1));
+$path2 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repPath.$path2));
 
 $debug = false;
 
 if (!$noinput)
 {
-   $rawcmd = $config->svn." diff ".$rep->svnParams().quote($path1."@".$rev1)." ".quote($path2."@".$rev2);
+   $rawcmd = $config->svn." diff -r$rev1:$rev2 ".quote("file:///".$path1)." ".quote("file:///".$path2);
    $cmd = quoteCommand($rawcmd, true);
    if ($debug) echo "$cmd\n";
 }
@@ -153,7 +152,7 @@ if (!$noinput)
          
          clearVars();	   
    	   $getLine = true;
-         if ($debug) print "Line = '$line'<br />" ;	         
+         if ($debug) print "Line = '$line'<br>" ;	         
    	   if ($indiff)
    	   {
       	   // If we're in a diff proper, just set up the line
@@ -165,26 +164,26 @@ if (!$noinput)
          	      {
          	         case " ":
          	            $listing[$index]["diffclass"] = "diff";
-         	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
+         	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
-                        if ($debug) print "Including as diff: $subline<br />";
+                        if ($debug) print "Including as diff: $subline<br>";
          	            break;
          	   
          	         case "+":
          	            $listing[$index]["diffclass"] = "diffadded";
-         	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
+         	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
-                        if ($debug) print "Including as added: $subline<br />";
+                        if ($debug) print "Including as added: $subline<br>";
          	            break;
          
          	         case "-":
          	            $listing[$index]["diffclass"] = "diffdeleted";
-         	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
+         	            $subline = hardspace(transChars(rtrim(substr($line, 1)), true)); 
          	            if (empty($subline)) $subline = "&nbsp;";
          	            $listing[$index++]["line"] = $subline;
-                        if ($debug) print "Including as removed: $subline<br />";
+                        if ($debug) print "Including as removed: $subline<br>";
          	            break;
          	      }
          	      
@@ -195,7 +194,7 @@ if (!$noinput)
          	      $indiffproper = false;
          	      $listing[$index++]["enddifflines"] = true;
          	      $getLine = false;
-                  if ($debug) print "Ending lines<br />";
+                  if ($debug) print "Ending lines<br>";
          	      continue;
          	   }
       	   }
@@ -206,16 +205,16 @@ if (!$noinput)
                $pos = strpos($line, "+");
                $posline = substr($line, $pos); 
          	   sscanf($posline, "+%d,%d", $sline, $eline);
-                        if ($debug) print "sline = '$sline', eline = '$eline'<br />";      	   
+                        if ($debug) print "sline = '$sline', eline = '$eline'<br>";      	   
          	   // Check that this isn't a file deletion
          	   if ($sline == 0 && $eline == 0)
          	   {
          	      $line = fgets($diff);
-                  if ($debug) print "Ignoring: $line<br />" ;	         
+                  if ($debug) print "Ignoring: $line<br>" ;	         
          	      while ($line[0] == " " || $line[0] == "+" || $line[0] == "-")
                   {
          	         $line = fgets($diff);
-                     if ($debug) print "Ignoring: $line<br />" ;	         
+                     if ($debug) print "Ignoring: $line<br>" ;	         
                   }      	
                            
          	      $getLine = false;
@@ -251,15 +250,15 @@ if (!$noinput)
             $node = substr($node, 7);
       
             $listing[$index]["newpath"] = $node;
-            if ($debug) echo "Creating node $node<br />";
+            if ($debug) echo "Creating node $node<br>";
             
             // Skip past the line of ='s
             $line = fgets($diff);
-            if ($debug) print "Skipping: $line<br />" ;	         
+            if ($debug) print "Skipping: $line<br>" ;	         
            
             // Check for a file addition
             $line = fgets($diff);
-            if ($debug) print "Examining: $line<br />" ;	         
+            if ($debug) print "Examining: $line<br>" ;	         
             if (strpos($line, "(revision 0)"))
                $listing[$index]["info"] = $lang["FILEADDED"];
             
@@ -273,7 +272,7 @@ if (!$noinput)
             
             // Skip second file info
             $line = fgets($diff);
-            if ($debug) print "Skipping: $line<br />" ;	         
+            if ($debug) print "Skipping: $line<br>" ;	         
             
             $indiff = true;
             $index++;
@@ -303,11 +302,11 @@ if (!$noinput)
             
             $listing[$index++]["properties"] = true;
             clearVars();
-            if ($debug) echo "Creating node $node<br />";
+            if ($debug) echo "Creating node $node<br>";
    
             // Skip the row of underscores
             $line = fgets($diff);
-            if ($debug) print "Skipping: $line<br />" ;	     
+            if ($debug) print "Skipping: $line<br>" ;	     
             
             while ($line = trim(fgets($diff)))
             {
@@ -341,12 +340,8 @@ if (!$noinput)
 }
 
 $vars["version"] = $version;
-
-if (!$rep->hasUnrestrictedReadAccess($path1) || !$rep->hasUnrestrictedReadAccess($path2, false))
-   $vars["noaccess"] = true;
-
-parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."compare.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."compare.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
    
 ?>

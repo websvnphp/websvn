@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -42,30 +41,30 @@ if (!isset($rep))
    exit;
 }
 
-$svnrep = new SVNRepository($rep);
+$svnrep = new SVNRepository($rep->path);
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, "", "", true);
-$youngest = $history->entries[0]->rev;
+$history = $svnrep->getHistory($path);
+$youngest = $history[0]["rev"];
 
 if (empty($rev))
    $rev = $youngest;
 
-$history = $svnrep->getLog($path, $rev);
+$history = $svnrep->getHistory($path, $rev);
 
 if ($path{0} != "/")
    $ppath = "/".$path;
 else
    $ppath = $path;
 
-$prevrev = @$history->entries[1]->rev;
+$prevrev = @$history[1]["rev"];
 
-$vars["repname"] = $rep->getDisplayName();
+$vars["repname"] = $rep->name;
 $vars["rev"] = $rev;
 $vars["path"] = $ppath;
 $vars["prevrev"] = $prevrev;
 
-$vars["rev1"] = $history->entries[0]->rev;
+$vars["rev1"] = $history[0]["rev"];
 $vars["rev2"] = $prevrev;
 
 createDirLinks($rep, $ppath, $rev, $showchanged);
@@ -89,14 +88,13 @@ if ($prevrev)
 
    // Get the contents of the two files
    $newtname = tempnam("temp", "");
-   $new = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, "", true);
+   $new = $svnrep->getFileContents($history[0]["path"], $newtname, $history[0]["rev"]);
 
    $oldtname = tempnam("temp", "");
-   $old = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, "", true);
+   $old = $svnrep->getFileContents($history[1]["path"], $oldtname, $history[1]["rev"]);
    
    $ent = true;
-   $extension = strrchr(basename($path), ".");
-   if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript))
+   if ((strrchr($path, ".") == '.php') || ($config->useEnscript))
       $ent = false;
 
    $file1cache = array();
@@ -149,7 +147,7 @@ if ($prevrev)
                   $nl = fgets($ofile);
                   
                   if ($ent)
-                     $line = replaceEntities(rtrim($nl), $rep);
+                     $line = replaceEntities(rtrim($nl));
                   else
                      $line = rtrim($nl);
                      
@@ -165,11 +163,11 @@ if ($prevrev)
                   $nl = fgets($nfile);
 
                   if ($ent)
-                     $line = replaceEntities(rtrim($nl), $rep);
+                     $line = replaceEntities(rtrim($nl));
                   else
                      $line = rtrim($nl);
                      
-                  $listing[$index]["rev2line"] = hardspace($line);
+                  $listing[$index]["rev1line"] = hardspace($line);
                   $curnline++;
                }
                else
@@ -205,7 +203,7 @@ if ($prevrev)
                $mod = $line{0};
 
                if ($ent)
-                  $line = replaceEntities(rtrim(substr($line, 1)), $rep);
+                  $line = replaceEntities(rtrim(substr($line, 1)));
                else
                   $line = rtrim(substr($line, 1));
                   
@@ -234,7 +232,7 @@ if ($prevrev)
                   case "+":
                      
                      // Try to mark "changed" line sensibly
-                     if (!empty($listing[$index-1]) && empty($listing[$index-1]["rev1lineno"]) && @$listing[$index-1]["rev1diffclass"] == "diffdeleted" && @$listing[$index-1]["rev2diffclass"] == "diff")
+                     if (!empty($listing[$index-1]) && empty($listing[$index-1]["rev1lineno"]) && $listing[$index-1]["rev1diffclass"] == "diffdeleted" && $listing[$index-1]["rev2diffclass"] == "diff")
                      {
                         $i = $index - 1;
                         while (!empty($listing[$i-1]) && empty($listing[$i-1]["rev1lineno"]) && $listing[$i-1]["rev1diffclass"] == "diffdeleted" && $listing[$i-1]["rev2diffclass"] == "diff")
@@ -302,7 +300,7 @@ if ($prevrev)
             $listing[$index]["rev2diffclass"] = "diff";
                   
             if ($ent)
-               $line = replaceEntities(rtrim(fgets($ofile)), $rep);
+               $line = replaceEntities(rtrim(fgets($ofile)));
             else
                $line = rtrim(fgets($ofile));
 
@@ -312,7 +310,7 @@ if ($prevrev)
                $listing[$index]["rev1line"] = "&nbsp;";
                
             if ($ent)
-               $line = replaceEntities(rtrim(fgets($nfile)), $rep);
+               $line = replaceEntities(rtrim(fgets($nfile)));
             else
                $line = rtrim(fgets($nfile));
 
@@ -347,12 +345,8 @@ else
 }
 
 $vars["version"] = $version;
-
-if (!$rep->hasReadAccess($path, false))
-   $vars["noaccess"] = true;
-
-parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."diff.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."header.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."diff.tmpl", $vars, $listing);
+parseTemplate($config->templatePath."footer.tmpl", $vars, $listing);
    
 ?>

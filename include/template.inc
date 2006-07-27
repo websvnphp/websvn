@@ -1,8 +1,7 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -270,7 +269,7 @@ function parseTemplate($template, $vars, $listing)
 
 // parseTags
 //
-// Replace all occurences of [websvn:varname] with the give variable
+// Replace all occurences of [websvn:varname] wit the give variable
 
 function parseTags($line, $vars)
 {

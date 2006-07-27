@@ -23,9 +23,6 @@
 // Translator: Lee Jae-Hong
 // Korean(utf8) language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Korean";
-
 $lang["LOG"] = "로그";
 $lang["DIFF"] = "비교";
 

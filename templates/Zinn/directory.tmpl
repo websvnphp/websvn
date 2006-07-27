@@ -8,118 +8,107 @@
       </td>
    </tr>
 </table>
-
-[websvn-test:noaccess]
-   [lang:NOACCESS]
-[websvn-else]
-   [websvn-test:restricted]
-   [websvn-else]
-      <b>[lang:PATH]:</b> [websvn:path]
-      <br><b>[lang:REV]:</b> [websvn:rev]
-      <p><hr>
-      <b>[lang:CURDIR]:</b>    [websvn:curdirlinks] - [websvn:curdirloglink]
-      [websvn-test:curdircomplink]
-       - [websvn:curdircomplink]
-      [websvn-endtest]    
-      [websvn-test:curdirdllink]
-       - [websvn:curdirdllink]
-      [websvn-endtest]
-      [websvn-test:curdirrsslink]
-       - [websvn:curdirrssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a>
-      [websvn-endtest]
-   [websvn-endtest]
-   
-   [websvn-defineicons]
-   dir=&nbsp;&nbsp;&nbsp;&nbsp;
-   diropen=&nbsp;&nbsp;&nbsp;&nbsp;
-   i-node=&nbsp;&nbsp;&nbsp;&nbsp;
-   t-node=&nbsp;&nbsp;&nbsp;&nbsp;
-   l-node=&nbsp;&nbsp;&nbsp;&nbsp;
-   e-node=&nbsp;&nbsp;&nbsp;&nbsp;
-   *=&nbsp;&nbsp;&nbsp;&nbsp;
-   [websvn-enddefineicons]
-   
-   <p>
-   [websvn:compare_form]
-      <table class="outlined" width="100%" cellpadding="2">
-         <tr>
-            <th width="100%"><b>Path</b></th>
-            <th><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-            [websvn-test:allowdownload]
-               <th><b>[lang:TARBALL]</b></th>
-            [websvn-endtest]
-            [websvn-test:curdirrsslink]
-               <th><b>[lang:RSSFEED]</b></th>
-            [websvn-endtest]
-         </tr>
-         [websvn-startlisting]
-         <tr>
-            <td class="[websvn:rowparity]">
-               [websvn:compare_box]
-               [websvn-treenode]
-               [websvn:filelink]
-            </td>
-            <td class="[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
-            [websvn-test:allowdownload]
-               <td class="[websvn:rowparity]">[websvn:fileviewdllink]</td>
-            [websvn-endtest]
-            [websvn-test:curdirrsslink]
-               <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
-            [websvn-endtest]
-         </tr>
-         [websvn-endlisting]
-      </table>
-   <p>
-   [websvn:compare_submit]  
-   [websvn:compare_endform]
-   <hr>
-   [websvn-test:goyoungestlink]
-    - [websvn:goyoungestlink]
-   [websvn-endtest]
-   <br><b>[lang:LASTMOD]:</b> [lang:REV] [websvn:lastchangedrev] - [websvn:author] - [websvn:date]
-   <br><b>[lang:LOGMSG]:</b><br>
-   [websvn:log]
-   <p>
-   [websvn-test:hidechanges]
-      <p>[websvn:showchangeslink]
-   [websvn-endtest]
-   
-   [websvn-test:showchanges]
-      <p><b>[lang:CHANGES]:</b><br>
-      <p>[websvn:hidechangeslink]
-      <p>
-         <center>
-         <table border=1 class="bordered" cellpadding=4>
-            <tr>
-               <th><center><b>[lang:NEWFILES]</b></center></th>
-               <th><center><b>[lang:CHANGEDFILES]</b></center></th>
-               <th><center><b>[lang:DELETEDFILES]</b></center></th>
-            </tr>
-            <tr>  
-               <td valign="top">
-               [websvn-test:newfilesbr]
-                  [websvn:newfilesbr]
-               [websvn-else]
-                  &nbsp;
-               [websvn-endtest]
-               </td>
-               <td valign="top">
-               [websvn-test:changedfilesbr]
-                  [websvn:changedfilesbr]
-               [websvn-else]
-                  &nbsp;
-               [websvn-endtest]
-               </td>
-               <td valign="top">
-               [websvn-test:deletedfilesbr]
-                  [websvn:deletedfilesbr]
-               [websvn-else]
-                  &nbsp;
-               [websvn-endtest]
-               </td>
-            </tr>
-         </table>
-      </center>
-   [websvn-endtest]
+<b>[lang:PATH]:</b> [websvn:path]
+<br><b>[lang:REV]:</b> [websvn:rev]
+<p><hr>
+<b>[lang:CURDIR]:</b> [websvn:curdirlinks] - [websvn:curdirloglink] - [websvn:curdircomplink]
+[websvn-test:allowdownload]
+ - [websvn:curdirdllink]
 [websvn-endtest]
+[websvn-test:curdirrsslink]
+ - [websvn:curdirrssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a>
+[websvn-endtest]
+
+[websvn-defineicons]
+dir=&nbsp;&nbsp;&nbsp;&nbsp;
+i-node=&nbsp;&nbsp;&nbsp;&nbsp;
+t-node=&nbsp;&nbsp;&nbsp;&nbsp;
+l-node=&nbsp;&nbsp;&nbsp;&nbsp;
+e-node=&nbsp;&nbsp;&nbsp;&nbsp;
+*=&nbsp;&nbsp;&nbsp;&nbsp;
+[websvn-enddefineicons]
+
+<p>
+[websvn:compare_form]
+   <table class="outlined" width="100%" cellpadding="2">
+      <tr>
+         <th width="100%"><b>Path</b></th>
+         <th><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
+         [websvn-test:allowdownload]
+            <th><b>[lang:TARBALL]</b></th>
+         [websvn-endtest]
+         [websvn-test:curdirrsslink]
+            <th><b>[lang:RSSFEED]</b></th>
+         [websvn-endtest]
+      </tr>
+      [websvn-startlisting]
+      <tr>
+         <td class="[websvn:rowparity]">
+            [websvn:compare_box]
+            [websvn-treenode]
+            [websvn:filelink]
+         </td>
+         <td class="[websvn:rowparity]">[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
+         [websvn-test:allowdownload]
+            <td class="[websvn:rowparity]">[websvn:fileviewdllink]</td>
+         [websvn-endtest]
+         [websvn-test:curdirrsslink]
+            <td class="row[websvn:rowparity]">[websvn:rssanchor]<img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/Standard/xml.gif" width="36" height="14" alt="[lang:RSSFEED]"></a></td>
+         [websvn-endtest]
+      </tr>
+      [websvn-endlisting]
+   </table>
+<p>
+[websvn:compare_submit]  
+[websvn:compare_endform]
+<hr>
+[websvn-test:goyoungestlink]
+ - [websvn:goyoungestlink]
+[websvn-endtest]
+<br><b>[lang:LASTMOD]:</b> [lang:REV] [websvn:lastchangedrev] - [websvn:author] - [websvn:date]
+<br><b>[lang:LOGMSG]:</b><br>
+[websvn:log]
+<p>
+[websvn-test:hidechanges]
+   <p>[websvn:showchangeslink]
+[websvn-endtest]
+
+[websvn-test:showchanges]
+   <p><b>[lang:CHANGES]:</b><br>
+   <p>[websvn:hidechangeslink]
+   <p>
+      <center>
+      <table border=1 class="bordered" cellpadding=4>
+         <tr>
+            <th><center><b>[lang:NEWFILES]</b></center></th>
+            <th><center><b>[lang:CHANGEDFILES]</b></center></th>
+            <th><center><b>[lang:DELETEDFILES]</b></center></th>
+         </tr>
+         <tr>  
+            <td valign="top">
+            [websvn-test:newfilesbr]
+               [websvn:newfilesbr]
+            [websvn-else]
+               &nbsp;
+            [websvn-endtest]
+            </td>
+            <td valign="top">
+            [websvn-test:changedfilesbr]
+               [websvn:changedfilesbr]
+            [websvn-else]
+               &nbsp;
+            [websvn-endtest]
+            </td>
+            <td valign="top">
+            [websvn-test:deletedfilesbr]
+               [websvn:deletedfilesbr]
+            [websvn-else]
+               &nbsp;
+            [websvn-endtest]
+            </td>
+         </tr>
+      </table>
+   </center>
+[websvn-endtest]
+
 

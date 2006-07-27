@@ -1,18 +1,13 @@
 
 <div align="right">[websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
 <h2>[websvn:repname]</h2>
-
-[websvn-test:noaccess]
-   [lang:NOACCESS]
-[websvn-else]
-   [websvn:curdirlinks] - [lang:REV] [websvn:rev]<p>
-   [websvn-test:goyoungestlink]
-   [websvn:goyoungestlink]<p>
-   [websvn-endtest]
-   
-   [websvn:prevdifflink] - [websvn:blamelink]
-   <p>
-   <table width="100%" border=0><tr><td>
-   [websvn-getlisting]
-   </td></tr></table>
+[websvn:curdirlinks] - [lang:REV] [websvn:rev]<p>
+[websvn-test:goyoungestlink]
+[websvn:goyoungestlink]<p>
 [websvn-endtest]
+
+[websvn:prevdifflink] - [websvn:blamelink]
+<p>
+<table width="100%" border=0><tr><td>
+[websvn-getlisting]
+</td></tr></table>

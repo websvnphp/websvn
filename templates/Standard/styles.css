@@ -1,93 +1,86 @@
+
 body
 {
-   font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif;
+   font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
    background-color: white;
    margin: 20px;
    padding: 0px
 }
 
-h1
+H1
 { 
    color: #99007E;
    font-size: 30px;
    font-weight: normal;
-   font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular, sans-serif;
+   font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular;
    text-decoration: none;
 }
 
-hr { color: #99007E; background-color: #99007E  }
+HR { color: #99007E; background-color: #99007E  }
 
 .highlight { color: #99007E; font-style: italic;  }
 
-table.bordered, table.outlined, table.blame
+TABLE.bordered, TABLE.outlined, TABLE.blame
 {
    border-collapse: collapse;
    border: solid 2px #99007E;
 }
 
-.bordered td, .bordered th
+.bordered TD, .bordered TH
 {
    border: solid 2px #99007E;
 }
 
-.outlined td
+.outlined TD
 {
    padding: 0px 5px 0px 5px;
 }
 
-.outlined th, .blame th
+.outlined TH, .blame TH
 {
    padding: 5px 5px 5px 5px;
    font-weight: bold;
    border: solid 2px #99007E;
 }
 
-.outlined td, .blame td
+.outlined TD, .blame TD
 {
    padding: 1px 5px 1px 5px;
    border-right: solid 2px #99007E;
    border-bottom: solid 1px #F0F0F0;
 }
 
-td.diffdeleted
+TD.diffdeleted
 {
    font-size: 11px;
    background-color: red;
 }
 
-td.diffchanged
+TD.diffchanged
 {
    font-size: 11px;
    background-color: yellow;
 }
 
-td.diffadded
+TD.diffadded
 {
    font-size: 11px;
    background-color: green;
 }
 
-td.diff
+TD.diff
 {
    font-size: 11px;
    background-color: #D0D0D0;
 }
 
-table.diff
+TABLE.diff
 {
    border-collapse: collapse;
 }
 
-div.newpath
+DIV.newpath
 {
    padding: 5px 5px 5px 5px;
    border: solid 2px #99007E;
 }
-
-.plusbox { float: left; clear: both; position: relative; top: -3px; font-size: 13px; font-weight: bold; width: 16px; text-indent: 0; height: 16px; color: black; background-color: #D0D0D0; text-align: center; padding: 0px 2px 0px 3px; border: black solid 1px; margin-right: 5px; }
-.minusbox { float: left; clear: both; position: relative; top: -3px; font-size: 13px; font-weight: bold; width: 16px; text-indent: 0; height: 16px; color: black; background-color: #99007E; text-align: center; padding: 0px 2px 0px 3px; border: black solid 1px; margin-right: 5px; }
-
-.groupname { padding-left: 0px; text-indent: -25px; margin: 3px 0 3px 0;}  
-.switchcontent { margin: 3px 0 0 20px; }
-
-code { white-space: pre-wrap; }

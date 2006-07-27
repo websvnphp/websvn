@@ -3,25 +3,21 @@
 [websvn:curdirlinks] - <h2> [lang:BLAMEFOR] [websvn:rev]</h2>
 <p>
 
-[websvn-test:noaccess]
-   [lang:NOACCESS]
-[websvn-else]
-   <table cellpadding="2px" cellspacing="0" width="100%">
+<table cellpadding="2px" cellspacing="0" width="100%">
+   <tr>
+      <th class="HdrClmn"><b>[lang:LINENO]</b></th>
+      <th class="HdrClmn"><b>[lang:REV]</b></th>
+      <th class="HdrClmn"><b>[lang:AUTHOR]</b></th>
+      <th class="HdrClmnEnd"><b>[lang:LINE]</b></th>
+   </tr>
+
+   [websvn-startlisting]
       <tr>
-         <th class="HdrClmn"><b>[lang:LINENO]</b></th>
-         <th class="HdrClmn"><b>[lang:REV]</b></th>
-         <th class="HdrClmn"><b>[lang:AUTHOR]</b></th>
-         <th class="HdrClmnEnd"><b>[lang:LINE]</b></th>
+         <td class="CatClmn0" style="border-right: 1px solid black" valign="top">[websvn:lineno]</td>
+         <td class="CatClmn0" style="border-right: 1px solid black" valign="top">[websvn:revision]</td>
+         <td class="CatClmn0" style="border-right: 1px solid black" valign="top">[websvn:author]</td>
+         <td style="border-right: 1px solid black" valign="top">[websvn:line]</td>
       </tr>
-   
-      [websvn-startlisting]
-         <tr>
-            <td class="CatClmn0" style="border-right: 1px solid black" valign="top">[websvn:lineno]</td>
-            <td class="CatClmn0" style="border-right: 1px solid black" valign="top">[websvn:revision]</td>
-            <td class="CatClmn0" style="border-right: 1px solid black" valign="top">[websvn:author]</td>
-            <td style="border-right: 1px solid black" valign="top">[websvn:line]</td>
-         </tr>
-      [websvn-endlisting]
-   
-   </table> 
-[websvn-endtest]
+   [websvn-endlisting]
+
+</table>
