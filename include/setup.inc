@@ -323,6 +323,7 @@ if ($handle = opendir('languages'))
    closedir($handle);
     
    // XXX: this shouldn't be necessary
+   // ^ i.e. just require english.inc, then the desired language
    // Reload english to get untranslated strings
    require 'languages/english.inc';
    
@@ -371,7 +372,8 @@ else
    
 // Retrieve other standard parameters
 
-$path = @$_REQUEST["path"];
+# due to possible XSS exploit, we need to clean up path first
+$path = !empty($_REQUEST['path']) ? urlencode($_REQUEST['path']) : null;
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
