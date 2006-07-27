@@ -361,7 +361,7 @@ else
    
 // Retrieve other standard parameters
 
-$path = @$_REQUEST["path"];
+$path = !empty($_REQUEST['path']) ? urlencode($_REQUEST['path']) : null;
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
