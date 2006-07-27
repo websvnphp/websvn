@@ -373,7 +373,8 @@ else
 // Retrieve other standard parameters
 
 # due to possible XSS exploit, we need to clean up path first
-$path = !empty($_REQUEST['path']) ? urlencode($_REQUEST['path']) : null;
+$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
+$vars['safepath'] = htmlentities($path);
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
