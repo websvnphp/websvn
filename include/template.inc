@@ -270,7 +270,7 @@ function parseTemplate($template, $vars, $listing)
 
 // parseTags
 //
-// Replace all occurences of [websvn:varname] wit the give variable
+// Replace all occurences of [websvn:varname] with the give variable
 
 function parseTags($line, $vars)
 {
