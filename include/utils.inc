@@ -34,7 +34,7 @@ function createDirLinks($rep, $path, $rev, $showchanged)
 {
    global $vars, $config;
    
-   $subs = explode("/", $path);
+   $subs = explode('/', htmlentities($path));
    $sofar = "";
    $count = count($subs);
    $vars["curdirlinks"] = "";
@@ -54,7 +54,7 @@ function createDirLinks($rep, $path, $rev, $showchanged)
       
    for ($n = 0; $n < $limit; $n++)
    {
-      $sofar .= $subs[$n]."/";
+      $sofar .= html_entity_decode($subs[$n])."/";
       $sofarurl = $config->getURL($rep, $sofar, "dir");
       $vars["curdirlinks"] .= "[<a href=\"${sofarurl}rev=$rev&amp;sc=$showchanged\">".$subs[$n]."/]</a> ";
    }
