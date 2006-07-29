@@ -1,0 +1,20 @@
+<!-- beginning of index.tmpl -->
+        <h2>[lang:PROJECTS]:</h2>
+[websvn-test:flatview]
+        <ul id='projectListing'>
+        [websvn-startlisting]
+            <li>[websvn:projlink]</li>
+        [websvn-endlisting]
+        </ul>
+[websvn-else]
+        [websvn-startlisting]
+            [websvn-test:isprojlink]
+        <div class='projectGroup'>
+            [websvn:listitem]
+        </div>
+            [websvn-else]
+        [websvn:listitem]
+            [websvn-endtest]
+        [websvn-endlisting]
+[websvn-endtest]
+<!-- end of index.tmpl -->
