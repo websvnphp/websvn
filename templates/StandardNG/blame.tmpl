@@ -1,0 +1,30 @@
+        [websvn:projects_form]
+            <div id='projectSelectForm'>
+                [websvn:projects_select]
+                [websvn:projects_submit]
+            </div>
+        [websvn:projects_form]
+        <h2>[websvn:repname]</h2>
+        [websvn:curdirlinks]
+        <h2>[lang:BLAMEFOR] [websvn:rev]</h2>
+        [websvn-test:noaccess]
+        <h3 class='err'>[lang:NOACCESS]</h3>
+        [websvn-else]
+        <table class='blame'>
+            <tr>
+                <th>[lang:LINENO]</th>
+                <th>[lang:REV]</th>
+                <th>[lang:AUTHOR]</th>
+                <th>[lang:LINE]</th>
+            </tr>
+
+            [websvn-startlisting]
+            <tr>
+                <td>[websvn:lineno]</td>
+                <td>[websvn:revision]</td>
+                <td>[websvn:author]</td>
+                <td>[websvn:line]</td>
+            </tr>
+            [websvn-endlisting]
+        </table>
+        [websvn-endtest]
