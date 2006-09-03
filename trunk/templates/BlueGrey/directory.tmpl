@@ -1,21 +1,23 @@
-
-<div align="right">[websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
-<h1>[websvn:repname]</h1>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+  <tr>
+    <td align="left"><h1>[websvn:repname]</h1></td>
+    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
+  </tr>
+</table>
 
 [websvn-test:noaccess]
    [lang:NOACCESS]
 [websvn-else]
-   <table border=0 cellpadding=2 cellspacing=0>
+   <table cellpadding="2px" cellspacing="0px" class="outline">
    <tr><th colspan=2 class="HdrClmnEnd">[lang:REVINFO]</th></tr>
-   <tr><td class="CatClmn0" valign="top">[lang:CURDIR]:</td><td class="row0">[websvn:path]</td></tr>
-   <tr><td class="CatClmn1">[lang:REV]:</td><td class="row1">[websvn:rev]
+   <tr><td class="CatClmn1" valign="top">[lang:CURDIR]:</td><td class="row1">[websvn:path]</td></tr>
+   <tr><td class="CatClmn0">[lang:REV] &amp; [lang:AUTHOR]:</td><td class="row0">[lang:REV] [websvn:rev] - [websvn:author]
    [websvn-test:goyoungestlink]
     - [websvn:goyoungestlink]
    [websvn-endtest]
    </td></tr>
    [websvn-test:restricted]
    [websvn-else]
-      <tr><td class="CatClmn0" valign="top">[lang:AUTHOR]:</td><td class="row0">[websvn:author]</td></tr>
       <tr><td class="CatClmn1" valign="top">[lang:LASTMOD]:</td><td class="row1">[lang:REV] [websvn:lastchangedrev] - [websvn:date]</td></tr>
       <tr><td class="CatClmn0" valign="top">[lang:LOGMSG]:</td><td class="row0">[websvn:log]</td></tr>
       [websvn-test:hidechanges]
@@ -54,16 +56,21 @@
    
    [websvn-defineicons]
    dir=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
-   diropen=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder-open.png" alt="[OPEN-FOLDER]">
+   diropen=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[OPEN-FOLDER]">
    *=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
    .c=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
+   .cpp=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filecpp.png" alt="[CPP-FILE]">
    .h=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
+   .html=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filehtml.png" alt="[HTML-FILE]">
+   .java=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filejava.png" alt="[JAVA-FILE]">
+   .m=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filem.png" alt="[M-FILE]">
+   .py=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filepy.png" alt="[PY-FILE]">
    .s=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/files.png" alt="[S-FILE]">
    
-   i-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/i-node.png" alt="[NODE]">
-   t-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/t-node.png" alt="[NODE]">
-   l-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/l-node.png" alt="[NODE]">
-   e-node=<img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/e-node.png" alt="[NODE]">
+   i-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/i-node.png" alt="[NODE]">
+   t-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/t-node.png" alt="[NODE]">
+   l-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/l-node.png" alt="[NODE]">
+   e-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/e-node.png" alt="[NODE]">
    [websvn-enddefineicons]
    
    <p><hr>
@@ -79,14 +86,14 @@
    [websvn-endtest]
    <p>
    [websvn:compare_form]
-      <table cellpadding="0px" cellspacing="0px" width="100%">
+      <table cellpadding="2px" cellspacing="0px" width="100%" class="outline">
          <tr>
             <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
             [websvn-test:allowdownload]
                [websvn-test:curdirrsslink]
                   <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
                   <th class="HdrClmn"><b>[lang:TARBALL]</b></th>
-                  <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></th>
+                  <th class="HdrClmnEnd"><b>RSS</b></th>
                [websvn-else]
                   <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
                   <th class="HdrClmnEnd"><b>[lang:TARBALL]</b></th>
@@ -94,7 +101,7 @@
             [websvn-else]
                [websvn-test:curdirrsslink]
                   <th class="HdrClmn"><b>[lang:LOG]</b></th>
-                  <th class="HdrClmnEnd"><b>[lang:RSSFEED]</b></th>
+                  <th class="HdrClmnEnd"><b>RSS</b></th>
                [websvn-else]
                   <th class="HdrClmnEnd"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
                [websvn-endtest]
