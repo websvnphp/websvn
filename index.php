@@ -74,6 +74,7 @@ else
          $url = $config->getURL($project, "/", "dir");
          if ($curgroup != $project->group)
          {
+            # TODO: this should be de-soupified
             if (!empty($curgroup))
                $listing[$i]["listitem"] = "</div>\n";  // Close the switchcontent div
             else
