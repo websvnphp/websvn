@@ -144,7 +144,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // Uncomment the default language.  If you want English then don't do anything here.
 //
-// include 'languages/catala.inc';
+// include 'languages/catalan.inc';
 // include 'languages/danish.inc';
 // include 'languages/dutch.inc';
 // include 'languages/finnish.inc';
