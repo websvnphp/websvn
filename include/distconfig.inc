@@ -144,24 +144,24 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // Uncomment the default language.  If you want English then don't do anything here.
 //
-// include('languages/german.inc');
-// include('languages/french.inc');
-// include('languages/spanish.inc');
-// include('languages/portuguese.inc');
-// include('languages/swedish.inc');
-// include('languages/slovenian.inc');
-// include('languages/dutch.inc');
-// include('languages/danish.inc');
-// include('languages/finnish.inc');
-// include('languages/turkish.inc');
-// include('languages/norwegian.inc');
-// include('languages/polish.inc');
-// include('languages/japanese.inc');
-// include('languages/korean.inc');
-// include('languages/tchinese.inc');
-// include('languages/schinese.inc');
-// include 'languages/russian.inc';
+// include 'languages/catala.inc';
+// include 'languages/danish.inc';
+// include 'languages/dutch.inc';
+// include 'languages/finnish.inc';
+// include 'languages/french.inc';
+// include 'languages/german.inc';
 // include 'languages/japanese.inc';
+// include 'languages/korean.inc';
+// include 'languages/norwegian.inc';
+// include 'languages/polish.inc';
+// include 'languages/portuguese.inc';
+// include 'languages/russian.inc';
+// include 'languages/schinese.inc';
+// include 'languages/slovenian.inc';
+// include 'languages/spanish.inc';
+// include 'languages/swedish.inc';
+// include 'languages/tchinese.inc';
+// include 'languages/turkish.inc';
 
 // }}}
 

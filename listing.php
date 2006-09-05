@@ -371,9 +371,9 @@ if ($rev != $headrev)
 
 if (isset($history->entries[1]->rev))
 {
-	$vars["curdircomplink"] = "<a href=\"${compurl}compare%5B%5D=".
+	$vars["curdircomplink"] = "<a href=\"${compurl}compare[]=".
 	 						        urlencode($history->entries[1]->path)."@".$history->entries[1]->rev.
-							        "&amp;compare%5B%5D=".urlencode($history->entries[0]->path)."@".$history->entries[0]->rev.
+							        "&amp;compare[]=".urlencode($history->entries[0]->path)."@".$history->entries[0]->rev.
 							        "\">${lang["DIFFPREV"]}</a>";
 }
 else

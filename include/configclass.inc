@@ -423,6 +423,10 @@ Class Repository
          
       return $config->getContentEncoding();
    }
+
+   // }}}
+
+   // {{{ Authentication
    
    function useAuthenticationFile($file)
    {
