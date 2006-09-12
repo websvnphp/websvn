@@ -30,14 +30,19 @@
 
 // Include the configuration class
 require_once 'include/configclass.inc';
-require_once 'include/svnlook.inc';
+
+// Create the config
+$config = new Config;
+
+// Set up the default character encodings
+if (function_exists('iconv_get_encoding'))
+{
+  $config->setInputEncoding(iconv_get_encoding('input_encoding'));
+}
 
 // Define the language array
 $lang = array();
 $langNames = array();
-
-// Include a default language file.
-require 'languages/english.inc';
 
 // Set up locwebsvnhttp
 // Note: we will use nothing in MultiViews mode so that the URLs use the root
@@ -50,17 +55,23 @@ if (empty($locwebsvnreal))
 
 $vars['locwebsvnhttp'] = $locwebsvnhttp;
 
+// Include a default language file (must go before config.inc)
+require 'languages/english.inc';
+
+// Get the user's personalised config (requires the locwebsvnhttp stuff above)
+require_once 'config.inc';
+
+// Load PHP_Compat if we're going to use it. This needs to be done after including config.inc (which contains
+// the setting) but before svnlook.inc (which requires util.inc, which contains PHP4-incompatible functions)
+if ($config->isPHPCompatEnabled()) {
+   require_once($config->getPHPCompatFile());
+   require_once 'include/php5compat.inc';
+}
+
+require_once 'include/svnlook.inc';
+
 // Make sure that the input locale is set up correctly
 setlocale(LC_ALL, '');
-
-// Create the config
-$config = new Config;
-
-// Set up the default character encodings
-if (function_exists('iconv_get_encoding'))
-{
-  $config->setInputEncoding(iconv_get_encoding('input_encoding'));
-}
 
 // {{{ Content-Type's
 // Set up the default content-type extension handling
@@ -272,10 +283,6 @@ $extEnscript = array
 // Default 'zipped' array
 
 $zipped = array ();
-
-// Get the user's personalised config
-
-require_once 'config.inc';
 
 // Set up the version info
 

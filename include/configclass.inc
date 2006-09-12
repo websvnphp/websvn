@@ -497,6 +497,7 @@ Class Config
    var $flatIndex = true;
    var $openTree = false;
    var $serverIsWindows = false;
+   var $phpCompatEnabled = false;
    var $cacheResults = false;
    var $multiViews = false;
    var $useEnscript = false;
@@ -524,6 +525,7 @@ Class Config
    var $outputEnc = "UTF-8";  // Encoding of web page.  Now forced to UTF-8
 
    var $quote = "'";
+   var $pathSeparator = ":";
 
    var $_repositories;
 
@@ -597,8 +599,24 @@ Class Config
       $this->setInputEncoding("CP$cp", "iso-8859-1");
       
       // On Windows machines, use double quotes around command line parameters
-      
       $this->quote = '"';
+      
+      // On Windows, semicolon separates path entries in a list rather than colon.
+      $this->$pathSeparator = ";";
+   }
+   
+   // }}}
+   
+   // {{{ setPHPCompatEnabled
+   //
+   // Used for PHP4
+
+   function setPHPCompatEnabled() {
+      $this->phpCompatEnabled = true;
+   }
+   
+   function isPHPCompatEnabled() {
+      return $this->phpCompatEnabled;
    }
 
    // }}}
