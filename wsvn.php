@@ -37,7 +37,7 @@ $locwebsvnhttp = '';
 
 // Physical location of websvn directory
 #$locwebsvnreal = "d:/websvn";
-$locwebsvnreal = '/home/junx/docs/wsvn';
+$locwebsvnreal = '/mnt/wsvn';
 
 chdir($locwebsvnreal);
 
