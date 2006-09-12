@@ -1,8 +1,11 @@
 2.1 alpha 1
 
-* Many cleanups and optimisations.
-* More documentation for *.inc files.
-* Removed extraneous bits.
+* Changed: many cleanups and optimisations.
+* Added: more documentation for *.inc files.
+* Removed: extraneous bits.
+* New: PHP_Compat usage to allow some new PHP5 functionality and remain
+  backwards-compatible.
+* Changed: line endings now use UNIX-style across the board.
 
 CHANGES
 
