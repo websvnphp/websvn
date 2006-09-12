@@ -24,8 +24,6 @@
 //
 // General utility commands
 
-#require_once 'php5compat.inc';
-
 // {{{ createDirLinks
 //
 // Create a list of links to the current path that'll be available from the template
