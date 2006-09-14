@@ -309,4 +309,28 @@ function getParameterisedSelfUrl($params = true)
 
 // }}}
 
+// {{{ getUserLanguage
+
+function getUserLanguage() {
+   $languages = !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : 'en';
+   if (strpos($languages, ',') === false) return $languages; # only one specified
+   # split off the languages into an array of languages and q-values
+   $qvals = array();
+   $langs = array();
+   preg_match_all('#(\S+?)\s*(?:;q=([01](?:\.\d{1,3})?))?\s*,\s*#', $languages, $qvals, PREG_SET_ORDER);
+   foreach ($qvals as $q) {
+      $langs[] = array (
+         $q[1],
+         floatval(!empty($q[2]) ? $q[2] : 1.0)
+      );
+   }
+   # XXX: now, we should loop through our available languages and choose an
+   # appropriate one for the user
+   # note that we shouldn't match the region unless we have a specific region
+   # to use (e.g. zh-CN vs. zh-TW)
+   # FIXME: see above; otherwise, this function doesn't really do anything
+}
+
+// }}}
+
 ?>
