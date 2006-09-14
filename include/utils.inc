@@ -151,7 +151,62 @@ function getFullURL($loc)
 
 function hardspace($s)
 {
-   return '<code>'.$s.'</code>';
+   return '<code>' . expandTabs($s) . '</code>';
+}
+
+// }}}
+
+// {{{ expandTabs
+
+/**
+ * Expands the tabs in a line that may or may not include HTML.
+ *
+ * Enscript generates code with HTML, so we need to take that into account.
+ *
+ * @param string $s Line of possibly HTML-encoded text to expand
+ * @param int $tabwidth Tab width, -1 to use repository's default, 0 to collapse
+ *                      all tabs.
+ * @return string The expanded line.
+ * @since 2.1
+ */
+
+function expandTabs($s, $tabwidth = -1)
+{
+   global $rep;
+
+   if ($tabwidth == -1) 
+      $tabwidth = $rep->getExpandTabsBy();
+   $pos = 0;
+
+   // Parse the string into chunks that are either 1 of: HTML tag, tab char, run of any other stuff
+   $chunks = preg_split("/((?:<.+?>)|(?:&.+?;)|(?:\t))/", $s, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+   // Count the sizes of the chunks and replace tabs as we go
+   for ($i = 0; $i < count($chunks); $i++)
+   {
+      switch ($chunks[$i]{0})
+      {
+         case '<':       // HTML tag   : ignore its width by doing nothing
+         break;
+
+         case '&':       // HTML entity: count its width as 1 char
+             $pos        +=   1;
+         break;
+
+         case "\t":      // Tab char: replace it with a run of spaces between length tabwidth and 1
+             $tabsize    = $tabwidth - ($pos % $tabwidth);
+             $chunks[$i] = str_repeat(' ', $tabsize);
+             $pos        +=   $tabsize;
+         break;
+
+         default:        // Anything else: just keep track of its width
+             $pos        +=   strlen($chunks[$i]);
+         break;
+      }
+   }
+
+   // Put the chunks back together and we've got the original line, detabbed.
+   return join('', $chunks);
 }
 
 // }}}
