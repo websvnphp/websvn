@@ -26,6 +26,7 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Dansk";
+$lang['LANGUAGETAG'] = 'da';
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Sammenlign";
