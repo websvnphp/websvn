@@ -27,6 +27,7 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Traditional Chinese";
+$lang['LANGUAGETAG'] = 'zh-TW';
 
 $lang["LOG"] = "歷史記錄";
 $lang["DIFF"] = "比對";

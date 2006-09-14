@@ -25,6 +25,7 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Català-Valencià";
+$lang['LANGUAGETAG'] = 'ca';
 
 $lang["LOG"] = "Registre";
 $lang["DIFF"] = "Diferència";
