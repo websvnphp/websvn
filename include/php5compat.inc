@@ -15,7 +15,7 @@ $funcs = array(
 // isn't relative to the standard include path '.' (it's instead relative
 // to './include'). So rather than hack PHP_Compat to work, just add
 // './include' to our include path.
-ini_set("include_path", ini_get("include_path").$config->$pathSeparator."./include");
+ini_set("include_path", ini_get("include_path").$config->pathSeparator."./include");
 
 foreach ($funcs as $fn) {
     if (PHP_Compat::loadFunction($fn) != true)
