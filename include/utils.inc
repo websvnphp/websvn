@@ -184,6 +184,8 @@ function expandTabs($s, $tabwidth = -1)
    // Count the sizes of the chunks and replace tabs as we go
    for ($i = 0; $i < count($chunks); $i++)
    {
+      # make sure we're not dealing with an empty string
+      if (empty($chunks[$i])) continue;
       switch ($chunks[$i]{0})
       {
          case '<':       // HTML tag   : ignore its width by doing nothing
