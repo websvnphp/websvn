@@ -602,7 +602,7 @@ Class Config
       $this->quote = '"';
       
       // On Windows, semicolon separates path entries in a list rather than colon.
-      $this->$pathSeparator = ";";
+      $this->pathSeparator = ";";
    }
    
    // }}}
