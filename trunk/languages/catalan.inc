@@ -84,6 +84,7 @@ $lang["CLEARLOG"] = "Neteja el filtre actual";
 $lang["MORERESULTS"] = "Cerca més coincidències...";
 $lang["NORESULTS"] = "No hi ha cap registre que coincideixi amb la vostra cerca";
 $lang["NOMORERESULTS"] = "No hi ha més registres que coincideixin amb la vostra cerca";
+$lang['NOPREVREV'] = 'No hi ha cap revisió anterior.';
 
 $lang["RSSFEEDTITLE"] = "Canal RSS del WebSVN"; 
 $lang["FILESMODIFIED"] = "fitxer(s) modificat(s)"; 
