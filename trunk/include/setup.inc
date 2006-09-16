@@ -197,7 +197,24 @@ $contentType = array (
 '.mov' => 'video/quicktime', // QuickTime Video
 '.avi' => 'video/msvideo', // Microsoft Windows Video
 '.movie' => 'video/x-sgi-movie', // SGI Movieplayer format
-'.wrl' => 'x-world/x-vrml' // VRML Worlds
+'.wrl' => 'x-world/x-vrml', // VRML Worlds
+'.odt' => 'application/vnd.oasis.opendocument.text',                  // OpenDocument Text
+'.ott' => 'application/vnd.oasis.opendocument.text-template',         // OpenDocument Text Template
+'.ods' => 'application/vnd.oasis.opendocument.spreadsheet',           // OpenDocument Spreadsheet
+'.ots' => 'application/vnd.oasis.opendocument.spreadsheet-template',  // OpenDocument Spreadsheet Template
+'.odp' => 'application/vnd.oasis.opendocument.presentation',          // OpenDocument Presentation
+'.otp' => 'application/vnd.oasis.opendocument.presentation-template', // OpenDocument Presentation Template
+'.odg' => 'application/vnd.oasis.opendocument.graphics',              // OpenDocument Drawing
+'.otg' => 'application/vnd.oasis.opendocument.graphics-template',     // OpenDocument Drawing Template
+'.odc' => 'application/vnd.oasis.opendocument.chart',                 // OpenDocument Chart
+'.otc' => 'application/vnd.oasis.opendocument.chart-template',        // OpenDocument Chart Template
+'.odf' => 'application/vnd.oasis.opendocument.formula',               // OpenDocument Formula
+'.otf' => 'application/vnd.oasis.opendocument.formula-template',      // OpenDocument Formula Template
+'.odi' => 'application/vnd.oasis.opendocument.image',                 // OpenDocument Image
+'.oti' => 'application/vnd.oasis.opendocument.image-template',        // OpenDocument Image Template
+'.odm' => 'application/vnd.oasis.opendocument.text-master',           // OpenDocument Master Document
+'.oth' => 'application/vnd.oasis.opendocument.text-web',              // HTML Document Template
+'.odb' => 'application/vnd.oasis.opendocument.database',              // OpenDocument Database
 
 );
 
