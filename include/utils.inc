@@ -282,6 +282,8 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 
 function getParameterisedSelfUrl($params = true)
 {
+   global $config;
+
    $url = null;
 
    if ($config->multiViews)
