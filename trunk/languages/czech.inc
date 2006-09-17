@@ -86,6 +86,7 @@ $lang["CLEARLOG"] = "Zruš aktuální filtr";
 $lang["MORERESULTS"] = "Najdi další...";
 $lang["NORESULTS"] = "Nejsou tu žádné zázanmy odpovídající vašim požadavkům";
 $lang["NOMORERESULTS"] = "Nejsou tu žádné další záznamy odpovídající vašim požadavkům";
+$lang['NOPREVREV'] = 'Není předchozí revize.';
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "soubor(y) změněn(y)";
