@@ -83,6 +83,7 @@ $lang["CLEARLOG"] = "T&oslash;m gjeldende s&oslash;k";
 $lang["MORERESULTS"] = "Finn flere treff...";
 $lang["NORESULTS"] = "Ingen loggmeldinger passer til ditt s&oslash;k";
 $lang["NOMORERESULTS"] = "Ingen flere loggmeldinger passer til ditt s&oslash;k";
+$lang['NOPREVREV'] = 'Ingen tidligere revisjon';
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS-str&oslash;m"; 
 $lang["FILESMODIFIED"] = "fil(er) endret"; 
