@@ -84,6 +84,7 @@ $lang["CLEARLOG"] = "Ryd aktuelle filter";
 $lang["MORERESULTS"] = "Vis flere resultater...";
 $lang["NORESULTS"] = "Der er ingen logbeskeder, der passer p&aring; s&oslash;gningen";
 $lang["NOMORERESULTS"] = "Der er ikke flere logbeskeder, som svarer til s&oslash;gningen";
+$lang['NOPREVREV'] = 'Ingen forrige revision';
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS-feed"; 
 $lang["FILESMODIFIED"] = "fil(er) &aelig;ndret"; 

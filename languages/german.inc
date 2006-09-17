@@ -76,6 +76,7 @@ $lang["CLEARLOG"] = "Aktuelle Suche l&ouml;schen";
 $lang["MORERESULTS"] = "Weitere Ergebnisse finden...";
 $lang["NORESULTS"] = "Es wurden keine Treffer erzielt";
 $lang["NOMORERESULTS"] = "Keine weiteren Treffer f&uuml;r diese Suche";    
+$lang['NOPREVREV'] = 'Keine vorherige Revision';
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
 $lang["FILESMODIFIED"] = "Ver&auml;nderte Dateien"; 

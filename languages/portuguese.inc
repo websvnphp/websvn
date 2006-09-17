@@ -58,6 +58,7 @@ $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Idade";
 $lang["LOG"] = "Log";
 $lang["CURDIR"] = "Directoria Currente";
+$lang['NOPREVREV'] = 'Nenhuma revisão anterior';
 
 $lang["PREV"] = "Anterior";
 $lang["NEXT"] = "Seguinte";
