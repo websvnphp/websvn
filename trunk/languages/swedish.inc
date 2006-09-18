@@ -10,12 +10,12 @@
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 // --
 //
@@ -23,7 +23,7 @@
 //
 // Swedish language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
+// The language name is displayed in the drop down box. It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Swedish";
 $lang['LANGUAGETAG'] = 'sv';
 
@@ -31,88 +31,91 @@ $lang["LOG"] = "Logg";
 $lang["DIFF"] = "Skillnad";
 
 $lang["NOREP"] = "Inget arkiv angivet"; //repository
-$lang["NOPATH"] = "S&ouml;kv&auml;gen saknas";
-$lang["SUPPLYREP"] = "V&auml;nligen s&auml;tt upp en s&ouml;v&auml;g till arkivet i include/config.inc med \$config->parentPath eller \$config->addRepository<p>Se installationsanvisningen f&ouml;r mer detaljer";
+$lang["NOPATH"] = "Sökvägen saknas";
+$lang["NOACCESS"] = "Du har inte tillräckliga rättigheter för att läsa i denna arkivsökväg";
+$lang["RESTRICTED"] = "Rättighetsbegränsad";
+$lang["SUPPLYREP"] = "Vänligen sätt upp en sökväg till arkivet i include/config.inc med \$config->parentPath eller \$config->addRepository<p>Se installationsanvisningen för mer detaljer";
 
 $lang["DIFFREVS"] = "Skillnad mellan rev.";
 $lang["AND"] = "och";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Rad";
 $lang["SHOWENTIREFILE"] = "Visa hela filen";
-$lang["SHOWCOMPACT"] = "Visa bara omr&aring;den med skillnader";
+$lang["SHOWCOMPACT"] = "Visa bara områden med skillnader";
 
-$lang["DIFFPREV"] = "Skillnad mot f&ouml;reg&aring;ende";
+$lang["DIFFPREV"] = "Skillnad mot föregående";
 $lang["BLAME"] = "Ansvarig";
 
 $lang["REVINFO"] = "Revisionsinformation";
-$lang["GOYOUNGEST"] = "G&aring; till senaste revision";
-$lang["LASTMOD"] = "Senast &auml;ndrad";
+$lang["GOYOUNGEST"] = "Gå till senaste revision";
+$lang["LASTMOD"] = "Senast ändrad";
 $lang["LOGMSG"] = "Loggmeddelande";
-$lang["CHANGES"] = "&auml;ndringar";
-$lang["SHOWCHANGED"] = "Visa &auml;ndrade filer";
-$lang["HIDECHANGED"] = "G&ouml;m &auml;ndrade filer";
+$lang["CHANGES"] = "Ändringar";
+$lang["SHOWCHANGED"] = "Visa Ändrade filer";
+$lang["HIDECHANGED"] = "Göm ändrade filer";
 $lang["NEWFILES"] = "Nya filer";
-$lang["CHANGEDFILES"] = "&Auml;ndrade filer";
+$lang["CHANGEDFILES"] = "Ändrade filer";
 $lang["DELETEDFILES"] = "Raderade filer";
-$lang["VIEWLOG"] = "Visa&nbsp;Logg";
-$lang["PATH"] = "S&ouml;kv&auml;g";
-$lang["AUTHOR"] = "F&ouml;rfattare";
-$lang["AGE"] = "&Aring;lder";
+$lang["VIEWLOG"] = "Visa Logg";
+$lang["PATH"] = "Sökväg";
+$lang["AUTHOR"] = "Författare";
+$lang["AGE"] = "Ålder";
 $lang["LOG"] = "Logg";
 $lang["CURDIR"] = "Nuvarande folder";
 $lang["TARBALL"] = "Tarball";
 
-$lang["PREV"] = "F&ouml;reg.";
-$lang["NEXT"] = "N&auml;sta";
+$lang["PREV"] = "Föreg.";
+$lang["NEXT"] = "Nästa";
 $lang["SHOWALL"] = "Visa alla";
 
-$lang["BADCMD"] = "Fel vid k&ouml;rning av kommande";
+$lang["BADCMD"] = "Fel vid körning av kommando";
 
 $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Projekt";
-$lang["SERVER"] = "Subversion&nbsp;Server";
+$lang["PROJECTS"] = "Subversion Projekt";
+$lang["SERVER"] = "Subversion Server";
 
-$lang["SEARCHLOG"] = "S&ouml;k i logg efter";
-$lang["CLEARLOG"] = "Rensa nuvarande s&ouml;kning";
-$lang["MORERESULTS"] = "Hitta fler tr&auml;ffar...";
-$lang["NORESULTS"] = "Det finns ingen logg som motsvarar din s&ouml;kning";
-$lang["NOMORERESULTS"] = "Det finns inga fler loggar i din s&ouml;kning";
+$lang["FILTER"] = "Filteralternativ";
+$lang["STARTLOG"] = "Från rev";
+$lang["ENDLOG"] = "Till rev";
+$lang["MAXLOG"] = "Max revs";
+$lang["SEARCHLOG"] = "Sök i logg efter";
+$lang["CLEARLOG"] = "Rensa nuvarande sökning";
+$lang["MORERESULTS"] = "Hitta fler träffar...";
+$lang["NORESULTS"] = "Det finns ingen logg som motsvarar din sökning";
+$lang["NOMORERESULTS"] = "Det finns inga fler loggar i din sökning";
+$lang['NOPREVREV'] = "Ingen föregående revision";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "fil(er) &auml;ndrade"; 
-$lang["RSSFEED"] = "RSS"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "fil(er) ändrade";
+$lang["RSSFEED"] = "RSS";
 
 $lang["LINENO"] = "Radnr.";
-$lang["BLAMEFOR"] = "Ansvariginformation f&ouml;r rev";
+$lang["BLAMEFOR"] = "Ansvariginformation för rev";
 
-$lang["YEARS"] = "&aring;r";
-$lang["MONTHS"] = "m&aring;nader";
-$lang["WEEKS"] = "veckor";
-$lang["DAYS"] = "dagar";
-$lang["HOURS"] = "timmar";
-$lang["MINUTES"] = "minuter";
+$lang["DAYLETTER"] = "d";
+$lang["HOURLETTER"] = "h";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
-$lang["GO"] = "Utf&ouml;r";
+$lang["GO"] = "Utför";
 
-$lang["PATHCOMPARISON"] = "S&ouml;kv&auml;gsj&auml;mf&ouml;relse";
-$lang["COMPAREPATHS"] = "J&auml;mf&ouml;r s&ouml;kv&auml;gar";
-$lang["COMPAREREVS"] = "J&auml;mf&ouml;r revisioner";
-$lang["PROPCHANGES"] = "Egenskaps&auml;ndringar :";
-$lang["CONVFROM"] = "Denna j&auml;mf�relse visar &auml;ndringarna som beh&ouml;vs f�r att konvertera s&ouml;kv&auml;g "; 
+$lang["PATHCOMPARISON"] = "Sökvägsjämförelse";
+$lang["COMPAREPATHS"] = "Jämför sökvägar";
+$lang["COMPAREREVS"] = "Jämför revisioner";
+$lang["PROPCHANGES"] = "Egenskapsändringar :";
+$lang["CONVFROM"] = "Denna jämförelse visar ändringarna som behövs för att konvertera sökväg ";
 $lang["TO"] = "till";
-$lang["REVCOMP"] = "V&auml;xla j&auml;mf&ouml;relse";
-$lang["COMPPATH"] = "J&auml;mf&ouml;r s&ouml;kv&auml;g:";
-$lang["WITHPATH"] = "Med s&ouml;kv&auml;g:";
+$lang["REVCOMP"] = "Växla jämförelse";
+$lang["COMPPATH"] = "Jämför sökväg:";
+$lang["WITHPATH"] = "Med sökväg:";
 $lang["FILEDELETED"] = "Filen raderad";
 $lang["FILEADDED"] = "Ny fil";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
 
 // $lang["NOBR"] = "<nobr>";
 // $lang["ENDNOBR"] = "</nobr>";
-
-
