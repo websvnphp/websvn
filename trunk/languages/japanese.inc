@@ -86,6 +86,7 @@ $lang["CLEARLOG"] = "検索条件をクリアする";
 $lang["MORERESULTS"] = "検索条件を絞り込む";
 $lang["NORESULTS"] = "検索条件にマッチするものはありませんでした";
 $lang["NOMORERESULTS"] = "これ以上検索条件にマッチするものはありません";
+$lang['NOPREVREV'] = "前のリビジョンはありません";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
 $lang["FILESMODIFIED"] = "ファイルが修正されました"; 
