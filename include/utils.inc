@@ -104,37 +104,47 @@ function getFullURL($loc)
 {
    $protocol = 'http';
    
-   if (isset($_SERVER["HTTPS"]) && (strtolower($_SERVER["HTTPS"]) != "off"))
+   if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off'))
    {
-   	$protocol = "https";
+   	$protocol = 'https';
    }
    
-   $port = ":".$_SERVER["SERVER_PORT"];
-   if ((":80" == $port && "http" == $protocol) ||
-       (":443" == $port && "https" == $protocol)) 
+   $port = ':'.$_SERVER['SERVER_PORT'];
+   if ((':80' == $port && 'http' == $protocol) ||
+       (':443' == $port && 'https' == $protocol)) 
    {
-      $port = "";
+      $port = '';
    }
    
-   if (isset($_SERVER["HTTP_HOST"]))
+   if (isset($_SERVER['HTTP_HOST']))
    {
-   	$host = $_SERVER["HTTP_HOST"];
+   	$host = $_SERVER['HTTP_HOST'];
    }
-   else if (isset($_SERVER["SERVER_NAME"]))
+   else if (isset($_SERVER['SERVER_NAME']))
    {
-   	$host = $_SERVER["SERVER_NAME"].$port;
+   	$host = $_SERVER['SERVER_NAME'].$port;
    }
-   else if (isset($_SERVER["SERVER_ADDR"]))
+   else if (isset($_SERVER['SERVER_ADDR']))
    {
-   	$host = $_SERVER["SERVER_ADDR"].$port;
+   	$host = $_SERVER['SERVER_ADDR'].$port;
    }
    else
    {
-      print "Unable to redirect";
+      print 'Unable to redirect';
       exit;
    }
+
+   # make sure we have a directory to go to
+   if (empty($loc))
+   {
+      $loc = '/';
+   }
+   elseif ($loc{0} != '/')
+   {
+      $loc = '/'.$loc;
+   }
    
-   $url	= $protocol . "://" . $host . $loc;
+   $url = $protocol . '://' . $host . $loc;
 
    return $url;
 }
