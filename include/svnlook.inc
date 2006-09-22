@@ -272,6 +272,8 @@ function characterData($parser, $data)
 
 // }}}
 
+// {{{ internal functions (_topLevel, _dirSort, and _revStr)
+
 // Function returns true if the give entry in a directory tree is at the top level
 
 function _topLevel($entry)
@@ -302,6 +304,8 @@ function _revStr($rev)
    else
       return "";
 }
+
+// }}}
 
 // {{{ encodePath
 
@@ -439,6 +443,10 @@ Class SVNRepository
          $hline.="</".$attr['tag'].">";
       }
 
+      # XXX: this just simply replaces [ and ] with their entities to prevent
+      #      it from being parsed by the template parser; maybe something more
+      #      elegant is in order?
+      $hline = str_replace('[', '&#91;', str_replace(']', '&#93;', $hline) );
       return($hline);
    }
 
