@@ -26,6 +26,8 @@ Grab the source and stick it somewhere that your server can get to.  You
 obviously need to have PHP installed and working.  Also note that WebSVN
 won't currently work in safe mode, due to the need to call svnlook.
 
+If it isn't already, make sure to chmod the cache directory to 0777.
+
 You'll also need diff (preferably the GNU version; for Windows users I'd
 recommend the Cygwin version) and svnlook available.
 
