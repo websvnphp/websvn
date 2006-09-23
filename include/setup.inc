@@ -374,7 +374,7 @@ if ($handle = opendir('languages'))
 
 // Set up headers
 
-header("Content-type: text/html; charset=".$config->outputEnc);
+header('Content-Type: text/html; charset=UTF-8');
 
 // Make sure that the user has set up a repository
 
