@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004 Tim Armes
