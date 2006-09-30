@@ -28,9 +28,13 @@
 
 // {{{ PLATFORM CONFIGURATION ---
 
-// Uncomment the next line if your running a windows server
+// Uncomment the next line if you're running a windows server
 //
 // $config->setServerIsWindows();
+
+// Uncomment the next line if you're running PHP 4
+//
+// $config->setPHPCompatEnabled(;
 
 // Configure these lines if your commands aren't on your path. 
 //
@@ -76,7 +80,7 @@
 // $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', NULL, 'username', 'password');
 // $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'group', 'username', 'password');
 //
-// To use the parent path method, uncomment the newt line and and replace the path with your one.  You
+// To use the parent path method, uncomment the next line and and replace the path with your one.  You
 // can call the function several times if you have several parent paths.  Note that in this case the
 // path is a filesystem path
 //
