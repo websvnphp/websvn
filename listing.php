@@ -189,7 +189,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
    
          if (($level != $limit) && ($isDir))
          {
-            if (!strcmp(htmlentities($subs[$level + 1],ENT_QUOTES)."/", $file))
+            if (!strcmp(htmlentities($subs[$level + 1],ENT_QUOTES).'/', htmlentities($file)))
             {
                $listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $listing, $index);
                $index = count($listing);
