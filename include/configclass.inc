@@ -812,7 +812,7 @@ Class Config
          
          if (is_object($rep))
          {
-            $url .= "/".$rep->getDisplayName().str_replace('%2F', '/', urlencode($path));
+            $url .= "/".$rep->getDisplayName().str_replace('%2F', '/', rawurlencode($path));
             
             if ($op != "dir" && $op != "file")
                $url .= "?op=$op&amp;";
