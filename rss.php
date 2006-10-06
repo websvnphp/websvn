@@ -156,6 +156,7 @@ foreach ($history->entries as $r)
 
    $item->date = $r->committime;
    $item->author = $r->author;
+   $item->guid = sha1($item->link);
      
    $rss->addItem($item);
 }
