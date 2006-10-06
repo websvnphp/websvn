@@ -685,13 +685,14 @@ Class SVNRepository
             {
                if (xml_get_error_code($xml_parser) != 5)
                {               
-                  die(sprintf("XML error: %s (%d) at line %d column %d byte %d<br>cmd: %s<nr>",
+                  error_log(sprintf("XML error: %s (%d) at line %d column %d byte %d<br>cmd: %s<nr>",
                               xml_error_string(xml_get_error_code($xml_parser)),
                               xml_get_error_code($xml_parser),
                               xml_get_current_line_number($xml_parser),
                               xml_get_current_column_number($xml_parser),
                               xml_get_current_byte_index($xml_parser),
                               $cmd));
+                  exit;
                }
                else
                {
