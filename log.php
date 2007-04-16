@@ -1,8 +1,6 @@
 <?php
-# vim:et:ts=3:sts=3:sw=3:fdm=marker:
-
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright © 2004-2006 Tim Armes, Matt Sicker
+// Copyright (C) 2004-2006 Tim Armes
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
