@@ -90,4 +90,5 @@ div.newpath
 .groupname { padding-left: 0px; text-indent: -25px; margin: 3px 0 3px 0;}  
 .switchcontent { margin: 3px 0 0 20px; }
 
-code { white-space: pre-wrap; }
+code { white-space: pre; white-space: pre-wrap; }
+
