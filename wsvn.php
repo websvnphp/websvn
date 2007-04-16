@@ -65,7 +65,7 @@ if ($config->multiViews)
       exit;
    }
 
-   $path = @$_SERVER["PATH_INFO"];
+   $path = trim(empty($_SERVER['PATH_INFO']) ? $_SERVER['ORIG_PATH_INFO'] : $_SERVER['PATH_INFO']);
 
    // Remove initial slash
    $path = substr($path, 1);
