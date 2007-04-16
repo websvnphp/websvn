@@ -129,6 +129,8 @@ class Authentication
    function hasReadAccess($repos, $path, $checkSubFolders = false)
    {
       $access = UNDEFINED;
+      $repos = strtolower($repos); // .ini parser converts groups to lower-case
+      $path = strtolower($path);
       if ($path{0} != "/")
          $path = "/$path";
   
@@ -144,8 +146,7 @@ class Authentication
          {
             $qualified = $repos.":".$path;
             $len = strlen($qualified);
-            
-            if ($len < strlen($section) && strncmp($section, $qualified, strlen($qualified)) == 0)
+            if ($len <= strlen($section) && strncmp($section, $qualified, $len) == 0)
             {
                $access = $this->inList($accessers, $this->user);
             }
@@ -153,7 +154,7 @@ class Authentication
             if ($access != ALLOW)
             {
                $len = strlen($path);
-               if ($len < strlen($section) && strncmp($section, $path, strlen($path)) == 0)
+               if ($len <= strlen($section) && strncmp($section, $path, $len) == 0)
                {
                   $access = $this->inList($accessers, $this->user);
                }
@@ -212,6 +213,8 @@ class Authentication
          return false;
          
       // Now check to see if there is a sub folder that's protected
+      $repos = strtolower($repos); // .ini parser converts groups to lower-case
+      $path = strtolower($path);
       
       $sections = $this->rights->getSections();
       
@@ -221,7 +224,7 @@ class Authentication
          $len = strlen($qualified);
          $access = UNDEFINED;
          
-         if ($len < strlen($section) && strncmp($section, $qualified, strlen($qualified)) == 0)
+         if ($len <= strlen($section) && strncmp($section, $qualified, $len) == 0)
          {
             $access = $this->inList($accessers, $this->user);
          }
@@ -229,7 +232,7 @@ class Authentication
          if ($access != DENY)
          {
             $len = strlen($path);
-            if ($len < strlen($section) && strncmp($section, $path, strlen($qualified)) == 0)
+            if ($len <= strlen($section) && strncmp($section, $path, $len) == 0)
             {
                $access = $this->inList($accessers, $this->user);
             }
