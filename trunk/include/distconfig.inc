@@ -242,9 +242,9 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // the default ones or even delete them entirely (to show them in
 // ASCII via WebSVN).
 
-// $contentType['.c'] = 'plain/text'; // Create a new association
-// $contentType['.doc'] = 'plain/text'; // Modify an existing one
-// unset($contentType['.m'] // Remove a default association
+// $contentType['.c'] = 'text/plain'; // Create a new association
+// $contentType['.doc'] = 'text/plain'; // Modify an existing one
+// unset($contentType['.m']); // Remove a default association
 
 // }}}
 
