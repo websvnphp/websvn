@@ -108,6 +108,10 @@ $noinput = empty($path1) || empty($path2);
 $listing = array();
 
 // Generate the diff listing
+
+$relativePath1 = $path1;
+$relativePath2 = $path2;
+
 $path1 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repConfig->path.$path1));
 $path2 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repConfig->path.$path2));
 
@@ -343,7 +347,7 @@ if (!$noinput)
 
 $vars["version"] = $version;
 
-if (!$rep->hasUnrestrictedReadAccess($path1) || !$rep->hasUnrestrictedReadAccess($path2, false))
+if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false))
    $vars["noaccess"] = true;
 
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
