@@ -125,7 +125,4 @@ div.difflines
 .switchcontent { margin: 3px 0 0 20px; }
 .project { padding: 2px; }
 
-code
-{
-   white-space: pre-wrap;
-}
+code { white-space: pre; white-space: pre-wrap; }
