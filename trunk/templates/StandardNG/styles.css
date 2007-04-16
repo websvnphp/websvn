@@ -92,3 +92,18 @@ div.newpath
 
 code { white-space: pre; white-space: pre-wrap; }
 
+table.blame tr.dark  { background-color: #e7e7e7; }
+table.blame tr.light { background-color: #ffffff; }
+
+div.blame-popup
+{
+   position: absolute;
+   background-color: white;
+   border: solid 2px #99007E;
+   padding: 5px;
+}
+
+div.blame-popup .date
+{
+    font-weight: bold;
+}
