@@ -55,7 +55,7 @@ $extn = strrchr($path, ".");
 // Check to see if the user has requested that this type be zipped and sent
 // to the browser as an attachment
 
-if (in_array($extn, $zipped))
+if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false))
 {
    $base = basename($path);
    header("Content-Type: application/x-gzip");
@@ -103,7 +103,7 @@ else if (!empty($svnMimeType))
 // If there's a MIME type associated with this format, then we deliver it
 // with this information 
 
-if (!empty($cont))
+if (!empty($cont) && $rep->hasReadAccess($path, false))
 {
    $base = basename($path);
    
