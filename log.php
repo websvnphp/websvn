@@ -71,7 +71,7 @@ foreach ($words as $index => $word)
 if (empty($page)) $page = 1;
 
 // If searching, display all the results
-$all = (bool) $dosearch;
+if ($dosearch) $all = true;
 
 $maxperpage = 20;
 
