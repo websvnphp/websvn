@@ -863,7 +863,7 @@ Class Config
                break;
          }
 
-         if ($rep == -1)
+         if ($rep === -1)
             return $fname."?path=".urlencode($path)."&amp;";
          else
             return $fname."?repname=".urlencode($rep->getDisplayName())."&amp;path=".urlencode($path)."&amp;";
