@@ -80,6 +80,9 @@ if ($file = fopen($tfname, 'r'))
       // Create an array of version/author/line
       
       $index = 0;
+      $seen_rev = array();
+      $last_rev = "";
+      $row_class = 'light';
       
       while (!feof($blame) && !feof($file))
       {
@@ -91,8 +94,24 @@ if ($file = fopen($tfname, 'r'))
             
             $listing[$index]['lineno'] = $index + 1;
             
-            $url = $config->getURL($rep, $parent, 'dir');
-            $listing[$index]['revision'] = "<a href=\"${url}rev=$revision&amp;sc=1\">$revision</a>";
+            if ($last_rev <> $revision || fmod($index, 10) == 0)
+            {
+               $url = $config->getURL($rep, $parent, 'dir');
+               $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision&amp;sc=1\">$revision</a>";
+               $seen_rev[$revision] = 1;
+            }
+            else
+            {
+               $listing[$index]['revision'] = "";
+            }
+            
+            if ($last_rev <> $revision)
+            {
+               $row_class = ($row_class == 'light') ? 'dark' : 'light';
+            }
+            
+            $listing[$index]['row_class'] = $row_class;
+            $last_rev = $revision;
 
             $listing[$index]['author'] = $author;
             
@@ -124,8 +143,66 @@ $vars['version'] = $version;
 if (!$rep->hasReadAccess($path, false))
    $vars['noaccess'] = true;
 
+$vars['javascript'] = <<<HTML
+
+<script type='text/javascript'>
+var rev = new Array();
+var a = document.getElementsByTagName('a');
+for (var i = 0; i < a.length; i++) {
+   if (a[i].className = 'blame-revision') {
+      var id = a[i].id;
+      addEvent(a[i], 'mouseover', function() { mouseover(this) });
+      addEvent(a[i], 'mouseout', function() { mouseout(this) });
+   }
+}
+
+function mouseover(a) {
+   // Find the revision by using the link
+   var m = /rev=(\d+)/.exec(a.href);
+   var r = m[1];
+
+   div = document.createElement('div');
+   div.className = 'blame-popup';
+   div.innerHTML = rev[r];
+   a.parentNode.appendChild(div);
+}
+
+function mouseout(a) {
+   var div = a.parentNode.parentNode.getElementsByTagName('div');
+   for (var i = 0; i < div.length; i++) {
+      if (div[i].className = 'blame-popup') {
+         div[i].parentNode.removeChild(div[i]);
+      }
+   }
+}
+
+function addEvent(obj, type, func) {
+   if (obj.addEventListener) {
+      obj.addEventListener(type, func, false);
+      return true;
+   } else if (obj.attachEvent) {
+      return obj.attachEvent('on'+type, func);
+   } else {
+      return false;
+   }
+}
+
+HTML;
+
+foreach($seen_rev as $key => $val)
+{
+   $history = $svnrep->getLog($path, $key, $key, false, 1);
+   $vars['javascript'] .= "rev[$key] = '";
+   $vars['javascript'] .= "<div class=\"info\">";
+   $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."</span>";
+   $vars['javascript'] .= "</div>";
+   $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br>", $history->curEntry->msg))."</div>";
+   $vars['javascript'] .= "';\n";
+}
+$vars['javascript'] .= "</script>";
+
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'blame.tmpl', $vars, $listing);
+parseTemplate($rep->getTemplatePath().'blame.tmpl',  $vars, $listing);
 parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
    
 ?>
