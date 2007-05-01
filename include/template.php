@@ -18,7 +18,7 @@
 //
 // --
 //
-// templates.inc
+// templates.php
 //
 // Templating system to allow advanced page customisation
 

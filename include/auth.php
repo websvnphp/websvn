@@ -18,11 +18,11 @@
 //
 // --
 //
-// auth.inc
+// auth.php
 //
 // Handle reading and interpretation of an SVN auth file
 
-require_once("include/accessfile.inc");
+require_once("include/accessfile.php");
 
 define("UNDEFINED", 0);
 define("ALLOW", 1);

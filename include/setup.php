@@ -18,7 +18,7 @@
 //
 // --
 //
-// setup.inc
+// setup.php
 //
 // Global setup
 
@@ -27,7 +27,7 @@
 // User changes should be done in config.ini
 
 // Include the configuration class
-require_once 'include/configclass.inc';
+require_once 'include/configclass.php';
 
 // Create the config
 $config = new Config;
@@ -53,20 +53,20 @@ if (empty($locwebsvnreal))
 
 $vars['locwebsvnhttp'] = $locwebsvnhttp;
 
-// Include a default language file (must go before config.inc)
-require 'languages/english.inc';
+// Include a default language file (must go before config.php)
+require 'languages/english.php';
 
 // Get the user's personalised config (requires the locwebsvnhttp stuff above)
-require_once 'config.inc';
+require_once 'config.php';
 
-// Load PHP_Compat if we're going to use it. This needs to be done after including config.inc (which contains
-// the setting) but before svnlook.inc (which requires util.inc, which contains PHP4-incompatible functions)
+// Load PHP_Compat if we're going to use it. This needs to be done after including config.php (which contains
+// the setting) but before svnlook.php (which requires util.php, which contains PHP4-incompatible functions)
 if ($config->isPHPCompatEnabled()) {
    require_once($config->getPHPCompatFile());
-   require_once 'include/php5compat.inc';
+   require_once 'include/php5compat.php';
 }
 
-require_once 'include/svnlook.inc';
+require_once 'include/svnlook.php';
 
 // Make sure that the input locale is set up correctly
 setlocale(LC_ALL, '');
@@ -269,7 +269,7 @@ $extEnscript = array
   '.php'     => 'php',
   '.phtml'   => 'php',
   '.php3'    => 'php',
-  '.inc'     => 'php'  
+  '.php'     => 'php'  
 );
 
 // }}}
@@ -282,7 +282,7 @@ $zipped = array ();
 
 initSvnVersion($major,$minor);
 
-// Get the language choice as defained as the default by config.inc
+// Get the language choice as defained as the default by config.php
 $user_defaultLang = $lang['LANGUAGENAME'];
 
 // Override this with the user choice if there is one, and memorise the setting
@@ -324,9 +324,9 @@ if ($handle = opendir('languages'))
    closedir($handle);
     
    // XXX: this shouldn't be necessary
-   // ^ i.e. just require english.inc, then the desired language
+   // ^ i.e. just require english.php, then the desired language
    // Reload english to get untranslated strings
-   require 'languages/english.inc';
+   require 'languages/english.php';
    
    // Reload the default language
    if (!empty($user_defaultFile))

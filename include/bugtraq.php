@@ -18,7 +18,7 @@
 //
 // --
 //
-// bugtraq.inc
+// bugtraq.php
 //
 // Functions for accessing the bugtraq properties and replacing issue IDs
 // with URLs.
