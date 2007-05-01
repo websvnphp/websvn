@@ -131,6 +131,8 @@ foreach ($history->entries as $r)
 
    if ($showchanged)
    {
+      usort($changes, array('SVNLogEntry', 'compare'));
+      
       foreach ($changes as $file)
       {
          switch ($file->action)
@@ -145,7 +147,7 @@ foreach ($history->entries as $r)
                                      
    
             case "D":
-               $item->description .= "-".$file->path."<br />";  
+               $item->description .= "- ".$file->path."<br />";  
                break;
                                      
          }
