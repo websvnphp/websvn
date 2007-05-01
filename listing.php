@@ -326,6 +326,10 @@ else
    $vars["deletedfilesbr"] = "";
    $vars["deletedfiles"] = "";
 
+   if (!is_array($changes)) $changes = array();
+   
+   usort($changes, array('SVNLogEntry', 'compare'));
+
    foreach ($changes as $file)
    {
       switch ($file->action)
