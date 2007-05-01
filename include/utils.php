@@ -18,7 +18,7 @@
 //
 // --
 //
-// utils.inc
+// utils.php
 //
 // General utility commands
 

@@ -18,7 +18,7 @@
 //
 // --
 //
-// accessfile.inc
+// accessfile.php
 //
 // Read a .ini style file
 

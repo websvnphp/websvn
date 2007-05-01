@@ -18,13 +18,13 @@
 //
 // --
 //
-// configclass.inc4
+// configclass.php4
 //
 // General class for handling configuration options
 
-require_once("include/command.inc");
-require_once("include/auth.inc");
-require_once("include/version.inc");
+require_once("include/command.php");
+require_once("include/auth.php");
+require_once("include/version.php");
 
 // Auxillary functions used to sort repositories by name/group
 

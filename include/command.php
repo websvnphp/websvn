@@ -18,7 +18,7 @@
 //
 // --
 //
-// command.inc
+// command.php
 //
 // External command handling
 

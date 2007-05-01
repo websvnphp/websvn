@@ -18,14 +18,14 @@
 //
 // --
 //
-// svn-look.inc
+// svn-look.php
 //
 // Svn bindings
 //
 // These binding currently use the svn command line to achieve their goal.  Once a proper
 // SWIG binding has been produced for PHP, there'll be an option to use that instead.
 
-require_once("include/utils.inc");
+require_once("include/utils.php");
 
 // {{{ Classes for retaining log information ---
 
