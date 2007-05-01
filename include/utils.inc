@@ -233,53 +233,45 @@ function expandTabs($s, $tabwidth = -1)
 
 function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 {
-   global $lang;
-   
-	if ($seconds < 0)
-	{
+	global $lang;
+	
+	$neg = false;
+	if ($seconds < 0) {
 		$seconds = -$seconds;
 		$neg = true;
 	}
-	else
-		$neg = false;
-
+	
 	$qty = array();
-
+	$names = array($lang["DAYLETTER"], $lang["HOURLETTER"], $lang["MINUTELETTER"]);
+	
 	$qty[] = (int)($seconds / (60 * 60 * 24));
 	$seconds %= 60 * 60 * 24;
-
+	
 	$qty[] = (int)($seconds / (60 * 60));
 	$seconds %= 60 * 60;
-
+	
 	$qty[] = (int)($seconds / 60);
-	$qty[] = (int)($seconds % 60);
-
-	$text = "";
-	$names = $lang["DAYLETTER"].$lang["HOURLETTER"].$lang["MINUTELETTER"];
-	if (!$skipSeconds) $names .= $lang["SECONDLETTER"];
-
+	
+	if (!$skipSeconds) {
+		$qty[] = (int)($seconds % 60);
+		$names[] = $lang["SECONDLETTER"];
+	}
+	
+	$text = $neg ? '-' : '';
 	$any = false;
-	for ($i = 0; $i < strlen($names); $i++)
+	$count = count($names);
+	for ($i = 0; $i < $count; $i++) {
 		// If a "higher valued" time slot had a value or this time slot
 		// has a value or this is the very last entry (i.e. all values
 		// are 0 and we still want to print seconds)
-		if ($any || $qty[$i] || $i == sizeof($qty) - 1)
-		{
+		if ($any || $qty[$i] > 0 || $i == $count - 1) {
+			if ($any) $text .= $nbsp ? '&nbsp;' : ' ';
+			if ($any && $qty[$i] < 10) $text .= '0';
+			$text .= $qty[$i].$names[$i];
 			$any = true;
-
-			if ($i)
-				$text .= sprintf("%2d", $qty[$i]);
-			else
-				$text .= $qty[$i];
-
-			$text .= "{$names{$i}} ";
 		}
-
-	$text = trim($text);
-	if ($neg)
-		$text = "-$text";
-
-	return $nbsp ? str_replace(" ", "&nbsp;", $text) : $text;
+	}
+	return $text;
 }
 
 // }}}
