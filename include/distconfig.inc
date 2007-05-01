@@ -32,7 +32,7 @@
 
 // Uncomment the next line if you're running PHP 4
 //
-// $config->setPHPCompatEnabled(;
+// $config->setPHPCompatEnabled();
 
 // Configure these lines if your commands aren't on your path. 
 //
