@@ -141,7 +141,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
             }
             
             $listing[$index]["fileviewdllink"] = "&nbsp;";
-            $listing[$index]["filetype"] = strrchr($file, ".");
+            $listing[$index]["filetype"] = strtolower(strrchr($file, "."));
          }   
       }
       
