@@ -50,7 +50,7 @@ $youngest = $history->entries[0]->rev;
 if (empty($rev))
    $rev = $youngest;
 
-$extn = strrchr($path, ".");
+$extn = strtolower(strrchr($path, "."));
 
 // Check to see if the user has requested that this type be zipped and sent
 // to the browser as an attachment
