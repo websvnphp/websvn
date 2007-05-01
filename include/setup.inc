@@ -75,21 +75,15 @@ setlocale(LC_ALL, '');
 // Set up the default content-type extension handling
 
 $contentType = array (
-
 '.dwg' => 'application/acad', // AutoCAD Drawing files
-'.DWG' => 'application/acad', // AutoCAD Drawing files
 '.arj' => 'application/arj', //  
-'.ccAD' => 'application/clariscad', // ClarisCAD files
-'.DRW' => 'application/drafting', // MATRA Prelude drafting
+'.ccad' => 'application/clariscad', // ClarisCAD files
+'.drw' => 'application/drafting', // MATRA Prelude drafting
 '.dxf' => 'application/dxf', // DXF (AutoCAD)
-'.DXF' => 'application/dxf', // DXF (AutoCAD)
 '.xl' => 'application/excel', // Microsoft Excel
 '.unv' => 'application/i-deas', //SDRC I-DEAS files
-'.UNV' => 'application/i-deas', //SDRC I-DEAS files
 '.igs' => 'application/iges', // IGES graphics format
 '.iges' => 'application/iges', // IGES graphics format
-'.IGS' => 'application/iges', // IGES graphics format
-'.IGES' => 'application/iges', // IGES graphics format
 '.hqx' => 'application/mac-binhex40', // Macintosh BinHex format
 '.word' => 'application/msword', // Microsoft Word
 '.w6w' => 'application/msword', // Microsoft Word
@@ -97,28 +91,20 @@ $contentType = array (
 '.wri' => 'application/mswrite', // Microsoft Write
 '.bin' => 'application/octet-stream', // Uninterpreted binary
 '.exe' => 'application/x-msdownload', // Windows EXE
-'.EXE' => 'application/x-msdownload', // Windows EXE
 '.oda' => 'application/oda', //  
 '.pdf' => 'application/pdf', // PDF (Adobe Acrobat)
 '.ai' => 'application/postscript', // PostScript
-'.PS' => 'application/postscript', // PostScript
 '.ps' => 'application/postscript', // PostScript
 '.eps' => 'application/postscript', // PostScript
 '.prt' => 'application/pro_eng', // PTC Pro/ENGINEER
-'.PRT' => 'application/pro_eng', // PTC Pro/ENGINEER
 '.part' => 'application/pro_eng', // PTC Pro/ENGINEER
 '.rtf' => 'application/rtf', // Rich Text Format
 '.set' => 'application/set', // SET (French CAD standard)
-'.SET' => 'application/set', // SET (French CAD standard)
 '.stl' => 'application/sla', // Stereolithography
-'.STL' => 'application/sla', // Stereolithography
-'.SOL' => 'application/solids', // MATRA Prelude Solids
+'.sol' => 'application/solids', // MATRA Prelude Solids
 '.stp' => 'application/STEP', // ISO-10303 STEP data files
-'.STP' => 'application/STEP', // ISO-10303 STEP data files
 '.step' => 'application/STEP', // ISO-10303 STEP data files
-'.STEP' => 'application/STEP', // ISO-10303 STEP data files
 '.vda' => 'application/vda', // VDA-FS Surface data
-'.VDA' => 'application/vda', // VDA-FS Surface data
 '.dir' => 'application/x-director', // Macromedia Director
 '.dcr' => 'application/x-director', // Macromedia Director
 '.dxr' => 'application/x-director', // Macromedia Director
@@ -165,10 +151,7 @@ $contentType = array (
 '.gif' => 'image/gif', // gif image
 '.ief' => 'image/ief', // Image Exchange Format
 '.jpg' => 'image/jpeg', // JPEG image
-'.JPG' => 'image/jpeg', // JPEG image
-'.JPE' => 'image/jpeg', // JPEG image
 '.jpe' => 'image/jpeg', // JPEG image
-'.JPEG' => 'image/jpeg', // JPEG image
 '.jpeg' => 'image/jpeg', // JPEG image
 '.pict' => 'image/pict', // Macintosh PICT
 '.tiff' => 'image/tiff', // TIFF image
@@ -186,10 +169,7 @@ $contentType = array (
 '.gzip' => 'multipart/x-gzip', // GNU ZIP Archive
 '.mpeg' => 'video/mpeg', // MPEG video
 '.mpg' => 'video/mpeg', // MPEG video
-'.MPG' => 'video/mpeg', // MPEG video
-'.MPE' => 'video/mpeg', // MPEG video
 '.mpe' => 'video/mpeg', // MPEG video
-'.MPEG' => 'video/mpeg', // MPEG video
 '.mpeg' => 'video/mpeg', // MPEG video
 '.qt' => 'video/quicktime', // QuickTime Video
 '.mov' => 'video/quicktime', // QuickTime Video
@@ -213,7 +193,6 @@ $contentType = array (
 '.odm' => 'application/vnd.oasis.opendocument.text-master',           // OpenDocument Master Document
 '.oth' => 'application/vnd.oasis.opendocument.text-web',              // HTML Document Template
 '.odb' => 'application/vnd.oasis.opendocument.database',              // OpenDocument Database
-
 );
 
 // }}}
