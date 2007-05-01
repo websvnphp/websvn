@@ -18,7 +18,7 @@
 //
 // --
 //
-// version.inc
+// version.php
 //
 // Version information
 

@@ -18,7 +18,7 @@
 //
 // --
 //
-// config.inc
+// config.php
 //
 // Configuration parameters
 
@@ -146,27 +146,27 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 
 // Uncomment the default language.  If you want English then don't do anything here.
 //
-// include 'languages/catalan.inc';
-// include 'languages/czech.inc';
-// include 'languages/danish.inc';
-// include 'languages/dutch.inc';
-// include 'languages/finnish.inc';
-// include 'languages/french.inc';
-// include 'languages/german.inc';
-// include 'languages/hebrew.inc';
-// include 'languages/japanese.inc';
-// include 'languages/korean.inc';
-// include 'languages/norwegian.inc';
-// include 'languages/polish.inc';
-// include 'languages/portuguese.inc';
-// include 'languages/portuguese-br.inc';
-// include 'languages/russian.inc';
-// include 'languages/schinese.inc';
-// include 'languages/slovenian.inc';
-// include 'languages/spanish.inc';
-// include 'languages/swedish.inc';
-// include 'languages/tchinese.inc';
-// include 'languages/turkish.inc';
+// include 'languages/catalan.php';
+// include 'languages/czech.php';
+// include 'languages/danish.php';
+// include 'languages/dutch.php';
+// include 'languages/finnish.php';
+// include 'languages/french.php';
+// include 'languages/german.php';
+// include 'languages/hebrew.php';
+// include 'languages/japanese.php';
+// include 'languages/korean.php';
+// include 'languages/norwegian.php';
+// include 'languages/polish.php';
+// include 'languages/portuguese.php';
+// include 'languages/portuguese-br.php';
+// include 'languages/russian.php';
+// include 'languages/schinese.php';
+// include 'languages/slovenian.php';
+// include 'languages/spanish.php';
+// include 'languages/swedish.php';
+// include 'languages/tchinese.php';
+// include 'languages/turkish.php';
 
 // }}}
 
@@ -215,7 +215,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // are set to the generic appcliation/octet-stream, and other files
 // don't have it set at all. WebSVN also has a built-in list of
 // associations from file extension to MIME content type. (You can
-// view this list in setup.inc).
+// view this list in setup.php).
 //
 // Determining the content-type: By default, if the svn:mime-type
 // property exists and is different from application/octet-stream, it
@@ -312,7 +312,7 @@ $config->setMinDownloadLevel(2);
 
 // Enscript need to be told what the contents of a file are so that it can be colourised
 // correctly.  WebSVN includes a predefined list of mappings from file extension to Enscript
-// file type (viewable in setup.inc).
+// file type (viewable in setup.php).
 //
 // Here you should add and other extensions not already listed or redefine the default ones. eg:
 //
