@@ -495,7 +495,6 @@ Class Config
    var $flatIndex = true;
    var $openTree = false;
    var $serverIsWindows = false;
-   var $phpCompatEnabled = false;
    var $cacheResults = false;
    var $multiViews = false;
    var $useEnscript = false;
@@ -509,7 +508,6 @@ Class Config
    var $auth = "";
      
    var $templatePath = "./templates/Standard/";
-   var $phpCompatPath = './include/PHP/Compat.php';
 
    var $ignoreSvnMimeTypes = false;
    var $ignoreWebSVNContentTypes = false;
@@ -605,20 +603,6 @@ Class Config
    
    // }}}
    
-   // {{{ setPHPCompatEnabled
-   //
-   // Used for PHP4
-
-   function setPHPCompatEnabled() {
-      $this->phpCompatEnabled = true;
-   }
-   
-   function isPHPCompatEnabled() {
-      return $this->phpCompatEnabled;
-   }
-
-   // }}}
-
    // {{{ Caching
 
    // setCachingOn
@@ -1018,18 +1002,6 @@ Class Config
    function getTemplatePath()
    {
       return $this->templatePath;
-   }
-
-   // PHP Compat file (from PEAR)
-
-   function setPHPCompatPath($path)
-   {
-      $this->setPath($this->phpCompatPath, $path, 'Compat.php');
-   }
-
-   function getPHPCompatFile()
-   {
-      return trim($this->phpCompatPath);
    }
 
    // }}}

@@ -305,7 +305,14 @@ function getParameterisedSelfUrl($params = true)
       $arr = $_GET + $_POST;
       # XXX: the point of HTTP POST is that URIs have a set size limit, so POST
       #      data is typically too large to bother with; why include it?
-      $url .= '?'.http_build_query($arr);
+      // $url .= '?'.http_build_query($arr);
+      
+      $p = array();
+      foreach ($arr as $key => $value) {
+      	$p[] = urlencode($key).'='.urlencode($value);
+      }
+      if (count($p) > 0) $url .= '?'.implode('&amp;', $p);
+      
    }
 
    return $url;
