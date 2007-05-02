@@ -19,7 +19,7 @@
 //
 // --
 //
-// english.inc
+// english.php
 //
 // English language strings
 
@@ -36,7 +36,7 @@ $lang["NOREP"] = "No repository given";
 $lang["NOPATH"] = "Path not found";
 $lang["NOACCESS"] = "You do not have the necessary permissions to read this directory";
 $lang["RESTRICTED"] = "Restricted access";
-$lang["SUPPLYREP"] = "Please set up a repository path in include/config.inc using \$config->parentPath or \$config->addRepository<p>See the installation guide for more details";
+$lang["SUPPLYREP"] = "Please set up a repository path in include/config.php using \$config->parentPath or \$config->addRepository<p>See the installation guide for more details";
 
 $lang["DIFFREVS"] = "Diff between revs";
 $lang["AND"] = "and";

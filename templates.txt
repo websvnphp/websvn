@@ -5,7 +5,7 @@ THE TEMPLATING SYSTEM
 Everyone wants their view onto their SVN repository to fit in with their look
 and feel.  With WebSVN's templating system this is very possible.
 
-To create your own templates, you first need to change your config.inc file to
+To create your own templates, you first need to change your config.php file to
 tell WebSVN where the templates are stored.  For example:
 
 $config->setTemplatePath("./templates/Standard/");

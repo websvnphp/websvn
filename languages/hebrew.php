@@ -19,7 +19,7 @@
 //
 // --
 //
-// Hebrew.inc
+// Hebrew.php
 //
 // Hebrew language strings
 
@@ -36,7 +36,7 @@ $lang["NOREP"] = "גנזך לא נמצא";
 $lang["NOPATH"] = "נתיב לא נמצא";
 $lang["NOACCESS"] = "אין לך את ההרשאות הנחוצות לתיקייה זו";
 $lang["RESTRICTED"] = "גישה מוגבלת";
-$lang["SUPPLYREP"] = 'אנא הוסף את הנתיב לגנזך ב include/config.inc ע"י $config->parentPath או $config->addRepository<p>בדוק את מדריך ההתקנה עבור הפרטים';
+$lang["SUPPLYREP"] = 'אנא הוסף את הנתיב לגנזך ב include/config.php ע"י $config->parentPath או $config->addRepository<p>בדוק את מדריך ההתקנה עבור הפרטים';
 $lang["DIFFREVS"] = "שוני בין גרסאות";
 $lang["AND"] = "ו";
 $lang["REV"] = "גרסה";

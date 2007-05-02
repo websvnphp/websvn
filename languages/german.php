@@ -19,7 +19,7 @@
 //
 // --
 //
-// germany.inc
+// germany.php
 //
 // German language strings
 
@@ -31,7 +31,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";
-$lang["SUPPLYREP"] = "Bitte den Repository Pfad in include/config.inc mit \$config->parentPath oder \$config->addRepository konfigurieren.<p>Genauere Informationen sind in der Installationsanleitung";
+$lang["SUPPLYREP"] = "Bitte den Repository Pfad in include/config.php mit \$config->parentPath oder \$config->addRepository konfigurieren.<p>Genauere Informationen sind in der Installationsanleitung";
 
 $lang["DIFFREVS"] = "Vergleich zwischen Revisionen";
 $lang["AND"] = "und";

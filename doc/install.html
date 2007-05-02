@@ -75,7 +75,7 @@ won't currently work in safe mode, due to the need to call svnlook.</p>
 <p>You'll also need diff (preferably the GNU version; for Windows users I'd
 recommend the Cygwin version) and svnlook available.</p>
 
-<p>Rename distconfig.inc as config.inc (found in the includes directory) and then
+<p>Rename distconfig.php as config.php (found in the includes directory) and then
 edit it as directed in the file itself.</p>
 
 <p>If everything has gone well, you should be able to view your projects by
@@ -142,13 +142,13 @@ system. This will enable you to access a respositoy using a url such as:</p>
 <ul>
 	<li>Place wsvn.php where you want to.  Normally you place it such that it's accessible straight after the servername, as shown above.</li>
 	<li>Configure the parent directory of wsvn.php to use MultiViews (see Apache docs).</li>
-	<li>Change config.inc to include the line $config->useMultiViews();</li>
+	<li>Change config.php to include the line $config->useMultiViews();</li>
 	<li>Change the paths configured at the beginning of the wsvn.php script.</li>
 </ul>
 
 <p>Now go to http://servername/wsvn/ and make sure that you get the index page.</p>
 
-<p>The repname part of the URL is the name given to it in the config.inc file.
+<p>The repname part of the URL is the name given to it in the config.php file.
 For this reason you may wish to avoid putting spaces in the name.</p>
 
 
@@ -180,7 +180,7 @@ $locwebsvnhttp = "/websvn";
 $locwebsvnreal = "d:/svnpage/websvn";
 </pre>
 
-<p>Next, turn on Multiviews in the WebSVN config.inc file:</p>
+<p>Next, turn on Multiviews in the WebSVN config.php file:</p>
 
 <pre class="code">
 $config->useMultiViews();
@@ -244,7 +244,7 @@ access file.</p>
 <p>Now that you've defined your authentication, you'll be asked for your user name
 and password in order to access the WebSVN directory.  All that's left is to
 configure WebSVN to use your Subversion access file to control access.  Add this
-line to your config.inc file:</p>
+line to your config.php file:</p>
 
 <pre class="code">
 $config->useAuthenticationFile("/path/to/accessfile");
@@ -358,7 +358,7 @@ won't currently work in safe mode, due to the need to call svnlook.</p>
 <p>You'll also need diff (preferably the GNU version; for Windows users I'd
 recommend the Cygwin version) and svnlook available.</p>
 
-<p>Rename distconfig.inc as config.inc (found in the includes directory) and then
+<p>Rename distconfig.php as config.php (found in the includes directory) and then
 edit it as directed in the file itself.</p>
 
 <p>If everything has gone well, you should be able to view your projects by
@@ -425,13 +425,13 @@ system. This will enable you to access a respositoy using a url such as:</p>
 <ul>
 	<li>Place wsvn.php where you want to.  Normally you place it such that it's accessible straight after the servername, as shown above.</li>
 	<li>Configure the parent directory of wsvn.php to use MultiViews (see Apache docs).</li>
-	<li>Change config.inc to include the line $config->useMultiViews();</li>
+	<li>Change config.php to include the line $config->useMultiViews();</li>
 	<li>Change the paths configured at the beginning of the wsvn.php script.</li>
 </ul>
 
 <p>Now go to http://servername/wsvn/ and make sure that you get the index page.</p>
 
-<p>The repname part of the URL is the name given to it in the config.inc file.
+<p>The repname part of the URL is the name given to it in the config.php file.
 For this reason you may wish to avoid putting spaces in the name.</p>
 
 
@@ -463,7 +463,7 @@ $locwebsvnhttp = "/websvn";
 $locwebsvnreal = "d:/svnpage/websvn";
 </pre>
 
-<p>Next, turn on Multiviews in the WebSVN config.inc file:</p>
+<p>Next, turn on Multiviews in the WebSVN config.php file:</p>
 
 <pre class="code">
 $config->useMultiViews();
@@ -527,7 +527,7 @@ access file.</p>
 <p>Now that you've defined your authentication, you'll be asked for your user name
 and password in order to access the WebSVN directory.  All that's left is to
 configure WebSVN to use your Subversion access file to control access.  Add this
-line to your config.inc file:</p>
+line to your config.php file:</p>
 
 <pre class="code">
 $config->useAuthenticationFile("/path/to/accessfile");

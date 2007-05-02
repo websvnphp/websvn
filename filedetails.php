@@ -22,10 +22,10 @@
 //
 // Simply lists the contents of a file
 
-require_once("include/setup.inc");
-require_once("include/svnlook.inc");
-require_once("include/utils.inc");
-require_once("include/template.inc");
+require_once("include/setup.php");
+require_once("include/svnlook.php");
+require_once("include/utils.php");
+require_once("include/template.php");
 
 // Make sure that we have a repository
 if (!isset($rep))
@@ -70,7 +70,7 @@ if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false))
 
 // Check to see if we should serve it with a particular content-type.
 // The content-type could come from an svn:mime-type property on the
-// file, or from the $contentType array in setup.inc.
+// file, or from the $contentType array in setup.php.
 
 if (!$rep->getIgnoreSvnMimeTypes()) 
 {

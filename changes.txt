@@ -1,7 +1,7 @@
 2.1 alpha 1
 
 * Changed: many cleanups and optimisations.
-* Added: more documentation for *.inc files.
+* Added: more documentation for *.php files.
 * Removed: extraneous bits.
 * New: PHP_Compat usage to allow some new PHP5 functionality and remain
   backwards-compatible.
@@ -71,7 +71,7 @@ CHANGE: The log display has a "max number of revisions to show" fiter option, wh
 FIX: It wasn't possible to display the contents of a file which had brackets in the name.
 FIX: Correct problem with download of tarballs containing special characters
 FIX: Improve time display
-FIX: Remove non-UTF8 language options from distconfig.inc
+FIX: Remove non-UTF8 language options from distconfig.php
 FIX: Fix recent bug whereby the log messages would contain unnecessary blank lines
 FIX: Access right file section groups without a trailing / are no correctly treated
 
@@ -173,7 +173,7 @@ NEW: Directory displays are now shown in tree view (so that it's harder
      The prettiest result are available in the BlueGrey scheme.
 NEW: Comparison of entire directories
 NEW: Tarballs of directories may now be downloaded.
-     Set $config->allowdownload(); in config.inc to allow this.
+     Set $config->allowdownload(); in config.php to allow this.
 NEW: New style 'Zinn' based on the templates created for
      http://www.projectzinn.org/.  Thanks to Justin Doran.
 NEW: File delivery now looks at the defined Mime-Type.  Thanks to
@@ -261,7 +261,7 @@ NEW: Tabs in file/diff listings are now expanded by a user
      configurable number of spaces. 
 NEW: WebSVN URLs now access the repository by name rather than number.
      This means that bookmarks will stay the same when new projects
-     are added.  The old behaviour can be configured in config.inc.
+     are added.  The old behaviour can be configured in config.php.
 
 FIX: Removed the revision 0 that has appeared since the previous version
 FIX: Repositories were not sorted alphabetically when using ParentPath
@@ -284,7 +284,7 @@ FIX: A year is 365 days, not 356.
 FIX: Base ages correctly upon GMT
 FIX: The diff output did not escape html entities when enscript was
      enabled and the file extension was not recognised for enscript. 
-FIX: distconfig.inc has a few minor errors in the examples.
+FIX: distconfig.php has a few minor errors in the examples.
 FIX: It wasn't possible to call ParentPath multiple times
 
 1.38
@@ -348,7 +348,7 @@ FIX: Removed spurious BRs from the file listings
 1.33
 
 There are a few changes to the config file in this release.  Copy
-distconfig.inc to config.inc and redo any configuration changes that you
+distconfig.php to config.php and redo any configuration changes that you
 had made.
 
 NEW: Recognised non-text files are now delivered to the user as attachments.
@@ -368,13 +368,13 @@ FIX: Stop diff from comparing space changes
 1.31
 
 FIX: Directory view had disappeared!
-FIX: Included missing file setup.inc
+FIX: Included missing file setup.php
 FIX: Handle spaces in filenames
 
 1.30
 
 There are a few changes to the config file in this release.  Copy
-distconfig.inc to config.inc and redo any configuration changes that you
+distconfig.php to config.php and redo any configuration changes that you
 had made.
 
 NEW: MultiViews support.  You can now set up WebSVN to access the
@@ -408,7 +408,7 @@ FIX: Fixed error concerning use of pclose
 1.10/1.10a
 
 There are a few changes to the config file in this release.  Copy
-distconfig.inc to config.inc and redo any configuration changes that you
+distconfig.php to config.php and redo any configuration changes that you
 had made.
 
 NEW: WebSVN now caches information on the repositories.  Once a revision
@@ -432,9 +432,9 @@ Note that you can't view logs with 1.04!  Use 1.04a.
 
 1.03
 
-Note that the config.inc file has completely changed in this release, in
+Note that the config.php file has completely changed in this release, in
 order to make it more "future proof" and resiliant.  You'll need to copy
-distconfig.inc to config.inc redo the appropriate changes are described.
+distconfig.php to config.php redo the appropriate changes are described.
 
 NEW: A 'ParentPath' can now be specified, rather than having to specify the
      directories by hand.

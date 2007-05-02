@@ -19,7 +19,7 @@
 //
 // --
 //
-// schinese-utf8.inc
+// schinese-utf8.php
 //
 // Simple Chinese language strings
 // 
@@ -34,7 +34,7 @@ $lang["DIFF"] = "差异";
 
 $lang["NOREP"] = "没有仓库";
 $lang["NOPATH"] = "找不到路径";
-$lang["SUPPLYREP"] = "请在include/config.inc中使用\$config->parentPath或\$config->addRepository设置仓库的路径<p>更详细的内容请参考安装手册";
+$lang["SUPPLYREP"] = "请在include/config.php中使用\$config->parentPath或\$config->addRepository设置仓库的路径<p>更详细的内容请参考安装手册";
 
 $lang["DIFFREVS"] = "修订版本之间的差异";
 $lang["AND"] = "和";

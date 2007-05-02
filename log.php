@@ -22,11 +22,11 @@
 //
 // Show the logs for the given path
 
-require_once("include/setup.inc");
-require_once("include/svnlook.inc");
-require_once("include/utils.inc");
-require_once("include/template.inc");
-require_once("include/bugtraq.inc");
+require_once("include/setup.php");
+require_once("include/svnlook.php");
+require_once("include/utils.php");
+require_once("include/template.php");
+require_once("include/bugtraq.php");
 
 $page = (int)@$_REQUEST["page"];
 $all = (@$_REQUEST["all"] == 1)?1:0;
