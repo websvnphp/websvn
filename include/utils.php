@@ -276,6 +276,31 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 
 // }}}
 
+// {{{ buildQuery
+//
+// Build parameters for url query part
+
+function buildQuery($data, $separator = '&amp;', $key = '')
+{
+    if (is_object($data)) $data = get_object_vars($data);
+    $p = array();
+    foreach($data as $k => $v) {
+        $k = urlencode($k);
+        if (!empty($key)) $k = $key.'['.$k.']';
+        
+        if (is_array($v) || is_object($v)) {
+            $p[] = buildQuery($v, $separator, $k);
+        }
+        else {
+            $p[] = $k.'='.urlencode($v);
+        }
+    }
+    
+    return implode($separator, $p);
+};
+
+// }}}
+
 // {{{ getParameterisedSelfUrl
 //
 // Get the relative URL (PHP_SELF) with GET and POST data
@@ -305,14 +330,7 @@ function getParameterisedSelfUrl($params = true)
       $arr = $_GET + $_POST;
       # XXX: the point of HTTP POST is that URIs have a set size limit, so POST
       #      data is typically too large to bother with; why include it?
-      // $url .= '?'.http_build_query($arr);
-      
-      $p = array();
-      foreach ($arr as $key => $value) {
-      	$p[] = urlencode($key).'='.urlencode($value);
-      }
-      if (count($p) > 0) $url .= '?'.implode('&amp;', $p);
-      
+      $url .= '?'.buildQuery($arr);
    }
 
    return $url;
