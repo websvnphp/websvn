@@ -19,7 +19,7 @@
 //
 // --
 //
-// polish.inc
+// polish.php
 //
 // Polish language strings in UTF-8 encoding
 
@@ -33,7 +33,7 @@ $lang["DIFF"] = "Różnice";
 $lang["NOREP"] = "Nie podano żadnego repozytorium";
 $lang["NOPATH"] = "Nie odnaleziono ścieżki";
 $lang["SUPPLYREP"] = "Proszę ustawić ścieżkę do repozytoriów w
-include/config.inc za pomocą \$config->parentPath lub
+include/config.php za pomocą \$config->parentPath lub
 \$config->addRepository<p>Aby uzyskać więcej szczegółów zapoznaj się z
 podręcznikiem instalacyjnym";
 

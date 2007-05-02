@@ -19,7 +19,7 @@
 //
 // --
 //
-// dutch.inc
+// dutch.php
 //
 // Dutch language strings
 //
@@ -35,7 +35,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Geen repository ingegeven";
 $lang["NOPATH"] = "Pad niet gevonden";
-$lang["SUPPLYREP"] = "Gelieve een repository pad aan te maken in include/config.inc met behulp van \$config->parentPath of \$config->addRepository<p>Zie de installatiegids voor meer details";
+$lang["SUPPLYREP"] = "Gelieve een repository pad aan te maken in include/config.php met behulp van \$config->parentPath of \$config->addRepository<p>Zie de installatiegids voor meer details";
 
 $lang["DIFFREVS"] = "Verschil tussen de revisies";
 $lang["AND"] = "en";

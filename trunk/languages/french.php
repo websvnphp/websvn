@@ -19,7 +19,7 @@
 //
 // --
 //
-// french.inc
+// french.php
 //
 // French language strings
 

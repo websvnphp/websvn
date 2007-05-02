@@ -19,7 +19,7 @@
 //
 // --
 //
-// russian.inc
+// russian.php
 //
 // Russian language strings
 // by Alexey Chumakov <alex@chumakov.ru>
@@ -36,7 +36,7 @@ $lang["NOREP"] = "Не задано хранилище";
 $lang["NOPATH"] = "Путь не найден";
 $lang["NOACCESS"] = "Для чтения этого каталога у вас нет нужных прав";
 $lang["RESTRICTED"] = "Ограниченный доступ";
-$lang["SUPPLYREP"] = "Пожалуйста, настройте путь к хранилищу в include/config.inc, пользуясь \$config->parentPath или \$config->addRepository<p>Дополнительные сведения приведены в руководстве по установке ";
+$lang["SUPPLYREP"] = "Пожалуйста, настройте путь к хранилищу в include/config.php, пользуясь \$config->parentPath или \$config->addRepository<p>Дополнительные сведения приведены в руководстве по установке ";
 
 $lang["DIFFREVS"] = "Различия между редакциями";
 $lang["AND"] = "и";

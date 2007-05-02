@@ -19,7 +19,7 @@
 //
 // --
 //
-// norwegian.inc
+// norwegian.php
 //
 // Norwegian language strings
 // by Sigve Indregard <sigve.indregard@gmail.com>.
@@ -38,7 +38,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Depot ble ikke angitt";
 $lang["NOPATH"] = "Stien ble ikke funnet";
-$lang["SUPPLYREP"] = "Vennligst sett opp en depotsti i include/config.inc ved hjelp av \$config->parentPath eller \$config->addRepository.<p>Se installasjonsguiden for detaljer.";
+$lang["SUPPLYREP"] = "Vennligst sett opp en depotsti i include/config.php ved hjelp av \$config->parentPath eller \$config->addRepository.<p>Se installasjonsguiden for detaljer.";
 
 $lang["DIFFREVS"] = "Diff mellom revisjoner";
 $lang["AND"] = "og";

@@ -48,8 +48,8 @@ if (!defined('WSVN_MULTIVIEWS'))
 
 ini_set("include_path", $locwebsvnreal);
 
-require_once("include/setup.inc");
-require_once("include/svnlook.inc");
+require_once("include/setup.php");
+require_once("include/svnlook.php");
 
 if (!isset($_REQUEST["sc"]))
    $_REQUEST["sc"] = 1;
@@ -154,6 +154,6 @@ if ($config->multiViews)
 }
 else
 {
-   print "<p>MultiViews must be configured in config.inc in order to use this file";
+   print "<p>MultiViews must be configured in config.php in order to use this file";
    exit;
 }

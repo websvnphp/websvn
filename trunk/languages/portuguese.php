@@ -19,7 +19,7 @@
 //
 // --
 //
-// portuguese.inc
+// portuguese.php
 //
 // Portuguese language strings
 

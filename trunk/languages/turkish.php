@@ -19,7 +19,7 @@
 //
 // --
 //
-// turkish.inc
+// turkish.php
 //
 // Turkish language strings
 // by Barış Metin <baris@uludag.org.tr>
@@ -33,7 +33,7 @@ $lang["DIFF"] = "Fark";
 
 $lang["NOREP"] = "Bir depo tanımlanmadı";
 $lang["NOPATH"] = "Patika bulunamadı";
-$lang["SUPPLYREP"] = "Lütfen, include/config.inc dosyasında \$config->parentPath ya da \$config->addRepository değerlerini kullanarak bir depo yolu belirtin<p>Daha fazla bilgi için kurulum kılavuzuna bakın";
+$lang["SUPPLYREP"] = "Lütfen, include/config.php dosyasında \$config->parentPath ya da \$config->addRepository değerlerini kullanarak bir depo yolu belirtin<p>Daha fazla bilgi için kurulum kılavuzuna bakın";
 
 $lang["DIFFREVS"] = "Sürümler arası fark";
 $lang["AND"] = "ve";

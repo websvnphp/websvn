@@ -19,7 +19,7 @@
 //
 // --
 //
-// danish.inc
+// danish.php
 //
 // Danish language strings based on TortoiseSVN translation.
 // by Jan Normann Nielsen, <span@dubbekarl.dk>
@@ -35,7 +35,7 @@ $lang["NOREP"] = "Der er ikke angivet noget versionarkiv";
 $lang["NOPATH"] = "Stien blev ikke fundet";
 $lang["NOACCESS"] = "Du har ikke de n&oslash;dvendige rettigheder til at l&aelig;se denne mappe";
 $lang["RESTRICTED"] = "Begr&aelig;nset adgang";
-$lang["SUPPLYREP"] = "Konfigurer venligst stier til versionsarkiver i include/config.inc ved at bruge \$config->parentPath eller \$config->addRepository<p>. Se installationsguiden for n&aelig;rmere detaljer.";
+$lang["SUPPLYREP"] = "Konfigurer venligst stier til versionsarkiver i include/config.php ved at bruge \$config->parentPath eller \$config->addRepository<p>. Se installationsguiden for n&aelig;rmere detaljer.";
 
 $lang["DIFFREVS"] = "Sammenlign revisionerne";
 $lang["AND"] = "og";

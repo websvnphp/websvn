@@ -19,7 +19,7 @@
 //
 // --
 //
-// korean-utf8.inc
+// korean-utf8.php
 // Translator: Lee Jae-Hong
 // Korean(utf8) language strings
 
@@ -32,7 +32,7 @@ $lang["DIFF"] = "비교";
 
 $lang["NOREP"] = "저장소가 지정되어 있지 않습니다.";
 $lang["NOPATH"] = "경로를 찾을 수 없습니다.";
-$lang["SUPPLYREP"] = "include/config.inc 파일의 \$config->parentPath 또는 \$config->addRepository에 저장소의 경로를 지정해 주십시오.<p>설치 설명서를 참조해 주십시오.";
+$lang["SUPPLYREP"] = "include/config.php 파일의 \$config->parentPath 또는 \$config->addRepository에 저장소의 경로를 지정해 주십시오.<p>설치 설명서를 참조해 주십시오.";
 
 $lang["DIFFREVS"] = "리비전간 비교";
 $lang["AND"] = "와(과)";
