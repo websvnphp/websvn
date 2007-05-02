@@ -59,13 +59,6 @@ require 'languages/english.php';
 // Get the user's personalised config (requires the locwebsvnhttp stuff above)
 require_once 'config.php';
 
-// Load PHP_Compat if we're going to use it. This needs to be done after including config.php (which contains
-// the setting) but before svnlook.php (which requires util.php, which contains PHP4-incompatible functions)
-if ($config->isPHPCompatEnabled()) {
-   require_once($config->getPHPCompatFile());
-   require_once 'include/php5compat.php';
-}
-
 require_once 'include/svnlook.php';
 
 // Make sure that the input locale is set up correctly
