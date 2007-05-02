@@ -19,7 +19,7 @@
 //
 // --
 //
-// spanish.inc
+// spanish.php
 //
 // Spanish language strings
 
@@ -32,7 +32,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "No se especificó un repositorio";
 $lang["NOPATH"] = "Ruta no encontrada";
-$lang["SUPPLYREP"] = "Por Favor, configure una ruta a un repositorio en include/config.inc usando \$config->parentPath o \$config->addRepository<p>Verifique la guía de instalación para mas detalles";
+$lang["SUPPLYREP"] = "Por Favor, configure una ruta a un repositorio en include/config.php usando \$config->parentPath o \$config->addRepository<p>Verifique la guía de instalación para mas detalles";
 
 $lang["DIFFREVS"] = "Diff entre versiones";
 $lang["AND"] = "y";

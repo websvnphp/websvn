@@ -19,7 +19,7 @@
 //
 // --
 //
-// japanese.inc
+// japanese.php
 // Translatior: BEPPU Masamichi
 //
 // Japanese(UTF-8) language strings
@@ -35,7 +35,7 @@ $lang["NOREP"] = "リポジトリが指定されていません";
 $lang["NOPATH"] = "パスが見付かりません";
 
 $lang["RESTRICTED"] = "アクセスが制限されています";
-$lang["SUPPLYREP"] = "ファイル include/config.inc 内に \$config->parentPath もしくは \$config->addRepository を使用してリポジトリパスを設定してください。<p>詳しくはインストールガイドを参照してください。";
+$lang["SUPPLYREP"] = "ファイル include/config.php 内に \$config->parentPath もしくは \$config->addRepository を使用してリポジトリパスを設定してください。<p>詳しくはインストールガイドを参照してください。";
 
 
 $lang["DIFFREVS"] = "リビジョン間の差分";

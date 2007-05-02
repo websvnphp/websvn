@@ -19,7 +19,7 @@
 //
 // --
 //
-// tchinese.inc
+// tchinese.php
 //
 // Traditional Chinese language strings
 // 
@@ -34,7 +34,7 @@ $lang["DIFF"] = "比對";
 
 $lang["NOREP"] = "沒有檔案庫";
 $lang["NOPATH"] = "找不到路徑";
-$lang["SUPPLYREP"] = "請在include/config.inc中設定檔案庫位置為 \$config->parentPath 或 \$config->addRepository<p>更詳細的內容請見安裝手冊";
+$lang["SUPPLYREP"] = "請在include/config.php中設定檔案庫位置為 \$config->parentPath 或 \$config->addRepository<p>更詳細的內容請見安裝手冊";
 
 $lang["DIFFREVS"] = "不同版本間的差異";
 $lang["AND"] = "與";

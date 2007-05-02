@@ -19,7 +19,7 @@
 //
 // --
 //
-// portuguese-br.inc
+// portuguese-br.php
 //
 // Brazilian Portuguese language strings
 // Translated by Flavio Fonseca

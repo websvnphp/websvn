@@ -22,9 +22,9 @@
 //
 // Create gz/tar files of the requested item
 
-require_once("include/setup.inc");
-require_once("include/svnlook.inc");
-require_once("include/utils.inc");
+require_once("include/setup.php");
+require_once("include/svnlook.php");
+require_once("include/utils.php");
 
 // Make sure that this operation is allowed
 

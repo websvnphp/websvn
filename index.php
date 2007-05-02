@@ -22,9 +22,9 @@
 //
 // Main page.  Lists all the projects
 
-require_once("include/setup.inc");
-require_once("include/svnlook.inc");
-require_once("include/template.inc");
+require_once("include/setup.php");
+require_once("include/svnlook.php");
+require_once("include/template.php");
 
 $vars["action"] = $lang["PROJECTS"];
 $vars["repname"] = "";

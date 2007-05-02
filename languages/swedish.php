@@ -19,7 +19,7 @@
 //
 // --
 //
-// swedish.inc
+// swedish.php
 //
 // Swedish language strings
 
@@ -34,7 +34,7 @@ $lang["NOREP"] = "Inget arkiv angivet"; //repository
 $lang["NOPATH"] = "Sökvägen saknas";
 $lang["NOACCESS"] = "Du har inte tillräckliga rättigheter för att läsa i denna arkivsökväg";
 $lang["RESTRICTED"] = "Rättighetsbegränsad";
-$lang["SUPPLYREP"] = "Vänligen sätt upp en sökväg till arkivet i include/config.inc med \$config->parentPath eller \$config->addRepository<p>Se installationsanvisningen för mer detaljer";
+$lang["SUPPLYREP"] = "Vänligen sätt upp en sökväg till arkivet i include/config.php med \$config->parentPath eller \$config->addRepository<p>Se installationsanvisningen för mer detaljer";
 
 $lang["DIFFREVS"] = "Skillnad mellan rev.";
 $lang["AND"] = "och";

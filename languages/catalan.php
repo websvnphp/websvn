@@ -19,7 +19,7 @@
 //
 // --
 //
-// catalan.inc
+// catalan.php
 //
 // Catalan language strings
 
@@ -34,7 +34,7 @@ $lang["NOREP"] = "No s'ha proporcionat cap dipòsit";
 $lang["NOPATH"] = "No s'ha trobat cap camí";
 $lang["NOACCESS"] = "No teniu els permisos necessaris per a llegir aquest directori";
 $lang["RESTRICTED"] = "Accés restringit";
-$lang["SUPPLYREP"] = "Definiu un camí per al dipòsit a include/config.inc utilitzant \$config->parentPath o \$config->addRepository<p>Vegeu la guia d'instal·lació per a més detalls";
+$lang["SUPPLYREP"] = "Definiu un camí per al dipòsit a include/config.php utilitzant \$config->parentPath o \$config->addRepository<p>Vegeu la guia d'instal·lació per a més detalls";
 
 $lang["DIFFREVS"] = "Diferències entre revisions";
 $lang["AND"] = "i";

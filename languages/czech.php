@@ -19,7 +19,7 @@
 //
 // --
 //
-// czech.inc
+// czech.php
 //
 // Czech language strings
 
@@ -36,7 +36,7 @@ $lang["NOREP"] = "Není určen žádný repozitář";
 $lang["NOPATH"] = "Cesta nebyla nalezena";
 $lang["NOACCESS"] = "Nemáte dostatečná přístupová práva pro čtení adresáře";
 $lang["RESTRICTED"] = "Omezený přístup";
-$lang["SUPPLYREP"] = "Nastavte prosím cestu k repozitáři v include/config.inc pomocí \$config->parentPath nebo \$config->addRepository<p>Podívejte se do insatlační příručky pro podrobnější informace";
+$lang["SUPPLYREP"] = "Nastavte prosím cestu k repozitáři v include/config.php pomocí \$config->parentPath nebo \$config->addRepository<p>Podívejte se do insatlační příručky pro podrobnější informace";
 
 $lang["DIFFREVS"] = "Rozdíly mezi revizemi";
 $lang["AND"] = "a";

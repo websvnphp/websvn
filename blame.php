@@ -23,10 +23,10 @@
 // Show the blame information of a file.
 //
 
-require_once 'include/setup.inc';
-require_once 'include/svnlook.inc';
-require_once 'include/utils.inc';
-require_once 'include/template.inc';
+require_once 'include/setup.php';
+require_once 'include/svnlook.php';
+require_once 'include/utils.php';
+require_once 'include/template.php';
 
 $vars['action'] = $lang['BLAME'];
 

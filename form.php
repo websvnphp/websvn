@@ -22,8 +22,8 @@
 //
 // Handling of WebSVN forms
 
-require_once("include/setup.inc");
-require_once("include/utils.inc");
+require_once("include/setup.php");
+require_once("include/utils.php");
 
 // Generic redirect handling
 

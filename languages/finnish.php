@@ -19,7 +19,7 @@
 //
 // --
 //
-// finnish.inc
+// finnish.php
 //
 // Finnish language strings
 // Matti Pöllä <mpo@iki.fi>
@@ -33,7 +33,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Tietokantaa ei ole valittu";
 $lang["NOPATH"] = "Polkua ei löydy";
-$lang["SUPPLYREP"] = "Aseta tietokannan polku tiedostossa include/config.inc käyttäen muuttujaa \$config->parentPath tai \$config->addRepository<p>Katso asennusoppaasta yksityiskohtaiset ohjeet";
+$lang["SUPPLYREP"] = "Aseta tietokannan polku tiedostossa include/config.php käyttäen muuttujaa \$config->parentPath tai \$config->addRepository<p>Katso asennusoppaasta yksityiskohtaiset ohjeet";
 
 $lang["DIFFREVS"] = "Versioiden väliset muutokset";
 $lang["AND"] = "ja";

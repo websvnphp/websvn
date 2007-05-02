@@ -19,7 +19,7 @@
 //
 // --
 //
-// slovenian.inc
+// slovenian.php
 //
 // Slovenian language strings
 
@@ -34,7 +34,7 @@ $lang["NOREP"] = "Skladišče ni določeno";
 $lang["NOPATH"] = "Ne najdem poti";
 $lang["NOACCESS"] = "Nimate dovolj pravic za branje tega direktorija";
 $lang["RESTRICTED"] = "Dostop zavrnjen";
-$lang["SUPPLYREP"] = "Prosim nastavi pot do skladišča v include/config.inc z \$config->parentPath ali \$config->addRepository<p>Poglej navodila za detajle";
+$lang["SUPPLYREP"] = "Prosim nastavi pot do skladišča v include/config.php z \$config->parentPath ali \$config->addRepository<p>Poglej navodila za detajle";
 
 $lang["DIFFREVS"] = "Razlika med različicama";
 $lang["AND"] = "in";
