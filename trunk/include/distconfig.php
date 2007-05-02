@@ -30,10 +30,6 @@
 //
 // $config->setServerIsWindows();
 
-// Uncomment the next line if you're running PHP 4
-//
-// $config->setPHPCompatEnabled();
-
 // Configure these lines if your commands aren't on your path. 
 //
 // $config->setSVNCommandPath('Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin');
@@ -370,11 +366,6 @@ $config->expandTabsBy(8);
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->expandTabsBy(3, 'myrep'); // Expand Tabs by 3 for repository 'myrep'
-
-// For installations without PHP5, a copy of PEAR's PHP Compat library is included.
-// If you have your own version of Compat you wish to use, go ahead and specify here.
-
-// $config->setPHPCompatPath('/usr/share/php/PHP/');
 
 // }}}
 ?>
