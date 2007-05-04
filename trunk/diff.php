@@ -102,16 +102,42 @@ if ($prevrev)
 
    // Open a pipe to the diff command with $context lines of context   
    
-   $cmd = quoteCommand($config->diff." --ignore-all-space -U $context $oldtname $newtname", false);
+   $cmd = quoteCommand($config->diff." --ignore-all-space -U $context $oldtname $newtname");
    
    if ($all)
    {
       $ofile = fopen($oldtname, "r");
       $nfile = fopen($newtname, "r");      
    }
+   
+   $descriptorspec = array (
+      0 => array('pipe', 'r'),
+      1 => array('pipe', 'w'),
+      2 => array('pipe', 'w')
+   );
 
-   if ($diff = popen($cmd, "r"))
+   $resource = proc_open($cmd, $descriptorspec, $pipes, NULL, NULL);
+   $error = "";
+   
+   if (is_resource($resource))
    {
+      while (!feof($pipes[2]))
+      {
+         $error .= fgets($pipes[2]);
+      }
+
+      $error = toOutputEncoding(trim($error));
+      
+      if (!empty($error))
+         $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+   }
+   else
+      $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+      
+   if (empty($error))
+   {
+      $diff = $pipes[1];
+
       // Ignore the 3 header lines
 	   $line = fgets($diff);
 	   $line = fgets($diff);
@@ -324,7 +350,25 @@ if ($prevrev)
 	      }
 	   }
 		
-		pclose($diff);   
+      fclose($pipes[0]);
+      fclose($pipes[1]);
+      fclose($pipes[2]);
+      
+      proc_close($resource);
+   }
+   else
+   {
+      echo $error;
+      
+      if (is_resource($resource))
+      {
+         fclose($pipes[0]);
+         fclose($pipes[1]);
+         fclose($pipes[2]);
+         
+         proc_close($resource);
+      }
+      exit;
    }		   
    
    if ($all)

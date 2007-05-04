@@ -65,7 +65,7 @@ if ($file = fopen($tfname, 'r'))
    // Get the blame info
    $tbname = tempnam('temp', '');
    $svnrep->getBlameDetails($path, $tbname, $rev); 
-   
+
    $ent = true;
    $extension = strrchr(basename($path), '.');
    if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript))

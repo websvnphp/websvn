@@ -853,6 +853,13 @@ Class Config
          $path .= DIRECTORY_SEPARATOR;
       }
 
+      if (($this->serverIsWindows  && !file_exists($path.$name.".exe")) ||
+          (!$this->serverIsWindows && !file_exists($path.$name)))
+      {
+         echo "Unable to find '$name' tool at location '$path$name'";
+         exit;
+      }
+
       // On a windows machine we need to put spaces around the entire command
       // to allow for spaces in the path
       if ($this->serverIsWindows)

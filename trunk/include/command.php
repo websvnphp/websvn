@@ -87,13 +87,10 @@ function toOutputEncoding($str, $inputEncoding = "")
 
 // {{{ quoteCommand
 
-function quoteCommand($cmd, $redirecterr)
+function quoteCommand($cmd)
 {
    global $config;
-   
-   if ($redirecterr)
-      $cmd .= " 2>&1";
-      
+         
    // On Windows machines, the whole line needs quotes round it so that it's
    // passed to cmd.exe correctly
 
@@ -114,11 +111,35 @@ function runCommand($cmd, $mayReturnNothing = false)
    $output = array ();
    $err = false;
 
-   $c = quoteCommand($cmd, false);
+   $c = quoteCommand($cmd);
       
-   // Try to run the command normally
-   if ($handle = popen($c, 'r'))
+   $descriptorspec = array (
+      0 => array('pipe', 'r'),
+      1 => array('pipe', 'w'),
+      2 => array('pipe', 'w')
+   );
+
+   $resource = proc_open($c, $descriptorspec, $pipes, NULL, NULL);
+   $error = "";
+   
+   if (is_resource($resource))
    {
+      while (!feof($pipes[2]))
+      {
+         $error .= fgets($pipes[2]);
+      }
+
+      $error = toOutputEncoding(trim($error));
+      
+      if (!empty($error))
+         $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+   }
+   else
+      $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+      
+   if (empty($error))
+   {
+      $handle = $pipes[1];
       $firstline = true;
 		while (!feof($handle))
 		{
@@ -131,20 +152,31 @@ function runCommand($cmd, $mayReturnNothing = false)
 		   $output[] = toOutputEncoding(rtrim($line));
 		}
 		
-		pclose($handle);
+      fclose($pipes[0]);
+      fclose($pipes[1]);
+      fclose($pipes[2]);
+      
+      proc_close($resource);
+
 		if (!$err)
 		   return $output;
+		else
+		{
+		   echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+		   exit;
+		}
    }
-
-   echo '<p>',$lang['BADCMD'],': <code>',$cmd,'</code></p>';
    
-   // Rerun the command, this time grabbing the error information
-
-   $c = quoteCommand($cmd, true);
-
-   $output = toOutputEncoding(shell_exec($c));
-   if (!empty($output))
-      echo '<p>',nl2br($output),'</p>';
+   echo $error;
+   
+   if (is_resource($resource))
+   {
+      fclose($pipes[0]);
+      fclose($pipes[1]);
+      fclose($pipes[2]);
+      
+      proc_close($resource);
+   }
    exit;
 }
 

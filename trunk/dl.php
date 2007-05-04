@@ -65,10 +65,10 @@ if (mkdir($tmpname))
    
    // Create the tar file
    chdir($tmpname);
-   exec(quoteCommand($config->tar." -cf ".quote("$arcname.tar")." ".quote($arcname), false));
+   exec(quoteCommand($config->tar." -cf ".quote("$arcname.tar")." ".quote($arcname)));
    
    // ZIP it up
-   exec(quoteCommand($config->gzip." ".quote("$arcname.tar"), false));
+   exec(quoteCommand($config->gzip." ".quote("$arcname.tar")));
    $size = filesize("$arcname.tar.gz");
 
    // Give the file to the browser
@@ -99,11 +99,11 @@ if (mkdir($tmpname))
 
    if ($config->serverIsWindows)
    {
-      $cmd = quoteCommand("rmdir /S /Q ".quote($tmpname), false);
+      $cmd = quoteCommand("rmdir /S /Q ".quote($tmpname));
    }
    else
    {
-      $cmd = quoteCommand("rm -rf ".quote($tmpname), false);
+      $cmd = quoteCommand("rm -rf ".quote($tmpname));
    }
    
    @exec($cmd);
