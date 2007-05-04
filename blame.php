@@ -60,8 +60,6 @@ $listing = array();
 $tfname = tempnam('temp', '');
 $svnrep->getFileContents($path, $tfname, $rev, '', true);
 
-$filecache = array();
-
 if ($file = fopen($tfname, 'r'))      
 {
    // Get the blame info

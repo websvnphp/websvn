@@ -495,7 +495,6 @@ Class Config
    var $flatIndex = true;
    var $openTree = false;
    var $serverIsWindows = false;
-   var $cacheResults = false;
    var $multiViews = false;
    var $useEnscript = false;
    var $allowDownload = false;
@@ -603,24 +602,6 @@ Class Config
    
    // }}}
    
-   // {{{ Caching
-
-   // setCachingOn
-   //
-   // Set result caching on
-   
-   function setCachingOn()
-   {
-      $this->cacheResults = true;
-   }
-
-   function isCachingOn()
-   {
-      return $this->cacheResults;
-   }
-
-   // }}}
-
    // {{{ MultiViews
 
    // useMultiViews
