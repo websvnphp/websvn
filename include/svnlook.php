@@ -459,7 +459,7 @@ Class SVNRepository
       if ($filename == "")
       {
          $path = encodepath($this->repConfig->path.$path);
-         passthru(quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." $pipe", false));
+         passthru(quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." $pipe"));
          return;
       }
       
@@ -472,7 +472,7 @@ Class SVNRepository
       {         
          // Output the file to the filename
          $path = encodepath($this->repConfig->path.$path);
-         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename", false);
+         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename");
          @exec($cmd);
          
          // Get the file as a string (memory hogging, but we have no other options)
@@ -530,13 +530,13 @@ Class SVNRepository
             $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." | ".
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-                                $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $filename", false);
+                                $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $filename");
             @exec($cmd);
          }
          else
          {
             $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
-            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename", false);
+            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename");
             @exec($cmd);
          }
       }
@@ -566,7 +566,7 @@ Class SVNRepository
          
          // Output the file to a temporary file
          $path = encodepath($this->repConfig->path.$path);
-         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $tmp", false);
+         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $tmp");
          @exec($cmd);
          highlight_file($tmp);
          unlink($tmp);
@@ -579,37 +579,33 @@ Class SVNRepository
             $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." | ".
                                 $config->enscript." --language=html ".
  								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-                                $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote." 2>&1", false);
-                                  
-            if (!($result = popen($cmd, "r")))
-               return;
+                                $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote);                                  
          }
          else
          {
             $path = encodepath($this->repConfig->path.$path);
-            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." 2>&1", false);
-            
-            if (!($result = popen($cmd, "r")))
-               return;
-              
+            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev");
             $pre = true;
          }
-          
-         if ($pre)
-            echo "<PRE>";
-            
-   		while (!feof($result))
-   		{
-   		   $line = fgets($result, 1024);
-   		   if ($pre) $line = replaceEntities($line, $this->repConfig);
-   		   
-   		   print hardspace($line);
-   		}
-    
-         if ($pre)
-            echo "</PRE>";
-   		
-   		pclose($result);
+                      
+         if ($result = popen($cmd, "r"))
+         {
+            if ($pre)
+               echo "<PRE>";
+               
+      		while (!feof($result))
+      		{
+      		   $line = fgets($result, 1024);
+      		   if ($pre) $line = replaceEntities($line, $this->repConfig);
+      		   
+      		   print hardspace($line);
+      		}
+       
+            if ($pre)
+               echo "</PRE>";
+      		
+            pclose($result);
+      	}
       }
    }
 
@@ -624,7 +620,7 @@ Class SVNRepository
       global $config;
             
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." blame ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename", false);
+      $cmd = quoteCommand($config->svn." blame ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename");
       
       @exec($cmd);
    }
@@ -639,7 +635,13 @@ Class SVNRepository
       
       
       $path = encodepath($this->repConfig->path.$path);
-      $ret = runCommand($config->svn." propget $property ".$this->repConfig->svnParams().quote($path)."@$rev", true);
+      
+      if ($rev > 0)
+         $rev = "@".$rev;
+      else
+         $rev = "";
+      
+      $ret = runCommand($config->svn." propget $property ".$this->repConfig->svnParams().quote($path).$rev, true);
       
       // Remove the surplus newline
       if (count($ret))
@@ -659,7 +661,7 @@ Class SVNRepository
       global $config;
             
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." export ".$this->repConfig->svnParams().quote($path)."@$rev"." ".quote($filename), false);
+      $cmd = quoteCommand($config->svn." export ".$this->repConfig->svnParams().quote($path)."@$rev"." ".quote($filename));
 
       @exec($cmd);
    }
@@ -703,10 +705,35 @@ Class SVNRepository
       if ($quiet)
          $info = "--quiet";
          
-      $cmd = quoteCommand($config->svn." log --xml $info $revStr ".$this->repConfig->svnParams().quote($path), false);
+      $cmd = quoteCommand($config->svn." log --xml $info $revStr ".$this->repConfig->svnParams().quote($path));
 
-      if ($handle = popen($cmd, "r"))
+      $descriptorspec = array (
+         0 => array('pipe', 'r'),
+         1 => array('pipe', 'w'),
+         2 => array('pipe', 'w')
+      );
+   
+      $resource = proc_open($cmd, $descriptorspec, $pipes, NULL, NULL);
+      $error = "";
+      
+      if (is_resource($resource))
       {
+         while (!feof($pipes[2]))
+         {
+            $error .= fgets($pipes[2]);
+         }
+   
+         $error = toOutputEncoding(trim($error));
+         
+         if (!empty($error))
+            $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+      }
+      else
+         $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+         
+      if (empty($error))
+      {
+         $handle = $pipes[1];
          $firstline = true;
    		while (!feof($handle))
    		{
@@ -732,7 +759,26 @@ Class SVNRepository
                }
             }
    		}
-		   pclose($handle);
+
+         fclose($pipes[0]);
+         fclose($pipes[1]);
+         fclose($pipes[2]);
+         
+         proc_close($resource);
+      }
+      else
+      {
+         echo $error;
+      
+         if (is_resource($resource))
+         {
+            fclose($pipes[0]);
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+            
+            proc_close($resource);
+         }
+         exit;
       }
 
       xml_parser_free($xml_parser);
