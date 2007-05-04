@@ -50,6 +50,7 @@ if (empty($rev))
 
 $tmpname = tempnam("temp", "wsvn");
 unlink($tmpname);
+
 if (mkdir($tmpname))
 {
    // Get the name of the directory being archived
@@ -62,10 +63,10 @@ if (mkdir($tmpname))
    
    // Create the tar file
    chdir($tmpname);
-   exec($config->tar." -cf ".quote("$arcname.tar")." ".quote($arcname));
+   exec(quoteCommand($config->tar." -cf ".quote("$arcname.tar")." ".quote($arcname), false));
    
    // ZIP it up
-   exec($config->gzip." ".quote("$arcname.tar"));
+   exec(quoteCommand($config->gzip." ".quote("$arcname.tar"), false));
    $size = filesize("$arcname.tar.gz");
 
    // Give the file to the browser
