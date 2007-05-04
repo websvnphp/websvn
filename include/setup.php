@@ -53,17 +53,6 @@ if (empty($locwebsvnreal))
 
 $vars['locwebsvnhttp'] = $locwebsvnhttp;
 
-// Include a default language file (must go before config.php)
-require 'languages/english.php';
-
-// Get the user's personalised config (requires the locwebsvnhttp stuff above)
-require_once 'config.php';
-
-require_once 'include/svnlook.php';
-
-// Make sure that the input locale is set up correctly
-setlocale(LC_ALL, '');
-
 // {{{ Content-Type's
 // Set up the default content-type extension handling
 
@@ -266,6 +255,17 @@ $extEnscript = array
 );
 
 // }}}
+
+// Include a default language file (must go before config.php)
+require 'languages/english.php';
+
+// Get the user's personalised config (requires the locwebsvnhttp stuff above)
+require_once 'config.php';
+
+require_once 'include/svnlook.php';
+
+// Make sure that the input locale is set up correctly
+setlocale(LC_ALL, '');
 
 // Default 'zipped' array
 
