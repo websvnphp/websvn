@@ -58,6 +58,8 @@ if (mkdir($tmpname))
    $arcname = basename($arcname);
    if (empty($arcname))
       $arcname = $rep->name;
+      
+   $arcname = $arcname . ".r$rev";
 
    $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
    
