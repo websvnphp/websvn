@@ -246,7 +246,7 @@ if (!empty($history))
       if (!$numSearchResults)
       {
          $url = $config->getURL($rep, $path, "log");
-         $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&amp;&sc=$showchanged&amp;isdir=$isDir&logsearch=1&search=$search&fr=$thisrev\">${lang["MORERESULTS"]}</a>";
+         $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=$isDir&amp;logsearch=1&amp;search=$search&amp;fr=$thisrev\">${lang["MORERESULTS"]}</a>";         
          break;
       }         
    }
