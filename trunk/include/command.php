@@ -121,63 +121,46 @@ function runCommand($cmd, $mayReturnNothing = false)
 
    $resource = proc_open($c, $descriptorspec, $pipes, NULL, NULL);
    $error = "";
-   
-   if (is_resource($resource))
-   {
-      while (!feof($pipes[2]))
-      {
-         $error .= fgets($pipes[2]);
-      }
 
-      $error = toOutputEncoding(trim($error));
-      
-      if (!empty($error))
-         $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
-   }
-   else
-      $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
-      
-   if (empty($error))
+   if (!is_resource($resource))
    {
-      $handle = $pipes[1];
-      $firstline = true;
-		while (!feof($handle))
-		{
-		   $line = fgets($handle);
-		   if ($firstline && empty($line) && !$mayReturnNothing)
-		   {
-		      $err = true;
-		   }
-		   $firstline = false;
-		   $output[] = toOutputEncoding(rtrim($line));
-		}
-		
-      fclose($pipes[0]);
-      fclose($pipes[1]);
-      fclose($pipes[2]);
+      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+      exit;
+   }
       
-      proc_close($resource);
+   $handle = $pipes[1];
+   $firstline = true;
+	while (!feof($handle))
+	{
+	   $line = fgets($handle);
+	   if ($firstline && empty($line) && !$mayReturnNothing)
+	   {
+	      $err = true;
+	   }
 
-		if (!$err)
-		   return $output;
-		else
-		{
-		   echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
-		   exit;
-		}
+	   $firstline = false;
+	   $output[] = toOutputEncoding(rtrim($line));
+	}
+	
+   while (!feof($pipes[2]))
+   {               
+      $error .= fgets($pipes[2]);
    }
+
+   $error = toOutputEncoding(trim($error));
+
+   fclose($pipes[0]);
+   fclose($pipes[1]);
+   fclose($pipes[2]);
    
-   echo $error;
-   
-   if (is_resource($resource))
-   {
-      fclose($pipes[0]);
-      fclose($pipes[1]);
-      fclose($pipes[2]);
-      
-      proc_close($resource);
-   }
-   exit;
+   proc_close($resource);
+
+	if (!$err)
+	   return $output;
+	else
+	{
+      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+	}
 }
 
 // }}}

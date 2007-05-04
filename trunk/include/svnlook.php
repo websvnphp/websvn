@@ -715,69 +715,56 @@ Class SVNRepository
    
       $resource = proc_open($cmd, $descriptorspec, $pipes, NULL, NULL);
       $error = "";
-      
-      if (is_resource($resource))
-      {
-         while (!feof($pipes[2]))
-         {
-            $error .= fgets($pipes[2]);
-         }
-   
-         $error = toOutputEncoding(trim($error));
-         
-         if (!empty($error))
-            $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
-      }
-      else
-         $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
-         
-      if (empty($error))
-      {
-         $handle = $pipes[1];
-         $firstline = true;
-   		while (!feof($handle))
-   		{
-   		   $line = fgets($handle);
-   		   if (!xml_parse($xml_parser, $line, feof($handle)))
-            {
-               if (xml_get_error_code($xml_parser) != 5)
-               {               
-                  # errors can contain sensitive info! don't echo this ~J
-                  error_log(sprintf("XML error: %s (%d) at line %d column %d byte %d\ncmd: %s",
-                              xml_error_string(xml_get_error_code($xml_parser)),
-                              xml_get_error_code($xml_parser),
-                              xml_get_current_line_number($xml_parser),
-                              xml_get_current_column_number($xml_parser),
-                              xml_get_current_byte_index($xml_parser),
-                              $cmd));
-                  exit;
-               }
-               else
-               {
-                  $vars["error"] = $lang["UNKNOWNREVISION"];
-                  return 0;
-               }
-            }
-   		}
 
-         fclose($pipes[0]);
-         fclose($pipes[1]);
-         fclose($pipes[2]);
-         
-         proc_close($resource);
-      }
-      else
+      if (!is_resource($resource))
       {
-         echo $error;
-      
-         if (is_resource($resource))
+         echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+         exit;
+      }
+               
+      $handle = $pipes[1];
+      $firstline = true;
+		while (!feof($handle))
+		{
+		   $line = fgets($handle); 
+		   if (!xml_parse($xml_parser, $line, feof($handle)))
          {
-            fclose($pipes[0]);
-            fclose($pipes[1]);
-            fclose($pipes[2]);
-            
-            proc_close($resource);
+            if (xml_get_error_code($xml_parser) != 5)
+            {               
+               # errors can contain sensitive info! don't echo this ~J
+               error_log(sprintf("XML error: %s (%d) at line %d column %d byte %d\ncmd: %s",
+                           xml_error_string(xml_get_error_code($xml_parser)),
+                           xml_get_error_code($xml_parser),
+                           xml_get_current_line_number($xml_parser),
+                           xml_get_current_column_number($xml_parser),
+                           xml_get_current_byte_index($xml_parser),
+                           $cmd));
+               exit;
+            }
+            else
+            {
+               $vars["error"] = $lang["UNKNOWNREVISION"];
+               return 0;
+            }
          }
+		}
+
+      while (!feof($pipes[2]))
+      {               
+         $error .= fgets($pipes[2]);
+      }
+
+      $error = toOutputEncoding(trim($error));
+      
+      fclose($pipes[0]);
+      fclose($pipes[1]);
+      fclose($pipes[2]);
+      
+      proc_close($resource);
+      
+      if (!empty($error))
+      {
+         echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
          exit;
       }
 
