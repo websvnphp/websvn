@@ -331,8 +331,11 @@ function encodePath($uri)
    // Correct for Window share names
    if ( $config->serverIsWindows==true )
    {
-      if ( substr($uri, 0,2)=="//" )
-         $uri="\\".substr($uri, 2, strlen($uri));
+      if (substr($uri, 0,2) == "//")
+         $uri = "\\".substr($uri, 2, strlen($uri));
+         
+      if (substr($uri, 0,10)=="file://///" )
+         $uri="file:///\\".substr($uri, 10, strlen($uri));
    }
 
    return $uri;
