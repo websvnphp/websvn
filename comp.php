@@ -120,7 +120,7 @@ $debug = false;
 if (!$noinput)
 {
    $rawcmd = $config->svn." diff ".$rep->svnParams().quote($path1."@".$rev1)." ".quote($path2."@".$rev2);
-   $cmd = quoteCommand($rawcmd, true);
+   $cmd = quoteCommand($rawcmd);
    if ($debug) echo "$cmd\n";
 }
 
@@ -155,7 +155,7 @@ if (!$noinput)
    	{
    	   if ($getLine)
    	      $line = fgets($diff);
-         
+
          clearVars();	   
    	   $getLine = true;
          if ($debug) print "Line = '$line'<br />" ;	         
@@ -342,7 +342,9 @@ if (!$noinput)
       }
          
       if ($debug) print_r($listing);
-   }		   
+
+      pclose($diff);
+   }
 }
 
 $vars["version"] = $version;
