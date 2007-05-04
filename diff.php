@@ -97,8 +97,6 @@ if ($prevrev)
    if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript))
       $ent = false;
 
-   $file1cache = array();
-
    if ($all)
       $context = 1;  // Setting the context to 0 makes diff generate the wrong line numbers!
 

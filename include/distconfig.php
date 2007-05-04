@@ -354,9 +354,6 @@ $config->setMinDownloadLevel(2);
 // Comment out this if you don't have the right to use it.  Be warned that you may need it however!
 set_time_limit(0);
 
-// Comment this line to turn off caching of repo information.  This will slow down your browsing.
-$config->setCachingOn();
-
 // Number of spaces to expand tabs to in diff/listing view across all repositories
 
 $config->expandTabsBy(8);
