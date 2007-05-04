@@ -276,28 +276,47 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false)
 
 // }}}
 
-// {{{ buildQuery
+// {{{ http_build_query
 //
 // Build parameters for url query part
 
-function buildQuery($data, $separator = '&amp;', $key = '')
+if (!function_exists('http_build_query'))
 {
-    if (is_object($data)) $data = get_object_vars($data);
-    $p = array();
-    foreach($data as $k => $v) {
-        $k = urlencode($k);
-        if (!empty($key)) $k = $key.'['.$k.']';
-        
-        if (is_array($v) || is_object($v)) {
-            $p[] = buildQuery($v, $separator, $k);
-        }
-        else {
-            $p[] = $k.'='.urlencode($v);
-        }
-    }
-    
-    return implode($separator, $p);
-};
+   function http_build_query($data,$prefix=null,$sep='',$key='')
+   {
+      $ret = array();
+      
+      foreach ((array)$data as $k => $v)
+      {
+         $k = urlencode($k);
+         if (is_int($k) && $prefix != null)
+         {
+            $k = $prefix.$k;
+         }
+         
+         if (!empty($key))
+         {
+            $k = $key."[".$k."]";
+         }
+         
+         if (is_array($v) || is_object($v))
+         {
+            array_push($ret,http_build_query($v,"",$sep,$k));
+         }
+         else
+         {
+            array_push($ret,$k."=".urlencode($v));
+         }
+      }
+
+      if (empty($sep))
+      {
+          $sep = ini_get("arg_separator.output");
+      }
+
+      return implode($sep, $ret);
+   }
+}
 
 // }}}
 
@@ -330,7 +349,8 @@ function getParameterisedSelfUrl($params = true)
       $arr = $_GET + $_POST;
       # XXX: the point of HTTP POST is that URIs have a set size limit, so POST
       #      data is typically too large to bother with; why include it?
-      $url .= '?'.buildQuery($arr);
+      
+      $url .= '?'.http_build_query($arr);      
    }
 
    return $url;
