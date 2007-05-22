@@ -568,7 +568,9 @@ Class SVNRepository
          $path = encodepath($this->repConfig->path.$path);
          $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $tmp");
          @exec($cmd);
-         highlight_file($tmp);
+         $tmpStr = file_get_contents($tmp);
+         $tmpStr = str_replace(array("\r\n"), array("\n"), $tmpStr);
+         highlight_string($tmpStr);
          unlink($tmp);
       }
       else
