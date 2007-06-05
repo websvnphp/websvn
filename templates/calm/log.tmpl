@@ -1,0 +1,58 @@
+<div id="select">[websvn:projects_form][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span>[websvn:projects_endform]</div>
+<h1><a href="index.php">[lang:PROJECTS]</a> <span>[websvn:repname] - [lang:REV] [websvn:rev]</span></h1>
+<div id="info">
+<h2>Details</h2>
+<ul>
+<li><p>[websvn:logsearch_form][lang:SEARCHLOG]: [websvn:logsearch_inputbox]<span class="submit">[websvn:logsearch_submit]</span>
+[websvn-test:logsearch_clearloglink]
+[websvn:logsearch_clearloglink]
+[websvn-endtest]
+[websvn:logsearch_endform]
+</p></li>
+[websvn-test:goyoungestlink]
+<li>[websvn:goyoungestlink]</li>
+[websvn-endtest]
+</div>
+
+<div id="wrap">
+<h2 class="path">[websvn:curdirlinks]</h2>
+[websvn-test:logsearch_nomatches]
+   [lang:NORESULTS]
+[websvn-endtest]
+
+[websvn-test:logsearch_resultsfound]
+   [websvn:compare_form]
+      <table width="100%">
+         <thead>
+         <tr>
+            <th class="HdrClmn">[lang:REV]</th>
+            <th class="HdrClmn">[lang:LOGMSG]</th>
+            <th class="HdrClmn">[lang:AUTHOR]</th>
+            <th class="HdrClmn">[lang:AGE]</th>
+            <th class="HdrClmnEnd">[lang:PATH]</th>
+         </tr>
+         </thead>
+      
+         [websvn-startlisting]
+         <tr class="row[websvn:rowparity]">
+            <td><nobr>[websvn:compare_box][websvn:revlink]</nobr></td>
+            <td valign="middle" class="logmsg">[websvn:revlog]</td>
+            <td>[websvn:revauthor]</td>
+            <td>[websvn:revage]</td>
+            <td>[websvn:revpathlink]</td>
+         </tr>
+         [websvn-endlisting]
+      </table>
+      <p class="submit">
+      [websvn:compare_submit]
+      </p>  
+   [websvn:compare_endform]
+[websvn-endtest]
+
+[websvn-test:logsearch_nomorematches]
+   <p>[lang:NOMORERESULTS]
+[websvn-endtest]
+      
+<p>[websvn:logsearch_moreresultslink]
+<p>[websvn:pagelinks]<p>[websvn:showalllink]
+   

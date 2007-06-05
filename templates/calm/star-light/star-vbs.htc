@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	star-light - version 1.0.2 (2005/06/06)
+	Copyright 2005, Dean Edwards
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+-->
+<public:component xmlns:public="urn:HTMLComponent" lightweight="true">
+<public:attach event="ondocumentready" handler="init"/>
+<script type="text/javascript">
+//<![CDATA[
+
+// VBScript module by Rob Eberhardt
+
+var KEYWORDS =
+	"call|class|end|const|dim|do|loop|erase|execute|executeglobal|exit|for|each|in|next|function|end\\sfunction|if|then|else|" +
+	"on\\serror|resume\\snext|goto\\s0|goto\\s1|option\\sexplicit|private|property\\sget|property\\slet|property\\sset|end\\sproperty|public|" +
+	"randomize|redim|select|end\\sselect|case|set|sub|end\\ssub|while|wend|with|" +
+	"null|nothing|me|true|false|and|or|not|xor";
+var GLOBAL =
+	"Abs|Array|Asc|Atn|CBool|CByte|CCur|CDate|CDbl|Chr|CInt|CLng|CStr|Cos|CreateObject|CSng|" +
+	"Date|DateAdd|DateDiff|DatePart|DateSerial|DateValue|Day|Eval|Exp|Filter|FormatCurrency|FormatDateTime|FormatNumber|FormatPercent|" +
+	"GetLocale|GetObject|GetRef|Hex|Hour|InputBox|InStr|InStrRev|Int,|Fixs|IsArray|IsDate|IsEmpty|IsNull|IsNumeric|IsObject|Join|" +
+	"LBound|LCase|Left|Len|LoadPicture|Log|LTrim|RTrim|Trim|Maths|Mid|Minute|Month|MonthName|MsgBox|Now|Oct|Replace|RGB|Right|Rnd|Round|" +
+	"ScriptEngine|ScriptEngineBuildVersion|ScriptEngineMajorVersion|ScriptEngineMinorVersion|Second|SetLocale|Sgn|Sin|Space|Split|Sqr|StrComp|String|" +
+	"Tan|Time|Timer|TimeSerial|TimeValue|TypeName|UBound|UCase|VarType|Weekday|WeekdayName|Year|" +
+	"vbBlack|vbRed|vbGreen|vbYellow|vbBlue|vbMagenta|vbCyan|vbWhite|" +
+	"vbSunday|vbMonday|vbTuesday|vbWednesday|vbThursday|vbFriday|vbSaturday|vbUseSystemDayOfWeek|vbFirstJan1|vbFirstFourDays|vbFirstFullWeek|" +
+	"vbGeneralDate|vbLongDate|vbShortDate|vbLongTime|vbShortTime|" +
+	"vbObjectError|" +
+	"vbOKOnly|vbOKCancel|vbAbortRetryIgnore|vbYesNoCancel|vbYesNo|vbRetryCancel|vbCritical|vbQuestion|vbExclamation|vbInformation|vbDefaultButton1|vbDefaultButton2|vbDefaultButton3|vbDefaultButton4|vbApplicationModal|vbSystemModal|vbOK|vbCancel|vbAbort|vbRetry|vbIgnore|vbYes|vbNo|" +
+	"vbCr|VbCrLf|vbFormFeed|vbLf|vbNewLine|vbNullChar|vbNullString|vbTab|vbVerticalTab" +
+	"vbUseDefault|vbTrue|vbFalse|" +
+	"vbEmpty|vbNull|vbInteger|vbLong|vbSingle|vbSingle|vbCurrency|vbDate|vbString|vbObject|vbError|vbBoolean|vbVariant|vbDataObject|vbDecimal|vbByte|vbArray|" +
+	"Class_Initialize|Class_Terminate|" +
+	"Clear|Execute|Raise|Replace|Test|" +
+	"Err|RegExp|escape|unescape|" +
+	"";
+var ALERT = "msgbox|inputbox|alert|confirm|eval|exec|execute|__defineGetter__|__defineSetter__|on|error|resume|next|goto";
+
+function init() {
+	parser.ignoreCase = true;
+	parser.escapeChar = "\\";
+
+	// default text colour
+	style.color = "black";
+
+	// comments
+	var LINE_COMMENT = /(rem|')[^\n]*\n/;
+	parser.add(LINE_COMMENT, "color:green");
+
+	// regular expressions
+	parser.add(/([^\w\$\/'"*)])(\/[^\/\n\r\*][^\/\n\r]*\/g?i?)/, "color:maroon", "$2<span>$3</span>");
+
+	// strings
+	parser.add(STRING2, "color:maroon");	// double quotes
+
+	// numbers
+	parser.add(NUMBER, "color:maroon");
+
+	// urls/email
+	urls = true;
+	email = true;
+
+	tabStop = 4;
+
+	// vbcript keywords
+	parser.add(ALERT, "color:red");
+	parser.add(KEYWORDS, "color:blue");
+	parser.add(GLOBAL, "color:teal");
+};
+//]]>
+</script>
+</public:component>
+

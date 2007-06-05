@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	star-light - version 1.0.2 (2005/06/06)
+	Copyright 2005, Dean Edwards
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+-->
+<public:component xmlns:public="urn:HTMLComponent" lightweight="true">
+<public:attach event="ondocumentready" handler="init"/>
+<script type="text/javascript">
+//<![CDATA[
+
+/* copied from firefox's nice view-source style */
+/* also good for xhtml */
+
+function init() {
+	// default text colour
+	style.color = "black";
+
+	// cdata
+
+	// comments
+	parser.add(SGML_COMMENT, "color:green;font-style:italic");
+
+	// strings
+	parser.add(STRING1, "color:blue;font-weight:550");
+	parser.add(STRING2, "color:blue;font-weight:550");
+
+	// indentation
+	tabStop = 1;
+
+	// doctype
+	parser.add(/<!DOCTYPE[^>]+>/, "color:#4682B4;font-style:italic");
+
+	// processing instruction
+	parser.add(/<\?[\w-]+[^>]+>/, "color:#DA70D6;font-style:italic");
+
+	// script and style blocks
+	parser.add(/(>([^<][^\/]*<+)*\/)(script|style)>/, "color:#800080;font-weight:bold", "$2<span>$4</span>>");
+
+	// tags
+	parser.add(/(<\/?)([\w:-]+)/, "color:#800080;font-weight:bold", "$2<span>$3</span>");
+	parser.add(/(\/)>/, "font-weight:bold", "<span>$2</span>>");
+
+	// atributes
+	parser.add(/[\w:-]+=/, "font-weight:bold");
+
+	// entity references (this doesn't work)
+	parser.add(/&#?\w+;/, "color:#FF4500");
+};
+//]]>
+</script>
+</public:component>

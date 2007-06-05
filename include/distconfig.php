@@ -86,7 +86,8 @@
 //
 // Uncomment ONLY the template file that you want.  
 
-$config->setTemplatePath("$locwebsvnreal/templates/Standard/");
+$config->setTemplatePath("$locwebsvnreal/templates/Calm/");
+// $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
 // $config->setTemplatePath("$locwebsvnreal/templates/Zinn/");
 
