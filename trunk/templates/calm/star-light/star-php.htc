@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	star-light - version 1.0.2 (2005/06/06)
+	Copyright 2005, Dean Edwards
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+-->
+<public:component xmlns:public="urn:HTMLComponent" lightweight="true">
+<public:attach event="ondocumentready" handler="init"/>
+<script type="text/javascript">
+//<![CDATA[
+
+var KEYWORDS = "as|break|case|continue|declare|default|do|echo|else|" +
+	"elseif|endif|endfor|endswitch|endwhile|exit|for|foreach|function|global|" +
+	"if|include|include_once|next|return|require|require_once|switch|while";
+
+function init() {
+	// default text colour
+	style.color = "black";
+
+	// escape character
+	parser.escapeChar = "\\";
+
+	// comments
+	parser.add(LINE_COMMENT, "color:green");
+	parser.add(BLOCK_COMMENT, "color:green");
+
+	// regular expressions
+	parser.add(/([^\w\$\/'"*)])(\/[^\/\n\r\*][^\/\n\r]*\/g?i?)/, "color:maroon", "$2<span>$3</span>");
+
+	// strings
+	parser.add(STRING1, "color:maroon");
+	parser.add(STRING2, "color:maroon");
+
+	// numbers
+	parser.add(NUMBER, "color:maroon");
+
+	// urls/email
+	urls = true;
+	email = true;
+
+	tabStop = 4;
+
+	// ignore words that start with "$"
+	parser.add(/\$\w+/, IGNORE);
+
+	// php keywords
+	parser.add(/<\?php|\?>/, "color:red;font-weight:bold");
+	parser.add(KEYWORDS, "color:blue");
+	parser.add(/\w+/, "color:teal");
+};
+
+//]]>
+</script>
+</public:component>

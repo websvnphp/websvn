@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	star-light - version 1.0.2 (2005/06/06)
+	Copyright 2005, Dean Edwards
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+-->
+<public:component xmlns:public="urn:HTMLComponent" lightweight="true">
+<public:attach event="ondocumentready" handler="init"/>
+<script type="text/javascript">
+//<![CDATA[
+
+// my own ultraedit settings :-)
+
+var KEYWORDS = "arguments|break|case|continue|default|delete|do|else|false|" +
+	"for|function|if|in|new|null|return|switch|this|true|typeof|var|void|while|with";
+var GLOBAL = "toString|valueOf|toSource|window|element|prototype|constructor|document|" +
+	"escape|unescape|parseInt|parseFloat|setTimeout|clearTimeout|setInterval|clearInterval|" +
+	"NaN|isNaN|Infinity";
+var ALERT = "alert|eval|__defineGetter__|__defineSetter__|try|catch|finally|throw";
+
+function init() {
+	// default text colour
+	style.color = "black";
+
+	// escape character
+	parser.escapeChar = "\\";
+
+	// comments
+	parser.add(LINE_COMMENT, "color:green");
+	parser.add(BLOCK_COMMENT, "color:green");
+	parser.add(SGML_COMMENT, "color:green;font-style:italic");
+
+	// processing instruction
+	parser.add(/<\?[\w-]+[^>]+>/, "color:#DA70D6;font-style:italic");
+
+	// atributes
+	parser.add(/([\w:]+=)("[^"\n]*")/, "font-weight:bold;font-weight:550", "<span>$2</span><span style='color:blue'>$3</span>");
+
+	// strings
+	parser.add(STRING1, "color:maroon");
+	parser.add(STRING2, "color:maroon");
+
+	// tags
+	parser.add(/(<\/?)([\w:]+)/, "color:#800080;font-weight:bold", "$2<span>$3</span>");
+	parser.add(/(\/)>/, "font-weight:bold", "<span>$2</span>>");
+
+	// regular expressions
+	parser.add(/([^\w\$\/'"*)])(\/[^\/\n\r\*][^\/\n\r]*\/g?i?)/, "color:maroon", "$2<span>$3</span>");
+
+	// numbers
+	parser.add(NUMBER, "color:maroon");
+
+	// urls/email
+	urls = true;
+	email = true;
+
+	tabStop = 4;
+
+	// I use this a lot so I want it to stand out
+	parser.add(/\$element\b/, "color:teal");
+
+	// ignore words that start with "$"
+	parser.add(/\$\w+/, IGNORE);
+
+	// javascript keywords
+	parser.add(KEYWORDS, "color:blue");
+	parser.add(GLOBAL, "color:teal");
+	parser.add(ALERT, "color:red");
+};
+
+//]]>
+</script>
+</public:component>
+
