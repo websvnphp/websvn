@@ -129,7 +129,7 @@ class Authentication
       $access = UNDEFINED;
       $repos = strtolower($repos); // .ini parser converts groups to lower-case
       $path = strtolower($path);
-      if ($path{0} != "/")
+      if ($path == '' || $path{0} != "/")
          $path = "/$path";
   
       // If were told to, we should check sub folders of the path to see if there's
