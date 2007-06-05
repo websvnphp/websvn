@@ -119,7 +119,7 @@ function runCommand($cmd, $mayReturnNothing = false)
       2 => array('pipe', 'w')
    );
 
-   $resource = proc_open($c, $descriptorspec, $pipes, NULL, NULL);
+   $resource = proc_open($c, $descriptorspec, $pipes);
    $error = "";
 
    if (!is_resource($resource))
