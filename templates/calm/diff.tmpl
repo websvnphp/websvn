@@ -1,0 +1,37 @@
+[websvn-test:noprev]
+No Previous Revision
+[websvn-else]
+   <div id="select">[websvn:projects_form][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span>[websvn:projects_endform]</div>
+   <h1><a href="index.php" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
+   <div style="margin:0 2% 0 2%">
+   <h2 class="path">[websvn:curdirlinks] - [lang:DIFFREVS] [websvn:rev2] [lang:AND] [websvn:rev1]</h2>
+   
+   <span class="diff">[websvn:showcompactlink]</span>
+   [websvn:showalllink]
+   </center>
+   <p>
+   <table>
+    <thead>
+      <tr>
+         <th>[lang:REV] [websvn:rev2]</th>
+         <th>[lang:REV] [websvn:rev1]</th>
+      </tr>
+    </thead>
+    <tbody>
+    [websvn-startlisting]
+    [websvn-test:rev1lineno]
+      <tr class="diffcode">
+        <td class="row1"><strong>[lang:LINE] [websvn:rev1lineno]...</strong></td>
+        <td class="row1"><strong>[lang:LINE] [websvn:rev2lineno]...</strong></td>
+      <tr>
+      [websvn-else]
+      <tr class="diffcode">
+        <td class="[websvn:rev1diffclass]"><pre>[websvn:rev1line]</pre></td>
+        <td class="[websvn:rev2diffclass]"><pre>[websvn:rev2line]</pre></td>
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+    </tbody>
+   </table>
+[websvn-endtest]
+</div>
