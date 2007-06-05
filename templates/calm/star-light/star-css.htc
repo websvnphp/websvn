@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	star-light - version 1.0.2 (2005/06/06)
+	Copyright 2005, Dean Edwards
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+-->
+<public:component xmlns:public="urn:HTMLComponent" lightweight="true">
+<public:attach event="ondocumentready" handler="init"/>
+<script type="text/javascript">
+//<![CDATA[
+
+function init() {
+	// default text colour
+	style.color = "black";
+
+	// escape character
+	parser.escapeChar = "\\";
+
+	tabStop = 4;
+
+	// comments
+	parser.add(BLOCK_COMMENT, "color:green");
+
+	// strings
+	parser.add(STRING1, "color:maroon");
+	parser.add(STRING2, "color:maroon");
+
+	// urls/email
+	urls = true;
+
+	// keywords
+	parser.add(/@\w[\w\s]*/, "color:teal");
+	// brackets
+	parser.add(/\([^'")]*\)/, IGNORE);
+	// selectors
+	parser.add(/([\w-:\[.#][^{};]*)\{/, "color:maroon", "<span>$2</span>{");
+	// proprietary (e.g. -moz-box-sizing)
+	parser.add(/(-[\w-]+)\s*:/, "color:red", "<span>$2</span>:");
+	// properties
+	parser.add(/([\w-]+)\s*:/, "color:blue", "<span>$2</span>:");
+//# // colors
+//# parser.add(/#[\da-fA-F]{3,}/, "color:maroon");
+//# // numeric (e.g 2em)
+//# parser.add(/\b[.\d]+(cm|em|ex|pt|px|%)\b/, "color:maroon");
+	// keywords
+	parser.add(/attr|rect|rgb|url/, "color:teal");
+};
+
+//]]>
+</script>
+</public:component>

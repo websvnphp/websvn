@@ -1,0 +1,25 @@
+<div id="select">[websvn:projects_form][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span>[websvn:projects_endform]</div>
+<h1><a href="index.php" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span><br /><small>[lang:BLAMEFOR] [websvn:rev]</small></h1>
+<div style="margin:0 2% 0 2%">
+<h2 class="path">[websvn:curdirlinks]</h2>
+<table>
+   <thead>
+      <tr>
+      <th scope="col" class="collno">[lang:LINENO]</th>
+      <th scope="col" class="colrev">[lang:REV]</th>
+      <th scope="col" class="colauth">[lang:AUTHOR]</th>
+      <th scope="col" class="colcode">[lang:LINE]</th>
+      </tr>
+   </thead>
+   <tbody>
+[websvn-startlisting]
+      <tr valign="middle">
+         <td>[websvn:lineno]</td>
+         <td>[websvn:revision]</td>
+         <td>[websvn:author]</td>
+         <td class="code"><pre>[websvn:line]</pre></td>
+      </tr>
+[websvn-endlisting]
+   </tbody>
+</table>
+</div>

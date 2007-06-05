@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	star-light - version 1.0.2 (2005/06/06)
+	Copyright 2005, Dean Edwards
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+-->
+<public:component xmlns:public="urn:HTMLComponent" lightweight="true">
+<public:attach event="ondocumentready" handler="init"/>
+<script type="text/javascript">
+//<![CDATA[
+
+/* copied from thunderbird's nice plain text style */
+
+var SMILIES_DIR = "smilies/"; // this should be an absolute path on a live server
+
+var INDENT1 = "blue";
+var INDENT2 = "maroon";
+var INDENT3 = "teal";
+var INDENT4 = "purple";
+
+function init() {
+	// default text colour
+	style.color = "black";
+
+	// urls/email
+	urls = true;
+	email = true;
+
+	// text styling
+	parser.add(/\b_[^_\n]+_\b/, "text-decoration:underline");
+	parser.add(/\/[^\/\n]+\//, "font-style:italic");
+	parser.add(/\*[^*\n]+\*/, "font-weight:bold");
+
+	// smilies
+	parser.add(/:-?\)/, "vertical-align:top", "<img src='" + SMILIES_DIR + "icon_smile.gif' align='top'/>");
+	parser.add(/:-?\(/, "vertical-align:top", "<img src='" + SMILIES_DIR + "icon_sad.gif' align='top'/>");
+	parser.add(/;-\)/, "vertical-align:top", "<img src='" + SMILIES_DIR + "icon_wink.gif'/>");
+
+	// indentation
+	var INDENT = "<b style='border-left:2px solid %1;width:1em;padding-top:1px'>&nbsp;</b>";
+	INDENT1 = "\n" + INDENT.replace(/%1/, INDENT1);
+	INDENT2 = INDENT1 + INDENT.replace(/%1/, INDENT2);
+	INDENT3 = INDENT2 + INDENT.replace(/%1/, INDENT3);
+	INDENT4 = INDENT3 + INDENT.replace(/%1/, INDENT4);
+	parser.add(/\n>>>>/, "", INDENT4);
+	parser.add(/\n>>>/, "", INDENT3);
+	parser.add(/\n>>/, "", INDENT2);
+	parser.add(/\n>/, "", INDENT1);
+};
+
+//]]>
+</script>
+</public:component>
