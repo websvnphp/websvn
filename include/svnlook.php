@@ -715,7 +715,7 @@ Class SVNRepository
          2 => array('pipe', 'w')
       );
    
-      $resource = proc_open($cmd, $descriptorspec, $pipes, NULL, NULL);
+      $resource = proc_open($cmd, $descriptorspec, $pipes);
       $error = "";
 
       if (!is_resource($resource))
