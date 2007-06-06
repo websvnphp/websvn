@@ -1,19 +1,24 @@
 <div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
 <h1><a href="index.php" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
-<div id="info">
-<h2>[lang:REV] [websvn:rev]</h2>
-  <ul>
+
+<h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
+<p>
 [websvn-test:goyoungestlink]
-    <li class="goyoungest">[websvn:goyoungestlink]</li>
-[websvn-endtest]        
-    <li><dl><dt><strong>You are currently browsing:</strong></dt><dd class="curdir"><pre title="[websvn:path]">[websvn:path]</pre></dd><dd>[lang:REV] [websvn:lastchangedrev]</dd><dd>[websvn:date]</dd></dl></li>
-    <li><dl><dt><strong>[lang:LOGMSG]:</strong></dt><dd>[websvn:log]</dd></dl></li>
-    <li><strong>[lang:AUTHOR]:</strong> [websvn:author]</li>
-[websvn-test:allowdownload]    
-    <li class="compress">[websvn:curdirdllink] <strong>([lang:CURDIR])</strong></li>
+<span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
 [websvn-endtest]
 [websvn-test:curdirrsslink]
-    <li class="feed">[websvn:curdirrssanchor]Feed</a> <strong>([lang:CURDIR])</li>
+    <span class="feed">[websvn:curdirrssanchor]Feed</a></span>
+[websvn-endtest]
+</p>
+
+<div id="info">
+<h2>Last modification</h2>
+  <ul>
+    <li>[lang:REV] [websvn:lastchangedrev] [websvn:date]</li>
+    <li><strong>[lang:AUTHOR]:</strong> [websvn:author]</li>
+    <li><dl><dt><strong>[lang:LOGMSG]:</strong></dt><dd>[websvn:log]</dd></dl></li>
+[websvn-test:allowdownload]    
+    <li class="compress">[websvn:curdirdllink] <strong>([lang:CURDIR])</strong></li>
 [websvn-endtest]
 [websvn-test:hidechanges]
     <li class="diff">[websvn:curdircomplink]</li>
@@ -79,7 +84,6 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
 
 
 <div id="wrap">
-<h2 class="path">[websvn:curdirlinks]&nbsp;</h2>      
 [websvn:compare_form]
    <table>
       <thead>

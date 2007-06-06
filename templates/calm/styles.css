@@ -110,8 +110,8 @@ h2 {
 
 #info h2 {
   border-bottom:1px solid gray;
-  padding:10px 5px;
-  margin:10px 0 0 0;
+  padding:0 5px 10px;
+  margin:0;
   text-align:left;
   font-size:1.7em;
   font-weight:normal;
@@ -119,16 +119,16 @@ h2 {
 }
 
 #wrap h2 {
-  padding:10px 0 10px 0;
-  margin:10px 0 0 0;
+  padding:0 0 10px 0;
+  margin:0;
   text-align:left;
   font-size:1.7em;
   text-transform:none;
   letter-spacing: -0.018em;   
 }
 #wrap h2.regular {
-  padding:10px 5px 10px 5px;
-  margin:10px 0 0 0;
+  padding:0 5px 10px 5px;
+  margin:0;
   text-align:left;
   font-size:1.7em;
   text-transform:uppercase;
@@ -398,6 +398,7 @@ tbody tr td.compress a:link {
   background-position:3px 50%;
 }
 li.feed a,
+span.feed a,
 tbody tr td.feed a,
 tbody tr td.feed a:link,
 tbody tr td.feed a:visited,
