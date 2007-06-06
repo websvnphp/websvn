@@ -274,17 +274,25 @@ function parseTags($line, $vars)
 {
    global $lang;
    
+   $l = '';
    // Replace the websvn variables
    while (ereg("\[websvn:([a-zA-Z0-9_]+)\]", $line, $matches))
    {
-      // Make sure that the variable exists
-      if (!isset($vars[$matches[1]]))
-      {
-         $vars[$matches[1]] = "?${matches[1]}?";
-      }
+      // Find beginning
+      $p = strpos($line, $matches[0]);
       
-      $line = str_replace($matches[0], $vars[$matches[1]], $line);
+      // add everything up to beginning
+      if ($p > 0) $l .= substr($line, 0, $p);
+      
+      // Replace variable (special token, if not exists)
+      $l .= isset($vars[$matches[1]]) ? $vars[$matches[1]] : ('?'.$matches[1].'?');
+      
+      // Remove allready processed part of line
+      $line = substr($line, $p + strlen($matches[0]));
    }
+   
+   // Rebuild line, add remaining part of line
+   $line = $l . $line;
    
    // Replace the language strings
    while (ereg("\[lang:([a-zA-Z0-9_]+)\]", $line, $matches))
