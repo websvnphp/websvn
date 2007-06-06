@@ -274,7 +274,6 @@ if (!empty($history))
    {
       $prev = $page - 1;
       $next = $page + 1;
-      echo "<p><center>";
          
       if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;max=$max&amp;page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
       for ($p = 1; $p <= $pages; $p++)
@@ -287,7 +286,6 @@ if (!empty($history))
       if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;max=$max&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
       
       $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;all=1&amp;max=$max\">${lang["SHOWALL"]}</a>";
-      echo "</center>";
    }
 }
 

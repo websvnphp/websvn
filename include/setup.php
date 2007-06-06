@@ -333,8 +333,8 @@ if ($handle = opendir('languages'))
    foreach ($langNames as $name)
    {
       $sel = "";
-      if ($name == $user_defaultLang) $sel = "selected";
-      $vars["lang_select"] .= "<option value=\"$name\" $sel>$name</option>";
+      if ($name == $user_defaultLang) $sel = ' selected="selected"';
+      $vars["lang_select"] .= "<option value=\"$name\"$sel>$name</option>";
    }
    
    $vars["lang_select"] .= "</select>";
@@ -388,18 +388,19 @@ function createProjectSelectionForm()
       if ($trep->hasReadAccess("/", true))
       {
          if ($rep->getDisplayName() == $trep->getDisplayName())
-            $sel = "selected";
+            $sel = ' selected="selected"';
          else
             $sel = "";
             
-         $vars["projects_select"] .= "<option value=\"".$trep->getDisplayName()."\" $sel>".$trep->getDisplayName()."</option>";
+         $vars["projects_select"] .= "<option value=\"".$trep->getDisplayName()."\"$sel>".$trep->getDisplayName()."</option>";
       }
    }
    
    $vars["projects_select"] .= "</select>";
    
    $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-   $vars["projects_endform"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\" /><input type=\"hidden\" name=\"op\" value=\"form\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
+   $vars["projects_hidden"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\" /><input type=\"hidden\" name=\"op\" value=\"form\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" />";
+$vars["projects_endform"] = "</form>";   
 }
 
 // Create the form if we're not in MultiViews.  Otherwise wsvn must create the form once the current project has
