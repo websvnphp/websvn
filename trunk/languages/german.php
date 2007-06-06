@@ -40,6 +40,7 @@ $lang["LINE"] = "Zeile";
 $lang["SHOWENTIREFILE"] = "Ganze Datei anzeigen";
 $lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
 
+$lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
 $lang["BLAME"] = "Blame";
 

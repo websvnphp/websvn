@@ -40,6 +40,7 @@ $lang["LINE"] = "Ligne";
 $lang["SHOWENTIREFILE"] = "Afficher tout le fichier";
 $lang["SHOWCOMPACT"] = "Afficher seulement les passages avec des diff&eacute;rences";
 
+$lang["FILEDETAIL"] = "D&eacute;tails";
 $lang["DIFFPREV"] = "Diff&eacute;rence avec le pr&eacute;c&eacute;dent";
 $lang["BLAME"] = "Responsabilit&eacute;";
 

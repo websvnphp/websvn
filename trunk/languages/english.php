@@ -45,6 +45,7 @@ $lang["LINE"] = "Line";
 $lang["SHOWENTIREFILE"] = "Show entire file";
 $lang["SHOWCOMPACT"] = "Only display areas with differences";
 
+$lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Compare with Previous";
 $lang["BLAME"] = "Blame";
 
