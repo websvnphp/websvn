@@ -239,6 +239,10 @@ error - Error message when results not available
 pagelinks - List of list to all the pages of the log
 showalllink - Link to show the entire log in one go
 
+prevdifflink - Link to comparison with previous revision
+blamelink - Link to the blame information for this file
+fileviewloglink - Link to the log page for the file
+
 logsearch_form - HTML <form> specification for the log search box
 logsearch_inputbox - HTML <input> specification for the log search box
 logsearch_submit - HTML <input> specification for the log search GO button

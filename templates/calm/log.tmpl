@@ -1,21 +1,31 @@
 <div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
-<h1><a href="index.php">[lang:PROJECTS]</a> <span>[websvn:repname] - [lang:REV] [websvn:rev]</span></h1>
+<h1><a href="index.php">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
+<h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
+<p>
+[websvn-test:goyoungestlink]
+<span class="goyoungest">[websvn:goyoungestlink]</span>
+[websvn-test:filedetaillink]
+&#124;
+[websvn-endtest]
+[websvn-endtest]
+[websvn-test:filedetaillink]
+<span class="diff">[websvn:filedetaillink]</span> &#124;
+<span class="diff">[websvn:prevdifflink]</span> &#124;
+<span class="diff">[websvn:blamelink]</span>
+[websvn-endtest]
+</p>
+
 <div id="info">
-<h2>Details</h2>
 <ul>
-<li><p>[websvn:logsearch_form][lang:SEARCHLOG]: [websvn:logsearch_inputbox]<span class="submit">[websvn:logsearch_submit]</span>
+<li>[websvn:logsearch_form][lang:SEARCHLOG]: [websvn:logsearch_inputbox]<span class="submit">[websvn:logsearch_submit]</span>
 [websvn-test:logsearch_clearloglink]
 [websvn:logsearch_clearloglink]
 [websvn-endtest]
 [websvn:logsearch_endform]
-</p></li>
-[websvn-test:goyoungestlink]
-<li>[websvn:goyoungestlink]</li>
-[websvn-endtest]
+</li>
 </div>
 
 <div id="wrap">
-<h2 class="path">[websvn:curdirlinks]</h2>
 [websvn-test:logsearch_nomatches]
    [lang:NORESULTS]
 [websvn-endtest]

@@ -105,6 +105,18 @@ $vars["path"] = $ppath;
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 
+if (!$isDir)
+{
+   $url = $config->getURL($rep, $path, "file");
+   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&isdir=0\">${lang["FILEDETAIL"]}</a>";
+   
+   $url = $config->getURL($rep, $path, "diff");
+   $vars["prevdifflink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+   
+   $url = $config->getURL($rep, $path, "blame");
+   $vars["blamelink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">${lang["BLAME"]}</a>";
+}
+
 $logurl = $config->getURL($rep, $path, "log");
 
 if ($rev != $youngest)
