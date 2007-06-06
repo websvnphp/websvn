@@ -54,6 +54,22 @@ $vars['path'] = $ppath;
 
 createDirLinks($rep, $ppath, $rev, $showchanged);
 
+$url = $config->getURL($rep, $path, "file");
+
+if ($rev != $youngest)
+   $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
+else
+   $vars["goyoungestlink"] = "";
+
+$url = $config->getURL($rep, $path, "file");
+$vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&isdir=0\">${lang["FILEDETAIL"]}</a>";
+
+$url = $config->getURL($rep, $path, "log");
+$vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&isdir=0\">${lang["VIEWLOG"]}</a>";
+
+$url = $config->getURL($rep, $path, "diff");
+$vars["prevdifflink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+
 $listing = array();
 
 // Get the contents of the file
@@ -188,12 +204,15 @@ HTML;
 foreach($seen_rev as $key => $val)
 {
    $history = $svnrep->getLog($path, $key, $key, false, 1);
-   $vars['javascript'] .= "rev[$key] = '";
-   $vars['javascript'] .= "<div class=\"info\">";
-   $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."</span>";
-   $vars['javascript'] .= "</div>";
-   $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br>", $history->curEntry->msg))."</div>";
-   $vars['javascript'] .= "';\n";
+   if (!empty($history))
+   {
+      $vars['javascript'] .= "rev[$key] = '";
+      $vars['javascript'] .= "<div class=\"info\">";
+      $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."</span>";
+      $vars['javascript'] .= "</div>";
+      $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br>", $history->curEntry->msg))."</div>";
+      $vars['javascript'] .= "';\n";
+   }
 }
 $vars['javascript'] .= "</script>";
 

@@ -70,6 +70,24 @@ createDirLinks($rep, $ppath, $rev, $showchanged);
 
 $listing = array();
 
+$url = $config->getURL($rep, $path, "file");
+if ($rev != $youngest)
+   $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
+else
+   $vars["goyoungestlink"] = "";
+
+$url = $config->getURL($rep, $path, "file");
+$vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&isdir=0\">${lang["FILEDETAIL"]}</a>";
+
+$url = $config->getURL($rep, $path, "log");
+$vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&isdir=0\">${lang["VIEWLOG"]}</a>";
+
+$url = $config->getURL($rep, $path, "diff");
+$vars["prevdifflink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+
+$url = $config->getURL($rep, $path, "blame");
+$vars["blamelink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["BLAME"]}</a>";
+
 if ($prevrev)
 {
    $url = $config->getURL($rep, $path, "diff");
@@ -384,6 +402,8 @@ if ($prevrev)
 else
 {
    $vars["noprev"] = 1;
+   $url = $config->getURL($rep, $path, "file");
+   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp\">${lang["SHOWENTIREFILE"]}.</a>";
 }
 
 $vars["version"] = $version;

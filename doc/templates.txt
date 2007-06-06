@@ -141,6 +141,7 @@ projects_select - HTML <select>...</select> specification for the project
                   options
 projects_submit - HTML <input> specification for the projects selection GO
                   button
+project_hidden  - Hidden parameters that need to be passed from this form
 projects_endform - HTML </form> specification for the projects selection
                    box (includes hidden field declarations)
 
@@ -272,6 +273,7 @@ repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
 curdirlinks - List of the path of this directory with links to each one
+goyoungestlink - Link to head revision of repository
 
 prevdifflink - Link to comparison with previous revision
 blamelink - Link to the blame information for this file
@@ -291,6 +293,11 @@ repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
 curdirlinks - List of the path of this directory with links to each one
+goyoungestlink - Link to head revision of repository
+
+prevdifflink - Link to comparison with previous revision
+blamelink - Link to the blame information for this file
+fileviewloglink - Link to the log page for the file
 
 rev1 - Revision of the older file
 rev2 - Revision of the newer file
@@ -320,6 +327,10 @@ repname - Name of the repository
 rev - Revision being viewed
 path - Path of item being logged
 curdirlinks - List of the path of this directory with links to each one
+
+prevdifflink - Link to comparison with previous revision
+blamelink - Link to the blame information for this file
+fileviewloglink - Link to the log page for the file
 
 Used in [websvn-startlisting] ... [websvn-endlisting] block:
 

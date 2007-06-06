@@ -1,7 +1,14 @@
-<div id="select">[websvn:projects_form][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span>[websvn:projects_endform]</div>
-<h1><a href="index.php" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span><br /><small>[lang:BLAMEFOR] [websvn:rev]</small></h1>
+<div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
+<h1><a href="index.php" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
 <div style="margin:0 2% 0 2%">
-<h2 class="path">[websvn:curdirlinks]</h2>
+<h2 class="path">[websvn:curdirlinks] - [lang:BLAMEFOR] [websvn:rev]</h2>
+<p>
+[websvn-test:goyoungestlink]
+<span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
+[websvn-endtest]
+<span class="diff">[websvn:filedetaillink]</span> &#124;
+<span class="diff">[websvn:prevdifflink]</span>
+</p>
 <table>
    <thead>
       <tr>
