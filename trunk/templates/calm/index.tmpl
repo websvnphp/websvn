@@ -13,10 +13,24 @@
 
 <div id="wrap">
 <h2 class="regular">[lang:PROJECTS]</h2>
+
+[websvn-test:flatview]
     <dl class="projectlist">
       <dt>[lang:PROJECTS]:</dt>
       [websvn-startlisting]
       <dd>[websvn:projlink]</dd>
       [websvn-endlisting]
     </dl>
+[websvn-else]
+    <div class="projectlisthead">[lang:PROJECTS]:</div>
+	<div class="projectlist">
+	[websvn-startlisting]
+	[websvn-test:isprojlink]
+		<div class="project">[websvn:listitem]</div>
+	[websvn-else]
+		[websvn:listitem]
+	[websvn-endtest]
+	[websvn-endlisting]
+	</div>
+[websvn-endtest]
 </div>
