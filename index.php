@@ -48,7 +48,7 @@ if ($config->flatIndex)
          $url = $config->getURL($project, "/", "dir");
       
          $listing[$i]["rowparity"] = $i % 2;
-         $listing[$i++]["projlink"] = "<a href=\"${url}sc=0\">".$project->getDisplayName()."</a>";
+         $listing[$i++]["projlink"] = "<a href=\"${url}sc=$showchanged\">".$project->getDisplayName()."</a>";
       }
    } 
    $vars["flatview"] = true;
@@ -88,7 +88,7 @@ else
          $parity++;       
          $listing[$i]["isgrouphead"] = false;
          $listing[$i]["isprojlink"] = true;
-         $listing[$i++]["listitem"] = "<a href=\"${url}sc=0\">".$project->name."</a>\n";
+         $listing[$i++]["listitem"] = "<a href=\"${url}sc=$showchanged\">".$project->name."</a>\n";
       }
    } 
 
@@ -101,6 +101,8 @@ else
    $vars["treeview"] = true;   
    $vars["opentree"] = $config->openTree;
 }
+
+$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
 
 $vars["version"] = $version;
 parseTemplate($config->getTemplatePath()."header.tmpl", $vars, $listing);
