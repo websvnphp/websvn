@@ -22,7 +22,7 @@
 //
 // Glue for MultiViews
 
-// --- CONFIGURE THESE VARIABLES ---
+// --- CONFIGURE THIS VARIABLE ---
 
 // Location of websvn directory via HTTP
 //
@@ -33,13 +33,12 @@
 #$locwebsvnhttp = "/websvn";  
 $locwebsvnhttp = '';
 
-// Physical location of websvn directory
-#$locwebsvnreal = "d:/websvn";
-$locwebsvnreal = '/mnt/wsvn';
+// --- DON'T CHANGE BELOW HERE ---
+
+// get physical location of websvn directory
+$locwebsvnreal = dirname(__FILE__);
 
 chdir($locwebsvnreal);
-
-// --- DON'T CHANGE BELOW HERE ---
 
 // this tells files that we are in multiviews if they are unable to access
 // the $config variable
@@ -63,7 +62,9 @@ if ($config->multiViews)
       exit;
    }
 
-   $path = trim(empty($_SERVER['PATH_INFO']) ? $_SERVER['ORIG_PATH_INFO'] : $_SERVER['PATH_INFO']);
+   $origPathInfo = isset($_SERVER['ORIG_PATH_INFO']) ? $_SERVER['ORIG_PATH_INFO'] : '';
+   $pathInfo = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+   $path = trim(empty($pathInfo) ? $origPathInfo : $pathInfo);
 
    // Remove initial slash
    $path = substr($path, 1);

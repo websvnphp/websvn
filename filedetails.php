@@ -132,6 +132,8 @@ $vars["path"] = $ppath;
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 
+$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+
 $url = $config->getURL($rep, $path, "log");
 $vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged&isdir=0\">${lang["VIEWLOG"]}</a>";
 

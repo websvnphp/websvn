@@ -76,6 +76,8 @@ if ($rev != $youngest)
 else
    $vars["goyoungestlink"] = "";
 
+$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+
 $url = $config->getURL($rep, $path, "file");
 $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&isdir=0\">${lang["FILEDETAIL"]}</a>";
 
