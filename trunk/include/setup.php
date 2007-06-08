@@ -324,7 +324,9 @@ if ($handle = opendir('languages'))
    // Reload the default language
    if (!empty($user_defaultFile))
       require 'languages/'.$user_defaultFile;
-      
+   
+   $vars['lang_code'] = $lang['LANGUAGETAG'];
+   
    $url = getParameterisedSelfUrl(true);
    $vars["lang_form"] = "<form action=\"$url\" method=\"post\" id=\"langform\">";
    $vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";

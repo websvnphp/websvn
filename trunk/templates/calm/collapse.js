@@ -7,8 +7,8 @@
 var enablepersist="on"    // Enable saving state of content structure using session cookies? (on/off)
 var collapseprevious="yes" // Collapse previously open content when opening present? (yes/no)
 
-var contractsymbol='<img src="templates/calm/images/toggleup.png">'   // HTML for contract symbol. For image, use: <img src="${prefix}whatever.gif">
-var expandsymbol='<img src="templates/calm/images/toggledown.png">'     // HTML for expand symbol.
+var contractsymbol='<img src="'+getPath()+'/templates/calm/images/toggleup.png">'   // HTML for contract symbol. For image, use: <img src="${prefix}whatever.gif">
+var expandsymbol='<img src="'+getPath()+'/templates/calm/images/toggledown.png">'     // HTML for expand symbol.
 var expandonload=false
 
 if (document.getElementById)

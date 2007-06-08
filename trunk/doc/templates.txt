@@ -134,6 +134,7 @@ Variables defined for in all scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 locwebsvnhttp - Root of websvn directory
+indexurl - The URL to the WebSVN index page
 charset - The charset requested by the user
 
 projects_form - HTML <form> specification for the projects selection box
@@ -144,6 +145,8 @@ projects_submit - HTML <input> specification for the projects selection GO
 project_hidden  - Hidden parameters that need to be passed from this form
 projects_endform - HTML </form> specification for the projects selection
                    box (includes hidden field declarations)
+
+lang_code - The RFC 2616 language code of the selected language
 
 lang_form - HTML <form> specification for the language selection box
 lang_select - HTML <select>...</select> specification for the language options

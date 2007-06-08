@@ -1,5 +1,5 @@
 <div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
-<h1><a href="index.php" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
+<h1><a href="[websvn:indexurl]" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
 
 <h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
 <p>
@@ -20,11 +20,12 @@
 [websvn-test:allowdownload]    
     <li class="compress">[websvn:curdirdllink] <strong>([lang:CURDIR])</strong></li>
 [websvn-endtest]
-[websvn-test:hidechanges]
+[websvn-test:curdircomplink]
     <li class="diff">[websvn:curdircomplink]</li>
+[websvn-endtest]
+[websvn-test:hidechanges]
     <li class="toggledown">[websvn:showchangeslink]</li>
 [websvn-else]
-    <li class="diff">[websvn:curdircomplink]</li>
 [websvn:showchangeslink]
     <li class="toggleup">[websvn:hidechangeslink]</li>
 [websvn-test:changedfilesbr]

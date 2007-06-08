@@ -105,6 +105,8 @@ $vars["path"] = $ppath;
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 
+$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+
 if (!$isDir)
 {
    $url = $config->getURL($rep, $path, "file");

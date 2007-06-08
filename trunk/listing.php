@@ -366,6 +366,8 @@ else
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
 
+$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+
 if ($rev != $headrev)
 {
    $history = $svnrep->getLog($path, $rev, "", false);

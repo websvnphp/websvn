@@ -773,7 +773,11 @@ Class Config
                
          $url =  $base;
          
-         if (is_object($rep))
+         if ($op == 'index')
+         {
+         	$url .= '/?';
+         }
+         else if (is_object($rep))
          {
             $url .= "/".$rep->getDisplayName().str_replace('%2F', '/', rawurlencode($path));
             
@@ -789,6 +793,10 @@ Class Config
       {
          switch ($op)
          {
+            case "index":
+               $fname = ".";
+               break;
+               
             case "dir":
                $fname = "listing.php";
                break;
@@ -826,7 +834,9 @@ Class Config
                break;
          }
 
-         if ($rep === -1)
+         if ($op == 'index')
+            return $fname.'?';
+         else if ($rep === -1)
             return $fname."?path=".urlencode($path)."&amp;";
          else
             return $fname."?repname=".urlencode($rep->getDisplayName())."&amp;path=".urlencode($path)."&amp;";

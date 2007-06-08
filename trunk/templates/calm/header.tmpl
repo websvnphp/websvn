@@ -1,11 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="[websvn:lang_code]" lang="[websvn:lang_code]">
   <head>
     <meta http-equiv="content-type" content="text/html;charset=[websvn:charset]" />
     <meta http-equiv="generator" content="WebSVN [websvn:version]" /> <!-- leave this for stats -->
     <link rel="shortcut icon" type="image/x-icon" href="[websvn:locwebsvnhttp]/templates/calm/images/favicon.ico" />
     <link type="text/css" href="[websvn:locwebsvnhttp]/templates/calm/styles.css" rel="stylesheet" media="screen" />
     <link type="text/css" href="[websvn:locwebsvnhttp]/templates/calm/star-light/star-light.css" rel="stylesheet" media="screen" />
+    [websvn-test:curdirrsslink]
+    <link rel='alternate' type='application/rss+xml' title='WebSVN RSS' href='[websvn:curdirrsshref]' />
+    [websvn-endtest]
     <!--[if gte IE 5.5000]>
     <script type="text/javascript" src="[websvn:locwebsvnhttp]/templates/calm/png.js"></script>
     <style type="text/css" media="screen">
@@ -36,9 +39,13 @@
             - [websvn:path]
          [websvn-endtest]
     </title>
-    <script type="text/javascript" src="[websvn:locwebsvnhttp]/templates/calm/collapse.js"></script>
     <script type="text/javascript">
     //<![CDATA[
+         function getPath()
+         {
+         	return '[websvn:locwebsvnhttp]';
+         }
+         
          function checkCB(chBox)
          {
             count = 0
@@ -60,6 +67,7 @@
          }
     //]]>
     </script>
+    <script type="text/javascript" src="[websvn:locwebsvnhttp]/templates/calm/collapse.js"></script>
     </head>
     <body>
     <div id="container">
