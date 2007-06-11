@@ -518,6 +518,8 @@ Class Config
    var $inputEnc = "";        // Encoding of output returned from command line
    var $contentEnc = "";      // Encoding of repository content
    var $outputEnc = "UTF-8";  // Encoding of web page.  Now forced to UTF-8
+   
+   var $defaultLanguage = 'en';
 
    var $quote = "'";
    var $pathSeparator = ":";
@@ -1071,7 +1073,17 @@ Class Config
    }
 
    // }}}
-
+   
+   function setDefaultLanguage($language)
+   {
+      $this->defaultLanguage = $language;
+   }
+   
+   function getDefaultLanguage()
+   {
+      return $this->defaultLanguage;
+   }
+   
    // {{{ Tab expansion functions
    
    function expandTabsBy($sp, $myrep = 0)

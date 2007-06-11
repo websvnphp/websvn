@@ -38,10 +38,6 @@ if (function_exists('iconv_get_encoding'))
   $config->setInputEncoding(iconv_get_encoding('input_encoding'));
 }
 
-// Define the language array
-$lang = array();
-$langNames = array();
-
 // Set up locwebsvnhttp
 // Note: we will use nothing in MultiViews mode so that the URLs use the root
 //       directory by default.
@@ -275,78 +271,66 @@ $zipped = array ();
 
 initSvnVersion($major,$minor);
 
-// Get the language choice as defained as the default by config.php
-$user_defaultLang = $lang['LANGUAGENAME'];
-
-// Override this with the user choice if there is one, and memorise the setting
+// Get the user choice if there is one, and memorise the setting
 // as a cookie (since we don't have user accounts, we can't store the setting
-// anywhere else).  We try to memorise a permanant cookie and a per session cookie
-// in case the user's disabled permanant ones.
+// anywhere else).  We try to memorise a permanent cookie and a per session cookie
+// in case the user has disabled permanent ones.
 
+$userLang = false;
 if (!empty($_REQUEST['langchoice']))
 {
-   $user_defaultLang = $_REQUEST['langchoice'];
+   $userLang = $_REQUEST['langchoice'];
    setcookie('storedlang', $_REQUEST['langchoice'], time()+(3600*24*356*10), '/');
    setcookie('storedsesslang', $_REQUEST['langchoice']);
 }
 else // Try to read an existing cookie if there is one
 {
-   if (!empty($_COOKIE['storedlang'])) $user_defaultLang = $_COOKIE['storedlang'];
-   else if (!empty($_COOKIE['storedsesslang'])) $user_defaultLang = $_COOKIE['storedsesslang'];
+   if (!empty($_COOKIE['storedlang'])) $userLang = $_COOKIE['storedlang'];
+   else if (!empty($_COOKIE['storedsesslang'])) $userLang = $_COOKIE['storedsesslang'];
 }
-   
-$user_defaultFile = '';
-if ($handle = opendir('languages'))
-{
-   // Read the language name for each language.
-   while (false !== ($file = readdir($handle)))
-   {
-      if ($file{0} != '.' && !is_dir('languages'.DIRECTORY_SEPARATOR.$file))
-      {
-         $lang['LANGUAGENAME'] = '';
-         require 'languages/'.$file;
-         if ($lang['LANGUAGENAME'] != '')
-         {
-            $langNames[] = $lang['LANGUAGENAME'];
-            if ($lang['LANGUAGENAME'] == $user_defaultLang)
-               $user_defaultFile = $file;
-         }
-      }
-   }
 
-   closedir($handle);
-    
-   // XXX: this shouldn't be necessary
-   // ^ i.e. just require english.php, then the desired language
-   // Reload english to get untranslated strings
-   require 'languages/english.php';
-   
-   // Reload the default language
-   if (!empty($user_defaultFile))
-      require 'languages/'.$user_defaultFile;
-   
-   $vars['lang_code'] = $lang['LANGUAGETAG'];
-   
-   $url = getParameterisedSelfUrl(true);
-   $vars["lang_form"] = "<form action=\"$url\" method=\"post\" id=\"langform\">";
-   $vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";
-   
-   reset($langNames);
-   foreach ($langNames as $name)
-   {
-      $sel = "";
-      if ($name == $user_defaultLang) $sel = ' selected="selected"';
-      $vars["lang_select"] .= "<option value=\"$name\"$sel>$name</option>";
-   }
-   
-   $vars["lang_select"] .= "</select>";
-   $vars["lang_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\">";
-   $vars["lang_endform"] = "</form>";   
+// Load available languages
+require 'languages/languages.php';
+
+// Get the default language as defined as the default by config.php
+$defaultLang = $config->getDefaultLanguage();
+if (!isset($languages[$defaultLang])) $defaultLang = 'en';
+
+// Negotiate language
+$userLang = getUserLanguage($languages, $defaultLang, $userLang);
+$file = $languages[$userLang][0];
+
+// Define the language array
+$lang = array();
+
+// XXX: this shouldn't be necessary
+// ^ i.e. just require english.php, then the desired language
+// Reload english to get untranslated strings
+require 'languages/english.php';
+
+// Reload the default language
+require 'languages/'.$file.'.php';
+
+$vars['lang_code'] = $userLang;
+
+$url = getParameterisedSelfUrl(true);
+$vars["lang_form"] = "<form action=\"$url\" method=\"post\" id=\"langform\">";
+$vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";
+
+foreach ($languages as $code => $d)
+{
+  $sel = ($code == $userLang) ? ' selected="selected"' : '';
+  $vars["lang_select"] .= '<option value="'.$code.'"'.$sel.'>'.$d[2].' - '.$d[1].'</option>';
 }
+
+$vars["lang_select"] .= "</select>";
+$vars["lang_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
+$vars["lang_endform"] = "</form>";   
 
 // Set up headers
 
 header('Content-Type: text/html; charset=UTF-8');
+header('Content-Language: '.$userLang);
 
 // Make sure that the user has set up a repository
 
