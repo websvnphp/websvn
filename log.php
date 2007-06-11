@@ -110,7 +110,7 @@ $vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
 if (!$isDir)
 {
    $url = $config->getURL($rep, $path, "file");
-   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&isdir=0\">${lang["FILEDETAIL"]}</a>";
+   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
    
    $url = $config->getURL($rep, $path, "diff");
    $vars["prevdifflink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
