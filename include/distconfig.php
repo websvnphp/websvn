@@ -141,29 +141,10 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // Note for *nix users.  You'll need to have iconv compiled into your binary.  The default input and
 // output encodings are taken from your locale informations.  Override these if they aren't correct.
 
-// Uncomment the default language.  If you want English then don't do anything here.
+// Set the default language.  If you want English then don't do anything here.
 //
-// include 'languages/catalan.php';
-// include 'languages/czech.php';
-// include 'languages/danish.php';
-// include 'languages/dutch.php';
-// include 'languages/finnish.php';
-// include 'languages/french.php';
-// include 'languages/german.php';
-// include 'languages/hebrew.php';
-// include 'languages/japanese.php';
-// include 'languages/korean.php';
-// include 'languages/norwegian.php';
-// include 'languages/polish.php';
-// include 'languages/portuguese.php';
-// include 'languages/portuguese-br.php';
-// include 'languages/russian.php';
-// include 'languages/schinese.php';
-// include 'languages/slovenian.php';
-// include 'languages/spanish.php';
-// include 'languages/swedish.php';
-// include 'languages/tchinese.php';
-// include 'languages/turkish.php';
+// $config->setDefaultLanguage('en');
+
 
 // }}}
 

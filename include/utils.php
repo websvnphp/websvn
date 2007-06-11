@@ -342,24 +342,47 @@ function getParameterisedSelfUrl($params = true)
 
 // {{{ getUserLanguage
 
-function getUserLanguage() {
-   $languages = !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : 'en';
-   if (strpos($languages, ',') === false) return $languages; # only one specified
-   # split off the languages into an array of languages and q-values
-   $qvals = array();
-   $langs = array();
-   preg_match_all('#(\S+?)\s*(?:;q=([01](?:\.\d{1,3})?))?\s*,\s*#', $languages, $qvals, PREG_SET_ORDER);
-   foreach ($qvals as $q) {
-      $langs[] = array (
-         $q[1],
-         floatval(!empty($q[2]) ? $q[2] : 1.0)
-      );
-   }
-   # XXX: now, we should loop through our available languages and choose an
-   # appropriate one for the user
-   # note that we shouldn't match the region unless we have a specific region
-   # to use (e.g. zh-CN vs. zh-TW)
-   # FIXME: see above; otherwise, this function doesn't really do anything
+function getUserLanguage($languages, $default, $userchoice)
+{
+	$acceptlangs = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : false;
+	if (!$acceptlangs) return $default;
+	
+	$langs = array();
+	$sublangs = array();
+	
+	foreach (explode(',', $acceptlangs) as $str)
+	{
+		$a = explode(';', $str, 2);
+		$lang = trim($a[0]);
+		$pos = strpos($lang, '-');
+		if ($pos !== false) $sublangs[] = substr($lang, 0, $pos);
+		$q = 1.0;
+		
+		if (sizeof($a) == 2)
+		{
+			$v = trim($a[1]);
+			if (substr($v, 0, 2) == 'q=') $q = doubleval(substr($v, 2));
+		}
+		
+		if ($userchoice) $q *= 0.9;
+		$langs[$lang] = $q;
+	}
+	
+	foreach ($sublangs as $l) if (!isset($langs[$l])) $langs[$l] = 0.1;
+	
+	if ($userchoice) $langs[$userchoice] = 1.0;
+	
+	arsort($langs);
+	
+	foreach ($langs as $code => $q)
+	{
+		if (isset($languages[$code]))
+		{
+			return $code;
+		}
+	}
+	
+	return $default;
 }
 
 // }}}
