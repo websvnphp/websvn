@@ -135,7 +135,7 @@ createDirLinks($rep, $ppath, $passrev, $showchanged);
 $vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
 
 $url = $config->getURL($rep, $path, "log");
-$vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged&isdir=0\">${lang["VIEWLOG"]}</a>";
+$vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
 $url = $config->getURL($rep, $path, "diff");
 $vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
