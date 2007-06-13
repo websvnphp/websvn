@@ -127,7 +127,7 @@ if ($prevrev)
    if ($all)
    {
       $ofile = fopen($oldtname, "r");
-      $nfile = fopen($newtname, "r");      
+      $nfile = fopen($newtname, "r");
    }
    
    $descriptorspec = array (
@@ -141,29 +141,17 @@ if ($prevrev)
    
    if (is_resource($resource))
    {
-      while (!feof($pipes[2]))
-      {
-         $error .= fgets($pipes[2]);
-      }
-
-      $error = toOutputEncoding(trim($error));
+      // We don't need to write
+      fclose($pipes[0]);
       
-      if (!empty($error))
-         $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
-   }
-   else
-      $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
-      
-   if (empty($error))
-   {
       $diff = $pipes[1];
 
       // Ignore the 3 header lines
-	   $line = fgets($diff);
-	   $line = fgets($diff);
+      $line = fgets($diff);
+      $line = fgets($diff);
 
       // Get the first real line
-	   $line = fgets($diff);
+      $line = fgets($diff);
       
       $index = 0;
       $listing = array();
@@ -171,32 +159,30 @@ if ($prevrev)
       $curoline = 1;
       $curnline = 1;
       
-		while (!feof($diff))
-		{  
-		   // Get the first line of this range
-		   sscanf($line, "@@ -%d", $oline);
-		   
-		   $line = substr($line, strpos($line, "+"));
-		   sscanf($line, "+%d", $nline);
-		   
-		   if ($all)
-		   {
-		      while ($curoline < $oline || $curnline < $nline)
-		      {
-		         $listing[$index]["rev1diffclass"] = "diff";
+      while (!feof($diff))
+      {  
+         // Get the first line of this range
+         sscanf($line, "@@ -%d", $oline);
+         
+         $line = substr($line, strpos($line, "+"));
+         sscanf($line, "+%d", $nline);
+         
+         if ($all)
+         {
+            while ($curoline < $oline || $curnline < $nline)
+            {
+               $listing[$index]["rev1diffclass"] = "diff";
                $listing[$index]["rev2diffclass"] = "diff";
                      
                if ($curoline < $oline)
                {
                   $nl = fgets($ofile);
                   
-                  if ($ent)
-                     $line = replaceEntities(rtrim($nl), $rep);
-                  else
-                     $line = rtrim($nl);
-                     
+                  $line = rtrim($nl);
+                  if ($ent) $line = replaceEntities($line, $rep);
+                  
                   $listing[$index]["rev1line"] = hardspace($line);
-
+                  
                   $curoline++;
                }
                else
@@ -205,54 +191,50 @@ if ($prevrev)
                if ($curnline < $nline)
                {
                   $nl = fgets($nfile);
-
-                  if ($ent)
-                     $line = replaceEntities(rtrim($nl), $rep);
-                  else
-                     $line = rtrim($nl);
-                     
+                  
+                  $line = rtrim($nl);
+                  if ($ent) $line = replaceEntities($line, $rep);
+                  
                   $listing[$index]["rev2line"] = hardspace($line);
                   $curnline++;
                }
                else
                   $listing[$index]["rev2line"] = "&nbsp;";
                   
-      		   $listing[$index]["rev1lineno"] = 0;
-      		   $listing[$index]["rev2lineno"] = 0;
-
-		         $index++;
-		      }
-		   }
-		   else
-		   {
-   		   // Output the line numbers
-   		   $listing[$index]["rev1lineno"] = "$oline";
-   		   $listing[$index]["rev2lineno"] = "$nline";
-   		   $index++;
-		   }
-		   
+               $listing[$index]["rev1lineno"] = 0;
+               $listing[$index]["rev2lineno"] = 0;
+               
+               $index++;
+            }
+         }
+         else
+         {
+            // Output the line numbers
+            $listing[$index]["rev1lineno"] = $oline;
+            $listing[$index]["rev2lineno"] = $nline;
+            $index++;
+         }
+         
          $fin = false;
          while (!feof($diff) && !$fin)
          {          
-   		   $listing[$index]["rev1lineno"] = 0;
-   		   $listing[$index]["rev2lineno"] = 0;
-
-		      $line = fgets($diff);
+            $listing[$index]["rev1lineno"] = 0;
+            $listing[$index]["rev2lineno"] = 0;
+            
+            $line = fgets($diff);
             if (!strncmp($line, "@@", 2))
-		      {
-		         $fin = true;
-		      }
-		      else
-		      {
+            {
+               $fin = true;
+            }
+            else
+            {
                $mod = $line{0};
-
-               if ($ent)
-                  $line = replaceEntities(rtrim(substr($line, 1)), $rep);
-               else
-                  $line = rtrim(substr($line, 1));
-                  
+               
+               $line = rtrim(substr($line, 1));
+               if ($ent) $line = replaceEntities($line, $rep);
+               
                $listing[$index]["rev1line"] = hardspace($line);
-
+               
                $text = hardspace($line);
                if ($text == "") $text = "&nbsp;";
                
@@ -271,8 +253,8 @@ if ($prevrev)
                         $curoline++;
                      }
                      
-                     break;  
-
+                     break;
+                     
                   case "+":
                      
                      // Try to mark "changed" line sensibly
@@ -291,7 +273,7 @@ if ($prevrev)
                            fgets($nfile);
                            $curnline++;
                         }
-
+                        
                         // Don't increment the current index count
                         $index--;
                      }
@@ -326,57 +308,67 @@ if ($prevrev)
                         $curnline++;
                      }
 
-                     break;                         		
+                     break;
                }
-		      }
-		      
-		      if (!$fin)
-		         $index++;
-		   }
-		}   
-		
-		// Output the rest of the files
-	   if ($all)
-	   {
-	      while (!feof($ofile) || !feof($nfile))
-	      {
-	         $listing[$index]["rev1diffclass"] = "diff";
+            }
+            
+            if (!$fin)
+               $index++;
+         }
+      }   
+      
+      // Output the rest of the files
+      if ($all)
+      {
+         while (!feof($ofile) || !feof($nfile))
+         {
+            $listing[$index]["rev1diffclass"] = "diff";
             $listing[$index]["rev2diffclass"] = "diff";
-                  
-            if ($ent)
-               $line = replaceEntities(rtrim(fgets($ofile)), $rep);
-            else
-               $line = rtrim(fgets($ofile));
-
+            
+            $line = rtrim(fgets($ofile)); 
+            if ($ent) $line = replaceEntities($line, $rep);
+            
             if (!feof($ofile))
                $listing[$index]["rev1line"] = hardspace($line);
             else
                $listing[$index]["rev1line"] = "&nbsp;";
-               
-            if ($ent)
-               $line = replaceEntities(rtrim(fgets($nfile)), $rep);
-            else
-               $line = rtrim(fgets($nfile));
-
+            
+            $line = rtrim(fgets($nfile));
+            if ($ent) $line = replaceEntities(rtrim(fgets($nfile)), $rep);
+            
             if (!feof($nfile))
                $listing[$index]["rev2line"] = hardspace($line);
             else
                $listing[$index]["rev2line"] = "&nbsp;";
-               
-   		   $listing[$index]["rev1lineno"] = 0;
-   		   $listing[$index]["rev2lineno"] = 0;
-
-	         $index++;
-	      }
-	   }
-		
-      fclose($pipes[0]);
+            
+            $listing[$index]["rev1lineno"] = 0;
+            $listing[$index]["rev2lineno"] = 0;
+            
+            $index++;
+         }
+      }
+      
       fclose($pipes[1]);
+      
+      while (!feof($pipes[2]))
+      {
+         $error .= fgets($pipes[2]);
+      }
+
+      $error = toOutputEncoding(trim($error));
+      
+      if (!empty($error))
+         $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+      
       fclose($pipes[2]);
       
       proc_close($resource);
    }
    else
+      $error = "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+   
+   
+   if (!empty($error))
    {
       echo $error;
       
@@ -394,10 +386,10 @@ if ($prevrev)
    if ($all)
    {
       fclose($ofile);
-      fclose($nfile);      
+      fclose($nfile);
    }
 
-   // Remove our temporary files   
+   // Remove our temporary files
    unlink($oldtname);
    unlink($newtname);
 }
@@ -416,5 +408,5 @@ if (!$rep->hasReadAccess($path, false))
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."diff.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
-   
+
 ?>
