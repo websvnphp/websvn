@@ -853,33 +853,39 @@ Class Config
    //
    // Set the location of the given path
    
-   function setPath(&$var, $path, $name, $params = "")
+   function setPath(&$var, $path, $name, $params = '')
    {
-      $lastchar = substr($path, -1, 1);
-      $isDir = ($lastchar == DIRECTORY_SEPARATOR ||
-                $lastchar == "/" ||
-                $lastchar == "\\");
-     
-      if (!$isDir)
+      if ($path == '')
       {
-         $path .= DIRECTORY_SEPARATOR;
+         // Search in system search path. No check for existence possible
+         $var = $name;
       }
-
-      if (($this->serverIsWindows  && !file_exists($path.$name.".exe")) ||
-          (!$this->serverIsWindows && !file_exists($path.$name)))
+      else
       {
-         echo "Unable to find '$name' tool at location '$path$name'";
-         exit;
-      }
-
-      // On a windows machine we need to put spaces around the entire command
-      // to allow for spaces in the path
-      if ($this->serverIsWindows)
-         $var = "\"$path$name\"";
-      else         
-         $var = "$path$name";
+         $lastchar = substr($path, -1, 1);
+         $isDir = ($lastchar == DIRECTORY_SEPARATOR ||
+                   $lastchar == '/' ||
+                   $lastchar == '\\');
          
-      $var .= " ".$params;
+         if (!$isDir) $path .= DIRECTORY_SEPARATOR;
+         
+         if (($this->serverIsWindows  && !file_exists($path.$name.'.exe')) ||
+             (!$this->serverIsWindows && !file_exists($path.$name)))
+         {
+            echo "Unable to find '$name' tool at location '$path$name'";
+            exit;
+         }
+         
+         // On a windows machine we need to put spaces around the entire command
+         // to allow for spaces in the path
+         if ($this->serverIsWindows)
+            $var = '"'.$path.$name.'"';
+         else         
+            $var = $path.$name;
+      }
+      
+      // Append parameters
+      if ($params != '') $var .= ' '.$params;
    }
 
    // setSVNCommandPath
