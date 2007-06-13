@@ -200,7 +200,8 @@ if (!empty($history))
             // Make sure that each word in the search in also in the log
             foreach($words as $word)
             {
-               if (strpos(strtolower(removeAccents($r->msg)), $word) === false)
+               if (strpos(strtolower(removeAccents($r->msg)), $word) === false
+                   && strpos(strtolower(removeAccents($r->author)), $word) === false)
                {
                   $match = false;
                   break;
