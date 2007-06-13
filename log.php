@@ -122,7 +122,7 @@ if (!$isDir)
 $logurl = $config->getURL($rep, $path, "log");
 
 if ($rev != $youngest)
-   $vars["goyoungestlink"] = "<a href=\"${logurl}sc=1\">${lang["GOYOUNGEST"]}</a>";
+   $vars["goyoungestlink"] = "<a href=\"${logurl}sc=1&amp;isdir=$isDir\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
 
@@ -293,13 +293,13 @@ if (!empty($history))
       for ($p = 1; $p <= $pages; $p++)
       {
          if ($p != $page)
-            $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;max=$max&amp;page=$p\">$p</a> "; 
+            $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;isdir=$isDir&amp;max=$max&amp;page=$p\">$p</a> "; 
          else
             $vars["pagelinks"] .= "<b>$p </b>";
       }
-      if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;max=$max&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
+      if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;isdir=$isDir&amp;max=$max&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
       
-      $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;all=1&amp;max=$max\">${lang["SHOWALL"]}</a>";
+      $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;isdir=$isDir&amp;all=1&amp;max=$max\">${lang["SHOWALL"]}</a>";
    }
 }
 
