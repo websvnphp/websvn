@@ -6,6 +6,10 @@
 [websvn-test:goyoungestlink]
 <span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
 [websvn-endtest]
+[websvn:curdirloglink] &#124;
+[websvn-test:curdirdllink]    
+    <span class="compress">[websvn:curdirdllink]</span> &#124;
+[websvn-endtest]
 [websvn-test:curdirrsslink]
     <span class="feed">[websvn:curdirrssanchor]Feed</a></span>
 [websvn-endtest]
@@ -17,9 +21,6 @@
     <li>[lang:REV] [websvn:lastchangedrev] [websvn:date]</li>
     <li><strong>[lang:AUTHOR]:</strong> [websvn:author]</li>
     <li><dl><dt><strong>[lang:LOGMSG]:</strong></dt><dd>[websvn:log]</dd></dl></li>
-[websvn-test:allowdownload]    
-    <li class="compress">[websvn:curdirdllink] <strong>([lang:CURDIR])</strong></li>
-[websvn-endtest]
 [websvn-test:curdircomplink]
     <li class="diff">[websvn:curdircomplink]</li>
 [websvn-endtest]
@@ -32,26 +33,10 @@
     <li class="mod">[websvn:changedfilesbr]</li>
 [websvn-endtest]
 [websvn-test:newfilesbr]
-[websvn-test:changedfilesbr]
     <li class="new">[websvn:newfilesbr]</li>
-[websvn-else]
-    <li class="new">[websvn:newfilesbr]</li>
-[websvn-endtest]
 [websvn-endtest]
 [websvn-test:deletedfilesbr]
-[websvn-test:changedfilesbr]
-[websvn-test:newfilesbr]
     <li class="del">[websvn:deletedfilesbr]</li>
-[websvn-else]
-    <li class="del odd">[websvn:deletedfilesbr]</li>
-[websvn-endtest]
-[websvn-else]
-[websvn-test:newfilesbr]
-    <li class="del">[websvn:deletedfilesbr]</li>
-[websvn-else]
-    <li class="del">[websvn:deletedfilesbr]</li>
-[websvn-endtest]
-[websvn-endtest]
 [websvn-endtest]      
 [websvn-endtest]  
   </ul>
