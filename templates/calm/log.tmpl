@@ -16,13 +16,35 @@
 </p>
 
 <div id="info">
-<ul>
-<li>[websvn:logsearch_form][lang:SEARCHLOG]: [websvn:logsearch_inputbox]<span class="submit">[websvn:logsearch_submit]</span>
+<h2>[lang:FILTER]</h2>
+
+[websvn:logsearch_form]
+
+<table>
+  <tbody>
+    <tr>
+    	<th scope="col"><label>[lang:STARTLOG]</label></th>
+    	<th scope="col"><label>[lang:ENDLOG]</label></th>
+    	<th scope="col"><label>[lang:MAXLOG]</label></th>
+    </tr>
+    <tr>
+    	<td class="revcomp">[websvn:logsearch_startbox]</td>
+    	<td class="revcomp">[websvn:logsearch_endbox]</td>
+    	<td class="revcomp">[websvn:logsearch_maxbox]</td>
+    </tr>
+    
+    <tr><th scope="col" colspan="3"><label>[lang:SEARCHLOG]</label></th></tr>
+    <tr><td colspan="3">[websvn:logsearch_inputbox]</td></tr>
+  </tbody>
+</table>
+<p class="submit">[websvn:logsearch_submit]
 [websvn-test:logsearch_clearloglink]
-[websvn:logsearch_clearloglink]
+	[websvn:logsearch_clearloglink]
 [websvn-endtest]
+</p>
+
 [websvn:logsearch_endform]
-</li>
+
 </div>
 
 <div id="wrap">
@@ -45,7 +67,7 @@
       
          [websvn-startlisting]
          <tr class="row[websvn:rowparity]">
-            <td><nobr>[websvn:compare_box][websvn:revlink]</nobr></td>
+            <td>[websvn:compare_box][websvn:revlink]</td>
             <td valign="middle" class="logmsg">[websvn:revlog]</td>
             <td>[websvn:revauthor]</td>
             <td>[websvn:revage]</td>
@@ -63,6 +85,8 @@
    <p>[lang:NOMORERESULTS]
 [websvn-endtest]
       
-<p>[websvn:logsearch_moreresultslink]
-<p>[websvn:pagelinks]<p>[websvn:showalllink]
-   
+<p>[websvn:logsearch_moreresultslink]</p>
+<p>[websvn:pagelinks]</p>
+<p>[websvn:showalllink]</p>
+
+</div>

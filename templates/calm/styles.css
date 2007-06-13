@@ -405,6 +405,7 @@ tbody tr.row0:hover td {
   background-color:khaki;
 }
 li.compress a,
+span.compress a,
 tbody tr td.compress a:link,
 tbody tr td.compress a:visited,
 tbody tr td.compress a:link {
@@ -444,14 +445,6 @@ td.code {
 */
 h2.path {
   text-transform:none;
-}
-tbody tr.diffcode td.diffchanged pre {
-  color:#000;
-  border:1px solid #d5f2c7;  
-  padding-left:22px;
-  background-color:#f2ffd9;  
-  background-repeat:no-repeat;
-  background-position:2px 50%;
 }
 div.listing {
   overflow:auto;
@@ -511,8 +504,6 @@ tbody tr.diffcode td {
 tbody tr.diffcode td pre {
   display:block;
   height:100%;
-  background-color:ivory;
-  border:1px solid beige;
   padding-left:22px;
 }
 tbody tr.diffcode:hover td pre {
@@ -574,21 +565,44 @@ table.diff tbody tr td {
 table.diff tbody tr:hover {
   background:#FFF;
   }
-table.diff tbody tr td.diffdeleted {
-  color:rosybrown;
+td.diff pre {
+  border:1px solid beige;
+  background-color:ivory;
+  background-position:2px 50%;
+  background-repeat:no-repeat;
+}
+td.diffdeleted pre {
   border:1px solid rosybrown;  
   background-color:papayawhip;
   background-image:url(images/bullet_delete.png);
   background-position:2px 50%;
   background-repeat:no-repeat;
 }
-table.diff tbody tr td.diffadded {
-  color:#545400;
+tr.diffcode:hover td.diffdeleted pre {
+  border-color:rosybrown;
+  background-color:#ffc6d5;
+}
+td.diffadded pre {
   border:1px solid #d5f2c7;  
   background-color:#f2ffd9;
   background-image:url(images/bullet_add.png);
   background-repeat:no-repeat;
   background-position:2px 50%; 
+}
+tr.diffcode:hover td.diffadded pre {
+  border-color:#669900;
+  background-color:yellowgreen;
+}
+td.diffchanged pre {
+  border:1px solid #f2f2c7;  
+  background-color:lightyellow;
+  background-image:url(images/bullet_yellow.png);
+  background-repeat:no-repeat;
+  background-position:2px 50%; 
+}
+tr.diffcode:hover td.diffchanged pre {
+  border-color:darkkhaki;
+  background-color:#ffffa0;
 }
 
 /* Log View */
