@@ -172,24 +172,27 @@ if (!$noinput)
          	      {
          	         case " ":
          	            $listing[$index]["diffclass"] = "diff";
-         	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
+         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
          	            if (empty($subline)) $subline = "&nbsp;";
+                            $subline = hardspace($subline);
          	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as diff: $subline<br />";
          	            break;
          	   
          	         case "+":
          	            $listing[$index]["diffclass"] = "diffadded";
-         	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
+         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
          	            if (empty($subline)) $subline = "&nbsp;";
+                            $subline = hardspace($subline);
          	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as added: $subline<br />";
          	            break;
          
          	         case "-":
          	            $listing[$index]["diffclass"] = "diffdeleted";
-         	            $subline = hardspace(replaceEntities(rtrim(substr($line, 1)), $rep)); 
+         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
          	            if (empty($subline)) $subline = "&nbsp;";
+                            $subline = hardspace($subline);
          	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as removed: $subline<br />";
          	            break;
