@@ -87,9 +87,7 @@
 // Uncomment ONLY the template file that you want.  
 
 $config->setTemplatePath("$locwebsvnreal/templates/calm/");
-// $config->setTemplatePath("$locwebsvnreal/templates/Standard/");
 // $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
-// $config->setTemplatePath("$locwebsvnreal/templates/Zinn/");
 
 // You may also specify a per repository template file by uncommenting and changing the following
 // line as necessary.  Use the convention "groupname.myrep" if your repository is in a group.
