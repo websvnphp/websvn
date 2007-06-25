@@ -462,7 +462,7 @@ pre a, td.code pre a {
 }
 
 
-pre {
+code, pre {
   font-family:'Consolas',monospace,sans-serif;
   text-align:left;
   margin:0;  
@@ -501,12 +501,12 @@ tbody tr.diffcode td {
   
  
 }
-tbody tr.diffcode td pre {
+tbody tr.diffcode td code, tbody tr.diffcode td pre {
   display:block;
   height:100%;
   padding-left:22px;
 }
-tbody tr.diffcode:hover td pre {
+tbody tr:hover td.diff, tbody tr.diffcode:hover td pre {
   background-color:khaki;
   border:1px solid darkkhaki;
 }
@@ -565,42 +565,42 @@ table.diff tbody tr td {
 table.diff tbody tr:hover {
   background:#FFF;
   }
-td.diff pre {
+.newpath td.diff, td.diff pre {
   border:1px solid beige;
   background-color:ivory;
   background-position:2px 50%;
   background-repeat:no-repeat;
 }
-td.diffdeleted pre {
+.newpath td.diffdeleted, td.diffdeleted pre {
   border:1px solid rosybrown;  
   background-color:papayawhip;
   background-image:url(images/bullet_delete.png);
   background-position:2px 50%;
   background-repeat:no-repeat;
 }
-tr.diffcode:hover td.diffdeleted pre {
+.newpath tr:hover td.diffdeleted, tr.diffcode:hover td.diffdeleted pre {
   border-color:rosybrown;
   background-color:#ffc6d5;
 }
-td.diffadded pre {
+.newpath td.diffadded, td.diffadded pre {
   border:1px solid #d5f2c7;  
   background-color:#f2ffd9;
   background-image:url(images/bullet_add.png);
   background-repeat:no-repeat;
   background-position:2px 50%; 
 }
-tr.diffcode:hover td.diffadded pre {
+.newpath tr:hover td.diffadded, tr.diffcode:hover td.diffadded pre {
   border-color:#669900;
   background-color:yellowgreen;
 }
-td.diffchanged pre {
+.newpath td.diffchanged, td.diffchanged pre {
   border:1px solid #f2f2c7;  
   background-color:lightyellow;
   background-image:url(images/bullet_yellow.png);
   background-repeat:no-repeat;
   background-position:2px 50%; 
 }
-tr.diffcode:hover td.diffchanged pre {
+.newpath tr:hover td.diffchanged, tr.diffcode:hover td.diffchanged pre {
   border-color:darkkhaki;
   background-color:#ffffa0;
 }
