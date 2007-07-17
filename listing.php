@@ -113,7 +113,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
          if ($rep->hasReadAccess($path.$file, true))
          {
             $access = true;
-            $openDir = (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file));
+            $openDir = isset($subs[$level+1]) && (!strcmp($subs[$level+1]."/", $file) || !strcmp($subs[$level+1], $file));
    
             if ($openDir)
                $listing[$index]["filetype"] = "diropen";
