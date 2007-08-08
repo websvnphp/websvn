@@ -168,35 +168,30 @@ if (!$noinput)
       	   {
          	   if ($line[0] == " " || $line[0] == "+" || $line[0] == "-")
          	   {
+                  $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
+                  if (empty($subline)) $subline = "&nbsp;";
+                  $subline = hardspace($subline);
+                  $listing[$index]["line"] = $subline;
+                  
          	      switch ($line[0])
          	      {
          	         case " ":
          	            $listing[$index]["diffclass"] = "diff";
-         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
-         	            if (empty($subline)) $subline = "&nbsp;";
-                            $subline = hardspace($subline);
-         	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as diff: $subline<br />";
          	            break;
          	   
          	         case "+":
          	            $listing[$index]["diffclass"] = "diffadded";
-         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
-         	            if (empty($subline)) $subline = "&nbsp;";
-                            $subline = hardspace($subline);
-         	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as added: $subline<br />";
          	            break;
          
          	         case "-":
          	            $listing[$index]["diffclass"] = "diffdeleted";
-         	            $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
-         	            if (empty($subline)) $subline = "&nbsp;";
-                            $subline = hardspace($subline);
-         	            $listing[$index++]["line"] = $subline;
                         if ($debug) print "Including as removed: $subline<br />";
          	            break;
          	      }
+         	      
+         	      $index++;
          	      
          	      continue;
          	   }
@@ -234,8 +229,16 @@ if (!$noinput)
          	   }
          	   else
          	   {
-         	      $listing[$index++]["difflines"] = $line;
+         	      $listing[$index]["difflines"] = $line;
+         	      sscanf($line, "@@ -%d,%d +%d,%d @@", $sline, $slen, $eline, $elen);
+         	      $listing[$index]["rev1line"] = $sline;
+         	      $listing[$index]["rev1len"] = $slen;
+         	      $listing[$index]["rev2line"] = $eline;
+         	      $listing[$index]["rev2len"] = $elen;
+         	      
          	      $indiffproper = true;
+         	      
+         	      $index++;
          	   }
          	   
          	   continue;

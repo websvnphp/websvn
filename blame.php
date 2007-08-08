@@ -108,7 +108,7 @@ if ($file = fopen($tfname, 'r'))
             
             $listing[$index]['lineno'] = $index + 1;
             
-            if ($last_rev <> $revision || fmod($index, 10) == 0)
+            if ($last_rev <> $revision)
             {
                $url = $config->getURL($rep, $parent, 'dir');
                $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision&amp;sc=1\">$revision</a>";
@@ -129,16 +129,12 @@ if ($file = fopen($tfname, 'r'))
 
             $listing[$index]['author'] = $author;
             
-            if ($ent)
-               $line = replaceEntities(rtrim(fgets($file)), $rep);
-            else
-               $line = rtrim(fgets($file));
+            $line = rtrim(fgets($file));
+            if ($ent) $line = replaceEntities($line, $rep);
 
+            if ($line == '') $line = '&nbsp;';
             $listing[$index]['line'] = hardspace($line);
             
-            if (trim($listing[$index]['line']) == '')
-               $listing[$index]['line'] = '&nbsp;';
-               
             $index++;
          }
       }
