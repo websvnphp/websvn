@@ -233,10 +233,10 @@ if ($prevrev)
                $line = rtrim(substr($line, 1));
                if ($ent) $line = replaceEntities($line, $rep);
                
+               if ($line == '') $line = '&nbsp;';
                $listing[$index]["rev1line"] = hardspace($line);
                
                $text = hardspace($line);
-               if ($text == "") $text = "&nbsp;";
                
                switch ($mod)
                {
