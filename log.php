@@ -52,10 +52,12 @@ if ($search == "")
 // excessive as well...
 
 function removeAccents($string)
-{ 
-   return strtr($string,
-                "ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ",
-                "AAAAAAaaaaaaOOOOOOooooooEEEEeeeeCcIIIIiiiiUUUUuuuuyNn"); 
+{
+  $string = htmlentities($fileName, ENT_QUOTES, 'ISO-8859-1')) ; 
+  $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron);/','$1',$string);
+  $string = preg_replace('/&([A-Z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron);/','$1',$string);
+  
+  return $string;
 } 
 
 // Normalise the search words
