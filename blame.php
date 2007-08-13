@@ -48,9 +48,9 @@ else
 $pos = strrpos($ppath, '/');
 $parent = substr($ppath, 0, $pos + 1);
 
-$vars['repname'] = $rep->getDisplayName();
+$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = $rev;
-$vars['path'] = $ppath;
+$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 createDirLinks($rep, $ppath, $rev, $showchanged);
 
