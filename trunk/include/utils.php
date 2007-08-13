@@ -29,8 +29,9 @@
 function createDirLinks($rep, $path, $rev, $showchanged)
 {
    global $vars, $config;
-   
-   $subs = explode('/', htmlentities($path));
+
+   $subs = explode('/', htmlentities($path, ENT_QUOTES, 'UTF-8'));
+
    $sofar = "";
    $count = count($subs);
    $vars["curdirlinks"] = "";
