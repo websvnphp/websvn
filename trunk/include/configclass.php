@@ -565,7 +565,7 @@ Class Config
          }
       }
       
-      print "ERROR: Unable to find repository '$name'";
+      print "ERROR: Unable to find repository '".htmlentities($name, ENT_QUOTES, 'UTF-8')."'";
       exit;
    }
 

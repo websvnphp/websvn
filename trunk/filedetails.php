@@ -126,9 +126,9 @@ else
    $vars["goyoungestlink"] = "";
 
 $vars["action"] = "";
-$vars["repname"] = $rep->getDisplayName();
-$vars["rev"] = $rev;
-$vars["path"] = $ppath;
+$vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+$vars["rev"] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
+$vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 

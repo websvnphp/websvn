@@ -58,9 +58,9 @@ else
 
 $prevrev = @$history->entries[1]->rev;
 
-$vars["repname"] = $rep->getDisplayName();
+$vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars["rev"] = $rev;
-$vars["path"] = $ppath;
+$vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars["prevrev"] = $prevrev;
 
 $vars["rev1"] = $history->entries[0]->rev;

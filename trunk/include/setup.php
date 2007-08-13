@@ -354,7 +354,7 @@ else
 
 # due to possible XSS exploit, we need to clean up path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
-$vars['safepath'] = htmlentities($path);
+$vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST["rev"];
 $showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
@@ -400,7 +400,7 @@ if (!$config->multiViews)
 if ($rep)
 {
    $vars["allowdownload"] = $rep->getAllowDownload();
-   $vars["repname"] = $rep->getDisplayName();
+   $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 }
 
 // As of version 1.70 the output encoding is forced to be UTF-8, since this is the output

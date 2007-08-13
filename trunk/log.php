@@ -37,7 +37,7 @@ $words = preg_split('#\s+#', $search);
 $fromRev = (int)@$_REQUEST["fr"];
 $startrev = strtoupper(trim(@$_REQUEST["sr"]));
 $endrev = strtoupper(trim(@$_REQUEST["er"]));
-$max = @$_REQUEST["max"];
+$max = (int)@$_REQUEST["max"];
 
 // Max number of results to find at a time
 $numSearchResults = 15;
@@ -99,9 +99,9 @@ if ($path == "" || $path{0} != "/")
    $ppath = "/".$path;
 
 $vars["action"] = $lang["LOG"];
-$vars["repname"] = $rep->getDisplayName();
+$vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars["rev"] = $rev;
-$vars["path"] = $ppath;
+$vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 createDirLinks($rep, $ppath, $passrev, $showchanged);
 
@@ -129,7 +129,8 @@ else
 // We get the bugtraq variable just once based on the HEAD
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
-if ($startrev != "HEAD") $startrev = (int)$startrev;
+if ($startrev != "HEAD" && $startrev != "BASE" && $startrev != "PREV" && $startrev != "COMMITTED") $startrev = (int)$startrev;
+if ($endrev != "HEAD" && $endrev != "BASE" && $endrev != "PREV" && $endrev != "COMMITTED") $endrev = (int)$endrev;
 if (empty($startrev)) $startrev = $rev;
 if (empty($endrev)) $endrev = 1;
 
@@ -314,7 +315,7 @@ $vars["logsearch_form"] = "<form action=\"$url\" method=\"post\" name=\"logsearc
 $vars["logsearch_startbox"] = "<input name=\"sr\" size=\"5\" value=\"$startrev\" />";
 $vars["logsearch_endbox"  ] = "<input name=\"er\" size=\"5\" value=\"$endrev\" />";
 $vars["logsearch_maxbox"  ] = "<input name=\"max\" size=\"5\" value=\"".($max==0?"":$max)."\" />";
-$vars["logsearch_inputbox"] = "<input name=\"search\" value=\"$search\" />";
+$vars["logsearch_inputbox"] = "<input name=\"search\" value=\"".htmlentities($search, ENT_QUOTES, 'UTF-8')."\" />";
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
 $vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\" />".
