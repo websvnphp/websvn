@@ -33,10 +33,13 @@
 #$locwebsvnhttp = "/websvn";  
 $locwebsvnhttp = '';
 
-// --- DON'T CHANGE BELOW HERE ---
+// Physical location of websvn directory.  Change this if your wsvn.php is not in the
+// same folder as the rest of the distribution
 
-// get physical location of websvn directory
+get physical location of websvn directory
 $locwebsvnreal = dirname(__FILE__);
+
+// --- DON'T CHANGE BELOW HERE ---
 
 chdir($locwebsvnreal);
 
