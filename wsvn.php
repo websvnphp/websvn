@@ -79,22 +79,19 @@ if ($config->multiViews)
    //       having a slash in it
 
    $found = false;
+   
+   $pos = strpos($path, '/');
+   if ($pos === false) $pos = strlen($path);
+   $name = substr($path, 0, $pos);
 
    foreach ($config->getRepositories() as $rep)
    {
-      $pos = strlen($rep->getDisplayName());
-      if (strlen($path) < $pos)
-         continue;
-         
-      $name = substr($path, 0, $pos);
       if (strcasecmp($rep->getDisplayName(), $name) == 0)
       {
-         $tpath = substr($path, $pos);
-         if ($tpath[0] == "/") {
-            $found = true;
-            $path = $tpath;
-            break;
-         }
+         $found = true;
+         $path = substr($path, $pos);
+         if ($path == '') $path = '/';
+         break;
       }
    }
 
