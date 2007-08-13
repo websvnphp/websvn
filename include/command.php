@@ -45,7 +45,7 @@ function replaceEntities($str, $rep)
       // In this case, we can't do any better than assume that the
       // input encoding is ISO-8859-1.
       
-      $str = htmlentities($str);
+      $str = htmlentities($str, ENT_COMPAT);
    }
    else
    {
