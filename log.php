@@ -53,7 +53,7 @@ if ($search == "")
 
 function removeAccents($string)
 {
-  $string = htmlentities($fileName, ENT_QUOTES, 'ISO-8859-1')) ; 
+  $string = htmlentities($string, ENT_QUOTES, 'ISO-8859-1'); 
   $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron);/','$1',$string);
   $string = preg_replace('/&([A-Z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron);/','$1',$string);
   

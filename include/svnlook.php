@@ -365,7 +365,7 @@ Class SVNRepository
       if ($rev == 0)
       {
          $headlog = $this->getLog("/", "", "", true, 1);
-         $rev = $headlog->entries[0]->rev;
+         if (isset($headlog->entries[0])) $rev = $headlog->entries[0]->rev;
       }
       
       $path = encodepath($this->repConfig->path.$path);

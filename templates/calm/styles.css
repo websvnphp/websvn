@@ -1,7 +1,7 @@
 html,body {
   background:#FFF;
   color:gray;
-  font-family: 'Trebuchet MS', verdana, sans-serif;
+  font-family: 'Trebuchet MS', Verdana, sans-serif;
   font-size:13px;
   line-height:1.3em;
   margin:0; padding:0;
@@ -29,6 +29,7 @@ margin-top: -40px;
 a {
   color:#000;
   text-decoration:none;
+  outline: none !important;
   
 }
 a:link {
