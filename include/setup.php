@@ -193,6 +193,7 @@ $extEnscript = array
   '.cxx'     => 'cpp',
   '.diff'    => 'diffu',
   '.dpr'     => 'delphi',
+   '.e'       => 'eiffel',
   '.el'      => 'elisp',
   '.eps'     => 'postscript',
   '.f'       => 'fortran',
