@@ -295,7 +295,7 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
 $vars["action"] = "";
 $vars["rev"] = $rev;
-$vars["path"] = $ppath;
+$vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars["lastchangedrev"] = $logrev;
 $vars["date"] = $logEntry->date;
 $vars["author"] = $logEntry->author;

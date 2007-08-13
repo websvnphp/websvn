@@ -53,8 +53,8 @@ $svnrep = new SVNRepository($rep);
 // Retrieve the request information
 $path1 = @$_REQUEST["compare"][0];
 $path2 = @$_REQUEST["compare"][1];
-$rev1 = @$_REQUEST["compare_rev"][0];
-$rev2 = @$_REQUEST["compare_rev"][1];
+$rev1 = (int)@$_REQUEST["compare_rev"][0];
+$rev2 = (int)@$_REQUEST["compare_rev"][1];
 
 // Some page links put the revision with the path...
 if (strpos($path1, "@")) list($path1, $rev1) = explode("@", $path1);
@@ -90,18 +90,18 @@ if ($rev2 == 0) $rev2 = "HEAD";
 $vars["repname"] = $rep->getDisplayName();
 $vars["action"] = $lang["PATHCOMPARISON"];
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
-$vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"$path1\" />";
+$vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"".htmlentities($path1, ENT_QUOTES, 'UTF-8')."\" />";
 $vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[0]\" value=\"$rev1\" />";
-$vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"$path2\" />";
+$vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"".htmlentities($path2, ENT_QUOTES, 'UTF-8')."\" />";
 $vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\" />";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
 $vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"manualorder\" value=\"1\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
 
 # safe paths are a hack for fixing XSS sploit
-$vars["path1"] = $path1;
-$vars['safepath1'] = htmlentities($path1);
-$vars["path2"] = $path2;
-$vars['safepath2'] = htmlentities($path2);
+$vars["path1"] = htmlentities($path1, ENT_QUOTES, 'UTF-8');
+$vars['safepath1'] = htmlentities($path1, ENT_QUOTES, 'UTF-8');
+$vars["path2"] = htmlentities($path2, ENT_QUOTES, 'UTF-8');
+$vars['safepath2'] = htmlentities($path2, ENT_QUOTES, 'UTF-8');
 
 $vars["rev1"] = $rev1;
 $vars["rev2"] = $rev2;
