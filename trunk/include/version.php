@@ -22,5 +22,5 @@
 //
 // Version information
 
-$version = '2.1 alpha 1';
+$version = '[trunk]';
 ?>
