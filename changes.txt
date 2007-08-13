@@ -8,7 +8,7 @@
 * Changed: line endings now use UNIX-style across the board.
 
 CHANGES
-
+NEW: New default template theme offered by Erik Pöhler
 NEW: Template files may now be specified on a per repository basis
 NEW: Add RSS 'alternate' <link> elements to the HTML headers in
      directory listings. This lets you, for example, easily create a
