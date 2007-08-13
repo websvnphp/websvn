@@ -260,10 +260,10 @@ if ($logrev != $youngest)
    $logEntry = $logEntry->entries[0];
 }
 else
-   $logEntry = $history->entries[0];
+   $logEntry = isset($history->entries[0]) ? $history->entries[0] : false;
 
 $headlog = $svnrep->getLog("/", "", "", true, 1);
-$headrev = $headlog->entries[0]->rev;
+$headrev = isset($headlog->entries[0]) ? $headlog->entries[0]->rev : 0;
 
 // If we're not looking at a specific revision, get the HEAD revision number
 // (the revision of the rest of the tree display)
@@ -297,9 +297,9 @@ $vars["action"] = "";
 $vars["rev"] = $rev;
 $vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars["lastchangedrev"] = $logrev;
-$vars["date"] = $logEntry->date;
-$vars["author"] = $logEntry->author;
-$vars["log"] = nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg)));
+$vars["date"] = $logEntry ? $logEntry->date : '';
+$vars["author"] = $logEntry ? $logEntry->author : '';
+$vars["log"] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
 
 if (!$showchanged)
 {

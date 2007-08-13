@@ -5,21 +5,7 @@
 	<meta http-equiv="content-script-type" content="text/javascript" />
 	<meta http-equiv="content-style-type" content="text/css" />
 	<title>WebSVN Installation Guide</title>
-	<style type="text/css">
-		body { font-family: Verdana, Arial, sans-serif; font-size: 10pt; }
-		h1 { font-size: 140%; }
-		h2 {
-			font-size: 120%;
-			border-bottom: 1px solid #aaa;
-		}
-		.code {
-			border: 1px dashed #aaa;
-			background-color: #eee;
-			margin-left: 20px;
-			margin-right: 20px;
-			padding: 5px;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -64,7 +50,7 @@ file so as to see exactly what was changed in a particular revision.</p>
 <h2><a name="installation"></a>Installation</h2>
 
 <p>Grab the source and stick it somewhere that your server can get to.  You
-obviously need to have PHP 4.3.0 or greater installed and working.  Also note that WebSVN
+obviously need to have <strong>PHP 4.3.0</strong> or greater installed and working.  Also note that WebSVN
 won't currently work in safe mode, due to the need to call svnlook.</p>
 
 <p>If it isn't already, make sure to chmod the cache directory to 0777.  This is
