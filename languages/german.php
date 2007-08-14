@@ -25,13 +25,18 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "German";
+// This is the RFC 2616 (Â§3.10) language tag that corresponds to this translation
+// see also RFC 4646
 $lang['LANGUAGETAG'] = 'de';
 
+$lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";
-$lang["SUPPLYREP"] = "Bitte den Repository Pfad in include/config.php mit \$config->parentPath oder \$config->addRepository konfigurieren.<p>Genauere Informationen sind in der Installationsanleitung";
+$lang["NOACCESS"] = "Sie haben keine ausreichende Berechtigungen um dieses Verzeichnis zu lesen";
+$lang["RESTRICTED"] = "Beschränkter Zugriff";
+$lang["SUPPLYREP"] = "Bitte den Repository-Pfad in "include/config.php" mit "$config->parentPath" oder "$config->addRepository" angeben.<p>Genauere Informationen finden sich in der Installationsanleitung";
 
 $lang["DIFFREVS"] = "Vergleich zwischen Revisionen";
 $lang["AND"] = "und";
@@ -67,11 +72,16 @@ $lang["NEXT"] = "Weiter";
 $lang["SHOWALL"] = "Alles anzeigen";
 
 $lang["BADCMD"] = "Fehler beim Ausf&uuml;hren des Befehls";
+$lang["UNKNOWNREVISION"] = "Revision nicht gefunden";
    
 $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion-Projekte";                       
-$lang["SERVER"] = "Subversion Server";   
+$lang["SERVER"] = "Subversion-Server";   
 
+$lang["FILTER"] = "Filteroptionen";
+$lang["STARTLOG"] = "Von Rev.";
+$lang["ENDLOG"] = "bis Rev.";
+$lang["MAXLOG"] = "Max. Rev.";
 $lang["SEARCHLOG"] = "Suche im Log nach";
 $lang["CLEARLOG"] = "Aktuelle Suche l&ouml;schen";
 $lang["MORERESULTS"] = "Weitere Ergebnisse finden...";
@@ -83,8 +93,13 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "Ver&auml;nderte Dateien"; 
 $lang["RSSFEED"] = "RSS feed";
  
-$lang["LINENO"] = "Nr.";
-$lang["BLAMEFOR"] = "Blame Information f&uuml; Rev.";
+$lang["LINENO"] = "Zeilennr.";
+$lang["BLAMEFOR"] = "Blame-Information f&uuml; Rev.";
+
+$lang["DAYLETTER"] = "t";
+$lang["HOURLETTER"] = "h";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Los";
 
@@ -100,13 +115,11 @@ $lang["WITHPATH"] = "Mit Pfad:";
 $lang["FILEDELETED"] = "Datei gel&ouml;scht";
 $lang["FILEADDED"] = "Neue Datei";
 
-$lang["YEARS"] = "Jahre";                                             
-$lang["MONTHS"] = "Monate";                                           
-$lang["WEEKS"] = "Wochen";                                             
-$lang["DAYS"] = "Tage";                                               
-$lang["HOURS"] = "Stunden";                                             
-$lang["MINUTES"] = "Minuten";   
+// The following are defined by some languages to stop unwanted line splitting
+// in the template files. 
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
 
+// $lang["NOBR"] = "<nobr>";
+// $lang["ENDNOBR"] = "</nobr>";
