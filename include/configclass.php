@@ -484,7 +484,7 @@ Class Config
    var $svn = "svn --non-interactive --config-dir /tmp";
    var $svn_noparams = "svn --config-dir /tmp"; 
    var $diff = "diff";
-   var $enscript ="enscript";
+   var $enscript ="enscript -q";
    var $sed = "sed";
    var $gzip = "gzip";
    var $tar = "tar";
