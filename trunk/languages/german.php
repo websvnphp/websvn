@@ -25,7 +25,7 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "German";
-// This is the RFC 2616 (Â§3.10) language tag that corresponds to this translation
+// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
 // see also RFC 4646
 $lang['LANGUAGETAG'] = 'de';
 
@@ -35,8 +35,8 @@ $lang["DIFF"] = "Diff";
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";
 $lang["NOACCESS"] = "Sie haben keine ausreichende Berechtigungen um dieses Verzeichnis zu lesen";
-$lang["RESTRICTED"] = "Beschränkter Zugriff";
-$lang["SUPPLYREP"] = "Bitte den Repository-Pfad in "include/config.php" mit "$config->parentPath" oder "$config->addRepository" angeben.<p>Genauere Informationen finden sich in der Installationsanleitung";
+$lang["RESTRICTED"] = "Beschr&auml;nkter Zugriff";
+$lang["SUPPLYREP"] = "Bitte den Repository-Pfad in include/config.php mit \$config->parentPath oder \$config->addRepository angeben.<p>Genauere Informationen finden sich in der Installationsanleitung";
 
 $lang["DIFFREVS"] = "Vergleich zwischen Revisionen";
 $lang["AND"] = "und";
