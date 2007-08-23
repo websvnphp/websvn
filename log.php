@@ -37,7 +37,7 @@ $words = preg_split('#\s+#', $search);
 $fromRev = (int)@$_REQUEST["fr"];
 $startrev = strtoupper(trim(@$_REQUEST["sr"]));
 $endrev = strtoupper(trim(@$_REQUEST["er"]));
-$max = (int)@$_REQUEST["max"];
+$max = isset($_REQUEST['max']) ? (int)$_REQUEST['max'] : false;
 
 // Max number of results to find at a time
 $numSearchResults = 15;
@@ -136,16 +136,12 @@ if ($endrev != "HEAD" && $endrev != "BASE" && $endrev != "PREV" && $endrev != "C
 if (empty($startrev)) $startrev = $rev;
 if (empty($endrev)) $endrev = 1;
 
-if (empty($_REQUEST["max"]))
+if ($max === false)
 {
-   if (empty($_REQUEST["logsearch"]))
-      $max = 30;
-   else
-      $max = 0;
+   $max = $dosearch ? 0 : 30;
 }
 else
 {
-   $max = (int)$max;
    if ($max < 0) $max = 30;
 }
 
