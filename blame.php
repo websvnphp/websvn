@@ -113,22 +113,18 @@ if ($file = fopen($tfname, 'r'))
                $url = $config->getURL($rep, $parent, 'dir');
                $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision&amp;sc=1\">$revision</a>";
                $seen_rev[$revision] = 1;
+               $row_class = ($row_class == 'light') ? 'dark' : 'light';
+               $listing[$index]['author'] = $author;
             }
             else
             {
                $listing[$index]['revision'] = "";
-            }
-            
-            if ($last_rev <> $revision)
-            {
-               $row_class = ($row_class == 'light') ? 'dark' : 'light';
+               $listing[$index]['author'] = '';
             }
             
             $listing[$index]['row_class'] = $row_class;
             $last_rev = $revision;
 
-            $listing[$index]['author'] = $author;
-            
             $line = rtrim(fgets($file));
             if ($ent) $line = replaceEntities($line, $rep);
 
