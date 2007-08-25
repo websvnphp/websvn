@@ -94,7 +94,7 @@ $lang["FILESMODIFIED"] = "Ver&auml;nderte Dateien";
 $lang["RSSFEED"] = "RSS feed";
  
 $lang["LINENO"] = "Zeilennr.";
-$lang["BLAMEFOR"] = "Blame-Information f&uuml; Rev.";
+$lang["BLAMEFOR"] = "Blame-Information f&uuml;r Rev.";
 
 $lang["DAYLETTER"] = "t";
 $lang["HOURLETTER"] = "h";
