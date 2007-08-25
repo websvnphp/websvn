@@ -57,22 +57,22 @@ table
    margin: 0px;
    vertical-align:middle;
 }
-.row0
+.row0, .light
 {
    background-color: #f0f0f0;
 }
-.row1
+.row1, .dark
 {
    background-color: #e0e0e0;
 }
 
-.CatClmn0
+.CatClmn0, .light .CatClmn
 {
    border-right: black 1px solid;
    background-color: #e0e0ff
 }
 
-.CatClmn1
+.CatClmn1, .dark .CatClmn
 {
    border-right: black 1px solid;
    background-color: #d0d0ee
