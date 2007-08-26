@@ -104,7 +104,8 @@ if ($file = fopen($tfname, 'r'))
          
          if ($blameline != '')
          {
-            list($revision, $author) = sscanf($blameline, '%d %s');
+            list($revision, $author, $remainder) = sscanf($blameline, '%d %s %s');
+            $empty = !$remainder;
             
             $listing[$index]['lineno'] = $index + 1;
             
@@ -128,7 +129,7 @@ if ($file = fopen($tfname, 'r'))
             $line = rtrim(fgets($file));
             if ($ent) $line = replaceEntities($line, $rep);
 
-            if ($line == '') $line = '&nbsp;';
+            if ($empty) $line = '&nbsp;';
             $listing[$index]['line'] = hardspace($line);
             
             $index++;
@@ -152,6 +153,7 @@ if (!$rep->hasReadAccess($path, false))
 $vars['javascript'] = <<<HTML
 
 <script type='text/javascript'>
+/* <![CDATA[ */
 var rev = new Array();
 var a = document.getElementsByTagName('a');
 for (var i = 0; i < a.length; i++) {
@@ -202,13 +204,13 @@ foreach($seen_rev as $key => $val)
    {
       $vars['javascript'] .= "rev[$key] = '";
       $vars['javascript'] .= "<div class=\"info\">";
-      $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."</span>";
-      $vars['javascript'] .= "</div>";
-      $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br>", $history->curEntry->msg))."</div>";
+      $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."<\/span>";
+      $vars['javascript'] .= "<\/div>";
+      $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br />", $history->curEntry->msg))."<\/div>";
       $vars['javascript'] .= "';\n";
    }
 }
-$vars['javascript'] .= "</script>";
+$vars['javascript'] .= "/* ]]> */\n</script>";
 
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'blame.tmpl',  $vars, $listing);
