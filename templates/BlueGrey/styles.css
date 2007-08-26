@@ -66,13 +66,18 @@ table
    background-color: #e0e0e0;
 }
 
-.CatClmn0, .light .CatClmn
+.blameTbl tbody th {
+	font-weight: normal;
+	text-align: right;
+}
+
+.CatClmn0, .blameTbl tbody .light th
 {
    border-right: black 1px solid;
    background-color: #e0e0ff
 }
 
-.CatClmn1, .dark .CatClmn
+.CatClmn1, .blameTbl tbody .dark th
 {
    border-right: black 1px solid;
    background-color: #d0d0ee
@@ -127,12 +132,10 @@ div.difflines
 
 code { white-space: pre; white-space: pre-wrap; }
 
-table.blame tr.dark  { background-color: #e7e7e7; }
-table.blame tr.light { background-color: #ffffff; }
-
 div.blame-popup
 {
    position: absolute;
+   text-align: left;
    background-color: white;
    border: solid 2px #809cc8;
    padding: 5px;
