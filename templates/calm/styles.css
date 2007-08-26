@@ -629,3 +629,16 @@ table tbody tr td.logmsg {
   margin:0;  
 }
 /* inputs see -> forms */
+
+div.blame-popup {
+  position: absolute;
+  text-align: left;
+  background-color: white;
+  padding: 5px;
+  border:1px solid darkkhaki;
+  background-color: khaki;
+}
+
+div.blame-popup .date {
+  font-weight: bold;
+}
