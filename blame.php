@@ -157,7 +157,7 @@ $vars['javascript'] = <<<HTML
 var rev = new Array();
 var a = document.getElementsByTagName('a');
 for (var i = 0; i < a.length; i++) {
-   if (a[i].className = 'blame-revision') {
+   if (a[i].className == 'blame-revision') {
       var id = a[i].id;
       addEvent(a[i], 'mouseover', function() { mouseover(this) });
       addEvent(a[i], 'mouseout', function() { mouseout(this) });
