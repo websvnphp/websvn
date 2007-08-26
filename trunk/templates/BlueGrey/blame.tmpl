@@ -6,30 +6,29 @@
 </table>
 
 [websvn:curdirlinks] - [lang:BLAMEFOR] <b>[websvn:rev]</b>
-<p>
+<p>&nbsp;</p>
 
 [websvn-test:noaccess]
-   [lang:NOACCESS]
+	[lang:NOACCESS]
 [websvn-else]
-   <table cellpadding="2px" cellspacing="0" width="100%">
-      <tr>
-         <th class="HdrClmn"><b>[lang:LINENO]</b></th>
-         <th class="HdrClmn"><b>[lang:REV]</b></th>
-         <th class="HdrClmn"><b>[lang:AUTHOR]</b></th>
-         <th class="HdrClmnEnd"><b>[lang:LINE]</b></th>
-      </tr>
-   
-      [websvn-startlisting]
-         <tr class="[websvn:row_class]">
-            <td class="CatClmn">[websvn:lineno]</td>
-            <td class="CatClmn">[websvn:revision]</td>
-            <td class="CatClmn">[websvn:author]</td>
-            <td>[websvn:line]</td>
-         </tr>
-      [websvn-endlisting]
-   
-   </table> 
-   
-   [websvn:javascript]
-   
+<table cellpadding="2" cellspacing="0" width="100%" class="blameTbl">
+	<thead>
+		<tr>
+			<th class="HdrClmn"><b>[lang:LINENO]</b></th>
+			<th class="HdrClmn"><b>[lang:REV]</b></th>
+			<th class="HdrClmn"><b>[lang:AUTHOR]</b></th>
+			<th class="HdrClmnEnd"><b>[lang:LINE]</b></th>
+		</tr>
+	</thead>
+	<tbody>
+	[websvn-startlisting]
+	<tr class="[websvn:row_class]">
+		<th>[websvn:lineno]</th><th>[websvn:revision]</th><th>[websvn:author]</th><td>[websvn:line]</td>
+	</tr>
+	[websvn-endlisting]
+	</tbody>
+</table> 
+
+[websvn:javascript]
+
 [websvn-endtest]
