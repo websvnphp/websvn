@@ -78,7 +78,7 @@ $lang["NORESULTS"] = "Il n'y a pas de r&eacute;ponse &agrave; votre recherche da
 $lang["NOMORERESULTS"] = "Il n'y a pas plus de r&eacute;ponses &agrave; votre recherche";
 
 $lang["RSSFEEDTITLE"] = "Fil RSS de WebSVN"; 
-$lang["FILESMODIFIED"] = "fichier(s) modifi&aecute;(s)"; 
+$lang["FILESMODIFIED"] = "fichier(s) modifi&eacute;(s)"; 
 $lang["RSSFEED"] = "RSS"; 
 
 $lang["LINENO"] = "Ligne num&eacute;ro";
