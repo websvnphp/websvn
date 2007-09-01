@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<bindings xmlns="http://www.mozilla.org/xbl">
+
+<!-- provide the default path to moz-behaviors.xml (keep the #behavior suffix) -->
+<binding id="behavior" extends="moz-behaviors.xml#behavior"/>
+
+<!-- my/behaviors -->
+<binding id="autoQuote.htc" extends="#behavior"/>
+<binding id="favatar.htc" extends="#behavior"/>
+<binding id="favatar.htc|autoQuote.htc" extends="#behavior"/>
+<binding id="required-flag.htc" extends="#behavior"/>
+<!-- syntax highlighter -->
+<binding id="star-css.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-htc.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-html.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-email.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-js.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-php.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-xml.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-vbs.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-tsql.htc|star-light.htc" extends="#behavior"/>
+<binding id="star-common.htc|star-light.htc" extends="#behavior"/>
+<!-- demonstrations -->
+<binding id="test.htc" extends="#behavior"/>
+<binding id="drag-box.htc" extends="#behavior"/>
+<binding id="drag-me.htc" extends="#behavior"/>
+
+<!-- example: multiple bindings -->
+<binding id="example1.htc|example2.htc" extends="#behavior"/>
+
+<!-- example: table binding -->
+<binding id="test-td.htc" extends="#behavior"/>
+<binding id="test-table.htc" extends="moz-behaviors.xml#table">
+<implementation><constructor><![CDATA[
+// you must hard-code the table's behavior file
+//  (the path is relative to the containing page)
+this.addBehavior("/my/behaviors/test-table.htc");
+]]></constructor></implementation>
+</binding>
+
+</bindings>
