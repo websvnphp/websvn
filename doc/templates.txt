@@ -142,7 +142,7 @@ projects_select - HTML <select>...</select> specification for the project
                   options
 projects_submit - HTML <input> specification for the projects selection GO
                   button
-project_hidden  - Hidden parameters that need to be passed from this form
+projects_hidden  - Hidden parameters that need to be passed from this form
 projects_endform - HTML </form> specification for the projects selection
                    box (includes hidden field declarations)
 
