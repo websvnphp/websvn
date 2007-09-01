@@ -257,7 +257,7 @@ else
 if ($logrev != $youngest)
 {
    $logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
-   $logEntry = $logEntry->entries[0];
+   $logEntry = isset($logEntry->entries[0]) ? $logEntry->entries[0] : false;
 }
 else
    $logEntry = isset($history->entries[0]) ? $history->entries[0] : false;
@@ -313,7 +313,7 @@ else
 {
    $vars["showchangeslink"] = "";
    
-   $changes = $logEntry->mods;
+   $changes = $logEntry ? $logEntry->mods : false;
    
    $firstAdded = true;
    $firstModded = true;
