@@ -22,35 +22,38 @@
 //
 // Creates an rss feed for the given repository number
 
-include("include/feedcreator.class.php");
+include('include/feedcreator.class.php');
 
-require_once("include/setup.php");
-require_once("include/svnlook.php");
-require_once("include/utils.php");
-require_once("include/template.php");
+require_once('include/setup.php');
+require_once('include/svnlook.php');
+require_once('include/utils.php');
+require_once('include/template.php');
 
-$isDir = (@$_REQUEST["isdir"] == 1)?1:0;
+$isDir = @$_REQUEST['isdir'] == 1;
 
 $maxmessages = 20;
+
+// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML
+$feedformat = 'RSS2.0';
 
 // Find the base URL name
 if ($config->multiViews)
 {
-   $baseurl = "";
+   $baseurl = '';
 }
 else
 {
-   $baseurl = dirname($_SERVER["PHP_SELF"]);
-   if ($baseurl != "" && $baseurl != DIRECTORY_SEPARATOR && $baseurl != "\\" && $baseurl != "/" )
-      $baseurl .= "/";
+   $baseurl = dirname($_SERVER['PHP_SELF']);
+   if ($baseurl != '' && $baseurl != DIRECTORY_SEPARATOR && $baseurl != "\\" && $baseurl != '/' )
+      $baseurl .= '/';
    else
-      $baseurl = "/";
+      $baseurl = '/';
 }
 
 $svnrep = new SVNRepository($rep);
 
-if ($path == "" || $path{0} != "/")
-   $ppath = "/".$path;
+if ($path == '' || $path{0} != '/')
+   $ppath = '/'.$path;
 else
    $ppath = $path;
 
@@ -58,114 +61,97 @@ else
 if (!$rep->hasReadAccess($path, false))
    exit;
 
-$url = $config->getURL($rep, $path, "log");
-$listurl = $config->getURL($rep, $path, "dir");
+$listurl = $config->getURL($rep, $path, 'dir');
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $rev, "", false, 20);
-$youngest = $history->entries[0]->rev;
+$history = $svnrep->getLog($path, $rev, '', false, $maxmessages);
 
 // Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
 $cachename = strtr(getFullURL($listurl), ":/\\?", "____");
-$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR.$cachename.@$_REQUEST["rev"]."_rssfeed.xml";
+$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$cachename.@$_REQUEST['rev'].'_rssfeed.xml';
 
 $rss = new UniversalFeedCreator();
-$rss->useCached("RSS2.0", $cachename);
+$rss->useCached($feedformat, $cachename);
 $rss->title = $rep->getDisplayName();
-$rss->description = "${lang["RSSFEEDTITLE"]} - $repname";
+$rss->description = $lang['RSSFEEDTITLE'].' - '.$repname;
 $rss->link = html_entity_decode(getFullURL($baseurl.$listurl));
 $rss->syndicationURL = $rss->link;
-$rss->xslStyleSheet = ""; //required for UniversalFeedCreator since 1.7
-$rss->cssStyleSheet = ""; //required for UniversalFeedCreator since 1.7
+$rss->xslStyleSheet = ''; //required for UniversalFeedCreator since 1.7
+$rss->cssStyleSheet = ''; //required for UniversalFeedCreator since 1.7
 
-//$divbox = "<div>";
-//$divfont = "<span>";
-
-foreach ($history->entries as $r)
+if ($history && is_array($history->entries))
 {
-   $thisrev = $r->rev;
-   $changes = $r->mods;
-   $files = count($changes);
-
-   // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
-   $rpath = $r->path;
-   if ($isDir && $rpath{strlen($rpath) - 1} != "/")
-      $rpath .= "/";
-   
-   // Find the parent path (or the whole path if it's already a directory)
-   $pos = strrpos($rpath, "/");
-   $parent = substr($rpath, 0, $pos + 1);
- 
-   $url = $config->getURL($rep, $parent, "dir");
-   
-   $desc = $r->msg;
-   $item = new FeedItem();
-   
-   // For the title, we show the first 10 words of the description
-   $pos = 0;
-   $len = strlen($desc);
-   for ($i = 0; $i < 10; $i++)
+   foreach ($history->entries as $r)
    {
-      if ($pos >= $len) break;
+      $thisrev = $r->rev;
+      $changes = $r->mods;
+      $files = count($changes);
       
-      $pos = strpos($desc, " ", $pos);
+      // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
+      $rpath = $r->path;
+      if ($isDir && $rpath{strlen($rpath) - 1} != '/')
+         $rpath .= '/';
       
-      if ($pos === FALSE) break;
-      $pos++;
-   }
-   
-   if ($pos !== FALSE)
-   {
-      $sdesc = substr($desc, 0, $pos) . "...";
-   }
-   else
-   {
-      $sdesc = $desc;
-   }
-   
-   if ($desc == "") $sdesc = "${lang["REV"]} $thisrev";
-   
-   $item->title = "$sdesc";
-   $item->link = html_entity_decode(getFullURL($baseurl."${url}rev=$thisrev&amp;sc=$showchanged"));
-   $item->description = "<div><strong>${lang["REV"]} $thisrev - ".$r->author."</strong> ($files ${lang["FILESMODIFIED"]})</div><div>".nl2br(create_anchors($desc))."</div>";
-
-   if ($showchanged)
-   {
-      usort($changes, array('SVNLogEntry', 'compare'));
+      // Find the parent path (or the whole path if it's already a directory)
+      $pos = strrpos($rpath, '/');
+      $parent = substr($rpath, 0, $pos + 1);
       
-      foreach ($changes as $file)
+      $url = $config->getURL($rep, $parent, 'dir');
+      
+      $desc = $r->msg;
+      $item = new FeedItem();
+      
+      // For the title, we show the first 10 words of the description
+      $pos = 0;
+      $len = strlen($desc);
+      for ($i = 0; $i < 10; $i++)
       {
-         switch ($file->action)
+         if ($pos >= $len) break;
+         
+         $pos = strpos($desc, ' ', $pos);
+         
+         if ($pos === false) break;
+         $pos++;
+      }
+      
+      if ($pos !== false)
+      {
+         $desc = substr($desc, 0, $pos) . '...';
+      }
+      
+      if ($desc == '') $desc = $lang['REV'].' '.$thisrev;
+      
+      $item->title = $desc;
+      $item->link = html_entity_decode(getFullURL($baseurl.$url.'rev='.$thisrev.'&amp;sc='.$showchanged));
+      $item->description = '<div><strong>'.$lang['REV'].' '.$thisrev.' - '.$r->author.'</strong> ('.$files.' '.$lang['FILESMODIFIED'].')</div><div>'.nl2br(create_anchors($desc)).'</div>';
+      
+      if ($showchanged)
+      {
+         usort($changes, array('SVNLogEntry', 'compare'));
+         
+         foreach ($changes as $file)
          {
-            case "A":
-               $item->description .= "+ ".$file->path."<br />";  
-               break;
-                                     
-            case "M":
-               $item->description .= "~ ".$file->path."<br />";  
-               break;
-                                     
-   
-            case "D":
-               $item->description .= "- ".$file->path."<br />";  
-               break;
-                                     
+            switch ($file->action)
+            {
+               case 'A': $item->description .= '+ '; break;
+               case 'M': $item->description .= '~ '; break;
+               case 'D': $item->description .= '- '; break;
+            }
+            $item->description .= $file->path.'<br />';
          }
       }
+   
+      $item->date = $r->committime;
+      $item->author = $r->author;
+      $item->guid = sha1($item->link);
+      
+      $rss->addItem($item);
    }
-
-   $item->date = $r->committime;
-   $item->author = $r->author;
-   $item->guid = sha1($item->link);
-     
-   $rss->addItem($item);
 }
 
-// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML
-
 // Save the feed
-$rss->saveFeed("RSS2.0",$cachename, false);
-header("Content-Type: application/xml");
-echo $rss->createFeed("RSS2.0");
+$rss->saveFeed($feedformat, $cachename, false);
+header('Content-Type: application/xml');
+echo $rss->createFeed($feedformat);
 
 ?>
