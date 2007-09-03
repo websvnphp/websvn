@@ -49,7 +49,7 @@ if (empty($rev))
 // unlikely to occure race condition
 
 $tmpname = tempnam("temp", "wsvn");
-unlink($tmpname);
+@unlink($tmpname);
 
 if (mkdir($tmpname))
 {
