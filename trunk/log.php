@@ -90,7 +90,7 @@ $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", true);
-$youngest = $history->entries[0]->rev;
+$youngest = isset($history->entries[0]) ? $history->entries[0]->rev : 0;
 
 if (empty($rev))
    $rev = $youngest;
@@ -176,14 +176,21 @@ if (!empty($history))
       if ($lastrevindex > $revisions - 1) $lastrevindex = $revisions - 1;
    }
    
-   $history = $svnrep->getLog($path, $history->entries[$firstrevindex ]->rev,  $history->entries[$lastrevindex]->rev, false, 0);
+   $brev = isset($history->entries[$firstrevindex ]) ? $history->entries[$firstrevindex ]->rev : false;
+   $erev = isset($history->entries[$lastrevindex]) ? $history->entries[$lastrevindex]->rev : false;
+   
+   $entries = array();
+   if ($brev && $erev) {
+      $history = $svnrep->getLog($path, $brev, $erev, false, 0);
+      $entries = $history->entries;
+   }
    
    $row = 0;
    $index = 0;
    $listing = array();
    $found = false;
    
-   foreach ($history->entries as $r)
+   foreach ($entries as $r)
    {
       // Assume a good match
       $match = true;

@@ -390,8 +390,8 @@ if ($prevrev)
    }
 
    // Remove our temporary files
-   unlink($oldtname);
-   unlink($newtname);
+   @unlink($oldtname);
+   @unlink($newtname);
 }
 else
 {
