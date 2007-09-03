@@ -571,7 +571,7 @@ Class SVNRepository
          $tmpStr = file_get_contents($tmp);
          $tmpStr = str_replace(array("\r\n"), array("\n"), $tmpStr);
          highlight_string($tmpStr);
-         unlink($tmp);
+         @unlink($tmp);
       }
       else
       {  
