@@ -45,6 +45,7 @@ $languages = array(
 	'sl'    => array('slovenian', 'Slovenian', 'Sloven&#269;ina'),
 	'es'    => array('spanish', 'Spanish', 'Espa&ntilde;ol'),
 	'sv'    => array('swedish', 'Swedish', 'Svenska'),
+	'uz'    => array('uzbek', 'Uzbek', 'O‘zbekcha'),
 	'zh-TW' => array('tchinese', 'Traditional Chinese', '&#20013;&#25991;'),
 	'tr'    => array('turkish', 'Turkish', 'T&uuml;rk&ccedil;e'),
 );
