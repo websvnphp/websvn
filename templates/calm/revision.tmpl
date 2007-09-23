@@ -1,0 +1,65 @@
+<div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
+<h1><a href="[websvn:indexurl]" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
+
+<h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
+<p>
+[websvn-test:goyoungesturl]
+	<span class="goyoungest"><a href="[websvn:goyoungesturl]">[lang:GOYOUNGEST]</a></span> &#124;
+[websvn-endtest]
+	<span class="listing"><a href="[websvn:listingurl]">[lang:LISTING]</a></span> &#124;
+	<span class="log"><a href="[websvn:logurl]">[lang:VIEWLOG]</a></span> &#124;
+[websvn-test:compareurl]
+	<span class="diff"><a href="[websvn:compareurl]">[lang:DIFFPREV]</a></span> &#124;
+[websvn-endtest]
+[websvn-test:rssurl]
+    <span class="feed"><a href="[websvn:rssurl]">[lang:RSSFEED]</a></span>
+[websvn-endtest]
+</p>
+
+<div id="info">
+<h2>[lang:LASTMOD]</h2>
+  <ul>
+    <li>[lang:REV] [websvn:lastchangedrev], [websvn:date]</li>
+    <li><strong>[lang:AUTHOR]:</strong> [websvn:author]</li>
+    <li><dl><dt><strong>[lang:LOGMSG]:</strong></dt><dd>[websvn:log]</dd></dl></li>
+  </ul>
+</div>
+
+<div id="wrap">
+   <table>
+   	<colgroup>
+   		<col width="*" />
+   		<col width="16px" />
+   		<col width="16px" />
+   		<col width="16px" />
+   	</colgroup>
+      <thead>
+      <tr align="left" valign="middle">
+        <th scope="col" class="path" colspan="4">[lang:PATH]</th>
+      </tr>
+      </thead>
+      <tbody>
+      [websvn-startlisting]
+      <tr class="row[websvn:rowparity]">
+         <td>
+         	[websvn-test:modified]
+         		<a href="[websvn:detailurl]" class="modified">
+         	[websvn-endtest]
+         	[websvn-test:added]
+         		<a href="[websvn:detailurl]" class="added">
+         	[websvn-endtest]
+         	[websvn-test:deleted]
+         		<a href="[websvn:detailurl]" class="deleted">
+         	[websvn-endtest]
+         		
+         		[websvn:file]</a>
+         </td>
+         <td><a href="[websvn:logurl]" title="[lang:VIEWLOG]"><img src="[websvn:locwebsvnhttp]/templates/calm/images/log.png" class="icon" alt="" /></a></td>
+         <td><a href="[websvn:diffurl]" title="[lang:DIFFPREV]"><img src="[websvn:locwebsvnhttp]/templates/calm/images/diff.png" class="icon" alt="" /></a></td>
+         <td><a href="[websvn:blameurl]" title="[lang:BLAME]"><img src="[websvn:locwebsvnhttp]/templates/calm/images/blame.png" class="icon" alt="" /></a></td>
+      </tr>
+      [websvn-endlisting]
+    </tbody>
+
+   </table>
+</div>

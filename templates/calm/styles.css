@@ -287,12 +287,25 @@ dd.curdir pre {
   display:none;
   }
 li.mod a, li.new a, #info li.del {
-  
   padding:5px 5px 5px 26px;
   margin:2px 0 2px -2px;
   background-position:5px 50%;
   background-repeat:no-repeat;
-  }
+}
+a.modified, a.added, a.deleted {
+  padding-left: 26px;
+  background-position:5px 50%;
+  background-repeat:no-repeat;
+}
+a.modified {
+  background-image:url(images/page_white_edit.png);  
+}
+a.added {
+  background-image:url(images/page_white_add.png);  
+}
+a.deleted {
+  background-image:url(images/page_white_delete.png);  
+}
 li.mod a {
   display:block;
   color:#545400;
@@ -342,7 +355,7 @@ table {
 } 
 tbody tr td {  
   padding:0;
-  text-align:center;
+  text-align:left;
 }
 thead tr {
   background:#4d4d4d;
@@ -404,6 +417,50 @@ tbody tr.row0 td {
 }
 tbody tr.row0:hover td {
   background-color:khaki;
+}
+span.listing a, a.listing {
+  padding-left:22px;
+  background-image:url(images/sitemap_color.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.detail a {
+  padding-left:22px;
+  background-image:url(images/file.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.changes a {
+  padding-left:22px;
+  background-image:url(images/page_white_edit.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.compact a {
+  padding-left:22px;
+  background-image:url(images/arrow_in.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.full a {
+  padding-left:22px;
+  background-image:url(images/arrow_out.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.log a,
+td.log a {
+  padding-left:22px;
+  background-image:url(images/log.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.blame a,
+td.blame a {
+  padding-left:22px;
+  background-image:url(images/blame.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
 }
 li.compress a,
 span.compress a,
