@@ -231,6 +231,10 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 //
 // $config->allowDownload();
 //
+// Change the line below to set the temporary directory where to store generated tarball.
+//
+// $config->setTarballTmpDir('temp');
+//
 // To change the global option for individual repositories, uncomment and replicate
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
 // Use the convention 'groupname.myrep' if your repository is in a group.

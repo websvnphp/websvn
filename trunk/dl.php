@@ -48,7 +48,7 @@ if (empty($rev))
 // Create a temporary directory.  Here we have an unavoidable but highly
 // unlikely to occure race condition
 
-$tmpname = tempnam("temp", "wsvn");
+$tmpname = tempnam($config->getTarballTmpDir(), "wsvn");
 @unlink($tmpname);
 
 if (mkdir($tmpname))
