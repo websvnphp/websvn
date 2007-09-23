@@ -121,7 +121,7 @@ if (!empty($cont) && $rep->hasReadAccess($path, false))
 $url = $config->getURL($rep, $path, "file");
 
 if ($rev != $youngest)
-   $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
+   $vars["goyoungestlink"] = "<a href=\"${url}\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
 
@@ -130,18 +130,18 @@ $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars["rev"] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
 $vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-createDirLinks($rep, $ppath, $passrev, $showchanged);
+createDirLinks($rep, $ppath, $passrev);
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
 
 $url = $config->getURL($rep, $path, "log");
-$vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
+$vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
 $url = $config->getURL($rep, $path, "diff");
-$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>";
 
 $url = $config->getURL($rep, $path, "blame");
-$vars["blamelink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">${lang["BLAME"]}</a>";
+$vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
 
 $listing = array ();
 

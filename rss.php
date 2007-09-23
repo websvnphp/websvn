@@ -96,7 +96,7 @@ if ($history && is_array($history->entries))
       $pos = strrpos($rpath, '/');
       $parent = substr($rpath, 0, $pos + 1);
       
-      $url = $config->getURL($rep, $parent, 'dir');
+      $url = $config->getURL($rep, $parent, 'revision');
       
       $desc = $r->msg;
       $item = new FeedItem();
@@ -122,10 +122,10 @@ if ($history && is_array($history->entries))
       if ($desc == '') $desc = $lang['REV'].' '.$thisrev;
       
       $item->title = $desc;
-      $item->link = html_entity_decode(getFullURL($baseurl.$url.'rev='.$thisrev.'&amp;sc='.$showchanged));
+      $item->link = html_entity_decode(getFullURL($baseurl.$url.'rev='.$thisrev));
       $item->description = '<div><strong>'.$lang['REV'].' '.$thisrev.' - '.$r->author.'</strong> ('.$files.' '.$lang['FILESMODIFIED'].')</div><div>'.nl2br(create_anchors($desc)).'</div>';
       
-      if ($showchanged)
+      if (true)
       {
          usort($changes, array('SVNLogEntry', 'compare'));
          

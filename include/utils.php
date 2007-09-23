@@ -26,7 +26,7 @@
 //
 // Create a list of links to the current path that'll be available from the template
 
-function createDirLinks($rep, $path, $rev, $showchanged)
+function createDirLinks($rep, $path, $rev)
 {
    global $vars, $config;
 
@@ -53,7 +53,7 @@ function createDirLinks($rep, $path, $rev, $showchanged)
    {
       $sofar .= html_entity_decode($subs[$n])."/";
       $sofarurl = $config->getURL($rep, $sofar, "dir");
-      $vars["curdirlinks"] .= "[<a href=\"${sofarurl}rev=$rev&amp;sc=$showchanged\">".$subs[$n]."/</a>] ";
+      $vars["curdirlinks"] .= "[<a href=\"${sofarurl}rev=$rev\">".$subs[$n]."/</a>] ";
    }
    
    if ($dir)
