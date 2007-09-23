@@ -64,3 +64,8 @@ a:hover, a:active {
 	margin-right: 20px;
 	padding: 5px;
 }
+
+em {
+	font-style: normal;
+	color: #e25f53;
+}
