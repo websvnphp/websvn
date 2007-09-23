@@ -86,7 +86,7 @@ if ($file = fopen($tfname, 'r'))
 
    $ent = true;
    $extension = strrchr(basename($path), '.');
-   if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript))
+   if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript || $config->useGeshi))
       $ent = false;
 
    if ($blame = fopen($tbname, 'r'))      

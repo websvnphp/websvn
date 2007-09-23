@@ -497,6 +497,7 @@ Class Config
    var $serverIsWindows = false;
    var $multiViews = false;
    var $useEnscript = false;
+   var $useGeshi = false;
    var $allowDownload = false;
    var $minDownloadLevel = 0;
    var $allowedExceptions = array();
@@ -636,6 +637,19 @@ Class Config
    function getUseEnscript()
    {
       return $this->useEnscript;
+   }
+
+   // useGeshi
+   //
+   // Use GeSHi to colourise listings
+   function useGeshi()
+   {
+      $this->useGeshi = true;
+   }
+
+   function getUseGeshi()
+   {
+      return $this->useGeshi;
    }
 
    // }}}
