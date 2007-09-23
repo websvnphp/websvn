@@ -52,25 +52,25 @@ $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-createDirLinks($rep, $ppath, $rev, $showchanged);
+createDirLinks($rep, $ppath, $rev);
 
 $url = $config->getURL($rep, $path, "file");
 
 if ($rev != $youngest)
-   $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
+   $vars["goyoungestlink"] = '<a href="'.$url.'">'.$lang["GOYOUNGEST"].'</a>';
 else
    $vars["goyoungestlink"] = "";
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
 
 $url = $config->getURL($rep, $path, "file");
-$vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
+$vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
 
 $url = $config->getURL($rep, $path, "log");
-$vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
+$vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
 $url = $config->getURL($rep, $path, "diff");
-$vars["prevdifflink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+$vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
 
 $listing = array();
 
@@ -111,8 +111,8 @@ if ($file = fopen($tfname, 'r'))
             
             if ($last_rev <> $revision)
             {
-               $url = $config->getURL($rep, $parent, 'dir');
-               $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision&amp;sc=1\">$revision</a>";
+               $url = $config->getURL($rep, $parent, 'revision');
+               $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision\">$revision</a>";
                $seen_rev[$revision] = 1;
                $row_class = ($row_class == 'light') ? 'dark' : 'light';
                $listing[$index]['author'] = $author;
@@ -211,6 +211,8 @@ foreach($seen_rev as $key => $val)
    }
 }
 $vars['javascript'] .= "/* ]]> */\n</script>";
+
+// ob_start('ob_gzhandler');
 
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'blame.tmpl',  $vars, $listing);

@@ -357,12 +357,11 @@ else
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST["rev"];
-$showchanged = (@$_REQUEST["sc"] == 1)?1:0;
 
 // Function to create the project selection HTML form
 function createProjectSelectionForm()
 { 
-   global $config, $vars, $rep, $lang, $showchanged;
+   global $config, $vars, $rep, $lang;
    
    $url = $config->getURL(-1, "", "form");
    $vars["projects_form"] = "<form action=\"$url\" method=\"post\" id=\"projectform\">";
@@ -386,8 +385,8 @@ function createProjectSelectionForm()
    $vars["projects_select"] .= "</select>";
    
    $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-   $vars["projects_hidden"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\" /><input type=\"hidden\" name=\"op\" value=\"form\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" />";
-$vars["projects_endform"] = "</form>";   
+   $vars["projects_hidden"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\" /><input type=\"hidden\" name=\"op\" value=\"form\" />";
+   $vars["projects_endform"] = "</form>";   
 }
 
 // Create the form if we're not in MultiViews.  Otherwise wsvn must create the form once the current project has

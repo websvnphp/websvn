@@ -66,29 +66,29 @@ $vars["prevrev"] = $prevrev;
 $vars["rev1"] = $history->entries[0]->rev;
 $vars["rev2"] = $prevrev;
 
-createDirLinks($rep, $ppath, $rev, $showchanged);
+createDirLinks($rep, $ppath, $rev);
 
 $listing = array();
 
 $url = $config->getURL($rep, $path, "file");
 if ($rev != $youngest)
-   $vars["goyoungestlink"] = "<a href=\"${url}sc=1\">${lang["GOYOUNGEST"]}</a>";
+   $vars["goyoungestlink"] = '<a href="'.$url.'">'.$lang['GOYOUNGEST'].'</a>';
 else
    $vars["goyoungestlink"] = "";
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
 
 $url = $config->getURL($rep, $path, "file");
-$vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
+$vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
 
 $url = $config->getURL($rep, $path, "log");
-$vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
+$vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
 $url = $config->getURL($rep, $path, "diff");
-$vars["prevdifflink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+$vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
 
 $url = $config->getURL($rep, $path, "blame");
-$vars["blamelink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["BLAME"]}</a>";
+$vars["blamelink"] = "<a href=\"${url}rev=$rev\">${lang["BLAME"]}</a>";
 
 if ($prevrev)
 {
@@ -96,21 +96,21 @@ if ($prevrev)
    
    if (!$all)
    {
-      $vars["showalllink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;all=1\">${lang["SHOWENTIREFILE"]}</a>";
+      $vars["showalllink"] = "<a href=\"${url}rev=$rev&amp;all=1\">${lang["SHOWENTIREFILE"]}</a>";
       $vars["showcompactlink"] = "";
    }
    else
    {
-      $vars["showcompactlink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;all=0\">${lang["SHOWCOMPACT"]}</a>";
+      $vars["showcompactlink"] = "<a href=\"${url}rev=$rev&amp;all=0\">${lang["SHOWCOMPACT"]}</a>";
       $vars["showalllink"] = "";
    }
 
    // Get the contents of the two files
    $newtname = tempnam("temp", "");
-   $new = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, "", true);
+   $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, "", true);
 
    $oldtname = tempnam("temp", "");
-   $old = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, "", true);
+   $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, "", true);
    
    $ent = true;
    $extension = strrchr(basename($path), ".");
@@ -397,7 +397,7 @@ else
 {
    $vars["noprev"] = 1;
    $url = $config->getURL($rep, $path, "file");
-   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp\">${lang["SHOWENTIREFILE"]}.</a>";
+   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev\">${lang["SHOWENTIREFILE"]}.</a>";
 }
 
 $vars["version"] = $version;

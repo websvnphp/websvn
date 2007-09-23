@@ -79,7 +79,7 @@ if (!@$_REQUEST["manualorder"] && is_numeric($rev1) && is_numeric($rev2))
    }
 }
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
 
 $url = $config->getURL($rep, "/", "comp");
 $vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&amp;compare%5B%5D=".urlencode($path1)."@$rev1&manualorder=1\">${lang["REVCOMP"]}</a>";
@@ -95,7 +95,7 @@ $vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev
 $vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"".htmlentities($path2, ENT_QUOTES, 'UTF-8')."\" />";
 $vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\" />";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"manualorder\" value=\"1\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"manualorder\" value=\"1\" /></form>";   
 
 # safe paths are a hack for fixing XSS sploit
 $vars["path1"] = htmlentities($path1, ENT_QUOTES, 'UTF-8');
@@ -262,8 +262,12 @@ if (!$noinput)
                
             $node = trim($line);
             $node = substr($node, 7);
+            if ($node == '' || $node{0} != '/') $node = '/'.$node;
       
             $listing[$index]["newpath"] = $node;
+            
+            $listing[$index]["fileurl"] = $config->getURL($rep, $node, "file").'rev='.$rev2;
+            
             if ($debug) echo "Creating node $node<br />";
             
             // Skip past the line of ='s

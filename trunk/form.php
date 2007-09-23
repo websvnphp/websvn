@@ -55,9 +55,9 @@ if (@$_REQUEST["selectproj"])
    $url = html_entity_decode($url);
    
    if ($config->multiViews)
-      redirect($url."sc=$showchanged");
+      redirect($url);
    else
-      redirect($basedir.$url."sc=$showchanged");   
+      redirect($basedir.$url);   
 }
 
 
