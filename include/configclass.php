@@ -499,6 +499,7 @@ Class Config
    var $useEnscript = false;
    var $useGeshi = false;
    var $allowDownload = false;
+   var $tarballTmpDir = 'temp';
    var $minDownloadLevel = 0;
    var $allowedExceptions = array();
    var $disallowedExceptions = array();
@@ -711,6 +712,16 @@ Class Config
       return $this->allowDownload;
    }
 
+   function setTarballTmpDir($tmpdir)
+   {
+      $this->tarballTmpDir = $tmpdir;
+   }
+
+   function getTarballTmpDir()
+   {
+      return $this->tarballTmpDir;
+   }
+   
    function setMinDownloadLevel($level, $myrep = 0)
    {
       if (empty($myrep))
