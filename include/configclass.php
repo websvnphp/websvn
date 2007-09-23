@@ -758,7 +758,7 @@ Class Config
    //
    // Get the URL to a path name based on the current config
    
-   function getURL($rep, $path, $op)
+   function getURL($rep, $path, $op, $key = null, $value = null)
    {  
       $base = $_SERVER["SCRIPT_NAME"];
       
@@ -801,6 +801,10 @@ Class Config
                
             case "dir":
                $fname = "listing.php";
+               break;
+               
+            case "revision":
+               $fname = "revision.php";
                break;
                
             case "file":

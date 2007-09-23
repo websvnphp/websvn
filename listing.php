@@ -35,7 +35,7 @@ function removeURLSeparator($url)
 
 function fileLink($path, $file, $returnjoin = false)
 {
-   global $rep, $passrev, $showchanged, $config;
+   global $rep, $passrev, $config;
    
    if ($path == "" || $path{0} != "/")
       $ppath = "/".$path;
@@ -56,7 +56,6 @@ function fileLink($path, $file, $returnjoin = false)
    $isDir = $pfile{strlen($pfile) - 1} == "/";
       
    if ($passrev) $passrevstr = "rev=$passrev&amp;"; else $passrevstr = "";
-   if ($showchanged) $showchangedstr = "sc=$showchanged"; else $showchangedstr = "";
 
    if ($isDir)
    {
@@ -64,7 +63,7 @@ function fileLink($path, $file, $returnjoin = false)
 
       // XHTML doesn't allow slashes in IDs ~J
       $id = str_replace('/', '_', $ppath.$pfile);
-      $url = "<a id='$id' href=\"${url}$passrevstr$showchangedstr";
+      $url = "<a id='$id' href=\"${url}$passrevstr";
 
       $url = removeURLSeparator($url);
       if ($config->treeView) $url .= "#$id";
@@ -73,7 +72,7 @@ function fileLink($path, $file, $returnjoin = false)
    else
    {
       $url = $config->getURL($rep, $ppath.$pfile, "file");
-      $url .= $passrevstr.$showchangedstr;
+      $url .= $passrevstr;
       $url = removeURLSeparator($url);
       $url = "<a href=\"${url}\">$pfile</a>";
    }
@@ -83,7 +82,7 @@ function fileLink($path, $file, $returnjoin = false)
 
 function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $treeview = true)
 {
-   global $rep, $passrev, $showchanged, $config, $lang;
+   global $rep, $passrev, $config, $lang;
 
    $path = "";
 
@@ -124,9 +123,10 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
             {
                $dlurl = $config->getURL($rep, $path.$file, "dl"); 
                $listing[$index]["fileviewdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
+               $listing[$index]['downloadurl'] = $dlurl.'rev='.$passrev.'&amp;isdir=1';
             }
             else 
-               $listing[$index]["fileviewdllink"] = "&nbsp;";
+               $listing[$index]['downloadurl'] = '';
          }
       }
       else
@@ -140,7 +140,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
                continue;
             }
             
-            $listing[$index]["fileviewdllink"] = "&nbsp;";
+            $listing[$index]['downloadurl'] = '';
             $listing[$index]["filetype"] = strtolower(strrchr($file, "."));
          }   
       }
@@ -172,15 +172,23 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
          $listing[$index]["node"] = 0; // t-node
       
          $fileurl = $config->getURL($rep, $path.$file, "log");
-         $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
+         $listing[$index]["fileviewloglink"] = "<a href=\"${fileurl}rev=$passrev&amp;isdir=$isDir\">${lang["VIEWLOG"]}</a>";
+         $listing[$index]['logurl'] = $fileurl.'rev='.$passrev.'&amp;isdir='.$isDir;
       
-         $rssurl = $config->getURL($rep, $path.$file, "rss");
          if ($rep->getHideRss())
          {
-            $listing[$index]["rsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["RSSFEED"]}</a>";
-            $listing[$index]["rssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=$isDir\">";
+            $rssurl = $config->getURL($rep, $path.$file, 'rss');
+            $listing[$index]['rssurl'] = $rssurl.'rev='.$passrev.'&amp;isdir='.$isDir;
          }
-      
+         
+         $logEntry = $svnrep->getLog($path.$file, $rev);
+         $logEntry = $logEntry->entries[0];
+         
+         $listing[$index]['revision'] = 'rev';
+         $listing[$index]['author'] = 'author';
+         $listing[$index]['logmessage'] = 'message';
+         $listing[$index]['age'] = 'age';
+         
          $index++;
          $loop++;
          $last_index = $index;
@@ -280,16 +288,17 @@ else
 
 $vars["repname"] = $rep->getDisplayName();
 
-$dirurl = $config->getURL($rep, $path, "dir");
-$logurl = $config->getURL($rep, $path, "log");
-$rssurl = $config->getURL($rep, $path, "rss");
-$dlurl = $config->getURL($rep, $path, "dl");
 $compurl = $config->getURL($rep, "/", "comp");
+$revisionurl = $config->getURL($rep, $path, 'revision');
 
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1)
-   $vars["goyoungestlink"] = "<a href=\"${dirurl}opt=dir&amp;sc=1\">${lang["GOYOUNGEST"]}</a>";
+{
+   $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'opt=dir';
+}
 else
-   $vars["goyoungestlink"] = "";
+{
+   $vars['goyoungesturl'] = '';
+}
 
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
@@ -300,96 +309,26 @@ $vars["lastchangedrev"] = $logrev;
 $vars["date"] = $logEntry ? $logEntry->date : '';
 $vars["author"] = $logEntry ? $logEntry->author : '';
 $vars["log"] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
+$vars["changesurl"] = $revisionurl.'rev='.$passrev;
 
-if (!$showchanged)
-{
-   $vars["showchangeslink"] = "<a href=\"${dirurl}rev=$passrev&amp;sc=1\">${lang["SHOWCHANGED"]}</a>";
-   $vars["hidechangeslink"] = "";
+createDirLinks($rep, $ppath, $passrev);
 
-   $vars["hidechanges"] = true;
-   $vars["showchanges"] = false;
-}
-else
-{
-   $vars["showchangeslink"] = "";
-   
-   $changes = $logEntry ? $logEntry->mods : false;
-   
-   $firstAdded = true;
-   $firstModded = true;
-   $firstDeleted = true;
+$logurl = $config->getURL($rep, $path, "log");
+$vars['logurl'] = $logurl.'rev='.$passrev.'&amp;isdir=1';
 
-   $vars["newfilesbr"] = "";
-   $vars["newfiles"] = "";
-   $vars["changedfilesbr"] = "";
-   $vars["changedfiles"] = "";
-   $vars["deletedfilesbr"] = "";
-   $vars["deletedfiles"] = "";
-
-   if (!is_array($changes)) $changes = array();
-   
-   usort($changes, array('SVNLogEntry', 'compare'));
-
-   foreach ($changes as $file)
-   {
-      switch ($file->action)
-      {
-         case "A":
-            if (!$firstAdded) $vars["newfilesbr"] .= "<br />";
-            $firstAdded = false;
-            $vars["newfilesbr"] .= fileLink("", $file->path);
-            $vars["newfiles"] .= " ".fileLink("", $file->path);
-            break;
-                     
-         case "M":
-            if (!$firstModded) $vars["changedfilesbr"] .= "<br />";
-            $firstModded = false;
-            $vars["changedfilesbr"] .= fileLink("", $file->path);
-            $vars["changedfiles"] .= " ".fileLink("", $file->path);
-            break;
-
-         case "D":
-            if (!$firstDeleted) $vars["deletedfilesbr"] .= "<br />";
-            $firstDeleted = false;
-            $vars["deletedfilesbr"] .= $file->path;
-            $vars["deletedfiles"] .= " ".$file->path;
-            break;
-      }
-   }
-      
-   $vars["hidechangeslink"] = "<a href=\"${dirurl}rev=$passrev&amp;sc=0\">${lang["HIDECHANGED"]}</a>";
-   
-   $vars["hidechanges"] = false;
-   $vars["showchanges"] = true;
-}
-
-createDirLinks($rep, $ppath, $passrev, $showchanged);
-$vars["curdirloglink"] = "<a href=\"${logurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["VIEWLOG"]}</a>";
-
-$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
 
 if ($rev != $headrev)
 {
    $history = $svnrep->getLog($path, $rev, "", false);
 }
 
-if (isset($history->entries[1]->rev))
-{
-	$vars["curdircomplink"] = "<a href=\"${compurl}compare[]=".
-	 						        urlencode($history->entries[1]->path)."@".$history->entries[1]->rev.
-							        "&amp;compare[]=".urlencode($history->entries[0]->path)."@".$history->entries[0]->rev.
-							        "\">${lang["DIFFPREV"]}</a>";
-}
-else
-{
-	$vars["curdircomplink"] = "";
-} 
-
 if ($rep->getHideRss())
 {
-   $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">${lang["RSSFEED"]}</a>";
-   $vars["curdirrsshref"] = "${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1";
-   $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;sc=$showchanged&amp;isdir=1\">";
+   $rssurl = $config->getURL($rep, $path, "rss");
+   // $vars["curdirrsslink"] = "<a href=\"${rssurl}isdir=1\">${lang["RSSFEED"]}</a>";
+   $vars['rssurl'] = $rssurl.'isdir=1';
+   // $vars["curdirrssanchor"] = "<a href=\"${rssurl}isdir=1\">";
 }
 
 // Set up the tarball link
@@ -397,15 +336,22 @@ if ($rep->getHideRss())
 $subs = explode("/", $path);
 $level = count($subs) - 2;
 if ($rep->isDownloadAllowed($path))
+{
+   $dlurl = $config->getURL($rep, $path, "dl");
    $vars["curdirdllink"] = "<a href=\"${dlurl}rev=$passrev&amp;isdir=1\">${lang["TARBALL"]}</a>";
+   $vars['downloadurl'] = $dlurl.'rev='.$passrev.'&amp;isdir=1';
+}
 else
-   $vars["curdirdllink"] = "";
-   
+{
+   $vars["curdirdllink"] = '';
+   $vars['downloadurl'] = '';
+}
+  
 $url = $config->getURL($rep, "/", "comp");
 
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /></form>";   
 
 $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);

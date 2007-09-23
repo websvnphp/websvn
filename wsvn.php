@@ -113,6 +113,10 @@ if ($config->multiViews)
          $file = "listing.php";
          break;
          
+      case "revision":
+         $file = "revision.php";
+         break;
+         
       case "file":
          $file = "filedetails.php";
          break;

@@ -105,26 +105,26 @@ $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars["rev"] = $rev;
 $vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-createDirLinks($rep, $ppath, $passrev, $showchanged);
+createDirLinks($rep, $ppath, $passrev);
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index').'sc='.$showchanged;
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
 
 if (!$isDir)
 {
    $url = $config->getURL($rep, $path, "file");
-   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
+   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
    
    $url = $config->getURL($rep, $path, "diff");
-   $vars["prevdifflink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged\">${lang["DIFFPREV"]}</a>";
+   $vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
    
    $url = $config->getURL($rep, $path, "blame");
-   $vars["blamelink"] = "<a href=\"${url}rev=$passrev&amp;sc=$showchanged\">${lang["BLAME"]}</a>";
+   $vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
 }
 
 $logurl = $config->getURL($rep, $path, "log");
 
 if ($rev != $youngest)
-   $vars["goyoungestlink"] = "<a href=\"${logurl}sc=1&amp;isdir=$isDir\">${lang["GOYOUNGEST"]}</a>";
+   $vars["goyoungestlink"] = "<a href=\"${logurl}isdir=$isDir\">${lang["GOYOUNGEST"]}</a>";
 else
    $vars["goyoungestlink"] = "";
 
@@ -238,26 +238,26 @@ if (!empty($history))
          $pos = strrpos($rpath, "/");
          $parent = substr($rpath, 0, $pos + 1);
       
-         $url = $config->getURL($rep, $parent, "dir");
-         $listing[$index]["revlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=1\">$thisrev</a>";
+         $url = $config->getURL($rep, $parent, "revision");
+         $listing[$index]["revlink"] = "<a href=\"${url}rev=$thisrev\">$thisrev</a>";
       
          if ($isDir)
          {
             $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@$thisrev\" onclick=\"checkCB(this)\" />";
             $url = $config->getURL($rep, $rpath, "dir"); 
-            $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=$showchanged\">$rpath</a>";
+            $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev\">$rpath</a>";
          }
          else
          {
             $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$rpath@$thisrev\" onclick=\"checkCB(this)\" />";
             $url = $config->getURL($rep, $rpath, "file"); 
-            $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev&amp;sc=$showchanged\">$rpath</a>";
+            $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev\">$rpath</a>";
          }
          
          $listing[$index]["revauthor"] = $r->author;
          $listing[$index]["revage"] = $r->age;
          $listing[$index]["revlog"] = nl2br($bugtraq->replaceIDs(create_anchors($r->msg)));
-         $listing[$index]["rowparity"] = "$row";
+         $listing[$index]["rowparity"] = $row;
          
          $row = 1 - $row;
          $index++;
@@ -267,7 +267,7 @@ if (!empty($history))
       if (!$numSearchResults)
       {
          $url = $config->getURL($rep, $path, "log");
-         $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=$isDir&amp;logsearch=1&amp;search=$search&amp;fr=$thisrev\">${lang["MORERESULTS"]}</a>";         
+         $vars["logsearch_moreresultslink"] = "<a href=\"${url}rev=$rev&amp;isdir=$isDir&amp;logsearch=1&amp;search=$search&amp;fr=$thisrev\">${lang["MORERESULTS"]}</a>";         
          break;
       }         
    }
@@ -296,17 +296,17 @@ if (!empty($history))
       $prev = $page - 1;
       $next = $page + 1;
          
-      if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;max=$max&amp;page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
+      if ($page > 1) $vars["pagelinks"] .= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;max=$max&amp;page=$prev\"><&nbsp;${lang["PREV"]}</a> ";
       for ($p = 1; $p <= $pages; $p++)
       {
          if ($p != $page)
-            $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;isdir=$isDir&amp;max=$max&amp;page=$p\">$p</a> "; 
+            $vars["pagelinks"].= "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;isdir=$isDir&amp;max=$max&amp;page=$p\">$p</a> "; 
          else
             $vars["pagelinks"] .= "<b>$p </b>";
       }
-      if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;isdir=$isDir&amp;max=$max&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
+      if ($page < $pages) $vars["pagelinks"] .=" <a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;isdir=$isDir&amp;max=$max&amp;page=$next\">${lang["NEXT"]}&nbsp;></a>";   
       
-      $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;sc=$showchanged&amp;isdir=$isDir&amp;all=1&amp;max=$max\">${lang["SHOWALL"]}</a>";
+      $vars["showalllink"] = "<a href=\"${logurl}rev=$rev&amp;sr=$startrev&amp;er=$endrev&amp;isdir=$isDir&amp;all=1&amp;max=$max\">${lang["SHOWALL"]}</a>";
    }
 }
 
@@ -326,17 +326,16 @@ $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
 $vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\" />".
                              "<input type=\"hidden\" name=\"op\" value=\"log\" />".
                              "<input type=\"hidden\" name=\"rev\" value=\"$rev\" />".
-                             "<input type=\"hidden\" name=\"sc\" value=\"$showchanged\" />".
                              "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\" />".
                              "</form>";   
 
 $url = $config->getURL($rep, $path, "log");
-$vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;sc=$showchanged&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
+$vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
 
 $url = $config->getURL($rep, "/", "comp");
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREREVS"]}\" />";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"sc\" value=\"$showchanged\" /></form>";   
+$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /></form>";   
 
 $vars["version"] = $version;
 
