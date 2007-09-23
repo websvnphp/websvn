@@ -533,6 +533,10 @@ Class SVNRepository
                                 $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $filename");
             @exec($cmd);
          }
+         else if ($config->useGeshi)
+         {
+            $this->applyGeshi($path, $filename, $rev, $l);
+         }
          else
          {
             $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
@@ -544,6 +548,39 @@ Class SVNRepository
 
    // }}}
 
+   // {{{ applyGeshi
+   //
+   // perform syntax highlighting using geshi
+   
+   function applyGeshi($path, $filename, $rev = 0, $l, $return = false)
+   {
+      global $config;
+      
+      // Output the file to the filename
+      $path = encodepath($this->repConfig->path.$path);
+      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename");
+      @exec($cmd);
+
+      $source = file_get_contents($filename);
+      require_once 'lib/geshi.php';
+      $geshi = new GeSHi($source, $l);
+      if ($return)
+      {
+         return $geshi->parse_code();
+      }
+      else
+      {
+         $code = $geshi->parse_code();
+         $code = preg_replace("/^<pre.*?>/", '', $code);
+         $code = preg_replace("/<\/pre>$/", '', $code);
+         $f = @fopen($filename, 'w');
+         fwrite($f, $code);
+         fclose($f);
+      }
+   }
+   
+   // }}}
+   
    // {{{ listFileContents
    //
    // Print the contents of a file without filling up Apache's memory
@@ -572,6 +609,12 @@ Class SVNRepository
          $tmpStr = str_replace(array("\r\n"), array("\n"), $tmpStr);
          highlight_string($tmpStr);
          @unlink($tmp);
+      }
+      elseif ($config->useGeshi)
+      {
+         $tmp = tempnam("temp", "wsvn");
+         print $this->applyGeshi($path, $tmp, $rev, $l, true);
+         unlink($tmp);
       }
       else
       {  

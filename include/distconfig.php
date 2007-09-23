@@ -296,6 +296,10 @@ $config->setMinDownloadLevel(2);
 //
 // Note that extensions are case sensitive.
 
+// Uncomment this line if you want to use GeSHi to colourise your file listings
+//
+$config->useGeshi();
+
 // }}}
 
 // {{{ RSSFEED ---
