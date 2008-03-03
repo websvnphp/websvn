@@ -369,7 +369,7 @@ Class SVNRepository
       }
       
       $path = encodepath($this->repConfig->path.$path);
-      $output = runCommand($config->svn." list ".$this->repConfig->svnParams().quote($path)."@$rev", true);
+      $output = runCommand($config->svn." list ".$this->repConfig->svnParams().quote($path).' -r '.$rev, true);
       
       foreach ($output as $entry)
       {
@@ -459,7 +459,7 @@ Class SVNRepository
       if ($filename == "")
       {
          $path = encodepath($this->repConfig->path.$path);
-         passthru(quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." $pipe"));
+         passthru(quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' '.$pipe));
          return;
       }
       
@@ -472,7 +472,7 @@ Class SVNRepository
       {         
          // Output the file to the filename
          $path = encodepath($this->repConfig->path.$path);
-         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename");
+         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$filename);
          @exec($cmd);
          
          // Get the file as a string (memory hogging, but we have no other options)
@@ -527,7 +527,7 @@ Class SVNRepository
             // It's complicated because it's designed not to return those lines themselves.
          
             $path = encodepath($this->repConfig->path.$path);
-            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." | ".
+            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' | '.
                                 $config->enscript." --language=html ".
 								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $filename");
@@ -540,7 +540,7 @@ Class SVNRepository
          else
          {
             $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
-            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename");
+            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$filename);
             @exec($cmd);
          }
       }
@@ -558,7 +558,7 @@ Class SVNRepository
       
       // Output the file to the filename
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename");
+      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$filename);
       @exec($cmd);
 
       $source = file_get_contents($filename);
@@ -603,7 +603,7 @@ Class SVNRepository
          
          // Output the file to a temporary file
          $path = encodepath($this->repConfig->path.$path);
-         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." > $tmp");
+         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$tmp);
          @exec($cmd);
          $tmpStr = file_get_contents($tmp);
          $tmpStr = str_replace(array("\r\n"), array("\n"), $tmpStr);
@@ -621,7 +621,7 @@ Class SVNRepository
          if ($config->useEnscript)
          {
             $path = encodepath($this->repConfig->path.$path);
-            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev"." | ".
+            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' | '.
                                 $config->enscript." --language=html ".
  								        ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                                 $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote);                                  
@@ -629,7 +629,7 @@ Class SVNRepository
          else
          {
             $path = encodepath($this->repConfig->path.$path);
-            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path)."@$rev");
+            $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev);
             $pre = true;
          }
                       
@@ -665,7 +665,7 @@ Class SVNRepository
       global $config;
             
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." blame ".$this->repConfig->svnParams().quote($path)."@$rev"." > $filename");
+      $cmd = quoteCommand($config->svn." blame ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$filename);
       
       @exec($cmd);
    }
@@ -682,9 +682,9 @@ Class SVNRepository
       $path = encodepath($this->repConfig->path.$path);
       
       if ($rev > 0)
-         $rev = "@".$rev;
+         $rev = ' -r '.$rev;
       else
-         $rev = "";
+         $rev = '';
       
       $ret = runCommand($config->svn." propget $property ".$this->repConfig->svnParams().quote($path).$rev, true);
       
@@ -706,7 +706,7 @@ Class SVNRepository
       global $config;
             
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." export ".$this->repConfig->svnParams().quote($path)."@$rev"." ".quote($filename));
+      $cmd = quoteCommand($config->svn." export ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' '.quote($filename));
 
       @exec($cmd);
    }
