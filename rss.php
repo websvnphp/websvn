@@ -143,7 +143,7 @@ if ($history && is_array($history->entries))
    
       $item->date = $r->committime;
       $item->author = $r->author;
-      $item->guid = sha1($item->link);
+      $item->guid = htmlspecialchars($item->link);
       
       $rss->addItem($item);
    }
