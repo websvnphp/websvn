@@ -222,7 +222,7 @@ if ($prevrev)
             $listing[$index]["rev2lineno"] = 0;
             
             $line = fgets($diff);
-            if (!strncmp($line, "@@", 2))
+            if ($line === false || strncmp($line, "@@", 2) == 0)
             {
                $fin = true;
             }

@@ -40,27 +40,26 @@ class Authentication
    {
       $this->rights = new IniFile();
       $this->rights->readIniFile($accessfile);
-      $this->setUsername("");
+      $this->setUsername();
       $this->identifyGroups();
    }
 
    // }}}
    
-	// {{{ setUsername($username)
+	// {{{ setUsername()
 	//
-	// Set the username if it is given, or
-	// get the user of the current http session
+	// Set the username from the current http session
 
-	function setUsername($username)
+	function setUsername()
 	{
-		if ($username == "") // Use the current user
-		{
-			$this->user = @$_SERVER["REMOTE_USER"];
-		}
-		else
-		{
-			$this->user = $username; 	
-		}
+        if (isset($_SERVER["REMOTE_USER"]))
+        {
+           $this->user = $_SERVER["REMOTE_USER"];
+        }
+        elseif (isset($_SERVER["REDIRECT_REMOTE_USER"]))
+        {
+           $this->user = $_SERVER["REDIRECT_REMOTE_USER"];
+        }
 	}
 
    // }}}
