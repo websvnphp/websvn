@@ -526,7 +526,7 @@ Class Config
    var $quote = "'";
    var $pathSeparator = ":";
 
-   var $_repositories;
+   var $_repositories = array();
 
    // }}}
 
