@@ -524,7 +524,7 @@ Class Config
    var $quote = "'";
    var $pathSeparator = ":";
 
-   var $_repositories;
+   var $_repositories = array();
 
    // }}}
 
@@ -1016,7 +1016,7 @@ Class Config
    //
    // Automatically set up the repositories based on a parent path
    
-   function parentPath($path, $group = NULL)
+   function parentPath($path, $group = NULL, $pattern = false, $skipAlreadyAdded = true)
    {
       if ($handle = @opendir($path))
       {
@@ -1031,8 +1031,27 @@ Class Config
                
                if (is_dir($path.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR."db"))
                {
-                  // We add the repository to the list
-                  $this->addRepository($file, "file:///".$path.DIRECTORY_SEPARATOR.$file, $group);
+                  // And matches the pattern if specified
+                  if ($pattern === false || preg_match($pattern, $file)) {
+                     $name = 'file:///'.$path.DIRECTORY_SEPARATOR.$file;
+                     $add = true;
+                     // And has not already been added if specified
+                     if ($skipAlreadyAdded) {
+                        $url = str_replace(DIRECTORY_SEPARATOR, '/', $name);
+                        if ($url{strlen($url) - 1} == '/') $url = substr($url, 0, -1);
+                        $url = substr($url, strrpos($url, '/') + 1);
+                        foreach ($this->getRepositories() as $rep) {
+                           if ($rep->svnName == $url) {
+                              $add = false;
+                              break;
+                           }
+                        }
+                     }
+                     if ($add) {
+                        // We add the repository to the list
+                        $this->addRepository($file, $name, $group);
+                     }
+                  }
                }
             }
          }

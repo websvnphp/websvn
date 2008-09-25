@@ -1,6 +1,9 @@
 <div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
 <h1><a href="[websvn:indexurl]" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
 
+[websvn-test:noaccess]
+   [lang:NOACCESS]
+[websvn-else]
 <h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
 <p>
 [websvn-test:goyoungestlink]
@@ -111,15 +114,15 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
             [websvn-else]
                <td>[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
                <td class="compress">[websvn:fileviewdllink]</td>
-            [websvn-endtest]
+             [websvn-endtest]
          [websvn-else]
             [websvn-test:curdirrsslink]
                <td>[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
                <td class="feed">[websvn:rssanchor]Feed</a></td>
             [websvn-else]
                <td>[lang:NOBR][websvn:fileviewloglink][lang:ENDNOBR]</td>
-            [websvn-endtest]
-         [websvn-endtest]   
+         [websvn-endtest]
+         [websvn-endtest]
       </tr>
       [websvn-endlisting]
     </tbody>
@@ -130,3 +133,4 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
 </p>
 [websvn:compare_endform]
 </div>
+[websvn-endtest]
