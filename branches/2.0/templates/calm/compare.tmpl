@@ -1,5 +1,9 @@
 <div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
 <h1><a href="[websvn:indexurl]" title="[lang:PROJECTS]">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
+
+[websvn-test:noaccess]
+   [lang:NOACCESS]
+[websvn-else]
 <div id="info">
 <h2>Compare Revisions</h2>
 <ul><li><dl><dt><strong>[lang:CONVFROM]</strong></dt><dd class="curdir"><pre title="[websvn:path1]">[websvn:path1]</pre></dd><dd>from [lang:REV] [websvn:rev1] to [lang:REV] [websvn:rev2]</dd><dd>&harr; [websvn:revlink]</dd></dl></li>
@@ -60,3 +64,4 @@
 [websvn-endtest]
 
 [websvn-endlisting]
+[websvn-endtest]

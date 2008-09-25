@@ -144,7 +144,7 @@ class Authentication
          {
             $qualified = $repos.":".$path;
             $len = strlen($qualified);
-            if ($len <= strlen($section) && strncmp($section, $qualified, $len) == 0)
+            if ($len < strlen($section) && strncmp($section, $qualified, $len) == 0)
             {
                $access = $this->inList($accessers, $this->user);
             }
@@ -152,7 +152,7 @@ class Authentication
             if ($access != ALLOW)
             {
                $len = strlen($path);
-               if ($len <= strlen($section) && strncmp($section, $path, $len) == 0)
+               if ($len < strlen($section) && strncmp($section, $path, $len) == 0)
                {
                   $access = $this->inList($accessers, $this->user);
                }
