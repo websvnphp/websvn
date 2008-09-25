@@ -1,5 +1,9 @@
 <div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
 <h1><a href="[websvn:indexurl]" title="Project home">[lang:PROJECTS]</a> <span>[websvn:repname]</span></h1>
+
+[websvn-test:noaccess]
+   [lang:NOACCESS]
+[websvn-else]
 <div style="margin:0 2% 0 2%">
 <h2 class="path">[websvn:curdirlinks] - [lang:BLAMEFOR] [websvn:rev]</h2>
 <p>
@@ -34,3 +38,4 @@
 [websvn:javascript]
 
 </div>
+[websvn-endtest]
