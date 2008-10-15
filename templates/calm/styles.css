@@ -663,6 +663,11 @@ table.diff tbody tr:hover {
   background-color:#ffffa0;
 }
 
+code {
+  white-space: pre;
+  white-space: pre-wrap;
+}
+
 /* Log View */
 
 table tbody tr td.logmsg {
