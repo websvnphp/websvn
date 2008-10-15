@@ -28,8 +28,6 @@ require_once("include/svnlook.php");
 require_once("include/utils.php");
 require_once("include/template.php");
 
-$svnrep = new SVNRepository($rep);
-
 function checkRevision($rev)
 {
    if (is_numeric($rev) && ((int)$rev > 0))
@@ -150,13 +148,27 @@ if (!$noinput)
       $indiffproper = false;
       $getLine = true;
       $node = null;
+      $bufferedLine = false;
    
       $vars["success"] = true;
    
    	while (!feof($diff))
    	{
-   	   if ($getLine)
-   	      $line = fgets($diff);
+   	   if ($getLine) {
+            if ($bufferedLine === false) {
+               $bufferedLine = rtrim(fgets($diff), "\r\n");
+            }
+            $newlineR = strpos($bufferedLine, "\r");
+            $newlineN = strpos($bufferedLine, "\n");
+            if ($newlineR === false && $newlineN === false) {
+               $line = $bufferedLine;
+               $bufferedLine = false;
+            } else {
+               $newline = ($newlineR < $newlineN ? $newlineR : $newlineN);
+               $line = substr($bufferedLine, 0, $newline);
+               $bufferedLine = substr($bufferedLine, $newline + 1);
+            }
+         }
 
          clearVars();	   
    	   $getLine = true;
@@ -168,7 +180,7 @@ if (!$noinput)
       	   {
          	   if ($line[0] == " " || $line[0] == "+" || $line[0] == "-")
          	   {
-                  $subline = replaceEntities(rtrim(substr($line, 1)), $rep); 
+                  $subline = replaceEntities(substr($line, 1), $rep); 
                   if (empty($subline)) $subline = "&nbsp;";
                   $subline = hardspace($subline);
                   $listing[$index]["line"] = $subline;
@@ -195,7 +207,11 @@ if (!$noinput)
          	      
          	      continue;
          	   }
-         	   else
+               else if ($line == '\ No newline at end of file')
+               {
+                  continue;
+               }
+          	   else
          	   {
          	      $indiffproper = false;
          	      $listing[$index++]["enddifflines"] = true;
