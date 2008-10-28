@@ -304,43 +304,6 @@ function buildQuery($data, $separator = '&amp;', $key = '')
 
 // }}}
 
-// {{{ getParameterisedSelfUrl
-//
-// Get the relative URL (PHP_SELF) with GET and POST data
-
-function getParameterisedSelfUrl($params = true)
-{
-   global $config;
-
-   $url = null;
-
-   if ($config->multiViews)
-   {
-      // Get rid of the file's name
-      $url = preg_replace('/\.php/', '', $_SERVER['PHP_SELF'], 1);
-   }
-   else
-   {
-      $url = basename($_SERVER['PHP_SELF']);
-
-      // Sometimes the .php isn't on the end.  Damn strange...
-      if (strchr($url, '.') === false)
-         $url .= '.php';   
-   }
-
-   if ($params)
-   {
-      $arr = $_GET + $_POST;
-      # XXX: the point of HTTP POST is that URIs have a set size limit, so POST
-      #      data is typically too large to bother with; why include it?
-      $url .= '?'.buildQuery($arr);
-   }
-
-   return $url;
-}
-
-// }}}
-
 // {{{ getUserLanguage
 
 function getUserLanguage($languages, $default, $userchoice)
