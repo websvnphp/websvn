@@ -314,7 +314,7 @@ require 'languages/'.$file.'.php';
 
 $vars['lang_code'] = $userLang;
 
-$url = getParameterisedSelfUrl(true);
+$url = '?'.buildQuery($_GET + $_POST);
 $vars["lang_form"] = "<form action=\"$url\" method=\"post\" id=\"langform\">";
 $vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";
 
