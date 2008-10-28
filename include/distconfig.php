@@ -74,11 +74,16 @@
 // $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', NULL, 'username', 'password');
 // $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'group', 'username', 'password');
 //
-// To use the parent path method, uncomment the next line and and replace the path with your one.  You
-// can call the function several times if you have several parent paths.  Note that in this case the
-// path is a filesystem path
+// To use the parent path method (without and with optional group), uncomment the next line
+// and replace the path with your one. You can call the function several times if you have several parent paths.
+// Note that in this case the path is a filesystem path.
 //
 // $config->parentPath('Path/to/parent (e.g. c:\\svn)');
+// $config->parentPath('Path/to/parent (e.g. c:\\svn)', 'group');
+//
+// To add only a subset of repositories specified by the parent path you can call the function with a pattern.
+//
+// $config->parentPath('Path/to/parent (e.g. c:\\svn)', 'group', '/^beginwith/');
 
 // }}}
 
