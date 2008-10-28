@@ -68,7 +68,7 @@ $history = $svnrep->getLog($path, $rev, '', false, $maxmessages);
 
 // Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
 $cachename = strtr(getFullURL($listurl), ":/\\?", "____");
-$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$cachename.@$_REQUEST['rev'].'_rssfeed.xml';
+$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$cachename.$rev.'_rssfeed.xml';
 
 $rss = new UniversalFeedCreator();
 $rss->useCached($feedformat, $cachename);
