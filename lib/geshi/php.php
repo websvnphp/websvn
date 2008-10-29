@@ -4,13 +4,15 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.20
+ * Release Version: 1\.0\.8
  * Date Started: 2004/06/20
  *
  * PHP language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/05/23 (1.0.7.22)
+ *  -  Added description of extra language features (SF#1970248)
  * 2004/11/25 (1.0.3)
  *  -  Added support for multiple object splitters
  *  -  Fixed &new problem
@@ -52,9 +54,19 @@ $language_data = array (
     'LANG_NAME' => 'PHP',
     'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
+    'HARDQUOTE' => array("'", "'"),
+    'HARDESCAPE' => array("\'"),
+    'COMMENT_REGEXP' => array(
+        //Heredoc and Nowdoc syntax
+        3 => '/<<<\s*?(\'?)([a-zA-Z0-9]+?)\1[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU',
+        // phpdoc comments
+        4 => '#/\*\*(?!\*).*\*/#sU'
+        ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-    'QUOTEMARKS' => array("'", '"'),
+    'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => '\\',
+    'NUMBERS' => GESHI_NUMBER_INT_BASIC |  GESHI_NUMBER_OCT_PREFIX | GESHI_NUMBER_HEX_PREFIX |
+                 GESHI_NUMBER_FLT_SCI_ZERO,
     'KEYWORDS' => array(
         1 => array(
             'include', 'require', 'include_once', 'require_once',
@@ -64,17 +76,17 @@ $language_data = array (
             ),
         2 => array(
             'null', '__LINE__', '__FILE__',
-            'false', '&lt;?php', '?&gt;', '&lt;?',
+            'false', '&lt;?php', '&lt;?', '&lt;?=', '?&gt;', '&lt;%', '&lt;%=', '%&gt;',
             '&lt;script language', '&lt;/script&gt;',
             'true', 'var', 'default',
-            'function', 'class', 'new', '&amp;new', 'public', 'private', 'interface', 'extends',
+            'function', 'class', 'new', '&amp;new', 'public', 'private', 'interface', 'extends', 'self', 'const',
             '__FUNCTION__', '__CLASS__', '__METHOD__', 'PHP_VERSION',
             'PHP_OS', 'DEFAULT_INCLUDE_PATH', 'PEAR_INSTALL_DIR', 'PEAR_EXTENSION_DIR',
             'PHP_EXTENSION_DIR', 'PHP_BINDIR', 'PHP_LIBDIR', 'PHP_DATADIR', 'PHP_SYSCONFDIR',
             'PHP_LOCALSTATEDIR', 'PHP_CONFIG_FILE_PATH', 'PHP_OUTPUT_HANDLER_START', 'PHP_OUTPUT_HANDLER_CONT',
             'PHP_OUTPUT_HANDLER_END', 'E_ERROR', 'E_WARNING', 'E_PARSE', 'E_NOTICE',
             'E_CORE_ERROR', 'E_CORE_WARNING', 'E_COMPILE_ERROR', 'E_COMPILE_WARNING', 'E_USER_ERROR',
-            'E_USER_WARNING', 'E_USER_NOTICE', 'E_ALL'
+            'E_USER_WARNING', 'E_USER_NOTICE', 'E_ALL', 'E_STRICT'
             ),
         3 => array(
             'zlib_get_coding_type','zend_version','zend_logo_guid','yp_order','yp_next',
@@ -258,7 +270,11 @@ $language_data = array (
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '[', ']', '{', '}', '!', '@', '%', '&', '*', '|', '/', '<', '>'
+        '(', ')', '[', ']', '{', '}',
+        '!', '@', '%', '&', '|', '/',
+        '<', '>',
+        '=', '-', '+', '*',
+        '.', ':', ',', ';'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -270,48 +286,55 @@ $language_data = array (
         'KEYWORDS' => array(
             1 => 'color: #b1b100;',
             2 => 'color: #000000; font-weight: bold;',
-            3 => 'color: #000066;'
+            3 => 'color: #990000;'
             ),
         'COMMENTS' => array(
-            1 => 'color: #808080; font-style: italic;',
-            2 => 'color: #808080; font-style: italic;',
-            'MULTI' => 'color: #808080; font-style: italic;'
+            1 => 'color: #666666; font-style: italic;',
+            2 => 'color: #666666; font-style: italic;',
+            3 => 'color: #0000cc; font-style: italic;',
+            4 => 'color: #0000ff; font-style: italic;',
+            'MULTI' => 'color: #666666; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
-            0 => 'color: #000099; font-weight: bold;'
+            0 => 'color: #000099; font-weight: bold;',
+            'HARD' => 'color: #000099; font-weight: bold;'
             ),
         'BRACKETS' => array(
-            0 => 'color: #66cc66;'
+            0 => 'color: #009900;'
             ),
         'STRINGS' => array(
-            0 => 'color: #ff0000;'
+            0 => 'color: #0000ff;',
+            'HARD' => 'color: #0000ff;'
             ),
         'NUMBERS' => array(
-            0 => 'color: #cc66cc;'
+            0 => 'color: #cc66cc;',
+            GESHI_NUMBER_OCT_PREFIX => 'color: #208080;',
+            GESHI_NUMBER_HEX_PREFIX => 'color: #208080;',
+            GESHI_NUMBER_FLT_SCI_ZERO => 'color:#800080;',
             ),
         'METHODS' => array(
-            1 => 'color: #006600;',
-            2 => 'color: #006600;'
+            1 => 'color: #004000;',
+            2 => 'color: #004000;'
             ),
         'SYMBOLS' => array(
-            0 => 'color: #66cc66;'
+            0 => 'color: #339933;'
             ),
         'REGEXPS' => array(
-            0 => 'color: #0000ff;',
-            1 => 'color: #ff0000'
+            0 => 'color: #000088;'
             ),
         'SCRIPT' => array(
             0 => '',
             1 => '',
             2 => '',
-            3 => ''
+            3 => '',
+            4 => '',
+            5 => ''
             )
         ),
     'URLS' => array(
         1 => '',
         2 => '',
-        3 => 'http://www.php.net/{FNAME}',
-        4 => ''
+        3 => 'http://www.php.net/{FNAMEL}'
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
@@ -319,14 +342,8 @@ $language_data = array (
         2 => '::'
         ),
     'REGEXPS' => array(
-        0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*",
-        1 => array(
-            GESHI_SEARCH  => "([a-zA-Z]+)(\n)(.*)(\n)(\\1;?)",
-            GESHI_REPLACE => '\3',
-            GESHI_BEFORE => '\1\2',
-            GESHI_AFTER => '\4\5',
-            GESHI_MODIFIERS => 'siU'
-            )
+        //Variables
+        0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
         ),
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(
@@ -341,13 +358,17 @@ $language_data = array (
             ),
         3 => array(
             '<script language="php">' => '</script>'
-            )
+            ),
+        4 => "/(<\?(?:php)?)(?:'[^']*?'|\"[^\"]*?\"|\/\*(?!\*\/).*?\*\/|.)*?(\?>|\Z)/sm",
+        5 => "/(<%)(?:'[^']*?'|\"[^\"]*?\"|\/\*(?!\*\/).*?\*\/|.)*?(%>|\Z)/sm"
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,
         1 => true,
         2 => true,
-        3 => true
+        3 => true,
+        4 => true,
+        5 => true
         ),
     'TAB_WIDTH' => 4
 );
