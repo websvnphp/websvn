@@ -27,27 +27,33 @@ require_once("include/svnlook.php");
 require_once("include/utils.php");
 
 function removeDirectory($dir) {
-   if (is_dir($dir)) {
-      $dir = rtrim($dir, '/');
-      $handle = dir($dir);
-      while (($file = $handle->read()) !== false) {
-         if ($file == '.' || $file == '..') continue;
-         
-         $f = $dir.DIRECTORY_SEPARATOR.$file;
-         if (!is_link($f) && is_dir($f)) removeDirectory($f);
-         else @unlink($f);
+  if (is_dir($dir)) {
+    $dir = rtrim($dir, '/');
+    $handle = dir($dir);
+    while (($file = $handle->read()) !== false) {
+      if ($file == '.' || $file == '..') {
+        continue;
       }
-      $handle->close();
-      @rmdir($dir);
-      return true;
-   }
-   return false;
+
+      $f = $dir.DIRECTORY_SEPARATOR.$file;
+      if (!is_link($f) && is_dir($f)) {
+        removeDirectory($f);
+      } else {
+        @unlink($f);
+      }
+    }
+    $handle->close();
+    @rmdir($dir);
+    return true;
+  }
+  return false;
 }
 
 // Make sure that this operation is allowed
 
-if (!$rep->isDownloadAllowed($path))
-   exit;
+if (!$rep->isDownloadAllowed($path)) {
+  exit;
+}
 
 $svnrep = new SVNRepository($rep);
 
@@ -55,8 +61,9 @@ $svnrep = new SVNRepository($rep);
 $history = $svnrep->getLog($path, '', '', true);
 $youngest = $history->entries[0]->rev;
 
-if (empty($rev))
-   $rev = $youngest;
+if (empty($rev)) {
+  $rev = $youngest;
+}
 
 // Create a temporary directory.  Here we have an unavoidable but highly
 // unlikely to occure race condition
@@ -64,45 +71,45 @@ if (empty($rev))
 $tmpname = tempnam($config->getTarballTmpDir(), 'wsvn');
 @unlink($tmpname);
 
-if (mkdir($tmpname))
-{
-   // Get the name of the directory being archived
-   $arcname = $path;
-   if (substr($arcname, -1) == '/') $arcname = substr($arcname, 0, -1);
-   $arcname = basename($arcname);
-   if ($arcname == '') $arcname = $rep->name;
-      
-   $arcname = $arcname.'.r'.$rev;
-   $tararc = $arcname.'.tar';
-   $gzarc = $arcname.'.tar.gz';
+if (mkdir($tmpname)) {
+  // Get the name of the directory being archived
+  $arcname = $path;
+  if (substr($arcname, -1) == '/') {
+    $arcname = substr($arcname, 0, -1);
+  }
+  $arcname = basename($arcname);
+  if ($arcname == '') {
+    $arcname = $rep->name;
+  }
 
-   $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
-   
-   // Create the tar file
-   chdir($tmpname);
-   exec(quoteCommand($config->tar.' -cf '.quote($tararc).' '.quote($arcname)));
-   
-   // ZIP it up
-   exec(quoteCommand($config->gzip.' '.quote($tararc)));
-   
-   // Give the file to the browser
-   if (is_readable($gzarc)) {
-	   $size = filesize($gzarc);
-	   
-      header('Content-Type: application/x-gzip');
-      header('Content-Length: '.$size);
-      header('Content-Disposition: attachment; filename="'.$rep->name.'-'.$gzarc.'"');
-      
-      readfile($gzarc);
-   }
-   else
-   {
-      print 'Unable to open file '.$gzarc;
-   }
-   
-   chdir('..');
+  $arcname = $arcname.'.r'.$rev;
+  $tararc = $arcname.'.tar';
+  $gzarc = $arcname.'.tar.gz';
+
+  $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
+
+  // Create the tar file
+  chdir($tmpname);
+  exec(quoteCommand($config->tar.' -cf '.quote($tararc).' '.quote($arcname)));
+
+  // ZIP it up
+  exec(quoteCommand($config->gzip.' '.quote($tararc)));
+
+  // Give the file to the browser
+  if (is_readable($gzarc)) {
+    $size = filesize($gzarc);
+
+    header('Content-Type: application/x-gzip');
+    header('Content-Length: '.$size);
+    header('Content-Disposition: attachment; filename="'.$rep->name.'-'.$gzarc.'"');
+
+    readfile($gzarc);
+  } else {
+    print'Unable to open file '.$gzarc;
+  }
+
+  chdir('..');
 
 
-   removeDirectory($tmpname);
+  removeDirectory($tmpname);
 }
-?>

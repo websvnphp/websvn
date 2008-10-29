@@ -87,9 +87,9 @@ $lang["MORERESULTS"] = "yana qidirish...";
 $lang["NORESULTS"] = "Soʻrovingizga toʻgʻri keladigan yozuv topilmadi";
 $lang["NOMORERESULTS"] = "Soʻrovingizga toʻgʻri keladigan yozuvlar boshqa topilmadi";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS tarmasi"; 
-$lang["FILESMODIFIED"] = "fayl(lar) oʻzgartirilgan"; 
-$lang["RSSFEED"] = "RSS tasma"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS tarmasi";
+$lang["FILESMODIFIED"] = "fayl(lar) oʻzgartirilgan";
+$lang["RSSFEED"] = "RSS tasma";
 
 $lang["LINENO"] = "Satr raqami";
 $lang["BLAMEFOR"] = "Tahrir muallifi haqida maʼlumot";
@@ -114,7 +114,7 @@ $lang["FILEDELETED"] = "Fayl oʻchirilgan";
 $lang["FILEADDED"] = "Yangi fayl";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

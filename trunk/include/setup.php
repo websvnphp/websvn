@@ -33,19 +33,19 @@ require_once 'include/configclass.php';
 $config = new Config;
 
 // Set up the default character encodings
-if (function_exists('iconv_get_encoding'))
-{
+if (function_exists('iconv_get_encoding')) {
   $config->setInputEncoding(iconv_get_encoding('input_encoding'));
 }
 
 // Set up locwebsvnhttp
 // Note: we will use nothing in MultiViews mode so that the URLs use the root
-//       directory by default.
-if (empty($locwebsvnhttp))
-   $locwebsvnhttp = defined('WSVN_MULTIVIEWS') ? '' : '.';
-
-if (empty($locwebsvnreal))
-   $locwebsvnreal = '.';
+//     directory by default.
+if (empty($locwebsvnhttp)) {
+  $locwebsvnhttp = defined('WSVN_MULTIVIEWS') ? '' : '.';
+}
+if (empty($locwebsvnreal)) {
+  $locwebsvnreal = '.';
+}
 
 $vars['locwebsvnhttp'] = $locwebsvnhttp;
 
@@ -154,23 +154,23 @@ $contentType = array (
 '.avi' => 'video/msvideo', // Microsoft Windows Video
 '.movie' => 'video/x-sgi-movie', // SGI Movieplayer format
 '.wrl' => 'x-world/x-vrml', // VRML Worlds
-'.odt' => 'application/vnd.oasis.opendocument.text',                  // OpenDocument Text
-'.ott' => 'application/vnd.oasis.opendocument.text-template',         // OpenDocument Text Template
-'.ods' => 'application/vnd.oasis.opendocument.spreadsheet',           // OpenDocument Spreadsheet
+'.odt' => 'application/vnd.oasis.opendocument.text',            // OpenDocument Text
+'.ott' => 'application/vnd.oasis.opendocument.text-template',      // OpenDocument Text Template
+'.ods' => 'application/vnd.oasis.opendocument.spreadsheet',        // OpenDocument Spreadsheet
 '.ots' => 'application/vnd.oasis.opendocument.spreadsheet-template',  // OpenDocument Spreadsheet Template
-'.odp' => 'application/vnd.oasis.opendocument.presentation',          // OpenDocument Presentation
+'.odp' => 'application/vnd.oasis.opendocument.presentation',       // OpenDocument Presentation
 '.otp' => 'application/vnd.oasis.opendocument.presentation-template', // OpenDocument Presentation Template
-'.odg' => 'application/vnd.oasis.opendocument.graphics',              // OpenDocument Drawing
-'.otg' => 'application/vnd.oasis.opendocument.graphics-template',     // OpenDocument Drawing Template
-'.odc' => 'application/vnd.oasis.opendocument.chart',                 // OpenDocument Chart
-'.otc' => 'application/vnd.oasis.opendocument.chart-template',        // OpenDocument Chart Template
-'.odf' => 'application/vnd.oasis.opendocument.formula',               // OpenDocument Formula
-'.otf' => 'application/vnd.oasis.opendocument.formula-template',      // OpenDocument Formula Template
-'.odi' => 'application/vnd.oasis.opendocument.image',                 // OpenDocument Image
-'.oti' => 'application/vnd.oasis.opendocument.image-template',        // OpenDocument Image Template
-'.odm' => 'application/vnd.oasis.opendocument.text-master',           // OpenDocument Master Document
-'.oth' => 'application/vnd.oasis.opendocument.text-web',              // HTML Document Template
-'.odb' => 'application/vnd.oasis.opendocument.database',              // OpenDocument Database
+'.odg' => 'application/vnd.oasis.opendocument.graphics',          // OpenDocument Drawing
+'.otg' => 'application/vnd.oasis.opendocument.graphics-template',    // OpenDocument Drawing Template
+'.odc' => 'application/vnd.oasis.opendocument.chart',            // OpenDocument Chart
+'.otc' => 'application/vnd.oasis.opendocument.chart-template',      // OpenDocument Chart Template
+'.odf' => 'application/vnd.oasis.opendocument.formula',          // OpenDocument Formula
+'.otf' => 'application/vnd.oasis.opendocument.formula-template',    // OpenDocument Formula Template
+'.odi' => 'application/vnd.oasis.opendocument.image',            // OpenDocument Image
+'.oti' => 'application/vnd.oasis.opendocument.image-template',      // OpenDocument Image Template
+'.odm' => 'application/vnd.oasis.opendocument.text-master',        // OpenDocument Master Document
+'.oth' => 'application/vnd.oasis.opendocument.text-web',          // HTML Document Template
+'.odb' => 'application/vnd.oasis.opendocument.database',          // OpenDocument Database
 );
 
 // }}}
@@ -181,74 +181,74 @@ $contentType = array (
 
 $extEnscript = array
 (
-  '.ada'     => 'ada',
-  '.adb'     => 'ada',
-  '.ads'     => 'ada',
-  '.awk'     => 'awk',
-  '.c'       => 'c',
-  '.c++'     => 'cpp',
-  '.cc'      => 'cpp',
-  '.cpp'     => 'cpp',
-  '.csh'     => 'csh',
-  '.cxx'     => 'cpp',
-  '.diff'    => 'diffu',
-  '.dpr'     => 'delphi',
-   '.e'       => 'eiffel',
-  '.el'      => 'elisp',
-  '.eps'     => 'postscript',
-  '.f'       => 'fortran',
-  '.for'     => 'fortran',
-  '.gs'      => 'haskell',
-  '.h'       => 'c',
-  '.hpp'     => 'cpp',
-  '.hs'      => 'haskell',
-  '.htm'     => 'html',
-  '.html'    => 'html',
-  '.idl'     => 'idl',
-  '.java'    => 'java',
-  '.js'      => 'javascript',
-  '.lgs'     => 'haskell',
-  '.lhs'     => 'haskell',
-  '.m'       => 'objc',
-  '.m4'      => 'm4',
-  '.man'     => 'nroff',
-  '.nr'      => 'nroff',
-  '.p'       => 'pascal',
-  '.pas'     => 'delphi',
-  '.patch'   => 'diffu',
-  '.pkg'     => 'sql', 
-  '.pl'      => 'perl',
-  '.pm'      => 'perl',
-  '.pp'      => 'pascal',
-  '.ps'      => 'postscript',
-  '.s'       => 'asm',
+  '.ada'    => 'ada',
+  '.adb'    => 'ada',
+  '.ads'    => 'ada',
+  '.awk'    => 'awk',
+  '.c'     => 'c',
+  '.c++'    => 'cpp',
+  '.cc'    => 'cpp',
+  '.cpp'    => 'cpp',
+  '.csh'    => 'csh',
+  '.cxx'    => 'cpp',
+  '.diff'   => 'diffu',
+  '.dpr'    => 'delphi',
+  '.e'     => 'eiffel',
+  '.el'    => 'elisp',
+  '.eps'    => 'postscript',
+  '.f'     => 'fortran',
+  '.for'    => 'fortran',
+  '.gs'    => 'haskell',
+  '.h'     => 'c',
+  '.hpp'    => 'cpp',
+  '.hs'    => 'haskell',
+  '.htm'    => 'html',
+  '.html'   => 'html',
+  '.idl'    => 'idl',
+  '.java'   => 'java',
+  '.js'    => 'javascript',
+  '.lgs'    => 'haskell',
+  '.lhs'    => 'haskell',
+  '.m'     => 'objc',
+  '.m4'    => 'm4',
+  '.man'    => 'nroff',
+  '.nr'    => 'nroff',
+  '.p'     => 'pascal',
+  '.pas'    => 'delphi',
+  '.patch'  => 'diffu',
+  '.pkg'    => 'sql',
+  '.pl'    => 'perl',
+  '.pm'    => 'perl',
+  '.pp'    => 'pascal',
+  '.ps'    => 'postscript',
+  '.s'     => 'asm',
   '.scheme'  => 'scheme',
-  '.scm'     => 'scheme',
-  '.scr'     => 'synopsys',
-  '.sh'      => 'sh',
-  '.shtml'   => 'html',
-  '.sql'     => 'sql',
-  '.st'      => 'states',
-  '.syn'     => 'synopsys',
-  '.synth'   => 'synopsys',
-  '.tcl'     => 'tcl',
-  '.tex'     => 'tex',
-  '.texi'    => 'tex',
+  '.scm'    => 'scheme',
+  '.scr'    => 'synopsys',
+  '.sh'    => 'sh',
+  '.shtml'  => 'html',
+  '.sql'    => 'sql',
+  '.st'    => 'states',
+  '.syn'    => 'synopsys',
+  '.synth'  => 'synopsys',
+  '.tcl'    => 'tcl',
+  '.tex'    => 'tex',
+  '.texi'   => 'tex',
   '.texinfo' => 'tex',
-  '.v'       => 'verilog',
-  '.vba'     => 'vba',
-  '.vh'      => 'verilog',
-  '.vhd'     => 'vhdl',
-  '.vhdl'    => 'vhdl',
-  '.py'      => 'python',
-  
+  '.v'     => 'verilog',
+  '.vba'    => 'vba',
+  '.vh'    => 'verilog',
+  '.vhd'    => 'vhdl',
+  '.vhdl'   => 'vhdl',
+  '.py'    => 'python',
+
   // The following are handled internally by WebSVN, since there's no
   // support for them in Enscript
-  
-  '.php'     => 'php',
-  '.phtml'   => 'php',
-  '.php3'    => 'php',
-  '.php'     => 'php'  
+
+  '.php'    => 'php',
+  '.phtml'  => 'php',
+  '.php3'   => 'php',
+  '.php'    => 'php'
 );
 
 // }}}
@@ -266,7 +266,7 @@ setlocale(LC_ALL, '');
 
 // Default 'zipped' array
 
-$zipped = array ();
+$zipped = array();
 
 // Set up the version info
 
@@ -278,16 +278,13 @@ initSvnVersion($major,$minor);
 // in case the user has disabled permanent ones.
 
 $userLang = false;
-if (!empty($_REQUEST['langchoice']))
-{
-   $userLang = $_REQUEST['langchoice'];
-   setcookie('storedlang', $_REQUEST['langchoice'], time()+(3600*24*356*10), '/');
-   setcookie('storedsesslang', $_REQUEST['langchoice']);
-}
-else // Try to read an existing cookie if there is one
-{
-   if (!empty($_COOKIE['storedlang'])) $userLang = $_COOKIE['storedlang'];
-   else if (!empty($_COOKIE['storedsesslang'])) $userLang = $_COOKIE['storedsesslang'];
+if (!empty($_REQUEST['langchoice'])) {
+  $userLang = $_REQUEST['langchoice'];
+  setcookie('storedlang', $_REQUEST['langchoice'], time()+(3600*24*356*10), '/');
+  setcookie('storedsesslang', $_REQUEST['langchoice']);
+} else { // Try to read an existing cookie if there is one
+  if (!empty($_COOKIE['storedlang'])) $userLang = $_COOKIE['storedlang'];
+  else if (!empty($_COOKIE['storedsesslang'])) $userLang = $_COOKIE['storedsesslang'];
 }
 
 // Load available languages
@@ -318,15 +315,14 @@ $url = '?'.buildQuery($_GET + $_POST);
 $vars["lang_form"] = "<form action=\"$url\" method=\"post\" id=\"langform\">";
 $vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";
 
-foreach ($languages as $code => $d)
-{
+foreach ($languages as $code => $d) {
   $sel = ($code == $userLang) ? ' selected="selected"' : '';
   $vars["lang_select"] .= '<option value="'.$code.'"'.$sel.'>'.$d[2].' - '.$d[1].'</option>';
 }
 
 $vars["lang_select"] .= "</select>";
 $vars["lang_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-$vars["lang_endform"] = "</form>";   
+$vars["lang_endform"] = "</form>";
 
 // Set up headers
 
@@ -336,71 +332,65 @@ header('Content-Language: '.$userLang);
 // Make sure that the user has set up a repository
 
 $reps = $config->getRepositories();
-if (empty($reps[0]))
-{
-   echo $lang["SUPPLYREP"];
-   exit;
+if (empty($reps[0])) {
+  echo $lang["SUPPLYREP"];
+  exit;
 }
 
 // Override the rep parameter with the repository name if it's available
 $repname = @$_REQUEST["repname"];
-if (isset($repname))
-{
-    $rep = $config->findRepository($repname);
+if (isset($repname)) {
+  $rep = $config->findRepository($repname);
+} else {
+  $rep = $reps[0];
 }
-else
-   $rep = $reps[0];
-   
+
 // Retrieve other standard parameters
 
-# due to possible XSS exploit, we need to clean up path first
+// due to possible XSS exploit, we need to clean up path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST["rev"];
 
 // Function to create the project selection HTML form
-function createProjectSelectionForm()
-{ 
-   global $config, $vars, $rep, $lang;
-   
-   $url = $config->getURL(-1, "", "form");
-   $vars["projects_form"] = "<form action=\"$url\" method=\"post\" id=\"projectform\">";
-   
-   $reps = $config->getRepositories();
-   $vars["projects_select"] = "<select name=\"repname\" onchange=\"javascript:this.form.submit();\">";
-   
-   foreach ($reps as $trep)
-   {
-      if ($trep->hasReadAccess("/", true))
-      {
-         if ($rep->getDisplayName() == $trep->getDisplayName())
-            $sel = ' selected="selected"';
-         else
-            $sel = "";
-            
-         $vars["projects_select"] .= "<option value=\"".$trep->getDisplayName()."\"$sel>".$trep->getDisplayName()."</option>";
+function createProjectSelectionForm() {
+  global $config, $vars, $rep, $lang;
+
+  $url = $config->getURL(-1, "", "form");
+  $vars["projects_form"] = "<form action=\"$url\" method=\"post\" id=\"projectform\">";
+
+  $reps = $config->getRepositories();
+  $vars["projects_select"] = "<select name=\"repname\" onchange=\"javascript:this.form.submit();\">";
+
+  foreach ($reps as $trep) {
+    if ($trep->hasReadAccess("/", true)) {
+      if ($rep->getDisplayName() == $trep->getDisplayName()) {
+        $sel = ' selected="selected"';
+      } else {
+        $sel = "";
       }
-   }
-   
-   $vars["projects_select"] .= "</select>";
-   
-   $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-   $vars["projects_hidden"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\" /><input type=\"hidden\" name=\"op\" value=\"form\" />";
-   $vars["projects_endform"] = "</form>";   
+
+      $vars["projects_select"] .= "<option value=\"".$trep->getDisplayName()."\"$sel>".$trep->getDisplayName()."</option>";
+    }
+  }
+
+  $vars["projects_select"] .= "</select>";
+
+  $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
+  $vars["projects_hidden"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\" /><input type=\"hidden\" name=\"op\" value=\"form\" />";
+  $vars["projects_endform"] = "</form>";
 }
 
 // Create the form if we're not in MultiViews.  Otherwise wsvn must create the form once the current project has
 // been found
 
-if (!$config->multiViews)
-{
-   createProjectSelectionForm();
+if (!$config->multiViews) {
+  createProjectSelectionForm();
 }
 
-if ($rep)
-{
-   $vars["allowdownload"] = $rep->getAllowDownload();
-   $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+if ($rep) {
+  $vars["allowdownload"] = $rep->getAllowDownload();
+  $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 }
 
 // As of version 1.70 the output encoding is forced to be UTF-8, since this is the output
@@ -408,4 +398,3 @@ if ($rep)
 // rudimentary conversions.
 
 $vars["charset"] = "UTF-8";
-?>

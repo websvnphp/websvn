@@ -89,9 +89,9 @@ $lang["NORESULTS"] = "Vašej otázke nezodpovedajú žiadne záznamy denníka";
 $lang["NOMORERESULTS"] = "Vašej otázke zodpovedá viac záznamov denníka";
 $lang['NOPREVREV'] = 'Žiadna predchádzajúca revízia';
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "súbor(y) zmenený(/é)"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "súbor(y) zmenený(/é)";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Riadok č.";
 $lang["BLAMEFOR"] = "Blame informácie pre rev.";
@@ -116,7 +116,7 @@ $lang["FILEDELETED"] = "Súbor odstránený";
 $lang["FILEADDED"] = "Nový súbor";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

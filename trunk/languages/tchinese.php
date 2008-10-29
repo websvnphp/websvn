@@ -22,7 +22,7 @@
 // tchinese.php
 //
 // Traditional Chinese language strings
-// 
+//
 // Author: Yuan-Chung Hsiao <ychsiao@ychsiao.idv.tw>
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
@@ -80,9 +80,9 @@ $lang["MORERESULTS"] = "找到更多的符合的...";
 $lang["NORESULTS"] = "查詢結果並沒有符合的紀錄";
 $lang["NOMORERESULTS"] = "沒有更多紀錄符合你的查詢";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "個檔案變動"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "個檔案變動";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "行";
 $lang["BLAMEFOR"] = "版本譴責資訊";
@@ -104,7 +104,7 @@ $lang["TO"] = "到";
 $lang["REVCOMP"] = "顛倒比對";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

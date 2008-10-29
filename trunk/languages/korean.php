@@ -78,9 +78,9 @@ $lang["MORERESULTS"] = "나머지 검색 결과...";
 $lang["NORESULTS"] = "검색 조건에 맞는 결과가 없습니다.";
 $lang["NOMORERESULTS"] = "더 이상 검색 조건에 맞는 결과가 없습니다.";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "파일 수정됨"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "파일 수정됨";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "행번호";
 $lang["BLAMEFOR"] = "수정한 사람 보기, 리비전 ";
@@ -105,7 +105,7 @@ $lang["COMPPATH"] = "비교 경로:";
 $lang["WITHPATH"] = "경로:";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

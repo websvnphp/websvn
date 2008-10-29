@@ -79,9 +79,9 @@ $lang["MORERESULTS"] = "Hae lisää osumia...";
 $lang["NORESULTS"] = "Mikään loki ei vastaa kyselyä";
 $lang["NOMORERESULTS"] = "Kyselyä vastaavia lokeja ei ole enemmän";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS-syöte"; 
-$lang["FILESMODIFIED"] = "tiedosto(a) muokattu"; 
-$lang["RSSFEED"] = "RSS-syöte"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS-syöte";
+$lang["FILESMODIFIED"] = "tiedosto(a) muokattu";
+$lang["RSSFEED"] = "RSS-syöte";
 
 $lang["LINENO"] = "Rivi Nro.";
 $lang["BLAMEFOR"] = "Blame-tiedot versiolle";
@@ -108,7 +108,7 @@ $lang["FILEDELETED"] = "Tiedosto poistettu";
 $lang["FILEADDED"] = "Uusi tiedosto";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

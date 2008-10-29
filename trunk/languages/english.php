@@ -89,9 +89,9 @@ $lang["NORESULTS"] = "There are no logs matching your query";
 $lang["NOMORERESULTS"] = "There are no more logs matching your query";
 $lang['NOPREVREV'] = 'No previous revision';
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "file(s) modified"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "file(s) modified";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Line No.";
 $lang["BLAMEFOR"] = "Blame information for rev";
@@ -116,7 +116,7 @@ $lang["FILEDELETED"] = "File deleted";
 $lang["FILEADDED"] = "New file";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

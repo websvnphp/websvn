@@ -81,9 +81,9 @@ $lang["MORERESULTS"] = "Vind meer resultaten...";
 $lang["NORESULTS"] = "Er zijn geen logs die aan de zoekcriteria voldoen";
 $lang["NOMORERESULTS"] = "Er zijn geen logs meer die aan de zoekcriteria voldoen";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "bestand(en) gewijzigd"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "bestand(en) gewijzigd";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Lijn Nr.";
 $lang["BLAMEFOR"] = "Blame informatie voor revisie";
@@ -110,7 +110,7 @@ $lang["FILEDELETED"] = "Bestand gewist";
 $lang["FILEADDED"] = "Nieuw bestand";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

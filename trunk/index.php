@@ -34,72 +34,68 @@ $vars["path"] = "";
 // Sort the repositories by group
 $config->sortByGroup();
 
-if ($config->flatIndex)
-{
-   // Create the flat view
-   
-   $projects = $config->getRepositories();
-   $i = 0;
-   $listing = array ();
-   foreach ($projects as $project)
-   {
-      if ($project->hasReadAccess("/", true))
-      {
-         $url = $config->getURL($project, "/", "dir");
-      
-         $listing[$i]["rowparity"] = $i % 2;
-         $listing[$i++]["projlink"] = "<a href=\"${url}\">".$project->getDisplayName()."</a>";
+if ($config->flatIndex) {
+  // Create the flat view
+
+  $projects = $config->getRepositories();
+  $i = 0;
+  $listing = array();
+  foreach ($projects as $project) {
+    if ($project->hasReadAccess("/", true)) {
+      $url = $config->getURL($project, "/", "dir");
+
+      $listing[$i]["rowparity"] = $i % 2;
+      $listing[$i++]["projlink"] = "<a href=\"${url}\">".$project->getDisplayName()."</a>";
+    }
+  }
+  $vars["flatview"] = true;
+  $vars["treeview"] = false;
+} else {
+  // Create the tree view
+
+  $projects = $config->getRepositories();
+  reset($projects);
+  $i = 0;
+  $listing = array();
+  $curgroup = NULL;
+  $parity = 0;
+  foreach ($projects as $project) {
+    if ($project->hasReadAccess("/", true)) {
+      $listing[$i]["rowparity"] = $parity % 2;
+      $url = $config->getURL($project, "/", "dir");
+      if ($curgroup != $project->group) {
+        // TODO: this should be de-soupified
+        if (!empty($curgroup)) {
+          // Close the switchcontent div
+          $listing[$i]["listitem"] = "</div>\n";
+        } else {
+          $listing[$i]["listitem"] = "";
+        }
+
+        $listing[$i]["isprojlink"] = false;
+        $listing[$i]["isgrouphead"] = true;
+
+        $curgroup = $project->group;
+        $listing[$i++]["listitem"] .= "<div class=\"groupname\" onclick=\"expandcontent(this, 'grp$curgroup');\" style=\"cursor:hand; cursor:pointer\"><div class=\"a\"><span class=\"showstate\"></span>$curgroup</div></div>\n<div id=\"grp$curgroup\" class=\"switchcontent\">";
       }
-   } 
-   $vars["flatview"] = true;
-   $vars["treeview"] = false;   
-}
-else
-{
-   // Create the tree view
-   
-   $projects = $config->getRepositories();
-   reset($projects);
-   $i = 0;
-   $listing = array ();
-   $curgroup = NULL;
-   $parity = 0;
-   foreach ($projects as $project)
-   {
-      if ($project->hasReadAccess("/", true))
-      {
-         $listing[$i]["rowparity"] = $parity % 2;
-         $url = $config->getURL($project, "/", "dir");
-         if ($curgroup != $project->group)
-         {
-            # TODO: this should be de-soupified
-            if (!empty($curgroup))
-               $listing[$i]["listitem"] = "</div>\n";  // Close the switchcontent div
-            else
-               $listing[$i]["listitem"] = "";
 
-            $listing[$i]["isprojlink"] = false;
-            $listing[$i]["isgrouphead"] = true;
-            
-            $curgroup = $project->group;
-            $listing[$i++]["listitem"] .= "<div class=\"groupname\" onclick=\"expandcontent(this, 'grp$curgroup');\" style=\"cursor:hand; cursor:pointer\"><div class=\"a\"><span class=\"showstate\"></span>$curgroup</div></div>\n<div id=\"grp$curgroup\" class=\"switchcontent\">";
-         }
+      $parity++;
+      $listing[$i]["isgrouphead"] = false;
+      $listing[$i]["isprojlink"] = true;
+      $listing[$i++]["listitem"] = "<a href=\"${url}\">".$project->name."</a>\n";
+    }
+  }
 
-         $parity++;       
-         $listing[$i]["isgrouphead"] = false;
-         $listing[$i]["isprojlink"] = true;
-         $listing[$i++]["listitem"] = "<a href=\"${url}\">".$project->name."</a>\n";
-      }
-   } 
+  if (!empty($curgroup)) {
+    $listing[$i]["isprojlink"] = false;
+  }
+  $listing[$i]["isgrouphead"] = false;
+  // Close the switchcontent div
+  $listing[$i]["listitem"] = "</div>";
 
-   if (!empty($curgroup))
-   $listing[$i]["isprojlink"] = false;
-   $listing[$i]["isgrouphead"] = false;
-   $listing[$i]["listitem"] = "</div>";  // Close the switchcontent div
-
-   $vars["flatview"] = false;
-   $vars["treeview"] = true;   
-   $vars["opentree"] = $config->openTree;
+  $vars["flatview"] = false;
+  $vars["treeview"] = true;
+  $vars["opentree"] = $config->openTree;
 }
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
@@ -108,5 +104,3 @@ $vars["version"] = $version;
 parseTemplate($config->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($config->getTemplatePath()."index.tmpl", $vars, $listing);
 parseTemplate($config->getTemplatePath()."footer.tmpl", $vars, $listing);
-
-?>
