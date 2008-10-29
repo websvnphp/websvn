@@ -29,138 +29,123 @@
 // that of the local system (i.e., it's a string returned from a command
 // line command).
 
-function replaceEntities($str, $rep)
-{
-   global $config;
-   
-   // Ideally, we'd do this:
-   //
-   // $str = htmlentities($str, ENT_COMPAT, $config->inputEnc);
-   //
-   // However, htmlentities is very limited in it's ability to process
-   // character encodings.  We have to rely on something more powerful.
-   
-   if (version_compare(phpversion(), "4.1.0", "<"))
-   {
-      // In this case, we can't do any better than assume that the
-      // input encoding is ISO-8859-1.
-      
-      $str = htmlentities($str, ENT_COMPAT);
-   }
-   else
-   {
-      $str = toOutputEncoding($str, $rep->getContentEncoding());
+function replaceEntities($str, $rep) {
+  global $config;
 
-      // $str is now encoded as UTF-8.
-      $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
-   }
-   
-   return $str;
+  // Ideally, we'd do this:
+  //
+  // $str = htmlentities($str, ENT_COMPAT, $config->inputEnc);
+  //
+  // However, htmlentities is very limited in it's ability to process
+  // character encodings.  We have to rely on something more powerful.
+
+  if (version_compare(phpversion(), "4.1.0", "<")) {
+    // In this case, we can't do any better than assume that the
+    // input encoding is ISO-8859-1.
+
+    $str = htmlentities($str, ENT_COMPAT);
+  } else {
+    $str = toOutputEncoding($str, $rep->getContentEncoding());
+
+    // $str is now encoded as UTF-8.
+    $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
+  }
+
+  return $str;
 }
 
 // }}}
 
 // {{{ toOutputEncoding
 
-function toOutputEncoding($str, $inputEncoding = "")
-{
-   global $config;
-   
-   if (empty($inputEncoding))
-      $inputEncoding = $config->inputEnc;
-   
-   // Try to convert the messages based on the locale information
-   if ($config->inputEnc && $config->outputEnc)
-   {     
-      if (function_exists("iconv"))
-      {
-         $output = @iconv($inputEncoding, $config->outputEnc, $str);
-         if (!empty($output))
-            $str = $output;
-      }
-   }
+function toOutputEncoding($str, $inputEncoding = "") {
+  global $config;
 
-   return $str;
+  if (empty($inputEncoding)) {
+    $inputEncoding = $config->inputEnc;
+  }
+
+  // Try to convert the messages based on the locale information
+  if ($config->inputEnc && $config->outputEnc) {
+    if (function_exists("iconv")) {
+      $output = @iconv($inputEncoding, $config->outputEnc, $str);
+      if (!empty($output)) {
+        $str = $output;
+      }
+    }
+  }
+
+  return $str;
 }
 
 // }}}
 
 // {{{ quoteCommand
 
-function quoteCommand($cmd)
-{
-   global $config;
-         
-   // On Windows machines, the whole line needs quotes round it so that it's
-   // passed to cmd.exe correctly
+function quoteCommand($cmd) {
+  global $config;
 
-   if ($config->serverIsWindows)
-      $cmd = "\"$cmd\"";
-   
-   return $cmd;
+  // On Windows machines, the whole line needs quotes round it so that it's
+  // passed to cmd.exe correctly
+
+  if ($config->serverIsWindows) {
+    $cmd = "\"$cmd\"";
+  }
+
+  return $cmd;
 }
 
 // }}}
 
 // {{{ runCommand
 
-function runCommand($cmd, $mayReturnNothing = false)
-{
-   global $lang;
-   
-   $output = array ();
-   $err = false;
+function runCommand($cmd, $mayReturnNothing = false) {
+  global $lang;
 
-   $c = quoteCommand($cmd);
-      
-   $descriptorspec = array (
-      0 => array('pipe', 'r'),
-      1 => array('pipe', 'w'),
-      2 => array('pipe', 'w')
-   );
+  $output = array();
+  $err = false;
 
-   $resource = proc_open($c, $descriptorspec, $pipes);
-   $error = "";
+  $c = quoteCommand($cmd);
 
-   if (!is_resource($resource))
-   {
-      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
-      exit;
-   }
-      
-   $handle = $pipes[1];
-   $firstline = true;
-	while (!feof($handle))
-	{
-	   $line = fgets($handle);
-	   if ($firstline && empty($line) && !$mayReturnNothing)
-	   {
-	      $err = true;
-	   }
+  $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
-	   $firstline = false;
-	   $output[] = toOutputEncoding(rtrim($line));
-	}
-	
-   while (!feof($pipes[2]))
-   {               
-      $error .= fgets($pipes[2]);
-   }
+  $resource = proc_open($c, $descriptorspec, $pipes);
+  $error = "";
 
-   $error = toOutputEncoding(trim($error));
+  if (!is_resource($resource)) {
+    echo"<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+    exit;
+  }
 
-   fclose($pipes[0]);
-   fclose($pipes[1]);
-   fclose($pipes[2]);
-   
-   proc_close($resource);
+  $handle = $pipes[1];
+  $firstline = true;
+  while (!feof($handle)) {
+    $line = fgets($handle);
+    if ($firstline && empty($line) && !$mayReturnNothing) {
+      $err = true;
+    }
 
-	if (!$err)
-	   return $output;
-	else
-	{
-      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
-	}
+    $firstline = false;
+    $output[] = toOutputEncoding(rtrim($line));
+  }
+
+  while (!feof($pipes[2])) {
+    $error .= fgets($pipes[2]);
+  }
+
+  $error = toOutputEncoding(trim($error));
+
+  fclose($pipes[0]);
+  fclose($pipes[1]);
+  fclose($pipes[2]);
+
+  proc_close($resource);
+
+  if (!$err) {
+    return $output;
+  } else {
+    echo"<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+  }
 }
 
 // }}}
@@ -169,16 +154,14 @@ function runCommand($cmd, $mayReturnNothing = false)
 //
 // Quote a string to send to the command line
 
-function quote($str)
-{
-   global $config;
+function quote($str) {
+  global $config;
 
-   if ($config->serverIsWindows)
-      return "\"$str\"";
-   else
-      return escapeshellarg($str);      
+  if ($config->serverIsWindows) {
+    return "\"$str\"";
+  } else {
+    return escapeshellarg($str);
+  }
 }
 
 // }}}
-
-?>

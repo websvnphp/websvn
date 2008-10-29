@@ -22,7 +22,7 @@
 // schinese-utf8.php
 //
 // Simple Chinese language strings
-// 
+//
 // Author: Liangxu Wang <wlx@mygis.org>
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
@@ -80,9 +80,9 @@ $lang["MORERESULTS"] = "找个更多符合的...";
 $lang["NORESULTS"] = "没有符合要求的记录";
 $lang["NOMORERESULTS"] = "没有更多记录符合要求";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "个文件被改动"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "个文件被改动";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "行号";
 $lang["BLAMEFOR"] = "Blame information for rev";
@@ -109,7 +109,7 @@ $lang["FILEDELETED"] = "已删除文件";
 $lang["FILEADDED"] = "新文件";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

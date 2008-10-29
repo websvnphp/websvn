@@ -86,9 +86,9 @@ $lang["MORERESULTS"] = "Poišči še...";
 $lang["NORESULTS"] = "Med zapisi ni opomb z iskalno zahtevo";
 $lang["NOMORERESULTS"] = "Med zapisi ni več opomb z iskalno zahtevo";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "datotek spremenjenih"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "datotek spremenjenih";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Vrstica št.";
 $lang["BLAMEFOR"] = "Blame informacije za različico";
@@ -119,7 +119,7 @@ $lang["FILEDELETED"] = "Datoteka pobrisana";
 $lang["FILEADDED"] = "Nova datoteka";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

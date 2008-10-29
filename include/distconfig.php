@@ -30,7 +30,7 @@
 //
 // $config->setServerIsWindows();
 
-// Configure these lines if your commands aren't on your path. 
+// Configure these lines if your commands aren't on your path.
 //
 // $config->setSVNCommandPath('Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin');
 // $config->setDiffPath('Path/to/diff/command/');
@@ -58,7 +58,7 @@
 // convention GroupName.RepositoryName
 //
 // Performance is much better on local repositories (e.g. accessed by file:///).  However, you
-// can also provide an interface onto a remote repository.  In this case you should supply the 
+// can also provide an interface onto a remote repository.  In this case you should supply the
 // username and password needed to access it.
 //
 // To configure the repositories by hand, copy the appropriate line below, uncomment it and
@@ -89,7 +89,7 @@
 
 // {{{ LOOK AND FEEL ---
 //
-// Uncomment ONLY the template file that you want.  
+// Uncomment ONLY the template file that you want.
 
 $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
@@ -130,16 +130,16 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // "out of the box". Uncomment and change one of the examples below.
 //
 // $config->setInputEncoding('CP850');  // Encoding of result returned by svn command line, etc.
-// $config->setContentEncoding('iso-8859-1');  // Content encoding of all your repositories                                          // repositories
+// $config->setContentEncoding('iso-8859-1');  // Content encoding of all your repositories
 
 // You may also specify a content encoding on a per repository basis.  Uncomment and copy this
 // line as necessary.
 //
-// $config->setContentEncoding('iso-8859-1', 'MyEnc'); 
+// $config->setContentEncoding('iso-8859-1', 'MyEnc');
 
-// Note for Windows users:  To enable iconv you'll need to enable the extension in your php.ini file 
+// Note for Windows users:  To enable iconv you'll need to enable the extension in your php.ini file
 // AND copy iconv.dll (not php_iconv.dll) to your Windows system folder.  In most cases the correct
-// encoding is set when you call $config->setServerIsWindows();.  
+// encoding is set when you call $config->setServerIsWindows();.
 
 // Note for *nix users.  You'll need to have iconv compiled into your binary.  The default input and
 // output encodings are taken from your locale informations.  Override these if they aren't correct.
@@ -168,7 +168,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 
 // Uncomment this line if you want to use your Subversion access file to control access
 // rights via WebSVN.  For this to work, you'll need to set up the same Apache based authentication
-// to the WebSVN (or wsvn) directory as you have for Subversion itself.  More information can be 
+// to the WebSVN (or wsvn) directory as you have for Subversion itself.  More information can be
 // found in install.txt
 
 // $config->useAuthenticationFile('/path/to/accessfile'); // Global access file
@@ -212,11 +212,11 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // files.
 //
 // $config->ignoreSvnMimeTypes();
-// 
+//
 // Uncomment this if you want skip WebSVN's custom mime-type handling
 //
 // $config->ignoreWebSVNContentTypes();
-// 
+//
 // Following the examples below, you can add new associations, modify
 // the default ones or even delete them entirely (to show them in
 // ASCII via WebSVN).
@@ -251,7 +251,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // A value of zero will allow downloading from the root.  1 will allow downloding of directories
 // in the root, etc.
 //
-// If your project is arranged with trunk, tags and branches at the root level, then a value of 2 
+// If your project is arranged with trunk, tags and branches at the root level, then a value of 2
 // would allow the downloading of directories within branches/tags while disallowing the download
 // of the entire branches or tags directories.  This would also stop downloading of the trunk, but
 // see after for path exceptions.
@@ -264,14 +264,14 @@ $config->setMinDownloadLevel(2);
 // the required line below (replacing 'myrep' for the name of the repository to be changed).
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->setMinDownloadLevel(2, 'myrep'); 
+// $config->setMinDownloadLevel(2, 'myrep');
 
 // Finally, you may add or remove certain directories (and their contents) either globally
 // or on a per repository basis.  Uncomment and copy the following lines as necessary.  Note
 // that the these are searched in the order than you give them until a match is made (with the
 // exception that all the per repository exceptions are tested before the global ones).  This means
 // that you must disallow /a/b/c/ before you allow /a/b/ otherwise the allowed match on /a/b/ will
-// stop any further searching, thereby allowing downloads on /a/b/c/. 
+// stop any further searching, thereby allowing downloads on /a/b/c/.
 
 // Global exceptions possibilties:
 //
@@ -290,7 +290,7 @@ $config->setMinDownloadLevel(2);
 
 // Uncomment this line if you want to use Enscript to colourise your file listings
 //
-// You'll need Enscript version 1.6 or higher AND Sed installed to use this feature. 
+// You'll need Enscript version 1.6 or higher AND Sed installed to use this feature.
 // Set the path above.
 //
 // $config->useEnscript();
@@ -358,4 +358,3 @@ $config->expandTabsBy(8);
 // $config->expandTabsBy(3, 'myrep'); // Expand Tabs by 3 for repository 'myrep'
 
 // }}}
-?>

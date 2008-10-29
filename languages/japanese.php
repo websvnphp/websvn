@@ -88,13 +88,13 @@ $lang["NORESULTS"] = "検索条件にマッチするものはありませんで�
 $lang["NOMORERESULTS"] = "これ以上検索条件にマッチするものはありません";
 $lang['NOPREVREV'] = "前のリビジョンはありません";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "ファイルが修正されました"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "ファイルが修正されました";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "行番号";
 $lang["BLAMEFOR"] = "詳細表示 対象リビジョン";
-                                                                                
+
 $lang["YEARS"] = "年間";
 $lang["MONTHS"] = "ヵ月間";
 $lang["WEEKS"] = "週間";
@@ -122,7 +122,7 @@ $lang["FILEADDED"] = "新規ファイル";
 
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "<nobr>";
 $lang["ENDNOBR"] = "</nobr>";

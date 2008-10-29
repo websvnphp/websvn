@@ -79,9 +79,9 @@ $lang["MORERESULTS"] = "Daha fazla eşleştirmeyi bul...";
 $lang["NORESULTS"] = "Aramaya uyan kayıt mesajı yok";
 $lang["NOMORERESULTS"] = "Aramaya uyan başka kayıt mesajı yok";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS kaynağı"; 
-$lang["FILESMODIFIED"] = "dosya değişti"; 
-$lang["RSSFEED"] = "RSS kaynağı"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS kaynağı";
+$lang["FILESMODIFIED"] = "dosya değişti";
+$lang["RSSFEED"] = "RSS kaynağı";
 
 $lang["LINENO"] = "Satır No.";
 $lang["BLAMEFOR"] = "svn blame bilgisi alınan sürüm numarası";
@@ -108,7 +108,7 @@ $lang["FILEDELETED"] = "Dosya silinmiş";
 $lang["FILEADDED"] = "Yeni dosya";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

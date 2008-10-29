@@ -79,9 +79,9 @@ $lang["NORESULTS"] = "Ningún log coincide con su búsqueda";
 $lang["NOMORERESULTS"] = "No hay mas logs que coincidan con su búsqueda";
 $lang['NOPREVREV'] = 'No hay revisión anterior';
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "Archivo(s) modificados"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "Archivo(s) modificados";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Línea Nro.";
 $lang["BLAMEFOR"] = "Información de culpa para rev";
