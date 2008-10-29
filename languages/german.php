@@ -50,10 +50,10 @@ $lang["DIFFPREV"] = "Vergleich mit vorheriger";
 $lang["BLAME"] = "Blame";
 
 $lang["REVINFO"] = "Revisionsinformation";
-$lang["GOYOUNGEST"] = "Zur aktuellen Revision";                  
+$lang["GOYOUNGEST"] = "Zur aktuellen Revision";
 $lang["LASTMOD"] = "Letzte &Auml;nderung";
 $lang["LOGMSG"] = "Logeintrag";
-$lang["CHANGES"] = "&Auml;nderungen";                                         
+$lang["CHANGES"] = "&Auml;nderungen";
 $lang["SHOWCHANGED"] = "Ge&auml;nderte Dateien anzeigen";
 $lang["HIDECHANGED"] = "Ge&auml;nderte Dateien verstecken";
 $lang["NEWFILES"] = "Neue Dateien";
@@ -62,10 +62,10 @@ $lang["DELETEDFILES"] = "Gel&ouml;schte Dateien";
 $lang["VIEWLOG"] = "Log&nbsp;anzeigen";
 $lang["PATH"] = "Pfad";
 $lang["AUTHOR"] = "Autor";
-$lang["AGE"] = "Alter";                                                 
+$lang["AGE"] = "Alter";
 $lang["LOG"] = "Log";
-$lang["CURDIR"] = "Aktuelles Verzeichnis";   
-$lang["TARBALL"] = "Archiv Download";                         
+$lang["CURDIR"] = "Aktuelles Verzeichnis";
+$lang["TARBALL"] = "Archiv Download";
 
 $lang["PREV"] = "Zur&uuml;ck";
 $lang["NEXT"] = "Weiter";
@@ -73,10 +73,10 @@ $lang["SHOWALL"] = "Alles anzeigen";
 
 $lang["BADCMD"] = "Fehler beim Ausf&uuml;hren des Befehls";
 $lang["UNKNOWNREVISION"] = "Revision nicht gefunden";
-   
+
 $lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion-Projekte";                       
-$lang["SERVER"] = "Subversion-Server";   
+$lang["PROJECTS"] = "Subversion-Projekte";
+$lang["SERVER"] = "Subversion-Server";
 
 $lang["FILTER"] = "Filteroptionen";
 $lang["STARTLOG"] = "Von Rev.";
@@ -86,13 +86,13 @@ $lang["SEARCHLOG"] = "Suche im Log nach";
 $lang["CLEARLOG"] = "Aktuelle Suche l&ouml;schen";
 $lang["MORERESULTS"] = "Weitere Ergebnisse finden...";
 $lang["NORESULTS"] = "Es wurden keine Treffer erzielt";
-$lang["NOMORERESULTS"] = "Keine weiteren Treffer f&uuml;r diese Suche";    
+$lang["NOMORERESULTS"] = "Keine weiteren Treffer f&uuml;r diese Suche";
 $lang['NOPREVREV'] = 'Keine vorherige Revision';
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "Ver&auml;nderte Dateien"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "Ver&auml;nderte Dateien";
 $lang["RSSFEED"] = "RSS feed";
- 
+
 $lang["LINENO"] = "Zeilennr.";
 $lang["BLAMEFOR"] = "Blame-Information f&uuml;r Rev.";
 
@@ -116,7 +116,7 @@ $lang["FILEDELETED"] = "Datei gel&ouml;scht";
 $lang["FILEADDED"] = "Neue Datei";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

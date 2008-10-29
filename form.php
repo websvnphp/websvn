@@ -27,38 +27,39 @@ require_once("include/utils.php");
 
 // Generic redirect handling
 
-function redirect($loc)
-{
-   $url= getFullURL($loc);
-   
-   # technically, a die(header('Location: '.$url)); would suffice for all web browsers... ~J
-   header("Location: $url");
-   echo "<html>\n <head>\n  <title>Redirecting...</title>\n  <meta http-equiv='refresh' content='0; url=$url' />
-  <script type='application/x-javascript'><![CDATA[ window.location.href = '$url'; ]]></script>
- </head>
- <body>
-  <p>If you are not automatically redirected, please click <a href='$url'>here</a> to continue.</p>
- </body>\n</html>";
+function redirect($loc) {
+  $url = getFullURL($loc);
+
+  // technically, a die(header('Location: '.$url)); would suffice for all web browsers... ~J
+  header("Location: $url");
+  echo "<html>\n";
+  echo "  <head>\n";
+  echo "    <title>Redirecting...</title>\n";
+  echo "    <meta http-equiv=\"refresh\" content=\"0; url=$url\" />\n";
+  echo "    <script type='application/x-javascript'><![CDATA[ window.location.href = '$url'; ]]></script>\n";
+  echo "  </head>\n";
+  echo "  <body>\n";
+  echo "    <p>If you are not automatically redirected, please click <a href=\"$url\">here</a> to continue.</p>\n";
+  echo "  </body>\n";
+  echo "</html>";
 }
 
 // Handle project selection
 
-if (@$_REQUEST["selectproj"])
-{   
-   $basedir = dirname($_SERVER["PHP_SELF"]);
-   if ($basedir != "" && $basedir != DIRECTORY_SEPARATOR && $basedir != "\\" && $basedir != "/" )
-      $basedir .= "/";
-   else
-      $basedir = "/";
-      
-   $url = $config->getURL($rep, "/", "dir");
-   $url = html_entity_decode($url);
-   
-   if ($config->multiViews)
-      redirect($url);
-   else
-      redirect($basedir.$url);   
+if (@$_REQUEST["selectproj"]) {
+  $basedir = dirname($_SERVER["PHP_SELF"]);
+  if ($basedir != "" && $basedir != DIRECTORY_SEPARATOR && $basedir != "\\" && $basedir != "/" ) {
+    $basedir .= "/";
+  } else {
+    $basedir = "/";
+  }
+
+  $url = $config->getURL($rep, "/", "dir");
+  $url = html_entity_decode($url);
+
+  if ($config->multiViews) {
+    redirect($url);
+  } else {
+    redirect($basedir.$url);
+  }
 }
-
-
-?>

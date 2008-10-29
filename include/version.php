@@ -23,4 +23,3 @@
 // Version information
 
 $version = '[trunk]';
-?>

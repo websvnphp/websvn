@@ -1,7 +1,7 @@
 <?php
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Erik Le Blanc 
+// Copyright (C) 2004 Erik Le Blanc
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -77,9 +77,9 @@ $lang["MORERESULTS"] = "Trouver plus de r&eacute;ponses...";
 $lang["NORESULTS"] = "Il n'y a pas de r&eacute;ponse &agrave; votre recherche dans les Logs";
 $lang["NOMORERESULTS"] = "Il n'y a pas plus de r&eacute;ponses &agrave; votre recherche";
 
-$lang["RSSFEEDTITLE"] = "Fil RSS de WebSVN"; 
-$lang["FILESMODIFIED"] = "fichier(s) modifi&eacute;(s)"; 
-$lang["RSSFEED"] = "RSS"; 
+$lang["RSSFEEDTITLE"] = "Fil RSS de WebSVN";
+$lang["FILESMODIFIED"] = "fichier(s) modifi&eacute;(s)";
+$lang["RSSFEED"] = "RSS";
 
 $lang["LINENO"] = "Ligne num&eacute;ro";
 $lang["BLAMEFOR"] = "Dernier responsable";

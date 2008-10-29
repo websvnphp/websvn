@@ -22,79 +22,74 @@
 //
 // Read a .ini style file
 
-class IniFile
-{
-   var $sections;
-   
-   // {{{ __construct
+class IniFile {
+  var $sections;
 
-   function IniFile()
-   {
-      $this->sections = array();
-   }
+  // {{{ __construct
 
-   // }}}
-   
-   // {{{ readIniFile
+  function IniFile() {
+    $this->sections = array();
+  }
 
-   function readIniFile ($name)
-   {
-      $contents = file($name);
-      $cursection = '';
-      $first = true;
-      
-      foreach ($contents as $str)
-      {
-         $str = trim($str);
-         if (empty($str)) continue;
-         
-         if ($str{0} == '#' or $str{0} == "'")
-            continue;
-            
-         if ($str{0} == '[')
-         {
-             $cursection = strtolower(substr($str, 1, strlen($str) - 2));
-             if (!($str{strlen($str) - 2} == '/' or $str == '[groups]')) $cursection .= '/';
-             $first = true;
-         }
-         elseif (!empty($cursection))
-         {
-             if ($first === true) $this->sections[$cursection] = array();
-             list ($key, $val) = split('=', $str);
-             $this->sections[$cursection][strtolower(trim($key))] = strtolower(trim($val));
-             $first = false;
-         }
+  // }}}
+
+  // {{{ readIniFile
+
+  function readIniFile($name) {
+    $contents = file($name);
+    $cursection = '';
+    $first = true;
+
+    foreach ($contents as $str) {
+      $str = trim($str);
+      if (empty($str)) {
+        continue;
       }
-   }
 
-   // }}}
+      if ($str{0} == '#' or $str{0} == "'") {
+        continue;
+      }
 
-   // {{{ getSections
+      if ($str{0} == '[') {
+        $cursection = strtolower(substr($str, 1, strlen($str) - 2));
+        if (!($str{strlen($str) - 2} == '/' or $str == '[groups]')) {
+          $cursection .= '/';
+        }
+        $first = true;
+      } else if (!empty($cursection)) {
+        if ($first === true) {
+          $this->sections[$cursection] = array();
+        }
+        list($key, $val) = split('=', $str);
+        $this->sections[$cursection][strtolower(trim($key))] = strtolower(trim($val));
+        $first = false;
+      }
+    }
+  }
 
-   function &getSections()
-   {
-      return $this->sections;
-   }
+  // }}}
 
-   // }}}
+  // {{{ getSections
 
-   // {{{ getValues
+  function &getSections() {
+    return $this->sections;
+  }
 
-   function getValues($section)
-   {
-      return @$this->sections[strtolower($section)];
-   }
+  // }}}
 
-   // }}}
+  // {{{ getValues
 
-   // {{{ getValue
+  function getValues($section) {
+    return @$this->sections[strtolower($section)];
+  }
 
-   function getValue($section, $key)
-   {
-      return @$this->sections[strtolower($section)][strtolower($key)];
-   }
+  // }}}
 
-   // }}}
-}   
+  // {{{ getValue
 
-?>
+  function getValue($section, $key) {
+    return @$this->sections[strtolower($section)][strtolower($key)];
+  }
+
+  // }}}
+}

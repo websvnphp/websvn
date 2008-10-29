@@ -23,10 +23,10 @@
 // Show the blame information of a file.
 //
 
-require_once 'include/setup.php';
-require_once 'include/svnlook.php';
-require_once 'include/utils.php';
-require_once 'include/template.php';
+require_once'include/setup.php';
+require_once'include/svnlook.php';
+require_once'include/utils.php';
+require_once'include/template.php';
 
 $vars['action'] = $lang['BLAME'];
 
@@ -36,13 +36,15 @@ $svnrep = new SVNRepository($rep);
 $history = $svnrep->getLog($path, '', '', true);
 $youngest = $history->entries[0]->rev;
 
-if (empty($rev))
-   $rev = $youngest;
+if (empty($rev)) {
+  $rev = $youngest;
+}
 
-if ($path{0} != '/')
-   $ppath = '/'.$path;
-else
-   $ppath = $path;
+if ($path{0} != '/') {
+  $ppath = '/'.$path;
+} else {
+  $ppath = $path;
+}
 
 // Find the parent path (or the whole path if it's already a directory)
 $pos = strrpos($ppath, '/');
@@ -56,10 +58,11 @@ createDirLinks($rep, $ppath, $rev);
 
 $url = $config->getURL($rep, $path, "file");
 
-if ($rev != $youngest)
-   $vars["goyoungestlink"] = '<a href="'.$url.'">'.$lang["GOYOUNGEST"].'</a>';
-else
-   $vars["goyoungestlink"] = "";
+if ($rev != $youngest) {
+  $vars["goyoungestlink"] = '<a href="'.$url.'">'.$lang["GOYOUNGEST"].'</a>';
+} else {
+  $vars["goyoungestlink"] = "";
+}
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
 
@@ -78,144 +81,133 @@ $listing = array();
 $tfname = tempnam('temp', '');
 $svnrep->getFileContents($path, $tfname, $rev, '', true);
 
-if ($file = fopen($tfname, 'r'))      
-{
-   // Get the blame info
-   $tbname = tempnam('temp', '');
-   $svnrep->getBlameDetails($path, $tbname, $rev); 
+if ($file = fopen($tfname, 'r')) {
+  // Get the blame info
+  $tbname = tempnam('temp', '');
+  $svnrep->getBlameDetails($path, $tbname, $rev);
 
-   $ent = true;
-   $extension = strrchr(basename($path), '.');
-   if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript || $config->useGeshi))
-      $ent = false;
+  $ent = true;
+  $extension = strrchr(basename($path), '.');
+  if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript || $config->useGeshi)) {
+    $ent = false;
+  }
 
-   if ($blame = fopen($tbname, 'r'))      
-   {
-      // Create an array of version/author/line
-      
-      $index = 0;
-      $seen_rev = array();
-      $last_rev = "";
-      $row_class = 'light';
-      
-      while (!feof($blame) && !feof($file))
-      {
-         $blameline = fgets($blame);
-         
-         if ($blameline != '')
-         {
-            list($revision, $author, $remainder) = sscanf($blameline, '%d %s %s');
-            $empty = !$remainder;
-            
-            $listing[$index]['lineno'] = $index + 1;
-            
-            if ($last_rev <> $revision)
-            {
-               $url = $config->getURL($rep, $parent, 'revision');
-               $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision\">$revision</a>";
-               $seen_rev[$revision] = 1;
-               $row_class = ($row_class == 'light') ? 'dark' : 'light';
-               $listing[$index]['author'] = $author;
-            }
-            else
-            {
-               $listing[$index]['revision'] = "";
-               $listing[$index]['author'] = '';
-            }
-            
-            $listing[$index]['row_class'] = $row_class;
-            $last_rev = $revision;
+  if ($blame = fopen($tbname, 'r')) {
+    // Create an array of version/author/line
 
-            $line = rtrim(fgets($file));
-            if ($ent) $line = replaceEntities($line, $rep);
+    $index = 0;
+    $seen_rev = array();
+    $last_rev = "";
+    $row_class = 'light';
 
-            if ($empty) $line = '&nbsp;';
-            $listing[$index]['line'] = hardspace($line);
-            
-            $index++;
-         }
+    while (!feof($blame) && !feof($file)) {
+      $blameline = fgets($blame);
+
+      if ($blameline != '') {
+        list($revision, $author, $remainder) = sscanf($blameline, '%d %s %s');
+        $empty = !$remainder;
+
+        $listing[$index]['lineno'] = $index + 1;
+
+        if ($last_rev != $revision) {
+          $url = $config->getURL($rep, $parent, 'revision');
+          $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision\">$revision</a>";
+          $seen_rev[$revision] = 1;
+          $row_class = ($row_class == 'light') ? 'dark' : 'light';
+          $listing[$index]['author'] = $author;
+        } else {
+          $listing[$index]['revision'] = "";
+          $listing[$index]['author'] = '';
+        }
+
+        $listing[$index]['row_class'] = $row_class;
+        $last_rev = $revision;
+
+        $line = rtrim(fgets($file));
+        if ($ent) $line = replaceEntities($line, $rep);
+
+        if ($empty) $line = '&nbsp;';
+        $listing[$index]['line'] = hardspace($line);
+
+        $index++;
       }
-      
-      fclose($blame);
-   }
-   
-   fclose($file);
+    }
+
+    fclose($blame);
+  }
+
+  fclose($file);
 }
 
-@unlink($tfname);  
-@unlink($tbname);  
+@unlink($tfname);
+@unlink($tbname);
 
 $vars['version'] = $version;
 
-if (!$rep->hasReadAccess($path, false))
-   $vars['noaccess'] = true;
+if (!$rep->hasReadAccess($path, false)) {
+  $vars['noaccess'] = true;
+}
 
-$vars['javascript'] = <<<HTML
+$vars['javascript'] =  <<  < HTML
 
-<script type='text/javascript'>
+ < script type = 'text/javascript' >
 /* <![CDATA[ */
 var rev = new Array();
 var a = document.getElementsByTagName('a');
 for (var i = 0; i < a.length; i++) {
-   if (a[i].className == 'blame-revision') {
-      var id = a[i].id;
-      addEvent(a[i], 'mouseover', function() { mouseover(this) });
-      addEvent(a[i], 'mouseout', function() { mouseout(this) });
-   }
+  if (a[i].className == 'blame-revision') {
+    var id = a[i].id;
+    addEvent(a[i], 'mouseover', function() { mouseover(this) } );
+    addEvent(a[i], 'mouseout', function() { mouseout(this) } );
+  }
 }
 
 function mouseover(a) {
-   // Find the revision by using the link
-   var m = /rev=(\d+)/.exec(a.href);
-   var r = m[1];
+  // Find the revision by using the link
+  var m = /rev=(\d+)/.exec(a.href);
+  var r = m[1];
 
-   div = document.createElement('div');
-   div.className = 'blame-popup';
-   div.innerHTML = rev[r];
-   a.parentNode.appendChild(div);
+  div = document.createElement('div');
+  div.className = 'blame-popup';
+  div.innerHTML = rev[r];
+  a.parentNode.appendChild(div);
 }
 
 function mouseout(a) {
-   var div = a.parentNode.parentNode.getElementsByTagName('div');
-   for (var i = 0; i < div.length; i++) {
-      if (div[i].className = 'blame-popup') {
-         div[i].parentNode.removeChild(div[i]);
-      }
-   }
+  var div = a.parentNode.parentNode.getElementsByTagName('div');
+  for (var i = 0; i < div.length; i++) {
+    if (div[i].className = 'blame-popup') {
+      div[i].parentNode.removeChild(div[i]);
+    }
+  }
 }
 
 function addEvent(obj, type, func) {
-   if (obj.addEventListener) {
-      obj.addEventListener(type, func, false);
-      return true;
-   } else if (obj.attachEvent) {
-      return obj.attachEvent('on'+type, func);
-   } else {
-      return false;
-   }
+  if (obj.addEventListener) {
+    obj.addEventListener(type, func, false);
+    return true;
+  } else if (obj.attachEvent) {
+    return obj.attachEvent('on' + type, func);
+  } else {
+    return false;
+  }
 }
 
-HTML;
-
-foreach($seen_rev as $key => $val)
-{
-   $history = $svnrep->getLog($path, $key, $key, false, 1);
-   if (!empty($history))
-   {
-      $vars['javascript'] .= "rev[$key] = '";
-      $vars['javascript'] .= "<div class=\"info\">";
-      $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."<\/span>";
-      $vars['javascript'] .= "<\/div>";
-      $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br />", $history->curEntry->msg))."<\/div>";
-      $vars['javascript'] .= "';\n";
-   }
+foreach ($seen_rev as $key => $val) {
+  $history = $svnrep->getLog($path, $key, $key, false, 1);
+  if (!empty($history)) {
+    $vars['javascript'] .= "rev[$key] = '";
+    $vars['javascript'] .= "<div class=\"info\">";
+    $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."<\/span>";
+    $vars['javascript'] .= "<\/div>";
+    $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br />", $history->curEntry->msg))."<\/div>";
+    $vars['javascript'] .= "';\n";
+  }
 }
 $vars['javascript'] .= "/* ]]> */\n</script>";
 
 // ob_start('ob_gzhandler');
 
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'blame.tmpl',  $vars, $listing);
+parseTemplate($rep->getTemplatePath().'blame.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
-   
-?>

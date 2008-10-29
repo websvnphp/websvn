@@ -90,9 +90,9 @@ $lang["NORESULTS"] = "Tidak ada log yang sesuai dengan permintaan anda";
 $lang["NOMORERESULTS"] = "Tidak ada lagi log yang bisa ditampilkan";
 $lang['NOPREVREV'] = 'Tidak ada lagi revisi yang lebih lama';
 
-$lang["RSSFEEDTITLE"] = "Feed RSS WebSVN"; 
-$lang["FILESMODIFIED"] = "file yang berubah"; 
-$lang["RSSFEED"] = "Feed RSS"; 
+$lang["RSSFEEDTITLE"] = "Feed RSS WebSVN";
+$lang["FILESMODIFIED"] = "file yang berubah";
+$lang["RSSFEED"] = "Feed RSS";
 
 $lang["LINENO"] = "Baris No.";
 $lang["BLAMEFOR"] = "Bubuhi (blame) informasi for rev";
@@ -117,7 +117,7 @@ $lang["FILEDELETED"] = "File dihapus";
 $lang["FILEADDED"] = "File baru";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

@@ -84,9 +84,9 @@ $lang["MORERESULTS"] = "Encontrar mais...";
 $lang["NORESULTS"] = "A pesquisa n&atilde;o devolveu nenhum resultado";
 $lang["NOMORERESULTS"] = "N&atilde;o existem mais resultados para a pesquisa";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "arquivo(s) modificado(s)"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "arquivo(s) modificado(s)";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Linha No.";
 $lang["BLAMEFOR"] = "Informa&ccedil;&atilde;o de blame para rev";

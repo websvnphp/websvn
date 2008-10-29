@@ -86,9 +86,9 @@ $lang["NORESULTS"] = "Der er ingen logbeskeder, der passer p&aring; s&oslash;gni
 $lang["NOMORERESULTS"] = "Der er ikke flere logbeskeder, som svarer til s&oslash;gningen";
 $lang['NOPREVREV'] = 'Ingen forrige revision';
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS-feed"; 
-$lang["FILESMODIFIED"] = "fil(er) &aelig;ndret"; 
-$lang["RSSFEED"] = "RSS-feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS-feed";
+$lang["FILESMODIFIED"] = "fil(er) &aelig;ndret";
+$lang["RSSFEED"] = "RSS-feed";
 
 $lang["LINENO"] = "Linjenr.";
 $lang["BLAMEFOR"] = "&aelig;ndringsfordeling for revision";
@@ -113,7 +113,7 @@ $lang["FILEDELETED"] = "Fil slettet";
 $lang["FILEADDED"] = "Ny fil";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
