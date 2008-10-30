@@ -665,6 +665,8 @@ table.diff tbody tr:hover {
 
 code {
   white-space: pre;
+}
+code {
   white-space: pre-wrap;
 }
 
