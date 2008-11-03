@@ -447,7 +447,7 @@ Class Repository {
 
 // The general configuration class
 
-Class Config {
+Class WebSvnConfig {
   // {{{ Properties
 
   // Tool path locations
@@ -504,7 +504,7 @@ Class Config {
 
   // {{{ __construct()
 
-  function Config() {
+  function WebSvnConfig() {
   }
 
   // }}}

@@ -30,7 +30,7 @@
 require_once 'include/configclass.php';
 
 // Create the config
-$config = new Config;
+$config = new WebSvnConfig();
 
 // Set up the default character encodings
 if (function_exists('iconv_get_encoding')) {
