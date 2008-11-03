@@ -34,7 +34,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "No repository given";
 $lang["NOPATH"] = "Path not found";
-$lang["NOACCESS"] = "You do not have the necessary permissions to read this directory";
+$lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
 $lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "Please set up a repository path in include/config.php using \$config->parentPath or \$config->addRepository<p>See the installation guide for more details";
 
@@ -45,6 +45,7 @@ $lang["LINE"] = "Line";
 $lang["SHOWENTIREFILE"] = "Show entire file";
 $lang["SHOWCOMPACT"] = "Only display areas with differences";
 
+$lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Compare with Previous";
 $lang["BLAME"] = "Blame";
@@ -74,7 +75,7 @@ $lang["SHOWALL"] = "Show All";
 $lang["BADCMD"] = "Error running this command";
 $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;Repositories";
 $lang["SERVER"] = "Subversion&nbsp;Server";
 
