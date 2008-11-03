@@ -34,7 +34,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";
-$lang["NOACCESS"] = "Sie haben keine ausreichende Berechtigungen um dieses Verzeichnis zu lesen";
+$lang["NOACCESS"] = "Sie haben keine ausreichende Berechtigungen um diese Inhalte zu lesen";
 $lang["RESTRICTED"] = "Beschr&auml;nkter Zugriff";
 $lang["SUPPLYREP"] = "Bitte den Repository-Pfad in include/config.php mit \$config->parentPath oder \$config->addRepository angeben.<p>Genauere Informationen finden sich in der Installationsanleitung";
 
@@ -45,6 +45,7 @@ $lang["LINE"] = "Zeile";
 $lang["SHOWENTIREFILE"] = "Ganze Datei anzeigen";
 $lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
 
+$lang["LISTING"] = "Verzeichnisansicht";
 $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
 $lang["BLAME"] = "Blame";
@@ -74,7 +75,7 @@ $lang["SHOWALL"] = "Alles anzeigen";
 $lang["BADCMD"] = "Fehler beim Ausf&uuml;hren des Befehls";
 $lang["UNKNOWNREVISION"] = "Revision nicht gefunden";
 
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion-Projekte";
 $lang["SERVER"] = "Subversion-Server";
 
