@@ -74,7 +74,7 @@ $lang["SHOWALL"] = "Ukáž všetko";
 $lang["BADCMD"] = "Chyba pri vykonávaní tohto príkazu";
 $lang["UNKNOWNREVISION"] = "Revízia nebola nájdená";
 
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;úložiská";
 $lang["SERVER"] = "Subversion&nbsp;Server";
 

@@ -73,7 +73,7 @@ $lang["SHOWALL"] = "hammasini koʻrsatish";
 $lang["BADCMD"] = "Buyruqni bajarishda xatolik roʻy berdi";
 $lang["UNKNOWNREVISION"] = "Tahrir topilmadi";
 
-$lang["POWERED"] = "<a href=\"http://websvn.tigris.org/\">WebSVN</a> dasturi ishlatilmoqda";
+$lang["POWERED"] = "<a href=\"http://www.websvn.info/\">WebSVN</a> dasturi ishlatilmoqda";
 $lang["PROJECTS"] = "Subversion ombori&nbsp;";
 $lang["SERVER"] = "Subversion serveri&nbsp;";
 

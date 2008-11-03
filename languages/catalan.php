@@ -71,7 +71,7 @@ $lang["SHOWALL"] = "Mostra-ho tot";
 $lang["BADCMD"] = "S'ha produït un error en exectuar aquesta ordre";
 $lang["UNKNOWNREVISION"] = "No s'ha trobat la revisió";
 
-$lang["POWERED"] = "Funciona amb <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Funciona amb <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Dipòsits&nbsp;de&nbsp;Subversion";
 $lang["SERVER"] = "Servidor&nbsp;de&nbsp;Subversion";
 

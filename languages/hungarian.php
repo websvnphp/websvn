@@ -74,7 +74,7 @@ $lang["SHOWALL"] = "Az összes mutatása";
 $lang["BADCMD"] = "Hiba történt ennek a parancsnak a futtatásakor";
 $lang["UNKNOWNREVISION"] = "A revízió nem található";
 
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;repository-k";
 $lang["SERVER"] = "Subversion&nbsp;szerver";
 

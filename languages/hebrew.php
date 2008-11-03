@@ -72,7 +72,7 @@ $lang["SHOWALL"] = "הראה הכל";
 $lang["BADCMD"] = "שגיאה בהרצת הפקודה";
 $lang["UNKNOWNREVISION"] = "גרסה לא נמצאה";
 
-$lang["POWERED"] = "פועל על ידי <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "פועל על ידי <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;גנזכי";
 $lang["SERVER"] = "Subversion&nbsp;שרת";
 

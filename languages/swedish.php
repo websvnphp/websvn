@@ -70,7 +70,7 @@ $lang["SHOWALL"] = "Visa alla";
 
 $lang["BADCMD"] = "Fel vid körning av kommando";
 
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projekt";
 $lang["SERVER"] = "Subversion Server";
 
