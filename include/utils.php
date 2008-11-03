@@ -83,7 +83,7 @@ function create_anchors($text) {
                 "<a href=\"mailto:\\1@\\2\">\\1@\\2</a>",
                 $ret);
 
-  return ($ret);
+  return $ret;
 }
 
 // }}}
