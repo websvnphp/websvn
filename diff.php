@@ -123,7 +123,7 @@ if ($prevrev) {
 
   // Open a pipe to the diff command with $context lines of context
 
-  $cmd = quoteCommand($config->diff." -w -U $context $oldtname $newtname");
+  $cmd = quoteCommand($config->diff." -w -U $context \"$oldtname\" \"$newtname\"");
 
   if ($all) {
     $ofile = fopen($oldtname, "r");
