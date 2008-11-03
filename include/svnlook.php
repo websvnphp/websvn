@@ -727,6 +727,33 @@ Class SVNRepository {
     }
 
     xml_parser_free($xml_parser);
+
+    foreach ($curLog->entries as $entryKey => $entry) {
+      $fullModAccess = true;
+      $anyModAccess = (count($entry->mods) == 0);
+      foreach ($entry->mods as $modKey => $mod) {
+        $access = $this->repConfig->hasReadAccess($mod->path);
+        if ($access) {
+          $anyModAccess = true;
+        } else {
+          // hide modified entry when access is prohibited
+          unset($curLog->entries[$entryKey]->mods[$modKey]);
+          $fullModAccess = false;
+        }
+      }
+      if (!$fullModAccess) {
+        // hide commit message when access to any of the entries is prohibited
+        $curLog->entries[$entryKey]->msg = '';
+      }
+      if (!$anyModAccess) {
+        // hide author and date when access to all of the entries is prohibited
+        $curLog->entries[$entryKey]->author = '';
+        $curLog->entries[$entryKey]->date = '';
+        $curLog->entries[$entryKey]->committime = '';
+        $curLog->entries[$entryKey]->age = '';
+      }
+    }
+
     return $curLog;
   }
 
