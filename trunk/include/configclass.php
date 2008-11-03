@@ -96,7 +96,7 @@ function mergesort(&$array, $cmp_function = 'strcmp') {
 
 // A Repository configuration class
 
-Class Repository {
+class Repository {
   // {{{ Properties
 
   var $name;
@@ -447,7 +447,7 @@ Class Repository {
 
 // The general configuration class
 
-Class WebSvnConfig {
+class WebSvnConfig {
   // {{{ Properties
 
   // Tool path locations
