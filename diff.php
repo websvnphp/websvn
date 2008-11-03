@@ -206,13 +206,13 @@ if ($prevrev) {
 
       $fin = false;
       while (!feof($diff) && !$fin) {
-        $listing[$index]["rev1lineno"] = 0;
-        $listing[$index]["rev2lineno"] = 0;
-
         $line = fgets($diff);
         if ($line === false || strncmp($line, "@@", 2) == 0) {
           $fin = true;
         } else {
+          $listing[$index]["rev1lineno"] = 0;
+          $listing[$index]["rev2lineno"] = 0;
+
           $mod = $line{0};
 
           $line = rtrim(substr($line, 1));
