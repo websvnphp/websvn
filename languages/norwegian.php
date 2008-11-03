@@ -74,7 +74,7 @@ $lang["SHOWALL"] = "Vis alle";
 
 $lang["BADCMD"] = "En feil oppstod under utf&oslash;relse av denne kommandoen";
 
-$lang["POWERED"] = "Kj&oslash;rer p&aring; <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Kj&oslash;rer p&aring; <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversionprosjekter";
 $lang["SERVER"] = "Subversiontjener";
 

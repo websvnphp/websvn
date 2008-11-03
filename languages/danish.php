@@ -72,7 +72,7 @@ $lang["SHOWALL"] = "Vis alle";
 $lang["BADCMD"] = "Fejl ved udf&oslash;relse af kommandoen";
 $lang["UNKNOWNREVISION"] = "Revisionen findes ikke";
 
-$lang["POWERED"] = "Leveret af <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Leveret af <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion-versionsarkiver";
 $lang["SERVER"] = "Subversion-server";
 

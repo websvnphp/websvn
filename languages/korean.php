@@ -68,7 +68,7 @@ $lang["SHOWALL"] = "모두 보기";
 
 $lang["BADCMD"] = "명령 실행 에러";
 
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;프로젝트";
 $lang["SERVER"] = "Subversion&nbsp;서버";
 

@@ -71,8 +71,7 @@ $lang["SHOWALL"] = "Pokaż wszyskie";
 
 $lang["BADCMD"] = "Błąd podczas wykonywania polecenia";
 
-$lang["POWERED"] = "Obsługiwane przez <a
-href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Obsługiwane przez <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Projekty&nbsp;Subversion";
 $lang["SERVER"] = "Serwer Subversion";
 

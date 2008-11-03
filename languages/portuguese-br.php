@@ -70,7 +70,7 @@ $lang["SHOWALL"] = "Mostrar todos";
 $lang["BADCMD"] = "Erro ao executar este comando";
 $lang["UNKNOWNREVISION"] = "Revis&atilde;o n&atilde;o encontrada";
 
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Projetos&nbsp;Subversion";
 $lang["SERVER"] = "Servidor&nbsp;Subversion";
 
