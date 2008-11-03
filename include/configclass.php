@@ -960,11 +960,11 @@ class WebSvnConfig {
       // For each file...
       while (false !== ($file = readdir($handle))) {
         // That's also a non hidden directory
-        if ($file{0} != '.' && is_dir($path.DIRECTORY_SEPARATOR.$file)) {
+        if ($file{0} != '.' && is_dir($path.DIRECTORY_SEPARATOR.$file) && is_readable($path.DIRECTORY_SEPARATOR.$file)) {
           // And that contains a db directory (in an attempt to not include
           // non svn repositories.
 
-          if (is_dir($path.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR."db")) {
+          if (is_dir($path.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR."db") && is_readable($path.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR."db")) {
             // And matches the pattern if specified
             if ($pattern === false || preg_match($pattern, $file)) {
               $name = 'file:///'.$path.DIRECTORY_SEPARATOR.$file;
