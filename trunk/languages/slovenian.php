@@ -71,7 +71,7 @@ $lang["SHOWALL"] = "Prikaži vse";
 $lang["BADCMD"] = "Napaka pri izvajanju tega ukaza";
 $lang["UNKNOWNREVISION"] = "Ne najdem različice";
 
-$lang["POWERED"] = "Powered by <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;Projekti";
 $lang["SERVER"] = "Subversion&nbsp;strežnik";
 

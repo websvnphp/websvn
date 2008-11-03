@@ -69,7 +69,7 @@ $lang["SHOWALL"] = "Tümünü Göster";
 
 $lang["BADCMD"] = "Bu komut çalıştırılırken hata oluştu";
 
-$lang["POWERED"] = "<a href=\"http://websvn.tigris.org/\">WebSVN</a> tarafından çalıştırılmaktadır";
+$lang["POWERED"] = "<a href=\"http://www.websvn.info/\">WebSVN</a> tarafından çalıştırılmaktadır";
 $lang["PROJECTS"] = "Subversion&nbsp;Projeleri";
 $lang["SERVER"] = "Subversion&nbsp;Sunucusu";
 

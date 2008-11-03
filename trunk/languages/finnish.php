@@ -69,7 +69,7 @@ $lang["SHOWALL"] = "Näytä Kaikki";
 
 $lang["BADCMD"] = "Virhe komennon suorittamisessa";
 
-$lang["POWERED"] = "Moottorina <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Moottorina <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;Projektit";
 $lang["SERVER"] = "Subversion-palvelin";
 

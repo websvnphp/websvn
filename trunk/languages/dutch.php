@@ -71,7 +71,7 @@ $lang["SHOWALL"] = "Toon alles";
 
 $lang["BADCMD"] = "Een fout is opgetreden tijdens het uitvoeren van dit commando";
 
-$lang["POWERED"] = "Aangedreven door <a href=\"http://websvn.tigris.org/\">WebSVN</a>";
+$lang["POWERED"] = "Aangedreven door <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;Projecten";
 $lang["SERVER"] = "Subversion&nbsp;Server";
 
