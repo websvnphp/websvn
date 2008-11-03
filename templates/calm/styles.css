@@ -674,7 +674,7 @@ code {
 
 table tbody tr td.logmsg {
   text-align:left;
-  padding:3px 0;
+  padding: 3px 0 3px 3px;
   vertical-align:middle;
   }
 

@@ -31,14 +31,14 @@ require_once("include/utils.php");
 
 $debugxml = false;
 
-Class SVNMod {
+class SVNMod {
   var $action = '';
   var $copyfrom = '';
   var $copyrev = '';
   var $path = '';
 }
 
-Class SVNLogEntry {
+class SVNLogEntry {
   var $rev = 1;
   var $author = '';
   var $date = '';
@@ -56,7 +56,7 @@ Class SVNLogEntry {
 
 }
 
-Class SVNLog {
+class SVNLog {
   var $entries; // Array of entries
   var $curEntry; // Current entry
 
@@ -314,9 +314,9 @@ function encodePath($uri) {
 
 // }}}
 
-// The SVNRepository Class
+// The SVNRepository class
 
-Class SVNRepository {
+class SVNRepository {
   var $repConfig;
 
   function SVNRepository($repConfig) {
@@ -396,7 +396,7 @@ Class SVNRepository {
     //    it from being parsed by the template parser; maybe something more
     //    elegant is in order?
     $hline = str_replace('[', '&#91;', str_replace(']', '&#93;', $hline) );
-    return($hline);
+    return $hline;
   }
 
   // }}}
