@@ -103,6 +103,7 @@ if ($config->multiViews) {
   }
 
   createProjectSelectionForm();
+  createRevisionSelectionForm();
   $vars["allowdownload"] = $rep->getAllowDownload();
 
   // find the operation type

@@ -52,6 +52,12 @@ strong, b {
   padding:10px 10px 0 10px;
   height:2em;
 }
+#input {
+  margin:0em 2% 0 2%;
+  text-align:right;
+  padding:10px 10px 0 10px;
+  height:2em;
+}
 #wrap {  
   margin:0 2% 0 32%;
   text-align:left;  

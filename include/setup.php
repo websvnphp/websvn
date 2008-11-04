@@ -340,6 +340,7 @@ if (empty($reps[0])) {
 // Override the rep parameter with the repository name if it's available
 $repname = @$_REQUEST["repname"];
 if (isset($repname)) {
+	$repname = urldecode($repname);
   $rep = $config->findRepository($repname);
 } else {
   $rep = $reps[0];
@@ -381,11 +382,36 @@ function createProjectSelectionForm() {
   $vars["projects_endform"] = "</form>";
 }
 
+// Function to create the revision selection HTML form
+function createRevisionSelectionForm() {
+  global $config, $vars, $rep, $lang, $showchanged, $rev;
+
+  if ($rev == 0) {
+    $thisrev = "HEAD";
+  } else {
+    $thisrev  = $rev;
+  }
+
+  list($url, $params) = $config->getUrlParts($rep, $path, 'revision');
+  $vars["revision_form"] = "<form action=\"$url\" method=\"get\" id=\"revisionform\">";
+
+  $vars["revision_input"] = "<input type=\"text\" size=\"4\" name=\"rev\" value=\"$thisrev\" />";
+  $hidden = '';
+  foreach ($params as $k => $v) {
+    $hidden .= "<input type=\"hidden\" name=\"$k\" value=\"".htmlspecialchars($v)."\" />";
+  }
+  $vars["revision_hidden"] = $hidden;
+
+  $vars["revision_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
+  $vars["revision_endform"] = "</form>";
+}
+
 // Create the form if we're not in MultiViews.  Otherwise wsvn must create the form once the current project has
 // been found
 
 if (!$config->multiViews) {
   createProjectSelectionForm();
+  createRevisionSelectionForm();
 }
 
 if ($rep) {
