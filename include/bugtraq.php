@@ -123,7 +123,7 @@ class Bugtraq {
 
       // Make sure that our line really is an issue tracker message
 
-      if (((strncmp($bugLine, $this->firstPart, $this->firstPartLen) == 0)) && strcmp(substr($bugLine, -$this->lastPartLen, $this->lastPartLen), $this->lastPart) == 0) {
+      if (isset($this->firstPart) && isset($this->lastPart) && ((strncmp($bugLine, $this->firstPart, $this->firstPartLen) == 0)) && strcmp(substr($bugLine, -$this->lastPartLen, $this->lastPartLen), $this->lastPart) == 0) {
         // Get the issues list
         if ($this->lastPartLen > 0) {
           $issues = substr($bugLine, $this->firstPartLen, -$this->lastPartLen);
