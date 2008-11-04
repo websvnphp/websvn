@@ -392,7 +392,7 @@ function createRevisionSelectionForm() {
     $thisrev  = $rev;
   }
 
-  list($url, $params) = $config->getUrlParts($rep, $path, 'revision');
+  list($url, $params) = $config->getUrlParts($rep, '', 'revision');
   $vars["revision_form"] = "<form action=\"$url\" method=\"get\" id=\"revisionform\">";
 
   $vars["revision_input"] = "<input type=\"text\" size=\"4\" name=\"rev\" value=\"$thisrev\" />";
