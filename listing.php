@@ -62,8 +62,8 @@ function fileLink($path, $file, $returnjoin = false) {
   if ($isDir) {
     $url = $config->getURL($rep, $ppath.$pfile, "dir");
 
-    // XHTML doesn't allow slashes in IDs ~J
-    $id = str_replace('/', '_', $ppath.$pfile);
+    // XHTML doesn't allow slashes in IDs and must begin with a letter
+    $id = str_replace('/', '_', 'path'.$ppath.$pfile);
     $url = "<a id='$id' href=\"${url}$passrevstr";
 
     $url = removeURLSeparator($url);
@@ -328,9 +328,10 @@ if ($rep->isDownloadAllowed($path)) {
 
 $url = $config->getURL($rep, "/", "comp");
 
-$vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /></form>";
+$vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" />";
+$vars["compare_endform"] = "</form>";
 
 $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);

@@ -503,6 +503,9 @@ tbody tr td.feed a:link {
 td.code {
   padding:2px 2px 0 2px;
 }
+.icon {
+	vertical-align: middle;
+}
 
 /*
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ File, Blame, Diff

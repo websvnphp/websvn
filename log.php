@@ -292,7 +292,7 @@ if (!empty($history)) {
 $url = $config->getURL($rep, $path, "log");
 // XXX: forms don't have the name attribute, but _everything_ has the id attribute,
 //      so what you're trying to do (if anything?) should be done via that ~J
-$vars["logsearch_form"] = "<form action=\"$url\" method=\"post\" name=\"logsearchform\">";
+$vars["logsearch_form"] = "<form action=\"$url\" method=\"post\">";
 
 $vars["logsearch_startbox"] = "<input name=\"sr\" size=\"5\" value=\"$startrev\" />";
 $vars["logsearch_endbox"  ] = "<input name=\"er\" size=\"5\" value=\"$endrev\" />";
@@ -300,19 +300,20 @@ $vars["logsearch_maxbox"  ] = "<input name=\"max\" size=\"5\" value=\"".($max==0
 $vars["logsearch_inputbox"] = "<input name=\"search\" value=\"".htmlentities($search, ENT_QUOTES, 'UTF-8')."\" />";
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-$vars["logsearch_endform"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\" />".
+$vars["logsearch_hidden"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\" />".
                              "<input type=\"hidden\" name=\"op\" value=\"log\" />".
                              "<input type=\"hidden\" name=\"rev\" value=\"$rev\" />".
-                             "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\" />".
-                             "</form>";
+                             "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\" />";
+$vars["logsearch_endform"] = "</form>";
 
 $url = $config->getURL($rep, $path, "log");
 $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
 
 $url = $config->getURL($rep, "/", "comp");
-$vars["compare_form"] = "<form action=\"$url\" method=\"post\" name=\"compareform\">";
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREREVS"]}\" />";
-$vars["compare_endform"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /></form>";
+$vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" />";
+$vars["compare_endform"] = "</form>";
 
 $vars["version"] = $version;
 
