@@ -726,33 +726,47 @@ class WebSvnConfig {
   //
   // Get the URL to a path name based on the current config
 
-  function getURL($rep, $path, $op, $key = null, $value = null) {
-    $base = $_SERVER["SCRIPT_NAME"];
+  function getURL($rep, $path, $op) {
+    list($base, $params) = $this->getUrlParts($rep, $path, $op);
+
+    $url = $base.'?';
+    foreach ($params as $k => $v) {
+      $url .= $k.'='.urlencode($v).'&amp;';
+    }
+
+    return $url;
+ }
+
+  // }}}
+
+  // {{{ getUrlParts
+  //
+  // Get the Url and Parametes to a path name based on the current config
+
+  function getUrlParts($rep, $path, $op) {
+    $params = array();
 
     if ($this->multiViews) {
+      $url = $_SERVER["SCRIPT_NAME"];
       // Remove the .php
-      if (eregi(".php$", $base))  {
+      if (eregi(".php$", $url))  {
         // Remove the .php
-        $base = substr($base, 0, -4);
+        $url = substr($url, 0, -4);
       }
 
       if ($path && $path{0} != "/") $path = "/".$path;
 
-      $url = $base;
-
       if ($op == 'index') {
-        $url .= '/?';
+        $url .= '/';
       } else if (is_object($rep)) {
         $url .= "/".$rep->getDisplayName().str_replace('%2F', '/', rawurlencode($path));
 
         if ($op != "dir" && $op != "file") {
-          $url .= "?op=$op&amp;";
-        } else {
-          $url .= "?";
+          $params['op'] = $op;
         }
       }
 
-      return $url;
+      return array($url, $params);
 
     } else {
       switch ($op) {
@@ -801,13 +815,14 @@ class WebSvnConfig {
           break;
       }
 
-      if ($op == 'index') {
-        return $fname.'?';
-      } else if ($rep === -1) {
-        return $fname."?path=".urlencode($path)."&amp;";
-      } else {
-        return $fname."?repname=".urlencode($rep->getDisplayName())."&amp;path=".urlencode($path)."&amp;";
+      if ($rep === -1) {
+        $params['path'] = $path;
+      } else if ($op != 'index') {
+        $params['repname'] = $rep->getDisplayName();
+        $params['path'] = $path;
       }
+
+      return array($fname, $params);
     }
   }
 
