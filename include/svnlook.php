@@ -423,7 +423,7 @@ class SVNRepository {
     if ($l == "php") {
       // Output the file to the filename
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$filename);
+      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
       @exec($cmd);
 
       // Get the file as a string (memory hogging, but we have no other options)
