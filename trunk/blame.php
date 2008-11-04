@@ -148,9 +148,9 @@ if (!$rep->hasReadAccess($path, false)) {
   $vars['noaccess'] = true;
 }
 
-$vars['javascript'] =  <<  < HTML
+$vars['javascript'] =  <<<HTML
 
- < script type = 'text/javascript' >
+<script type='text/javascript'>
 /* <![CDATA[ */
 var rev = new Array();
 var a = document.getElementsByTagName('a');
@@ -192,6 +192,8 @@ function addEvent(obj, type, func) {
     return false;
   }
 }
+
+HTML;
 
 foreach ($seen_rev as $key => $val) {
   $history = $svnrep->getLog($path, $key, $key, false, 1);
