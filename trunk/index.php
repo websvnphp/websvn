@@ -45,7 +45,8 @@ if ($config->flatIndex) {
       $url = $config->getURL($project, "/", "dir");
 
       $listing[$i]["rowparity"] = $i % 2;
-      $listing[$i++]["projlink"] = "<a href=\"${url}\">".$project->getDisplayName()."</a>";
+      $listing[$i]["projlink"] = "<a href=\"${url}\">".$project->getDisplayName()."</a>";
+      $i++;
     }
   }
   $vars["flatview"] = true;
@@ -61,8 +62,7 @@ if ($config->flatIndex) {
   $parity = 0;
   foreach ($projects as $project) {
     if ($project->hasReadAccess("/", true)) {
-      $listing[$i]["rowparity"] = $parity % 2;
-      $url = $config->getURL($project, "/", "dir");
+      $listing[$i] = array();
       if ($curgroup != $project->group) {
         // TODO: this should be de-soupified
         if (!empty($curgroup)) {
@@ -77,22 +77,30 @@ if ($config->flatIndex) {
 
         $curgroup = $project->group;
         $id = strtr(base64_encode('grp'.$curgroup), array('+' => '-', '/' => '_', '=' => ''));
-        $listing[$i++]["listitem"] .= "<div class=\"groupname\" onclick=\"expandcontent(this, '$id');\" style=\"cursor:hand; cursor:pointer\"><div class=\"a\"><span class=\"showstate\"></span>$curgroup</div></div>\n<div id=\"$id\" class=\"switchcontent\">";
+        $listing[$i]["listitem"] .= "<div class=\"groupname\" onclick=\"expandcontent(this, '$id');\" style=\"cursor:hand; cursor:pointer\"><div class=\"a\"><span class=\"showstate\"></span>$curgroup</div></div>\n<div id=\"$id\" class=\"switchcontent\">";
+
+        $i++;
+        $listing[$i] = array();
       }
 
-      $parity++;
       $listing[$i]["isgrouphead"] = false;
       $listing[$i]["isprojlink"] = true;
-      $listing[$i++]["listitem"] = "<a href=\"${url}\">".$project->name."</a>\n";
+      $url = $config->getURL($project, "/", "dir");
+      $listing[$i]["listitem"] = "<a href=\"${url}\">".$project->name."</a>\n";
+
+      $listing[$i]["rowparity"] = $parity % 2;
+      $parity++;
+
+      $i++;
     }
   }
 
   if (!empty($curgroup)) {
+    // Close the switchcontent div
     $listing[$i]["isprojlink"] = false;
+    $listing[$i]["isgrouphead"] = false;
+    $listing[$i]["listitem"] = "</div>";
   }
-  $listing[$i]["isgrouphead"] = false;
-  // Close the switchcontent div
-  $listing[$i]["listitem"] = "</div>";
 
   $vars["flatview"] = false;
   $vars["treeview"] = true;
