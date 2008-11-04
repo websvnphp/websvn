@@ -11,7 +11,7 @@
 [websvn-test:noaccess]
    [lang:NOACCESS]
 [websvn-else]
-   <table cellpadding="2px" cellspacing="0px" class="outline">
+   <table cellpadding="2" cellspacing="0" class="outline">
    <tr><th colspan=2 class="HdrClmnEnd">[lang:REVINFO]</th></tr>
    <tr><td class="CatClmn1" valign="top">[lang:CURDIR]:</td><td class="row1">[websvn:path]</td></tr>
    <tr><td class="CatClmn0">[lang:REV] &amp; [lang:AUTHOR]:</td><td class="row0">[lang:REV] [websvn:rev] - [websvn:author]
@@ -27,22 +27,22 @@
    </table>
    
    [websvn-defineicons]
-   dir=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
-   diropen=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[OPEN-FOLDER]">
-   *=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
-   .c=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
-   .cpp=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filecpp.png" alt="[CPP-FILE]">
-   .h=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
-   .html=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filehtml.png" alt="[HTML-FILE]">
-   .java=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filejava.png" alt="[JAVA-FILE]">
-   .m=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filem.png" alt="[M-FILE]">
-   .py=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filepy.png" alt="[PY-FILE]">
-   .s=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/files.png" alt="[S-FILE]">
+   dir=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
+   diropen=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[OPEN-FOLDER]">
+   *=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
+   .c=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
+   .cpp=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filecpp.png" alt="[CPP-FILE]">
+   .h=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
+   .html=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filehtml.png" alt="[HTML-FILE]">
+   .java=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filejava.png" alt="[JAVA-FILE]">
+   .m=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filem.png" alt="[M-FILE]">
+   .py=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filepy.png" alt="[PY-FILE]">
+   .s=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/files.png" alt="[S-FILE]">
    
-   i-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/i-node.png" alt="[NODE]">
-   t-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/t-node.png" alt="[NODE]">
-   l-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/l-node.png" alt="[NODE]">
-   e-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/e-node.png" alt="[NODE]">
+   i-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/i-node.png" alt="[NODE]">
+   t-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/t-node.png" alt="[NODE]">
+   l-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/l-node.png" alt="[NODE]">
+   e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/e-node.png" alt="[NODE]">
    [websvn-enddefineicons]
    
    <p><hr>
@@ -62,7 +62,7 @@
    [websvn-endtest]
    <p>
    [websvn:compare_form]
-      <table cellpadding="2px" cellspacing="0px" width="100%" class="outline">
+      <table cellpadding="2" cellspacing="0" width="100%" class="outline">
          <tr>
             <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
             [websvn-test:allowdownload]
@@ -119,7 +119,8 @@
          [websvn-endlisting]
       </table>
    <p>
-   [websvn:compare_submit]  
+   [websvn:compare_submit]
+   [websvn:compare_hidden] 
    [websvn:compare_endform]
    <hr>
 [websvn-endtest]

@@ -76,7 +76,8 @@ if ($config->flatIndex) {
         $listing[$i]["isgrouphead"] = true;
 
         $curgroup = $project->group;
-        $listing[$i++]["listitem"] .= "<div class=\"groupname\" onclick=\"expandcontent(this, 'grp$curgroup');\" style=\"cursor:hand; cursor:pointer\"><div class=\"a\"><span class=\"showstate\"></span>$curgroup</div></div>\n<div id=\"grp$curgroup\" class=\"switchcontent\">";
+        $id = strtr(base64_encode('grp'.$curgroup), array('+' => '-', '/' => '_', '=' => ''));
+        $listing[$i++]["listitem"] .= "<div class=\"groupname\" onclick=\"expandcontent(this, '$id');\" style=\"cursor:hand; cursor:pointer\"><div class=\"a\"><span class=\"showstate\"></span>$curgroup</div></div>\n<div id=\"$id\" class=\"switchcontent\">";
       }
 
       $parity++;

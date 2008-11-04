@@ -123,6 +123,10 @@ div.difflines
 {
 }
 
+.icon {
+	vertical-align: middle;
+}
+
 .plusbox { float: left; clear: both; position: relative; top: -3px; font-size: 13px; font-weight: bold; width: 16px; text-indent: 0; height: 16px; color: black; background-color: #D0D0D0; text-align: center; padding: 0px 2px 0px 3px; border: black solid 1px; margin-right: 5px; }
 .minusbox { float: left; clear: both; position: relative; top: -3px; font-size: 13px; font-weight: bold; width: 16px; text-indent: 0; height: 16px; color: black; background-color: #809cc8; text-align: center; padding: 0px 2px 0px 3px; border: black solid 1px; margin-right: 5px; }
 
