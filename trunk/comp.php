@@ -77,6 +77,7 @@ if (!@$_REQUEST["manualorder"] && is_numeric($rev1) && is_numeric($rev2)) {
 }
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $url = $config->getURL($rep, "/", "comp");
 $vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&amp;compare%5B%5D=".urlencode($path1)."@$rev1&amp;manualorder=1\">${lang["REVCOMP"]}</a>";
