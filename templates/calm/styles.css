@@ -379,12 +379,7 @@ thead tr th {
 }
 thead tr th.path {
   text-align:left;
-  width:64%;
-}
-thead tr th.collog,
-thead tr th.colrss,
-thead tr th.coltar {
-  width:12%;
+  width:50%;
 }
 thead tr th.collno,
 thead tr th.colrev,
