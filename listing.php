@@ -301,6 +301,7 @@ $logurl = $config->getURL($rep, $path, "log");
 $vars['logurl'] = $logurl.'rev='.$passrev.'&amp;isdir=1';
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if ($rev != $headrev) {
   $history = $svnrep->getLog($path, $rev, "", false);
