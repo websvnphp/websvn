@@ -32,13 +32,13 @@ a {
   outline: none !important;
 }
 a:link {
-	color:#000;
+  color:#000;
   text-decoration: none;
 }
 a img {border:0;}
 
 a:hover {
-	background-color:khaki;
+  background-color:khaki;
 }
 strong, b {
   color:gray;
@@ -52,7 +52,7 @@ strong, b {
   height:2em;
 }
 #input {
-  margin:0em 2% 0 2%;
+  margin:-3.7em 2% 0 2%;
   text-align:right;
   padding:10px 10px 0 10px;
   height:2em;
@@ -234,7 +234,7 @@ dl.projectlist dd a {
   padding-left:22px;
 }
 .projectlisthead {
-	padding: 13px 0 5px;
+  padding: 13px 0 5px;
 }
 .projectlist .groupname {
   padding:3px 0 5px;
@@ -503,7 +503,7 @@ td.code {
   padding:2px 2px 0 2px;
 }
 .icon {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 /*
