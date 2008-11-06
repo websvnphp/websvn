@@ -466,6 +466,7 @@ class WebSvnConfig {
   var $treeView = true;
   var $flatIndex = true;
   var $openTree = false;
+  var $showLastMod = true;
   var $serverIsWindows = false;
   var $multiViews = false;
   var $useEnscript = false;
@@ -1142,6 +1143,14 @@ class WebSvnConfig {
 
   function getOpenTree() {
     return $this->openTree;
+  }
+
+  function showLastModInListing() {
+    return $this->showLastMod;
+  }
+
+  function setShowLastModInListing($show) {
+    $this->showLastMod = $show;
   }
 
   // setSubversionMajorVersion

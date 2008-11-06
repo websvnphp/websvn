@@ -38,6 +38,23 @@ class SVNMod {
   var $path = '';
 }
 
+class SVNListEntry {
+  var $rev = 1;
+  var $author = '';
+  var $date = '';
+  var $committime;
+  var $age = '';
+  var $file = '';
+  var $isdir = false;
+}
+
+class SVNList {
+  var $entries; // Array of entries
+  var $curEntry; // Current entry
+
+  var $path = ''; // The path of the list
+}
+
 class SVNLogEntry {
   var $rev = 1;
   var $author = '';
@@ -79,12 +96,145 @@ class SVNLog {
 
 // {{{ XML parsing functions---
 
-$curLog = 0;
 $curTag = '';
 
-// {{{ startElement
+$curList = 0;
 
-function startElement($parser, $name, $attrs) {
+// {{{ listStartElement
+
+function listStartElement($parser, $name, $attrs) {
+  global $curList, $curTag, $debugxml;
+
+  switch ($name) {
+    case "LIST":
+      if ($debugxml) print "Starting list\n";
+
+      if (sizeof($attrs)) {
+        while (list($k, $v) = each($attrs)) {
+          switch ($k) {
+            case "PATH":
+              if ($debugxml) print "Path $v\n";
+              $curList->path = $v;
+              break;
+          }
+        }
+      }
+      break;
+
+    case "ENTRY":
+      if ($debugxml) print "Creating new entry\n";
+      $curList->curEntry = new SVNListEntry;
+
+      if (sizeof($attrs)) {
+        while (list($k, $v) = each($attrs)) {
+          switch ($k) {
+            case "KIND":
+              if ($debugxml) print "Kind $v\n";
+              $curList->curEntry->isdir = ($v == 'dir');
+              break;
+          }
+        }
+      }
+      break;
+
+    case "COMMIT":
+      if ($debugxml) print "Commit\n";
+
+      if (sizeof($attrs)) {
+        while (list($k, $v) = each($attrs)) {
+          switch ($k) {
+            case "REVISION":
+              if ($debugxml) print "Revision $v\n";
+              $curList->curEntry->rev = $v;
+              break;
+          }
+        }
+      }
+      break;
+
+    default:
+      $curTag = $name;
+      break;
+  }
+}
+
+// }}}
+
+// {{{ listEndElement
+
+function listEndElement($parser, $name) {
+  global $curList, $debugxml, $curTag;
+
+  switch ($name) {
+    case "ENTRY":
+      if ($debugxml) print "Ending new list entry\n";
+      if ($curList->curEntry->isdir) {
+      	$curList->curEntry->file .= '/';
+      }
+      $curList->entries[] = $curList->curEntry;
+      $curList->curEntry = null;
+      break;
+  }
+
+  $curTag = "";
+}
+
+// }}}
+
+// {{{ listCharacterData
+
+function listCharacterData($parser, $data) {
+  global $curList, $curTag, $lang, $debugxml;
+
+  switch ($curTag) {
+    case "NAME":
+      if ($debugxml) print "Name: $data\n";
+      if (empty($data)) return;
+      $curList->curEntry->file .= $data;
+      break;
+
+    case "AUTHOR":
+      if ($debugxml) print "Author: $data\n";
+      if (empty($data)) return;
+      $curList->curEntry->author .= htmlentities($data, ENT_COMPAT, "UTF-8");
+      break;
+
+    case "DATE":
+      if ($debugxml) print "Date: $data\n";
+      $data = trim($data);
+      if (empty($data)) return;
+
+      sscanf($data, "%d-%d-%dT%d:%d:%d.", $y, $mo, $d, $h, $m, $s);
+
+      $mo = substr("00".$mo, -2);
+      $d = substr("00".$d, -2);
+      $h = substr("00".$h, -2);
+      $m = substr("00".$m, -2);
+      $s = substr("00".$s, -2);
+
+      $curList->curEntry->date = "$y-$mo-$d $h:$m:$s GMT";
+
+      $committime = strtotime($curList->curEntry->date);
+      $curList->curEntry->committime = $committime;
+      $curtime = time();
+
+      // Get the number of seconds since the commit
+      $agesecs = $curtime - $committime;
+      if ($agesecs < 0) $agesecs = 0;
+
+      $curList->curEntry->age = datetimeFormatDuration($agesecs, true, true);
+
+      break;
+  }
+}
+
+// }}}
+
+$curLog = 0;
+
+// {{{ logStartElement
+
+function logStartElement($parser, $name, $attrs) {
   global $curLog, $curTag, $debugxml;
 
   switch ($name) {
@@ -142,9 +292,9 @@ function startElement($parser, $name, $attrs) {
 
 // }}}
 
-// {{{ endElement
+// {{{ logEndElement
 
-function endElement($parser, $name) {
+function logEndElement($parser, $name) {
   global $curLog, $debugxml, $curTag;
 
   switch ($name) {
@@ -169,9 +319,9 @@ function endElement($parser, $name) {
 
 // }}}
 
-// {{{ characterData
+// {{{ logCharacterData
 
-function characterData($parser, $data) {
+function logCharacterData($parser, $data) {
   global $curLog, $curTag, $lang, $debugxml;
 
   switch ($curTag) {
@@ -251,7 +401,7 @@ function characterData($parser, $data) {
 
 // }}}
 
-// {{{ internal functions (_topLevel, and _dirSort)
+// {{{ internal functions (_topLevel and _listSort)
 
 // Function returns true if the give entry in a directory tree is at the top level
 
@@ -262,14 +412,14 @@ function _topLevel($entry) {
 
 // Function to sort two given directory entries.  Directories go at the top
 
-function _dirSort($e1, $e2) {
-  $isDir1 = $e1{strlen($e1) - 1} == "/";
-  $isDir2 = $e2{strlen($e2) - 1} == "/";
+function _listSort($e1, $e2) {
+  $isDir1 = $e1->file{strlen($e1->file) - 1} == "/";
+  $isDir2 = $e2->file{strlen($e2->file) - 1} == "/";
 
   if ($isDir1 && !$isDir2) return -1;
   if ($isDir2 && !$isDir1) return 1;
 
-  return strnatcasecmp($e1, $e2);
+  return strnatcasecmp($e1->file, $e2->file);
 }
 
 // }}}
@@ -322,33 +472,6 @@ class SVNRepository {
   function SVNRepository($repConfig) {
     $this->repConfig = $repConfig;
   }
-
-  // {{{ dirContents
-
-  function dirContents($path, $rev = 0) {
-    global $config, $locwebsvnreal;
-
-    $tree = array();
-
-    if ($rev == 0) {
-      $headlog = $this->getLog("/", "", "", true, 1);
-      if (isset($headlog->entries[0])) $rev = $headlog->entries[0]->rev;
-    }
-
-    $path = encodepath($this->repConfig->path.$path);
-    $output = runCommand($config->svn." list ".$this->repConfig->svnParams().quote($path).' -r '.$rev, true);
-
-    foreach ($output as $entry) {
-      if ($entry != "") $tree[] = $entry;
-    }
-
-    // Sort the entries into alphabetical order with the directories at the top of the list
-    usort($tree, "_dirSort");
-
-    return $tree;
-  }
-
-  // }}}
 
   // {{{ highlightLine
   //
@@ -636,6 +759,97 @@ class SVNRepository {
 
   // }}}
 
+  // {{{ getList
+
+  function getList($path, $rev = 0) {
+    global $config, $curList, $vars, $lang;
+
+    $xml_parser = xml_parser_create("UTF-8");
+    xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
+    xml_set_element_handler($xml_parser, "listStartElement", "listEndElement");
+    xml_set_character_data_handler($xml_parser, "listCharacterData");
+
+    // Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
+    // the trailing slash from the path for comparison purposes
+
+    if ($path{strlen($path) - 1} == "/" && $path != "/") {
+      $path = substr($path, 0, -1);
+    }
+
+    $curList = new SVNList;
+    $curList->entries = array();
+    $curList->path = $path;
+
+    // Get the list info
+    $path = encodepath($this->repConfig->path.$path);
+
+    if ($rev == 0) {
+      $headlog = $this->getLog("/", "", "", true, 1);
+      if (isset($headlog->entries[0])) $rev = $headlog->entries[0]->rev;
+    }
+    $revStr = "-r $rev";
+
+    $cmd = quoteCommand($config->svn." list --xml $revStr ".$this->repConfig->svnParams().quote($path));
+
+    $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+
+    $resource = proc_open($cmd, $descriptorspec, $pipes);
+    $error = "";
+
+    if (!is_resource($resource)) {
+      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+      exit;
+    }
+
+    $handle = $pipes[1];
+    $firstline = true;
+    while (!feof($handle)) {
+      $line = fgets($handle);
+      if (!xml_parse($xml_parser, $line, feof($handle))) {
+        if (xml_get_error_code($xml_parser) != 5) {
+          // errors can contain sensitive info! don't echo this ~J
+          error_log(sprintf("XML error: %s (%d) at line %d column %d byte %d\ncmd: %s",
+                  xml_error_string(xml_get_error_code($xml_parser)),
+                  xml_get_error_code($xml_parser),
+                  xml_get_current_line_number($xml_parser),
+                  xml_get_current_column_number($xml_parser),
+                  xml_get_current_byte_index($xml_parser),
+                  $cmd));
+          exit;
+        } else {
+          $vars["error"] = $lang["UNKNOWNREVISION"];
+          return 0;
+        }
+      }
+    }
+
+    while (!feof($pipes[2])) {
+      $error .= fgets($pipes[2]);
+    }
+
+    $error = toOutputEncoding(trim($error));
+
+    fclose($pipes[0]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+
+    proc_close($resource);
+
+    if (!empty($error)) {
+      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+      exit;
+    }
+
+    xml_parser_free($xml_parser);
+
+    // Sort the entries into alphabetical order with the directories at the top of the list
+    usort($curList->entries, "_listSort");
+
+    return $curList;
+  }
+
+  // }}}
+
   // {{{ getLog
 
   function getLog($path, $brev = "", $erev = 1, $quiet = false, $limit = 2) {
@@ -643,8 +857,8 @@ class SVNRepository {
 
     $xml_parser = xml_parser_create("UTF-8");
     xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
-    xml_set_element_handler($xml_parser, "startElement", "endElement");
-    xml_set_character_data_handler($xml_parser, "characterData");
+    xml_set_element_handler($xml_parser, "logStartElement", "logEndElement");
+    xml_set_character_data_handler($xml_parser, "logCharacterData");
 
     // Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
     // the trailing slash from the path for comparison purposes

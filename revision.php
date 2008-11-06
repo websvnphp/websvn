@@ -39,9 +39,6 @@ $svnrep = new SVNRepository($rep);
 // Revision info to pass along chain
 $passrev = $rev;
 
-// Get the directory contents of the given revision, or HEAD if not defined
-$contents = $svnrep->dirContents($path, @$rev);
-
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false);
 
