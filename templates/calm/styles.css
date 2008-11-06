@@ -93,6 +93,9 @@ h1 span {
   padding-left:22px;
   background:url(images/cube_green.png) no-repeat 0 50%;
 }
+h1 span a, h1 span a:link {
+  color:gray;
+}
 h2 a {
   background:#FFF ;
   padding:2px;
