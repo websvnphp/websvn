@@ -154,13 +154,11 @@ if ($rep->getHideRss()) {
   $vars['rssurl'] = $rssurl.'isdir=1';
 }
 
-
 $vars['version'] = $version;
 
 $vars['noaccess'] = !$rep->hasReadAccess($path, true);
 
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
-
 
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."revision.tmpl", $vars, $listing);

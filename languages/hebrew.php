@@ -87,9 +87,9 @@ $lang["NORESULTS"] = "אין לוגים התואמים את החיפוש שלך"
 $lang["NOMORERESULTS"] = "אין יותר לוגים התואמים את החיפוש שלך";
 $lang['NOPREVREV'] = 'אין גרסה קודמת';
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "קבצים ששונו"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "קבצים ששונו";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "מס שורה";
 $lang["BLAMEFOR"] = "האשמה בגרסה";
@@ -114,7 +114,7 @@ $lang["FILEDELETED"] = "קובץ נמחק";
 $lang["FILEADDED"] = "קובץ חדש";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
