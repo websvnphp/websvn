@@ -126,6 +126,7 @@ $vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 createDirLinks($rep, $ppath, $passrev);
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $url = $config->getURL($rep, $path, "log");
 $vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
