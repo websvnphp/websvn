@@ -101,7 +101,7 @@ if (mkdir($tmpname)) {
   exec(quoteCommand($config->touch.' -t '.$ts.' '.quote($tmpname.DIRECTORY_SEPARATOR.$arcname)));
 
   // Create the tar file
-  exec(quoteCommand($config->tar.' -cf '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc).' '.quote($tmpname.DIRECTORY_SEPARATOR.$arcname)));
+  exec(quoteCommand($config->tar.' -cf '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc).' '.quote($arcname)));
 
   // Set datetime of tar file to datetime of revision
   exec(quoteCommand($config->touch.' -t '.$ts.' '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc)));
