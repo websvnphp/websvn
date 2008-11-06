@@ -218,7 +218,7 @@ if ($prevrev) {
           $line = rtrim(substr($line, 1));
           if ($ent) $line = replaceEntities($line, $rep);
 
-          if ($line == '') $line = '&nbsp;';
+          if (strip_tags($line) == '') $line = '&nbsp;';
           $listing[$index]["rev1line"] = hardspace($line);
 
           $text = hardspace($line);
