@@ -63,7 +63,9 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
       <thead>
       <tr align="left" valign="middle">
         <th scope="col" class="path">[lang:PATH]</th>
+        [websvn-test:showlastmod]
         <th scope="col" class="colmod" colspan="3">[lang:LASTMOD]</th>
+        [websvn-endtest]
         <th scope="col" class="collog">[lang:NOBR][lang:LOG][lang:ENDNOBR]</th>
         [websvn-test:allowdownload]
         <th scope="col" class="coltar">[lang:TARBALL]</th>
@@ -83,9 +85,11 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
             [websvn:filelink]
          </td>
          
-         <td><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
-         <td>[websvn:age]</td>
-         <td>[websvn:author]</td>
+         [websvn-test:showlastmod]
+           <td><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
+           <td>[websvn:age]</td>
+           <td>[websvn:author]</td>
+         [websvn-endtest]
          
          <td class="log">[lang:NOBR]<a href="[websvn:logurl]">[lang:VIEWLOG]</a>[lang:ENDNOBR]</td>
          
