@@ -57,12 +57,16 @@ if (!$rep->isDownloadAllowed($path)) {
 
 $svnrep = new SVNRepository($rep);
 
-// If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, '', '', true);
-$youngest = $history->entries[0]->rev;
+// Fetch information about latest revision for this path
+if (empty($rev)) {
+  $history = $svnrep->getLog($path, 'HEAD', '', true, 1);
+} else {
+  $history = $svnrep->getLog($path, $rev, $rev - 1, true, 1);
+}
+$logEntry = $history->entries[0];
 
 if (empty($rev)) {
-  $rev = $youngest;
+  $rev = $logEntry->rev;
 }
 
 // Create a temporary directory.  Here we have an unavoidable but highly
@@ -88,28 +92,37 @@ if (mkdir($tmpname)) {
 
   $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
 
-  // Create the tar file
+  // change to temp directory so that only relative paths are stored in tar
   chdir($tmpname);
-  exec(quoteCommand($config->tar.' -cf '.quote($tararc).' '.quote($arcname)));
+
+  // Set datetime of exported and directory to datetime of revision
+  $date = $logEntry->date;
+  $ts = substr($date, 0, 4).substr($date, 5, 2).substr($date, 8, 2).substr($date, 11, 2).substr($date, 14, 2).'.'.substr($date, 17, 2);
+  exec(quoteCommand($config->touch.' -t '.$ts.' '.quote($tmpname.DIRECTORY_SEPARATOR.$arcname)));
+
+  // Create the tar file
+  exec(quoteCommand($config->tar.' -cf '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc).' '.quote($tmpname.DIRECTORY_SEPARATOR.$arcname)));
+
+  // Set datetime of tar file to datetime of revision
+  exec(quoteCommand($config->touch.' -t '.$ts.' '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc)));
 
   // ZIP it up
-  exec(quoteCommand($config->gzip.' '.quote($tararc)));
+  exec(quoteCommand($config->gzip.' '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc)));
 
   // Give the file to the browser
-  if (is_readable($gzarc)) {
-    $size = filesize($gzarc);
+  if (is_readable($tmpname.DIRECTORY_SEPARATOR.$gzarc)) {
+    $size = filesize($tmpname.DIRECTORY_SEPARATOR.$gzarc);
 
     header('Content-Type: application/x-gzip');
     header('Content-Length: '.$size);
     header('Content-Disposition: attachment; filename="'.$rep->name.'-'.$gzarc.'"');
 
-    readfile($gzarc);
+    readfile($tmpname.DIRECTORY_SEPARATOR.$gzarc);
   } else {
     print'Unable to open file '.$gzarc;
   }
 
   chdir('..');
-
 
   removeDirectory($tmpname);
 }
