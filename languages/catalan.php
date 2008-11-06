@@ -86,9 +86,9 @@ $lang["NORESULTS"] = "No hi ha cap registre que coincideixi amb la vostra cerca"
 $lang["NOMORERESULTS"] = "No hi ha més registres que coincideixin amb la vostra cerca";
 $lang['NOPREVREV'] = 'No hi ha cap revisió anterior.';
 
-$lang["RSSFEEDTITLE"] = "Canal RSS del WebSVN"; 
-$lang["FILESMODIFIED"] = "fitxer(s) modificat(s)"; 
-$lang["RSSFEED"] = "Canal RSS"; 
+$lang["RSSFEEDTITLE"] = "Canal RSS del WebSVN";
+$lang["FILESMODIFIED"] = "fitxer(s) modificat(s)";
+$lang["RSSFEED"] = "Canal RSS";
 
 $lang["LINENO"] = "Línia núm.";
 $lang["BLAMEFOR"] = "Informació de culpa per a la revisió";
@@ -113,7 +113,7 @@ $lang["FILEDELETED"] = "Fitxer suprimit";
 $lang["FILEADDED"] = "Nou fitxer";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

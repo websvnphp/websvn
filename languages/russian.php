@@ -87,9 +87,9 @@ $lang["MORERESULTS"] = "найти еще совпадения...";
 $lang["NORESULTS"] = "Нет записей, совпадающих с вашим запросом";
 $lang["NOMORERESULTS"] = "Больше нет записей, совпадающих с вашим запросом";
 
-$lang["RSSFEEDTITLE"] = "RSS-канал WebSVN"; 
-$lang["FILESMODIFIED"] = "файл(ов) изменено"; 
-$lang["RSSFEED"] = "канал RSS"; 
+$lang["RSSFEEDTITLE"] = "RSS-канал WebSVN";
+$lang["FILESMODIFIED"] = "файл(ов) изменено";
+$lang["RSSFEED"] = "канал RSS";
 
 $lang["LINENO"] = "№ строки";
 $lang["BLAMEFOR"] = "Сведения об авторстве для редакции ";
@@ -114,7 +114,7 @@ $lang["FILEDELETED"] = "Файл удален";
 $lang["FILEADDED"] = "Новый файл";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

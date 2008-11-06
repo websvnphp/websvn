@@ -89,9 +89,9 @@ $lang["NORESULTS"] = "Nincsenek a feltételnek megfelelő napló üzenetek";
 $lang["NOMORERESULTS"] = "Nincsen több olyan napló üzenet, ami megfelelne a feltételnek";
 $lang['NOPREVREV'] = 'Nincs előző revízió';
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed"; 
-$lang["FILESMODIFIED"] = "file(-ok) módosultak"; 
-$lang["RSSFEED"] = "RSS feed"; 
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "file(-ok) módosultak";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Sor száma.";
 $lang["BLAMEFOR"] = "A revízió felelőse";
@@ -116,7 +116,7 @@ $lang["FILEDELETED"] = "A file törölve";
 $lang["FILEADDED"] = "Új file";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

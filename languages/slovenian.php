@@ -75,7 +75,6 @@ $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion&nbsp;Projekti";
 $lang["SERVER"] = "Subversion&nbsp;strežnik";
 
-
 $lang["FILTER"] = "Možnosti filtriranja";
 $lang["STARTLOG"] = "Od različice";
 $lang["ENDLOG"] = "Do različice";
@@ -126,5 +125,3 @@ $lang["ENDNOBR"] = "";
 
 // $lang["NOBR"] = "<nobr>";
 // $lang["ENDNOBR"] = "</nobr>";
-
-
