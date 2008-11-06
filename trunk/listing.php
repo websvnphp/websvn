@@ -93,7 +93,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
     $path .= $subs[$n]."/";
   }
 
-  $contents = $svnrep->dirContents($path, $rev);
+  $logList = $svnrep->getList($path, $rev);
 
   // List each file in the current directory
   $loop = 0;
@@ -101,8 +101,9 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
   $openDir = false;
   $fullaccess = $rep->hasReadAccess($path, false);
 
-  foreach ($contents as $file) {
-    $isDir = ($file{strlen($file) - 1} == "/"?1:0);
+  foreach ($logList->entries as $entry) {
+  	$file = $entry->file;
+    $isDir = $entry->isdir;
     $access = false;
 
     if ($isDir) {
@@ -175,16 +176,14 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         $listing[$index]['rssurl'] = $rssurl.'rev='.$passrev.'&amp;isdir='.$isDir;
       }
 
-      $logEntry = $svnrep->getLog($path.$file, $rev);
-      $logEntry = $logEntry->entries[0];
-
-      $listing[$index]['revision'] = $logEntry->rev;
-      $listing[$index]['author'] = $logEntry->author;
-      $listing[$index]['logmessage'] = $logEntry->msg;
-      $listing[$index]['date'] = $logEntry->date;
-      $listing[$index]['committime'] = $logEntry->committime;
-      $listing[$index]['age'] = $logEntry->age;
-      $listing[$index]['revurl'] = $config->getURL($rep, '', 'revision').'rev='.$logEntry->rev.'&amp;';
+      if ($config->showLastMod) {
+        $listing[$index]['revision'] = $entry->rev;
+        $listing[$index]['author'] = $entry->author;
+        $listing[$index]['date'] = $entry->date;
+        $listing[$index]['committime'] = $entry->committime;
+        $listing[$index]['age'] = $entry->age;
+        $listing[$index]['revurl'] = $config->getURL($rep, '', 'revision').'rev='.$entry->rev.'&amp;';
+      }
 
       $index++;
       $loop++;
@@ -233,9 +232,6 @@ $svnrep = new SVNRepository($rep);
 
 // Revision info to pass along chain
 $passrev = $rev;
-
-// Get the directory contents of the given revision, or HEAD if not defined
-$contents = $svnrep->dirContents($path, @$rev);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", false);
@@ -336,6 +332,8 @@ $vars["compare_form"] = "<form action=\"$url\" method=\"post\">";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
 $vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" />";
 $vars["compare_endform"] = "</form>";
+
+$vars['showlastmod'] = $config->showLastMod;
 
 $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);

@@ -112,6 +112,12 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 
 // $config->useFlatView();
 
+// By default, WebSVN displays the information of the last modification
+// (revision, age and author) for each entry in an extra column.
+// To disable that uncomment this line.
+
+// $config->setShowLastModInListing(false);
+
 // }}}
 
 // {{{ LANGUAGE SETUP ---
