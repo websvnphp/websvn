@@ -601,7 +601,6 @@ class SVNRepository {
   function getProperty($path, $property, $rev = 0) {
     global $config;
 
-
     $path = encodepath($this->repConfig->path.$path);
 
     if ($rev > 0) {

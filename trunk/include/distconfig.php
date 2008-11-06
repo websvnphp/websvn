@@ -148,7 +148,6 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 //
 // $config->setDefaultLanguage('en');
 
-
 // }}}
 
 // {{{ MULTIVIEWS ---

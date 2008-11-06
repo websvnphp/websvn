@@ -120,6 +120,3 @@ $lang["ENDNOBR"] = "";
 
 // $lang["NOBR"] = "<nobr>";
 // $lang["ENDNOBR"] = "</nobr>";
-
-
-
