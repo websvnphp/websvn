@@ -178,10 +178,13 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       $logEntry = $svnrep->getLog($path.$file, $rev);
       $logEntry = $logEntry->entries[0];
 
-      $listing[$index]['revision'] = 'rev';
-      $listing[$index]['author'] = 'author';
-      $listing[$index]['logmessage'] = 'message';
-      $listing[$index]['age'] = 'age';
+      $listing[$index]['revision'] = $logEntry->rev;
+      $listing[$index]['author'] = $logEntry->author;
+      $listing[$index]['logmessage'] = $logEntry->msg;
+      $listing[$index]['date'] = $logEntry->date;
+      $listing[$index]['committime'] = $logEntry->committime;
+      $listing[$index]['age'] = $logEntry->age;
+      $listing[$index]['revurl'] = $config->getURL($rep, '', 'revision').'rev='.$logEntry->rev.'&amp;';
 
       $index++;
       $loop++;

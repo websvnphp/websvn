@@ -238,6 +238,7 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false) {
   $text = $neg ? '-' : '';
   $any = false;
   $count = count($names);
+  $parts = 0;
   for ($i = 0; $i < $count; $i++) {
     // If a "higher valued" time slot had a value or this time slot
     // has a value or this is the very last entry (i.e. all values
@@ -247,6 +248,8 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false) {
       if ($any && $qty[$i] < 10) $text .= '0';
       $text .= $qty[$i].$names[$i];
       $any = true;
+      $parts++;
+      if ($parts >= 2) break;
     }
   }
   return $text;
