@@ -4,7 +4,7 @@
  * ----------
  * Author: Milian Wolff (mail@milianw.de)
  * Copyright: (c) 2008 Milian Wolff (http://milianw.de)
- * Release Version: 1.0.8
+ * Release Version: 1.0.8.1
  * Date Started: 2008/07/07
  *
  * Gnuplot script language file for GeSHi.
@@ -41,6 +41,11 @@ $language_data = array (
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('`', '"', "'"),
     'ESCAPE_CHAR' => '\\',
+    'NUMBERS' =>
+        GESHI_NUMBER_INT_BASIC |
+        GESHI_NUMBER_FLT_NONSCI |
+        GESHI_NUMBER_FLT_SCI_SHORT |
+        GESHI_NUMBER_FLT_SCI_ZERO,
     'KEYWORDS' => array(
         // copy output of help command, indent properly and use this replace regexp:
         // ([a-z0-9_\-]+)(( )+|$)          =>     '\1',\3
