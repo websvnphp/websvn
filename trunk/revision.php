@@ -102,7 +102,7 @@ $changes = $logEntry->mods;
 if (!is_array($changes)) {
   $changes = array();
 }
-usort($changes, array('SVNLogEntry', 'compare'));
+usort($changes, 'SVNLogEntry_compare');
 
 $row = 0;
 $listing = array();

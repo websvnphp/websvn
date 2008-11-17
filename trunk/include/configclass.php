@@ -399,7 +399,7 @@ class Repository {
 
   function useAuthenticationFile($file) {
     if (is_readable($file)) {
-      $this->auth =& new Authentication($file);
+      $this->auth = new Authentication($file);
     } else {
       die('Unable to read authentication file "'.$file.'"');
     }
