@@ -129,7 +129,7 @@ if ($history && is_array($history->entries)) {
     $item->description = '<div><strong>'.$lang['REV'].' '.$thisrev.' - '.$r->author.'</strong> ('.$files.' '.$lang['FILESMODIFIED'].')</div><div>'.nl2br(create_anchors($desc)).'</div>';
 
     if (true) {
-      usort($changes, array('SVNLogEntry', 'compare'));
+      usort($changes, 'SVNLogEntry_compare');
 
       foreach ($changes as $file) {
         switch ($file->action) {
