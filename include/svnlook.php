@@ -66,11 +66,10 @@ class SVNLogEntry {
 
   var $mods;
   var $curMod;
+}
 
-  function compare($a, $b) {
-    return strnatcasecmp($a->path, $b->path);
-  }
-
+function SVNLogEntry_compare($a, $b) {
+  return strnatcasecmp($a->path, $b->path);
 }
 
 class SVNLog {
