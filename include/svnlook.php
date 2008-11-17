@@ -585,7 +585,10 @@ class SVNRepository {
       }
 
     } else {
-      if ($config->useEnscript) {
+      if ($l !== null && $config->useGeshi) {
+        $this->applyGeshi($path, $filename, $rev, $l);
+
+      } else if ($config->useEnscript) {
         // Get the files, feed it through enscript, then remove the enscript headers using sed
         //
         // Note that the sec command returns only the part of the file between <PRE> and </PRE>.
@@ -597,9 +600,6 @@ class SVNRepository {
                       ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                       $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $filename");
         @exec($cmd);
-
-      } else if ($config->useGeshi) {
-        $this->applyGeshi($path, $filename, $rev, $l);
 
       } else {
         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
@@ -666,7 +666,7 @@ class SVNRepository {
       $tmpStr = str_replace(array("\r\n"), array("\n"), $tmpStr);
       highlight_string($tmpStr);
       @unlink($tmp);
-    } else if ($config->useGeshi) {
+    } else if ($l !== null && $config->useGeshi) {
       $tmp = tempnam("temp", "wsvn");
       print $this->applyGeshi($path, $tmp, $rev, $l, true);
       unlink($tmp);
