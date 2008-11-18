@@ -468,6 +468,7 @@ class WebSvnConfig {
   var $flatIndex = true;
   var $openTree = false;
   var $showLastMod = true;
+  var $_showRepositorySelectionForm = true;
   var $serverIsWindows = false;
   var $multiViews = false;
   var $useEnscript = false;
@@ -1152,6 +1153,14 @@ class WebSvnConfig {
 
   function setShowLastModInListing($show) {
     $this->showLastMod = $show;
+  }
+
+  function showRepositorySelectionForm() {
+    return $this->_showRepositorySelectionForm;
+  }
+
+  function setShowRepositorySelectionForm($show) {
+    $this->_showRepositorySelectionForm = $show;
   }
 
   // setSubversionMajorVersion

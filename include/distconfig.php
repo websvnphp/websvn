@@ -118,6 +118,11 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 
 // $config->setShowLastModInListing(false);
 
+// By default, WebSVN displays the a form to select an other repository.
+// To disable that uncomment this line.
+
+// $config->setShowRepositorySelectionForm(false);
+
 // }}}
 
 // {{{ LANGUAGE SETUP ---

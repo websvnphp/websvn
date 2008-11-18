@@ -357,6 +357,15 @@ $rev = (int)@$_REQUEST["rev"];
 function createProjectSelectionForm() {
   global $config, $vars, $rep, $lang;
 
+  if (!$config->showRepositorySelectionForm()) {
+    $vars["projects_form"] = '';
+    $vars["projects_select"] = '';
+    $vars["projects_submit"] = '';
+    $vars["projects_hidden"] = '';
+    $vars["projects_endform"] = '';
+    return;
+  }
+
   $url = $config->getURL(-1, "", "form");
   $vars["projects_form"] = "<form action=\"$url\" method=\"post\" id=\"projectform\">";
 
