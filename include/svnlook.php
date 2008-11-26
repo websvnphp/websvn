@@ -603,7 +603,7 @@ class SVNRepository {
 
       } else {
         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
-        $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$filename);
+        $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
         @exec($cmd);
       }
     }
