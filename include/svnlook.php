@@ -620,7 +620,7 @@ class SVNRepository {
 
     // Output the file to the filename
     $path = encodepath($this->repConfig->path.$path);
-    $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$filename);
+    $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
     @exec($cmd);
 
     $source = file_get_contents($filename);
@@ -711,7 +711,7 @@ class SVNRepository {
     global $config;
 
     $path = encodepath($this->repConfig->path.$path);
-    $cmd = quoteCommand($config->svn." blame ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$filename);
+    $cmd = quoteCommand($config->svn." blame ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
 
     @exec($cmd);
   }
