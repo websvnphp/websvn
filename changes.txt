@@ -1,3 +1,18 @@
+2.1
+
+* Fixed: Several security fixed
+* Added: Added GeSHi for code highlighting.
+* Added: New languages.
+* Changed: Separated modified files and directory listing.
+* Changed: Updated used libraries.
+
+CHANGES
+FIX: XSS vulnarabilities (Issue 179)
+FIX: Hide modified files in revision view based on authentication.
+FIX: Numerous other security problems.
+NEW: Added translations: hungarian, indonesian, slovak, uzbek.
+CHANGED: Some code cleanup.
+
 2.0
 
 * Changed: many cleanups and optimisations.

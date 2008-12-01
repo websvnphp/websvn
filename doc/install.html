@@ -46,6 +46,7 @@ file so as to see exactly what was changed in a particular revision.</p>
 	<li>Log message searching</li>
 	<li>Apache MultiViews support</li>
 	<li>RSS feed support</li>
+	<li>Support for bugtraq: properties</li>
 </ul>
 
 <p>Since it's written using PHP, WebSVN is also very portable and easy to install.</p>
@@ -88,13 +89,25 @@ DLLs to the system directory (from the PHP installation directory).</p>
 
 <h2><a name="colourisation"></a>Colourisation</h2>
 
-<p>You can few files with syntax colouring if you have Enscript 1.6 or higher 
-installed on your system.  You'll also need Sed.</p>
+<p>Per default WebSVN uses the Generic Syntax Highlighter GeSHi which is bundle with WebSVN.</p>
+
+<p>Alternatively, if you have Enscript 1.6 or higher installed on your system,
+you can use that to view files with syntax colouring. You'll also need Sed.</p>
 
 <p>Simply set the paths in the config file and then uncomment the line:</p>
 
 <pre class="code">
 $config->useEnscript();
+</pre>
+
+<p>and comment the line:</p>
+
+<p>Alternatively you can use GeSHi which is bundle with WebSVN.</p>
+
+<p>Simply uncomment the line:</p>
+
+<pre class="code">
+$config->useGeshi();
 </pre>
 
 
