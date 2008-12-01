@@ -1,0 +1,476 @@
+2.1
+
+* Fixed: Several security fixed
+* Added: Added GeSHi for code highlighting.
+* Added: New languages.
+* Changed: Separated modified files and directory listing.
+* Changed: Updated used libraries.
+
+CHANGES
+FIX: XSS vulnarabilities (Issue 179)
+FIX: Hide modified files in revision view based on authentication.
+FIX: Numerous other security problems.
+NEW: Added translations: hungarian, indonesian, slovak, uzbek.
+CHANGED: Some code cleanup.
+
+2.0
+
+* Changed: many cleanups and optimisations.
+* Added: more documentation for *.php files.
+* Removed: extraneous bits.
+* Changed: line endings now use UNIX-style across the board.
+
+CHANGES
+NEW: New default template theme offered by Erik Pöhler
+NEW: Template files may now be specified on a per repository basis
+NEW: Add RSS 'alternate' <link> elements to the HTML headers in
+     directory listings. This lets you, for example, easily create a
+     'live bookmark' in Firefox to monitor commits to a particular SVN path.
+NEW: Russian translation.
+
+CHANGE: Bugtraq handling has been updated to account for the latest spec.
+
+FIX: Syntax highlighting across lines has been fixed (Issue 85)
+
+2.00 beta 8
+
+CHANGE: Remove path comparison boxes when using the flat view display
+CHANGE: Tidy up URLs generated from the listing view (Remove default parameters).
+CHANGE: wsvn now selectes either the listing or file view automatically when the op parameter
+        isn't present.  This allows for nicer URLS (eg. /http://example.com/wsvn/repo1/myfile.doc)
+        
+FIX: Fix warnings when using an access file that didn't define a groups section
+FIX: Fix tarballing of directories with spaces
+FIX: Path history information in the log view of a file was incorrect.
+
+2.00 beta 7
+
+NEW: Projects may now be assigned to groups, to simplify the index view
+NEW: The index may be displayed as a collapsable tree of groups
+
+CHANGE: The syntax for the per repository configurations has changed.  It's now much simpler and
+        will work on all versions of PHP
+
+FIX: Various bug fixes for the access rights module
+FIX: Language choice selection with MultiViews enabled didn't work
+FIX: Various small bugs introduced during 2.0 development
+
+2.00 beta 6
+
+Note: the $config->addRepository command now takes a URL and not a filesystem path!
+
+NEW: WebSVN can now host remote repositories!
+
+FIX: The access rights handling didn't work if you had give a repository a display name
+     different from it's "real" svn name.
+FIX: The deleted file list no longer links to non-existant files!
+FIX: Neaten the directory display when the download/compare links aren't available
+
+2.00 beta 5
+
+NEW: Access rights files can now be specified on a per repository basis
+
+CHANGE: Further improvements have been made to character encoding handling.  In particular,
+        it is now possible to specify the encoding of the repository contents separately 
+        from the system encoding.  This is the case for windows users, whereby the command
+        line tools typically returning CP850 encoded strings, whereas the source files are
+        encoded as iso-8859-1.  Now, when displaying text files, WebSVN will convert them
+        from the content encoding to the output encoding (UTF-8).
+
+CHANGE: Update Danish translation
+CHANGE: The log display has a "max number of revisions to show" fiter option, which defaults
+        to 30.  This significantly improves performance of the log display.
+
+FIX: It wasn't possible to display the contents of a file which had brackets in the name.
+FIX: Correct problem with download of tarballs containing special characters
+FIX: Improve time display
+FIX: Remove non-UTF8 language options from distconfig.php
+FIX: Fix recent bug whereby the log messages would contain unnecessary blank lines
+FIX: Access right file section groups without a trailing / are no correctly treated
+
+2.00 beta 4
+
+NEW: The log display may now be filtered to show a range of revisions
+NEW: You can now have control over the specification of directories that can or
+     cannot be tarball'ed.  Tarballing can be turned on only after a certain directory
+     depth and directories can be allow/disallowed on a per directory/repository basis.
+NEW: The user can now choose their language via a drop down box
+
+CHANGE: Character encodings are now handled differently.  The output encoding is ALWAYS
+        defined as UTF-8, and the setOutputEncoding option has been removed.
+
+FIX: Diff had been broken by 1.70 beta 2
+FIX: Download of tarballs is prohibited if the user doesn't have read access to the directory
+     AND all of its subdirectories
+FIX: The character set type is now sent in the HTTP header.  No need to hack the Apache config
+
+2.00 beta 3
+
+NEW: WebSVN may now be configured to display a flat view rather than a tree view
+
+FIX: Only use --limit option on svn  1.2 or greater
+FIX: Correct spelling of "danish" in distconfig
+FIX: Fix RSS, previously broken 1.7 beta 1
+
+2.00 beta 2
+
+CHANGE: WebSVN no longer requires the entire revision history when accessing a directory,
+        resulting in a faster access for large repositories
+
+FIX: The new access rights module didn't always hide directories
+FIX: Tree icons have been fixed (broken in 1.70 beta 1)
+
+2.00 beta 1
+
+NEW: Access rights module (Finally!) - see install.txt for details
+NEW: Added language file for Danish, Finnish, Turkish, Norwegian and Simplified Chinese
+NEW: The "View Log" link is now available for templates to use from the file view
+NEW: Added bugtraq:logregex support
+
+CHANGE: Ages are now displayed with higher resolution
+CHANGE: Update German translation
+CHANGE: Tex file are no longer delivered as binary by defaut, but displayed by enscript
+CHANGE: The last modified files display now shows the most recently modified  files of
+        the current directory
+CHANGE: Improve diff colours of Blue Grey Scheme for better readability
+CHANGE: WebSVN no longer requires the entire revision history when accessing a directory,
+        resulting in a faster access for large repositories
+
+FIX: Directories containing accents weren't always displayed
+FIX: File version can be compared via the log display (as oppoed to just directories)
+FIX: Corrected RSS encoding issue
+FIX: Corrected bug whereby diff lines would be displayed twice
+FIX: svn: Can't check path '/root/.subversion': Permission denied
+FIX: Sometimes files delivered (as opposed to disaplyed) by WebSVN were empty
+FIX: Fix problem with large tarball delivery
+FIX: Compare with previous always used HEAD
+FIX: .sh files are now viewable
+FIX: Allow special characters in repository names
+FIX: It wasn't possible to go into a module if another module starts with the same name.
+FIX: Remove hard-coded timezone from the RSS feed creator.
+FIX: Caching of RSS feeds wasn't working
+
+1.62
+
+NEW: RSS feed can now list changed files
+NEW: Templates can now show an open folder icon
+NEW: Polish translation
+NEW: Dutch translation
+
+CHANGE: Window is scrolled to appropriate location when opening a new directory
+
+FIX: Allow repository names containing '/'
+FIX: Fixed sloppy HTML in diff templates
+FIX: Fix problems with the diff output
+FIX: Repositories on Windows network shares can now be accessed.
+FIX: Accented characters weren't shown correctly in the directory comparison
+     view.
+FIX: Remove error when only one revision was available
+
+1.61
+
+NEW: Multibyte encodings are considered when urlencoding path names
+
+CHANGE: The listing view will now always show the revision asked for
+        (HEAD by default), but the log message will show the log 
+        string for the latest modification to the current directory).
+        This means the the parent directory structure won't change as you
+        browse through old directories.
+
+FIX: A bug prevented downloading of tarballs from working
+
+1.60 
+
+NEW: Directory displays are now shown in tree view (so that it's harder
+     to get lost).  Many thanks to Brent Lu for this excellent patch.
+     The prettiest result are available in the BlueGrey scheme.
+NEW: Comparison of entire directories
+NEW: Tarballs of directories may now be downloaded.
+     Set $config->allowdownload(); in config.php to allow this.
+NEW: New style 'Zinn' based on the templates created for
+     http://www.projectzinn.org/.  Thanks to Justin Doran.
+NEW: File delivery now looks at the defined Mime-Type.  Thanks to
+     Peter Valdemar Mørch for this patch.
+NEW: Various configuration options may now be applied on a per project
+     basis.  Look in distconfig for instructions.
+NEW: Support for using 'bugtraq' properties when display log entries.
+     See http://svn.collab.net/repos/tortoisesvn/trunk/doc/issuetrackers.txt
+NEW: Traditional Chinese translation
+NEW: Spanish translation
+     
+CHANGE: Style information removed from RSS feed
+CHANGE: Changed files are now hidden by defaut (since the directory
+        comparison link is far more useful)
+
+FIX: File listing were't being shown with the correct accented characters
+     under windows.
+FIX: File listing sometimes failed when there were spaces in the filename
+FIX: Some setups wouldn't allow diff generations with enscript
+     enabled.
+FIX: Filenames are URL encoded correctly before calling svn file:///
+FIX: Keywords weren't expanded in file view when enscript was disabled
+
+1.51
+
+NEW: Korean translation
+NEW: Russian translation
+
+FIX: Repositories may now have spaces in their path (eg: c:\my reps)
+FIX: Diff now works when the file name has changed between versions
+FIX: RSS feed now generates Content-Type header for XML so that IE can display
+     the contents
+FIX: Diff and Blame didn't work properly for php files when enscript wasn't used
+FIX: Use svn --non-interactive to ensure that svn doesn't prompt WebSVN for input
+FIX: Corrections to the French translation
+FIX: Display an explanatory message when the user hasn't configured any
+     repository paths
+FIX: When using Multiviews, change to the WebSVN directory before executing
+     commands so that tempnam works.  This used to cause problems on some
+     systems when running diff and blame.
+
+1.50
+
+Notes: Before installing this version you should delete all the existing
+       cache files.
+       
+       wsvn.php has changed.  You should redo any appropriate configuration
+       changes inside this file.
+
+NEW: Blame information for a file can now be viewed
+NEW: The cached files are now compressed
+NEW: The project selection box shows the current project by default
+NEW: Swedish translation
+NEW: Japanese translation
+NEW: The install file explains how to set up permission based repository
+     access such that access via the web interface is the same as access
+     via a client (assuming Apache2).
+NEW: SVN keywords are now expanded in file listings
+
+CHANGE: The extraction of the directory listings is now accomplished using
+        the svn command via file:/// access rather than svnlook.  This has
+        the advantage of being non-recursive, and thereby eliminates the need
+        for caching the entire directory listing, and is much quicker on
+        complex direcory structures. No more 50Mb directory caches!
+        
+FIX: Deleted directories are now viewable.
+FIX: SHOWALL was being redefined in the language files
+FIX: The directory listing view sometimes showed [lang:DELETEDFILES
+FIX: Under Windows, links in the RSS output would start with "\" if WebSVN
+     was installed in the server's root directory.
+FIX: Sed wouldn't work under all versions of Windows due to the use of single
+     quotes around the paramters
+FIX: Improved character encoding support for log messages etc.
+FIX: Paths passed by URL are encoded
+FIX: Generated HTML code is strictly 4.01
+
+1.40
+
+NEW: RSS feed support (thanks to Lübbe Onken for his work on this)
+NEW: Translatations for French and Portuguese
+NEW: .exe is recognised by default as having content-type
+     application/x-msdownload
+NEW: Recognised links are now 'linkified' in the log messages
+NEW: Tabs in file/diff listings are now expanded by a user
+     configurable number of spaces. 
+NEW: WebSVN URLs now access the repository by name rather than number.
+     This means that bookmarks will stay the same when new projects
+     are added.  The old behaviour can be configured in config.php.
+
+FIX: Removed the revision 0 that has appeared since the previous version
+FIX: Repositories were not sorted alphabetically when using ParentPath
+FIX: The PNG support script needed for IE (and the BlueGrey scheme) is
+     now only loaded with IE
+
+1.39
+
+CHANGE: In the human-readable date strings, display up to 119 minutes,
+        47 hours, 13 days or 23 months before moving up to the next
+        quantity, like ViewCVS.
+
+FIX: Links followed after viewing the contents of a file go to the 
+     revision of the repository previously being viewed
+FIX: Paths with spaces are now correctly showed in the log view
+FIX: Blank lines in the diff output are set to &nbsp; so the browser
+     won't compress them
+FIX: A blank author field is set to an &nbsp; cell.
+FIX: A year is 365 days, not 356.
+FIX: Base ages correctly upon GMT
+FIX: The diff output did not escape html entities when enscript was
+     enabled and the file extension was not recognised for enscript. 
+FIX: distconfig.php has a few minor errors in the examples.
+FIX: It wasn't possible to call ParentPath multiple times
+
+1.38
+
+NEW: Templates can now define icons for particular file types
+     (see BlueGrey scheme for an example)
+NEW: Display of  PHP files with syntax highlighting
+NEW: Improve site navigation with links to each directory level on all
+     pages.
+
+1.37
+
+NEW: Display a message when there are no results found
+
+CHANGE: Aesthetic changes to the BlueGrey scheme
+CHANGE: Sort entries more naturally
+
+FIX: Really make sure that we redirect to the right place when using the
+     drop-down box to select projects.
+FIX: Nested [webtest]'s didn't always work
+FIX: Fixed use of "standard" and "Standard", which caused problems on
+     non-windows machines
+
+1.36
+
+NEW: Log message search feature
+NEW: Diff display tries to display changed lines as changed, rather than
+     showing the line deleted then added.
+
+FIX: Problem surrounding the quoting of commands and command line arguments
+     on Windows machines.
+
+1.35
+
+NEW: You can now specify a list of file types (extensions) for files which
+     should be delivered to the user in a GZIP'd archive rather than 
+     displayed as ASCII in the browser window.
+
+CHANGE: Files delived with a MIME Content type are now sent as "inline".
+        The browser will try to display them in the browser window, offering
+        a save box only if they can't be displayed in this mannor.
+
+FIX: Detect use of the HTTPS protocol when using the drop-down box to
+     select projects. (-- FIX INCORRECT. USE v1.36 -- )
+FIX: The PNGs in the BlueGrey style are now transparent under Internet
+     Explorer 5.5 and higher.
+
+1.34
+
+NEW: Support for switching between projects using a drop-down box control
+     (MultiViews users - note that wsvn.php has been changed)
+NEW: Sort the repositories alphabetically when using parentPath
+NEW: Better support for internationalisation
+     (Template writers:  Please note the use of the new variable 'charset')
+NEW: More useful info in browser titles with the standard templates
+
+FIX: Accented characters should now be displayed correctly (I hope).
+FIX: HTML files now display correcly on all machines
+FIX: Removed spurious BRs from the file listings
+
+1.33
+
+There are a few changes to the config file in this release.  Copy
+distconfig.php to config.php and redo any configuration changes that you
+had made.
+
+NEW: Recognised non-text files are now delivered to the user as attachments.
+     The list of files types to be sent back to the user (rather than displayed
+     using WebSVN) is user configurable.
+NEW: File comparisons are now colourised based on the file extension
+
+CHANGE: Only the Enscript file extensions that the user wishes to override are
+        now listed in the config file.
+
+1.32
+
+FIX: Links no longer functionned correctly when used in basic
+     (non-multiviews) mode.
+FIX: Stop diff from comparing space changes
+
+1.31
+
+FIX: Directory view had disappeared!
+FIX: Included missing file setup.php
+FIX: Handle spaces in filenames
+
+1.30
+
+There are a few changes to the config file in this release.  Copy
+distconfig.php to config.php and redo any configuration changes that you
+had made.
+
+NEW: MultiViews support.  You can now set up WebSVN to access the
+     repositories using a URL such as:
+     
+      http://server/wsvn/repname/path/to/rep
+
+NEW: Colourisation support using Enscript
+NEW: [websvn-test] function can now be nested
+NEW: locwebsvnhttp variable added in template system
+NEW: Bluegrey scheme now has show/hide changed link
+
+FIX: Possible security hole with abuse of popen
+FIX: WebSVN should now function correctly (again) on non windows servers.
+FIX: First character of diff listing was missing
+
+1.20
+
+NEW: Comprehensive templating solution
+NEW: Show the age of a revision in the log view
+
+CHANGE: The youngest revision of the current directory is now shown by
+        default (as opposed to the head revision of the entire repository.
+        This means that clicking on a directory will show the lastest 
+        changes associated with it. A specific revision can still be
+        selected from a log view
+CHANGE: Only show the leaf name when viewing directory contents
+
+FIX: Fixed error concerning use of pclose
+
+1.10/1.10a
+
+There are a few changes to the config file in this release.  Copy
+distconfig.php to config.php and redo any configuration changes that you
+had made.
+
+NEW: WebSVN now caches information on the repositories.  Once a revision
+     has been viewed subsequent revisions use the cached infomation to 
+     display the directory structure.  This significantly improves the
+     browsing speed.
+NEW: German language file (thanks to Stephan Stapel)
+
+1.04/1.04a
+
+Please note that the config file is now stored in include/
+
+FIX: Directories in the log view lacked their trailing slashes.
+FIX: Diff is now far more efficient with Apache's memory,
+     and shows the corrrect line numbers.
+FIX: setDiffPath now works.
+FIX: Bug introduced in 1.03 whereby the revision number always showed '1'
+     corrected.
+
+Note that you can't view logs with 1.04!  Use 1.04a.
+
+1.03
+
+Note that the config.php file has completely changed in this release, in
+order to make it more "future proof" and resiliant.  You'll need to copy
+distconfig.php to config.php redo the appropriate changes are described.
+
+NEW: A 'ParentPath' can now be specified, rather than having to specify the
+     directories by hand.
+
+FIX: Rewrite of the file list code.  Should now be quite a bit faster
+FIX: Use a more memory efficient algorithm to list file contents
+FIX: Spaces in Windows path to svnlook and diff are now handled properly
+FIX: Calls to external commands such as svnlook no longer require Windows
+     style line endings.
+
+1.02
+
+NEW: Improved command handling to report returned errors.  Considerably helps
+     initial installation problems.
+NEW: Show the author of each revision in the log view
+
+FIX: Removed the spurious &nbsp that some people were seeing
+
+1.01 (5 Feb 2004)
+
+FIX: Files with HTML content are now shown correcty
+FIX: The diff output had the revision lables the wrong way round
+
+1.00 (4 Feb 2004)
+
+First Public Release

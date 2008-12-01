@@ -1,0 +1,80 @@
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+  <tr>
+    <td align="left" rowspan="2"><h1>[websvn:repname] - [lang:REV] [websvn:rev]</h1></td>
+    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_hidden][websvn:projects_endform]</td>
+  </tr>
+  <tr>
+    <td align="right"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_hidden][websvn:revision_endform]</td>
+  </tr>
+</table>
+
+[websvn:curdirlinks]<p>
+[websvn-test:goyoungestlink]
+[websvn:goyoungestlink]<p>
+[websvn-endtest]
+<hr>
+[websvn-test:noaccess]
+   [lang:NOACCESS]
+[websvn-else]
+   [websvn:logsearch_form]
+     <p style="text-align: center;">
+      <b>[lang:FILTER]</b>
+     </p>
+     <p style="text-align: center;">
+      [lang:STARTLOG]:[websvn:logsearch_startbox] [lang:ENDLOG]:[websvn:logsearch_endbox] [lang:MAXLOG]:[websvn:logsearch_maxbox] [lang:SEARCHLOG]:[websvn:logsearch_inputbox]
+      [websvn:logsearch_submit][websvn:logsearch_hidden]
+      [websvn-test:logsearch_clearloglink]
+        </p>
+        <p style="text-align: center;">
+         <font size="-1">[websvn:logsearch_clearloglink]</font>
+      [websvn-endtest]
+     </p>
+   [websvn:logsearch_endform]
+   
+   [websvn-test:logsearch_nomatches]
+      <p style="text-align: center;">[lang:NORESULTS]</p>
+   [websvn-endtest]
+   
+   [websvn-test:error]
+      <p style="text-align: center;">[websvn:error]</p>
+   [websvn-endtest]
+
+   [websvn-test:logsearch_resultsfound]
+      [websvn:compare_form]
+         <table cellpadding="2" cellspacing="0" width="100%">
+            <tr>
+               <th class="HdrClmn">[lang:REV]</th>
+               <th class="HdrClmn">[lang:PATH]</th>
+               <th class="HdrClmn">[lang:AUTHOR]</th>
+               <th class="HdrClmn">[lang:AGE]</th>
+               <th class="HdrClmnEnd">[lang:LOGMSG]</th>
+            </tr>
+         
+            [websvn-startlisting]
+            <tr>
+               <td style="border-right: 1px solid black; white-space: nowrap;" valign="top" class="row[websvn:rowparity]">[websvn:compare_box][websvn:revlink]</td>
+               <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revpathlink]</td>
+               <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revauthor]</td>
+               <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revage]</td>
+               <td valign="top" class="row[websvn:rowparity]">[websvn:revlog]</td>
+            </tr>
+            [websvn-endlisting]
+         </table>
+         <p>
+         [websvn:compare_submit]
+         [websvn:compare_hidden]
+         </p>
+      [websvn:compare_endform]
+   [websvn-endtest]
+   
+   [websvn-test:logsearch_nomorematches]
+      <p style="text-align: center;">[lang:NOMORERESULTS]</p>
+   [websvn-endtest]
+         
+   <p style="text-align: center;">[websvn:logsearch_moreresultslink]</p>
+   
+   <hr>
+   <p style="text-align: center;">[websvn:pagelinks]</p>
+   <p style="text-align: center;">[websvn:showalllink]</p>
+[websvn-endtest]
+  
