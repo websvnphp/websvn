@@ -1,0 +1,116 @@
+<div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
+<h1><a href="[websvn:indexurl]" title="Project home">[lang:PROJECTS]</a> <span><a href="[websvn:repurl]">[websvn:repname]</a></span></h1>
+
+[websvn-test:noaccess]
+   [lang:NOACCESS]
+[websvn-else]
+<h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
+<div id="input">[websvn:revision_form]<div>[lang:REV] [websvn:revision_hidden][websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
+<p>
+[websvn-test:goyoungesturl]
+	<span class="goyoungest"><a href="[websvn:goyoungesturl]">[lang:GOYOUNGEST]</a></span> &#124;
+[websvn-endtest]
+	<span class="changes"><a href="[websvn:changesurl]">[lang:CHANGES]</a></span> &#124;
+	<span class="log"><a href="[websvn:logurl]">[lang:VIEWLOG]</a></span> &#124;
+[websvn-test:downloadurl]
+	<span class="compress"><a href="[websvn:downloadurl]">[lang:TARBALL]</a></span> &#124;
+[websvn-endtest]
+[websvn-test:rssurl]
+    <span class="feed"><a href="[websvn:rssurl]">[lang:RSSFEED]</a></span>
+[websvn-endtest]
+</p>
+
+<div id="info">
+<h2>[lang:LASTMOD]</h2>
+  <ul>
+    <li>[lang:REV] [websvn:lastchangedrev] [websvn:date]</li>
+    <li><strong>[lang:AUTHOR]:</strong> [websvn:author]</li>
+    <li><dl><dt><strong>[lang:LOGMSG]:</strong></dt><dd>[websvn:log]</dd></dl></li>
+  </ul>
+</div>
+
+[websvn-defineicons]
+dir=<img src="[websvn:locwebsvnhttp]/templates/calm/images/folder.png" alt="[FOLDER]" class="icon" />
+diropen=<img src="[websvn:locwebsvnhttp]/templates/calm/images/folder.png" alt="[FOLDER]" class="icon" />
+*=<img src="[websvn:locwebsvnhttp]/templates/calm/images/file.png" alt="[FILE]" class="icon" />
+.c=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filec.png" alt="[C-FILE]" class="icon" />
+.h=<img src="[websvn:locwebsvnhttp]/templates/calm/images/fileh.png" alt="[H-FILE]" class="icon" />
+.s=<img src="[websvn:locwebsvnhttp]/templates/calm/images/files.png" alt="[S-FILE]" class="icon" />
+.db=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filedb.png" alt="[DB-FILE]" class="icon" />
+.png=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filepaint.png" alt="[DB-FILE]" class="icon" />
+.gif=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filepaint.png" alt="[DB-FILE]" class="icon" />
+.bmp=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filepaint.png" alt="[DB-FILE]" class="icon" />
+.jpg=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filepaint.png" alt="[DB-FILE]" class="icon" />
+.jpeg=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filepaint.png" alt="[DB-FILE]" class="icon" />
+.js=<img src="[websvn:locwebsvnhttp]/templates/calm/images/script.png" alt="[DB-FILE]" class="icon" />
+.css=<img src="[websvn:locwebsvnhttp]/templates/calm/images/css.png" alt="[DB-FILE]" class="icon" />
+.htm=<img src="[websvn:locwebsvnhttp]/templates/calm/images/html.png" alt="[DB-FILE]" class="icon" />
+.html=<img src="[websvn:locwebsvnhttp]/templates/calm/images/html.png" alt="[DB-FILE]" class="icon" />
+.php=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filephp.png" alt="[DB-FILE]" class="icon" />
+.txt=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filetxt.png" alt="[DB-FILE]" class="icon" />
+.xml=<img src="[websvn:locwebsvnhttp]/templates/calm/images/filexml.png" alt="[DB-FILE]" class="icon" />
+
+i-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/i-node.png" alt="[NODE]" class="icon" />
+t-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/t-node.png" alt="[NODE]" class="icon" />
+l-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/l-node.png" alt="[NODE]" class="icon" />
+e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[NODE]" class="icon" />
+[websvn-enddefineicons]
+
+
+<div id="wrap">
+[websvn:compare_form]
+   <table>
+      <thead>
+      <tr align="left" valign="middle">
+        <th scope="col" class="path">[lang:PATH]</th>
+        [websvn-test:showlastmod]
+        <th scope="col" class="colmod" colspan="3">[lang:LASTMOD]</th>
+        [websvn-endtest]
+        <th scope="col" class="collog">[lang:NOBR][lang:LOG][lang:ENDNOBR]</th>
+        [websvn-test:allowdownload]
+        <th scope="col" class="coltar">[lang:TARBALL]</th>
+        [websvn-endtest]
+        [websvn-test:rssurl]
+        <th scope="col" class="colrss">[lang:RSSFEED]</th>
+        [websvn-endtest]
+      </tr>
+      </thead>
+      <tbody>
+      [websvn-startlisting]
+      <tr class="row[websvn:rowparity]" valign="middle">
+         <td class="path" valign="middle">
+            [websvn:compare_box]
+            [websvn-treenode]
+            [websvn-icon]
+            [websvn:filelink]
+         </td>
+         
+         [websvn-test:showlastmod]
+           <td><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
+           <td>[websvn:age]</td>
+           <td>[websvn:author]</td>
+         [websvn-endtest]
+         
+         <td class="log">[lang:NOBR]<a href="[websvn:logurl]">[lang:VIEWLOG]</a>[lang:ENDNOBR]</td>
+         
+         [websvn-test:allowdownload]
+           <td class="compress">
+             [websvn-test:downloadurl]
+               <a href="[websvn:downloadurl]">[lang:TARBALL]</a>
+             [websvn-endtest]
+           </td>
+         [websvn-endtest]
+         [websvn-test:rssurl]
+            <td class="feed"><a href="[websvn:rssurl]">[lang:RSSFEED]</a></td>
+         [websvn-endtest]
+      </tr>
+      [websvn-endlisting]
+    </tbody>
+
+   </table>
+<p class="submit">
+    [websvn:compare_submit][websvn:compare_hidden]
+</p>
+[websvn:compare_endform]
+</div>
+[websvn-endtest]

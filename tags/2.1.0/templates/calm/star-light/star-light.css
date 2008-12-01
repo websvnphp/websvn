@@ -1,0 +1,40 @@
+/* initialise behaviors support for mozilla */
+head {-moz-binding: url(moz-behaviors.xml#block-netscape6);}
+
+/* syntax highlighter */
+pre.css {
+	behavior: url(star-css.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-css.htc|star-light.htc);
+}
+pre.eml, pre.email, pre.txt {
+	behavior: url(star-email.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-email.htc|star-light.htc);
+}
+pre.htm, pre.html {
+	behavior: url(star-html.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-html.htc|star-light.htc);
+}
+pre.htc {
+	behavior: url(star-htc.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-htc.htc|star-light.htc);
+}
+pre.js, pre.javascript {
+	behavior: url(star-js.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-js.htc|star-light.htc);
+}
+pre.php {
+	behavior: url(star-php.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-php.htc|star-light.htc);
+}
+pre.xml {
+	behavior: url(star-xml.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-xml.htc|star-light.htc);
+}
+pre.vbs, pre.vbscript {
+	behavior: url(star-vbs.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-vbs.htc|star-light.htc);
+}
+pre.tsql {
+	behavior: url(star-tsql.htc) url(star-light.htc);
+	-moz-binding: url(bindings.xml#star-tsql.htc|star-light.htc);
+}
