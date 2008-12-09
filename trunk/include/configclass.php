@@ -460,7 +460,6 @@ class WebSvnConfig {
   var $sed = "sed";
   var $gzip = "gzip";
   var $tar = "tar";
-  var $touch = "touch";
 
   // Other configuration items
 

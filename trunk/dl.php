@@ -97,14 +97,14 @@ if (mkdir($tmpname)) {
 
   // Set datetime of exported and directory to datetime of revision
   $date = $logEntry->date;
-  $ts = substr($date, 0, 4).substr($date, 5, 2).substr($date, 8, 2).substr($date, 11, 2).substr($date, 14, 2).'.'.substr($date, 17, 2);
-  exec(quoteCommand($config->touch.' -t '.$ts.' '.quote($tmpname.DIRECTORY_SEPARATOR.$arcname)));
+  $ts = mktime(substr($date, 11, 2), substr($date, 14, 2), substr($date, 17, 2), substr($date, 5, 2), substr($date, 8, 2), substr($date, 0, 4));
+  touch($tmpname.DIRECTORY_SEPARATOR.$arcname, $ts);
 
   // Create the tar file
   exec(quoteCommand($config->tar.' -cf '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc).' '.quote($arcname)));
 
   // Set datetime of tar file to datetime of revision
-  exec(quoteCommand($config->touch.' -t '.$ts.' '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc)));
+  touch($tmpname.DIRECTORY_SEPARATOR.$tararc, $ts);
 
   // ZIP it up
   exec(quoteCommand($config->gzip.' '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc)));
