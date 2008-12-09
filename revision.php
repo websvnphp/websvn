@@ -132,7 +132,7 @@ $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if ($rev != $headrev) {
-  $history = $svnrep->getLog($path, $rev, '', false);
+  $history = $svnrep->getLog($ppath, $rev, '', false);
 }
 
 if (isset($history->entries[1]->rev)) {

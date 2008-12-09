@@ -57,7 +57,16 @@ $rev2 = (int)@$_REQUEST["compare_rev"][1];
 
 // Some page links put the revision with the path...
 if (strpos($path1, "@")) list($path1, $rev1) = explode("@", $path1);
+// Something went wrong. The path is missing.
+else if (strpos($path1, "@") == 0) {
+  $rev1 = substr($path1, 1);
+  $path1 = '/';
+}
 if (strpos($path2, "@")) list($path2, $rev2) = explode("@", $path2);
+else if (strpos($path2, "@") == 0) {
+  $rev2 = substr($path2, 1);
+  $path2 = '/';
+}
 
 $rev1 = checkRevision($rev1);
 $rev2 = checkRevision($rev2);
