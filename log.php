@@ -239,6 +239,7 @@ if (!empty($history)) {
       }
 
       $listing[$index]["revauthor"] = $r->author;
+      $listing[$index]["date"] = $r->date;
       $listing[$index]["revage"] = $r->age;
       $listing[$index]["revlog"] = nl2br($bugtraq->replaceIDs(create_anchors($r->msg)));
       $listing[$index]["rowparity"] = $row;
