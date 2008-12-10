@@ -971,6 +971,17 @@ class SVNRepository {
 
   // }}}
 
+  function isFile($path, $rev = 0) {
+    global $config;
+
+    $path = encodepath($this->repConfig->path.$path);
+    $cmd = $config->svn." info --xml ".$this->repConfig->svnParams().quote($path);
+    if ($rev != 0) $cmd .= ' -r '.$rev;
+    $output = runCommand($cmd, true);
+
+    return strpos(implode(' ', $output), 'kind="file"') !== false;
+  }
+
 }
 
 // {{{ initSvnVersion
