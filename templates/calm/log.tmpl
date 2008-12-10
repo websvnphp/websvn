@@ -74,7 +74,11 @@
             <td>[websvn:compare_box][websvn:revlink]</td>
             <td valign="middle" class="logmsg">[websvn:revlog]</td>
             <td>[websvn:revauthor]</td>
-            <td title="[websvn:date]">[websvn:revage]</td>
+            [websvn-test:showageinsteadofdate]
+              <td title="[websvn:date]">[websvn:revage]</td>
+            [websvn-else]
+              <td title="[websvn:revage]">[websvn:date]</td>
+            [websvn-endtest]
             <td>[websvn:revpathlink]</td>
          </tr>
          [websvn-endlisting]

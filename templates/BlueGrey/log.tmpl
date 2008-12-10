@@ -55,7 +55,11 @@
                <td style="border-right: 1px solid black; white-space: nowrap;" valign="top" class="row[websvn:rowparity]">[websvn:compare_box][websvn:revlink]</td>
                <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revpathlink]</td>
                <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revauthor]</td>
-               <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]" title="[websvn:date]">[websvn:revage]</td>
+               [websvn-test:showageinsteadofdate]
+                 <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]" title="[websvn:date]">[websvn:revage]</td>
+               [websvn-else]
+                 <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]" title="[websvn:revage]">[websvn:date]</td>
+               [websvn-endtest]
                <td valign="top" class="row[websvn:rowparity]">[websvn:revlog]</td>
             </tr>
             [websvn-endlisting]

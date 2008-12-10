@@ -317,6 +317,8 @@ $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\
 $vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" />";
 $vars["compare_endform"] = "</form>";
 
+$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
+
 $vars["version"] = $version;
 
 if (!$rep->hasReadAccess($path, false)) {

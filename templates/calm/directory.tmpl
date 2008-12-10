@@ -87,7 +87,11 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
          
          [websvn-test:showlastmod]
            <td><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
-           <td title="[websvn:date]">[websvn:age]</td>
+           [websvn-test:showageinsteadofdate]
+             <td title="[websvn:date]">[websvn:age]</td>
+           [websvn-else]
+             <td title="[websvn:age]">[websvn:date]</td>
+           [websvn-endtest]
            <td>[websvn:author]</td>
          [websvn-endtest]
          
