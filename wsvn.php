@@ -137,10 +137,11 @@ if ($config->multiViews) {
       $file = "comp.php";
       break;
     default:
-      if ($path[strlen($path) - 1] == "/") {
-        $file = "listing.php";
-      } else {
+      $svnrep = new SVNRepository($rep);
+      if ($svnrep->isFile($path, $rev)) {
         $file = "filedetails.php";
+      } else {
+        $file = "listing.php";
       }
       break;
   }
