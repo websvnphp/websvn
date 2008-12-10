@@ -118,6 +118,12 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 
 // $config->setShowLastModInListing(false);
 
+// By default, WebSVN displays the age of the last modification.
+// Alternativly the date of the last modification can be shown.
+// To show dates instead of ages uncomment this line.
+
+// $config->setShowAgeInsteadOfDate(false);
+
 // By default, WebSVN displays the a form to select an other repository.
 // To disable that uncomment this line.
 

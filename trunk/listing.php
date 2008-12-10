@@ -334,6 +334,7 @@ $vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" />"
 $vars["compare_endform"] = "</form>";
 
 $vars['showlastmod'] = $config->showLastMod;
+$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
 $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);
