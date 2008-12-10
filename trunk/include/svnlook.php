@@ -546,7 +546,12 @@ class SVNRepository {
       // Output the file to the filename
       $path = encodepath($this->repConfig->path.$path);
       $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
-      @exec($cmd);
+      $retcode = 0;
+      @exec($cmd, $tmp, $retcode);
+      if ($retcode != 0) {
+        print'Unable to call svn command "'.$config->svn.'"';
+        exit(0);
+      }
 
       // Get the file as a string (memory hogging, but we have no other options)
       $content = highlight_file($filename, true);
@@ -599,12 +604,22 @@ class SVNRepository {
                       $config->enscript." --language=html ".
                       ($l ? "--color --pretty-print=$l" : "")." -o - | ".
                       $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $filename");
-        @exec($cmd);
+        $retcode = 0;
+        @exec($cmd, $tmp, $retcode);
+        if ($retcode != 0) {
+          print'Unable to call svn command "'.$config->svn.'"';
+          exit(0);
+        }
 
       } else {
         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
-        @exec($cmd);
+        $retcode = 0;
+        @exec($cmd, $tmp, $retcode);
+        if ($retcode != 0) {
+          print'Unable to call svn command "'.$config->svn.'"';
+          exit(0);
+        }
       }
     }
   }
@@ -621,7 +636,12 @@ class SVNRepository {
     // Output the file to the filename
     $path = encodepath($this->repConfig->path.$path);
     $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
-    @exec($cmd);
+    $retcode = 0;
+    @exec($cmd, $tmp, $retcode);
+    if ($retcode != 0) {
+      print'Unable to call svn command "'.$config->svn.'"';
+      exit(0);
+    }
 
     $source = file_get_contents($filename);
     require_once 'lib/geshi.php';
@@ -661,7 +681,12 @@ class SVNRepository {
       // Output the file to a temporary file
       $path = encodepath($this->repConfig->path.$path);
       $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$tmp);
-      @exec($cmd);
+      $retcode = 0;
+      @exec($cmd, $tmp, $retcode);
+      if ($retcode != 0) {
+        print'Unable to call svn command "'.$config->svn.'"';
+        exit(0);
+      }
       $tmpStr = file_get_contents($tmp);
       $tmpStr = str_replace(array("\r\n"), array("\n"), $tmpStr);
       highlight_string($tmpStr);
@@ -713,7 +738,12 @@ class SVNRepository {
     $path = encodepath($this->repConfig->path.$path);
     $cmd = quoteCommand($config->svn." blame ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
 
-    @exec($cmd);
+    $retcode = 0;
+    @exec($cmd, $tmp, $retcode);
+    if ($retcode != 0) {
+      print'Unable to call svn command "'.$config->svn.'"';
+      exit(0);
+    }
   }
 
   // }}}
@@ -753,7 +783,12 @@ class SVNRepository {
     $path = encodepath($this->repConfig->path.$path);
     $cmd = quoteCommand($config->svn." export ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' '.quote($filename));
 
-    @exec($cmd);
+    $retcode = 0;
+    @exec($cmd, $tmp, $retcode);
+    if ($retcode != 0) {
+      print'Unable to call svn command "'.$config->svn.'"';
+      exit(0);
+    }
   }
 
   // }}}
