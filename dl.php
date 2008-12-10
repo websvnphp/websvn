@@ -101,13 +101,27 @@ if (mkdir($tmpname)) {
   touch($tmpname.DIRECTORY_SEPARATOR.$arcname, $ts);
 
   // Create the tar file
-  exec(quoteCommand($config->tar.' -cf '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc).' '.quote($arcname)));
+  $retcode = 0;
+  @exec(quoteCommand($config->tar.' -cf '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc).' '.quote($arcname)), $tmp, $retcode);
+  if ($retcode != 0) {
+    print'Unable to call tar command "'.$config->tar.'"';
+    chdir('..');
+    removeDirectory($tmpname);
+    exit(0);
+  }
 
   // Set datetime of tar file to datetime of revision
   touch($tmpname.DIRECTORY_SEPARATOR.$tararc, $ts);
 
   // ZIP it up
-  exec(quoteCommand($config->gzip.' '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc)));
+  $retcode = 0;
+  @exec(quoteCommand($config->gzip.' '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc)), $tmp, $retcode);
+  if ($retcode != 0) {
+    print'Unable to call gzip command "'.$config->gzip.'"';
+    chdir('..');
+    removeDirectory($tmpname);
+    exit(0);
+  }
 
   // Give the file to the browser
   if (is_readable($tmpname.DIRECTORY_SEPARATOR.$gzarc)) {
