@@ -467,6 +467,7 @@ class WebSvnConfig {
   var $flatIndex = true;
   var $openTree = false;
   var $showLastMod = true;
+  var $showAgeInsteadOfDate = true;
   var $_showRepositorySelectionForm = true;
   var $serverIsWindows = false;
   var $multiViews = false;
@@ -1152,6 +1153,14 @@ class WebSvnConfig {
 
   function setShowLastModInListing($show) {
     $this->showLastMod = $show;
+  }
+
+  function showAgeInsteadOfDate() {
+    return $this->showAgeInsteadOfDate;
+  }
+
+  function setShowAgeInsteadOfDate($show) {
+    $this->showAgeInsteadOfDate = $show;
   }
 
   function showRepositorySelectionForm() {
