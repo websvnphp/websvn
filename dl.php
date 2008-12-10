@@ -98,11 +98,11 @@ if (mkdir($tmpname)) {
   // Set datetime of exported and directory to datetime of revision
   $date = $logEntry->date;
   $ts = mktime(substr($date, 11, 2), substr($date, 14, 2), substr($date, 17, 2), substr($date, 5, 2), substr($date, 8, 2), substr($date, 0, 4));
-  touch($tmpname.DIRECTORY_SEPARATOR.$arcname, $ts);
+  touch($arcname, $ts);
 
   // Create the tar file
   $retcode = 0;
-  @exec(quoteCommand($config->tar.' -cf '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc).' '.quote($arcname)), $tmp, $retcode);
+  @exec(quoteCommand($config->tar.' -cf '.quote($tararc).' '.quote($arcname)), $tmp, $retcode);
   if ($retcode != 0) {
     print'Unable to call tar command "'.$config->tar.'"';
     chdir('..');
@@ -111,11 +111,11 @@ if (mkdir($tmpname)) {
   }
 
   // Set datetime of tar file to datetime of revision
-  touch($tmpname.DIRECTORY_SEPARATOR.$tararc, $ts);
+  touch($tararc, $ts);
 
   // ZIP it up
   $retcode = 0;
-  @exec(quoteCommand($config->gzip.' '.quote($tmpname.DIRECTORY_SEPARATOR.$tararc)), $tmp, $retcode);
+  @exec(quoteCommand($config->gzip.' '.quote($tararc)), $tmp, $retcode);
   if ($retcode != 0) {
     print'Unable to call gzip command "'.$config->gzip.'"';
     chdir('..');
@@ -124,14 +124,14 @@ if (mkdir($tmpname)) {
   }
 
   // Give the file to the browser
-  if (is_readable($tmpname.DIRECTORY_SEPARATOR.$gzarc)) {
-    $size = filesize($tmpname.DIRECTORY_SEPARATOR.$gzarc);
+  if (is_readable($gzarc)) {
+    $size = filesize($gzarc);
 
     header('Content-Type: application/x-gzip');
     header('Content-Length: '.$size);
     header('Content-Disposition: attachment; filename="'.$rep->name.'-'.$gzarc.'"');
 
-    readfile($tmpname.DIRECTORY_SEPARATOR.$gzarc);
+    readfile($gzarc);
   } else {
     print'Unable to open file '.$gzarc;
   }
