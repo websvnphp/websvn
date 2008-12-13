@@ -150,6 +150,6 @@ if ($history && is_array($history->entries)) {
 }
 
 // Save the feed
-$rss->saveFeed($feedformat, $cachename, false);
+@$rss->saveFeed($feedformat, $cachename, false);
 header('Content-Type: application/xml');
-echo $rss->createFeed($feedformat);
+echo @$rss->createFeed($feedformat);
