@@ -682,7 +682,7 @@ class SVNRepository {
       $path = encodepath($this->repConfig->path.$path);
       $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$tmp);
       $retcode = 0;
-      @exec($cmd, $tmp, $retcode);
+      @exec($cmd, $null, $retcode);
       if ($retcode != 0) {
         print'Unable to call svn command "'.$config->svn.'"';
         exit(0);
