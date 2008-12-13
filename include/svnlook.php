@@ -467,6 +467,7 @@ function encodePath($uri) {
 
 class SVNRepository {
   var $repConfig;
+  var $geshi = null;
 
   function SVNRepository($repConfig) {
     $this->repConfig = $repConfig;
@@ -590,7 +591,10 @@ class SVNRepository {
       }
 
     } else {
-      if ($l !== null && $config->useGeshi) {
+      if ($config->useGeshi && $this->canHighlightUsingGeshi($ext)) {
+        $this->applyGeshi($path, $filename, $rev, $ext);
+
+      } else if ($config->useGeshi && $l !== null && $this->canHighlightUsingGeshi($l)) {
         $this->applyGeshi($path, $filename, $rev, $l);
 
       } else if ($config->useEnscript) {
@@ -626,6 +630,19 @@ class SVNRepository {
 
   // }}}
 
+  // {{{ canHighlightUsingGeshi
+  //
+  // check if geshi can highlight the given language
+
+  function canHighlightUsingGeshi($lang) {
+    require_once 'lib/geshi.php';
+    $this->geshi = new GeSHi();
+    $this->geshi->set_language($lang);
+    return $this->geshi->error() === false;
+  }
+
+  // }}}
+
   // {{{ applyGeshi
   //
   // perform syntax highlighting using geshi
@@ -644,12 +661,20 @@ class SVNRepository {
     }
 
     $source = file_get_contents($filename);
-    require_once 'lib/geshi.php';
-    $geshi = new GeSHi($source, $l);
-    if ($return) {
-      return $geshi->parse_code();
+    if ($this->geshi === null) {
+      require_once 'lib/geshi.php';
+      $this->geshi = new GeSHi($source, $l);
     } else {
-      $code = $geshi->parse_code();
+      $this->geshi->set_source($source);
+      $this->geshi->set_language($l);
+    }
+    $this->geshi->set_header_type(GESHI_HEADER_DIV);
+    $this->geshi->set_overall_class('gehsi');
+    
+    if ($return) {
+      return $this->geshi->parse_code();
+    } else {
+      $code = $this->geshi->parse_code();
       $code = preg_replace("/^<pre.*?>/", '', $code);
       $code = preg_replace("/<\/pre>$/", '', $code);
       $f = @fopen($filename, 'w');
@@ -691,7 +716,11 @@ class SVNRepository {
       $tmpStr = str_replace(array("\r\n"), array("\n"), $tmpStr);
       highlight_string($tmpStr);
       @unlink($tmp);
-    } else if ($l !== null && $config->useGeshi) {
+    } else if ($config->useGeshi && $this->canHighlightUsingGeshi($ext)) {
+      $tmp = tempnam("temp", "wsvn");
+      print $this->applyGeshi($path, $tmp, $rev, $ext, true);
+      unlink($tmp);
+    } else if ($config->useGeshi && $l !== null && $this->canHighlightUsingGeshi($l)) {
       $tmp = tempnam("temp", "wsvn");
       print $this->applyGeshi($path, $tmp, $rev, $l, true);
       unlink($tmp);
