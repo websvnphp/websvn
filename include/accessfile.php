@@ -57,7 +57,7 @@ class IniFile {
         }
         $first = true;
       } else if (!empty($cursection)) {
-        if ($first === true) {
+        if ($first && $cursection == 'groups' && !is_array($this->sections[$cursection])) {
           $this->sections[$cursection] = array();
         }
         list($key, $val) = split('=', $str);
