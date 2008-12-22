@@ -87,12 +87,6 @@ if ($file = fopen($tfname, 'r')) {
   $tbname = tempnam('temp', '');
   $svnrep->getBlameDetails($path, $tbname, $rev);
 
-  $ent = true;
-  $extension = strrchr(basename($path), '.');
-  if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript || $config->useGeshi)) {
-    $ent = false;
-  }
-
   if ($blame = fopen($tbname, 'r')) {
     // Create an array of version/author/line
 
@@ -125,7 +119,7 @@ if ($file = fopen($tfname, 'r')) {
         $last_rev = $revision;
 
         $line = rtrim(fgets($file));
-        if ($ent) $line = replaceEntities($line, $rep);
+        $line = replaceEntities($line, $rep);
 
         if ($empty) $line = '&nbsp;';
         $listing[$index]['line'] = hardspace($line);
