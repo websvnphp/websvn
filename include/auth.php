@@ -53,6 +53,8 @@ class Authentication {
       $this->user = $_SERVER["REMOTE_USER"];
     } else if (isset($_SERVER["REDIRECT_REMOTE_USER"])) {
       $this->user = $_SERVER["REDIRECT_REMOTE_USER"];
+    } else if (isset($_SERVER["PHP_AUTH_USER"])) {
+      $this->user = $_SERVER["PHP_AUTH_USER"];
     }
   }
 
