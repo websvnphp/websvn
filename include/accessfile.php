@@ -36,6 +36,8 @@ class IniFile {
   // {{{ readIniFile
 
   function readIniFile($name) {
+    // does not use parse_ini_file function since php 5.3 does not support comment lines starting with #
+
     $contents = file($name);
     $cursection = '';
     $first = true;
@@ -46,6 +48,7 @@ class IniFile {
         continue;
       }
 
+      // @todo remove ' in the next major release to be in line with the svn book
       if ($str{0} == '#' or $str{0} == "'") {
         continue;
       }
