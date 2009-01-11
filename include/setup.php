@@ -329,22 +329,26 @@ $vars["lang_endform"] = "</form>";
 header('Content-Type: text/html; charset=UTF-8');
 header('Content-Language: '.$userLang);
 
-// Make sure that the user has set up a repository
+// multiviews has custom code to load the repository
+if (!$config->multiViews) {
+  // if the repoparameter has been set load the corresponding
+  // repository, else load the default 
+  $repname = @$_REQUEST["repname"];
+  if (isset($repname)) {
+    $repname = urldecode($repname);
+    $rep = $config->findRepository($repname);
+  } else {
+    $reps = $config->getRepositories();
+    $rep = $reps[0];
+  }
 
-$reps = $config->getRepositories();
-if (empty($reps[0])) {
-  echo $lang["SUPPLYREP"];
-  exit;
+  // Make sure that the user has set up a repository
+  if ($rep == null) {
+    echo $lang["SUPPLYREP"];
+    exit;
+  }
 }
 
-// Override the rep parameter with the repository name if it's available
-$repname = @$_REQUEST["repname"];
-if (isset($repname)) {
-	$repname = urldecode($repname);
-  $rep = $config->findRepository($repname);
-} else {
-  $rep = $reps[0];
-}
 
 // Retrieve other standard parameters
 
@@ -423,7 +427,7 @@ if (!$config->multiViews) {
   createRevisionSelectionForm();
 }
 
-if ($rep) {
+if (!$config->multiViews && $rep) {
   $vars["allowdownload"] = $rep->getAllowDownload();
   $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 }
