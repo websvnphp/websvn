@@ -80,7 +80,7 @@ $listing = array();
 
 // Get the contents of the file
 $tfname = tempnam('temp', '');
-$svnrep->getFileContents($path, $tfname, $rev, '', true);
+$highlighted = $svnrep->getFileContents($path, $tfname, $rev, '', true);
 
 if ($file = fopen($tfname, 'r')) {
   // Get the blame info
@@ -119,7 +119,7 @@ if ($file = fopen($tfname, 'r')) {
         $last_rev = $revision;
 
         $line = rtrim(fgets($file));
-        $line = replaceEntities($line, $rep);
+        if (!$highlighted) $line = replaceEntities($line, $rep);
 
         if ($empty) $line = '&nbsp;';
         $listing[$index]['line'] = hardspace($line);
