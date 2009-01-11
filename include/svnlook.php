@@ -531,11 +531,13 @@ class SVNRepository {
   function getFileContents($path, $filename, $rev = 0, $pipe = "", $perLineHighlighting = false) {
     global $config, $extEnscript;
 
+    $highlighted = false;
+
     // If there's no filename, we'll just deliver the contents as it is to the user
     if ($filename == "") {
       $path = encodepath($this->repConfig->path.$path);
       passthru(quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' '.$pipe));
-      return;
+      return $highlighted;
     }
 
     // Get the file contents info
@@ -560,6 +562,7 @@ class SVNRepository {
       // Destroy the previous version, and replace it with the highlighted version
       $f = fopen($filename, "w");
       if ($f) {
+      	$highlighted = true;
         // The highlight file function doesn't deal with line endings very nicely at all.  We'll have to do it
         // by hand.
 
@@ -571,7 +574,7 @@ class SVNRepository {
 
         if ($perLineHighlighting) {
           // If we need each line independently highlighted (e.g. for diff or blame)
-          //  hen we'll need to filter the output of the highlighter
+          // then we'll need to filter the output of the highlighter
           // to make sure tags like <font>, <i> or <b> don't span lines
 
           // $attributes is used to remember what highlighting attributes
@@ -579,7 +582,7 @@ class SVNRepository {
           $attributes = array(); // start with no attributes in effect
 
           foreach ($content as $line) {
-            fputs($f, $this->highlightLine(rtrim($line),$attributes)."\n");
+            fputs($f, $this->highlightLine(rtrim($line), $attributes)."\n");
           }
         } else {
           foreach ($content as $line) {
@@ -591,11 +594,16 @@ class SVNRepository {
       }
 
     } else {
+      $tempname = $filename;
+      if ($perLineHighlighting) {
+        $tempname = tempnam('temp', '');
+      }
+    	$highlighted = true;
       if ($config->useGeshi && $this->canHighlightUsingGeshi($ext)) {
-        $this->applyGeshi($path, $filename, $rev, $ext);
+        $this->applyGeshi($path, $tempname, $rev, $ext);
 
       } else if ($config->useGeshi && $l !== null && $this->canHighlightUsingGeshi($l)) {
-        $this->applyGeshi($path, $filename, $rev, $l);
+        $this->applyGeshi($path, $tempname, $rev, $l);
 
       } else if ($config->useEnscript) {
         // Get the files, feed it through enscript, then remove the enscript headers using sed
@@ -607,7 +615,7 @@ class SVNRepository {
         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' | '.
                       $config->enscript." --language=html ".
                       ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-                      $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $filename");
+                      $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $tempname");
         $retcode = 0;
         @exec($cmd, $tmp, $retcode);
         if ($retcode != 0) {
@@ -616,6 +624,7 @@ class SVNRepository {
         }
 
       } else {
+      	$highlighted = false;
         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
         $retcode = 0;
@@ -625,7 +634,29 @@ class SVNRepository {
           exit(0);
         }
       }
+
+      if ($highlighted && $perLineHighlighting) {
+        // If we need each line independently highlighted (e.g. for diff or blame)
+        // then we'll need to filter the output of the highlighter
+        // to make sure tags like <font>, <i> or <b> don't span lines
+
+        $dst = fopen($filename, 'w');
+        if ($dst) {
+          $content = file_get_contents($tempname);
+          $content = explode('<br />', $content);
+
+          // $attributes is used to remember what highlighting attributes
+          // are in effect from one line to the next
+          $attributes = array(); // start with no attributes in effect
+
+          foreach ($content as $line) {
+            fputs($dst, $this->highlightLine(trim($line), $attributes)."\n");
+          }
+          fclose($dst);
+        }
+      }
     }
+    return $highlighted;
   }
 
   // }}}
