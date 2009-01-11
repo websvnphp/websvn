@@ -78,26 +78,19 @@ if ($config->multiViews) {
   // Note: we have to cope with the repository name
   //       having a slash in it
 
-  $found = false;
-
   $pos = strpos($path, '/');
   if ($pos === false) {
     $pos = strlen($path);
   }
   $name = substr($path, 0, $pos);
 
-  foreach ($config->getRepositories() as $rep) {
-    if (strcasecmp($rep->getDisplayName(), $name) == 0) {
-      $found = true;
-      $path = substr($path, $pos);
-      if ($path == '') {
-        $path = '/';
-      }
-      break;
+  $rep =& $config->findRepository(strtolower($name));
+  if ($rep != null) {
+    $path = substr($path, $pos);
+    if ($path == '') {
+      $path = '/';
     }
-  }
-
-  if ($found == false) {
+  } else {
     include("$locwebsvnreal/index.php");
     exit;
   }
@@ -105,6 +98,7 @@ if ($config->multiViews) {
   createProjectSelectionForm();
   createRevisionSelectionForm();
   $vars["allowdownload"] = $rep->getAllowDownload();
+  $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 
   // find the operation type
   $op = @$_REQUEST["op"];

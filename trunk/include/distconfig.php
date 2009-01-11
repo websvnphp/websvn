@@ -125,6 +125,7 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // $config->setShowAgeInsteadOfDate(false);
 
 // By default, WebSVN displays the a form to select an other repository.
+// If you have a lot of repositories this slows done the script considerably.
 // To disable that uncomment this line.
 
 // $config->setShowRepositorySelectionForm(false);
