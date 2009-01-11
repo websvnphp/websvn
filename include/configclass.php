@@ -94,6 +94,112 @@ function mergesort(&$array, $cmp_function = 'strcmp') {
 
 // }}}
 
+// A Repository parent path configuration class
+
+class ParentPath {
+  // {{{ Properties
+
+  var $path;
+  var $group;
+  var $pattern;
+  var $skipAlreadyAdded;
+
+  // }}}
+
+  // {{{ __construct($path, [$group, [$pattern, [$skipAlreadyAdded]]])
+  function ParentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true) {
+    $this->path = $path;
+    $this->group = $group;
+    $this->pattern = $pattern;
+    $this->skipAlreadyAdded = $skipAlreadyAdded;
+  }
+  // }}}
+
+  // {{{ findRepository($name)
+  // look for a repository with $name
+  function &findRepository($name) {
+    if ($this->group != null) {
+      $prefix = $this->group.'.';
+      if (substr($name, 0, strlen($prefix)) == $prefix) {
+        $name = substr($name, strlen($prefix));
+      } else {
+        $null;
+        return $null;
+      }
+    }
+    if ($handle = @opendir($this->path)) {
+      // is there a directory named $name?
+      $fullpath = $this->path.DIRECTORY_SEPARATOR.$name;
+      if (is_dir($fullpath) && is_readable($fullpath)) {
+        // And that contains a db directory (in an attempt to not include non svn repositories.
+        $dbfullpath = $fullpath.DIRECTORY_SEPARATOR.'db';
+        if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
+          // And matches the pattern if specified
+          if ($this->pattern === false || preg_match($this->pattern, $name)) {
+            $url = 'file:///'.$fullpath;  
+            $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+            if ($url{strlen($url) - 1} == "/") {
+              $url = substr($url, 0, -1);
+            }
+
+            $rep = new Repository($name, $name, $url, $this->group, null, null);
+            return $rep;
+          }  
+        }
+      }
+      closedir($handle);
+    }
+    $null = null;
+    return $null;
+  }
+  // }}}
+  
+  // {{{ getRepositories()
+  // return all repositories in the parent path matching pattern
+  function &getRepositories() {
+     $repos = array();
+     if ($handle = @opendir($this->path)) {
+      // For each file...
+      while (false !== ($name = readdir($handle))) {     
+        $fullpath = $this->path.DIRECTORY_SEPARATOR.$name;
+        if ($name{0} != '.' && is_dir($fullpath) && is_readable($fullpath)) {
+          // And that contains a db directory (in an attempt to not include non svn repositories.
+          $dbfullpath = $fullpath.DIRECTORY_SEPARATOR.'db';
+          if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
+            // And matches the pattern if specified
+            if ($this->pattern === false || preg_match($this->pattern, $name)) {
+              $url = 'file:///'.$fullpath;  
+              $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+              if ($url{strlen($url) - 1} == "/") {
+                $url = substr($url, 0, -1);
+              }
+
+              $repos[] = new Repository($name, $name, $url, $this->group, null, null);
+            }
+          }  
+        }
+      }
+      closedir($handle);
+    }
+
+
+    // Sort the repositories into alphabetical order
+    if (!empty($repos)) {
+      usort($repos, "cmpReps");
+    }
+
+    return $repos;
+  }
+  // }}}
+
+  // {{{ getSkipAlreadyAdded()
+  // Return if we should skip already added repos for this parent path.
+  function getSkipAlreadyAdded() {
+    return $this->skipAlreadyAdded;
+  }
+  // }}}
+}
+
 // A Repository configuration class
 
 class Repository {
@@ -503,6 +609,10 @@ class WebSvnConfig {
 
   var $_repositories = array();
 
+  var $_parentPaths = array();  // parent paths to load
+
+  var $_parentPathsLoaded = false;
+
   // }}}
 
   // {{{ __construct()
@@ -526,14 +636,54 @@ class WebSvnConfig {
   }
 
   function getRepositories() {
+    // lazily load parent paths
+    if (!$this->_parentPathsLoaded) {
+      $this->_parentPathsLoaded = true;    
+      foreach ($this->_parentPaths as $parentPath) {
+        $parentRepos = $parentPath->getRepositories();
+        foreach ($parentRepos as $repo) {
+          if (!$parentPath->getSkipAlreadyAdded()) {
+            $this->_repositories[] = $repo;
+          } else {
+            // we have to check if we already have a repo with the same svn name
+            $found = false;
+            if (!empty($this->_repositories)) {
+              foreach ($this->_repositories as $knownRepos) {
+                if ($knownRepos->svnName == $repo->svnName) {
+                  $found = true;
+                  break;
+                }
+              }
+            }
+
+            if (!$found) {
+              $this->_repositories[] = $repo;
+            }
+          }
+        }
+      }
+    }
+
     return $this->_repositories;
   }
 
   function &findRepository($name) {
+    // first look in the "normal repositories"
     foreach ($this->_repositories as $index => $rep) {
       if (strcmp($rep->getDisplayName(), $name) == 0) {
         $repref =& $this->_repositories[$index];
         return $repref;
+      }
+    }
+
+    // now if the parent repos have not already been loaded
+    // check them
+    if (!$this->_parentPathsLoaded) {
+      foreach ($this->_parentPaths as $parentPath) {
+        $repref =& $parentPath->findRepository($name);
+        if ($repref != null) {
+          return $repref;
+        }
       }
     }
 
@@ -974,47 +1124,7 @@ class WebSvnConfig {
   // Automatically set up the repositories based on a parent path
 
   function parentPath($path, $group = NULL, $pattern = false, $skipAlreadyAdded = true) {
-    if ($handle = @opendir($path)) {
-      // For each file...
-      while (false !== ($file = readdir($handle))) {
-        // That's also a non hidden directory
-        if ($file{0} != '.' && is_dir($path.DIRECTORY_SEPARATOR.$file) && is_readable($path.DIRECTORY_SEPARATOR.$file)) {
-          // And that contains a db directory (in an attempt to not include
-          // non svn repositories.
-
-          if (is_dir($path.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR."db") && is_readable($path.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR."db")) {
-            // And matches the pattern if specified
-            if ($pattern === false || preg_match($pattern, $file)) {
-              $name = 'file:///'.$path.DIRECTORY_SEPARATOR.$file;
-              $add = true;
-              // And has not already been added if specified
-              if ($skipAlreadyAdded) {
-                $url = str_replace(DIRECTORY_SEPARATOR, '/', $name);
-                if ($url{strlen($url) - 1} == '/') $url = substr($url, 0, -1);
-                $url = substr($url, strrpos($url, '/') + 1);
-                foreach ($this->getRepositories() as $rep) {
-                  if ($rep->svnName == $url) {
-                    $add = false;
-                    break;
-                  }
-                }
-              }
-              if ($add) {
-                // We add the repository to the list
-                $this->addRepository($file, $name, $group);
-              }
-            }
-          }
-        }
-      }
-      closedir($handle);
-    }
-
-    // Sort the repositories into alphabetical order
-
-    if (!empty($this->_repositories)) {
-      usort($this->_repositories, "cmpReps");
-    }
+    $this->_parentPaths[] = new ParentPath($path, $group, $pattern, $skipAlreadyAdded);
   }
 
   // }}}
