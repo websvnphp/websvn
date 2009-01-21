@@ -168,7 +168,7 @@ function listEndElement($parser, $name) {
     case "ENTRY":
       if ($debugxml) print "Ending new list entry\n";
       if ($curList->curEntry->isdir) {
-      	$curList->curEntry->file .= '/';
+        $curList->curEntry->file .= '/';
       }
       $curList->entries[] = $curList->curEntry;
       $curList->curEntry = null;
@@ -562,7 +562,7 @@ class SVNRepository {
       // Destroy the previous version, and replace it with the highlighted version
       $f = fopen($filename, "w");
       if ($f) {
-      	$highlighted = true;
+        $highlighted = true;
         // The highlight file function doesn't deal with line endings very nicely at all.  We'll have to do it
         // by hand.
 
@@ -598,12 +598,9 @@ class SVNRepository {
       if ($perLineHighlighting) {
         $tempname = tempnam('temp', '');
       }
-    	$highlighted = true;
-      if ($config->useGeshi && $this->canHighlightUsingGeshi($ext)) {
-        $this->applyGeshi($path, $tempname, $rev, $ext);
-
-      } else if ($config->useGeshi && $l !== null && $this->canHighlightUsingGeshi($l)) {
-        $this->applyGeshi($path, $tempname, $rev, $l);
+      $highlighted = true;
+      if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
+        $this->applyGeshi($path, $tempname, $rev, $geshiLang);
 
       } else if ($config->useEnscript) {
         // Get the files, feed it through enscript, then remove the enscript headers using sed
@@ -624,7 +621,7 @@ class SVNRepository {
         }
 
       } else {
-      	$highlighted = false;
+        $highlighted = false;
         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
         $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
         $retcode = 0;
@@ -661,15 +658,31 @@ class SVNRepository {
 
   // }}}
 
-  // {{{ canHighlightUsingGeshi
+  // {{{ highlightLanguageUsingGeshi
   //
-  // check if geshi can highlight the given language
+  // check if geshi can highlight the given extension and return the language
 
-  function canHighlightUsingGeshi($lang) {
-    require_once 'lib/geshi.php';
-    $this->geshi = new GeSHi();
-    $this->geshi->set_language($lang);
-    return $this->geshi->error() === false;
+  function highlightLanguageUsingGeshi($ext) {
+    global $extGeshi;
+    if (substr($ext, 0, 1) == '.') $ext = substr($ext, 1);
+
+    foreach ($extGeshi as $lang => $extensions) {
+      if (in_array($ext, $extensions)) {
+        if ($this->geshi === null) {
+          require_once 'lib/geshi.php';
+          $this->geshi = new GeSHi();
+        } else {
+          $this->geshi->error = false;
+        }
+        $this->geshi->set_language($lang);
+        if ($this->geshi->error() === false) {
+          return $lang;
+        }
+      }
+    }
+    return '';
+
+
   }
 
   // }}}
@@ -678,7 +691,7 @@ class SVNRepository {
   //
   // perform syntax highlighting using geshi
 
-  function applyGeshi($path, $filename, $rev = 0, $l, $return = false) {
+  function applyGeshi($path, $filename, $rev, $lang, $return = false) {
     global $config;
 
     // Output the file to the filename
@@ -694,14 +707,13 @@ class SVNRepository {
     $source = file_get_contents($filename);
     if ($this->geshi === null) {
       require_once 'lib/geshi.php';
-      $this->geshi = new GeSHi($source, $l);
-    } else {
-      $this->geshi->set_source($source);
-      $this->geshi->set_language($l);
+      $this->geshi = new GeSHi();
     }
+    $this->geshi->set_source($source);
+    $this->geshi->set_language($lang);
     $this->geshi->set_header_type(GESHI_HEADER_DIV);
     $this->geshi->set_overall_class('gehsi');
-    
+
     if ($return) {
       return $this->geshi->parse_code();
     } else {
@@ -747,13 +759,9 @@ class SVNRepository {
       $tmpStr = str_replace(array("\r\n"), array("\n"), $tmpStr);
       highlight_string($tmpStr);
       @unlink($tmp);
-    } else if ($config->useGeshi && $this->canHighlightUsingGeshi($ext)) {
+    } else if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
       $tmp = tempnam("temp", "wsvn");
-      print $this->applyGeshi($path, $tmp, $rev, $ext, true);
-      unlink($tmp);
-    } else if ($config->useGeshi && $l !== null && $this->canHighlightUsingGeshi($l)) {
-      $tmp = tempnam("temp", "wsvn");
-      print $this->applyGeshi($path, $tmp, $rev, $l, true);
+      print $this->applyGeshi($path, $tmp, $rev, $geshiLang, true);
       unlink($tmp);
     } else {
       if ($config->useEnscript) {
