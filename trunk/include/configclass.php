@@ -608,7 +608,6 @@ class WebSvnConfig {
   var $defaultLanguage = 'en';
 
   var $quote = "'";
-  var $pathSeparator = ":";
 
   var $_repositories = array();
 
@@ -722,9 +721,6 @@ class WebSvnConfig {
 
     // On Windows machines, use double quotes around command line parameters
     $this->quote = '"';
-
-    // On Windows, semicolon separates path entries in a list rather than colon.
-    $this->pathSeparator = ";";
   }
 
   // }}}
@@ -907,7 +903,7 @@ class WebSvnConfig {
     if ($this->multiViews) {
       $url = $_SERVER["SCRIPT_NAME"];
       // Remove the .php
-      if (eregi(".php$", $url))  {
+      if (preg_match('|\.php$|i', $url))  {
         // Remove the .php
         $url = substr($url, 0, -4);
       }
@@ -1002,7 +998,7 @@ class WebSvnConfig {
 
       if (!$isDir) $path .= DIRECTORY_SEPARATOR;
 
-      if (($this->serverIsWindows  && !file_exists($path.$name.'.exe')) || (!$this->serverIsWindows && !file_exists($path.$name))) {
+      if (($this->serverIsWindows && !file_exists($path.$name.'.exe')) || (!$this->serverIsWindows && !file_exists($path.$name))) {
         echo "Unable to find '$name' tool at location '$path$name'";
         exit;
       }

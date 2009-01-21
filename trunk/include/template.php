@@ -229,7 +229,7 @@ function parseTags($line, $vars) {
 
   $l = '';
   // Replace the websvn variables
-  while (ereg("\[websvn:([a-zA-Z0-9_]+)\]", $line, $matches)) {
+  while (preg_match('|\[websvn:([a-zA-Z0-9_]+)\]|', $line, $matches)) {
     // Find beginning
     $p = strpos($line, $matches[0]);
 
@@ -249,7 +249,7 @@ function parseTags($line, $vars) {
   $line = $l.$line;
 
   // Replace the language strings
-  while (ereg("\[lang:([a-zA-Z0-9_]+)\]", $line, $matches)) {
+  while (preg_match('|\[lang:([a-zA-Z0-9_]+)\]|', $line, $matches)) {
     // Make sure that the variable exists
     if (!isset($lang[$matches[1]])) {
       $lang[$matches[1]] = "?${matches[1]}?";
