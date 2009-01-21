@@ -65,7 +65,7 @@ class IniFile {
             $this->sections[$cursection] = array();
           }
         }
-        list($key, $val) = split('=', $str);
+        list($key, $val) = explode('=', $str, 2);
         $this->sections[$cursection][strtolower(trim($key))] = strtolower(trim($val));
         $first = false;
       }
