@@ -608,6 +608,7 @@ class WebSvnConfig {
   var $defaultLanguage = 'en';
 
   var $quote = "'";
+  var $pathSeparator = ":";
 
   var $_repositories = array();
 
@@ -721,6 +722,9 @@ class WebSvnConfig {
 
     // On Windows machines, use double quotes around command line parameters
     $this->quote = '"';
+
+    // On Windows, semicolon separates path entries in a list rather than colon.
+    $this->pathSeparator = ";";
   }
 
   // }}}
