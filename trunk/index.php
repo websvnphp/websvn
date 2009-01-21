@@ -107,7 +107,9 @@ if ($config->flatIndex) {
   $vars["opentree"] = $config->openTree;
 }
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
+if (!$config->multiViews) {
+  $vars['indexurl'] = $config->getURL($rep, '', 'index');
+}
 
 $vars["version"] = $version;
 parseTemplate($config->getTemplatePath()."header.tmpl", $vars, $listing);
