@@ -118,12 +118,13 @@ class ParentPath {
   // {{{ findRepository($name)
   // look for a repository with $name
   function &findRepository($name) {
+  	global $config;
     if ($this->group != null) {
       $prefix = $this->group.'.';
       if (substr($name, 0, strlen($prefix)) == $prefix) {
         $name = substr($name, strlen($prefix));
       } else {
-        $null;
+        $null = null;
         return $null;
       }
     }
@@ -142,8 +143,10 @@ class ParentPath {
               $url = substr($url, 0, -1);
             }
 
-            $rep = new Repository($name, $name, $url, $this->group, null, null);
-            return $rep;
+            if (!in_array($url, $config->_excluded, true)) {
+              $rep = new Repository($name, $name, $url, $this->group, null, null);
+              return $rep;
+            }
           }  
         }
       }
@@ -613,6 +616,8 @@ class WebSvnConfig {
 
   var $_parentPathsLoaded = false;
 
+  var $_excluded = array();
+
   // }}}
 
   // {{{ __construct()
@@ -646,17 +651,17 @@ class WebSvnConfig {
             $this->_repositories[] = $repo;
           } else {
             // we have to check if we already have a repo with the same svn name
-            $found = false;
+            $duplicate = false;
             if (!empty($this->_repositories)) {
               foreach ($this->_repositories as $knownRepos) {
                 if ($knownRepos->svnName == $repo->svnName) {
-                  $found = true;
+                  $duplicate = true;
                   break;
                 }
               }
             }
 
-            if (!$found) {
+            if (!$duplicate && !in_array($repo->path, $this->_excluded, true)) {
               $this->_repositories[] = $repo;
             }
           }
@@ -1125,6 +1130,15 @@ class WebSvnConfig {
 
   function parentPath($path, $group = NULL, $pattern = false, $skipAlreadyAdded = true) {
     $this->_parentPaths[] = new ParentPath($path, $group, $pattern, $skipAlreadyAdded);
+  }
+
+  function addExcludedPath($path) {
+    $url = 'file:///'.$path;  
+    $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+    if ($url{strlen($url) - 1} == '/') {
+      $url = substr($url, 0, -1);
+    }
+    $this->_excluded[] = $url;
   }
 
   // }}}
