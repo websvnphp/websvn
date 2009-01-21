@@ -81,6 +81,11 @@
 // $config->parentPath('Path/to/parent (e.g. c:\\svn)');
 // $config->parentPath('Path/to/parent (e.g. c:\\svn)', 'group');
 //
+// To exclude a repository from being added by the parentPath method uncomment the next line
+// and replace the path with your one. You can call the function several times if you have several paths to exclude.
+//
+// $config->addExcludedPath('Path/to/parent/excludedRep (e.g. c:\\svn\\excludedRep)');
+//
 // To add only a subset of repositories specified by the parent path you can call the function with a pattern.
 //
 // $config->parentPath('Path/to/parent (e.g. c:\\svn)', 'group', '/^beginwith/');
