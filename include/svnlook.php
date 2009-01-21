@@ -448,7 +448,7 @@ function encodePath($uri) {
   $uri = str_replace("%3A" ,":", $uri);
 
   // Correct for Window share names
-  if ( $config->serverIsWindows==true ) {
+  if ($config->serverIsWindows) {
     if (substr($uri, 0,2) == "//") {
       $uri = "\\".substr($uri, 2, strlen($uri));
     }

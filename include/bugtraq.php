@@ -155,7 +155,7 @@ class Bugtraq {
         $line = "";
         $allissues = "";
 
-        $lines = split("\n", $this->logregex);
+        $lines = explode("\n", $this->logregex);
         $regex_all = "~".$lines[0]."~";
         $regex_single = @$lines[1];
 
