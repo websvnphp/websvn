@@ -331,6 +331,16 @@ $config->setMinDownloadLevel(2);
 //
 $config->useGeshi();
 
+// GeSHi need to be told what the contents of a file are so that it can be colourised
+// correctly.  WebSVN includes a predefined list of mappings from file extension to GeSHi
+// languages (viewable in setup.php).
+//
+// Here you should add and other extensions not already listed or redefine the default ones. eg:
+//
+// $extGeshi['pascal'] = array('p', 'pas');
+//
+// Note that extensions are case sensitive.
+
 // }}}
 
 // {{{ RSSFEED ---
