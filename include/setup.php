@@ -241,14 +241,69 @@ $extEnscript = array
   '.vhd'    => 'vhdl',
   '.vhdl'   => 'vhdl',
   '.py'    => 'python',
+);
 
-  // The following are handled internally by WebSVN, since there's no
-  // support for them in Enscript
+// }}}
 
-  '.php'    => 'php',
-  '.phtml'  => 'php',
-  '.php3'   => 'php',
-  '.php'    => 'php'
+// {{{ GeSHi file extensions
+
+// List of extensions recognised by GeSHi.
+
+$extGeshi = array
+(
+  'actionscript3' => array('as'),
+  'ada' => array('ada', 'adb', 'ads'),
+  'asm' => array('ash', 'asi', 'asm'),
+  'asp' => array('asp'),
+  'bash' => array('sh'),
+  'c' => array('c'),
+  'cfm' => array('cfm', 'cfml'),
+  'cobol' => array('cbl'),
+  'cpp' => array('cc', 'cpp', 'cxx', 'c++', 'h', 'hpp'),
+  'csharp' => array('cs'),
+  'css' => array('css'),
+  'd' => array('d'),
+  'delphi' => array('dpk', 'dpr', 'pas'),
+  'diff' => array('diff', 'patch'),
+  'dos' => array('bat', 'cmd'),
+  'eiffel' => array('e'),
+  'email' => array('eml'),
+  'fortran' => array('f', 'for'),
+  'gettext' => array('po', 'pot'),
+  'gml' => array('gml'),
+  'gnuplot' => array('plt'),
+  'groovy' => array('groovy'),
+  'haskell' => array('gs', 'hs', 'lgs', 'lhs'),
+  'html4strict' => array('html', 'htm'),
+  'idl' => array('idl'),
+  'ini' => array('desktop', 'ini'),
+  'java5' => array('java'),
+  'javascript' => array('js'),
+  'latex' => array('tex'),
+  'lisp' => array('lisp'),
+  'lua' => array('lua'),
+  'make' => array('make'),
+  'matlab' => array('m'),
+  'perl' => array('pl', 'pm'),
+  'php' => array('php', 'php3', 'php4', 'php5', 'phps', 'phtml'),
+  'povray' => array('pov'),
+  'providex' => array('pvc', 'pvx'),
+  'python' => array('py'),
+  'reg' => array('reg'),
+  'ruby' => array('rb'),
+  'scala' => array('scala'),
+  'scheme' => array('scm', 'scheme'),
+  'scilab' => array('sci'),
+  'smalltalk' => array('st'),
+  'sql' => array('sql'),
+  'tcl' => array('tcl'),
+  'vb' => array('bas'),
+  'vh' => array('v', 'verilog'),
+  'vhdl' => array('vhd', 'vhdl'),
+  'vim' => array('vim'),
+  'whitespace' => array('ws'),
+  'xml' => array('svg', 'xml'),
+  'z80' => array('z80'),
 );
 
 // }}}
