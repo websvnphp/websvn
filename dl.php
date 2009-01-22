@@ -102,9 +102,12 @@ if (mkdir($tmpname)) {
 
   // Create the tar file
   $retcode = 0;
-  @exec(quoteCommand($config->tar.' -cf '.quote($tararc).' '.quote($arcname)), $tmp, $retcode);
+  $cmd = $config->tar.' -cf '.quote($tararc).' '.quote($arcname);
+  execCommand($cmd, $retcode);
   if ($retcode != 0) {
     print'Unable to call tar command "'.$config->tar.'"';
+  }
+  if ($retcode != 0) {
     chdir('..');
     removeDirectory($tmpname);
     exit(0);
@@ -114,8 +117,9 @@ if (mkdir($tmpname)) {
   touch($tararc, $ts);
 
   // ZIP it up
+  $cmd = $config->gzip.' '.quote($tararc);
   $retcode = 0;
-  @exec(quoteCommand($config->gzip.' '.quote($tararc)), $tmp, $retcode);
+  execCommand($cmd, $retcode);
   if ($retcode != 0) {
     print'Unable to call gzip command "'.$config->gzip.'"';
     chdir('..');

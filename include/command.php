@@ -97,6 +97,24 @@ function quoteCommand($cmd) {
 
 // }}}
 
+// {{{ execCommand
+
+function execCommand($cmd, &$retcode) {
+  global $config;
+
+  // On Windows machines, the whole line needs quotes round it so that it's
+  // passed to cmd.exe correctly
+  // Since php 5.3.0 the quoting seems to be done internally
+
+  if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
+    $cmd = "\"$cmd\"";
+  }
+
+  return @exec($cmd, $tmp, $retcode);
+}
+
+// }}}
+
 // {{{ runCommand
 
 function runCommand($cmd, $mayReturnNothing = false) {

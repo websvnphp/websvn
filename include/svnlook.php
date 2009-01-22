@@ -548,9 +548,9 @@ class SVNRepository {
     if ($l == "php") {
       // Output the file to the filename
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
+      $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename);
       $retcode = 0;
-      @exec($cmd, $tmp, $retcode);
+      execCommand($cmd, $retcode);
       if ($retcode != 0) {
         print'Unable to call svn command "'.$config->svn.'"';
         exit(0);
@@ -609,12 +609,12 @@ class SVNRepository {
         // It's complicated because it's designed not to return those lines themselves.
 
         $path = encodepath($this->repConfig->path.$path);
-        $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' | '.
-                      $config->enscript." --language=html ".
-                      ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-                      $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $tempname");
+        $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' | '.
+          $config->enscript." --language=html ".
+          ($l ? "--color --pretty-print=$l" : "")." -o - | ".
+          $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $tempname";
         $retcode = 0;
-        @exec($cmd, $tmp, $retcode);
+        execCommand($cmd, $retcode);
         if ($retcode != 0) {
           print'Unable to call svn command "'.$config->svn.'"';
           exit(0);
@@ -623,9 +623,9 @@ class SVNRepository {
       } else {
         $highlighted = false;
         $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->repConfig->path.$path));
-        $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
+        $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename);
         $retcode = 0;
-        @exec($cmd, $tmp, $retcode);
+        execCommand($cmd, $retcode);
         if ($retcode != 0) {
           print'Unable to call svn command "'.$config->svn.'"';
           exit(0);
@@ -696,9 +696,9 @@ class SVNRepository {
 
     // Output the file to the filename
     $path = encodepath($this->repConfig->path.$path);
-    $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
+    $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename);
     $retcode = 0;
-    @exec($cmd, $tmp, $retcode);
+    execCommand($cmd, $retcode);
     if ($retcode != 0) {
       print'Unable to call svn command "'.$config->svn.'"';
       exit(0);
@@ -748,9 +748,9 @@ class SVNRepository {
 
       // Output the file to a temporary file
       $path = encodepath($this->repConfig->path.$path);
-      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$tmp);
+      $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.$tmp;
       $retcode = 0;
-      @exec($cmd, $null, $retcode);
+      execCommand($cmd, $retcode);
       if ($retcode != 0) {
         print'Unable to call svn command "'.$config->svn.'"';
         exit(0);
@@ -804,10 +804,10 @@ class SVNRepository {
     global $config;
 
     $path = encodepath($this->repConfig->path.$path);
-    $cmd = quoteCommand($config->svn." blame ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename));
+    $cmd = $config->svn." blame ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' > '.quote($filename);
 
     $retcode = 0;
-    @exec($cmd, $tmp, $retcode);
+    execCommand($cmd, $retcode);
     if ($retcode != 0) {
       print'Unable to call svn command "'.$config->svn.'"';
       exit(0);
@@ -849,10 +849,10 @@ class SVNRepository {
     global $config;
 
     $path = encodepath($this->repConfig->path.$path);
-    $cmd = quoteCommand($config->svn." export ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' '.quote($filename));
+    $cmd = $config->svn." export ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' '.quote($filename);
 
     $retcode = 0;
-    @exec($cmd, $tmp, $retcode);
+    execCommand($cmd, $retcode);
     if ($retcode != 0) {
       print'Unable to call svn command "'.$config->svn.'"';
       exit(0);
@@ -908,15 +908,16 @@ class SVNRepository {
     while (!feof($handle)) {
       $line = fgets($handle);
       if (!xml_parse($xml_parser, $line, feof($handle))) {
-        if (xml_get_error_code($xml_parser) != 5) {
-          // errors can contain sensitive info! don't echo this ~J
-          error_log(sprintf("XML error: %s (%d) at line %d column %d byte %d\ncmd: %s",
+        $errorMsg = sprintf("XML error: %s (%d) at line %d column %d byte %d\ncmd: %s",
                   xml_error_string(xml_get_error_code($xml_parser)),
                   xml_get_error_code($xml_parser),
                   xml_get_current_line_number($xml_parser),
                   xml_get_current_column_number($xml_parser),
                   xml_get_current_byte_index($xml_parser),
-                  $cmd));
+                  $cmd);
+        if (xml_get_error_code($xml_parser) != 5) {
+          // errors can contain sensitive info! don't echo this ~J
+          error_log($errorMsg);
           exit;
         } else {
           $vars["error"] = $lang["UNKNOWNREVISION"];
@@ -1007,15 +1008,16 @@ class SVNRepository {
     while (!feof($handle)) {
       $line = fgets($handle);
       if (!xml_parse($xml_parser, $line, feof($handle))) {
-        if (xml_get_error_code($xml_parser) != 5) {
-          // errors can contain sensitive info! don't echo this ~J
-          error_log(sprintf("XML error: %s (%d) at line %d column %d byte %d\ncmd: %s",
+        $errorMsg = sprintf("XML error: %s (%d) at line %d column %d byte %d\ncmd: %s",
                   xml_error_string(xml_get_error_code($xml_parser)),
                   xml_get_error_code($xml_parser),
                   xml_get_current_line_number($xml_parser),
                   xml_get_current_column_number($xml_parser),
                   xml_get_current_byte_index($xml_parser),
-                  $cmd));
+                  $cmd);
+        if (xml_get_error_code($xml_parser) != 5) {
+          // errors can contain sensitive info! don't echo this ~J
+          error_log($errorMsg);
           exit;
         } else {
           $vars["error"] = $lang["UNKNOWNREVISION"];
