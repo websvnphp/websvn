@@ -766,18 +766,17 @@ class SVNRepository {
     } else {
       if ($config->useEnscript) {
         $path = encodepath($this->repConfig->path.$path);
-        $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' | '.
+        $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev.' | '.
           $config->enscript." --language=html ".
           ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-          $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote
-        );
+          $config->sed." -n ".$config->quote."/^<PRE.$/,/^<\\/PRE.$/p".$config->quote;
       } else {
         $path = encodepath($this->repConfig->path.$path);
-        $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev);
+        $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path).' -r '.$rev;
         $pre = true;
       }
 
-      if ($result = popen($cmd, "r")) {
+      if ($result = popenCommand($cmd, "r")) {
         if ($pre) echo "<PRE>";
 
         while (!feof($result)) {
