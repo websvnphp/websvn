@@ -30,6 +30,10 @@
 //
 // $config->setServerIsWindows();
 
+// Configure the path to your subversion config file
+// (e.g. if accepting certificates is required when using repositories via https)
+// $config->setConfigPath('/tmp');
+
 // Configure these lines if your commands aren't on your path.
 //
 // $config->setSVNCommandPath('Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin');

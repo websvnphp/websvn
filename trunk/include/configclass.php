@@ -562,6 +562,8 @@ class WebSvnConfig {
   // Tool path locations
 
   var $svnlook = "svnlook";
+  var $_commandPath = "";
+  var $_configPath = "/tmp";
   var $svn = "svn --non-interactive --config-dir /tmp";
   var $svn_noparams = "svn --config-dir /tmp";
   var $diff = "diff";
@@ -1020,14 +1022,24 @@ class WebSvnConfig {
     if ($params != '') $var .= ' '.$params;
   }
 
+  function setConfigPath($path) {
+    $this->_configPath = $path;
+    $this->updateSVNCommands();
+  }
+
   // setSVNCommandPath
   //
   // Define the location of the svn and svnlook commands
 
   function setSVNCommandPath($path) {
-    $this->setPath($this->svn, $path, "svn", "--non-interactive --config-dir /tmp");
-    $this->setPath($this->svn_noparams, $path, "svn", " --config-dir /tmp");
-    $this->setPath($this->svnlook, $path, "svnlook");
+    $this->_commandPath = $path;
+    $this->updateSVNCommands();
+  }
+
+  function updateSVNCommands() {
+    $this->setPath($this->svn, $this->_commandPath, "svn", "--non-interactive --config-dir ".$this->_configPath);
+    $this->setPath($this->svn_noparams, $this->_commandPath, "svn", " --config-dir ".$this->_configPath);
+    $this->setPath($this->svnlook, $this->_commandPath, "svnlook");
   }
 
   function getSvnCommand() {
