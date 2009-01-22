@@ -128,8 +128,7 @@ $path2 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repConfig->pa
 $debug = false;
 
 if (!$noinput) {
-  $rawcmd = $config->svn." diff ".$rep->svnParams().quote($path1."@".$rev1)." ".quote($path2."@".$rev2);
-  $cmd = quoteCommand($rawcmd);
+  $cmd = $config->svn." diff ".$rep->svnParams().quote($path1."@".$rev1)." ".quote($path2."@".$rev2);
   if ($debug) echo "$cmd\n";
 }
 
@@ -148,7 +147,7 @@ function clearVars() {
 $vars["success"] = false;
 
 if (!$noinput) {
-  if ($diff = popen($cmd, "r")) {
+  if ($diff = popenCommand($cmd, "r")) {
     $index = 0;
     $indiff = false;
     $indiffproper = false;
