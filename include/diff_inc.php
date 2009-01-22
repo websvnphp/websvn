@@ -247,7 +247,7 @@ function command_diff($all, $rep, $ent, $newtname, $oldtname) {
 
   // Open a pipe to the diff command with $context lines of context
 
-  $cmd = quoteCommand($config->diff." -w -U $context \"$oldtname\" \"$newtname\""); // TODO Text_Diff
+  $cmd = quoteCommand($config->diff." -w -U $context \"$oldtname\" \"$newtname\"");
 
   $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
