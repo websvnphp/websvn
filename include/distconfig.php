@@ -26,10 +26,6 @@
 
 // {{{ PLATFORM CONFIGURATION ---
 
-// Uncomment the next line if you're running a windows server
-//
-// $config->setServerIsWindows();
-
 // Configure the path to your subversion config file
 // (e.g. if accepting certificates is required when using repositories via https)
 // $config->setConfigPath('/tmp');
