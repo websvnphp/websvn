@@ -617,6 +617,9 @@ class SVNRepository {
         execCommand($cmd, $retcode);
         if ($retcode != 0) {
           print'Unable to call svn command "'.$config->svn.'"';
+          if ($tempname != $filename) {
+            @unlink($tempname);
+          }
           exit(0);
         }
 
@@ -628,6 +631,9 @@ class SVNRepository {
         execCommand($cmd, $retcode);
         if ($retcode != 0) {
           print'Unable to call svn command "'.$config->svn.'"';
+          if ($tempname != $filename) {
+            @unlink($tempname);
+          }
           exit(0);
         }
       }
@@ -652,7 +658,10 @@ class SVNRepository {
           fclose($dst);
         }
       }
+      if ($tempname != $filename) {
+        @unlink($tempname);
       }
+    }
     return $highlighted;
   }
 
@@ -753,6 +762,7 @@ class SVNRepository {
       execCommand($cmd, $retcode);
       if ($retcode != 0) {
         print'Unable to call svn command "'.$config->svn.'"';
+        @unlink($tmp);
         exit(0);
       }
       $tmpStr = file_get_contents($tmp);
@@ -762,7 +772,7 @@ class SVNRepository {
     } else if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
       $tmp = tempnam("temp", "wsvn");
       print $this->applyGeshi($path, $tmp, $rev, $geshiLang, true);
-      unlink($tmp);
+      @unlink($tmp);
     } else {
       if ($config->useEnscript) {
         $path = encodepath($this->repConfig->path.$path);
