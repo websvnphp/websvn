@@ -132,10 +132,11 @@ if ($file = fopen($tfname, 'r')) {
   }
 
   fclose($file);
+
+  @unlink($tbname);
 }
 
 @unlink($tfname);
-@unlink($tbname);
 
 $vars['version'] = $version;
 
