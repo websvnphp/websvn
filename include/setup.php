@@ -32,6 +32,10 @@ require_once 'include/configclass.php';
 // Create the config
 $config = new WebSvnConfig();
 
+if (DIRECTORY_SEPARATOR == '\\') {
+  $config->setServerIsWindows();
+}
+
 // Set up the default character encodings
 if (function_exists('iconv_get_encoding')) {
   $config->setInputEncoding(iconv_get_encoding('input_encoding'));
@@ -312,7 +316,11 @@ $extGeshi = array
 require 'languages/english.php';
 
 // Get the user's personalised config (requires the locwebsvnhttp stuff above)
-require_once 'config.php';
+if (file_exists(dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php')) {
+  require_once 'config.php';
+} else {
+  die('File "includes'.DIRECTORY_SEPARATOR.'config.php" does not exists, please create one. The example is located under "includes'.DIRECTORY_SEPARATOR.'distconfig.php"');
+}
 
 require_once 'include/svnlook.php';
 
