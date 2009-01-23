@@ -777,7 +777,7 @@ class SVNRepository {
       }
 
       if ($result = popenCommand($cmd, "r")) {
-        if ($pre) echo "<PRE>";
+        if ($pre) echo "<pre>";
 
         while (!feof($result)) {
           $line = fgets($result, 1024);
@@ -786,7 +786,7 @@ class SVNRepository {
           print hardspace($line);
         }
 
-        if ($pre) echo "</PRE>";
+        if ($pre) echo "</pre>";
 
         pclose($result);
       }
