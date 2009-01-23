@@ -417,6 +417,7 @@ if (!$config->multiViews) {
 
 // due to possible XSS exploit, we need to clean up path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
+if ($path === null || $path === '') $path = '/';
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST["rev"];
 
