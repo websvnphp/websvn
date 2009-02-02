@@ -1,3 +1,29 @@
+/* UPCOMING RELEASE - 2.2 */
+
+* Fixed revision handling to use PEG revision instead of OPERATIVE revision
+  * This fixes many (but not all) cases when working with moved/renamed/deleted files
+* Removed dependencies to external command
+  * Added PEAR Archive_Tar
+  * Added PEAR Text_Diff
+  * Added usage of gz extension if available
+  * Added usage of PHP touch function
+* Improved scalability of parent path handling
+* Added support for upcoming PHP 5.3
+
+* Added separate customizable extension mapping for GeSHi
+* Added config option to set custom config path
+* Added config option to exclude specific paths from the set of repositories add by parentPath
+* Added config option to switch between showing age and date in log and listing view (the other is displayed in the title attribute)
+* Added auto detection of Windows
+* Added message when config file does not exist
+
+* Fixed some broken links when navigating through a repository
+* Fixed created archive to be identical (for the same revision) across multiple request
+  * This works under Linux with any PHP version and under Windows with PHP 5.3
+* Fixed parsing of access file to support usernames containing equal characters
+
+* Updated French translation
+
 2.1
 
 * Fixed: Several security fixed
