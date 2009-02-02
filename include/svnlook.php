@@ -450,7 +450,10 @@ function encodePath($uri) {
       $parts[$i] = mb_convert_encoding($parts[$i], "UTF-8", mb_detect_encoding($parts[$i]));
     }
 
-    $parts[$i] = rawurlencode($parts[$i]);
+    // do not urlencode the 'svn+ssh://' part!
+    if ($i != 0 || $parts[$i] != 'svn+ssh:') {
+      $parts[$i] = rawurlencode($parts[$i]);
+    }
   }
 
   $uri = implode('/', $parts);
