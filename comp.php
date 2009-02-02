@@ -223,6 +223,8 @@ if (!$noinput) {
         if (!strncmp($line, "@@", 2)) {
           $pos = strpos($line, "+");
           $posline = substr($line, $pos);
+          $sline = 0;
+          $eline = 0;
           sscanf($posline, "+%d,%d", $sline, $eline);
           if ($debug) print "sline = '$sline', eline = '$eline'<br />";
           // Check that this isn't a file deletion
@@ -240,6 +242,10 @@ if (!$noinput) {
 
           } else {
             $listing[$index]["difflines"] = $line;
+            $sline = 0;
+            $slen = 0;
+            $eline = 0;
+            $elen = 0;
             sscanf($line, "@@ -%d,%d +%d,%d @@", $sline, $slen, $eline, $elen);
             $listing[$index]["rev1line"] = $sline;
             $listing[$index]["rev1len"] = $slen;
