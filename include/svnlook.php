@@ -548,7 +548,7 @@ class SVNRepository {
     // If there's no filename, we'll just deliver the contents as it is to the user
     if ($filename == "") {
       $path = encodepath($this->repConfig->path.$path);
-      passthru(quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path.'@'.$rev).' '.$pipe));
+      passthruCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path.'@'.$rev).' '.$pipe);
       return $highlighted;
     }
 
