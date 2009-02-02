@@ -53,15 +53,15 @@ file so as to see exactly what was changed in a particular revision.</p>
 
 <h2><a name="installation"></a>Installation</h2>
 
-<p>Grab the source and stick it somewhere that your server can get to.  You
-obviously need to have <strong>PHP 4.3.0</strong> or greater installed and working.  Also note that WebSVN
-won't currently work in safe mode, due to the need to call svnlook.</p>
+<p>Grab the source and stick it somewhere that your server can get to.
+You need to have <strong>PHP 4.3.0</strong> or greater installed and working.
+Additionally you need <strong>SVN 1.2.0</strong> or greater.
+Also note that WebSVN won't currently work in safe mode, due to the need to call svn/svnlook.</p>
 
-<p>If it isn't already, make sure to chmod the cache directory to 0777.  This is
-used to cache RSS files.</p>
-
-<p>You'll also need diff (preferably the GNU version; for Windows users I'd
-recommend the Cygwin version) and svnlook available.</p>
+<p>If it isn't already, make sure to chmod the cache directory to at least 0700,
+and is owned by the process your webserver is running under.  This is used to
+cache RSS files.  It is not recommended to set the directory to full write,
+0777.</p>
 
 <p>Rename distconfig.php as config.php (found in the includes directory) and then
 edit it as directed in the file itself.</p>
@@ -72,12 +72,18 @@ pointing your browser at the index.php file.</p>
 <p>For those of you wishing to customise the look and feel a little, you should
 read templates.txt, which explains the highly configurable template system.</p>
 
+<p>No other external program are required.</p>
+
+<!--
+<p>You'll also need diff (preferably the GNU version; for Windows users I'd
+recommend the Cygwin version) and svnlook available.</p>
+
 <p><b>Windows users:</b> Note that some of the features offered by WebSVN, when
 enabled, require the use of various external programs. They can be downloaded
 from these locations:</p>
 
-<p>Diff/Sed/Gzip/Tar: <a href="http://www.cygwin.com/">http://www.cygwin.com/</a><br />
-Enscript:      <a href="http://people.ssh.com/mtr/genscript/">http://people.ssh.com/mtr/genscript/</a></p>
+<p>Diff/Sed/Gzip/Tar: <a href="http://www.cygwin.com/">http://www.cygwin.com/</a></p>
+-->
 
 <h2><a name="accentedchars"></a>Accented characters</h2>
 
@@ -92,7 +98,9 @@ DLLs to the system directory (from the PHP installation directory).</p>
 <p>Per default WebSVN uses the Generic Syntax Highlighter GeSHi which is bundle with WebSVN.</p>
 
 <p>Alternatively, if you have Enscript 1.6 or higher installed on your system,
-you can use that to view files with syntax colouring. You'll also need Sed.</p>
+you can use that to view files with syntax colouring. You'll also need Sed.<br />
+It can be found at <a href="http://people.ssh.com/mtr/genscript/">http://people.ssh.com/mtr/genscript/</a></p>
+
 
 <p>Simply set the paths in the config file and then uncomment the line:</p>
 
