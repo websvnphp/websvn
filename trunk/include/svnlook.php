@@ -203,6 +203,12 @@ function listCharacterData($parser, $data) {
       $data = trim($data);
       if (empty($data)) return;
 
+      $y = 0;
+      $mo = 0;
+      $d = 0;
+      $h = 0;
+      $m = 0;
+      $s = 0;
       sscanf($data, "%d-%d-%dT%d:%d:%d.", $y, $mo, $d, $h, $m, $s);
 
       $mo = substr("00".$mo, -2);
@@ -335,6 +341,12 @@ function logCharacterData($parser, $data) {
       $data = trim($data);
       if (empty($data)) return;
 
+      $y = 0;
+      $mo = 0;
+      $d = 0;
+      $h = 0;
+      $m = 0;
+      $s = 0;
       sscanf($data, "%d-%d-%dT%d:%d:%d.", $y, $mo, $d, $h, $m, $s);
 
       $mo = substr("00".$mo, -2);

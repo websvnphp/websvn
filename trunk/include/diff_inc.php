@@ -60,8 +60,10 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 
   while (!endOfFile($obj)) {
     // Get the first line of this range
+    $oline = 0;
     sscanf($line, "@@ -%d", $oline);
     $line = substr($line, strpos($line, "+"));
+    $nline = 0;
     sscanf($line, "+%d", $nline);
 
     if ($all) {
