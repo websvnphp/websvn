@@ -913,9 +913,8 @@ class SVNRepository {
       $headlog = $this->getLog("/", "", "", true, 1);
       if (isset($headlog->entries[0])) $rev = $headlog->entries[0]->rev;
     }
-    $revStr = "-r $rev";
 
-    $cmd = quoteCommand($config->svn." list --xml $revStr ".$this->repConfig->svnParams().quote($path));
+    $cmd = quoteCommand($config->svn.' list --xml '.$this->repConfig->svnParams().quote($path.'@'.$rev));
 
     $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
