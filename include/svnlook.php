@@ -1014,7 +1014,11 @@ class SVNRepository {
     $info = "--verbose";
     if ($quiet) $info = "--quiet";
 
-    $cmd = quoteCommand($config->svn." log --xml $info $revStr ".$this->repConfig->svnParams().quote($path));
+    $pegRev = '';
+    if ($brev) {
+      $pegRev = '@'.$brev;
+    }
+    $cmd = quoteCommand($config->svn." log --xml $info $revStr ".$this->repConfig->svnParams().quote($path.$pegRev));
 
     $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 

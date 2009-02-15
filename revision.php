@@ -57,7 +57,7 @@ if (empty($rev)) {
 
 if ($logrev != $youngest) {
   $logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
-  $logEntry = $logEntry->entries[0];
+  $logEntry = $logEntry ? $logEntry->entries[0] : false;
 } else {
   $logEntry = isset($history->entries[0]) ? $history->entries[0]: false;
 }
@@ -98,7 +98,7 @@ $vars['date'] = $logEntry ? $logEntry->date: '';
 $vars['author'] = $logEntry ? $logEntry->author: '';
 $vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))): '';
 
-$changes = $logEntry->mods;
+$changes = $logEntry ? $logEntry->mods : array();
 if (!is_array($changes)) {
   $changes = array();
 }
