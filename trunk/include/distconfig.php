@@ -171,6 +171,11 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 //
 // $config->setDefaultLanguage('en');
 
+// Ignore the user supplied accepted languages to choose reasonable default language.
+// If you want to force the default language - regardless of the client - uncomment the following line.
+//
+// $config->ignoreUserAcceptedLanguages();
+
 // }}}
 
 // {{{ MULTIVIEWS ---
