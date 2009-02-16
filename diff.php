@@ -106,17 +106,12 @@ if ($prevrev) {
 
   // Get the contents of the two files
   $newtname = tempnam("temp", "");
-  $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, "", true);
+  $highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, "", true);
 
   $oldtname = tempnam("temp", "");
-  $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, "", true);
+  $highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, "", true);
 
-  $ent = true;
-  $extension = strrchr(basename($path), ".");
-  if (($extension && isset($extEnscript[$extension]) && ('php' == $extEnscript[$extension])) || ($config->useEnscript || $config->useGeshi)) {
-    $ent = false;
-  }
-
+  $ent = (!$highlightedNew && !$highlightedOld);
   $listing = do_diff($all, $rep, $ent, $newtname, $oldtname);
 
   // Remove our temporary files
