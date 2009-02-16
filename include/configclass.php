@@ -608,6 +608,7 @@ class WebSvnConfig {
   var $outputEnc = "UTF-8";  // Encoding of web page.  Now forced to UTF-8
 
   var $defaultLanguage = 'en';
+  var $ignoreAcceptedLanguages = false;
 
   var $quote = "'";
   var $pathSeparator = ":";
@@ -1190,6 +1191,14 @@ class WebSvnConfig {
 
   function getDefaultLanguage() {
     return $this->defaultLanguage;
+  }
+
+  function ignoreUserAcceptedLanguages() {
+    $this->ignoreAcceptedLanguages = true;
+  }
+
+  function useAcceptedLanguages() {
+    return !$this->ignoreAcceptedLanguages;
   }
 
   // {{{ Tab expansion functions

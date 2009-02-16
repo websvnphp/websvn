@@ -283,6 +283,9 @@ function buildQuery($data, $separator = '&amp;', $key = '') {
 // {{{ getUserLanguage
 
 function getUserLanguage($languages, $default, $userchoice) {
+  global $config;
+  if (!$config->useAcceptedLanguages()) return $default;
+
   $acceptlangs = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : false;
   if (!$acceptlangs) return $default;
 
