@@ -126,7 +126,7 @@ if ($history && is_array($history->entries)) {
 
     $item->title = $desc;
     $item->link = html_entity_decode(getFullURL($baseurl.$url.'rev='.$thisrev));
-    $item->description = '<div><strong>'.$lang['REV'].' '.$thisrev.' - '.$r->author.'</strong> ('.$files.' '.$lang['FILESMODIFIED'].')</div><div>'.nl2br(create_anchors($desc)).'</div>';
+    $item->description = '<div><strong>'.$lang['REV'].' '.$thisrev.' - '.$r->author.'</strong> ('.$files.' '.$lang['FILESMODIFIED'].')</div><div>'.nl2br(create_anchors($r->msg)).'</div>';
 
     if (true) {
       usort($changes, 'SVNLogEntry_compare');
