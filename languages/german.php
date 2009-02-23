@@ -44,6 +44,8 @@ $lang["REV"] = "Revision";
 $lang["LINE"] = "Zeile";
 $lang["SHOWENTIREFILE"] = "Ganze Datei anzeigen";
 $lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
+$lang["IGNOREWHITESPACE"] = "Leerzeichen ignorieren";
+$lang["REGARDWHITESPACE"] = "Leerzeichen ber&uuml;cksichtigen";
 
 $lang["LISTING"] = "Verzeichnisansicht";
 $lang["FILEDETAIL"] = "Details";

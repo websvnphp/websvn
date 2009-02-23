@@ -31,7 +31,8 @@ require_once("include/template.php");
 require_once("include/diff_inc.php");
 
 $vars["action"] = $lang["DIFF"];
-$all = (@$_REQUEST["all"] == 1)?1:0;
+$all = (@$_REQUEST["all"] == 1);
+$ignoreWhitespace = (@$_REQUEST["ignorews"] == 1);
 
 // Make sure that we have a repository
 if (!isset($rep)) {
@@ -97,11 +98,18 @@ if ($prevrev) {
   $url = $config->getURL($rep, $path, "diff");
 
   if (!$all) {
-    $vars["showalllink"] = "<a href=\"${url}rev=$rev&amp;all=1\">${lang["SHOWENTIREFILE"]}</a>";
-    $vars["showcompactlink"] = "";
+    $vars["showalllink"] = '<a href="'.$url.'rev='.$rev.'&amp;all=1&amp;ignorews='.($ignoreWhitespace ? '1' : '0').'">'.$lang['SHOWENTIREFILE'].'</a>';
+    $vars["showcompactlink"] = '';
   } else {
-    $vars["showcompactlink"] = "<a href=\"${url}rev=$rev&amp;all=0\">${lang["SHOWCOMPACT"]}</a>";
-    $vars["showalllink"] = "";
+    $vars["showcompactlink"] = '<a href="'.$url.'rev='.$rev.'&amp;all=0&amp;ignorews='.($ignoreWhitespace ? '1' : '0').'">'.$lang['SHOWCOMPACT'].'</a>';
+    $vars["showalllink"] = '';
+  }
+  if (!$ignoreWhitespace) {
+    $vars['ignorewhitespacelink'] = '<a href="'.$url.'rev='.$rev.'&amp;all='.($all ? '1' : '0').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
+    $vars['regardwhitespacelink'] = '';
+  } else {
+    $vars['regardwhitespacelink'] = '<a href="'.$url.'rev='.$rev.'&amp;all='.($all ? '1' : '0').'&amp;ignorews=0">'.$lang['REGARDWHITESPACE'].'</a>';
+    $vars['ignorewhitespacelink'] = '';
   }
 
   // Get the contents of the two files
@@ -112,7 +120,7 @@ if ($prevrev) {
   $highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, "", true);
 
   $ent = (!$highlightedNew && !$highlightedOld);
-  $listing = do_diff($all, $rep, $ent, $newtname, $oldtname);
+  $listing = do_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname);
 
   // Remove our temporary files
   @unlink($oldtname);
