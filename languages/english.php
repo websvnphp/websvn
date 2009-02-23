@@ -44,6 +44,8 @@ $lang["REV"] = "Rev";
 $lang["LINE"] = "Line";
 $lang["SHOWENTIREFILE"] = "Show entire file";
 $lang["SHOWCOMPACT"] = "Only display areas with differences";
+$lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+$lang["REGARDWHITESPACE"] = "Regard whitespace";
 
 $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Details";

@@ -143,6 +143,19 @@ h2 {
   text-transform:uppercase;
   border-bottom:1px solid gray;
 }
+#wrap h2.regular .links {
+  float:right;
+  padding:0 5px 10px 5px;
+  margin:0;
+  text-align:right;
+  font-size:13px;
+  text-transform:none;
+}
+#wrap h2.regular .links a {
+  color: #000000;
+  font-weight: normal;
+  letter-spacing: 0;
+}
 /*
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Forms
 */
@@ -450,6 +463,18 @@ span.compact a {
 span.full a {
   padding-left:22px;
   background-image:url(images/arrow_out.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.ignorews a {
+  padding-left:22px;
+  background-image:url(images/pilcrow_delete.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.regardws a {
+  padding-left:22px;
+  background-image:url(images/pilcrow.png);
   background-repeat:no-repeat;
   background-position:3px 50%;
 }

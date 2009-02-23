@@ -54,6 +54,7 @@ $path1 = @$_REQUEST["compare"][0];
 $path2 = @$_REQUEST["compare"][1];
 $rev1 = (int)@$_REQUEST["compare_rev"][0];
 $rev2 = (int)@$_REQUEST["compare_rev"][1];
+$ignoreWhitespace = (@$_REQUEST["ignorews"] == 1);
 
 // Some page links put the revision with the path...
 if (strpos($path1, "@")) list($path1, $rev1) = explode("@", $path1);
@@ -89,7 +90,14 @@ $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $url = $config->getURL($rep, "/", "comp");
-$vars["revlink"] = "<a href=\"${url}compare%5B%5D=".urlencode($path2)."@$rev2&amp;compare%5B%5D=".urlencode($path1)."@$rev1&amp;manualorder=1\">${lang["REVCOMP"]}</a>";
+$vars["revlink"] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1&amp;ignorews='.($ignoreWhitespace ? '1' : '0').'">'.$lang['REVCOMP'].'</a>';
+if (!$ignoreWhitespace) {
+  $vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
+  $vars['regardwhitespacelink'] = '';
+} else {
+  $vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1&amp;ignorews=0">'.$lang['REGARDWHITESPACE'].'</a>';
+  $vars['ignorewhitespacelink'] = '';
+}
 
 if ($rev1 == 0) $rev1 = "HEAD";
 if ($rev2 == 0) $rev2 = "HEAD";
@@ -128,7 +136,7 @@ $path2 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repConfig->pa
 $debug = false;
 
 if (!$noinput) {
-  $cmd = $config->svn." diff ".$rep->svnParams().quote($path1."@".$rev1)." ".quote($path2."@".$rev2);
+  $cmd = $config->svn." diff ".($ignoreWhitespace ? '-x -w ' : '').$rep->svnParams().quote($path1."@".$rev1)." ".quote($path2."@".$rev2);
   if ($debug) echo "$cmd\n";
 }
 
