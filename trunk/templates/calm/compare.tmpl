@@ -6,7 +6,7 @@
 [websvn-else]
 <div id="info">
 <h2>[lang:COMPAREREVS]</h2>
-<ul><li><dl><dt><strong>[lang:CONVFROM]</strong></dt><dd class="curdir"><pre title="[websvn:path1]">[websvn:path1]</pre></dd><dd>from [lang:REV] [websvn:rev1] to [lang:REV] [websvn:rev2]</dd><dd>&harr; [websvn:revlink]</dd></dl></li>
+<ul><li><dl><dt><strong>[lang:CONVFROM]</strong></dt><dd class="curdir"><pre title="[websvn:path1]">[websvn:path1]</pre></dd><dd>[lang:REV] [websvn:rev1] &rarr; [lang:REV] [websvn:rev2]</dd><dd>&harr; [websvn:revlink]</dd></dl></li>
 <li>
 [websvn:compare_form]
 <table>
@@ -28,7 +28,17 @@
 </div>
 
 <div id="wrap">
-  <h2 class="regular">[lang:REV] [websvn:rev1] &rarr; [lang:REV] [websvn:rev2]</h2>
+  <h2 class="regular">
+    <span class="links">
+[websvn-test:ignorewhitespacelink]
+  <span class="ignorews">[websvn:ignorewhitespacelink]</span>
+[websvn-endtest]
+[websvn-test:regardwhitespacelink]
+  <span class="regardws">[websvn:regardwhitespacelink]</span>
+[websvn-endtest]
+    </span>
+    [lang:REV] [websvn:rev1] &rarr; [lang:REV] [websvn:rev2]
+  </h2>
 [websvn-startlisting]
 
 [websvn-test:newpath]
