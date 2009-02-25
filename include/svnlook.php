@@ -217,9 +217,10 @@ function listCharacterData($parser, $data) {
       $m = substr("00".$m, -2);
       $s = substr("00".$s, -2);
 
-      $curList->curEntry->date = "$y-$mo-$d $h:$m:$s GMT";
+      $committime = strtotime("$y-$mo-$d $h:$m:$s GMT");
 
-      $committime = strtotime($curList->curEntry->date);
+      $curList->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
+
       $curList->curEntry->committime = $committime;
       $curtime = time();
 
@@ -355,9 +356,10 @@ function logCharacterData($parser, $data) {
       $m = substr("00".$m, -2);
       $s = substr("00".$s, -2);
 
-      $curLog->curEntry->date = "$y-$mo-$d $h:$m:$s GMT";
+      $committime = strtotime("$y-$mo-$d $h:$m:$s GMT");
 
-      $committime = strtotime($curLog->curEntry->date);
+      $curLog->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
+
       $curLog->curEntry->committime = $committime;
       $curtime = time();
 
