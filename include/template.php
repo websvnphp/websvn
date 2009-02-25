@@ -35,14 +35,27 @@ $ignorelevel = 0;
 // Parse a special command
 
 function parseCommand($line, $vars, $handle) {
-  global $ignore, $ignorestack, $ignorelevel;
+  global $ignore, $ignorestack, $ignorelevel, $config, $listing, $vars;
+
+  // process content of included file
+  if (strncmp(trim($line), "[websvn-include:", 16) == 0) {
+    if (!$ignore) {
+      $line = trim($line);
+      $file = substr($line, 16, -1);
+      parseTemplate($config->templatePath.$file, $vars, $listing);
+    }
+    return true;
+  }
+
 
   // Check for test conditions
   if (strncmp(trim($line), "[websvn-test:", 13) == 0) {
     if (!$ignore) {
       $line = trim($line);
       $var = substr($line, 13, -1);
-      if (empty($vars[$var])) {
+      $neg = ($var{0} == '!');
+      if ($neg) $var = substr($var, 1);
+      if (empty($vars[$var]) xor $neg) {
         array_push($ignorestack, $ignore);
         $ignore = true;
       }
