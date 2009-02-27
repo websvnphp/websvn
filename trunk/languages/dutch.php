@@ -43,6 +43,8 @@ $lang["REV"] = "Rev";
 $lang["LINE"] = "Lijn";
 $lang["SHOWENTIREFILE"] = "Toon volledig bestand";
 $lang["SHOWCOMPACT"] = "Toon enkel de delen met verschillen";
+$lang["IGNOREWHITESPACE"] = "Negeer witruimtes";
+$lang["REGARDWHITESPACE"] = "Toon witruimtes";
 
 $lang["DIFFPREV"] = "Vergelijk met vorige";
 $lang["BLAME"] = "Blame";
