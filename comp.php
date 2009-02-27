@@ -54,6 +54,7 @@ $path1 = @$_REQUEST["compare"][0];
 $path2 = @$_REQUEST["compare"][1];
 $rev1 = (int)@$_REQUEST["compare_rev"][0];
 $rev2 = (int)@$_REQUEST["compare_rev"][1];
+$manualorder = (@$_REQUEST["manualorder"] == 1);
 $ignoreWhitespace = (@$_REQUEST["ignorews"] == 1);
 
 // Some page links put the revision with the path...
@@ -73,17 +74,16 @@ $rev1 = checkRevision($rev1);
 $rev2 = checkRevision($rev2);
 
 // Choose a sensible comparison order unless told not to
-if (!@$_REQUEST["manualorder"] && is_numeric($rev1) && is_numeric($rev2)) {
-  if ($rev1 > $rev2) {
-    $temppath = $path1;
-    $temprev = $rev1;
 
-    $path1 = $path2;
-    $rev1 = $rev2;
+if (!$manualorder && is_numeric($rev1) && is_numeric($rev2) && $rev1 > $rev2) {
+  $temppath = $path1;
+  $temprev = $rev1;
 
-    $path2 = $temppath;
-    $rev2 = $temprev;
-  }
+  $path1 = $path2;
+  $rev1 = $rev2;
+
+  $path2 = $temppath;
+  $rev2 = $temprev;
 }
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
@@ -92,10 +92,10 @@ $vars['repurl'] = $config->getURL($rep, '', 'dir');
 $url = $config->getURL($rep, "/", "comp");
 $vars["revlink"] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1&amp;ignorews='.($ignoreWhitespace ? '1' : '0').'">'.$lang['REVCOMP'].'</a>';
 if (!$ignoreWhitespace) {
-  $vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
+  $vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;manualorder='.($manualorder ? '1' : '0').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
   $vars['regardwhitespacelink'] = '';
 } else {
-  $vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1&amp;ignorews=0">'.$lang['REGARDWHITESPACE'].'</a>';
+  $vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;manualorder='.($manualorder ? '1' : '0').'&amp;ignorews=0">'.$lang['REGARDWHITESPACE'].'</a>';
   $vars['ignorewhitespacelink'] = '';
 }
 
@@ -190,7 +190,7 @@ if (!$noinput) {
         if ($indiffproper) {
           if (strlen($line) > 0 && ($line[0] == " " || $line[0] == "+" || $line[0] == "-")) {
             $subline = replaceEntities(substr($line, 1), $rep);
-            if (empty($subline)) $subline = "&nbsp;";
+            if ($subline == '') $subline = "&nbsp;";
             $subline = hardspace($subline);
             $listing[$index]["line"] = $subline;
 
