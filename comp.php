@@ -130,8 +130,8 @@ $listing = array();
 $relativePath1 = $path1;
 $relativePath2 = $path2;
 
-$path1 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repConfig->path.$path1));
-$path2 = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $svnrep->repConfig->path.$path2));
+$path1 = encodepath($svnrep->getSvnpath(str_replace(DIRECTORY_SEPARATOR, '/', $path1)));
+$path2 = encodepath($svnrep->getSvnpath(str_replace(DIRECTORY_SEPARATOR, '/', $path2)));
 
 $debug = false;
 
