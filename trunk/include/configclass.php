@@ -211,6 +211,7 @@ class Repository {
   var $name;
   var $svnName;
   var $path;
+  var $subpath;
   var $group;
   var $username;
   var $password;
@@ -234,10 +235,11 @@ class Repository {
 
   // {{{ __construct($name, $svnName, $path, [$group, [$username, [$password]]])
 
-  function Repository($name, $svnName, $path, $group = NULL, $username = NULL, $password = NULL) {
+  function Repository($name, $svnName, $path, $group = NULL, $username = NULL, $password = NULL, $subpath = NULL) {
     $this->name = $name;
     $this->svnName = $svnName;
     $this->path = $path;
+    $this->subpath = $subpath;
     $this->group = $group;
     $this->username = $username;
     $this->password = $password;
@@ -643,6 +645,19 @@ class WebSvnConfig {
     $this->_repositories[] = new Repository($name, $svnName, $url, $group, $username, $password);
   }
 
+  function addRepositorySubpath($name, $url, $subpath, $group = NULL, $username = NULL, $password = NULL) {
+    $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+    $subpath = str_replace(DIRECTORY_SEPARATOR, '/', $subpath);
+
+    if ($url{strlen($url) - 1} == '/') {
+      $url = substr($url, 0, -1);
+    }
+
+    $svnName = substr($url, strrpos($url, '/') + 1);
+    $this->_repositories[] = new Repository($name, $svnName, $url, $group, $username, $password, $subpath);
+  }
+
+
   function getRepositories() {
     // lazily load parent paths
     if (!$this->_parentPathsLoaded) {
@@ -657,7 +672,7 @@ class WebSvnConfig {
             $duplicate = false;
             if (!empty($this->_repositories)) {
               foreach ($this->_repositories as $knownRepos) {
-                if ($knownRepos->svnName == $repo->svnName) {
+                if ($knownRepos->svnName == $repo->svnName && $knownRepos->subpath == $repo->subpath) {
                   $duplicate = true;
                   break;
                 }

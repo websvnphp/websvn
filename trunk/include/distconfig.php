@@ -74,6 +74,18 @@
 // $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', NULL, 'username', 'password');
 // $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'group', 'username', 'password');
 //
+// Display Part of a repository as if it was a repository.
+// 
+// Local repositories (without and with optional group):
+//
+// $config->addRepositorySubpath('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)', 'subpath');
+// $config->addRepositorySubpath('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)', 'subpath', 'group');
+//
+// Remote repositories (without and with optional group):
+//
+// $config->addRepositorySubpath('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'subpath', NULL, 'username', 'password');
+// $config->addRepositorySubpath('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'subpath', 'group', 'username', 'password');
+//
 // To use the parent path method (without and with optional group), uncomment the next line
 // and replace the path with your one. You can call the function several times if you have several parent paths.
 // Note that in this case the path is a filesystem path.
