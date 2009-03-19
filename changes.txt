@@ -11,8 +11,10 @@
 * Added support for upcoming PHP 5.3
 
 * Added separate customizable extension mapping for GeSHi
+* Added possiblity to ignore whitespace on compare and diff
 * Added config option to set custom config path
-* Added config option to exclude specific paths from the set of repositories add by parentPath
+* Added config option to exclude specific paths from the set of repositories added by parentPath
+* Added config option to add a subpath of a repository to the list of repositories
 * Added config option to switch between showing age and date in log and listing view (the other is displayed in the title attribute)
 * Added auto detection of Windows
 * Added message when config file does not exist
@@ -22,7 +24,9 @@
   * This works under Linux with any PHP version and under Windows with PHP 5.3
 * Fixed parsing of access file to support usernames containing equal characters
 
-* Updated French translation
+* Updated translations
+  * Dutch
+  * French
 
 2.1
 

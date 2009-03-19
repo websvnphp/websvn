@@ -395,7 +395,7 @@ header('Content-Language: '.$userLang);
 // multiviews has custom code to load the repository
 if (!$config->multiViews) {
   // if the repoparameter has been set load the corresponding
-  // repository, else load the default 
+  // repository, else load the default
   $repname = @$_REQUEST["repname"];
   if (isset($repname)) {
     $repname = urldecode($repname);
