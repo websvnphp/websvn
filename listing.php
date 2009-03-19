@@ -102,7 +102,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
   $fullaccess = $rep->hasReadAccess($path, false);
 
   foreach ($logList->entries as $entry) {
-  	$file = $entry->file;
+    $file = $entry->file;
     $isDir = $entry->isdir;
     $access = false;
 
@@ -124,6 +124,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         } else {
           $listing[$index]['downloadurl'] = '';
         }
+        $listing[$index]['downloadplainurl'] = '';
       }
 
     } else {
@@ -135,6 +136,12 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         }
 
         $listing[$index]['downloadurl'] = '';
+        if ($rep->isDownloadAllowed($path.$file)) {
+          $dlurl = $config->getURL($rep, $path.$file, "dl");
+          $listing[$index]['downloadplainurl'] = $dlurl.'rev='.$passrev;
+        } else {
+          $listing[$index]['downloadplainurl'] = '';
+        }
         $listing[$index]["filetype"] = strtolower(strrchr($file, "."));
       }
     }
