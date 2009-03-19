@@ -118,7 +118,7 @@ class ParentPath {
   // {{{ findRepository($name)
   // look for a repository with $name
   function &findRepository($name) {
-  	global $config;
+    global $config;
     if ($this->group != null) {
       $prefix = $this->group.'.';
       if (substr($name, 0, strlen($prefix)) == $prefix) {
@@ -137,7 +137,7 @@ class ParentPath {
         if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
           // And matches the pattern if specified
           if ($this->pattern === false || preg_match($this->pattern, $name)) {
-            $url = 'file:///'.$fullpath;  
+            $url = 'file:///'.$fullpath;
             $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
             if ($url{strlen($url) - 1} == "/") {
               $url = substr($url, 0, -1);
@@ -147,7 +147,7 @@ class ParentPath {
               $rep = new Repository($name, $name, $url, $this->group, null, null);
               return $rep;
             }
-          }  
+          }
         }
       }
       closedir($handle);
@@ -156,14 +156,14 @@ class ParentPath {
     return $null;
   }
   // }}}
-  
+
   // {{{ getRepositories()
   // return all repositories in the parent path matching pattern
   function &getRepositories() {
      $repos = array();
      if ($handle = @opendir($this->path)) {
       // For each file...
-      while (false !== ($name = readdir($handle))) {     
+      while (false !== ($name = readdir($handle))) {
         $fullpath = $this->path.DIRECTORY_SEPARATOR.$name;
         if ($name{0} != '.' && is_dir($fullpath) && is_readable($fullpath)) {
           // And that contains a db directory (in an attempt to not include non svn repositories.
@@ -171,7 +171,7 @@ class ParentPath {
           if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
             // And matches the pattern if specified
             if ($this->pattern === false || preg_match($this->pattern, $name)) {
-              $url = 'file:///'.$fullpath;  
+              $url = 'file:///'.$fullpath;
               $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
               if ($url{strlen($url) - 1} == "/") {
                 $url = substr($url, 0, -1);
@@ -179,7 +179,7 @@ class ParentPath {
 
               $repos[] = new Repository($name, $name, $url, $this->group, null, null);
             }
-          }  
+          }
         }
       }
       closedir($handle);
@@ -573,6 +573,15 @@ class WebSvnConfig {
   var $sed = "sed";
   var $gzip = "gzip";
   var $tar = "tar";
+  var $zip = "zip";
+
+  // different modes for file and folder download
+
+  var $defaultFileDlMode = "plain";
+  var $defaultFolderDlMode = "gzip";
+
+  var $validFileDlModes = array( 'gzip', 'zip', 'plain' );
+  var $validFolderDlModes = array( 'gzip', 'zip' );
 
   // Other configuration items
 
@@ -661,7 +670,7 @@ class WebSvnConfig {
   function getRepositories() {
     // lazily load parent paths
     if (!$this->_parentPathsLoaded) {
-      $this->_parentPathsLoaded = true;    
+      $this->_parentPathsLoaded = true;
       foreach ($this->_parentPaths as $parentPath) {
         $parentRepos = $parentPath->getRepositories();
         foreach ($parentRepos as $repo) {
@@ -1130,6 +1139,49 @@ class WebSvnConfig {
     return $this->gzip;
   }
 
+  // setZipPath
+  //
+  // Define the location of the zip command
+  function setZipPath($path) {
+    $this->setPath($this->zip, $path, "zip");
+  }
+
+  function getZipPath() {
+    return $this->zip;
+  }
+
+  // setDefaultFileDlMode
+  //
+  // Define the default file download mode - one of [gzip, zip, plain]
+  function setDefaultFileDlMode($dlmode) {
+    if (in_array($dlmode, $this->validFileDlModes)) {
+      $this->defaultFileDlMode = $dlmode;
+    } else {
+      echo 'Setting default file download mode to an invalid value "'.$dlmode.'"';
+      exit;
+    }
+  }
+
+  function getDefaultFileDlMode() {
+    return $this->defaultFileDlMode;
+  }
+
+  // setDefaultFolderDlMode
+  //
+  // Define the default folder download mode - one of [gzip, zip]
+  function setDefaultFolderDlMode($dlmode) {
+    if (in_array($dlmode, $this->validFolderDlModes)) {
+      $this->defaultFolderDlMode = $dlmode;
+    } else {
+      echo 'Setting default file download mode to an invalid value "'.$dlmode.'"';
+      exit;
+    }
+  }
+
+  function getDefaultFolderDlMode() {
+    return $this->defaultFolderDlMode;
+  }
+
   // Templates
 
   function setTemplatePath($path, $myrep = 0) {
@@ -1161,7 +1213,7 @@ class WebSvnConfig {
   }
 
   function addExcludedPath($path) {
-    $url = 'file:///'.$path;  
+    $url = 'file:///'.$path;
     $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
     if ($url{strlen($url) - 1} == '/') {
       $url = substr($url, 0, -1);

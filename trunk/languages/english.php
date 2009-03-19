@@ -69,6 +69,7 @@ $lang["AGE"] = "Age";
 $lang["LOG"] = "Log";
 $lang["CURDIR"] = "Current Directory";
 $lang["TARBALL"] = "Tarball";
+$lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Prev";
 $lang["NEXT"] = "Next";

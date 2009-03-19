@@ -45,6 +45,9 @@
 // For delivered GZIP'd files and tarballs, if option enabled...
 // $config->setGZipPath('Path/to/gzip/command/');
 
+// download folder/file zipped ...
+// $config->setZipPath('Path/to/zip/command/');
+
 // }}}
 
 // {{{ REPOSITORY SETUP ---
@@ -75,7 +78,7 @@
 // $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'group', 'username', 'password');
 //
 // Display Part of a repository as if it was a repository.
-// 
+//
 // Local repositories (without and with optional group):
 //
 // $config->addRepositorySubpath('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)', 'subpath');
@@ -274,6 +277,10 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // repositories.
 //
 // $config->allowDownload();
+//
+// Set download modes
+// $config->setDefaultFileDlMode('plain');
+// $config->setDefaultFolderDlMode('gzip');
 //
 // Change the line below to set the temporary directory where to store generated tarball.
 //

@@ -77,6 +77,8 @@ function removeDirectory($dir) {
 // Make sure that this operation is allowed
 
 if (!$rep->isDownloadAllowed($path)) {
+  header('HTTP/1.x 403 Forbidden', true, 403);
+  print 'Unable to download path '.$path."\n";
   exit;
 }
 
@@ -103,7 +105,8 @@ $tmpname = tempnam($config->getTarballTmpDir(), 'wsvn');
 if (mkdir($tmpname)) {
   // Get the name of the directory being archived
   $arcname = $path;
-  if (substr($arcname, -1) == '/') {
+  $isDir = (substr($arcname, -1) == '/');
+  if ($isDir) {
     $arcname = substr($arcname, 0, -1);
   }
   $arcname = basename($arcname);
@@ -111,9 +114,8 @@ if (mkdir($tmpname)) {
     $arcname = $rep->name;
   }
 
+  $plainfilename = $arcname;
   $arcname = $arcname.'.r'.$rev;
-  $tararc = $arcname.'.tar';
-  $gzarc = $arcname.'.tar.gz';
 
   $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
 
@@ -125,71 +127,120 @@ if (mkdir($tmpname)) {
   // change to temp directory so that only relative paths are stored in tar
   chdir($tmpname);
 
-  // Create the tar file
-  $retcode = 0;
-  if (class_exists('Archive_Tar')) {
-    $tar = new Archive_Tar($tararc);
-    $created = $tar->create($arcname);
-    if (!$created) {
-      $retcode = 1;
-      print'Unable to create tar archive';
-    }
-
+  if ($isDir) {
+    $dlmode = $config->getDefaultFolderDlMode();
   } else {
-    $cmd = $config->tar.' -cf '.quote($tararc).' '.quote($arcname);
+    $dlmode = $config->getDefaultFileDlMode();
+  }
+
+  // $_REQUEST parameter can override dlmode
+  if (!empty($_REQUEST['dlmode'])) {
+    $dlmode = $_REQUEST['dlmode'];
+    if (substr($logEntry->path, -1) == '/') {
+      if (!in_array($dlmode, $config->validFolderDlModes)) {
+        $dlmode = $config->getDefaultFolderDlMode();
+      }
+    } else {
+      if (!in_array($dlmode, $config->validFileDlModes)) {
+        $dlmode = $config->getDefaultFileDlMode();
+      }
+    }
+  }
+
+  if ($dlmode == 'plain') {
+    $dlarc  = $arcname;
+    $dlmime = 'application/octetstream';
+
+  } else if ($dlmode == 'zip') {
+    $dlarc  = $arcname.'.zip';
+    $dlmime = 'application/x-zip';
+    // Create zip file
+    $cmd = $config->zip.' -r '.quote($dlarc).' '.quote($arcname);
     execCommand($cmd, $retcode);
     if ($retcode != 0) {
-      print'Unable to call tar command "'.$config->tar.'"';
+      print'Unable to call zip command "'.$config->zip.'"';
     }
-  }
-  if ($retcode != 0) {
-    chdir('..');
-    removeDirectory($tmpname);
-    exit(0);
-  }
-
-  // Set datetime of tar file to datetime of revision
-  touch($tararc, $ts);
-
-  // ZIP it up
-  if (function_exists('gzopen')) {
-    $srcHandle = fopen($tmpname.DIRECTORY_SEPARATOR.$tararc, 'rb');
-    $dstHandle = gzopen($tmpname.DIRECTORY_SEPARATOR.$gzarc, 'wb');
-    if (!$srcHandle || !$dstHandle) {
-      print'Unable to open file for gz-compression';
-      chdir('..');
-      removeDirectory($tmpname);
-      exit(0);
-    }
-    while (!feof($srcHandle)) {
-      gzwrite($dstHandle, fread($srcHandle, 1024 * 512));
-    }
-    fclose($srcHandle);
-    gzclose($dstHandle);
 
   } else {
-    $cmd = $config->gzip.' '.quote($tararc);
+    $tararc = $arcname.'.tar';
+    $dlarc = $arcname.'.tar.gz';
+    $dlmime = 'application/x-gzip';
+
+    // Create the tar file
     $retcode = 0;
-    execCommand($cmd, $retcode);
+    if (class_exists('Archive_Tar')) {
+      $tar = new Archive_Tar($tararc);
+      $created = $tar->create($arcname);
+      if (!$created) {
+        $retcode = 1;
+        print'Unable to create tar archive';
+      }
+
+    } else {
+      $cmd = $config->tar.' -cf '.quote($tararc).' '.quote($arcname);
+      execCommand($cmd, $retcode);
+      if ($retcode != 0) {
+        print'Unable to call tar command "'.$config->tar.'"';
+      }
+    }
     if ($retcode != 0) {
-      print'Unable to call gzip command "'.$config->gzip.'"';
       chdir('..');
       removeDirectory($tmpname);
       exit(0);
+    }
+
+    // Set datetime of tar file to datetime of revision
+    touch($tararc, $ts);
+
+    // GZIP it up
+    if (function_exists('gzopen')) {
+      $srcHandle = fopen($tmpname.DIRECTORY_SEPARATOR.$tararc, 'rb');
+      $dstHandle = gzopen($tmpname.DIRECTORY_SEPARATOR.$gzarc, 'wb');
+      if (!$srcHandle || !$dstHandle) {
+        print'Unable to open file for gz-compression';
+        chdir('..');
+        removeDirectory($tmpname);
+        exit(0);
+      }
+      while (!feof($srcHandle)) {
+        gzwrite($dstHandle, fread($srcHandle, 1024 * 512));
+      }
+      fclose($srcHandle);
+      gzclose($dstHandle);
+
+    } else {
+      $cmd = $config->gzip.' '.quote($tararc);
+      $retcode = 0;
+      execCommand($cmd, $retcode);
+      if ($retcode != 0) {
+        print'Unable to call gzip command "'.$config->gzip.'"';
+        chdir('..');
+        removeDirectory($tmpname);
+        exit(0);
+      }
     }
   }
 
   // Give the file to the browser
-  if (is_readable($gzarc)) {
-    $size = filesize($gzarc);
+  if (is_readable($dlarc)) {
+    $size = filesize($dlarc);
 
-    header('Content-Type: application/x-gzip');
+    if ($dlmode == 'plain') {
+      $dlfilename = $plainfilename;
+    } else {
+      $dlfilename = $rep->name.'-'.$dlarc;
+    }
+
+    header('Content-Type: '.$dlmime);
     header('Content-Length: '.$size);
-    header('Content-Disposition: attachment; filename="'.$rep->name.'-'.$gzarc.'"');
+    header('Content-Disposition: attachment; filename="'. $dlfilename .'"');
 
-    readfile($gzarc);
+    readfile($dlarc);
+
   } else {
-    print'Unable to open file '.$gzarc;
+    header('HTTP/1.x 404 Not Found', true, 404);
+
+    print 'Unable to open file '.$dlarc."\n";
   }
 
   chdir('..');
