@@ -1,7 +1,7 @@
 <?php
 
 // WebSVN - Subversion repository viewing via the web using PHP
-// Copyright (C) 2004 Erik Le Blanc 
+// Copyright (C) 2004 Erik Le Blanc
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -91,9 +91,9 @@ $lang["NORESULTS"] = "Il n'y a pas de r&eacute;ponse &agrave; votre recherche da
 $lang["NOMORERESULTS"] = "Il n'y a pas plus de r&eacute;ponses &agrave; votre recherche";
 $lang["NOPREVREV"] = "Pas de r&eacute;vision ant&eacute;rieur";
 
-$lang["RSSFEEDTITLE"] = "Flux RSS de WebSVN"; 
-$lang["FILESMODIFIED"] = "fichier(s) modifi&eacute;(s)"; 
-$lang["RSSFEED"] = "Flux RSS"; 
+$lang["RSSFEEDTITLE"] = "Flux RSS de WebSVN";
+$lang["FILESMODIFIED"] = "fichier(s) modifi&eacute;(s)";
+$lang["RSSFEED"] = "Flux RSS";
 
 $lang["LINENO"] = "Ligne";
 $lang["BLAMEFOR"] = "Dernier responsable";
@@ -118,7 +118,7 @@ $lang["FILEDELETED"] = "Fichier supprim&eacute;";
 $lang["FILEADDED"] = "Nouveau fichier";
 
 // The following are defined by some languages to stop unwanted line splitting
-// in the template files. 
+// in the template files.
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";

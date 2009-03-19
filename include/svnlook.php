@@ -1120,7 +1120,7 @@ class SVNRepository {
     return strpos(implode(' ', $output), 'kind="file"') !== false;
   }
 
-  // {{{ getSvnpath  
+  // {{{ getSvnpath
 
   function getSvnpath( $path ) {
     if ($this->repConfig->subpath === null) {
@@ -1131,7 +1131,7 @@ class SVNRepository {
     }
   }
 
-  // }}} 
+  // }}}
 
 }
 
