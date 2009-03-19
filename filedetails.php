@@ -137,6 +137,11 @@ $vars["prevdifflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>"
 $url = $config->getURL($rep, $path, "blame");
 $vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
 
+if ($rep->isDownloadAllowed($path)) {
+  $url = $config->getURL($rep, $path, "dl");
+  $vars["dllink"] = "<a href=\"${url}rev=$passrev\">${lang["DOWNLOAD"]}</a>";
+}
+
 $listing = array();
 
 $vars["version"] = $version;
