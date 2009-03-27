@@ -27,6 +27,7 @@
 * Updated translations
   * Dutch
   * French
+  * Italian
 
 2.1
 

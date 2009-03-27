@@ -19,12 +19,16 @@
 //
 // --
 //
-// italian.inc
+// Translated by Andrea Visinoni (andrea.visinoni@gmail.com)
+// italian.php
 //
 // Italian language strings
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Italian";
+// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
+// see also RFC 4646
+$lang['LANGUAGETAG'] = 'it';
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -41,7 +45,11 @@ $lang["REV"] = "Revisione";
 $lang["LINE"] = "Linea";
 $lang["SHOWENTIREFILE"] = "Mostra tutto il file";
 $lang["SHOWCOMPACT"] = "Mostra solo aree con differenze";
+$lang["IGNOREWHITESPACE"] = "Ignora gli spazi vuoti";
+$lang["REGARDWHITESPACE"] = "Rispetta gli spazi vuoti";
 
+$lang["LISTING"] = "Lista directory";
+$lang["FILEDETAIL"] = "Dettagli";
 $lang["DIFFPREV"] = "Confronta con la precedente";
 $lang["BLAME"] = "Responsabilità";
 
@@ -62,6 +70,7 @@ $lang["AGE"] = "Anzianità";
 $lang["LOG"] = "Log";
 $lang["CURDIR"] = "Directory corrente";
 $lang["TARBALL"] = "Archivio";
+$lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Precedente";
 $lang["NEXT"] = "Successivo";
@@ -83,6 +92,7 @@ $lang["CLEARLOG"] = "Pulisci il fitro corrente";
 $lang["MORERESULTS"] = "Trova più risultati...";
 $lang["NORESULTS"] = "Non ci sono log che soddifano la tua ricerca";
 $lang["NOMORERESULTS"] = "Non ci sono più log che soddifano la tua ricerca";
+$lang['NOPREVREV'] = 'Nessuna revisione precedente';
 
 $lang["RSSFEEDTITLE"] = "WebSVN feed RSS";
 $lang["FILESMODIFIED"] = "file modificati";
