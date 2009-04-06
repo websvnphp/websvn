@@ -45,6 +45,8 @@ function endOfFile(&$obj) {
 }
 
 function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
+  $contentEncoding = $rep->getContentEncoding();
+
   $ofile = fopen($oldtname, 'r');
   $nfile = fopen($newtname, 'r');
 
@@ -77,6 +79,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
         if ($all) {
           $line = rtrim($nl);
           if ($ent) $line = replaceEntities($line, $rep);
+          else $line = toOutputEncoding($line, $contentEncoding);
           if (strip_tags($line) == '') $line = '&nbsp;';
 
           $listing[$index]["rev1line"] = hardspace($line);
@@ -93,6 +96,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
         if ($all) {
           $line = rtrim($nl);
           if ($ent) $line = replaceEntities($line, $rep);
+          else $line = toOutputEncoding($line, $contentEncoding);
           if (strip_tags($line) == '') $line = '&nbsp;';
 
           $listing[$index]["rev2line"] = hardspace($line);
@@ -131,6 +135,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 
         $line = rtrim(substr($line, 1));
         if ($ent) $line = replaceEntities($line, $rep);
+        else $line = toOutputEncoding($line, $contentEncoding);
         if (strip_tags($line) == '') $line = '&nbsp;';
         $text = hardspace($line);
         $listing[$index]["rev1line"] = $text;
@@ -185,6 +190,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
             $nl = fgets($ofile);
             $line = rtrim($nl);
             if ($ent) $line = replaceEntities($line, $rep);
+            else $line = toOutputEncoding($line, $contentEncoding);
             if (strip_tags($line) == '') $line = '&nbsp;';
             $listing[$index]["rev1line"] = hardspace($line);
             $curoline++;
@@ -192,6 +198,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
             $nl = fgets($nfile);
             $line = rtrim($nl);
             if ($ent) $line = replaceEntities($line, $rep);
+            else $line = toOutputEncoding($line, $contentEncoding);
             if (strip_tags($line) == '') $line = '&nbsp;';
             $listing[$index]["rev2line"] = hardspace($line);
             $curnline++;
