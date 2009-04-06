@@ -788,7 +788,7 @@ class SVNRepository {
       @unlink($tmp);
     } else if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
       $tmp = tempnam("temp", "wsvn");
-      print $this->applyGeshi($path, $tmp, $rev, $geshiLang, true);
+      print toOutputEncoding($this->applyGeshi($path, $tmp, $rev, $geshiLang, true), $this->repConfig->getContentEncoding());
       @unlink($tmp);
     } else {
       if ($config->useEnscript) {
@@ -806,9 +806,11 @@ class SVNRepository {
       if ($result = popenCommand($cmd, "r")) {
         if ($pre) echo "<pre>";
 
+        $contentEncoding = $this->repConfig->getContentEncoding();
         while (!feof($result)) {
           $line = fgets($result, 1024);
           if ($pre) $line = replaceEntities($line, $this->repConfig);
+          else $line = toOutputEncoding($line, $contentEncoding);
 
           print hardspace($line);
         }
