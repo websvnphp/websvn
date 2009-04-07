@@ -221,6 +221,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 
       $line = rtrim(fgets($ofile));
       if ($ent) $line = replaceEntities($line, $rep);
+      else $line = toOutputEncoding($line, $contentEncoding);
       if (strip_tags($line) == '') $line = '&nbsp;';
 
       if (!feof($ofile)) {
@@ -231,6 +232,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 
       $line = rtrim(fgets($nfile));
       if ($ent) $line = replaceEntities(rtrim(fgets($nfile)), $rep);
+      else $line = toOutputEncoding($line, $contentEncoding);
       if (strip_tags($line) == '') $line = '&nbsp;';
 
       if (!feof($nfile)) {
