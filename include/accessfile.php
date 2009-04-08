@@ -59,13 +59,13 @@ class IniFile {
         $this->sections[$cursection][$curkey] .= strtolower($str);
       } else if ($str{0} == '[') {
         $cursection = strtolower(substr($str, 1, strlen($str) - 2));
-        if (!($str{strlen($str) - 2} == '/' or $str == '[groups]')) {
+        if (!($str{strlen($str) - 2} == '/' || $str == '[aliases]' || $str == '[groups]')) {
           $cursection .= '/';
         }
         $first = true;
       } else if (!empty($cursection)) {
         if ($first) {
-          if ($cursection != 'groups' || !isset($this->sections[$cursection])) {
+          if (($cursection != 'aliases' && $cursection != 'groups') || !isset($this->sections[$cursection])) {
             $this->sections[$cursection] = array();
           }
         }
