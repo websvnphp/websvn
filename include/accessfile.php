@@ -37,13 +37,14 @@ class IniFile {
 
   function readIniFile($name) {
     // does not use parse_ini_file function since php 5.3 does not support comment lines starting with #
-
     $contents = file($name);
     $cursection = '';
+    $curkey = '';
     $first = true;
 
-    foreach ($contents as $str) {
-      $str = trim($str);
+    foreach ($contents as $line) {
+      $line = rtrim($line);
+      $str = ltrim($line);
       if (empty($str)) {
         continue;
       }
@@ -53,7 +54,10 @@ class IniFile {
         continue;
       }
 
-      if ($str{0} == '[') {
+      if ($str != $line && !empty($cursection) && !empty($curkey)) {
+        // line starts with whitespace
+        $this->sections[$cursection][$curkey] .= strtolower($str);
+      } else if ($str{0} == '[') {
         $cursection = strtolower(substr($str, 1, strlen($str) - 2));
         if (!($str{strlen($str) - 2} == '/' or $str == '[groups]')) {
           $cursection .= '/';
@@ -66,7 +70,9 @@ class IniFile {
           }
         }
         list($key, $val) = explode('=', $str, 2);
-        $this->sections[$cursection][strtolower(trim($key))] = strtolower(trim($val));
+        $key = strtolower(trim($key));
+        $curkey = $key;
+        $this->sections[$cursection][$key] = strtolower(trim($val));
         $first = false;
       }
     }
