@@ -54,6 +54,14 @@ if (@$_REQUEST["selectproj"]) {
     $basedir = "/";
   }
 
+  if ($config->multiViews) {
+    $rep =& $config->findRepository(@$_REQUEST["repname"]);
+    if ($rep == null) {
+      include("$locwebsvnreal/index.php");
+      exit;
+    }
+  }
+
   $url = $config->getURL($rep, "/", "dir");
   $url = html_entity_decode($url);
 
