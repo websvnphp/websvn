@@ -58,7 +58,7 @@ class Bugtraq {
         if (empty($this->msgstring)) $this->msgstring = $svnrep->getProperty($parent, 'bugtraq:message');
         if (empty($this->logregex)) $this->logregex = $svnrep->getProperty($parent, 'bugtraq:logregex');
         if (empty($this->urlstring)) $this->urlstring = $svnrep->getProperty($parent, 'bugtraq:url');
-        if (empty($this->append)) $this->append = ($svnrep->getProperty($parent, 'bugtraq:append') == "true");
+        if ($svnrep->getProperty($parent, 'bugtraq:append') == 'false') $this->append = false;
 
         $parent = substr($parent, 0, -1);      // Remove the trailing slash
         $pos = strrpos($parent, "/");        // Find the last trailing slash
