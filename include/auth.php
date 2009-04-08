@@ -62,20 +62,30 @@ class Authentication {
 
   // {{{ identifyGroups()
   //
-  // Checks to see which groups the user belongs to
+  // Checks to see which groups and aliases the user belongs to
 
   function identifyGroups() {
-    $this->usersGroups[] = "*";
+    $this->usersGroups[] = '*';
 
-    if (is_array($this->rights->getValues("groups"))) {
-      foreach ($this->rights->getValues("groups")as $group => $names) {
+    $aliases = $this->rights->getValues('aliases');
+    if (is_array($aliases)) {
+      foreach ($aliases as $alias => $user) {
+        if ($user == strtolower($this->user)) {
+          $this->usersGroups[] = '&'.$alias;
+        }
+      }
+    }
+
+    $groups = $this->rights->getValues('groups');
+    if (is_array($groups)) {
+      foreach ($groups as $group => $names) {
         if (in_array(strtolower($this->user), preg_split('/\s*,\s*/', $names))) {
-          $this->usersGroups[] = "@".$group;
+          $this->usersGroups[] = '@'.$group;
         }
 
         foreach ($this->usersGroups as $users_group) {
           if (in_array($users_group, preg_split('/\s*,\s*/', $names))) {
-            $this->usersGroups[] = "@".$group;
+            $this->usersGroups[] = '@'.$group;
           }
         }
       }
@@ -92,13 +102,7 @@ class Authentication {
   function inList($accessors, $user) {
     $output = UNDEFINED;
     foreach ($accessors As $key => $rights) {
-      $keymatch = false;
-
       if (in_array($key, $this->usersGroups) || !strcmp($key, strtolower($user))) {
-        $keymatch = true;
-      }
-
-      if ($keymatch) {
         if (strpos($rights, "r") !== false) {
           return ALLOW;
         } else {

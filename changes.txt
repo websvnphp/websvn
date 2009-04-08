@@ -12,6 +12,7 @@
 
 * Added separate customizable extension mapping for GeSHi
 * Added possiblity to ignore whitespace on compare and diff
+* Added support for aliases in access file
 * Added config option to set custom config path
 * Added config option to exclude specific paths from the set of repositories added by parentPath
 * Added config option to add a subpath of a repository to the list of repositories
