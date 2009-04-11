@@ -1,0 +1,33 @@
+<div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
+<h1><a href="[websvn:indexurl]" title="Project home">[lang:PROJECTS]</a> <span><a href="[websvn:repurl]">[websvn:repname]</a></span></h1>
+
+[websvn-test:noaccess]
+   [lang:NOACCESS]
+[websvn-else]
+<h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
+<p>
+[websvn-test:goyoungestlink]
+<span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
+[websvn-endtest]
+<span class="diff">[websvn:prevdifflink]</span> &#124;
+<span class="blame">[websvn:blamelink]</span> &#124;
+[websvn-test:dllink]
+<span class="compress">[websvn:dllink]</span> &#124;
+[websvn-endtest]
+<span class="log">[websvn:fileviewloglink]</span>
+</p>
+    <div class="listing">
+      [websvn-getlisting]
+    </div>
+<p>
+[websvn-test:goyoungestlink]
+<span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
+[websvn-endtest]
+<span class="diff">[websvn:prevdifflink]</span> &#124;
+<span class="blame">[websvn:blamelink]</span> &#124;
+[websvn-test:dllink]
+<span class="compress">[websvn:dllink]</span> &#124;
+[websvn-endtest]
+<span class="log">[websvn:fileviewloglink]</span>
+</p>
+[websvn-endtest]
