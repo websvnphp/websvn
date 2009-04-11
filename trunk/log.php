@@ -300,6 +300,7 @@ $vars["logsearch_startbox"] = "<input name=\"sr\" size=\"5\" value=\"$startrev\"
 $vars["logsearch_endbox"  ] = "<input name=\"er\" size=\"5\" value=\"$endrev\" />";
 $vars["logsearch_maxbox"  ] = "<input name=\"max\" size=\"5\" value=\"".($max==0?"":$max)."\" />";
 $vars["logsearch_inputbox"] = "<input name=\"search\" value=\"".htmlentities($search, ENT_QUOTES, 'UTF-8')."\" />";
+$vars["logsearch_showall"] = '<input type="checkbox" name="all" value="1"'.($all ? ' checked="checked"' : '').' />';
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
 $vars["logsearch_hidden"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\" />".
