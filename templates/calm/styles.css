@@ -207,6 +207,9 @@ span.submit input,
 #info table tbody tr td.revcomp input {
   width:50px;
 }
+#info table tbody tr td.all input {
+  width:auto;
+}
 select {
   padding:2px 2px 2px 21px;
   border:1px solid #cccccc;
