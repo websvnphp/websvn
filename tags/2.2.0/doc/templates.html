@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-script-type" content="text/javascript" />
+	<meta http-equiv="content-style-type" content="text/css" />
+	<title>WebSVN Templating System</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+
+<h1>WebSVN Templating System</h1>
+
+<div class="misc">
+<h2><a name="content"></a>Content</h2>
+<ul>
+	<li><a href="#intro">Introduction</a></li>
+</ul>
+</div>
+
+<div class="content">
+<h2><a name="intro"></a>Introduction</h2>
+
+<p><em>The documentation of the variables for each template is currently not up to date due to major changes on the trunk. User defined templates will not work with the current development version.</em></p>
+
+<p>Everyone wants their view onto their SVN repository to fit in with their look
+and feel.  With WebSVN's templating system this is very possible.</p>
+
+<p>To create your own templates, you first need to change your config.php file to
+tell WebSVN where the templates are stored.  For example:</p>
+
+<pre class="code">
+$config->setTemplatePath("./templates/Standard/");
+</pre>
+
+<p>This directory should contain at least the following files:</p>
+
+<dl>
+<dt>header.tmpl</dt><dd>Header templated included before any other</dd>
+<dt>footer.tmpl</dt><dd>Footer templated included after any other</dd>
+
+<dt>index.tmpl</dt><dd>The main project page template</dd>
+
+<dt>directory.tmpl</dt><dd>Listing of a directory</dd>
+<dt>log.tmple</dt><dd>Log of a directory or file</dd>
+<dt>file.tmpl</dt><dd>Contents of a text file</dd>
+<dt>diff.tmpl</dt><dd>Differences between text files</dd>
+<dt>blame.tmpl</dt><dd>Blame information for a file</dd>
+</dl>
+
+<p>Each template file should be written in HTML, but is allowed to contain certain
+WebSVN controls.  There are two control types, commands and variables.</p>
+
+
+<h2><a name="commands"></a>Commands</h2>
+
+<p>NOTE:  Commands MUST appear on their own line</p>
+
+<pre class="code">
+[websvn-test:varname]
+...
+[websvn-else]
+...
+[websvn-endtest]
+</pre>
+
+<p>If the variable is non-0 write out the first part else write out the second</p>
+
+<pre class="code">
+[websvn-startlisting]
+...
+[websvn-endlisting]
+</pre>
+
+<p>Used in pages that contain listings of files, logs, etc.  Everything between
+the controls is repeated for each item in the list</p>
+
+<pre class="code">
+[websvn-defineicons] (used in directory.tmpl only)
+...
+[websvn-enddefineicons]
+...
+
+[websvn-treenode]
+[websvn-icon]
+</pre>
+
+<p>These commands are used to display certain icons next to certain file types in
+the directory view.</p>
+
+<p>The [websvn-defineicons] block should contain a line for each file type,
+defining the HTML to be used for that file type.  To define the HTML for a
+particular extension use the syntax:</p>
+
+<pre class="code">
+.&lt;extension>=&lt;HTML code>
+</pre>
+
+<p>There are also some special filetypes:</p>
+
+<dl>
+<dt>dir=&lt;HTML code></dt><dd>is used for directory icons</dd>
+<dt>diropen=&lt;HTML code></dt><dd>is used for open directory icons</dd>
+<dt>*=&lt;HTML code></dt><dd>is used for all filetypes which have no other definition</dd>
+
+<dt>i-node</dt><dd>| shaped node of the tree view</dd>
+<dt>t-node</dt><dd>T shaped node of the tree view</dd>
+<dt>l-node</dt><dd>L shaped node of the tree view</dd>
+<dt>e-node</dt><dd>Empty node of the tree view</dd>
+</dl>
+
+<p>Example from the BlueGrey scheme:</p>
+
+<pre class="code">
+[websvn-defineicons]
+dir=&lt;img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
+diropen=&lt;img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder-open.png" alt="[FOLDER]">
+*=&lt;img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
+.c=&lt;img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
+.h=&lt;img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
+.s=&lt;img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/files.png" alt="[S-FILE]">
+
+i-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/i-node.png" alt="[NODE]">
+t-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/t-node.png" alt="[NODE]">
+l-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/l-node.png" alt="[NODE]">
+e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/e-node.png" alt="[NODE]">
+[websvn-enddefineicons]
+</pre>
+
+<p>Inside the [websvn-startlisting] block, the command [websvn-treeview] will
+output the HTML code defined for the appropriate tree view icon.
+[websvn-icon] will output the HTML code defined for the type of the current
+file.</p>
+
+
+<pre class="code">
+[websvn-getlisting] (used in file.tmpl only)
+</pre>
+ 
+<p>Get the contents of the file being viewed and output it exactly (surrounded
+with &lt;PRE> .. &lt;/PRE>).</p>
+
+<h2><a name="variables"></a>Variables</h2>
+
+<p>Variables are written in the form [websvn:varname] where varname is the name of
+a variable passed to the template.  The control is replaced with the variable
+required.</p>
+
+<p>The variables available are described below for each template.
+You may also access the language file using [lang:varname] is order to keep your
+templates international!</p>
+
+<p>Take special notice of the use of the locwebsvnhttp variable.  It should be used
+to locate other files and graphics that your templates need.  For example:</p>
+
+<pre class="code">
+&lt;link href="[websvn:locwebsvnhttp]/templates/tmptname/styles.css" ...
+</pre>
+
+<p>You may imagine that simply using . in place should work, however this isn't
+the case when MultiViews are turned on.  Using this variable gives you a way to
+access your template files in all cases.</p>
+
+<h2><a name="varsall"></a>Variables defined for all scripts</h2>
+
+<dl>
+<dt>locwebsvnhttp</dt><dd>Root of websvn directory</dd>
+<dt>indexurl</dt><dd>The URL to the WebSVN index page</dd>
+<dt>charset</dt><dd>The charset requested by the user</dd>
+
+<dt>projects_form</dt><dd>HTML &lt;form> specification for the projects selection box</dd>
+<dt>projects_select</dt><dd>HTML &lt;select>...&lt;/select> specification for the project
+                  options</dd>
+<dt>projects_submit</dt><dd>HTML &lt;input> specification for the projects selection GO
+                  button</dd>
+<dt>projects_hidden</dt><dd>Hidden parameters that need to be passed from this form</dd>
+<dt>projects_endform</dt><dd>HTML &lt;/form> specification for the projects selection
+                   box (includes hidden field declarations)</dd>
+
+<dt>lang_code</dt><dd>The RFC 2616 language code of the selected language</dd>
+
+<dt>lang_form</dt><dd>HTML &lt;form> specification for the language selection box</dd>
+<dt>lang_select</dt><dd>HTML &lt;select>...&lt;/select> specification for the language options</dd>
+<dt>lang_submit</dt><dd>HTML &lt;input> specification for the language selection GO button</dd>
+<dt>lang_endform</dt><dd>HTML &lt;/form> specification for the language selection box</dd>
+
+<dt>noaccess</dt><dd>True if the user should be blocked from accessing this page due
+           to insufficient access rights.</dd>
+</dl>
+
+<h2><a name="varsindex"></a>Variables defined for index.tmpl</h2>
+
+<dl>
+<dt>treeview</dt><dd>true if the index should be displayed as a tree of grouped projects</dd>
+<dt>flatview</dt><dd>true if the index should be displayed as a simple list of projects</dd>
+<dt>opentree</dt><dd>true if the tree viewed should be open by default</dd>
+</dl>
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block of a flat view:
+
+<dl>
+<dt>projlink</dt><dd>Link to the project</dd>
+<dt>rowparity</dt><dd>Parity of the row (0 or 1).  Used to generate striped tables</dd>
+</dl>
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block of a tree view:
+
+<dl>
+<dt>isprojlink</dt><dd>This item is a project link</dd>
+<dt>isgrouphead</dt><dd>This item is a group name</dd>
+<dt>rowparity</dt><dd>Parity of the row (0 or 1).  Used to generate striped tables</dd>
+<dt>listitem</dt><dd>The item to display</dd>
+</dl>
+
+<h2><a name="varsdir"></a>Variables defined for directory.tmpl</h2>
+
+<dl>
+<dt>restricted</dt><dd>True if the users has restricted access to this directory (to
+             allow access to a readable directory lower down only)</dd>
+<dt>repname</dt><dd>Name of the repository</dd>
+<dt>rev</dt><dd>Revision being viewed</dd>
+<dt>path</dt><dd>Path of item being logged</dd>
+<dt>author</dt><dd>Author of current revision</dd>
+<dt>date</dt><dd>Date that revision was committed</dd>
+<dt>log</dt><dd>Log message of revision</dd>
+<dt>lastchangedrev</dt><dd>Revision of the last modification to current directory</dd>
+<dt>goyoungestlink</dt><dd>Link to head revision of repository</dd>
+
+<dt>showchanges</dt><dd>1 if showing changes (for websvn-test)</dd>
+<dt>hidechanges</dt><dd>1 if hiding changes (for websvn-test)</dd>
+<dt>showchangeslink</dt><dd>Link to page with changes hidden</dd>
+<dt>hidechangeslink</dt><dd>Link to page with changes shown</dd>
+
+<dt>newfilesbr</dt><dd>list of the new files separated by &lt;BR>'s</dd>
+<dt>changedfilesbr</dt><dd>list of the changed files separated by &lt;BR>'s</dd>
+<dt>deletedfilesbr</dt><dd>list of the deleted files separated by &lt;BR>'s</dd>
+
+<dt>newfiles</dt><dd>list of the new files separated by spaces</dd>
+<dt>changedfiles</dt><dd>list of the changed files separated by spaces</dd>
+<dt>deletedfiles</dt><dd>list of the deleted files separated by spaces</dd>
+
+<dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
+<dt>curdirloglink</dt><dd>Link to the log view of current directory</dd>
+<dt>curdirrsslink</dt><dd>Link to the RSS feed for the current directory</dd>
+<dt>curdirrssanchor</dt><dd>The &lt;a href=...> tag to the RSS feed for the current directory</dd>
+<dt>curdirrsshref</dt><dd>URL of the feed for the current directory (without anchor tag)</dd>
+<dt>curdirdllink</dt><dd>Link to the tarball of current directory</dd>
+<dt>curdircomplink</dt><dd>Link to comparison with previously changed revision</dd>
+
+<dt>allowdownload</dt><dd>True if downloading has been configured</dd>
+
+<dt>compare_form</dt><dd>HTML &lt;form> specification for the comparison form</dd>
+<dt>compare_submit</dt><dd>HTML &lt;input> specification for the comparison button</dd>
+<dt>compare_endform</dt><dd>HTML &lt;/form> specification for the comparison form</dd>
+</dl>
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+<dl>
+<dt>compare_box</dt><dd>HTML checkbox specification for the comparison option</dd>
+<dt>filelink</dt><dd>Link to the file</dd>
+<dt>rowparity</dt><dd>Parity of the row (0 or 1).  Used to generate striped tables</dd>
+<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
+<dt>fileviewdllink</dt><dd>Link to the tarball of current directory</dd>
+<dt>isDir</dt><dd>true if the current file is a directory (use with [websvn-test:isDir]
+        to display icons)</dd>
+<dt>rsslink</dt><dd>Link to the RSS feed for this file/directory</dd>
+<dt>rssanchor</dt><dd>The &lt;a href=...> tag to the RSS feed for this file/directory</dd>
+</dl>
+
+<h2><a name="varslog"></a>Variables defined for log.tmpl</h2>
+
+<dl>
+<dt>action</dt><dd>Action being performed ("Log")</dd>
+
+<dt>repname</dt><dd>Name of the repository</dd>
+<dt>rev</dt><dd>Revision being viewed</dd>
+<dt>path</dt><dd>Path of item being logged</dd>
+<dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
+<dt>error</dt><dd>Error message when results not available</dd>
+
+<dt>pagelinks</dt><dd>List of list to all the pages of the log</dd>
+<dt>showalllink</dt><dd>Link to show the entire log in one go</dd>
+
+<dt>prevdifflink</dt><dd>Link to comparison with previous revision</dd>
+<dt>blamelink</dt><dd>Link to the blame information for this file</dd>
+<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
+
+<dt>logsearch_form</dt><dd>HTML &lt;form> specification for the log search box</dd>
+<dt>logsearch_inputbox</dt><dd>HTML &lt;input> specification for the log search box</dd>
+<dt>logsearch_submit</dt><dd>HTML &lt;input> specification for the log search GO button</dd>
+<dt>logsearch_endform</dt><dd>HTML &lt;/form> specification for the log search box box
+                     (includes hidden field declarations)</dd>
+<dt>logsearch_clearloglink</dt><dd>Link to unfiltered display (remove current search
+                         criteria)</dd>
+                         
+<dt>logsearch_resultsfound</dt><dd>true when there are logs to display</dd>
+<dt>logsearch_nomatches</dt><dd>true when there are no matches for the current request</dd>
+<dt>logsearch_nomorematches</dt><dd>true when there are no further matches to the current
+                          request (but there have been previous pages,
+                          for example)</dd>
+
+<dt>compare_form</dt><dd>HTML &lt;form> specification for the comparison form</dd>
+<dt>compare_submit</dt><dd>HTML &lt;input> specification for the comparison button</dd>
+<dt>compare_endform </dt><dd>HTML &lt;/form> specification for the comparison form</dd>
+</dl>
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+<dl>
+<dt>compare_box</dt><dd>HTML checkbox specification for the comparison option</dd>
+<dt>revpathlink</dt><dd>Link to revision</dd>
+<dt>revauthor</dt><dd>Author of this revision</dd>
+<dt>revage</dt><dd>Age of revision</dd>
+<dt>revlog</dt><dd>Log message of revision</dd>
+</dl>
+
+<h2><a name="varsfile"></a>Variables defined for file.tmpl</h2>
+
+<dl>
+<dt>repname</dt><dd>Name of the repository</dd>
+<dt>rev</dt><dd>Revision being viewed</dd>
+<dt>path</dt><dd>Path of item being logged</dd>
+<dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
+<dt>goyoungestlink</dt><dd>Link to head revision of repository</dd>
+
+<dt>prevdifflink</dt><dd>Link to comparison with previous revision</dd>
+<dt>blamelink</dt><dd>Link to the blame information for this file</dd>
+<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
+</dl>
+
+Note: Use command [websvn-getlisting] to display the listing.
+
+
+<h2><a name="varsdiff"></a>Variables defined for diff.tmpl</h2>
+
+<dl>
+<dt>action</dt><dd>Action being performed ("Diff")</dd>
+<dt>locwebsvnhttp</dt><dd>Root of websvn directory</dd>
+<dt>charset</dt><dd>The charset requested by the user</dd>
+
+<dt>repname</dt><dd>Name of the repository</dd>
+<dt>rev</dt><dd>Revision being viewed</dd>
+<dt>path</dt><dd>Path of item being logged</dd>
+<dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
+<dt>goyoungestlink</dt><dd>Link to head revision of repository</dd>
+
+<dt>prevdifflink</dt><dd>Link to comparison with previous revision</dd>
+<dt>blamelink</dt><dd>Link to the blame information for this file</dd>
+<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
+
+<dt>rev1</dt><dd>Revision of the older file</dd>
+<dt>rev2</dt><dd>Revision of the newer file</dd>
+
+<dt>showcompactlink</dt><dd>Link to compact view</dd>
+<dt>showalllink</dt><dd>Link to full view</dd>
+</dl>
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+<dl>
+<dt>rev1lineno / rev2lineno</dt><dd>Line number of the next difference block.  Only
+                          defined at the start of the block.</dd>
+<dt>rev2diffclass / rev2diffclass</dt><dd>Class name of the diff block used for colouring
+                                differences.  The result is one of:
+                                    * diff (no changes)
+                                    * diffadded
+                                    * diffchanged
+                                    * diffdeleted</dd>
+<dt>rev1line / rev2line</dt><dd>The line under comparison</dd>
+</dl>
+
+<h2><a name="varsblame"></a>Variables defined for blame.tmpl</h2>
+
+<dl>
+<dt>locwebsvnhttp</dt><dd>Root of websvn directory</dd>
+<dt>charset</dt><dd>The charset requested by the user</dd>
+
+<dt>repname</dt><dd>Name of the repository</dd>
+<dt>rev</dt><dd>Revision being viewed</dd>
+<dt>path</dt><dd>Path of item being logged</dd>
+<dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
+
+<dt>prevdifflink</dt><dd>Link to comparison with previous revision</dd>
+<dt>blamelink</dt><dd>Link to the blame information for this file</dd>
+<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
+</dl>
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+<dl>
+<dt>lineno</dt><dd>Line number of the line</dd>
+<dt>revision</dt><dd>Revision in which the line changed</dd>
+<dt>author</dt><dd>Last author to modify the line</dd>
+<dt>line</dt><dd>The line itself</dd>
+</dl>
+
+<h2><a name="varscompare"></a>Variables defined for compare.tmpl</h2>
+
+<dl>
+<dt>action</dt><dd>Action being performed ("Path Comparison")</dd>
+<dt>repname</dt><dd>Name of the repository</dd>
+<dt>path1</dt><dd>First path being compared</dd>
+<dt>rev1</dt><dd>Revision of first path</dd>
+<dt>path2</dt><dd>Second path being compared</dd>
+<dt>rev2</dt><dd>Revision of second path</dd>
+
+<dt>success</dt><dd>true if the comparison succeeded</dd>
+
+<dt>revlink</dt><dd>Link to reverse comparison</dd>
+
+<dt>compare_form</dt><dd>HTML &lt;form> specification for the comparison form</dd>
+<dt>compare_path1input/compare_path2input</dt><dd>HTML specifications for the path input areas</dd>
+<dt>compare_rev1input/compare_rev2input</dt><dd>HTML specifications for the revision input areas </dd>                                      
+<dt>compare_submit</dt><dd>HTML &lt;input> specification for the comparison button</dd>
+<dt>compare_endform</dt><dd>HTML &lt;/form> specification for the comparison form</dd>
+</dl>
+
+Used in [websvn-startlisting] ... [websvn-endlisting] block:
+
+<dl>
+<dt>newpath</dt><dd>Name of new file under comparison (only defined at start of block)</dd>
+<dt>difflines</dt><dd>Lines changed information for this file.  Start of diff lines.
+            (only defined after newpath)</dd>
+<dt>diffclass</dt><dd>Class name of the diff block used for colouring
+            differences.  The result is one of:
+               * diff (no changes)
+               * diffadded
+               * diffdeleted</dd>
+<dt>line</dt><dd>The line under comparison</dd>
+<dt>enddifflines</dt><dd>End of diff lines</dd>
+<dt>properties</dt><dd>Property changes</dd>
+<dt>endpath</dt><dd>End of current path</dd>
+</dl>
+
+</div>
+
+</body>
+</html>
