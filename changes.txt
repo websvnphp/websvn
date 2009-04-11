@@ -1,4 +1,9 @@
-/* UPCOMING RELEASE - 2.2 */
+/* NEXTRELEASE */
+
+* nothing yet
+
+
+2.2.0
 
 * Fixed revision handling to use PEG revision instead of OPERATIVE revision
   * This fixes many (but not all) cases when working with moved/renamed/deleted files
@@ -12,13 +17,14 @@
 
 * Added separate customizable extension mapping for GeSHi
 * Added possiblity to ignore whitespace on compare and diff
-* Added support for aliases in access file
+* Added support for aliases in access file and handle continuation lines correctly
 * Added config option to set custom config path
 * Added config option to exclude specific paths from the set of repositories added by parentPath
 * Added config option to add a subpath of a repository to the list of repositories
 * Added config option to switch between showing age and date in log and listing view (the other is displayed in the title attribute)
 * Added auto detection of Windows
 * Added message when config file does not exist
+* Added new logo and favicon
 
 * Fixed some broken links when navigating through a repository
 * Fixed created archive to be identical (for the same revision) across multiple request
@@ -30,7 +36,8 @@
   * French
   * Italian
 
-2.1
+
+2.1.0
 
 * Fixed: Several security fixed
 * Added: Added GeSHi for code highlighting.
@@ -44,6 +51,7 @@ FIX: Hide modified files in revision view based on authentication.
 FIX: Numerous other security problems.
 NEW: Added translations: hungarian, indonesian, slovak, uzbek.
 CHANGED: Some code cleanup.
+
 
 2.0
 
