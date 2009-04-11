@@ -4,7 +4,7 @@
  * -----
  * Author: Thomas Kuehne (thomas@kuehne.cn)
  * Copyright: (c) 2005 Thomas Kuehne (http://thomas.kuehne.cn/)
- * Release Version: 1.0.8.2
+ * Release Version: 1.0.8.3
  * Date Started: 2005/04/22
  *
  * D language file for GeSHi.
@@ -59,7 +59,7 @@ $language_data = array (
     'ESCAPE_CHAR' => '',
     'ESCAPE_REGEXP' => array(
         //Simple Single Char Escapes
-        1 => "#\\\\[abfnrtv\\'\"?\n]#i",
+        1 => "#\\\\[abfnrtv\\'\"?\n\\\\]#i",
         //Hexadecimal Char Specs
         2 => "#\\\\x[\da-fA-F]{2}#",
         //Hexadecimal Char Specs
