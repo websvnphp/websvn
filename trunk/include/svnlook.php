@@ -423,14 +423,19 @@ function _topLevel($entry) {
   return (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ");
 }
 
-// Function to sort two given directory entries.  Directories go at the top
+// Function to sort two given directory entries.
+// Directories go at the top if config option alphabetic is not set
 
 function _listSort($e1, $e2) {
-  $isDir1 = $e1->file{strlen($e1->file) - 1} == "/";
-  $isDir2 = $e2->file{strlen($e2->file) - 1} == "/";
+  global $config;
 
-  if ($isDir1 && !$isDir2) return -1;
-  if ($isDir2 && !$isDir1) return 1;
+  if (!$config->isAlphabeticOrder()) {
+    $isDir1 = $e1->file{strlen($e1->file) - 1} == "/";
+    $isDir2 = $e2->file{strlen($e2->file) - 1} == "/";
+
+    if ($isDir1 && !$isDir2) return -1;
+    if ($isDir2 && !$isDir1) return 1;
+  }
 
   return strnatcasecmp($e1->file, $e2->file);
 }
@@ -972,7 +977,7 @@ class SVNRepository {
 
     xml_parser_free($xml_parser);
 
-    // Sort the entries into alphabetical order with the directories at the top of the list
+    // Sort the entries into alphabetical order
     usort($curList->entries, "_listSort");
 
     return $curList;

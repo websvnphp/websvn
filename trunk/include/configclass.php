@@ -588,6 +588,7 @@ class WebSvnConfig {
   var $treeView = true;
   var $flatIndex = true;
   var $openTree = false;
+  var $alphabetic = false;
   var $showLastMod = true;
   var $showAgeInsteadOfDate = true;
   var $_showRepositorySelectionForm = true;
@@ -1357,6 +1358,14 @@ class WebSvnConfig {
 
   function getOpenTree() {
     return $this->openTree;
+  }
+
+  function setAlphabeticOrder($flag) {
+    $this->alphabetic = $flag;
+  }
+
+  function isAlphabeticOrder() {
+    return $this->alphabetic;
   }
 
   function showLastModInListing() {

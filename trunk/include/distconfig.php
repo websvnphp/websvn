@@ -132,6 +132,12 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 
 // $config->useFlatView();
 
+// By default, WebSVN displays subfolders first and than the files of a directory,
+// both alphabetically sorted.
+// To use alphabetic order independent iof folders and files uncomment this line.
+
+// $config->setAlphabeticOrder(true);
+
 // By default, WebSVN displays the information of the last modification
 // (revision, age and author) for each entry in an extra column.
 // To disable that uncomment this line.
