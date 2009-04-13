@@ -1,6 +1,6 @@
 /* NEXTRELEASE */
 
-* nothing yet
+* Added config option to use full alphabetic order (independent of folder or file type)
 
 
 2.2.0
