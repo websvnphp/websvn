@@ -472,7 +472,7 @@ function createRevisionSelectionForm() {
   list($url, $params) = $config->getUrlParts($rep, '', 'revision');
   $vars["revision_form"] = "<form action=\"$url\" method=\"get\" id=\"revisionform\">";
 
-  $vars["revision_input"] = "<input type=\"text\" size=\"4\" name=\"rev\" value=\"$thisrev\" />";
+  $vars["revision_input"] = "<input type=\"text\" size=\"5\" name=\"rev\" value=\"$thisrev\" />";
   $hidden = '';
   foreach ($params as $k => $v) {
     $hidden .= "<input type=\"hidden\" name=\"$k\" value=\"".htmlspecialchars($v)."\" />";
