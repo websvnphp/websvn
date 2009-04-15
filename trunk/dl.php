@@ -195,7 +195,7 @@ if (mkdir($tmpname)) {
     // GZIP it up
     if (function_exists('gzopen')) {
       $srcHandle = fopen($tmpname.DIRECTORY_SEPARATOR.$tararc, 'rb');
-      $dstHandle = gzopen($tmpname.DIRECTORY_SEPARATOR.$gzarc, 'wb');
+      $dstHandle = gzopen($tmpname.DIRECTORY_SEPARATOR.$dlarc, 'wb');
       if (!$srcHandle || !$dstHandle) {
         print'Unable to open file for gz-compression';
         chdir('..');
