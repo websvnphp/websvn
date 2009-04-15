@@ -1,6 +1,7 @@
 /* NEXTRELEASE */
 
 * Added config option to use full alphabetic order (independent of folder or file type)
+* Fixed downloading tar-gz-archives when using gz-extension
 
 
 2.2.0
