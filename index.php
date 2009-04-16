@@ -33,17 +33,21 @@ $vars["path"] = "";
 
 // Sort the repositories by group
 $config->sortByGroup();
+$projects = $config->getRepositories();
+
+if (count($projects) == 1 && $projects[0]->hasReadAccess('/', true)) {
+  $url = str_replace('&amp;', '&', $config->getURL($projects[0], '/', 'dir'));
+  header('Location: '.$url);
+  exit;
+}
 
 if ($config->flatIndex) {
   // Create the flat view
-
-  $projects = $config->getRepositories();
   $i = 0;
   $listing = array();
   foreach ($projects as $project) {
     if ($project->hasReadAccess("/", true)) {
       $url = $config->getURL($project, "/", "dir");
-
       $listing[$i]["rowparity"] = $i % 2;
       $listing[$i]["projlink"] = "<a href=\"${url}\">".$project->getDisplayName()."</a>";
       $i++;
@@ -53,8 +57,6 @@ if ($config->flatIndex) {
   $vars["treeview"] = false;
 } else {
   // Create the tree view
-
-  $projects = $config->getRepositories();
   reset($projects);
   $i = 0;
   $listing = array();
