@@ -2,7 +2,7 @@ body
 {
    font-family: verdana, sans-serif;
    color: black;
-   background-color: white
+   background-color: white;
 }
 body *
 {
@@ -21,7 +21,7 @@ hr
    border: 0px;
    padding: 0px;
    height: 1px;
-   background-color: #808080
+   background-color: #808080;
 }
 a:link, a:visited
 {
@@ -32,30 +32,28 @@ a:hover, a:active
 {
    text-decoration: underline;
 }
-.HdrClmn,
-.HdrClmnEnd
+.HdrClmn, .HdrClmnEnd
 {
    border: black 1px solid;
    font-weight: bold;
    color: white;
-   background-color: #809cc8
+   background-color: #809cc8;
 }
 table
 {
-   border-width:0px;
-   border-collapse:collapse;
+   border-width: 0px;
+   border-collapse: collapse;
 }
-.row0,
-.row1
+.row0, .row1
 {
-   height:22px;
-   border-width:0px;
+   height: 22px;
+   border-width: 0px;
 }
-.row0 img,
-.row1 img {
+.row0 img, .row1 img
+{
    padding: 0px;
    margin: 0px;
-   vertical-align:middle;
+   vertical-align: middle;
 }
 .row0, .light
 {
@@ -66,7 +64,8 @@ table
    background-color: #e0e0e0;
 }
 
-.blameTbl tbody th {
+.blameTbl tbody th
+{
 	font-weight: normal;
 	text-align: right;
 }
@@ -85,7 +84,7 @@ table
 
 table.outline
 {
-   border-collapse:collapse;
+   border-collapse: collapse;
    border: 1px black solid;
 }
 
@@ -116,25 +115,72 @@ td.diff
 div.newpath
 {
    padding: 10px;
-   background-color: #d0d0ee
+   background-color: #d0d0ee;
 }
 
 div.difflines
 {
 }
 
-.icon {
-	vertical-align: middle;
+.icon
+{
+   vertical-align: middle;
 }
 
-.plusbox { float: left; clear: both; position: relative; top: -3px; font-size: 13px; font-weight: bold; width: 16px; text-indent: 0; height: 16px; color: black; background-color: #D0D0D0; text-align: center; padding: 0px 2px 0px 3px; border: black solid 1px; margin-right: 5px; }
-.minusbox { float: left; clear: both; position: relative; top: -3px; font-size: 13px; font-weight: bold; width: 16px; text-indent: 0; height: 16px; color: black; background-color: #809cc8; text-align: center; padding: 0px 2px 0px 3px; border: black solid 1px; margin-right: 5px; }
+.plusbox, .minusbox
+{
+   float: left;
+   clear: both;
+   position: relative;
+   top: -3px;
+   font-size: 13px;
+   font-weight: bold;
+   width: 16px;
+   text-indent: 0;
+   height: 16px;
+   color: black;
+   text-align: center;
+   padding: 0px 2px 0px 3px;
+   border: black solid 1px;
+   margin-right: 5px;	
+}
 
-.groupname { padding-left: 0px; text-indent: -25px; margin: 3px 0 3px 0;}  
-.switchcontent { margin: 3px 0 0 20px; }
-.project { padding: 2px; }
+.plusbox
+{
+   background-color: #D0D0D0;
+}
 
-code { white-space: pre; white-space: pre-wrap; }
+.minusbox
+{
+   background-color: #809cc8;
+}
+
+.groupname
+{
+   padding-left: 0px;
+   text-indent: -25px;
+   margin: 3px 0 3px 0;
+}
+
+.switchcontent
+{
+   margin: 3px 0 0 20px;
+}
+
+.project
+{
+   padding: 2px;
+}
+
+pre {
+   padding: 4px;
+   background-color: #eee;
+   border: solid 1px #ccc;
+}
+
+code {
+	white-space: pre-wrap;
+}
 
 div.blame-popup
 {
@@ -147,5 +193,5 @@ div.blame-popup
 
 div.blame-popup .date
 {
-    font-weight: bold;
+   font-weight: bold;
 }
