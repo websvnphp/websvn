@@ -398,7 +398,6 @@ if (!$config->multiViews) {
   // repository, else load the default
   $repname = @$_REQUEST["repname"];
   if (isset($repname)) {
-    $repname = urldecode($repname);
     $rep = $config->findRepository($repname);
   } else {
     $reps = $config->getRepositories();
