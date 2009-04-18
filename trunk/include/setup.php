@@ -185,66 +185,66 @@ $contentType = array (
 
 $extEnscript = array
 (
-  '.ada'    => 'ada',
-  '.adb'    => 'ada',
-  '.ads'    => 'ada',
-  '.awk'    => 'awk',
-  '.c'     => 'c',
-  '.c++'    => 'cpp',
-  '.cc'    => 'cpp',
-  '.cpp'    => 'cpp',
-  '.csh'    => 'csh',
-  '.cxx'    => 'cpp',
-  '.diff'   => 'diffu',
-  '.dpr'    => 'delphi',
-  '.e'     => 'eiffel',
-  '.el'    => 'elisp',
-  '.eps'    => 'postscript',
-  '.f'     => 'fortran',
-  '.for'    => 'fortran',
-  '.gs'    => 'haskell',
-  '.h'     => 'c',
-  '.hpp'    => 'cpp',
-  '.hs'    => 'haskell',
-  '.htm'    => 'html',
-  '.html'   => 'html',
-  '.idl'    => 'idl',
-  '.java'   => 'java',
-  '.js'    => 'javascript',
-  '.lgs'    => 'haskell',
-  '.lhs'    => 'haskell',
-  '.m'     => 'objc',
-  '.m4'    => 'm4',
-  '.man'    => 'nroff',
-  '.nr'    => 'nroff',
-  '.p'     => 'pascal',
-  '.pas'    => 'delphi',
-  '.patch'  => 'diffu',
-  '.pkg'    => 'sql',
-  '.pl'    => 'perl',
-  '.pm'    => 'perl',
-  '.pp'    => 'pascal',
-  '.ps'    => 'postscript',
-  '.s'     => 'asm',
+  '.ada'     => 'ada',
+  '.adb'     => 'ada',
+  '.ads'     => 'ada',
+  '.awk'     => 'awk',
+  '.c'       => 'c',
+  '.c++'     => 'cpp',
+  '.cc'      => 'cpp',
+  '.cpp'     => 'cpp',
+  '.csh'     => 'csh',
+  '.cxx'     => 'cpp',
+  '.diff'    => 'diffu',
+  '.dpr'     => 'delphi',
+  '.e'       => 'eiffel',
+  '.el'      => 'elisp',
+  '.eps'     => 'postscript',
+  '.f'       => 'fortran',
+  '.for'     => 'fortran',
+  '.gs'      => 'haskell',
+  '.h'       => 'c',
+  '.hpp'     => 'cpp',
+  '.hs'      => 'haskell',
+  '.htm'     => 'html',
+  '.html'    => 'html',
+  '.idl'     => 'idl',
+  '.java'    => 'java',
+  '.js'      => 'javascript',
+  '.lgs'     => 'haskell',
+  '.lhs'     => 'haskell',
+  '.m'       => 'objc',
+  '.m4'      => 'm4',
+  '.man'     => 'nroff',
+  '.nr'      => 'nroff',
+  '.p'       => 'pascal',
+  '.pas'     => 'delphi',
+  '.patch'   => 'diffu',
+  '.pkg'     => 'sql',
+  '.pl'      => 'perl',
+  '.pm'      => 'perl',
+  '.pp'      => 'pascal',
+  '.ps'      => 'postscript',
+  '.s'       => 'asm',
   '.scheme'  => 'scheme',
-  '.scm'    => 'scheme',
-  '.scr'    => 'synopsys',
-  '.sh'    => 'sh',
-  '.shtml'  => 'html',
-  '.sql'    => 'sql',
-  '.st'    => 'states',
-  '.syn'    => 'synopsys',
-  '.synth'  => 'synopsys',
-  '.tcl'    => 'tcl',
-  '.tex'    => 'tex',
-  '.texi'   => 'tex',
+  '.scm'     => 'scheme',
+  '.scr'     => 'synopsys',
+  '.sh'      => 'sh',
+  '.shtml'   => 'html',
+  '.sql'     => 'sql',
+  '.st'      => 'states',
+  '.syn'     => 'synopsys',
+  '.synth'   => 'synopsys',
+  '.tcl'     => 'tcl',
+  '.tex'     => 'tex',
+  '.texi'    => 'tex',
   '.texinfo' => 'tex',
-  '.v'     => 'verilog',
-  '.vba'    => 'vba',
-  '.vh'    => 'verilog',
-  '.vhd'    => 'vhdl',
-  '.vhdl'   => 'vhdl',
-  '.py'    => 'python',
+  '.v'       => 'verilog',
+  '.vba'     => 'vba',
+  '.vh'      => 'verilog',
+  '.vhd'     => 'vhdl',
+  '.vhdl'    => 'vhdl',
+  '.py'      => 'python',
 );
 
 // }}}
@@ -335,10 +335,10 @@ $zipped = array();
 
 initSvnVersion($major,$minor);
 
-// Get the user choice if there is one, and memorise the setting
-// as a cookie (since we don't have user accounts, we can't store the setting
-// anywhere else).  We try to memorise a permanent cookie and a per session cookie
-// in case the user has disabled permanent ones.
+// Get the user choice if there is one, and memorise the setting as a cookie
+// (since we don't have user accounts, we can't store the setting anywhere
+// else).  We try to memorise a permanent cookie and a per session cookie in
+// case the user has disabled permanent ones.
 
 $userLang = false;
 if (!empty($_REQUEST['langchoice'])) {
@@ -401,7 +401,7 @@ if (!$config->multiViews) {
     $rep = $config->findRepository($repname);
   } else {
     $reps = $config->getRepositories();
-    $rep = $reps[0];
+    $rep = (isset($reps[0]) ? $reps[0] : null);
   }
 
   // Make sure that the user has set up a repository

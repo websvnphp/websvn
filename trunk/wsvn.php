@@ -26,23 +26,22 @@
 
 // Location of websvn directory via HTTP
 //
-// e.g.  For http://servername/websvn use /websvn
+// e.g.  For "http://www.example.com/websvn" use "/websvn"
 //
 // Note that wsvn.php need not be in the /websvn directory (and normally isn't).
 // If you want to use the root server directory, just use a blank string ('').
 //$locwebsvnhttp = "/websvn";
 $locwebsvnhttp = '';
 
-// Physical location of websvn directory.  Change this if your wsvn.php is not in the
-// same folder as the rest of the distribution
+// Physical location of websvn directory. Change this if your wsvn.php is not in 
+// the same folder as the rest of the distribution
 $locwebsvnreal = dirname(__FILE__);
 
 // --- DON'T CHANGE BELOW HERE ---
 
 chdir($locwebsvnreal);
 
-// this tells files that we are in multiviews if they are unable to access
-// the $config variable
+// Tell files that we are using multiviews if they are unable to access $config.
 if (!defined('WSVN_MULTIVIEWS')) {
   define('WSVN_MULTIVIEWS', 1);
 }
