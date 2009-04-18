@@ -596,6 +596,7 @@ class WebSvnConfig {
   var $multiViews = false;
   var $useEnscript = false;
   var $useGeshi = false;
+  var $inlineMimeTypes = array();
   var $allowDownload = false;
   var $tarballTmpDir = 'temp';
   var $minDownloadLevel = 0;
@@ -606,7 +607,7 @@ class WebSvnConfig {
   var $bugtraq = false;
   var $auth = "";
 
-  var $templatePath = "./templates/Standard/";
+  var $templatePath = "./templates/calm/";
 
   var $ignoreSvnMimeTypes = false;
   var $ignoreWebSVNContentTypes = false;
@@ -787,6 +788,10 @@ class WebSvnConfig {
     return $this->useEnscript;
   }
 
+  // }}}
+
+  // {{{ GeSHi
+
   // useGeshi
   //
   // Use GeSHi to colourise listings
@@ -796,6 +801,23 @@ class WebSvnConfig {
 
   function getUseGeshi() {
     return $this->useGeshi;
+  }
+  
+  // }}}
+
+  // {{{ Inline MIME Types
+
+  // inlineMimeTypes
+  //
+  // Specify MIME types to display inline in WebSVN pages
+  function addInlineMimeType($type) {
+    if (!in_array($type, $this->inlineMimeTypes)) {
+      $this->inlineMimeTypes[] = $type;
+    }
+  }
+  
+  function getInlineMimeTypes() {
+    return $this->inlineMimeTypes;
   }
 
   // }}}
