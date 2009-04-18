@@ -273,6 +273,16 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // $contentType['.doc'] = 'text/plain'; // Modify an existing one
 // unset($contentType['.m']); // Remove a default association
 
+// If you want to selectively override one or more MIME types to display inline
+// (e.g., the svn:mime-type property is something like text/plain or text/xml, or
+// the file extension matches an entry in $contentType), you can choose to ignore
+// one or more specific MIME types. This approach is finer-grained than ignoring
+// all svn:mime-type properties, and displaying matching files inline such that
+// they are highlighted correctly. (Regular expression matching is used.)
+
+$config->addInlineMimeType("text/plain");
+// $config->addInlineMimeType("text/*");
+
 // }}}
 
 // {{{ TARBALLS ---
