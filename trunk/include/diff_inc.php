@@ -284,7 +284,7 @@ function command_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname)
     $line = fgets($diff);
 
     $arrayBased = false;
-    $fileBases = true;
+    $fileBased = true;
     $listing = diff_result($all, $rep, $ent, $newtname, $oldtname, $diff);
     fclose($pipes[1]);
 
@@ -364,7 +364,7 @@ function inline_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname) 
   error_reporting($bckLevel);
 
   $arrayBased = true;
-  $fileBases = false;
+  $fileBased = false;
   $listing = diff_result($all, $rep, $ent, $newtname, $oldtname, $rendered);
 
   return $listing;
