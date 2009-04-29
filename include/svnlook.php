@@ -743,7 +743,8 @@ class SVNRepository {
     $this->geshi->set_source($source);
     $this->geshi->set_language($lang);
     $this->geshi->set_header_type(GESHI_HEADER_DIV);
-    $this->geshi->set_overall_class('gehsi');
+    $this->geshi->set_overall_class('geshi');
+    $this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
 
     if ($return) {
       return $this->geshi->parse_code();
