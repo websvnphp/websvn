@@ -928,7 +928,6 @@ class SVNRepository {
     $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
     $resource = proc_open($cmd, $descriptorspec, $pipes);
-    $error = "";
 
     if (!is_resource($resource)) {
       echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
@@ -952,12 +951,14 @@ class SVNRepository {
           error_log($errorMsg);
           exit;
         } else {
+          break;
           $vars["error"] = $lang["UNKNOWNREVISION"];
           return 0;
         }
       }
     }
 
+    $error = '';
     while (!feof($pipes[2])) {
       $error .= fgets($pipes[2]);
     }
@@ -1032,7 +1033,6 @@ class SVNRepository {
     $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
     $resource = proc_open($cmd, $descriptorspec, $pipes);
-    $error = "";
 
     if (!is_resource($resource)) {
       echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
@@ -1056,12 +1056,14 @@ class SVNRepository {
           error_log($errorMsg);
           exit;
         } else {
+        	break;
           $vars["error"] = $lang["UNKNOWNREVISION"];
           return 0;
         }
       }
     }
 
+    $error = '';
     while (!feof($pipes[2])) {
       $error .= fgets($pipes[2]);
     }
