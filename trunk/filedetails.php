@@ -91,8 +91,8 @@ if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') {
 
 // If the MIME type exists but is set to be ignored, set it to an empty string.
 if (!empty($mimeType)) {
-  foreach ($config->inlineMIMETypes as $inlineType) {
-    if (preg_match($inlineType, $mimeType)) {
+  foreach ($config->inlineMimeTypes as $inlineType) {
+    if (preg_match('|'.$inlineType.'|', $mimeType)) {
       $mimeType = '';
       break;
     }
