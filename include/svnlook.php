@@ -749,11 +749,8 @@ class SVNRepository {
     if ($return) {
       return $this->geshi->parse_code();
     } else {
-      $code = $this->geshi->parse_code();
-      $code = preg_replace("/^<pre.*?>/", '', $code);
-      $code = preg_replace("/<\/pre>$/", '', $code);
       $f = @fopen($filename, 'w');
-      fwrite($f, $code);
+      fwrite($f, $this->geshi->parse_code());
       fclose($f);
     }
   }
