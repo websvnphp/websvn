@@ -34,6 +34,10 @@ $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', true);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $youngest = $history->entries[0]->rev;
 
 if (empty($rev)) {
@@ -193,7 +197,7 @@ HTML;
 
 foreach ($seen_rev as $key => $val) {
   $history = $svnrep->getLog($path, $key, $key, false, 1);
-  if (!empty($history)) {
+  if (!is_string($history)) {
     $vars['javascript'] .= "rev[$key] = '";
     $vars['javascript'] .= "<div class=\"info\">";
     $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."<\/span>";
