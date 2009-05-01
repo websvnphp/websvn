@@ -44,6 +44,10 @@ $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", true);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $youngest = $history->entries[0]->rev;
 
 if (empty($rev)) {
@@ -51,6 +55,10 @@ if (empty($rev)) {
 }
 
 $history = $svnrep->getLog($path, $rev);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 
 if ($path{0} != "/") {
   $ppath = "/".$path;

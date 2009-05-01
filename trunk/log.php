@@ -87,6 +87,10 @@ $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", true);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $youngest = isset($history->entries[0]) ? $history->entries[0]->rev : 0;
 
 if (empty($rev)) {
@@ -143,6 +147,10 @@ if ($max === false) {
 }
 
 $history = $svnrep->getLog($path, $startrev, $endrev, true, $max);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $vars["logsearch_moreresultslink"] = "";
 $vars["pagelinks"] = "";
 $vars["showalllink"] = "";
@@ -175,6 +183,10 @@ if (!empty($history)) {
   $entries = array();
   if ($brev && $erev) {
     $history = $svnrep->getLog($path, $brev, $erev, false, 0);
+    if (is_string($history)) {
+      echo $history;
+      exit;
+    }
     $entries = $history->entries;
   }
 

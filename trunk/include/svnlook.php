@@ -918,6 +918,10 @@ class SVNRepository {
 
     if ($rev == 0) {
       $headlog = $this->getLog("/", "", "", true, 1);
+      if (is_string($headlog)) {
+        echo $headlog;
+        exit;
+      }
       if (isset($headlog->entries[0])) $rev = $headlog->entries[0]->rev;
     }
 
@@ -950,8 +954,6 @@ class SVNRepository {
           exit;
         } else {
           break;
-          $vars["error"] = $lang["UNKNOWNREVISION"];
-          return 0;
         }
       }
     }
@@ -970,7 +972,7 @@ class SVNRepository {
     proc_close($resource);
 
     if (!empty($error)) {
-      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+      echo '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
       exit;
     }
 
@@ -1054,9 +1056,7 @@ class SVNRepository {
           error_log($errorMsg);
           exit;
         } else {
-        	break;
-          $vars["error"] = $lang["UNKNOWNREVISION"];
-          return 0;
+          break;
         }
       }
     }
@@ -1075,8 +1075,7 @@ class SVNRepository {
     proc_close($resource);
 
     if (!empty($error)) {
-      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
-      exit;
+      return '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
     }
 
     xml_parser_free($xml_parser);

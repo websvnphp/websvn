@@ -45,6 +45,10 @@ $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", true);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $youngest = isset($history->entries[0]) ? $history->entries[0]->rev: false;
 
 if (empty($rev)) {
