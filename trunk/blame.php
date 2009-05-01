@@ -97,7 +97,7 @@ if ($file = fopen($tfname, 'r')) {
     $index = 0;
     $seen_rev = array();
     $last_rev = "";
-    $row_class = 'light';
+    $row_class = '';
 
     while (!feof($blame) && !feof($file)) {
       $blameline = fgets($blame);
