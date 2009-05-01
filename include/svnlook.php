@@ -1144,18 +1144,16 @@ class SVNRepository {
 
 // {{{ initSvnVersion
 
-function initSvnVersion(&$major, &$minor) {
+function initSvnVersion() {
   global $config;
 
   $ret = runCommand($config->svn_noparams." --version", false);
 
   if (preg_match("~([0-9]?)\.([0-9]?)\.([0-9]?)~",$ret[0],$matches)) {
-    $major = $matches[1];
-    $minor = $matches[2];
+    $config->setSubversionVersion($matches[0]);
+    $config->setSubversionMajorVersion($matches[1]);
+    $config->setSubversionMinorVersion($matches[2]);
   }
-
-  $config->setSubversionMajorVersion($major);
-  $config->setSubversionMinorVersion($minor);
 }
 
 // }}}
