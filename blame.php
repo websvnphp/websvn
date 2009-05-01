@@ -60,9 +60,8 @@ $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 createDirLinks($rep, $ppath, $rev);
 
-$url = $config->getURL($rep, $path, "file");
-
 if ($rev != $youngest) {
+  $url = $config->getURL($rep, $path, 'blame');
   $vars["goyoungestlink"] = '<a href="'.$url.'">'.$lang["GOYOUNGEST"].'</a>';
 } else {
   $vars["goyoungestlink"] = "";
