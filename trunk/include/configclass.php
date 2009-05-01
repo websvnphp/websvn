@@ -612,6 +612,7 @@ class WebSvnConfig {
   var $ignoreSvnMimeTypes = false;
   var $ignoreWebSVNContentTypes = false;
 
+  var $subversionVersion = "";
   var $subversionMajorVersion = "";
   var $subversionMinorVersion = "";
 
@@ -1413,9 +1414,15 @@ class WebSvnConfig {
     $this->_showRepositorySelectionForm = $show;
   }
 
-  // setSubversionMajorVersion
-  //
-  // Set subversion major version
+  // Methods for storing version information for the command-line svn tool
+
+  function setSubversionVersion($subversionVersion) {
+    $this->subversionVersion = $subversionVersion;
+  }
+
+  function getSubversionVersion() {
+    return $this->subversionVersion;
+  }
 
   function setSubversionMajorVersion($subversionMajorVersion) {
     $this->subversionMajorVersion = $subversionMajorVersion;
@@ -1424,10 +1431,6 @@ class WebSvnConfig {
   function getSubversionMajorVersion() {
     return $this->subversionMajorVersion;
   }
-
-  // setSubversionMinorVersion
-  //
-  // Set subversion minor version
 
   function setSubversionMinorVersion($subversionMinorVersion) {
     $this->subversionMinorVersion = $subversionMinorVersion;

@@ -333,7 +333,8 @@ $zipped = array();
 
 // Set up the version info
 
-initSvnVersion($major,$minor);
+initSvnVersion();
+$vars['svnversion'] = $config->getSubversionVersion();
 
 // Get the user choice if there is one, and memorise the setting as a cookie
 // (since we don't have user accounts, we can't store the setting anywhere
