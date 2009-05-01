@@ -321,8 +321,10 @@ $vars["logsearch_hidden"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1
                              "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\" />";
 $vars["logsearch_endform"] = "</form>";
 
-$url = $config->getURL($rep, $path, "log");
-$vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
+if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 30) {
+  $url = $config->getURL($rep, $path, "log");
+  $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
+}
 
 $url = $config->getURL($rep, "/", "comp");
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\">";
