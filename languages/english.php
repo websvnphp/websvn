@@ -62,7 +62,7 @@ $lang["HIDECHANGED"] = "Hide changed files";
 $lang["NEWFILES"] = "New Files";
 $lang["CHANGEDFILES"] = "Modified files";
 $lang["DELETEDFILES"] = "Deleted files";
-$lang["VIEWLOG"] = "View&nbsp;Log";
+$lang["VIEWLOG"] = "View Log";
 $lang["PATH"] = "Path";
 $lang["AUTHOR"] = "Author";
 $lang["AGE"] = "Age";
@@ -79,8 +79,8 @@ $lang["BADCMD"] = "Error running this command";
 $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Repositories";
-$lang["SERVER"] = "Subversion&nbsp;Server";
+$lang["PROJECTS"] = "Subversion Repositories";
+$lang["SERVER"] = "Subversion Server";
 
 $lang["FILTER"] = "Filtering Options";
 $lang["STARTLOG"] = "From rev";
