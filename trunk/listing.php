@@ -189,7 +189,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         $listing[$index]['date'] = $entry->date;
         $listing[$index]['committime'] = $entry->committime;
         $listing[$index]['age'] = $entry->age;
-        $listing[$index]['revurl'] = $config->getURL($rep, $path, 'revision').'rev='.$entry->rev.'&amp;';
+        $listing[$index]['revurl'] = $config->getURL($rep, $path.$file, 'revision').'rev='.$entry->rev.'&amp;';
       }
 
       $index++;
