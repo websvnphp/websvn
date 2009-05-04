@@ -53,6 +53,8 @@ $youngest = isset($history->entries[0]) ? $history->entries[0]->rev: false;
 
 if (empty($rev)) {
   $rev = $youngest;
+} else {
+  $history = $svnrep->getLog($path, $rev, '', true);
 }
 
 $extn = strtolower(strrchr($path, "."));
@@ -136,8 +138,10 @@ $vars['repurl'] = $config->getURL($rep, '', 'dir');
 $url = $config->getURL($rep, $path, "log");
 $vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
-$url = $config->getURL($rep, $path, "diff");
-$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>";
+if (sizeof($history->entries) > 1) {
+  $url = $config->getURL($rep, $path, "diff");
+  $vars["prevdifflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>";
+}
 
 $url = $config->getURL($rep, $path, "blame");
 $vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
@@ -145,6 +149,12 @@ $vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
 if ($rep->isDownloadAllowed($path)) {
   $url = $config->getURL($rep, $path, "dl");
   $vars["dllink"] = "<a href=\"${url}rev=$passrev\">${lang["DOWNLOAD"]}</a>";
+}
+
+if ($rep->getHideRss()) {
+  $url = $config->getURL($rep, $path, "rss");
+  $vars["rssurl"] = $url;
+  $vars["rsslink"] = "<a href=\"${url}rev=$passrev\">${lang["RSSFEED"]}</a>";
 }
 
 $listing = array();

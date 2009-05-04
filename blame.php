@@ -42,6 +42,8 @@ $youngest = $history->entries[0]->rev;
 
 if (empty($rev)) {
   $rev = $youngest;
+} else {
+  $history = $svnrep->getLog($path, $rev, '', true);
 }
 
 if ($path{0} != '/') {
@@ -76,8 +78,16 @@ $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDE
 $url = $config->getURL($rep, $path, "log");
 $vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
-$url = $config->getURL($rep, $path, "diff");
-$vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
+if (sizeof($history->entries) > 1) {
+  $url = $config->getURL($rep, $path, "diff");
+  $vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
+}
+
+if ($rep->getHideRss()) {
+  $url = $config->getURL($rep, $path, 'rss')."rev=".$rev;
+  $vars["rssurl"] = $url;
+  $vars["rsslink"] = "<a href=\"${url}\">${lang["RSSFEED"]}</a>";
+}
 
 $listing = array();
 
