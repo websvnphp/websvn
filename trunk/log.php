@@ -122,6 +122,15 @@ if (!$isDir) {
 
   $url = $config->getURL($rep, $path, "blame");
   $vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
+} else {
+  $url = $config->getURL($rep, $path, "dir");
+  $vars["directorylink"] = "<a href=\"${url}\">${lang["LISTING"]}</a>";
+}
+
+if ($rep->getHideRss()) {
+  $url = $config->getURL($rep, $path, 'rss').($isDir?"&amp;isdir=1":"");
+  $vars["rssurl"] = $url;
+  $vars["rsslink"] = "<a href=\"${url}rev=$passrev\">${lang["RSSFEED"]}</a>";
 }
 
 $logurl = $config->getURL($rep, $path, "log");
