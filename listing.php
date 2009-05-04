@@ -353,8 +353,6 @@ $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);
 
-$vars["version"] = $version;
-
 if (!$rep->hasReadAccess($path, true)) {
   $vars["noaccess"] = true;
 }
@@ -362,6 +360,7 @@ if (!$rep->hasReadAccess($path, false)) {
   $vars["restricted"] = true;
 }
 
+$vars["template"] = "directory";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."directory.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

@@ -141,8 +141,6 @@ if ($file = fopen($tfname, 'r')) {
 
 @unlink($tfname);
 
-$vars['version'] = $version;
-
 if (!$rep->hasReadAccess($path, false)) {
   $vars['noaccess'] = true;
 }
@@ -209,6 +207,7 @@ $vars['javascript'] .= "/* ]]> */\n</script>";
 
 // ob_start('ob_gzhandler');
 
+$vars["template"] = "blame";
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'blame.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
