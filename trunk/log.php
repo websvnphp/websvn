@@ -343,12 +343,11 @@ $vars["compare_endform"] = "</form>";
 
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
-$vars["version"] = $version;
-
 if (!$rep->hasReadAccess($path, false)) {
   $vars["noaccess"] = true;
 }
 
+$vars["template"] = "log";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."log.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
