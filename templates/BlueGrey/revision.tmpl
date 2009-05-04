@@ -72,7 +72,7 @@
       <tbody>
       [websvn-startlisting]
       <tr class="row[websvn:rowparity]">
-         <td style="border-right: 1px solid black; padding: 0 2px 0 2px;">
+        <td style="border-right: 1px solid black; padding: 0 2px 0 2px;">
          	[websvn-test:modified]
          		M
          	[websvn-endtest]
@@ -83,10 +83,18 @@
          		D
          	[websvn-endtest]
       		<a href="[websvn:detailurl]">[websvn:file]</a>
-         </td>
-         <td style="border-right: 1px solid black; padding: 0 2px 0 2px;"><a href="[websvn:logurl]">[lang:NOBR][lang:VIEWLOG][lang:ENDNOBR]</a></td>
-         <td style="border-right: 1px solid black; padding: 0 2px 0 2px;"><a href="[websvn:diffurl]">[lang:NOBR][lang:DIFFPREV][lang:ENDNOBR]</a></td>
-         <td><a href="[websvn:blameurl]">[lang:NOBR][lang:BLAME][lang:ENDNOBR]</a></td>
+        </td>
+        <td style="border-right: 1px solid black; padding: 0 2px 0 2px;"><a href="[websvn:logurl]">[lang:NOBR][lang:VIEWLOG][lang:ENDNOBR]</a></td>
+        <td style="border-right: 1px solid black; padding: 0 2px 0 2px;">
+          [websvn-test:diffurl]
+          <a href="[websvn:diffurl]">[lang:NOBR][lang:DIFFPREV][lang:ENDNOBR]</a>
+          [websvn-endtest]
+        </td>
+        <td>
+          [websvn-test:blameurl]
+          <a href="[websvn:blameurl]">[lang:NOBR][lang:BLAME][lang:ENDNOBR]</a>
+          [websvn-endtest]
+        </td>
       </tr>
       [websvn-endlisting]
     </tbody>
