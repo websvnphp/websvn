@@ -140,12 +140,11 @@ if ($prevrev) {
   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev\">${lang["SHOWENTIREFILE"]}.</a>";
 }
 
-$vars["version"] = $version;
-
 if (!$rep->hasReadAccess($path, false)) {
   $vars["noaccess"] = true;
 }
 
+$vars["template"] = "diff";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."diff.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

@@ -381,12 +381,11 @@ if (!$noinput) {
   }
 }
 
-$vars["version"] = $version;
-
 if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false)) {
   $vars["noaccess"] = true;
 }
 
+$vars["template"] = "compare";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."compare.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

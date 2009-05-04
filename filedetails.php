@@ -149,12 +149,11 @@ if ($rep->isDownloadAllowed($path)) {
 
 $listing = array();
 
-$vars["version"] = $version;
-
 if (!$rep->hasReadAccess($path, false)) {
   $vars["noaccess"] = true;
 }
 
+$vars["template"] = "file";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."file.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

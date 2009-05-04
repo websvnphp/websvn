@@ -113,7 +113,7 @@ if (!$config->multiViews) {
   $vars['indexurl'] = $config->getURL($rep, '', 'index');
 }
 
-$vars["version"] = $version;
+$vars["template"] = "index";
 parseTemplate($config->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($config->getTemplatePath()."index.tmpl", $vars, $listing);
 parseTemplate($config->getTemplatePath()."footer.tmpl", $vars, $listing);
