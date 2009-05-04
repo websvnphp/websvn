@@ -50,5 +50,5 @@ $languages = array(
   'sv'    => array('swedish', 'Swedish', 'Svenska'),
   'zh-TW' => array('tchinese', 'Traditional Chinese', '&#20013;&#25991;'),
   'tr'    => array('turkish', 'Turkish', 'T&uuml;rk&ccedil;e'),
-  'uz'    => array('uzbek', 'Uzbek', 'O‘zbekcha'),
+  'uz'    => array('uzbek', 'Uzbek', 'O&euml;zbekcha'),
 );
