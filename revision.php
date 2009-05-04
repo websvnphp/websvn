@@ -93,7 +93,7 @@ if ($path == '' || $path{0} != '/') {
 $vars['repname'] = $rep->getDisplayName();
 
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
-  $vars['goyoungestlink'] = '<a href="'.$config->getURL($rep, $path, 'revision').'opt=dir">'.$lang['GOYOUNGEST'].'</a>';
+  $vars['goyoungestlink'] = '<a href="'.$config->getURL($rep, $path, 'revision').'">'.$lang['GOYOUNGEST'].'</a>';
 } else {
   $vars['goyoungestlink'] = '';
 }
@@ -152,20 +152,19 @@ if ($rev != $headrev) {
 }
 
 if (isset($history->entries[1]->rev)) {
-  $compurl = $config->getURL($rep, '/', 'comp');
-  $vars['curdircomplink'] = '<a href="'.$compurl.'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev. '">'.$lang['DIFFPREV'].'</a>';
-  $vars['compareurl'] = $compurl.'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
+  $compareurl = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
+  
+  $vars['compareurl'] = $compareurl;
+  $vars['curdircomplink'] = '<a href="'.$compareurl.'</a>';
 } else {
-  $vars['curdircomplink'] = '';
   $vars['compareurl'] = '';
+  $vars['curdircomplink'] = '';
 }
 
 if ($rep->getHideRss()) {
-  $rssurl = $config->getURL($rep, $path, 'rss');
-  // $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;isdir=1\">${lang["RSSFEED"]}</a>";
-  // $vars["curdirrsshref"] = "${rssurl}rev=$passrev&amp;isdir=1";
-  // $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;isdir=1\">";
-  $vars['rssurl'] = $rssurl.'isdir=1';
+  $url = $config->getURL($rep, $path, 'rss');
+  $vars['rssurl'] = $url;
+  $vars['rsslink'] = "<a href=\"${url}\">${lang["RSSFEED"]}</a>";
 }
 
 $vars['noaccess'] = !$rep->hasReadAccess($path, true);
