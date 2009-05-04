@@ -312,10 +312,12 @@ if (!empty($history)) {
 
 // Create the project change combo box
 
-$url = $config->getURL($rep, $path, "log");
-// XXX: forms don't have the name attribute, but _everything_ has the id attribute,
-//      so what you're trying to do (if anything?) should be done via that ~J
-$vars["logsearch_form"] = "<form action=\"$url\" method=\"post\">";
+$url = $config->getURL(-1, "", "log");
+$hidden = ($config->multiViews) ? "<input type=\"hidden\" name=\"op\" value=\"log\" />" : "";
+$hidden .= "<input type=\"hidden\" name=\"rev\" value=\"$rev\" />".
+           "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\" />".
+           "<input type=\"hidden\" name=\"logsearch\" value=\"1\" />";
+$vars["logsearch_form"] = "<form action=\"$url\" method=\"post\">".$hidden;
 
 $vars["logsearch_startbox"] = "<input name=\"sr\" size=\"5\" value=\"$startrev\" />";
 $vars["logsearch_endbox"  ] = "<input name=\"er\" size=\"5\" value=\"$endrev\" />";
@@ -324,10 +326,7 @@ $vars["logsearch_inputbox"] = "<input name=\"search\" value=\"".htmlentities($se
 $vars["logsearch_showall"] = '<input type="checkbox" name="all" value="1"'.($all ? ' checked="checked"' : '').' />';
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-$vars["logsearch_hidden"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1\" />".
-                             "<input type=\"hidden\" name=\"op\" value=\"log\" />".
-                             "<input type=\"hidden\" name=\"rev\" value=\"$rev\" />".
-                             "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\" />";
+$vars["logsearch_hidden"] = ""; // TODO: Remove this completely at some point
 $vars["logsearch_endform"] = "</form>";
 
 if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 30) {
@@ -336,9 +335,10 @@ if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endre
 }
 
 $url = $config->getURL($rep, "/", "comp");
-$vars["compare_form"] = "<form action=\"$url\" method=\"post\">";
-$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREREVS"]}\" />";
-$vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" />";
+$hidden = ($config->multiViews) ? "<input type=\"hidden\" name=\"op\" value=\"log\" />" : "";
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\">".$hidden;
+$vars["compare_submit"] = "<input type=\"submit\" value=\"${lang["COMPAREREVS"]}\" />";
+$vars["compare_hidden"] = ""; // TODO: Remove this completely at some point
 $vars["compare_endform"] = "</form>";
 
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;

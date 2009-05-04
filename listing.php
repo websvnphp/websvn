@@ -342,9 +342,10 @@ if ($rep->isDownloadAllowed($path)) {
 
 $url = $config->getURL($rep, "/", "comp");
 
-$vars["compare_form"] = "<form action=\"$url\" method=\"post\">";
-$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
-$vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" />";
+$hidden = ($config->multiViews) ? "<input type=\"hidden\" name=\"op\" value=\"comp\" />" : "";
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\">".$hidden;
+$vars["compare_submit"] = "<input type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
+$vars["compare_hidden"] = ""; // TODO: Remove this completely at some point
 $vars["compare_endform"] = "</form>";
 
 $vars['showlastmod'] = $config->showLastMod;
