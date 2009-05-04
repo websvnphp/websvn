@@ -127,8 +127,8 @@ foreach ($changes as $file) {
     'deleted' => $file->action == 'D',
     'detailurl' => $config->getURL($rep, $file->path, 'file').'rev='.$passrev,
     'logurl' => $config->getURL($rep, $file->path, 'log').'rev='.$passrev.'&amp;isdir=0',
-    'diffurl' => $config->getURL($rep, $file->path, 'diff').'rev='.$passrev,
-    'blameurl' => $config->getURL($rep, $file->path, 'blame').'rev='.$passrev,
+    'diffurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').($passrev ? 'rev='.$passrev : '') : '',
+    'blameurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').($passrev ? 'rev='.$passrev : '') : '',
     'rowparity' => $row,
   );
 
