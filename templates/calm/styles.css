@@ -744,3 +744,12 @@ div.blame-popup {
 div.blame-popup .date {
   font-weight: bold;
 }
+
+#wrap td.log, #wrap td.feed {
+	white-space: nowrap;
+}
+
+#wrap td.age, #wrap td.date {
+	padding-left: 3px;
+	padding-right: 8px;
+}
