@@ -754,6 +754,10 @@ div.blame-popup .date {
 	padding-right: 8px;
 }
 
+#wrap td.age, #wrap td.date, #wrap td.rev {
+	text-align: right;
+}
+
 div.warning {
 	font-weight: bold;
 	border:  1px solid #d5ce00;
