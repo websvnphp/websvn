@@ -125,8 +125,10 @@ foreach ($changes as $file) {
     'added' => $file->action == 'A',
     'modified' => $file->action == 'M',
     'deleted' => $file->action == 'D',
-    'detailurl' => $config->getURL($rep, $file->path, 'file').'rev='.$passrev,
-    'logurl' => $config->getURL($rep, $file->path, 'log').'rev='.$passrev.'&amp;isdir=0',
+     // TODO: Figure out how to differentiate directories (detailurl / logurl)
+    'detailurl' => $config->getURL($rep, $file->path, 'file').($passrev ? 'rev='.$passrev : ''),
+    // For deleted resources, make log link start at previous revision
+    'logurl' => $config->getURL($rep, $file->path, 'log').($file->action == 'D' ? 'sr='.($passrev-1) : ($passrev ? 'rev='.$passrev : '')),
     'diffurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').($passrev ? 'rev='.$passrev : '') : '',
     'blameurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').($passrev ? 'rev='.$passrev : '') : '',
     'rowparity' => $row,
