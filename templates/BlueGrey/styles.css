@@ -129,10 +129,7 @@ div.difflines
 
 .plusbox, .minusbox
 {
-   float: left;
-   clear: both;
-   position: relative;
-   top: -3px;
+   display: inline;
    font-size: 13px;
    font-weight: bold;
    width: 16px;
@@ -142,7 +139,7 @@ div.difflines
    text-align: center;
    padding: 0px 2px 0px 3px;
    border: black solid 1px;
-   margin-right: 5px;	
+   margin-right: 5px;
 }
 
 .plusbox
@@ -157,8 +154,9 @@ div.difflines
 
 .groupname
 {
+   font-weight: bold;
    padding-left: 0px;
-   text-indent: -25px;
+   text-indent: 4px;
    margin: 3px 0 3px 0;
 }
 
