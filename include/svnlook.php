@@ -885,9 +885,9 @@ class SVNRepository {
     $retcode = 0;
     execCommand($cmd, $retcode);
     if ($retcode != 0) {
-      print'Unable to call svn command "'.$config->svn.'"';
-      exit(0);
+      error_log('Unable to call svn command "'.$cmd.'"');
     }
+    return $retcode;
   }
 
   // }}}
