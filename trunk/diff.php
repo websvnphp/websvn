@@ -112,7 +112,7 @@ if (!$rep->getIgnoreSvnMimeTypes() && preg_match("~application/*~", $svnMimeType
 else if (!$prevrev) {
   $vars["noprev"] = 1;
   $url = $config->getURL($rep, $path, "file");
-  $vars["filedetaillink"] = "<a href=\"${url}rev=$rev\">${lang["SHOWENTIREFILE"]}.</a>";
+  $vars["filedetaillink"] = "<a href=\"${url}rev=$rev\">${lang["FILEDETAIL"]}</a>";
 }
 else {
   $url = $config->getURL($rep, $path, "diff");
