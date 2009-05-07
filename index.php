@@ -36,8 +36,7 @@ $config->sortByGroup();
 $projects = $config->getRepositories();
 
 if (count($projects) == 1 && $projects[0]->hasReadAccess('/', true)) {
-  $url = str_replace('&amp;', '&', $config->getURL($projects[0], '', 'dir'));
-  header('Location: '.$url);
+  header('Location: '.str_replace('?', '', $config->getURL(-1, '', 'dir')));
   exit;
 }
 
