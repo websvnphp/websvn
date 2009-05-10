@@ -42,7 +42,7 @@ if ($config->flatIndex) {
   $listing = array();
   foreach ($projects as $project) {
     if ($project->hasReadAccess("/", true)) {
-      $url = $config->getURL($project, "/", "dir");
+      $url = $config->getURL($project, '', 'dir');
 
       $listing[$i]["rowparity"] = $i % 2;
       $listing[$i]["projlink"] = "<a href=\"${url}\">".$project->getDisplayName()."</a>";
@@ -85,7 +85,7 @@ if ($config->flatIndex) {
 
       $listing[$i]["isgrouphead"] = false;
       $listing[$i]["isprojlink"] = true;
-      $url = $config->getURL($project, "/", "dir");
+      $url = $config->getURL($project, '', 'dir');
       $listing[$i]["listitem"] = "<a href=\"${url}\">".$project->name."</a>\n";
 
       $listing[$i]["rowparity"] = $parity % 2;

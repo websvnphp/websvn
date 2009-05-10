@@ -130,13 +130,13 @@ $listing = array();
 $relativePath1 = $path1;
 $relativePath2 = $path2;
 
-$path1 = encodepath($svnrep->getSvnpath(str_replace(DIRECTORY_SEPARATOR, '/', $path1)));
-$path2 = encodepath($svnrep->getSvnpath(str_replace(DIRECTORY_SEPARATOR, '/', $path2)));
+$svnpath1 = encodepath($svnrep->getSvnpath(str_replace(DIRECTORY_SEPARATOR, '/', $path1)));
+$svnpath2 = encodepath($svnrep->getSvnpath(str_replace(DIRECTORY_SEPARATOR, '/', $path2)));
 
 $debug = false;
 
 if (!$noinput) {
-  $cmd = $config->svn." diff ".($ignoreWhitespace ? '-x -w ' : '').$rep->svnParams().quote($path1."@".$rev1)." ".quote($path2."@".$rev2);
+  $cmd = $config->svn." diff ".($ignoreWhitespace ? '-x -w ' : '').$rep->svnParams().quote($svnpath1."@".$rev1)." ".quote($svnpath2."@".$rev2);
   if ($debug) echo "$cmd\n";
 }
 
@@ -285,9 +285,17 @@ if (!$noinput) {
         $node = substr($node, 7);
         if ($node == '' || $node{0} != '/') $node = '/'.$node;
 
-        $listing[$index]["newpath"] = $node;
+        if (substr($path2, -strlen($node)) === $node) {
+          $absnode = $path2;
+        } else {
+          $absnode = $path2;
+          if (substr($absnode, -1) == '/') $absnode = substr($absnode, 0, -1);
+          $absnode .= $node;
+        }
 
-        $listing[$index]["fileurl"] = $config->getURL($rep, $node, "file").'rev='.$rev2;
+        $listing[$index]["newpath"] = $absnode;
+
+        $listing[$index]["fileurl"] = $config->getURL($rep, $absnode, "file").'rev='.$rev2;
 
         if ($debug) echo "Creating node $node<br />";
 

@@ -62,7 +62,7 @@ if (@$_REQUEST["selectproj"]) {
     }
   }
 
-  $url = $config->getURL($rep, "/", "dir");
+  $url = $config->getURL($rep, "", "dir");
   $url = html_entity_decode($url);
 
   if ($config->multiViews) {

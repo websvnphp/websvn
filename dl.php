@@ -90,6 +90,10 @@ if (empty($rev)) {
 } else {
   $history = $svnrep->getLog($path, $rev, $rev - 1, true, 1);
 }
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $logEntry = $history->entries[0];
 
 if (empty($rev)) {
@@ -195,7 +199,7 @@ if (mkdir($tmpname)) {
     // GZIP it up
     if (function_exists('gzopen')) {
       $srcHandle = fopen($tmpname.DIRECTORY_SEPARATOR.$tararc, 'rb');
-      $dstHandle = gzopen($tmpname.DIRECTORY_SEPARATOR.$gzarc, 'wb');
+      $dstHandle = gzopen($tmpname.DIRECTORY_SEPARATOR.$dlarc, 'wb');
       if (!$srcHandle || !$dstHandle) {
         print'Unable to open file for gz-compression';
         chdir('..');

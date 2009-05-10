@@ -423,14 +423,19 @@ function _topLevel($entry) {
   return (strlen($entry) > 1 && $entry{0} == " " && $entry{1} != " ");
 }
 
-// Function to sort two given directory entries.  Directories go at the top
+// Function to sort two given directory entries.
+// Directories go at the top if config option alphabetic is not set
 
 function _listSort($e1, $e2) {
-  $isDir1 = $e1->file{strlen($e1->file) - 1} == "/";
-  $isDir2 = $e2->file{strlen($e2->file) - 1} == "/";
+  global $config;
 
-  if ($isDir1 && !$isDir2) return -1;
-  if ($isDir2 && !$isDir1) return 1;
+  if (!$config->isAlphabeticOrder()) {
+    $isDir1 = $e1->file{strlen($e1->file) - 1} == "/";
+    $isDir2 = $e2->file{strlen($e2->file) - 1} == "/";
+
+    if ($isDir1 && !$isDir2) return -1;
+    if ($isDir2 && !$isDir1) return 1;
+  }
 
   return strnatcasecmp($e1->file, $e2->file);
 }
@@ -738,16 +743,14 @@ class SVNRepository {
     $this->geshi->set_source($source);
     $this->geshi->set_language($lang);
     $this->geshi->set_header_type(GESHI_HEADER_DIV);
-    $this->geshi->set_overall_class('gehsi');
+    $this->geshi->set_overall_class('geshi');
+    $this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
 
     if ($return) {
       return $this->geshi->parse_code();
     } else {
-      $code = $this->geshi->parse_code();
-      $code = preg_replace("/^<pre.*?>/", '', $code);
-      $code = preg_replace("/<\/pre>$/", '', $code);
       $f = @fopen($filename, 'w');
-      fwrite($f, $code);
+      fwrite($f, $this->geshi->parse_code());
       fclose($f);
     }
   }
@@ -915,6 +918,10 @@ class SVNRepository {
 
     if ($rev == 0) {
       $headlog = $this->getLog("/", "", "", true, 1);
+      if (is_string($headlog)) {
+        echo $headlog;
+        exit;
+      }
       if (isset($headlog->entries[0])) $rev = $headlog->entries[0]->rev;
     }
 
@@ -923,7 +930,6 @@ class SVNRepository {
     $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
     $resource = proc_open($cmd, $descriptorspec, $pipes);
-    $error = "";
 
     if (!is_resource($resource)) {
       echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
@@ -947,12 +953,12 @@ class SVNRepository {
           error_log($errorMsg);
           exit;
         } else {
-          $vars["error"] = $lang["UNKNOWNREVISION"];
-          return 0;
+          break;
         }
       }
     }
 
+    $error = '';
     while (!feof($pipes[2])) {
       $error .= fgets($pipes[2]);
     }
@@ -966,13 +972,13 @@ class SVNRepository {
     proc_close($resource);
 
     if (!empty($error)) {
-      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+      echo '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
       exit;
     }
 
     xml_parser_free($xml_parser);
 
-    // Sort the entries into alphabetical order with the directories at the top of the list
+    // Sort the entries into alphabetical order
     usort($curList->entries, "_listSort");
 
     return $curList;
@@ -1027,7 +1033,6 @@ class SVNRepository {
     $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
     $resource = proc_open($cmd, $descriptorspec, $pipes);
-    $error = "";
 
     if (!is_resource($resource)) {
       echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
@@ -1051,12 +1056,12 @@ class SVNRepository {
           error_log($errorMsg);
           exit;
         } else {
-          $vars["error"] = $lang["UNKNOWNREVISION"];
-          return 0;
+          break;
         }
       }
     }
 
+    $error = '';
     while (!feof($pipes[2])) {
       $error .= fgets($pipes[2]);
     }
@@ -1070,8 +1075,7 @@ class SVNRepository {
     proc_close($resource);
 
     if (!empty($error)) {
-      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
-      exit;
+      return '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
     }
 
     xml_parser_free($xml_parser);
@@ -1139,18 +1143,16 @@ class SVNRepository {
 
 // {{{ initSvnVersion
 
-function initSvnVersion(&$major, &$minor) {
+function initSvnVersion() {
   global $config;
 
   $ret = runCommand($config->svn_noparams." --version", false);
 
   if (preg_match("~([0-9]?)\.([0-9]?)\.([0-9]?)~",$ret[0],$matches)) {
-    $major = $matches[1];
-    $minor = $matches[2];
+    $config->setSubversionVersion($matches[0]);
+    $config->setSubversionMajorVersion($matches[1]);
+    $config->setSubversionMinorVersion($matches[2]);
   }
-
-  $config->setSubversionMajorVersion($major);
-  $config->setSubversionMinorVersion($minor);
 }
 
 // }}}

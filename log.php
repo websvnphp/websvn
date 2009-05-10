@@ -86,7 +86,11 @@ $svnrep = new SVNRepository($rep);
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, "", "", true);
+$history = $svnrep->getLog($path, $startrev, $endrev, true);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $youngest = isset($history->entries[0]) ? $history->entries[0]->rev : 0;
 
 if (empty($rev)) {
@@ -143,6 +147,10 @@ if ($max === false) {
 }
 
 $history = $svnrep->getLog($path, $startrev, $endrev, true, $max);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $vars["logsearch_moreresultslink"] = "";
 $vars["pagelinks"] = "";
 $vars["showalllink"] = "";
@@ -175,6 +183,10 @@ if (!empty($history)) {
   $entries = array();
   if ($brev && $erev) {
     $history = $svnrep->getLog($path, $brev, $erev, false, 0);
+    if (is_string($history)) {
+      echo $history;
+      exit;
+    }
     $entries = $history->entries;
   }
 
@@ -309,8 +321,10 @@ $vars["logsearch_hidden"] = "<input type=\"hidden\" name=\"logsearch\" value=\"1
                              "<input type=\"hidden\" name=\"isdir\" value=\"$isDir\" />";
 $vars["logsearch_endform"] = "</form>";
 
-$url = $config->getURL($rep, $path, "log");
-$vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
+if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 30) {
+  $url = $config->getURL($rep, $path, "log");
+  $vars["logsearch_clearloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=$isDir\">${lang["CLEARLOG"]}</a>";
+}
 
 $url = $config->getURL($rep, "/", "comp");
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\">";

@@ -34,6 +34,10 @@ $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', true);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $youngest = $history->entries[0]->rev;
 
 if (empty($rev)) {
@@ -56,9 +60,8 @@ $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 createDirLinks($rep, $ppath, $rev);
 
-$url = $config->getURL($rep, $path, "file");
-
 if ($rev != $youngest) {
+  $url = $config->getURL($rep, $path, 'blame');
   $vars["goyoungestlink"] = '<a href="'.$url.'">'.$lang["GOYOUNGEST"].'</a>';
 } else {
   $vars["goyoungestlink"] = "";
@@ -93,7 +96,7 @@ if ($file = fopen($tfname, 'r')) {
     $index = 0;
     $seen_rev = array();
     $last_rev = "";
-    $row_class = 'light';
+    $row_class = '';
 
     while (!feof($blame) && !feof($file)) {
       $blameline = fgets($blame);
@@ -193,7 +196,7 @@ HTML;
 
 foreach ($seen_rev as $key => $val) {
   $history = $svnrep->getLog($path, $key, $key, false, 1);
-  if (!empty($history)) {
+  if (!is_string($history)) {
     $vars['javascript'] .= "rev[$key] = '";
     $vars['javascript'] .= "<div class=\"info\">";
     $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."<\/span>";

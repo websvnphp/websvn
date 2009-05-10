@@ -1,6 +1,17 @@
-/* NEXTRELEASE */
+/* NEXT MINOR RELEASE - 2.3.0 */
 
-* nothing yet
+* Added http header 500 for errors during downloading archives/files (issue 240)
+* Modified various things in templates
+* Fixed issues: 189, 214, 233, 235, 236, 239, 240
+
+
+2.2.1
+
+* Fixed downloading tar-gz-archives when using gz-extension
+* Improved output when svn-command could not be executed correctly
+* Added config option to use full alphabetic order (independent of folder or file type)
+* Fixed multiple links and minor issues
+  * Fixed issues: 212, 213, 214, 215, 216, 217, 219, 222, 223, 224, 225, 227, 228, 229, 230, 231, 232, 234, 237, 238
 
 
 2.2.0

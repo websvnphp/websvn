@@ -31,19 +31,19 @@ and feel.  With WebSVN's templating system this is very possible.</p>
 tell WebSVN where the templates are stored.  For example:</p>
 
 <pre class="code">
-$config->setTemplatePath("./templates/Standard/");
+$config->setTemplatePath("./templates/calm/");
 </pre>
 
 <p>This directory should contain at least the following files:</p>
 
 <dl>
-<dt>header.tmpl</dt><dd>Header templated included before any other</dd>
-<dt>footer.tmpl</dt><dd>Footer templated included after any other</dd>
+<dt>header.tmpl</dt><dd>Header template included before any other</dd>
+<dt>footer.tmpl</dt><dd>Footer template included after any other</dd>
 
 <dt>index.tmpl</dt><dd>The main project page template</dd>
 
 <dt>directory.tmpl</dt><dd>Listing of a directory</dd>
-<dt>log.tmple</dt><dd>Log of a directory or file</dd>
+<dt>log.tmpl</dt><dd>Log of a directory or file</dd>
 <dt>file.tmpl</dt><dd>Contents of a text file</dd>
 <dt>diff.tmpl</dt><dd>Differences between text files</dd>
 <dt>blame.tmpl</dt><dd>Blame information for a file</dd>

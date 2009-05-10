@@ -588,6 +588,7 @@ class WebSvnConfig {
   var $treeView = true;
   var $flatIndex = true;
   var $openTree = false;
+  var $alphabetic = false;
   var $showLastMod = true;
   var $showAgeInsteadOfDate = true;
   var $_showRepositorySelectionForm = true;
@@ -595,6 +596,7 @@ class WebSvnConfig {
   var $multiViews = false;
   var $useEnscript = false;
   var $useGeshi = false;
+  var $inlineMimeTypes = array();
   var $allowDownload = false;
   var $tarballTmpDir = 'temp';
   var $minDownloadLevel = 0;
@@ -605,11 +607,12 @@ class WebSvnConfig {
   var $bugtraq = false;
   var $auth = "";
 
-  var $templatePath = "./templates/Standard/";
+  var $templatePath = "./templates/calm/";
 
   var $ignoreSvnMimeTypes = false;
   var $ignoreWebSVNContentTypes = false;
 
+  var $subversionVersion = "";
   var $subversionMajorVersion = "";
   var $subversionMinorVersion = "";
 
@@ -786,6 +789,10 @@ class WebSvnConfig {
     return $this->useEnscript;
   }
 
+  // }}}
+
+  // {{{ GeSHi
+
   // useGeshi
   //
   // Use GeSHi to colourise listings
@@ -795,6 +802,23 @@ class WebSvnConfig {
 
   function getUseGeshi() {
     return $this->useGeshi;
+  }
+  
+  // }}}
+
+  // {{{ Inline MIME Types
+
+  // inlineMimeTypes
+  //
+  // Specify MIME types to display inline in WebSVN pages
+  function addInlineMimeType($type) {
+    if (!in_array($type, $this->inlineMimeTypes)) {
+      $this->inlineMimeTypes[] = $type;
+    }
+  }
+  
+  function getInlineMimeTypes() {
+    return $this->inlineMimeTypes;
   }
 
   // }}}
@@ -926,20 +950,21 @@ class WebSvnConfig {
 
   // {{{ getUrlParts
   //
-  // Get the Url and Parametes to a path name based on the current config
+  // Get the URL and parameters for a path name based on the current config
 
   function getUrlParts($rep, $path, $op) {
     $params = array();
 
     if ($this->multiViews) {
       $url = $_SERVER["SCRIPT_NAME"];
-      // Remove the .php
       if (preg_match('|\.php$|i', $url))  {
-        // Remove the .php
+        // remove the .php extension
         $url = substr($url, 0, -4);
       }
 
-      if ($path && $path{0} != "/") $path = "/".$path;
+      if ($path && $path{0} != "/") {
+        $path = "/".$path;
+      }
 
       if ($op == 'index') {
         $url .= '/';
@@ -951,64 +976,62 @@ class WebSvnConfig {
         }
       }
 
-      return array($url, $params);
-
     } else {
       switch ($op) {
         case "index":
-          $fname = ".";
+          $url = ".";
           break;
 
         case "dir":
-          $fname = "listing.php";
+          $url = "listing.php";
           break;
 
         case "revision":
-          $fname = "revision.php";
+          $url = "revision.php";
           break;
 
         case "file":
-          $fname = "filedetails.php";
+          $url = "filedetails.php";
           break;
 
         case "log":
-          $fname = "log.php";
+          $url = "log.php";
           break;
 
         case "diff":
-          $fname = "diff.php";
+          $url = "diff.php";
           break;
 
         case "blame":
-          $fname = "blame.php";
+          $url = "blame.php";
           break;
 
         case "form":
-          $fname = "form.php";
+          $url = "form.php";
           break;
 
         case "rss":
-          $fname = "rss.php";
+          $url = "rss.php";
           break;
 
         case "dl":
-          $fname = "dl.php";
+          $url = "dl.php";
           break;
 
         case "comp":
-          $fname = "comp.php";
+          $url = "comp.php";
           break;
       }
 
-      if ($rep === -1) {
-        $params['path'] = $path;
-      } else if ($op != 'index') {
+      if ($rep !== -1 && $op != 'index') {
         $params['repname'] = $rep->getDisplayName();
+      }
+      if (!empty($path)) {
         $params['path'] = $path;
       }
-
-      return array($fname, $params);
     }
+
+    return array($url, $params);
   }
 
   // }}}
@@ -1359,6 +1382,14 @@ class WebSvnConfig {
     return $this->openTree;
   }
 
+  function setAlphabeticOrder($flag) {
+    $this->alphabetic = $flag;
+  }
+
+  function isAlphabeticOrder() {
+    return $this->alphabetic;
+  }
+
   function showLastModInListing() {
     return $this->showLastMod;
   }
@@ -1383,9 +1414,15 @@ class WebSvnConfig {
     $this->_showRepositorySelectionForm = $show;
   }
 
-  // setSubversionMajorVersion
-  //
-  // Set subversion major version
+  // Methods for storing version information for the command-line svn tool
+
+  function setSubversionVersion($subversionVersion) {
+    $this->subversionVersion = $subversionVersion;
+  }
+
+  function getSubversionVersion() {
+    return $this->subversionVersion;
+  }
 
   function setSubversionMajorVersion($subversionMajorVersion) {
     $this->subversionMajorVersion = $subversionMajorVersion;
@@ -1394,10 +1431,6 @@ class WebSvnConfig {
   function getSubversionMajorVersion() {
     return $this->subversionMajorVersion;
   }
-
-  // setSubversionMinorVersion
-  //
-  // Set subversion minor version
 
   function setSubversionMinorVersion($subversionMinorVersion) {
     $this->subversionMinorVersion = $subversionMinorVersion;

@@ -65,6 +65,10 @@ $listurl = $config->getURL($rep, $path, 'dir');
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, $rev, '', false, $maxmessages);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 
 // Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
 $cachename = strtr(getFullURL($listurl), ":/\\?", "____");
