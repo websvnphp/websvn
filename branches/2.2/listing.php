@@ -189,7 +189,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         $listing[$index]['date'] = $entry->date;
         $listing[$index]['committime'] = $entry->committime;
         $listing[$index]['age'] = $entry->age;
-        $listing[$index]['revurl'] = $config->getURL($rep, $path, 'revision').'rev='.$entry->rev.'&amp;';
+        $listing[$index]['revurl'] = $config->getURL($rep, $path.$file, 'revision').'rev='.$entry->rev.'&amp;';
       }
 
       $index++;
@@ -242,6 +242,10 @@ $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", false);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 
 if (!empty($history->entries[0])) {
   $youngest = $history->entries[0]->rev;
@@ -258,12 +262,20 @@ if (empty($rev)) {
 
 if ($logrev != $youngest) {
   $logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
+  if (is_string($logEntry)) {
+    echo $logEntry;
+    exit;
+  }
   $logEntry = isset($logEntry->entries[0]) ? $logEntry->entries[0] : false;
 } else {
   $logEntry = isset($history->entries[0]) ? $history->entries[0] : false;
 }
 
 $headlog = $svnrep->getLog("/", "", "", true, 1);
+if (is_string($headlog)) {
+  echo $headlog;
+  exit;
+}
 $headrev = isset($headlog->entries[0]) ? $headlog->entries[0]->rev : 0;
 
 // If we're not looking at a specific revision, get the HEAD revision number
@@ -308,10 +320,6 @@ $vars['logurl'] = $logurl.'rev='.$passrev.'&amp;isdir=1';
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
-
-if ($rev != $headrev) {
-  $history = $svnrep->getLog($path, $rev, "", false);
-}
 
 if ($rep->getHideRss()) {
   $rssurl = $config->getURL($rep, $path, "rss");

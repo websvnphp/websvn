@@ -45,6 +45,10 @@ $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, "", "", true);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 $youngest = isset($history->entries[0]) ? $history->entries[0]->rev: false;
 
 if (empty($rev)) {
@@ -80,35 +84,36 @@ if (!$rep->getIgnoreWebSVNContentTypes()) {
   $setupContentType = @$contentType[$extn];
 }
 
-// Use this set of priorities when establishing what content-type to
-// actually use.
-
+// Use the documented priorities when establishing what content-type to use.
 if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') {
-  $cont = $svnMimeType;
+  $mimeType = $svnMimeType;
 } else if (!empty($setupContentType)) {
-  $cont = $setupContentType;
+  $mimeType = $setupContentType;
 } else if (!empty($svnMimeType)) {
-  // It now is equal to application/octet-stream due to logic
-  // above....
-  $cont = $svnMimeType;
+  $mimeType = $svnMimeType; // Use SVN's default of "application/octet-stream"
 }
 
-// If there's a MIME type associated with this format, then we deliver it
-// with this information
+// If the MIME type exists but is set to be ignored, set it to an empty string.
+if (!empty($mimeType)) {
+  foreach ($config->inlineMimeTypes as $inlineType) {
+    if (preg_match('|'.$inlineType.'|', $mimeType)) {
+      $mimeType = '';
+      break;
+    }
+  }
+}
 
-if (!empty($cont) && $rep->hasReadAccess($path, false)) {
+// If a MIME type is associated with the file, deliver with Content-Type header.
+if (!empty($mimeType) && $rep->hasReadAccess($path, false)) {
   $base = basename($path);
-
-  header("Content-Type: $cont");
-  //header("Content-Length: $size");
-  header("Content-Disposition: inline; filename=".urlencode($base));
-
+  header('Content-Type: '.$mimeType);
+  //header('Content-Length: '.$size);
+  header('Content-Disposition: inline; filename='.urlencode($base));
   $svnrep->getFileContents($path, "", $rev);
-
   exit;
 }
 
-// There's no associated MIME type.  Show the file using WebSVN.
+// Display the file inline using WebSVN.
 
 $url = $config->getURL($rep, $path, "file");
 

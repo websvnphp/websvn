@@ -132,6 +132,12 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 
 // $config->useFlatView();
 
+// By default, WebSVN displays subfolders first and than the files of a directory,
+// both alphabetically sorted.
+// To use alphabetic order independent iof folders and files uncomment this line.
+
+// $config->setAlphabeticOrder(true);
+
 // By default, WebSVN displays the information of the last modification
 // (revision, age and author) for each entry in an extra column.
 // To disable that uncomment this line.
@@ -266,6 +272,16 @@ $config->setTemplatePath("$locwebsvnreal/templates/calm/");
 // $contentType['.c'] = 'text/plain'; // Create a new association
 // $contentType['.doc'] = 'text/plain'; // Modify an existing one
 // unset($contentType['.m']); // Remove a default association
+
+// If you want to selectively override one or more MIME types to display inline
+// (e.g., the svn:mime-type property is something like text/plain or text/xml, or
+// the file extension matches an entry in $contentType), you can choose to ignore
+// one or more specific MIME types. This approach is finer-grained than ignoring
+// all svn:mime-type properties, and displaying matching files inline such that
+// they are highlighted correctly. (Regular expression matching is used.)
+
+$config->addInlineMimeType("text/plain");
+// $config->addInlineMimeType("text/*");
 
 // }}}
 

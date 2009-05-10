@@ -41,6 +41,10 @@ $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false);
+if (is_string($history)) {
+  echo $history;
+  exit;
+}
 
 if (!empty($history->entries[0])) {
   $youngest = $history->entries[0]->rev;
@@ -57,12 +61,20 @@ if (empty($rev)) {
 
 if ($logrev != $youngest) {
   $logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
+  if (is_string($logEntry)) {
+    echo $logEntry;
+    exit;
+  }
   $logEntry = $logEntry ? $logEntry->entries[0] : false;
 } else {
   $logEntry = isset($history->entries[0]) ? $history->entries[0]: false;
 }
 
 $headlog = $svnrep->getLog('/', '', '', true, 1);
+if (is_string($headlog)) {
+  echo $headlog;
+  exit;
+}
 $headrev = isset($headlog->entries[0]) ? $headlog->entries[0]->rev: 0;
 
 // If we're not looking at a specific revision, get the HEAD revision number
@@ -133,6 +145,10 @@ $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if ($rev != $headrev) {
   $history = $svnrep->getLog($ppath, $rev, '', false);
+  if (is_string($history)) {
+    echo $history;
+    exit;
+  }
 }
 
 if (isset($history->entries[1]->rev)) {

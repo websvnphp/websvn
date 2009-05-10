@@ -1,5 +1,5 @@
 <div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
-<h1><a href="[websvn:indexurl]" title="Project home">[lang:PROJECTS]</a> <span><a href="[websvn:repurl]">[websvn:repname]</a></span></h1>
+<h1><a href="[websvn:indexurl]" title="[lang:PROJECTS]">[lang:PROJECTS]</a> <span><a href="[websvn:repurl]">[websvn:repname]</a></span></h1>
 
 [websvn-test:noaccess]
    [lang:NOACCESS]
@@ -13,7 +13,7 @@
 	<span class="changes"><a href="[websvn:changesurl]">[lang:CHANGES]</a></span> &#124;
 	<span class="log"><a href="[websvn:logurl]">[lang:VIEWLOG]</a></span> &#124;
 [websvn-test:downloadurl]
-	<span class="compress"><a href="[websvn:downloadurl]">[lang:TARBALL]</a></span> &#124;
+	<span class="compress"><a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a></span> &#124;
 [websvn-endtest]
 [websvn-test:rssurl]
     <span class="feed"><a href="[websvn:rssurl]">[lang:RSSFEED]</a></span>
@@ -100,10 +100,10 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
          [websvn-test:allowdownload]
            <td class="compress">
              [websvn-test:downloadurl]
-               <a href="[websvn:downloadurl]">[lang:TARBALL]</a>
+               <a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a>
              [websvn-endtest]
              [websvn-test:downloadplainurl]
-               <a href="[websvn:downloadplainurl]">[lang:DOWNLOAD]</a>
+               <a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a>
              [websvn-endtest]
            </td>
          [websvn-endtest]
