@@ -9,18 +9,14 @@
    [lang:NOACCESS]
 [websvn-else]
    [websvn:curdirlinks] - [lang:REV] <b>[websvn:rev]</b>
-   <p>
-    [websvn-test:goyoungestlink]
-     [websvn:goyoungestlink] -
-    [websvn-endtest]
-    [websvn-test:prevdifflink]
-     [websvn:prevdifflink] -
-    [websvn-endtest]
-     [websvn:blamelink] -
-    [websvn-test:dllink]
-     [websvn:dllink] -
-    [websvn-endtest]
-     [websvn:fileviewloglink]
+   [websvn-test:goyoungestlink]
+   [websvn:goyoungestlink]<p>
+   [websvn-endtest]
+   <p>[websvn:prevdifflink] -
+     [websvn:blamelink]
+     [websvn-test:dllink]
+       - [websvn:dllink]
+     [websvn-endtest]
    </p>
    <hr />
    [websvn-getlisting]

@@ -129,7 +129,10 @@ div.difflines
 
 .plusbox, .minusbox
 {
-   display: inline;
+   float: left;
+   clear: both;
+   position: relative;
+   top: -3px;
    font-size: 13px;
    font-weight: bold;
    width: 16px;
@@ -139,7 +142,7 @@ div.difflines
    text-align: center;
    padding: 0px 2px 0px 3px;
    border: black solid 1px;
-   margin-right: 5px;
+   margin-right: 5px;	
 }
 
 .plusbox
@@ -154,9 +157,8 @@ div.difflines
 
 .groupname
 {
-   font-weight: bold;
    padding-left: 0px;
-   text-indent: 4px;
+   text-indent: -25px;
    margin: 3px 0 3px 0;
 }
 
@@ -192,14 +194,4 @@ div.blame-popup
 div.blame-popup .date
 {
    font-weight: bold;
-}
-
-div.warning
-{
-	font-weight: bold;
-	border:  1px solid black;
-	background-color: #ffc;
-	display: table;
-	padding: 5px;
-	margin: 0 auto;
 }

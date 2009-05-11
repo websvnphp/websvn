@@ -22,8 +22,6 @@
 //
 // Templating system to allow advanced page customisation
 
-$vars["version"] = $version; // Set WebSVN version for all template files
-
 $ignore = false;
 
 // Stack of previous test results

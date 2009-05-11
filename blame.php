@@ -42,8 +42,6 @@ $youngest = $history->entries[0]->rev;
 
 if (empty($rev)) {
   $rev = $youngest;
-} else {
-  $history = $svnrep->getLog($path, $rev, '', true);
 }
 
 if ($path{0} != '/') {
@@ -78,152 +76,139 @@ $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDE
 $url = $config->getURL($rep, $path, "log");
 $vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
-if (sizeof($history->entries) > 1) {
-  $url = $config->getURL($rep, $path, "diff");
-  $vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
-}
-
-if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, 'rss')."rev=".$rev;
-  $vars["rssurl"] = $url;
-  $vars["rsslink"] = "<a href=\"${url}\">${lang["RSSFEED"]}</a>";
-}
+$url = $config->getURL($rep, $path, "diff");
+$vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
 
 $listing = array();
 
-// Check for binary file type before grabbing blame information.
-$svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
+// Get the contents of the file
+$tfname = tempnam('temp', '');
+$highlighted = $svnrep->getFileContents($path, $tfname, $rev, '', true);
 
-if (!$rep->getIgnoreSvnMimeTypes() && preg_match("~application/*~", $svnMimeType)) {
-  $vars["warning"] = "Cannot display blame info for binary file. (svn:mime-type = $svnMimeType)";
-}
-else {
-  // Get the contents of the file
-  $tfname = tempnam('temp', '');
-  $highlighted = $svnrep->getFileContents($path, $tfname, $rev, '', true);
-  
-  if ($file = fopen($tfname, 'r')) {
-    // Get the blame info
-    $tbname = tempnam('temp', '');
-    $svnrep->getBlameDetails($path, $tbname, $rev);
-  
-    if ($blame = fopen($tbname, 'r')) {
-      // Create an array of version/author/line
-  
-      $index = 0;
-      $seen_rev = array();
-      $last_rev = "";
-      $row_class = '';
-  
-      while (!feof($blame) && !feof($file)) {
-        $blameline = fgets($blame);
-  
-        if ($blameline != '') {
-          list($revision, $author, $remainder) = sscanf($blameline, '%d %s %s');
-          $empty = !$remainder;
-  
-          $listing[$index]['lineno'] = $index + 1;
-  
-          if ($last_rev != $revision) {
-            $url = $config->getURL($rep, $parent, 'revision');
-            $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision\">$revision</a>";
-            $seen_rev[$revision] = 1;
-            $row_class = ($row_class == 'light') ? 'dark' : 'light';
-            $listing[$index]['author'] = $author;
-          } else {
-            $listing[$index]['revision'] = "";
-            $listing[$index]['author'] = '';
-          }
-  
-          $listing[$index]['row_class'] = $row_class;
-          $last_rev = $revision;
-  
-          $line = rtrim(fgets($file));
-          if (!$highlighted) $line = replaceEntities($line, $rep);
-  
-          if ($empty) $line = '&nbsp;';
-          $listing[$index]['line'] = hardspace($line);
-  
-          $index++;
+if ($file = fopen($tfname, 'r')) {
+  // Get the blame info
+  $tbname = tempnam('temp', '');
+  $svnrep->getBlameDetails($path, $tbname, $rev);
+
+  if ($blame = fopen($tbname, 'r')) {
+    // Create an array of version/author/line
+
+    $index = 0;
+    $seen_rev = array();
+    $last_rev = "";
+    $row_class = '';
+
+    while (!feof($blame) && !feof($file)) {
+      $blameline = fgets($blame);
+
+      if ($blameline != '') {
+        list($revision, $author, $remainder) = sscanf($blameline, '%d %s %s');
+        $empty = !$remainder;
+
+        $listing[$index]['lineno'] = $index + 1;
+
+        if ($last_rev != $revision) {
+          $url = $config->getURL($rep, $parent, 'revision');
+          $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision\">$revision</a>";
+          $seen_rev[$revision] = 1;
+          $row_class = ($row_class == 'light') ? 'dark' : 'light';
+          $listing[$index]['author'] = $author;
+        } else {
+          $listing[$index]['revision'] = "";
+          $listing[$index]['author'] = '';
         }
+
+        $listing[$index]['row_class'] = $row_class;
+        $last_rev = $revision;
+
+        $line = rtrim(fgets($file));
+        if (!$highlighted) $line = replaceEntities($line, $rep);
+
+        if ($empty) $line = '&nbsp;';
+        $listing[$index]['line'] = hardspace($line);
+
+        $index++;
       }
-  
-      fclose($blame);
     }
-  
-    fclose($file);
-  
-    @unlink($tbname);
-  }
-  
-  @unlink($tfname);
-  
-  if (!$rep->hasReadAccess($path, false)) {
-    $vars['noaccess'] = true;
-  }
-  
-  $vars['javascript'] =  <<<HTML
-  
-  <script type='text/javascript'>
-  /* <![CDATA[ */
-  var rev = new Array();
-  var a = document.getElementsByTagName('a');
-  for (var i = 0; i < a.length; i++) {
-    if (a[i].className == 'blame-revision') {
-      var id = a[i].id;
-      addEvent(a[i], 'mouseover', function() { mouseover(this) } );
-      addEvent(a[i], 'mouseout', function() { mouseout(this) } );
-    }
-  }
-  
-  function mouseover(a) {
-    // Find the revision by using the link
-    var m = /rev=(\d+)/.exec(a.href);
-    var r = m[1];
-  
-    div = document.createElement('div');
-    div.className = 'blame-popup';
-    div.innerHTML = rev[r];
-    a.parentNode.appendChild(div);
+
+    fclose($blame);
   }
 
-  function mouseout(a) {
-    var div = a.parentNode.parentNode.getElementsByTagName('div');
-    for (var i = 0; i < div.length; i++) {
-      if (div[i].className = 'blame-popup') {
-        div[i].parentNode.removeChild(div[i]);
-      }
+  fclose($file);
+
+  @unlink($tbname);
+}
+
+@unlink($tfname);
+
+$vars['version'] = $version;
+
+if (!$rep->hasReadAccess($path, false)) {
+  $vars['noaccess'] = true;
+}
+
+$vars['javascript'] =  <<<HTML
+
+<script type='text/javascript'>
+/* <![CDATA[ */
+var rev = new Array();
+var a = document.getElementsByTagName('a');
+for (var i = 0; i < a.length; i++) {
+  if (a[i].className == 'blame-revision') {
+    var id = a[i].id;
+    addEvent(a[i], 'mouseover', function() { mouseover(this) } );
+    addEvent(a[i], 'mouseout', function() { mouseout(this) } );
+  }
+}
+
+function mouseover(a) {
+  // Find the revision by using the link
+  var m = /rev=(\d+)/.exec(a.href);
+  var r = m[1];
+
+  div = document.createElement('div');
+  div.className = 'blame-popup';
+  div.innerHTML = rev[r];
+  a.parentNode.appendChild(div);
+}
+
+function mouseout(a) {
+  var div = a.parentNode.parentNode.getElementsByTagName('div');
+  for (var i = 0; i < div.length; i++) {
+    if (div[i].className = 'blame-popup') {
+      div[i].parentNode.removeChild(div[i]);
     }
   }
-  
-  function addEvent(obj, type, func) {
-    if (obj.addEventListener) {
-      obj.addEventListener(type, func, false);
-      return true;
-    } else if (obj.attachEvent) {
-      return obj.attachEvent('on' + type, func);
-    } else {
-      return false;
-    }
+}
+
+function addEvent(obj, type, func) {
+  if (obj.addEventListener) {
+    obj.addEventListener(type, func, false);
+    return true;
+  } else if (obj.attachEvent) {
+    return obj.attachEvent('on' + type, func);
+  } else {
+    return false;
   }
+}
 
 HTML;
 
-  foreach ($seen_rev as $key => $val) {
-    $history = $svnrep->getLog($path, $key, $key, false, 1);
-    if (!is_string($history)) {
-      $vars['javascript'] .= "rev[$key] = '";
-      $vars['javascript'] .= "<div class=\"info\">";
-      $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."<\/span>";
-      $vars['javascript'] .= "<\/div>";
-      $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br />", $history->curEntry->msg))."<\/div>";
-      $vars['javascript'] .= "';\n";
-    }
+foreach ($seen_rev as $key => $val) {
+  $history = $svnrep->getLog($path, $key, $key, false, 1);
+  if (!is_string($history)) {
+    $vars['javascript'] .= "rev[$key] = '";
+    $vars['javascript'] .= "<div class=\"info\">";
+    $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."<\/span>";
+    $vars['javascript'] .= "<\/div>";
+    $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br />", $history->curEntry->msg))."<\/div>";
+    $vars['javascript'] .= "';\n";
   }
-  $vars['javascript'] .= "/* ]]> */\n</script>";
 }
+$vars['javascript'] .= "/* ]]> */\n</script>";
 
-$vars["template"] = "blame";
+// ob_start('ob_gzhandler');
+
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'blame.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);

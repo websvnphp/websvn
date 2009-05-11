@@ -90,12 +90,12 @@ $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $url = $config->getURL($rep, "/", "comp");
-$vars["revlink"] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
+$vars["revlink"] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1&amp;ignorews='.($ignoreWhitespace ? '1' : '0').'">'.$lang['REVCOMP'].'</a>';
 if (!$ignoreWhitespace) {
-  $vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
+  $vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;manualorder='.($manualorder ? '1' : '0').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
   $vars['regardwhitespacelink'] = '';
 } else {
-  $vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').'">'.$lang['REGARDWHITESPACE'].'</a>';
+  $vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;manualorder='.($manualorder ? '1' : '0').'&amp;ignorews=0">'.$lang['REGARDWHITESPACE'].'</a>';
   $vars['ignorewhitespacelink'] = '';
 }
 
@@ -104,16 +104,13 @@ if ($rev2 == 0) $rev2 = "HEAD";
 
 $vars["repname"] = $rep->getDisplayName();
 $vars["action"] = $lang["PATHCOMPARISON"];
-
-$hidden = ($config->multiViews) ? "<input type=\"hidden\" name=\"op\" value=\"comp\" />" : "";
-$hidden .= "<input type=\"hidden\" name=\"manualorder\" value=\"1\" />";
-$vars["compare_form"] = "<form action=\"$url\" method=\"post\">".$hidden;
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\">";
 $vars["compare_path1input"] = "<input type=\"text\" size=\"40\" name=\"compare[0]\" value=\"".htmlentities($path1, ENT_QUOTES, 'UTF-8')."\" />";
 $vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[0]\" value=\"$rev1\" />";
 $vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"".htmlentities($path2, ENT_QUOTES, 'UTF-8')."\" />";
 $vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\" />";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
-$vars["compare_hidden"] = ""; // TODO: Remove this completely at some point
+$vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" /><input type=\"hidden\" name=\"manualorder\" value=\"1\" />";
 $vars["compare_endform"] = "</form>";
 
 // safe paths are a hack for fixing XSS sploit
@@ -384,11 +381,12 @@ if (!$noinput) {
   }
 }
 
+$vars["version"] = $version;
+
 if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false)) {
   $vars["noaccess"] = true;
 }
 
-$vars["template"] = "compare";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."compare.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

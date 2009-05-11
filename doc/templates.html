@@ -191,31 +191,27 @@ access your template files in all cases.</p>
 
 <h2><a name="varsindex"></a>Variables defined for index.tmpl</h2>
 
-<p>Unlike previous versions of WebSVN, index.php now passes the same variable structure to index.tmpl regardless of whether flat view or tree view is selected. This makes the variable names more uniform, but does require templates to actively skip over group names in flat view (by testing for <code>groupid</code>) if they don't want to display them.</p>
-
-<p>Static for the duration of a page:</p> 
-
 <dl>
 <dt>treeview</dt><dd>true if the index should be displayed as a tree of grouped projects</dd>
 <dt>flatview</dt><dd>true if the index should be displayed as a simple list of projects</dd>
 <dt>opentree</dt><dd>true if the tree viewed should be open by default</dd>
-<dt>groupcount</dt><dd>The number of project groups (0 or more)</dd>
 </dl>
 
-<p>Defined only in [websvn-startlisting] ... [websvn-endlisting] blocks:</p>
+Used in [websvn-startlisting] ... [websvn-endlisting] block of a flat view:
 
 <dl>
-<dt>projectlink</dt><dd>HTML link to a project (not set for group headers)</dd>
-<dt>rowparity</dt><dd>Parity of the row (0 or 1). Used to generate striped tables. Group headers do no have a row parity, only projects</dd>
-<dt>groupparity</dt><dd>Similar to row parity, but the first entry in each group restarts at 0</dd>
-<dt>groupid</dt><dd>Only set if the current entry is a group header</dd>
-<dt>groupname</dt><dd>Set for group headers and each member of a group</dd>
-<dt>notfirstgroup</dt><dd>true if the entry is a second or subsequent group</dd>
+<dt>projlink</dt><dd>Link to the project</dd>
+<dt>rowparity</dt><dd>Parity of the row (0 or 1).  Used to generate striped tables</dd>
 </dl>
 
-<p>The last variable in each of these lists are useful for determining if an element surrounding a group needs to be closed. For example, you may wish to create a &lt;div&gt; or &lt;ul&gt; tag to open a group, and a closing tag at the end of the group, either between groups or after the last group.</p>
+Used in [websvn-startlisting] ... [websvn-endlisting] block of a tree view:
 
-<p>For examples of how to use these variables to create an index with either a flat or tree view, consult index.tmpl in any of the included templates.</p>
+<dl>
+<dt>isprojlink</dt><dd>This item is a project link</dd>
+<dt>isgrouphead</dt><dd>This item is a group name</dd>
+<dt>rowparity</dt><dd>Parity of the row (0 or 1).  Used to generate striped tables</dd>
+<dt>listitem</dt><dd>The item to display</dd>
+</dl>
 
 <h2><a name="varsdir"></a>Variables defined for directory.tmpl</h2>
 
@@ -317,7 +313,6 @@ Used in [websvn-startlisting] ... [websvn-endlisting] block:
 <dt>revpathlink</dt><dd>Link to revision</dd>
 <dt>revauthor</dt><dd>Author of this revision</dd>
 <dt>revage</dt><dd>Age of revision</dd>
-<dt>revdate</dt><dd>Date of revision</dd>
 <dt>revlog</dt><dd>Log message of revision</dd>
 </dl>
 

@@ -121,13 +121,7 @@ if (mkdir($tmpname)) {
   $plainfilename = $arcname;
   $arcname = $arcname.'.r'.$rev;
 
-  $exportRC = $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
-  if ($exportRC != 0) {
-    header('HTTP/1.x 500 Internal Server Error', true, 500);
-    print '"svn export" failed for '.$arcname.' - see webserver error log for details'."\n";
-    removeDirectory($tmpname);
-    exit(0);
-  }
+  $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
 
   // Set datetime of exported directory (and subdirectories) to datetime of revision so that every archive is equal
   $date = $logEntry->date;
@@ -183,7 +177,6 @@ if (mkdir($tmpname)) {
       $created = $tar->create($arcname);
       if (!$created) {
         $retcode = 1;
-        header('HTTP/1.x 500 Internal Server Error', true, 500);
         print'Unable to create tar archive';
       }
 
@@ -191,9 +184,7 @@ if (mkdir($tmpname)) {
       $cmd = $config->tar.' -cf '.quote($tararc).' '.quote($arcname);
       execCommand($cmd, $retcode);
       if ($retcode != 0) {
-        header('HTTP/1.x 500 Internal Server Error', true, 500);
-        error_log('Unable to call tar command "'.$cmd.'"');
-        print'Unable to call tar command - see webserver error log for details';
+        print'Unable to call tar command "'.$config->tar.'"';
       }
     }
     if ($retcode != 0) {
@@ -210,7 +201,6 @@ if (mkdir($tmpname)) {
       $srcHandle = fopen($tmpname.DIRECTORY_SEPARATOR.$tararc, 'rb');
       $dstHandle = gzopen($tmpname.DIRECTORY_SEPARATOR.$dlarc, 'wb');
       if (!$srcHandle || !$dstHandle) {
-        header('HTTP/1.x 500 Internal Server Error', true, 500);
         print'Unable to open file for gz-compression';
         chdir('..');
         removeDirectory($tmpname);
@@ -227,9 +217,7 @@ if (mkdir($tmpname)) {
       $retcode = 0;
       execCommand($cmd, $retcode);
       if ($retcode != 0) {
-        header('HTTP/1.x 500 Internal Server Error', true, 500);
-        error_log('Unable to call gzip command "'.$cmd.'"');
-        print'Unable to call gzip command - see webserver error log for details';
+        print'Unable to call gzip command "'.$config->gzip.'"';
         chdir('..');
         removeDirectory($tmpname);
         exit(0);

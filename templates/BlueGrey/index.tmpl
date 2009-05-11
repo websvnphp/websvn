@@ -1,29 +1,27 @@
-    <p>
-      <table align="center" cellspacing="0" cellpadding="0" width="50%">
-        <tr><th align="center" class="HdrClmnEnd">[lang:PROJECTS]</th></tr>
-      [websvn-test:flatview]
-        [websvn-startlisting]
-        [websvn-test:groupid]
-        [websvn-else]
-        <tr><td class="row[websvn:rowparity]"><img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/repo.png" alt="[REPO]"> [websvn:projectlink]</td></tr>
-        [websvn-endtest]
-        [websvn-endlisting]
-      [websvn-else]
-        <tr><td>
-        [websvn-startlisting]
-        [websvn-test:groupid]
-          [websvn-test:notfirstgroup]
-          </div> <!-- switchcontent -->
-          [websvn-endtest]
-          
-          <div class="groupname" onclick="expandcontent(this, '[websvn:groupid]');" style="cursor: pointer;"><div class="a"><span class="showstate"></span>[websvn:groupname]</div></div>
-          <div class="switchcontent" id="[websvn:groupid]">
-        [websvn-else]
-          <div class="row[websvn:rowparity]"><img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/repo.png" alt="[REPO]">[websvn:projectlink]</div>
-        [websvn-endtest]
-        [websvn-endlisting]
-        </td></tr>
-        </tr>
-      [websvn-endtest]
-      </table>
-    <hr />
+	<p>
+	[websvn-test:flatview]
+	  <table align="center" cellspacing="0" cellpadding="0" width="50%">
+		<tr><th align="center" class="HdrClmnEnd">[lang:PROJECTS]</th></tr>
+		  [websvn-startlisting]
+		<tr><td class="row[websvn:rowparity]"><img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/repo.png" alt="[FOLDER]"> [websvn:projlink]</td>
+		</tr>
+	  [websvn-endlisting]
+	  </table>
+	[websvn-else]
+	   <table align="center" cellspacing=0 cellpadding=0 width="50%">
+		  <tr><th align="left" class="HdrClmnEnd">[lang:PROJECTS]</th></tr>
+		  <tr>
+		  <td>
+		  [websvn-startlisting]
+			 [websvn-test:isprojlink]
+				<div class="row[websvn:rowparity]"><img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/repo.png" alt="[FOLDER]"> [websvn:listitem]</div>
+			 [websvn-else]
+				[websvn:listitem]
+			 [websvn-endtest]
+		  [websvn-endlisting]
+		  </td>
+		  </tr>
+	   </table>
+	[websvn-endtest]
+	<hr />
+	

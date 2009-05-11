@@ -4,6 +4,7 @@
    [websvn-test:noprev]
      [lang:NOPREVREV]. [websvn:filedetaillink]
    [websvn-else]
+   
 	<table cellspacing="0" cellpadding="0" border="0" width="100%">
 	  <tr>
 		<td align="left"><h1>[websvn:repname]</h1></td>
@@ -11,25 +12,15 @@
 	  </tr>
 	</table>
       [websvn:curdirlinks] - [lang:DIFFREVS] <b>[websvn:rev2]</b> [lang:AND] <b>[websvn:rev1]</b>
+      <p>
       
       <p><center>
-      [websvn-test:showcompactlink]
-        [websvn:showcompactlink]
-      [websvn-endtest]
-      [websvn-test:showalllink]
-        [websvn:showalllink]
-      [websvn-endtest]
-      [websvn-test:regardwhitespacelink]
-        [websvn:regardwhitespacelink]
-      [websvn-endtest]
-      [websvn-test:ignorewhitespacelink]
-        [websvn:ignorewhitespacelink]
-      [websvn-endtest]
+      [websvn:showcompactlink]
+      [websvn:showalllink]
+      [websvn:regardwhitespacelink]
+      [websvn:ignorewhitespacelink]
       </center>
       <p>
-   [websvn-test:warning]
-      <div class="warning">[websvn:warning]</div>
-   [websvn-else]
       <table class="diff" width="100%" cellspacing="0">
          <tr>
             <th class="HdrClmnEnd" style="padding-bottom: 5px" width="50%" align="left"><b>[lang:REV] [websvn:rev2]</b></th>
@@ -52,7 +43,6 @@
          [websvn-endlisting]
       
       </table>
-     [websvn-endtest]
    [websvn-endtest]
 [websvn-endtest]
 

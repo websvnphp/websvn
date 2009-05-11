@@ -435,27 +435,27 @@ function createProjectSelectionForm() {
   }
 
   $url = $config->getURL(-1, "", "form");
-  $hidden = ($config->multiViews) ? "<input type=\"hidden\" name=\"op\" value=\"form\" />" : "";
-  $hidden .= "<input type=\"hidden\" name=\"selectproj\" value=\"1\" />";
-  $vars["projects_form"] = "<form action=\"$url\" method=\"post\" id=\"projectform\">".$hidden;
+  $vars["projects_form"] = "<form action=\"$url\" method=\"post\" id=\"projectform\">";
 
   $reps = $config->getRepositories();
   $vars["projects_select"] = "<select name=\"repname\" onchange=\"javascript:this.form.submit();\">";
 
-  foreach ($reps as $project) {
-    if ($project->hasReadAccess("/", true)) {
-      if ($rep->getDisplayName() == $project->getDisplayName()) {
+  foreach ($reps as $trep) {
+    if ($trep->hasReadAccess("/", true)) {
+      if ($rep->getDisplayName() == $trep->getDisplayName()) {
         $sel = ' selected="selected"';
       } else {
         $sel = "";
       }
-      $vars["projects_select"] .= "<option value=\"".$project->getDisplayName()."\"$sel>".$project->getDisplayName()."</option>";
+
+      $vars["projects_select"] .= "<option value=\"".$trep->getDisplayName()."\"$sel>".$trep->getDisplayName()."</option>";
     }
   }
+
   $vars["projects_select"] .= "</select>";
 
   $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-  $vars["projects_hidden"] = ""; // TODO: Remove this completely at some point
+  $vars["projects_hidden"] = "<input type=\"hidden\" name=\"selectproj\" value=\"1\" /><input type=\"hidden\" name=\"op\" value=\"form\" />";
   $vars["projects_endform"] = "</form>";
 }
 
@@ -466,23 +466,25 @@ function createRevisionSelectionForm() {
   if ($rev == 0) {
     $thisrev = "HEAD";
   } else {
-    $thisrev = $rev;
+    $thisrev  = $rev;
   }
 
-  list($url, $params) = $config->getUrlParts($rep, "", "revision");
-  $hidden = "";
+  list($url, $params) = $config->getUrlParts($rep, '', 'revision');
+  $vars["revision_form"] = "<form action=\"$url\" method=\"get\" id=\"revisionform\">";
+
+  $vars["revision_input"] = "<input type=\"text\" size=\"5\" name=\"rev\" value=\"$thisrev\" />";
+  $hidden = '';
   foreach ($params as $k => $v) {
     $hidden .= "<input type=\"hidden\" name=\"$k\" value=\"".htmlspecialchars($v)."\" />";
   }
-  $vars["revision_form"] = "<form action=\"$url\" method=\"get\" id=\"revisionform\">".$hidden;
-  $vars["revision_input"] = "<input type=\"text\" size=\"5\" name=\"rev\" value=\"$thisrev\" />";
-  $vars["revision_hidden"] = ""; // TODO: Remove this completely at some point
+  $vars["revision_hidden"] = $hidden;
+
   $vars["revision_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
   $vars["revision_endform"] = "</form>";
 }
 
-// Create the form if we're not in MultiViews.  Otherwise, wsvn must create the
-// form once the current project has been found.
+// Create the form if we're not in MultiViews.  Otherwise wsvn must create the form once the current project has
+// been found
 
 if (!$config->multiViews) {
   createProjectSelectionForm();

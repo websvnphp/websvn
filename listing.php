@@ -241,8 +241,7 @@ $svnrep = new SVNRepository($rep);
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $passrev, "", false);
-// TODO: Check this for the same problem that log.php has with move/delete.
+$history = $svnrep->getLog($path, "", "", false);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -294,8 +293,11 @@ if ($path == "" || $path{0} != "/") {
 
 $vars["repname"] = $rep->getDisplayName();
 
+$compurl = $config->getURL($rep, "/", "comp");
+$revisionurl = $config->getURL($rep, $path, 'revision');
+
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
-  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir');
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'opt=dir';
 } else {
   $vars['goyoungesturl'] = '';
 }
@@ -309,11 +311,7 @@ $vars["lastchangedrev"] = $logrev;
 $vars["date"] = $logEntry ? $logEntry->date : '';
 $vars["author"] = $logEntry ? $logEntry->author : '';
 $vars["log"] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
-
-$vars["changesurl"] = $config->getURL($rep, $path, 'revision').'rev='.$passrev;
-if (sizeof($history->entries) > 1) {
-  $vars["compareurl"] = $config->getURL($rep, '', "comp").'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
-}
+$vars["changesurl"] = $revisionurl.'rev='.$passrev;
 
 createDirLinks($rep, $ppath, $passrev);
 
@@ -324,7 +322,10 @@ $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if ($rep->getHideRss()) {
-  $vars['rssurl'] = $config->getURL($rep, $path, "rss").'isdir=1';
+  $rssurl = $config->getURL($rep, $path, "rss");
+  // $vars["curdirrsslink"] = "<a href=\"${rssurl}isdir=1\">${lang["RSSFEED"]}</a>";
+  $vars['rssurl'] = $rssurl.'isdir=1';
+  // $vars["curdirrssanchor"] = "<a href=\"${rssurl}isdir=1\">";
 }
 
 // Set up the tarball link
@@ -342,10 +343,9 @@ if ($rep->isDownloadAllowed($path)) {
 
 $url = $config->getURL($rep, "/", "comp");
 
-$hidden = ($config->multiViews) ? "<input type=\"hidden\" name=\"op\" value=\"comp\" />" : "";
-$vars["compare_form"] = "<form action=\"$url\" method=\"post\">".$hidden;
-$vars["compare_submit"] = "<input type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
-$vars["compare_hidden"] = ""; // TODO: Remove this completely at some point
+$vars["compare_form"] = "<form action=\"$url\" method=\"post\">";
+$vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
+$vars["compare_hidden"] = "<input type=\"hidden\" name=\"op\" value=\"comp\" />";
 $vars["compare_endform"] = "</form>";
 
 $vars['showlastmod'] = $config->showLastMod;
@@ -354,6 +354,8 @@ $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 $listing = array();
 $listing = showTreeDir($svnrep, $path, $rev, $listing);
 
+$vars["version"] = $version;
+
 if (!$rep->hasReadAccess($path, true)) {
   $vars["noaccess"] = true;
 }
@@ -361,7 +363,6 @@ if (!$rep->hasReadAccess($path, false)) {
   $vars["restricted"] = true;
 }
 
-$vars["template"] = "directory";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."directory.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

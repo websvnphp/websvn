@@ -53,8 +53,6 @@ $youngest = isset($history->entries[0]) ? $history->entries[0]->rev: false;
 
 if (empty($rev)) {
   $rev = $youngest;
-} else {
-  $history = $svnrep->getLog($path, $rev, '', true);
 }
 
 $extn = strtolower(strrchr($path, "."));
@@ -79,7 +77,7 @@ if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
 // file, or from the $contentType array in setup.php.
 
 if (!$rep->getIgnoreSvnMimeTypes()) {
-  $svnMimeType = $svnrep->getProperty($path, "svn:mime-type", $rev);
+  $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
 }
 
 if (!$rep->getIgnoreWebSVNContentTypes()) {
@@ -87,7 +85,7 @@ if (!$rep->getIgnoreWebSVNContentTypes()) {
 }
 
 // Use the documented priorities when establishing what content-type to use.
-if (!empty($svnMimeType) && $svnMimeType != "application/octet-stream") {
+if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') {
   $mimeType = $svnMimeType;
 } else if (!empty($setupContentType)) {
   $mimeType = $setupContentType;
@@ -108,9 +106,9 @@ if (!empty($mimeType)) {
 // If a MIME type is associated with the file, deliver with Content-Type header.
 if (!empty($mimeType) && $rep->hasReadAccess($path, false)) {
   $base = basename($path);
-  header("Content-Type: $mimeType");
-  //header("Content-Length: $size");
-  header("Content-Disposition: inline; filename=".urlencode($base));
+  header('Content-Type: '.$mimeType);
+  //header('Content-Length: '.$size);
+  header('Content-Disposition: inline; filename='.urlencode($base));
   $svnrep->getFileContents($path, "", $rev);
   exit;
 }
@@ -132,16 +130,14 @@ $vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 createDirLinks($rep, $ppath, $passrev);
 
-$vars["indexurl"] = $config->getURL($rep, '', "index");
-$vars["repurl"] = $config->getURL($rep, '', "dir");
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $url = $config->getURL($rep, $path, "log");
 $vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
-if (sizeof($history->entries) > 1) {
-  $url = $config->getURL($rep, $path, "diff");
-  $vars["prevdifflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>";
-}
+$url = $config->getURL($rep, $path, "diff");
+$vars["prevdifflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>";
 
 $url = $config->getURL($rep, $path, "blame");
 $vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
@@ -151,19 +147,14 @@ if ($rep->isDownloadAllowed($path)) {
   $vars["dllink"] = "<a href=\"${url}rev=$passrev\">${lang["DOWNLOAD"]}</a>";
 }
 
-if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, "rss");
-  $vars["rssurl"] = $url;
-  $vars["rsslink"] = "<a href=\"${url}rev=$passrev\">${lang["RSSFEED"]}</a>";
-}
-
 $listing = array();
+
+$vars["version"] = $version;
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars["noaccess"] = true;
 }
 
-$vars["template"] = "file";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."file.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

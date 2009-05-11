@@ -93,7 +93,7 @@ if ($path == '' || $path{0} != '/') {
 $vars['repname'] = $rep->getDisplayName();
 
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
-  $vars['goyoungestlink'] = '<a href="'.$config->getURL($rep, $path, 'revision').'">'.$lang['GOYOUNGEST'].'</a>';
+  $vars['goyoungestlink'] = '<a href="'.$config->getURL($rep, $path, 'revision').'opt=dir">'.$lang['GOYOUNGEST'].'</a>';
 } else {
   $vars['goyoungestlink'] = '';
 }
@@ -125,12 +125,10 @@ foreach ($changes as $file) {
     'added' => $file->action == 'A',
     'modified' => $file->action == 'M',
     'deleted' => $file->action == 'D',
-     // TODO: Figure out how to differentiate directories (detailurl / logurl)
-    'detailurl' => $config->getURL($rep, $file->path, 'file').($passrev ? 'rev='.$passrev : ''),
-    // For deleted resources, make log link start at previous revision
-    'logurl' => $config->getURL($rep, $file->path, 'log').($file->action == 'D' ? 'sr='.($passrev-1) : ($passrev ? 'rev='.$passrev : '')),
-    'diffurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').($passrev ? 'rev='.$passrev : '') : '',
-    'blameurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').($passrev ? 'rev='.$passrev : '') : '',
+    'detailurl' => $config->getURL($rep, $file->path, 'file').'rev='.$passrev,
+    'logurl' => $config->getURL($rep, $file->path, 'log').'rev='.$passrev.'&amp;isdir=0',
+    'diffurl' => $config->getURL($rep, $file->path, 'diff').'rev='.$passrev,
+    'blameurl' => $config->getURL($rep, $file->path, 'blame').'rev='.$passrev,
     'rowparity' => $row,
   );
 
@@ -154,25 +152,28 @@ if ($rev != $headrev) {
 }
 
 if (isset($history->entries[1]->rev)) {
-  $compareurl = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
-  
-  $vars['compareurl'] = $compareurl;
-  $vars['curdircomplink'] = '<a href="'.$compareurl.'</a>';
+  $compurl = $config->getURL($rep, '/', 'comp');
+  $vars['curdircomplink'] = '<a href="'.$compurl.'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev. '">'.$lang['DIFFPREV'].'</a>';
+  $vars['compareurl'] = $compurl.'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
 } else {
-  $vars['compareurl'] = '';
   $vars['curdircomplink'] = '';
+  $vars['compareurl'] = '';
 }
 
 if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, 'rss');
-  $vars['rssurl'] = $url;
-  $vars['rsslink'] = "<a href=\"${url}\">${lang["RSSFEED"]}</a>";
+  $rssurl = $config->getURL($rep, $path, 'rss');
+  // $vars["curdirrsslink"] = "<a href=\"${rssurl}rev=$passrev&amp;isdir=1\">${lang["RSSFEED"]}</a>";
+  // $vars["curdirrsshref"] = "${rssurl}rev=$passrev&amp;isdir=1";
+  // $vars["curdirrssanchor"] = "<a href=\"${rssurl}rev=$passrev&amp;isdir=1\">";
+  $vars['rssurl'] = $rssurl.'isdir=1';
 }
 
+$vars['version'] = $version;
+
 $vars['noaccess'] = !$rep->hasReadAccess($path, true);
+
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
 
-$vars["template"] = "revision";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."revision.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

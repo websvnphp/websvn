@@ -744,25 +744,3 @@ div.blame-popup {
 div.blame-popup .date {
   font-weight: bold;
 }
-
-#wrap td.log, #wrap td.feed {
-	white-space: nowrap;
-}
-
-#wrap td.age, #wrap td.date {
-	padding-left: 3px;
-	padding-right: 8px;
-}
-
-#wrap td.age, #wrap td.date, #wrap td.rev {
-	text-align: right;
-}
-
-div.warning {
-	font-weight: bold;
-	border:  1px solid #d5ce00;
-	background-color: #ffffdc;
-	display: table;
-	padding: 5px;
-	margin: 0 auto;
-}

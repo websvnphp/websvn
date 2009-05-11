@@ -68,9 +68,9 @@ if ($path{0} != "/") {
 
 $prevrev = @$history->entries[1]->rev;
 
-$vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, "UTF-8");
+$vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars["rev"] = $rev;
-$vars["path"] = htmlentities($ppath, ENT_QUOTES, "UTF-8");
+$vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars["prevrev"] = $prevrev;
 
 $vars["rev1"] = $history->entries[0]->rev;
@@ -82,13 +82,13 @@ $listing = array();
 
 $url = $config->getURL($rep, $path, "file");
 if ($rev != $youngest) {
-  $vars["goyoungestlink"] = "<a href=\"${url}\">${lang["GOYOUNGEST"]}</a>";
+  $vars["goyoungestlink"] = '<a href="'.$url.'">'.$lang['GOYOUNGEST'].'</a>';
 } else {
   $vars["goyoungestlink"] = "";
 }
 
-$vars["indexurl"] = $config->getURL($rep, "", "index");
-$vars["repurl"] = $config->getURL($rep, "", "dir");
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $url = $config->getURL($rep, $path, "file");
 $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
@@ -102,34 +102,22 @@ $vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
 $url = $config->getURL($rep, $path, "blame");
 $vars["blamelink"] = "<a href=\"${url}rev=$rev\">${lang["BLAME"]}</a>";
 
-// Check for binary file type before diffing.
-$svnMimeType = $svnrep->getProperty($path, "svn:mime-type", $rev);
-
-if (!$rep->getIgnoreSvnMimeTypes() && preg_match("~application/*~", $svnMimeType)) {
-  $vars["warning"] = "Cannot display diff of binary file. (svn:mime-type = $svnMimeType)";
-}
-// If no previous revision exists, bail out before diffing
-else if (!$prevrev) {
-  $vars["noprev"] = 1;
-  $url = $config->getURL($rep, $path, "file");
-  $vars["filedetaillink"] = "<a href=\"${url}rev=$rev\">${lang["FILEDETAIL"]}</a>";
-}
-else {
+if ($prevrev) {
   $url = $config->getURL($rep, $path, "diff");
 
   if (!$all) {
-    $vars["showalllink"] = '<a href="'.$url.'rev='.$rev.'&amp;all=1'.($ignoreWhitespace ? "&amp;ignorews=1" : "").'">'.$lang['SHOWENTIREFILE'].'</a>';
+    $vars["showalllink"] = '<a href="'.$url.'rev='.$rev.'&amp;all=1&amp;ignorews='.($ignoreWhitespace ? '1' : '0').'">'.$lang['SHOWENTIREFILE'].'</a>';
     $vars["showcompactlink"] = '';
   } else {
-    $vars["showcompactlink"] = '<a href="'.$url.'rev='.$rev.'&amp;all=0'.($ignoreWhitespace ? "&amp;ignorews=1" : "").'">'.$lang['SHOWCOMPACT'].'</a>';
+    $vars["showcompactlink"] = '<a href="'.$url.'rev='.$rev.'&amp;all=0&amp;ignorews='.($ignoreWhitespace ? '1' : '0').'">'.$lang['SHOWCOMPACT'].'</a>';
     $vars["showalllink"] = '';
   }
   if (!$ignoreWhitespace) {
-    $vars["ignorewhitespacelink"] = '<a href="'.$url.'rev='.$rev.'&amp;all='.($all ? '1' : '0').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
-    $vars["regardwhitespacelink"] = "";
+    $vars['ignorewhitespacelink'] = '<a href="'.$url.'rev='.$rev.'&amp;all='.($all ? '1' : '0').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
+    $vars['regardwhitespacelink'] = '';
   } else {
-    $vars["regardwhitespacelink"] = '<a href="'.$url.'rev='.$rev.($all ? '&amp;all=1' : '').'">'.$lang['REGARDWHITESPACE'].'</a>';
-    $vars["ignorewhitespacelink"] = "";
+    $vars['regardwhitespacelink'] = '<a href="'.$url.'rev='.$rev.'&amp;all='.($all ? '1' : '0').'&amp;ignorews=0">'.$lang['REGARDWHITESPACE'].'</a>';
+    $vars['ignorewhitespacelink'] = '';
   }
 
   // Get the contents of the two files
@@ -145,13 +133,19 @@ else {
   // Remove our temporary files
   @unlink($oldtname);
   @unlink($newtname);
+
+} else {
+  $vars["noprev"] = 1;
+  $url = $config->getURL($rep, $path, "file");
+  $vars["filedetaillink"] = "<a href=\"${url}rev=$rev\">${lang["SHOWENTIREFILE"]}.</a>";
 }
+
+$vars["version"] = $version;
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars["noaccess"] = true;
 }
 
-$vars["template"] = "diff";
 parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."diff.tmpl", $vars, $listing);
 parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);

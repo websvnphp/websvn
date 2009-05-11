@@ -84,28 +84,31 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
             [websvn-icon]
             [websvn:filelink]
          </td>
+         
          [websvn-test:showlastmod]
-         <td class="rev"><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
-         [websvn-test:showageinsteadofdate]
-         <td class="age" title="[websvn:date]">[websvn:age]</td>
-         [websvn-else]
-         <td class="date" title="[websvn:age]">[websvn:date]</td>
+           <td><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
+           [websvn-test:showageinsteadofdate]
+             <td title="[websvn:date]">[websvn:age]</td>
+           [websvn-else]
+             <td title="[websvn:age]">[websvn:date]</td>
+           [websvn-endtest]
+           <td>[websvn:author]</td>
          [websvn-endtest]
-         <td class="author">[websvn:author]</td>
-         [websvn-endtest]
+         
          <td class="log">[lang:NOBR]<a href="[websvn:logurl]">[lang:VIEWLOG]</a>[lang:ENDNOBR]</td>
+         
          [websvn-test:allowdownload]
-         <td class="compress">
-           [websvn-test:downloadurl]
-             <a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a>
-           [websvn-endtest]
-           [websvn-test:downloadplainurl]
-             <a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a>
-           [websvn-endtest]
-         </td>
+           <td class="compress">
+             [websvn-test:downloadurl]
+               <a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a>
+             [websvn-endtest]
+             [websvn-test:downloadplainurl]
+               <a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a>
+             [websvn-endtest]
+           </td>
          [websvn-endtest]
          [websvn-test:rssurl]
-         <td class="feed"><a href="[websvn:rssurl]">RSS</a></td>
+            <td class="feed"><a href="[websvn:rssurl]">[lang:RSSFEED]</a></td>
          [websvn-endtest]
       </tr>
       [websvn-endlisting]
