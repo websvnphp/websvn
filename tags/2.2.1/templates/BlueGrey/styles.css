@@ -1,0 +1,197 @@
+body
+{
+   font-family: verdana, sans-serif;
+   color: black;
+   background-color: white;
+}
+body *
+{
+   font-size: 10pt;
+}
+h1
+{
+   font-size: 150%;
+}
+h2
+{
+   font-size: 125%;
+}
+hr
+{
+   border: 0px;
+   padding: 0px;
+   height: 1px;
+   background-color: #808080;
+}
+a:link, a:visited
+{
+   color: #004080;
+   text-decoration: none;
+}
+a:hover, a:active
+{
+   text-decoration: underline;
+}
+.HdrClmn, .HdrClmnEnd
+{
+   border: black 1px solid;
+   font-weight: bold;
+   color: white;
+   background-color: #809cc8;
+}
+table
+{
+   border-width: 0px;
+   border-collapse: collapse;
+}
+.row0, .row1
+{
+   height: 22px;
+   border-width: 0px;
+}
+.row0 img, .row1 img
+{
+   padding: 0px;
+   margin: 0px;
+   vertical-align: middle;
+}
+.row0, .light
+{
+   background-color: #f0f0f0;
+}
+.row1, .dark
+{
+   background-color: #e0e0e0;
+}
+
+.blameTbl tbody th
+{
+	font-weight: normal;
+	text-align: right;
+}
+
+.CatClmn0, .blameTbl tbody .light th
+{
+   border-right: black 1px solid;
+   background-color: #e0e0ff
+}
+
+.CatClmn1, .blameTbl tbody .dark th
+{
+   border-right: black 1px solid;
+   background-color: #d0d0ee
+}
+
+table.outline
+{
+   border-collapse: collapse;
+   border: 1px black solid;
+}
+
+td.diffdeleted
+{
+   font-size: 11px;
+   background-color: #ff8888;
+}
+
+td.diffchanged
+{
+   font-size: 11px;
+   background-color: #ffff88;
+}
+
+td.diffadded
+{
+   font-size: 11px;
+   background-color: #88ff88;
+}
+
+td.diff
+{
+   font-size: 11px;
+   background-color: #F0F0F0;
+}
+
+div.newpath
+{
+   padding: 10px;
+   background-color: #d0d0ee;
+}
+
+div.difflines
+{
+}
+
+.icon
+{
+   vertical-align: middle;
+}
+
+.plusbox, .minusbox
+{
+   float: left;
+   clear: both;
+   position: relative;
+   top: -3px;
+   font-size: 13px;
+   font-weight: bold;
+   width: 16px;
+   text-indent: 0;
+   height: 16px;
+   color: black;
+   text-align: center;
+   padding: 0px 2px 0px 3px;
+   border: black solid 1px;
+   margin-right: 5px;	
+}
+
+.plusbox
+{
+   background-color: #D0D0D0;
+}
+
+.minusbox
+{
+   background-color: #809cc8;
+}
+
+.groupname
+{
+   padding-left: 0px;
+   text-indent: -25px;
+   margin: 3px 0 3px 0;
+}
+
+.switchcontent
+{
+   margin: 3px 0 0 20px;
+}
+
+.project
+{
+   padding: 2px;
+}
+
+pre {
+   padding: 4px;
+   background-color: #eee;
+   border: solid 1px #ccc;
+}
+
+code {
+	white-space: pre-wrap;
+}
+
+div.blame-popup
+{
+   position: absolute;
+   text-align: left;
+   background-color: white;
+   border: solid 2px #809cc8;
+   padding: 5px;
+}
+
+div.blame-popup .date
+{
+   font-weight: bold;
+}

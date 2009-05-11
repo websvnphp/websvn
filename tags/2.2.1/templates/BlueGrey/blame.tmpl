@@ -1,0 +1,34 @@
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+  <tr>
+    <td align="left"><h1>[websvn:repname]</h1></td>
+    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_hidden][websvn:projects_endform]</td>
+  </tr>
+</table>
+
+[websvn:curdirlinks] - [lang:BLAMEFOR] <b>[websvn:rev]</b>
+<p>&nbsp;</p>
+
+[websvn-test:noaccess]
+	[lang:NOACCESS]
+[websvn-else]
+<table cellpadding="2" cellspacing="0" width="100%" class="blameTbl">
+	<thead>
+		<tr>
+			<th class="HdrClmn"><b>[lang:LINENO]</b></th>
+			<th class="HdrClmn"><b>[lang:REV]</b></th>
+			<th class="HdrClmn"><b>[lang:AUTHOR]</b></th>
+			<th class="HdrClmnEnd"><b>[lang:LINE]</b></th>
+		</tr>
+	</thead>
+	<tbody>
+	[websvn-startlisting]
+	<tr class="[websvn:row_class]">
+		<th><a name="l[websvn:lineno]">[websvn:lineno]</a></th><th>[websvn:revision]</th><th>[websvn:author]</th><td>[websvn:line]</td>
+	</tr>
+	[websvn-endlisting]
+	</tbody>
+</table> 
+
+[websvn:javascript]
+
+[websvn-endtest]
