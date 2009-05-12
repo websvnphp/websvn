@@ -379,13 +379,13 @@ $url = '?'.buildQuery($_GET + $_POST);
 $vars["lang_form"] = "<form action=\"$url\" method=\"post\" id=\"langform\">";
 $vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";
 
-foreach ($languages as $code => $d) {
+foreach ($languages as $code => $names) {
   $sel = ($code == $userLang) ? ' selected="selected"' : '';
-  $vars["lang_select"] .= '<option value="'.$code.'"'.$sel.'>'.$d[2].' - '.$d[1].'</option>';
+  $vars["lang_select"] .= "<option value=\"$code\"$sel>{$names[2]} - {$names[1]}</option>";
 }
 
 $vars["lang_select"] .= "</select>";
-$vars["lang_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
+$vars["lang_submit"] = "<noscript><input type=\"submit\" value=\"${lang[GO]}\" /></noscript>";
 $vars["lang_endform"] = "</form>";
 
 // Set up headers
@@ -418,7 +418,7 @@ if (!$config->multiViews) {
 // due to possible XSS exploit, we need to clean up path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 if ($path === null || $path === '') $path = '/';
-$vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
+$vars['safepath'] = htmlentities($path, ENT_QUOTES, "UTF-8");
 $rev = (int)@$_REQUEST["rev"];
 
 // Function to create the project selection HTML form
@@ -454,7 +454,7 @@ function createProjectSelectionForm() {
   }
   $vars["projects_select"] .= "</select>";
 
-  $vars["projects_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
+  $vars["projects_submit"] = "<noscript><input type=\"submit\" value=\"${lang[GO]}\" /></noscript>";
   $vars["projects_hidden"] = ""; // TODO: Remove this completely at some point
   $vars["projects_endform"] = "</form>";
 }
@@ -491,7 +491,7 @@ if (!$config->multiViews) {
 
 if (!$config->multiViews && $rep) {
   $vars["allowdownload"] = $rep->getAllowDownload();
-  $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+  $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, "UTF-8");
 }
 
 // As of version 1.70 the output encoding is forced to be UTF-8, since this is the output
