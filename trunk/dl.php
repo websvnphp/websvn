@@ -135,6 +135,7 @@ if (mkdir($tmpname)) {
   setDirectoryTimestamp($tmpname.DIRECTORY_SEPARATOR.$arcname, $ts);
 
   // change to temp directory so that only relative paths are stored in tar
+  $oldcwd = getcwd();
   chdir($tmpname);
 
   if ($isDir) {
@@ -197,7 +198,7 @@ if (mkdir($tmpname)) {
       }
     }
     if ($retcode != 0) {
-      chdir('..');
+      chdir($oldcwd);
       removeDirectory($tmpname);
       exit(0);
     }
@@ -207,12 +208,12 @@ if (mkdir($tmpname)) {
 
     // GZIP it up
     if (function_exists('gzopen')) {
-      $srcHandle = fopen($tmpname.DIRECTORY_SEPARATOR.$tararc, 'rb');
-      $dstHandle = gzopen($tmpname.DIRECTORY_SEPARATOR.$dlarc, 'wb');
+      $srcHandle = fopen($tararc, 'rb');
+      $dstHandle = gzopen($dlarc, 'wb');
       if (!$srcHandle || !$dstHandle) {
         header('HTTP/1.x 500 Internal Server Error', true, 500);
         print'Unable to open file for gz-compression';
-        chdir('..');
+        chdir($oldcwd);
         removeDirectory($tmpname);
         exit(0);
       }
@@ -230,7 +231,7 @@ if (mkdir($tmpname)) {
         header('HTTP/1.x 500 Internal Server Error', true, 500);
         error_log('Unable to call gzip command "'.$cmd.'"');
         print'Unable to call gzip command - see webserver error log for details';
-        chdir('..');
+        chdir($oldcwd);
         removeDirectory($tmpname);
         exit(0);
       }
@@ -259,7 +260,7 @@ if (mkdir($tmpname)) {
     print 'Unable to open file '.$dlarc."\n";
   }
 
-  chdir('..');
+  chdir($oldcwd);
 
   removeDirectory($tmpname);
 }
