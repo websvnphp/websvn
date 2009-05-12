@@ -40,7 +40,7 @@ $lang["SUPPLYREP"] = "Nastavte prosím cestu k repozitáři v include/config.php
 
 $lang["DIFFREVS"] = "Rozdíly mezi revizemi";
 $lang["AND"] = "a";
-$lang["REV"] = "Revevize";
+$lang["REV"] = "Revize";
 $lang["LINE"] = "Line";
 $lang["SHOWENTIREFILE"] = "Zobraz celý soubor";
 $lang["SHOWCOMPACT"] = "Zobraz pouze rozdílné části";
