@@ -45,6 +45,8 @@ $lang["REV"] = "R&eacute;vision";
 $lang["LINE"] = "Ligne";
 $lang["SHOWENTIREFILE"] = "Afficher tout le fichier";
 $lang["SHOWCOMPACT"] = "Afficher seulement les passages avec des diff&eacute;rences";
+$lang["IGNOREWHITESPACE"] = "Ignorer les espaces blanc";
+$lang["REGARDWHITESPACE"] = "Prendre en compte les espaces blanc";
 
 $lang["LISTING"] = "Arborescence";
 $lang["FILEDETAIL"] = "D&eacute;tails";
@@ -68,6 +70,7 @@ $lang["AGE"] = "Anciennet&eacute;";
 $lang["LOG"] = "Journal";
 $lang["CURDIR"] = "R&eacute;pertoire courant";
 $lang["TARBALL"] = "Tarball";
+$lang["DOWNLOAD"] = "T&eacute;l&eacute;charger";
 
 $lang["PREV"] = "Pr&eacute;c&eacute;dent";
 $lang["NEXT"] = "Suivant";
