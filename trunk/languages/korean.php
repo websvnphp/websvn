@@ -19,13 +19,15 @@
 //
 // --
 //
-// korean-utf8.php
+// korean.php
+//
+// Korean (utf8) language strings
 // Translator: Lee Jae-Hong
-// Korean(utf8) language strings
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Korean";
-$lang['LANGUAGETAG'] = 'ko';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "ko";
 
 $lang["LOG"] = "로그";
 $lang["DIFF"] = "비교";
@@ -54,7 +56,7 @@ $lang["HIDECHANGED"] = "변경된 파일 숨기기";
 $lang["NEWFILES"] = "새 파일";
 $lang["CHANGEDFILES"] = "수정된 파일";
 $lang["DELETEDFILES"] = "삭제된 파일";
-$lang["VIEWLOG"] = "로그&nbsp;보기";
+$lang["VIEWLOG"] = "로그 보기";
 $lang["PATH"] = "경로";
 $lang["AUTHOR"] = "작성자";
 $lang["AGE"] = "기간";
@@ -69,8 +71,8 @@ $lang["SHOWALL"] = "모두 보기";
 $lang["BADCMD"] = "명령 실행 에러";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;프로젝트";
-$lang["SERVER"] = "Subversion&nbsp;서버";
+$lang["PROJECTS"] = "Subversion 프로젝트";
+$lang["SERVER"] = "Subversion 서버";
 
 $lang["SEARCHLOG"] = "로그 검색";
 $lang["CLEARLOG"] = "검색 조건 삭제";
@@ -109,6 +111,3 @@ $lang["WITHPATH"] = "경로:";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

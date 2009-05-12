@@ -25,13 +25,14 @@
 // by Sigve Indregard <sigve.indregard@gmail.com>.
 
 // Translation notes:
-// - I've tried to keep with the translations made in the norwegian version
-//   of "Version control with Subversion"
+// - I've tried to keep with the translations made in the Norwegian version
+//   of "Version Control with Subversion"
 // - I've kept the abbreviation "diff"
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Norwegian";
-$lang['LANGUAGETAG'] = 'no';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "no";
 
 $lang["LOG"] = "Logg";
 $lang["DIFF"] = "Diff";
@@ -45,13 +46,13 @@ $lang["AND"] = "og";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Linje";
 $lang["SHOWENTIREFILE"] = "Vis hele filen";
-$lang["SHOWCOMPACT"] = "Vis kun omr&aring;der med forskjeller";
+$lang["SHOWCOMPACT"] = "Vis kun områder med forskjeller";
 
 $lang["DIFFPREV"] = "Sammenlign med forrige";
 $lang["BLAME"] = "Ansvarlig";
 
 $lang["REVINFO"] = "Revisjonsinformasjon";
-$lang["GOYOUNGEST"] = "G&aring; til nyeste revisjon";
+$lang["GOYOUNGEST"] = "Gå til nyeste revisjon";
 $lang["LASTMOD"] = "Siste endring";
 $lang["LOGMSG"] = "Loggmelding";
 $lang["CHANGES"] = "Endringer";
@@ -60,7 +61,7 @@ $lang["HIDECHANGED"] = "Gjem endrede filer";
 $lang["NEWFILES"] = "Nye filer";
 $lang["CHANGEDFILES"] = "Endrede filer";
 $lang["DELETEDFILES"] = "Slettede filer";
-$lang["VIEWLOG"] = "Vis&nbsp;logg";
+$lang["VIEWLOG"] = "Vis logg";
 $lang["PATH"] = "Sti";
 $lang["AUTHOR"] = "Forfatter";
 $lang["AGE"] = "Alder";
@@ -72,40 +73,40 @@ $lang["PREV"] = "Forrige";
 $lang["NEXT"] = "Neste";
 $lang["SHOWALL"] = "Vis alle";
 
-$lang["BADCMD"] = "En feil oppstod under utf&oslash;relse av denne kommandoen";
+$lang["BADCMD"] = "En feil oppstod under utførelse av denne kommandoen";
 
-$lang["POWERED"] = "Kj&oslash;rer p&aring; <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Kjører på <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversionprosjekter";
 $lang["SERVER"] = "Subversiontjener";
 
-$lang["SEARCHLOG"] = "S&oslash;k i loggen etter";
-$lang["CLEARLOG"] = "T&oslash;m gjeldende s&oslash;k";
+$lang["SEARCHLOG"] = "Søk i loggen etter";
+$lang["CLEARLOG"] = "Tøm gjeldende søk";
 $lang["MORERESULTS"] = "Finn flere treff...";
-$lang["NORESULTS"] = "Ingen loggmeldinger passer til ditt s&oslash;k";
-$lang["NOMORERESULTS"] = "Ingen flere loggmeldinger passer til ditt s&oslash;k";
-$lang['NOPREVREV'] = 'Ingen tidligere revisjon';
+$lang["NORESULTS"] = "Ingen loggmeldinger passer til ditt søk";
+$lang["NOMORERESULTS"] = "Ingen flere loggmeldinger passer til ditt søk";
+$lang["NOPREVREV"] = "Ingen tidligere revisjon";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS-str&oslash;m";
+$lang["RSSFEEDTITLE"] = "WebSVN RSS-strøm";
 $lang["FILESMODIFIED"] = "fil(er) endret";
-$lang["RSSFEED"] = "RSS-str&oslash;m";
+$lang["RSSFEED"] = "RSS-strøm";
 
 $lang["LINENO"] = "Linjenr.";
 $lang["BLAMEFOR"] = "Ansvarliginformasjon for rev.";
 
-$lang["YEARS"] = "&aring;r";
-$lang["MONTHS"] = "m&aring;neder";
+$lang["YEARS"] = "år";
+$lang["MONTHS"] = "måneder";
 $lang["WEEKS"] = "uker";
 $lang["DAYS"] = "dager";
 $lang["HOURS"] = "timer";
 $lang["MINUTES"] = "minutter";
 
-$lang["GO"] = "G&aring;";
+$lang["GO"] = "Gå";
 
 $lang["PATHCOMPARISON"] = "Stisammenligning";
 $lang["COMPAREPATHS"] = "Sammenlign stier";
 $lang["COMPAREREVS"] = "Sammenlign revisjoner";
 $lang["PROPCHANGES"] = "Egenskapsendringer :";
-$lang["CONVFROM"] = "Denne sammenligningen viser hva som m&aring; til for &aring; konvertere stien ";
+$lang["CONVFROM"] = "Denne sammenligningen viser hva som må til for å konvertere stien ";
 $lang["TO"] = "med";
 $lang["REVCOMP"] = "Baklengs sammenligning";
 $lang["COMPPATH"] = "Sammenlign sti:";
@@ -118,6 +119,3 @@ $lang["FILEADDED"] = "Ny fil";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

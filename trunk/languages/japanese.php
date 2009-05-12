@@ -20,13 +20,14 @@
 // --
 //
 // japanese.php
-// Translatior: BEPPU Masamichi
 //
 // Japanese(UTF-8) language strings
+// Translator: BEPPU Masamichi
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Japanese";
-$lang['LANGUAGETAG'] = 'ja';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "ja";
 
 $lang["LOG"] = "ログ";
 $lang["DIFF"] = "差分";
@@ -73,8 +74,8 @@ $lang["BADCMD"] = "コマンド実行中のエラー";
 $lang["UNKNOWNREVISION"] = "指定のリビジョンがありません";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;リポジトリ一覧";
-$lang["SERVER"] = "Subversion&nbsp;サーバ";
+$lang["PROJECTS"] = "Subversion リポジトリ一覧";
+$lang["SERVER"] = "Subversion サーバ";
 
 $lang["FILTER"] = "フィルタオプション";
 $lang["STARTLOG"] = "開始リビジョン";
@@ -85,7 +86,7 @@ $lang["CLEARLOG"] = "検索条件をクリアする";
 $lang["MORERESULTS"] = "検索条件を絞り込む";
 $lang["NORESULTS"] = "検索条件にマッチするものはありませんでした";
 $lang["NOMORERESULTS"] = "これ以上検索条件にマッチするものはありません";
-$lang['NOPREVREV'] = "前のリビジョンはありません";
+$lang["NOPREVREV"] = "前のリビジョンはありません";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "ファイルが修正されました";

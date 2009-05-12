@@ -25,14 +25,15 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Spanish";
-$lang['LANGUAGETAG'] = 'es';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "es";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "No se especificó un repositorio";
 $lang["NOPATH"] = "Ruta no encontrada";
-$lang["SUPPLYREP"] = "Por Favor, configure una ruta a un repositorio en include/config.php usando \$config->parentPath o \$config->addRepository<p>Verifique la guía de instalación para mas detalles";
+$lang["SUPPLYREP"] = "Por favor, configure una ruta a un repositorio en include/config.php usando \$config->parentPath o \$config->addRepository<p>Verifique la guía de instalación para mas detalles";
 
 $lang["DIFFREVS"] = "Diff entre versiones";
 $lang["AND"] = "y";
@@ -54,7 +55,7 @@ $lang["HIDECHANGED"] = "Ocultar archivos modificados";
 $lang["NEWFILES"] = "Archivos Nuevos";
 $lang["CHANGEDFILES"] = "Archivos modificados";
 $lang["DELETEDFILES"] = "Archivos borrados";
-$lang["VIEWLOG"] = "Ver&nbsp;Log";
+$lang["VIEWLOG"] = "Ver Log";
 $lang["PATH"] = "Ruta";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Antigüedad";
@@ -69,15 +70,15 @@ $lang["SHOWALL"] = "Mostrar todo";
 $lang["BADCMD"] = "Error ejecutando ese comando";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Proyectos de&nbsp;Subversion";
-$lang["SERVER"] = "Servidor de&nbsp;Subversion";
+$lang["PROJECTS"] = "Proyectos de Subversion";
+$lang["SERVER"] = "Servidor de Subversion";
 
 $lang["SEARCHLOG"] = "Buscar en el log";
 $lang["CLEARLOG"] = "Limpiar la búsqueda actual";
 $lang["MORERESULTS"] = "Buscar mas coincidencias";
 $lang["NORESULTS"] = "Ningún log coincide con su búsqueda";
 $lang["NOMORERESULTS"] = "No hay mas logs que coincidan con su búsqueda";
-$lang['NOPREVREV'] = 'No hay revisión anterior';
+$lang["NOPREVREV"] = "No hay revisión anterior";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "Archivo(s) modificados";
@@ -85,13 +86,6 @@ $lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Línea Nro.";
 $lang["BLAMEFOR"] = "Información de culpa para rev";
-
-$lang["YEARS"] = "Años";
-$lang["MONTHS"] = "meses";
-$lang["WEEKS"] = "semanas";
-$lang["DAYS"] = "días";
-$lang["HOURS"] = "horas";
-$lang["MINUTES"] = "minutos";
 
 $lang["GO"] = "Ir";
 
@@ -112,6 +106,3 @@ $lang["FILEADDED"] = "Archivo Nuevo";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

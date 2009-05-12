@@ -21,13 +21,13 @@
 //
 // russian.php
 //
-// Russian language strings
+// Russian language strings (UTF-8 encoding)
 // by Alexey Chumakov <alex@chumakov.ru>
-// UTF-8 encoding
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Russian";
-$lang['LANGUAGETAG'] = 'ru';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "ru";
 
 $lang["LOG"] = "Журнал";
 $lang["DIFF"] = "Различия";
@@ -58,7 +58,7 @@ $lang["HIDECHANGED"] = "скрыть измененные файлы";
 $lang["NEWFILES"] = "Новые файлы";
 $lang["CHANGEDFILES"] = "Измененные файлы";
 $lang["DELETEDFILES"] = "Удаленные файлы";
-$lang["VIEWLOG"] = "открыть&nbsp;журнал";
+$lang["VIEWLOG"] = "открыть журнал";
 $lang["PATH"] = "Путь";
 $lang["AUTHOR"] = "Автор";
 $lang["AGE"] = "Давность";
@@ -74,8 +74,8 @@ $lang["BADCMD"] = "Ошибка при выполнении этой коман�
 $lang["UNKNOWNREVISION"] = "Редакция не найдена";
 
 $lang["POWERED"] = "Работает на <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Хранилища Subversion&nbsp;";
-$lang["SERVER"] = "Сервер Subversion&nbsp;";
+$lang["PROJECTS"] = "Хранилища Subversion";
+$lang["SERVER"] = "Сервер Subversion";
 
 $lang["FILTER"] = "Параметры фильтрации";
 $lang["STARTLOG"] = "От редакции";
@@ -118,6 +118,3 @@ $lang["FILEADDED"] = "Новый файл";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-//$lang["NOBR"] = "<nobr>";
-//$lang["ENDNOBR"] = "</nobr>";

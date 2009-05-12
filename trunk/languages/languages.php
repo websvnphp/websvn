@@ -23,14 +23,17 @@
 //
 // declares all available languages
 
+// language tag => array(base filename, name in English, name in native tongue)
 $languages = array(
   'ca'    => array('catalan', 'Catalan', 'Catal&agrave;-Valenci&agrave;'),
-  'cs'    => array('czech', 'Cesky', '&#268;esky'),
-  'da'    => array('danish', 'Dansk', 'Dansk'),
-  'nl'    => array('dutch', 'Dutch', 'Dutch'),
+  'zh-CN' => array('chinese-simplified', 'Chinese (Simplified)', '&#20013;&#25991;'),
+  'zh-TW' => array('chinese-traditional', 'Chinese (Traditional)', '&#20013;&#25991;'),
+  'cs'    => array('czech', 'Czech', '&#268;esky'),
+  'da'    => array('danish', 'Danish', 'Dansk'),
+  'nl'    => array('dutch', 'Dutch', 'Nederlands'),
   'en'    => array('english', 'English', 'English'),
-  'fi'    => array('finnish', 'Finnish', 'Finnish'),
-  'fr'    => array('french', 'Francais', 'Fran&ccedil;ais'),
+  'fi'    => array('finnish', 'Finnish', 'Suomi'),
+  'fr'    => array('french', 'French', 'Fran&ccedil;ais'),
   'de'    => array('german', 'German', 'Deutsch'),
   'he-IL' => array('hebrew', 'Hebrew', '&#1506;&#1489;&#1512;&#1497;&#1514;'),
   'hu'    => array('hungarian', 'Hungarian', 'Magyar'),
@@ -41,14 +44,12 @@ $languages = array(
   'no'    => array('norwegian', 'Norwegian', 'Norsk'),
   'pl'    => array('polish', 'Polish', 'Polski'),
   'pt'    => array('portuguese', 'Portuguese', 'Portugu&ecirc;s'),
-  'pt-BR' => array('portuguese-br', 'Brazilian Portuguese', 'Portugu&ecirc;s'),
+  'pt-BR' => array('portuguese-br', 'Portuguese (Brazil)', 'Portugu&ecirc;s'),
   'ru'    => array('russian', 'Russian', '&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;'),
-  'zh-CN' => array('schinese', 'Simplified Chinese', '&#20013;&#25991;'),
   'sk'    => array('slovak', 'Slovak', 'Sloven&#269;ina'),
   'sl'    => array('slovenian', 'Slovenian', 'Sloven&#269;ina'),
   'es'    => array('spanish', 'Spanish', 'Espa&ntilde;ol'),
   'sv'    => array('swedish', 'Swedish', 'Svenska'),
-  'zh-TW' => array('tchinese', 'Traditional Chinese', '&#20013;&#25991;'),
   'tr'    => array('turkish', 'Turkish', 'T&uuml;rk&ccedil;e'),
   'uz'    => array('uzbek', 'Uzbek', 'O&euml;zbekcha'),
 );
