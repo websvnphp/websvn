@@ -19,16 +19,15 @@
 //
 // --
 //
-// Translated by Andrea Visinoni (andrea.visinoni@gmail.com)
 // italian.php
 //
 // Italian language strings
+// Translated by Andrea Visinoni (andrea.visinoni@gmail.com)
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Italian";
-// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
-// see also RFC 4646
-$lang['LANGUAGETAG'] = 'it';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "it";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -63,7 +62,7 @@ $lang["HIDECHANGED"] = "Nascondi file modificati";
 $lang["NEWFILES"] = "Nuovi File";
 $lang["CHANGEDFILES"] = "File modificati";
 $lang["DELETEDFILES"] = "File cancellati";
-$lang["VIEWLOG"] = "Visualizza&nbsp;Log";
+$lang["VIEWLOG"] = "Visualizza Log";
 $lang["PATH"] = "Percorso";
 $lang["AUTHOR"] = "Autore";
 $lang["AGE"] = "Anzianità";
@@ -80,8 +79,8 @@ $lang["BADCMD"] = "Errore durante l'esecuzione del comando";
 $lang["UNKNOWNREVISION"] = "Revisione non trovata";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Repository&nbsp;Subversion";
-$lang["SERVER"] = "Subversion&nbsp;Server";
+$lang["PROJECTS"] = "Repository Subversion";
+$lang["SERVER"] = "Subversion Server";
 
 $lang["FILTER"] = "Opzioni Filtro";
 $lang["STARTLOG"] = "Dalla  revisione";
@@ -92,7 +91,7 @@ $lang["CLEARLOG"] = "Pulisci il fitro corrente";
 $lang["MORERESULTS"] = "Trova più risultati...";
 $lang["NORESULTS"] = "Non ci sono log che soddifano la tua ricerca";
 $lang["NOMORERESULTS"] = "Non ci sono più log che soddifano la tua ricerca";
-$lang['NOPREVREV'] = 'Nessuna revisione precedente';
+$lang["NOPREVREV"] = "Nessuna revisione precedente";
 
 $lang["RSSFEEDTITLE"] = "WebSVN feed RSS";
 $lang["FILESMODIFIED"] = "file modificati";
@@ -125,7 +124,3 @@ $lang["FILEADDED"] = "Nuovo file";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";
-

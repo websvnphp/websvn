@@ -26,7 +26,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Turkish";
-$lang['LANGUAGETAG'] = 'tr';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "tr";
 
 $lang["LOG"] = "Kayıt";
 $lang["DIFF"] = "Fark";
@@ -55,7 +56,7 @@ $lang["HIDECHANGED"] = "Değişen dosyaları gizle";
 $lang["NEWFILES"] = "Yeni Dosyalar";
 $lang["CHANGEDFILES"] = "Değişen dosyalar";
 $lang["DELETEDFILES"] = "Silinen dosyalar";
-$lang["VIEWLOG"] = "Kayıt&nbsp;Mesajını&nbsp;Göster";
+$lang["VIEWLOG"] = "Kayıt Mesajını Göster";
 $lang["PATH"] = "Patika";
 $lang["AUTHOR"] = "Yazar";
 $lang["AGE"] = "Yaş";
@@ -70,8 +71,8 @@ $lang["SHOWALL"] = "Tümünü Göster";
 $lang["BADCMD"] = "Bu komut çalıştırılırken hata oluştu";
 
 $lang["POWERED"] = "<a href=\"http://www.websvn.info/\">WebSVN</a> tarafından çalıştırılmaktadır";
-$lang["PROJECTS"] = "Subversion&nbsp;Projeleri";
-$lang["SERVER"] = "Subversion&nbsp;Sunucusu";
+$lang["PROJECTS"] = "Subversion Projeleri";
+$lang["SERVER"] = "Subversion Sunucusu";
 
 $lang["SEARCHLOG"] = "Kayıtlarda ara";
 $lang["CLEARLOG"] = "Mevcut aramayı iptal et";
@@ -112,6 +113,3 @@ $lang["FILEADDED"] = "Yeni dosya";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

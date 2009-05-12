@@ -19,15 +19,14 @@
 //
 // --
 //
-// Hebrew.php
+// hebrew.php
 //
 // Hebrew language strings
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "עברית";
-// This is the RFC 2616 (?§3.10) language tag that corresponds to this translation
-// see also RFC 4646
-$lang['LANGUAGETAG'] = 'he-IL';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "he-IL";
 
 $lang["LOG"] = "לוג";
 $lang["DIFF"] = "שוני";
@@ -73,8 +72,8 @@ $lang["BADCMD"] = "שגיאה בהרצת הפקודה";
 $lang["UNKNOWNREVISION"] = "גרסה לא נמצאה";
 
 $lang["POWERED"] = "פועל על ידי <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;גנזכי";
-$lang["SERVER"] = "Subversion&nbsp;שרת";
+$lang["PROJECTS"] = "Subversion גנזכי";
+$lang["SERVER"] = "Subversion שרת";
 
 $lang["FILTER"] = "אפשרויות חיפוש";
 $lang["STARTLOG"] = "מגרסה";
@@ -85,7 +84,7 @@ $lang["CLEARLOG"] = "נקה חיפוש נוכחי";
 $lang["MORERESULTS"] = "מצא עוד נתונים...";
 $lang["NORESULTS"] = "אין לוגים התואמים את החיפוש שלך";
 $lang["NOMORERESULTS"] = "אין יותר לוגים התואמים את החיפוש שלך";
-$lang['NOPREVREV'] = 'אין גרסה קודמת';
+$lang["NOPREVREV"] = "אין גרסה קודמת";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "קבצים ששונו";
@@ -118,7 +117,3 @@ $lang["FILEADDED"] = "קובץ חדש";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";
-

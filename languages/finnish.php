@@ -26,7 +26,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Finnish";
-$lang['LANGUAGETAG'] = 'fi';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "fi";
 
 $lang["LOG"] = "Loki";
 $lang["DIFF"] = "Diff";
@@ -55,7 +56,7 @@ $lang["HIDECHANGED"] = "Piilota muutoksia sisältävät tiedostot";
 $lang["NEWFILES"] = "Uudet tiedostot";
 $lang["CHANGEDFILES"] = "Muokatut tiedostot";
 $lang["DELETEDFILES"] = "Poistetut tiedostot";
-$lang["VIEWLOG"] = "Näytä&nbsp;Loki";
+$lang["VIEWLOG"] = "Näytä Loki";
 $lang["PATH"] = "Polku";
 $lang["AUTHOR"] = "Tekijä";
 $lang["AGE"] = "Ikä";
@@ -70,7 +71,7 @@ $lang["SHOWALL"] = "Näytä Kaikki";
 $lang["BADCMD"] = "Virhe komennon suorittamisessa";
 
 $lang["POWERED"] = "Moottorina <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Projektit";
+$lang["PROJECTS"] = "Subversion Projektit";
 $lang["SERVER"] = "Subversion-palvelin";
 
 $lang["SEARCHLOG"] = "Etsi lokista";
@@ -112,6 +113,3 @@ $lang["FILEADDED"] = "Uusi tiedosto";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

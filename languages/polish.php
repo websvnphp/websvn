@@ -25,7 +25,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Polish";
-$lang['LANGUAGETAG'] = 'pl';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "pl";
 
 $lang["LOG"] = "Dziennik zmian";
 $lang["DIFF"] = "Różnice";
@@ -57,11 +58,11 @@ $lang["HIDECHANGED"] = "Ukryj zmienione pliki";
 $lang["NEWFILES"] = "Nowe pliki";
 $lang["CHANGEDFILES"] = "Zmienione pliki";
 $lang["DELETEDFILES"] = "Usunięte pliki";
-$lang["VIEWLOG"] = "Pokaż&nbsp;dziennik&nbsp;zmian";
+$lang["VIEWLOG"] = "Pokaż dziennik zmian";
 $lang["PATH"] = "Ścieżka";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Wiek";
-$lang["LOG"] = "Dziennik&nbsp;zmian";
+$lang["LOG"] = "Dziennik zmian";
 $lang["CURDIR"] = "Aktualny katalog";
 $lang["TARBALL"] = "Archiwum tar";
 
@@ -72,7 +73,7 @@ $lang["SHOWALL"] = "Pokaż wszyskie";
 $lang["BADCMD"] = "Błąd podczas wykonywania polecenia";
 
 $lang["POWERED"] = "Obsługiwane przez <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Projekty&nbsp;Subversion";
+$lang["PROJECTS"] = "Projekty Subversion";
 $lang["SERVER"] = "Serwer Subversion";
 
 $lang["SEARCHLOG"] = "Przeszukaj dziennik zmian";
@@ -116,6 +117,3 @@ $lang["FILEADDED"] = "Nowy plik";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

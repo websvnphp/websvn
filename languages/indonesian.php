@@ -26,9 +26,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Indonesian";
-// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
-// see also RFC 4646
-$lang['LANGUAGETAG'] = 'id';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "id";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Perbedaan";
@@ -60,7 +59,7 @@ $lang["HIDECHANGED"] = "Sembunyikan perubahan file";
 $lang["NEWFILES"] = "Daftar file baru";
 $lang["CHANGEDFILES"] = "Daftar file yang berubah";
 $lang["DELETEDFILES"] = "Daftar file yang dihapus";
-$lang["VIEWLOG"] = "Lihat&nbsp;Log";
+$lang["VIEWLOG"] = "Lihat Log";
 $lang["PATH"] = "Path";
 $lang["AUTHOR"] = "Pemrakarsa";
 $lang["AGE"] = "Usia";
@@ -76,8 +75,8 @@ $lang["BADCMD"] = "Kesalahan menjalankan instruksi ini";
 $lang["UNKNOWNREVISION"] = "Revisi tidak ditemukan";
 
 $lang["POWERED"] = "Didukung oleh <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Repositori&nbsp;Subversion";
-$lang["SERVER"] = "Server&nbsp;Subversion";
+$lang["PROJECTS"] = "Repositori Subversion";
+$lang["SERVER"] = "Server Subversion";
 
 $lang["FILTER"] = "Pilihan Filter";
 $lang["STARTLOG"] = "Dari rev";
@@ -88,7 +87,7 @@ $lang["CLEARLOG"] = "Hapus filter yang ada";
 $lang["MORERESULTS"] = "Cari lebih lanjut...";
 $lang["NORESULTS"] = "Tidak ada log yang sesuai dengan permintaan anda";
 $lang["NOMORERESULTS"] = "Tidak ada lagi log yang bisa ditampilkan";
-$lang['NOPREVREV'] = 'Tidak ada lagi revisi yang lebih lama';
+$lang["NOPREVREV"] = "Tidak ada lagi revisi yang lebih lama";
 
 $lang["RSSFEEDTITLE"] = "Feed RSS WebSVN";
 $lang["FILESMODIFIED"] = "file yang berubah";
@@ -121,6 +120,3 @@ $lang["FILEADDED"] = "File baru";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

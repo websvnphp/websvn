@@ -19,15 +19,14 @@
 //
 // --
 //
-// english.php
+// hungarian.php
 //
-// English language strings
+// Hungarian language strings
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Magyar";
-// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
-// see also RFC 4646
-$lang['LANGUAGETAG'] = 'hu';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "hu";
 
 $lang["LOG"] = "Napló";
 $lang["DIFF"] = "Diff";
@@ -59,7 +58,7 @@ $lang["HIDECHANGED"] = "Módosult file-ok elrejtése";
 $lang["NEWFILES"] = "Új file-ok";
 $lang["CHANGEDFILES"] = "Módosult file-ok";
 $lang["DELETEDFILES"] = "Törölt file-ok";
-$lang["VIEWLOG"] = "Napló&nbsp;megtekintése";
+$lang["VIEWLOG"] = "Napló megtekintése";
 $lang["PATH"] = "Útvonal";
 $lang["AUTHOR"] = "Szerző";
 $lang["AGE"] = "Kor";
@@ -75,8 +74,8 @@ $lang["BADCMD"] = "Hiba történt ennek a parancsnak a futtatásakor";
 $lang["UNKNOWNREVISION"] = "A revízió nem található";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;repository-k";
-$lang["SERVER"] = "Subversion&nbsp;szerver";
+$lang["PROJECTS"] = "Subversion repository-k";
+$lang["SERVER"] = "Subversion szerver";
 
 $lang["FILTER"] = "Szűrő feltételek";
 $lang["STARTLOG"] = "Revíziótól";
@@ -87,7 +86,7 @@ $lang["CLEARLOG"] = "Aktuális szűrő törlése";
 $lang["MORERESULTS"] = "További találatok keresése...";
 $lang["NORESULTS"] = "Nincsenek a feltételnek megfelelő napló üzenetek";
 $lang["NOMORERESULTS"] = "Nincsen több olyan napló üzenet, ami megfelelne a feltételnek";
-$lang['NOPREVREV'] = 'Nincs előző revízió';
+$lang["NOPREVREV"] = "Nincs előző revízió";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "file(-ok) módosultak";
@@ -120,7 +119,3 @@ $lang["FILEADDED"] = "Új file";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";
-

@@ -19,14 +19,13 @@
 //
 // --
 //
-// germany.php
+// german.php
 //
 // German language strings
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "German";
-// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
-// see also RFC 4646
+// The language tag (see RFC 4646) which corresponds to this translation.
 $lang['LANGUAGETAG'] = 'de';
 
 $lang["LOG"] = "Log";
@@ -35,7 +34,7 @@ $lang["DIFF"] = "Diff";
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";
 $lang["NOACCESS"] = "Sie haben keine ausreichende Berechtigungen um diese Inhalte zu lesen";
-$lang["RESTRICTED"] = "Beschr&auml;nkter Zugriff";
+$lang["RESTRICTED"] = "Beschränkter Zugriff";
 $lang["SUPPLYREP"] = "Bitte den Repository-Pfad in include/config.php mit \$config->parentPath oder \$config->addRepository angeben.<p>Genauere Informationen finden sich in der Installationsanleitung";
 
 $lang["DIFFREVS"] = "Vergleich zwischen Revisionen";
@@ -43,9 +42,9 @@ $lang["AND"] = "und";
 $lang["REV"] = "Revision";
 $lang["LINE"] = "Zeile";
 $lang["SHOWENTIREFILE"] = "Ganze Datei anzeigen";
-$lang["SHOWCOMPACT"] = "Nur ge&auml;nderte Bereiche";
+$lang["SHOWCOMPACT"] = "Nur geänderte Bereiche";
 $lang["IGNOREWHITESPACE"] = "Leerzeichen ignorieren";
-$lang["REGARDWHITESPACE"] = "Leerzeichen ber&uuml;cksichtigen";
+$lang["REGARDWHITESPACE"] = "Leerzeichen berücksichtigen";
 
 $lang["LISTING"] = "Verzeichnisansicht";
 $lang["FILEDETAIL"] = "Details";
@@ -54,15 +53,15 @@ $lang["BLAME"] = "Blame";
 
 $lang["REVINFO"] = "Revisionsinformation";
 $lang["GOYOUNGEST"] = "Zur aktuellen Revision";
-$lang["LASTMOD"] = "Letzte &Auml;nderung";
+$lang["LASTMOD"] = "Letzte Änderung";
 $lang["LOGMSG"] = "Logeintrag";
-$lang["CHANGES"] = "&Auml;nderungen";
-$lang["SHOWCHANGED"] = "Ge&auml;nderte Dateien anzeigen";
-$lang["HIDECHANGED"] = "Ge&auml;nderte Dateien verstecken";
+$lang["CHANGES"] = "Änderungen";
+$lang["SHOWCHANGED"] = "Geänderte Dateien anzeigen";
+$lang["HIDECHANGED"] = "Geänderte Dateien verstecken";
 $lang["NEWFILES"] = "Neue Dateien";
-$lang["CHANGEDFILES"] = "Ge&auml;nderte Dateien";
-$lang["DELETEDFILES"] = "Gel&ouml;schte Dateien";
-$lang["VIEWLOG"] = "Log&nbsp;anzeigen";
+$lang["CHANGEDFILES"] = "Geänderte Dateien";
+$lang["DELETEDFILES"] = "Gelöschte Dateien";
+$lang["VIEWLOG"] = "Log anzeigen";
 $lang["PATH"] = "Pfad";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Alter";
@@ -71,11 +70,11 @@ $lang["CURDIR"] = "Aktuelles Verzeichnis";
 $lang["TARBALL"] = "Archiv Download";
 $lang["DOWNLOAD"] = "Download";
 
-$lang["PREV"] = "Zur&uuml;ck";
+$lang["PREV"] = "Zurück";
 $lang["NEXT"] = "Weiter";
 $lang["SHOWALL"] = "Alles anzeigen";
 
-$lang["BADCMD"] = "Fehler beim Ausf&uuml;hren des Befehls";
+$lang["BADCMD"] = "Fehler beim Ausführen des Befehls";
 $lang["UNKNOWNREVISION"] = "Revision nicht gefunden";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info\">WebSVN</a>";
@@ -87,18 +86,18 @@ $lang["STARTLOG"] = "Von Rev.";
 $lang["ENDLOG"] = "bis Rev.";
 $lang["MAXLOG"] = "Max. Rev.";
 $lang["SEARCHLOG"] = "Suche im Log nach";
-$lang["CLEARLOG"] = "Aktuelle Suche l&ouml;schen";
+$lang["CLEARLOG"] = "Aktuelle Suche löschen";
 $lang["MORERESULTS"] = "Weitere Ergebnisse finden...";
 $lang["NORESULTS"] = "Es wurden keine Treffer erzielt";
-$lang["NOMORERESULTS"] = "Keine weiteren Treffer f&uuml;r diese Suche";
+$lang["NOMORERESULTS"] = "Keine weiteren Treffer für diese Suche";
 $lang['NOPREVREV'] = 'Keine vorherige Revision';
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
-$lang["FILESMODIFIED"] = "Ver&auml;nderte Dateien";
+$lang["FILESMODIFIED"] = "Veränderte Dateien";
 $lang["RSSFEED"] = "RSS feed";
 
 $lang["LINENO"] = "Zeilennr.";
-$lang["BLAMEFOR"] = "Blame-Information f&uuml;r Rev.";
+$lang["BLAMEFOR"] = "Blame-Information für Rev.";
 
 $lang["DAYLETTER"] = "t";
 $lang["HOURLETTER"] = "h";
@@ -110,13 +109,13 @@ $lang["GO"] = "Los";
 $lang["PATHCOMPARISON"] = "Pfadvergleich";
 $lang["COMPAREPATHS"] = "Vergleiche Pfade";
 $lang["COMPAREREVS"] = "Vergleiche Revisionen";
-$lang["PROPCHANGES"] = "Ge&auml;nderte Eigenschaften :";
-$lang["CONVFROM"] = "Dieser Vergleich zeigt die &Auml;nderungen zwischen ";
+$lang["PROPCHANGES"] = "Geänderte Eigenschaften :";
+$lang["CONVFROM"] = "Dieser Vergleich zeigt die Änderungen zwischen ";
 $lang["TO"] = "und";
 $lang["REVCOMP"] = "Revisionen vertauschen";
 $lang["COMPPATH"] = "Vergleiche Pfad:";
 $lang["WITHPATH"] = "Mit Pfad:";
-$lang["FILEDELETED"] = "Datei gel&ouml;scht";
+$lang["FILEDELETED"] = "Datei gelöscht";
 $lang["FILEADDED"] = "Neue Datei";
 
 // The following are defined by some languages to stop unwanted line splitting
@@ -124,6 +123,3 @@ $lang["FILEADDED"] = "Neue Datei";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

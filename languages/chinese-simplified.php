@@ -19,7 +19,7 @@
 //
 // --
 //
-// schinese-utf8.php
+// chinese-simplified.php
 //
 // Simple Chinese language strings
 //
@@ -27,7 +27,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Simplified Chinese";
-$lang['LANGUAGETAG'] = 'zh-CN';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "zh-CN";
 
 $lang["LOG"] = "记录";
 $lang["DIFF"] = "差异";
@@ -71,8 +72,8 @@ $lang["SHOWALL"] = "全部显示";
 $lang["BADCMD"] = "命令执行错误";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Projects";
-$lang["SERVER"] = "Subversion&nbsp;Server";
+$lang["PROJECTS"] = "Subversion Projects";
+$lang["SERVER"] = "Subversion Server";
 
 $lang["SEARCHLOG"] = "搜索记录内容";
 $lang["CLEARLOG"] = "清除当前搜索";

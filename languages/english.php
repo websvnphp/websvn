@@ -25,9 +25,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "English";
-// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
-// see also RFC 4646
-$lang['LANGUAGETAG'] = 'en';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "en";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -36,12 +35,13 @@ $lang["NOREP"] = "No repository given";
 $lang["NOPATH"] = "Path not found";
 $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
 $lang["RESTRICTED"] = "Restricted access";
-$lang["SUPPLYREP"] = "Please set up a repository path in include/config.php using \$config->parentPath or \$config->addRepository<p>See the installation guide for more details";
+$lang["SUPPLYREP"] = "Please set up a repository in include/config.php using \$config->parentPath or \$config->addRepository<p>See the installation guide for more details";
 
 $lang["DIFFREVS"] = "Diff between revs";
 $lang["AND"] = "and";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Line";
+$lang["LINENO"] = "Line No.";
 $lang["SHOWENTIREFILE"] = "Show entire file";
 $lang["SHOWCOMPACT"] = "Only display areas with differences";
 $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
@@ -51,6 +51,7 @@ $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Compare with Previous";
 $lang["BLAME"] = "Blame";
+$lang["BLAMEFOR"] = "Blame information for rev";
 
 $lang["REVINFO"] = "Revision Information";
 $lang["GOYOUNGEST"] = "Go to most recent revision";
@@ -66,7 +67,6 @@ $lang["VIEWLOG"] = "View Log";
 $lang["PATH"] = "Path";
 $lang["AUTHOR"] = "Author";
 $lang["AGE"] = "Age";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Current Directory";
 $lang["TARBALL"] = "Tarball";
 $lang["DOWNLOAD"] = "Download";
@@ -86,19 +86,16 @@ $lang["FILTER"] = "Filtering Options";
 $lang["STARTLOG"] = "From rev";
 $lang["ENDLOG"] = "To rev";
 $lang["MAXLOG"] = "Max revs";
-$lang["SEARCHLOG"] = "Search for";
+$lang["SEARCHLOG"] = "Search history for";
 $lang["CLEARLOG"] = "Clear current filter";
 $lang["MORERESULTS"] = "Find more matches...";
 $lang["NORESULTS"] = "There are no logs matching your query";
 $lang["NOMORERESULTS"] = "There are no more logs matching your query";
-$lang['NOPREVREV'] = 'No previous revision';
+$lang["NOPREVREV"] = "No previous revision";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "file(s) modified";
 $lang["RSSFEED"] = "RSS feed";
-
-$lang["LINENO"] = "Line No.";
-$lang["BLAMEFOR"] = "Blame information for rev";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";
@@ -112,7 +109,7 @@ $lang["COMPAREPATHS"] = "Compare Paths";
 $lang["COMPAREREVS"] = "Compare Revisions";
 $lang["PROPCHANGES"] = "Property changes :";
 $lang["CONVFROM"] = "This comparison shows the changes necessary to convert path ";
-$lang["TO"] = "TO";
+$lang["TO"] = "to";
 $lang["REVCOMP"] = "Reverse comparison";
 $lang["COMPPATH"] = "Compare Path:";
 $lang["WITHPATH"] = "With Path:";

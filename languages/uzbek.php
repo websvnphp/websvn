@@ -21,13 +21,13 @@
 //
 // uzbek.php
 //
-// Uzbek language strings
+// Uzbek language strings (UTF-8 encoding)
 // by Behzod Saidov <behzodsaidov@gmail.com>
-// UTF-8 encoding
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Uzbek";
-$lang['LANGUAGETAG'] = 'uz';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "uz";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Farq";
@@ -58,7 +58,7 @@ $lang["HIDECHANGED"] = "oʻzgargan fayllarni yashirish";
 $lang["NEWFILES"] = "Yangi fayllar";
 $lang["CHANGEDFILES"] = "Oʻzgargan fayllar";
 $lang["DELETEDFILES"] = "Oʻchirilgan fayllar";
-$lang["VIEWLOG"] = "loglarni&nbsp;ochish";
+$lang["VIEWLOG"] = "loglarni ochish";
 $lang["PATH"] = "Yoʻl";
 $lang["AUTHOR"] = "Muallif";
 $lang["AGE"] = "Yoshi";
@@ -74,8 +74,8 @@ $lang["BADCMD"] = "Buyruqni bajarishda xatolik roʻy berdi";
 $lang["UNKNOWNREVISION"] = "Tahrir topilmadi";
 
 $lang["POWERED"] = "<a href=\"http://www.websvn.info/\">WebSVN</a> dasturi ishlatilmoqda";
-$lang["PROJECTS"] = "Subversion ombori&nbsp;";
-$lang["SERVER"] = "Subversion serveri&nbsp;";
+$lang["PROJECTS"] = "Subversion ombori ";
+$lang["SERVER"] = "Subversion serveri ";
 
 $lang["FILTER"] = "Filtr parametrlari";
 $lang["STARTLOG"] = "Tahrirdan";
@@ -118,6 +118,3 @@ $lang["FILEADDED"] = "Yangi fayl";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-//$lang["NOBR"] = "<nobr>";
-//$lang["ENDNOBR"] = "</nobr>";

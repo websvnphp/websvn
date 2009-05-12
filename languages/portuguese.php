@@ -21,66 +21,92 @@
 //
 // portuguese.php
 //
-// Portuguese language strings
+// Portuguese language strings (UTF-8)
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Portuguese";
-$lang['LANGUAGETAG'] = 'pt';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "pt";
 
 $lang["LOG"] = "Log";
-$lang["DIFF"] = "Diff";
+$lang["DIFF"] = "Diferenças";
 
-$lang["NOREP"] = "N&atilde;o foi indicado um reposit&oacute;rio";
-$lang["NOPATH"] = "Path Inv&aacute;lida";
+$lang["NOREP"] = "Não foi indicado um repositório";
+$lang["NOPATH"] = "Caminho inválido";
+$lang["NOACCESS"] = "Você não tem as permissões necessárias para ler esse diretório";
+$lang["RESTRICTED"] = "Acesso restrito";
+$lang["SUPPLYREP"] = "Favor de configurar um repositório em include/config.php usando \$config->parentPath ou \$config->addRepository. Veja o guia de instalação para mais detalhes.";
 
-$lang["DIFFREVS"] = "Diferen&ccedil;as entre revis&otilde;es";
+$lang["DIFFREVS"] = "Diferenças entre revisões";
 $lang["AND"] = "e";
-$lang["REV"] = "Rev";
+$lang["REV"] = "Revisão";
 $lang["LINE"] = "Linha";
+$lang["LINENO"] = "Linha Nº";
 $lang["SHOWENTIREFILE"] = "Mostrar todo o ficheiro";
-$lang["SHOWCOMPACT"] = "Mostrar apenas &aacute;reas com diferen&ccedil;as";
+$lang["SHOWCOMPACT"] = "Mostrar apenas áreas com diferenças";
+$lang["IGNOREWHITESPACE"] = "Ignorar whitespace";
+$lang["REGARDWHITESPACE"] = "Considerar whitespace";
 
-$lang["DIFFPREV"] = "Diferen&ccedil;as com a anterior";
+$lang["LISTING"] = "Conteúdo do diretório";
+$lang["FILEDETAIL"] = "Detalhes";
+$lang["DIFFPREV"] = "Diferenças com a anterior";
+$lang["BLAME"] = "Anotações";
+$lang["BLAMEFOR"] = "Anotações para revisão";
 
-$lang["REVINFO"] = "Notas desta revis&atilde;o";
-$lang["GOYOUNGEST"] = "Revis&atilde;o mais recente";
-$lang["LASTMOD"] = "&Uacute;ltima altera&ccedil;&atilde;o";
-$lang["LOGMSG"] = "Mensagem de Log";
-$lang["CHANGES"] = "Altera&ccedil;&otilde;es";
+$lang["REVINFO"] = "Notas desta revisão";
+$lang["GOYOUNGEST"] = "Revisão mais recente";
+$lang["LASTMOD"] = "Última alteração";
+$lang["LOGMSG"] = "Mensagem de log";
+$lang["CHANGES"] = "Alterações";
 $lang["SHOWCHANGED"] = "Mostrar ficheiros alterados";
 $lang["HIDECHANGED"] = "Esconder ficheiros alterados";
-$lang["NEWFILES"] = "Novos ficheiros";
+$lang["NEWFILES"] = "Ficheiros novos";
 $lang["CHANGEDFILES"] = "Ficheiros alterados";
 $lang["DELETEDFILES"] = "Ficheiros apagados";
-$lang["VIEWLOG"] = "Ver&nbsp;Log";
-$lang["PATH"] = "Path";
+$lang["VIEWLOG"] = "Ver log";
+$lang["PATH"] = "Caminho";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Idade";
-$lang["LOG"] = "Log";
-$lang["CURDIR"] = "Directoria Currente";
-$lang['NOPREVREV'] = 'Nenhuma revisão anterior';
+$lang["CURDIR"] = "Directoria currente";
+$lang["NOPREVREV"] = "Nenhuma revisão anterior";
+$lang["TARBALL"] = "Baixar";
+$lang["DOWNLOAD"] = "Baixar";
 
 $lang["PREV"] = "Anterior";
 $lang["NEXT"] = "Seguinte";
 $lang["SHOWALL"] = "Mostrar todos";
 
 $lang["BADCMD"] = "Erro ao correr este comando";
+$lang["UNKNOWNREVISION"] = "Revisão não encontrada";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Projectos";
-$lang["SERVER"] = "Subversion&nbsp;Servidor";
+$lang["PROJECTS"] = "Subversion Projectos";
+$lang["SERVER"] = "Subversion Servidor";
 
-$lang["SEARCHLOG"] = "Pesquisar o Search log por";
+$lang["FILTER"] = "Opções de filtro";
+$lang["STARTLOG"] = "De revisão";
+$lang["ENDLOG"] = "Até revisão";
+$lang["MAXLOG"] = "Limite de entradas";
+$lang["SEARCHLOG"] = "Pesquisar o log por";
 $lang["CLEARLOG"] = "Limpar pesquisa";
 $lang["MORERESULTS"] = "Encontrar mais...";
-$lang["NORESULTS"] = "A pesquisa n&atilde;o devolveu nenhum log";
-$lang["NOMORERESULTS"] = "N&atilde;o existem mais resultados (logs) para a pesquisa";
+$lang["NORESULTS"] = "A pesquisa não devolveu nenhum log";
+$lang["NOMORERESULTS"] = "Não existem mais resultados (logs) para a pesquisa";
 
-$lang["YEARS"] = "anos";
-$lang["MONTHS"] = "meses";
-$lang["WEEKS"] = "semanas";
-$lang["DAYS"] = "dias";
-$lang["HOURS"] = "horas";
-$lang["MINUTES"] = "minutos";
+$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["FILESMODIFIED"] = "ficheiro(s) modificado(s)";
+$lang["RSSFEED"] = "RSS feed";
 
 $lang["GO"] = "Go";
+
+$lang["PATHCOMPARISON"] = "Comparação de caminhos";
+$lang["COMPAREPATHS"] = "Comparar caminhos";
+$lang["COMPAREREVS"] = "Comparar revisões";
+$lang["PROPCHANGES"] = "Modificações de propriedades :";
+$lang["CONVFROM"] = "Esta comparação mostra as modificações necessárias para converter o caminho ";
+$lang["TO"] = "para";
+$lang["REVCOMP"] = "Comparação reversa";
+$lang["COMPPATH"] = "Comparar caminho:";
+$lang["WITHPATH"] = "Com caminho:";
+$lang["FILEDELETED"] = "Arquivo apagado";
+$lang["FILEADDED"] = "Arquivo adicionado";
