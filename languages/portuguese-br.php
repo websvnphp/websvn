@@ -21,91 +21,93 @@
 //
 // portuguese-br.php
 //
-// Brazilian Portuguese language strings
+// Brazilian Portuguese language strings (UTF-8)
 // Translated by Flavio Fonseca
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Brazilian Portuguese";
+$lang["LANGUAGENAME"] = "Portuguese (Brazil)";
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "pt-BR";
 
 $lang["LOG"] = "Log";
-$lang["DIFF"] = "Diff";
+$lang["DIFF"] = "Diferenças";
 
-$lang["NOREP"] = "N&atilde;o foi indicado um reposit&oacute;rio";
-$lang["NOPATH"] = "Path Inv&aacute;lido";
-$lang["NOACCESS"] = "Voc&ecirc; n&atilde;o tem as permiss&otilde;es necess&aacute;rias para ler esse diret&oacute;rio";
+$lang["NOREP"] = "Não foi indicado um repositório";
+$lang["NOPATH"] = "Caminho inválido";
+$lang["NOACCESS"] = "Você não tem as permissões necessárias para ler esse diretório";
 $lang["RESTRICTED"] = "Acesso restrito";
+$lang["SUPPLYREP"] = "Favor de configurar um repositório em include/config.php usando \$config->parentPath ou \$config->addRepository. Veja o guia de instalação para mais detalhes.";
 
-$lang["DIFFREVS"] = "Diferen&ccedil;as entre revis&otilde;es";
+$lang["DIFFREVS"] = "Diferenças entre revisões";
 $lang["AND"] = "e";
-$lang["REV"] = "Revis&atilde;o";
+$lang["REV"] = "Revisão";
 $lang["LINE"] = "Linha";
-$lang["SHOWENTIREFILE"] = "Mostrar todo o arquivo";
-$lang["SHOWCOMPACT"] = "Mostrar apenas &aacute;reas com diferen&ccedil;as";
+$lang["LINENO"] = "Linha Nº";
+$lang["SHOWENTIREFILE"] = "Mostrar o arquivo inteiro";
+$lang["SHOWCOMPACT"] = "Mostrar apenas áreas com diferenças";
+$lang["IGNOREWHITESPACE"] = "Ignorar whitespace";
+$lang["REGARDWHITESPACE"] = "Considerar whitespace";
 
-$lang["DIFFPREV"] = "Diferen&ccedil;as com a anterior";
-$lang["BLAME"] = "Blame";
+$lang["LISTING"] = "Conteúdo do diretório";
+$lang["FILEDETAIL"] = "Detalhes";
+$lang["DIFFPREV"] = "Diferenças com a anterior";
+$lang["BLAME"] = "Anotações";
+$lang["BLAMEFOR"] = "Anotações para revisão";
 
-$lang["REVINFO"] = "Notas desta revis&atilde;o";
-$lang["GOYOUNGEST"] = "Revis&atilde;o mais recente";
-$lang["LASTMOD"] = "&Uacute;ltima altera&ccedil;&atilde;o";
-$lang["LOGMSG"] = "Mensagem de Log";
-$lang["CHANGES"] = "Altera&ccedil;&otilde;es";
+$lang["REVINFO"] = "Notas desta revisão";
+$lang["GOYOUNGEST"] = "Revisão mais recente";
+$lang["LASTMOD"] = "Última alteração";
+$lang["LOGMSG"] = "Mensagem de log";
+$lang["CHANGES"] = "Alterações";
 $lang["SHOWCHANGED"] = "Mostrar arquivos alterados";
 $lang["HIDECHANGED"] = "Esconder arquivos alterados";
 $lang["NEWFILES"] = "Arquivos novos";
 $lang["CHANGEDFILES"] = "Arquivos alterados";
 $lang["DELETEDFILES"] = "Arquivos apagados";
-$lang["VIEWLOG"] = "Ver&nbsp;Log";
-$lang["PATH"] = "Path";
+$lang["VIEWLOG"] = "Ver log";
+$lang["PATH"] = "Caminho";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Idade";
-$lang["LOG"] = "Log";
-$lang["CURDIR"] = "Diret&oacute;rio Corrente";
-$lang["TARBALL"] = "Tarball";
+$lang["CURDIR"] = "Diretório corrente";
+$lang["NOPREVREV"] = "Nenhuma revisão anterior";
+$lang["TARBALL"] = "Baixar";
+$lang["DOWNLOAD"] = "Baixar";
 
 $lang["PREV"] = "Anterior";
 $lang["NEXT"] = "Seguinte";
 $lang["SHOWALL"] = "Mostrar todos";
 
 $lang["BADCMD"] = "Erro ao executar este comando";
-$lang["UNKNOWNREVISION"] = "Revis&atilde;o n&atilde;o encontrada";
+$lang["UNKNOWNREVISION"] = "Revisão não encontrada";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Projetos&nbsp;Subversion";
-$lang["SERVER"] = "Servidor&nbsp;Subversion";
+$lang["PROJECTS"] = "Projetos Subversion";
+$lang["SERVER"] = "Servidor Subversion";
 
-$lang["FILTER"] = "Op&ccedil;&otilde;es de filtro";
-$lang["STARTLOG"] = "De rev";
-$lang["ENDLOG"] = "At&eacute; rev";
-$lang["MAXLOG"] = "Max revs";
+$lang["FILTER"] = "Opções de filtro";
+$lang["STARTLOG"] = "De revisão";
+$lang["ENDLOG"] = "Até revisão";
+$lang["MAXLOG"] = "Limite de entradas";
 $lang["SEARCHLOG"] = "Pesquisar o log por";
 $lang["CLEARLOG"] = "Limpar pesquisa";
 $lang["MORERESULTS"] = "Encontrar mais...";
-$lang["NORESULTS"] = "A pesquisa n&atilde;o devolveu nenhum resultado";
-$lang["NOMORERESULTS"] = "N&atilde;o existem mais resultados para a pesquisa";
+$lang["NORESULTS"] = "A pesquisa não devolveu nenhum resultado";
+$lang["NOMORERESULTS"] = "Não existem mais resultados para a pesquisa";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "arquivo(s) modificado(s)";
 $lang["RSSFEED"] = "RSS feed";
 
-$lang["LINENO"] = "Linha No.";
-$lang["BLAMEFOR"] = "Informa&ccedil;&atilde;o de blame para rev";
+$lang["GO"] = "Go";
 
-$lang["DAYLETTER"] = "d";
-$lang["HOURLETTER"] = "h";
-$lang["MINUTELETTER"] = "m";
-$lang["SECONDLETTER"] = "s";
-
-$lang["GO"] = "Ir";
-
-$lang["PATHCOMPARISON"] = "Compara&ccedil;&atilde;o de caminhos";
-$lang["COMPAREPATHS"] = "Comparar caminho";
-$lang["COMPAREREVS"] = "Comparar Revis&otilde;es";
-$lang["PROPCHANGES"] = "Modifica&ccedil;&otilde;es de propriedades :";
-$lang["CONVFROM"] = "Esta compara&ccedil;&atilde;o mostra as modifica&ccedil;&otilde;es necess&aacute;rias para converter o caminho ";
+$lang["PATHCOMPARISON"] = "Comparação de caminhos";
+$lang["COMPAREPATHS"] = "Comparar caminhos";
+$lang["COMPAREREVS"] = "Comparar revisões";
+$lang["PROPCHANGES"] = "Modificações de propriedades :";
+$lang["CONVFROM"] = "Esta comparação mostra as modificações necessárias para converter o caminho ";
 $lang["TO"] = "para";
-$lang["REVCOMP"] = "Compara&ccedil;&atilde;o reversa";
+$lang["REVCOMP"] = "Comparação reversa";
 $lang["COMPPATH"] = "Comparar caminho:";
 $lang["WITHPATH"] = "Com caminho:";
 $lang["FILEDELETED"] = "Arquivo apagado";
-$lang["FILEADDED"] = "Novo arquivo";
+$lang["FILEADDED"] = "Arquivo adicionado";

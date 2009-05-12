@@ -25,7 +25,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Slovenian";
-$lang['LANGUAGETAG'] = 'sl';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "sl";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -56,7 +57,7 @@ $lang["HIDECHANGED"] = "Skrij spremenjene datoteke";
 $lang["NEWFILES"] = "Nove datoteke";
 $lang["CHANGEDFILES"] = "Spremenjene datoteke";
 $lang["DELETEDFILES"] = "Pobrisane datoteke";
-$lang["VIEWLOG"] = "Poglej&nbsp;Opombe";
+$lang["VIEWLOG"] = "Poglej Opombe";
 $lang["PATH"] = "Pot";
 $lang["AUTHOR"] = "Avtor";
 $lang["AGE"] = "Starost";
@@ -72,8 +73,8 @@ $lang["BADCMD"] = "Napaka pri izvajanju tega ukaza";
 $lang["UNKNOWNREVISION"] = "Ne najdem različice";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Projekti";
-$lang["SERVER"] = "Subversion&nbsp;strežnik";
+$lang["PROJECTS"] = "Subversion Projekti";
+$lang["SERVER"] = "Subversion strežnik";
 
 $lang["FILTER"] = "Možnosti filtriranja";
 $lang["STARTLOG"] = "Od različice";
@@ -122,6 +123,3 @@ $lang["FILEADDED"] = "Nova datoteka";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

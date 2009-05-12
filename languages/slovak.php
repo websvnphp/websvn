@@ -19,15 +19,14 @@
 //
 // --
 //
-// english.php
+// slovak.php
 //
-// English language strings
+// Slovak language strings
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Slovak";
-// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
-// see also RFC 4646
-$lang['LANGUAGETAG'] = 'sk';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "sk";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -59,7 +58,7 @@ $lang["HIDECHANGED"] = "Skry smenené súbory";
 $lang["NEWFILES"] = "Nové súbory";
 $lang["CHANGEDFILES"] = "Zmenené súbory";
 $lang["DELETEDFILES"] = "Odstránené súbory";
-$lang["VIEWLOG"] = "Zobraz&nbsp;denník";
+$lang["VIEWLOG"] = "Zobraz denník";
 $lang["PATH"] = "Cesta";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Vek";
@@ -75,8 +74,8 @@ $lang["BADCMD"] = "Chyba pri vykonávaní tohto príkazu";
 $lang["UNKNOWNREVISION"] = "Revízia nebola nájdená";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;úložiská";
-$lang["SERVER"] = "Subversion&nbsp;Server";
+$lang["PROJECTS"] = "Subversion úložiská";
+$lang["SERVER"] = "Subversion Server";
 
 $lang["FILTER"] = "Možnosti filtrovania";
 $lang["STARTLOG"] = "Od rev.";
@@ -87,7 +86,7 @@ $lang["CLEARLOG"] = "Zmaž aktuálny filter";
 $lang["MORERESULTS"] = "Nájdi viac zhôd...";
 $lang["NORESULTS"] = "Vašej otázke nezodpovedajú žiadne záznamy denníka";
 $lang["NOMORERESULTS"] = "Vašej otázke zodpovedá viac záznamov denníka";
-$lang['NOPREVREV'] = 'Žiadna predchádzajúca revízia';
+$lang["NOPREVREV"] = "Žiadna predchádzajúca revízia";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "súbor(y) zmenený(/é)";
@@ -120,6 +119,3 @@ $lang["FILEADDED"] = "Nový súbor";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

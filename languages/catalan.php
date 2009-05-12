@@ -25,7 +25,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Català-Valencià";
-$lang['LANGUAGETAG'] = 'ca';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "ca";
 
 $lang["LOG"] = "Registre";
 $lang["DIFF"] = "Diferència";
@@ -56,7 +57,7 @@ $lang["HIDECHANGED"] = "Amaga els fitxers canviats";
 $lang["NEWFILES"] = "Nous fitxers";
 $lang["CHANGEDFILES"] = "Fitxers modificats";
 $lang["DELETEDFILES"] = "Fitxers suprimits";
-$lang["VIEWLOG"] = "Visualitza&nbsp;el&nbsp;registre";
+$lang["VIEWLOG"] = "Visualitza el registre";
 $lang["PATH"] = "Camí";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Edat";
@@ -72,8 +73,8 @@ $lang["BADCMD"] = "S'ha produït un error en exectuar aquesta ordre";
 $lang["UNKNOWNREVISION"] = "No s'ha trobat la revisió";
 
 $lang["POWERED"] = "Funciona amb <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Dipòsits&nbsp;de&nbsp;Subversion";
-$lang["SERVER"] = "Servidor&nbsp;de&nbsp;Subversion";
+$lang["PROJECTS"] = "Dipòsits de Subversion";
+$lang["SERVER"] = "Servidor de Subversion";
 
 $lang["FILTER"] = "Opcions de filtratge";
 $lang["STARTLOG"] = "Des de la revisió";
@@ -84,7 +85,7 @@ $lang["CLEARLOG"] = "Neteja el filtre actual";
 $lang["MORERESULTS"] = "Cerca més coincidències...";
 $lang["NORESULTS"] = "No hi ha cap registre que coincideixi amb la vostra cerca";
 $lang["NOMORERESULTS"] = "No hi ha més registres que coincideixin amb la vostra cerca";
-$lang['NOPREVREV'] = 'No hi ha cap revisió anterior.';
+$lang["NOPREVREV"] = "No hi ha cap revisió anterior.";
 
 $lang["RSSFEEDTITLE"] = "Canal RSS del WebSVN";
 $lang["FILESMODIFIED"] = "fitxer(s) modificat(s)";
@@ -117,6 +118,3 @@ $lang["FILEADDED"] = "Nou fitxer";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

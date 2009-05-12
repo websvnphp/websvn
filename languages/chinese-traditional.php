@@ -19,7 +19,7 @@
 //
 // --
 //
-// tchinese.php
+// chinese-traditional.php
 //
 // Traditional Chinese language strings
 //
@@ -27,7 +27,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Traditional Chinese";
-$lang['LANGUAGETAG'] = 'zh-TW';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "zh-TW";
 
 $lang["LOG"] = "歷史記錄";
 $lang["DIFF"] = "比對";
@@ -71,8 +72,8 @@ $lang["SHOWALL"] = "顯示全部";
 $lang["BADCMD"] = "執行錯誤";
 
 $lang["POWERED"] = "採用 <a href=\"http://www.websvn.info/\">WebSVN</a>架設";
-$lang["PROJECTS"] = "Subversion&nbsp;專案";
-$lang["SERVER"] = "Subversion&nbsp;Server";
+$lang["PROJECTS"] = "Subversion 專案";
+$lang["SERVER"] = "Subversion Server";
 
 $lang["SEARCHLOG"] = "搜尋記錄內容";
 $lang["CLEARLOG"] = "清除目前搜尋";

@@ -25,9 +25,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Česky";
-// This is the RFC 2616 (§3.10) language tag that corresponds to this translation
-// see also RFC 4646
-$lang['LANGUAGETAG'] = 'cs';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "cs";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -74,8 +73,8 @@ $lang["BADCMD"] = "Nepodařilo se spustit tento příkaz";
 $lang["UNKNOWNREVISION"] = "Revize nebyla nalezena";
 
 $lang["POWERED"] = "Poháněno <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Repozitáře";
-$lang["SERVER"] = "Subversion&nbsp;Servery";
+$lang["PROJECTS"] = "Subversion Repozitáře";
+$lang["SERVER"] = "Subversion Servery";
 
 $lang["FILTER"] = "Nastavení filtrování";
 $lang["STARTLOG"] = "Od revize";
@@ -86,7 +85,7 @@ $lang["CLEARLOG"] = "Zruš aktuální filtr";
 $lang["MORERESULTS"] = "Najdi další...";
 $lang["NORESULTS"] = "Nejsou tu žádné zázanmy odpovídající vašim požadavkům";
 $lang["NOMORERESULTS"] = "Nejsou tu žádné další záznamy odpovídající vašim požadavkům";
-$lang['NOPREVREV'] = 'Není předchozí revize.';
+$lang["NOPREVREV"] = "Není předchozí revize.";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "soubor(y) změněn(y)";
@@ -119,6 +118,3 @@ $lang["FILEADDED"] = "Nový soubor";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

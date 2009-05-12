@@ -18,84 +18,83 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 // --
-// Translated by Yokav (mailme@yokav.info)
 //
 // french.php
 //
 // French language strings
+// Translated by Yokav (mailme@yokav.info)
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Francais";
-// This is the RFC 2616 (�3.10) language tag that corresponds to this translation
-// see also RFC 4646
-$lang['LANGUAGETAG'] = 'fr';
+$lang["LANGUAGENAME"] = "French";
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "fr";
 
 $lang["LOG"] = "Journal";
-$lang["DIFF"] = "Diff&eacute;.";
+$lang["DIFF"] = "Diffé.";
 
-$lang["NOREP"] = "Pas de d&eacute;p&ocirc;t fourni";
-$lang["NOPATH"] = "R&eacute;pertoire non trouv&eacute;";
-$lang["NOACCESS"] = "Vous n'avez pas la permission n&eacute;cessaire pour acc&eacute;der &agrave; ce r&eacute;pertoire";
-$lang["RESTRICTED"] = "Acc&egrave;s restreint";
-$lang["SUPPLYREP"] = "Veuillez indiquer le r&eacute;pertoire d'un d&eacute;p&ocirc;t dans le fichier include/config.php en utilisant \$config->parentPath ou \$config->addRepository<p>Lire le guide d'installation pour plus de d&eacute;tails";
+$lang["NOREP"] = "Pas de dépôt fourni";
+$lang["NOPATH"] = "Répertoire non trouvé";
+$lang["NOACCESS"] = "Vous n'avez pas la permission nécessaire pour accéder à ce répertoire";
+$lang["RESTRICTED"] = "Accès restreint";
+$lang["SUPPLYREP"] = "Veuillez indiquer le répertoire d'un dépôt dans le fichier include/config.php en utilisant \$config->parentPath ou \$config->addRepository<p>Lire le guide d'installation pour plus de détails";
 
-$lang["DIFFREVS"] = "Diff&eacute;rences entre les r&eacute;visions";
+$lang["DIFFREVS"] = "Différences entre les révisions";
 $lang["AND"] = "et";
-$lang["REV"] = "R&eacute;vision";
+$lang["REV"] = "Révision";
 $lang["LINE"] = "Ligne";
 $lang["SHOWENTIREFILE"] = "Afficher tout le fichier";
-$lang["SHOWCOMPACT"] = "Afficher seulement les passages avec des diff&eacute;rences";
+$lang["SHOWCOMPACT"] = "Afficher seulement les passages avec des différences";
 $lang["IGNOREWHITESPACE"] = "Ignorer les espaces blanc";
 $lang["REGARDWHITESPACE"] = "Prendre en compte les espaces blanc";
 
 $lang["LISTING"] = "Arborescence";
-$lang["FILEDETAIL"] = "D&eacute;tails";
-$lang["DIFFPREV"] = "Diff&eacute;rence avec la pr&eacute;c&eacute;dente";
-$lang["BLAME"] = "Responsabilit&eacute;";
+$lang["FILEDETAIL"] = "Détails";
+$lang["DIFFPREV"] = "Différence avec la précédente";
+$lang["BLAME"] = "Responsabilité";
 
-$lang["REVINFO"] = "Information sur la R&eacute;vision";
-$lang["GOYOUNGEST"] = "Aller &agrave; la r&eacute;vision la plus r&eacute;cente";
-$lang["LASTMOD"] = "Derni&egrave;re modification";
+$lang["REVINFO"] = "Information sur la Révision";
+$lang["GOYOUNGEST"] = "Aller à la révision la plus récente";
+$lang["LASTMOD"] = "Dernière modification";
 $lang["LOGMSG"] = "Message du journal";
 $lang["CHANGES"] = "Changements";
-$lang["SHOWCHANGED"] = "Montrer les fichiers modifi&eacute;s";
-$lang["HIDECHANGED"] = "Cacher les fichiers modifi&eacute;s";
+$lang["SHOWCHANGED"] = "Montrer les fichiers modifiés";
+$lang["HIDECHANGED"] = "Cacher les fichiers modifiés";
 $lang["NEWFILES"] = "Nouveaux fichiers";
-$lang["CHANGEDFILES"] = "Fichiers modifi&eacute;s";
-$lang["DELETEDFILES"] = "Fichiers supprim&eacute;s";
-$lang["VIEWLOG"] = "Afficher&nbsp;le&nbsp;Journal";
+$lang["CHANGEDFILES"] = "Fichiers modifiés";
+$lang["DELETEDFILES"] = "Fichiers supprimés";
+$lang["VIEWLOG"] = "Afficher le Journal";
 $lang["PATH"] = "Chemin";
 $lang["AUTHOR"] = "Auteur";
-$lang["AGE"] = "Anciennet&eacute;";
+$lang["AGE"] = "Ancienneté";
 $lang["LOG"] = "Journal";
-$lang["CURDIR"] = "R&eacute;pertoire courant";
+$lang["CURDIR"] = "Répertoire courant";
 $lang["TARBALL"] = "Tarball";
-$lang["DOWNLOAD"] = "T&eacute;l&eacute;charger";
+$lang["DOWNLOAD"] = "Télécharger";
 
-$lang["PREV"] = "Pr&eacute;c&eacute;dent";
+$lang["PREV"] = "Précédent";
 $lang["NEXT"] = "Suivant";
 $lang["SHOWALL"] = "Tout montrer";
 
-$lang["BADCMD"] = "Cette commande a provoqu&eacute; une erreur";
-$lang["UNKNOWNREVISION"] = "R&eacute;vision non trouv&eacute;e";
+$lang["BADCMD"] = "Cette commande a provoqué une erreur";
+$lang["UNKNOWNREVISION"] = "Révision non trouvée";
 
-$lang["POWERED"] = "Propuls&eacute; par <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "D&eacute;p&ocirc;ts&nbsp;Subversion";
-$lang["SERVER"] = "Serveur&nbsp;Subversion";
+$lang["POWERED"] = "Propulsé par <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["PROJECTS"] = "Dépôts Subversion";
+$lang["SERVER"] = "Serveur Subversion";
 
 $lang["FILTER"] = "Options de recherche";
-$lang["STARTLOG"] = "De la r&eacute;v.";
-$lang["ENDLOG"] = "A la r&eacute;v.";
-$lang["MAXLOG"] = "Max r&eacute;vs.";
+$lang["STARTLOG"] = "De la rév.";
+$lang["ENDLOG"] = "A la rév.";
+$lang["MAXLOG"] = "Max révs.";
 $lang["SEARCHLOG"] = "Rechercher dans le journal";
 $lang["CLEARLOG"] = "Effacer la recherche courante";
-$lang["MORERESULTS"] = "Trouver plus de r&eacute;ponses...";
-$lang["NORESULTS"] = "Il n'y a pas de r&eacute;ponse &agrave; votre recherche dans le journal";
-$lang["NOMORERESULTS"] = "Il n'y a pas plus de r&eacute;ponses &agrave; votre recherche";
-$lang["NOPREVREV"] = "Pas de r&eacute;vision ant&eacute;rieur";
+$lang["MORERESULTS"] = "Trouver plus de réponses...";
+$lang["NORESULTS"] = "Il n'y a pas de réponse à votre recherche dans le journal";
+$lang["NOMORERESULTS"] = "Il n'y a pas plus de réponses à votre recherche";
+$lang["NOPREVREV"] = "Pas de révision antérieur";
 
 $lang["RSSFEEDTITLE"] = "Flux RSS de WebSVN";
-$lang["FILESMODIFIED"] = "fichier(s) modifi&eacute;(s)";
+$lang["FILESMODIFIED"] = "fichier(s) modifié(s)";
 $lang["RSSFEED"] = "Flux RSS";
 
 $lang["LINENO"] = "Ligne";
@@ -110,14 +109,14 @@ $lang["GO"] = "Go";
 
 $lang["PATHCOMPARISON"] = "Comparaison de dossiers";
 $lang["COMPAREPATHS"] = "Comparer les dossiers";
-$lang["COMPAREREVS"] = "Comparer les r&eacute;visions";
-$lang["PROPCHANGES"] = "Changements de propri&eacute;t&eacute; :";
-$lang["CONVFROM"] = "Cette comparaison affiche les changements n&eacute;cessaires pour convertir le dossier ";
+$lang["COMPAREREVS"] = "Comparer les révisions";
+$lang["PROPCHANGES"] = "Changements de propriété :";
+$lang["CONVFROM"] = "Cette comparaison affiche les changements nécessaires pour convertir le dossier ";
 $lang["TO"] = "EN";
 $lang["REVCOMP"] = "Comparaison inverse";
 $lang["COMPPATH"] = "Comparer le dossier :";
 $lang["WITHPATH"] = "Au dossier :";
-$lang["FILEDELETED"] = "Fichier supprim&eacute;";
+$lang["FILEDELETED"] = "Fichier supprimé";
 $lang["FILEADDED"] = "Nouveau fichier";
 
 // The following are defined by some languages to stop unwanted line splitting
@@ -125,6 +124,3 @@ $lang["FILEADDED"] = "Nouveau fichier";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

@@ -25,7 +25,8 @@
 
 // The language name is displayed in the drop down box. It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Swedish";
-$lang['LANGUAGETAG'] = 'sv';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "sv";
 
 $lang["LOG"] = "Logg";
 $lang["DIFF"] = "Skillnad";
@@ -83,7 +84,7 @@ $lang["CLEARLOG"] = "Rensa nuvarande sökning";
 $lang["MORERESULTS"] = "Hitta fler träffar...";
 $lang["NORESULTS"] = "Det finns ingen logg som motsvarar din sökning";
 $lang["NOMORERESULTS"] = "Det finns inga fler loggar i din sökning";
-$lang['NOPREVREV'] = "Ingen föregående revision";
+$lang["NOPREVREV"] = "Ingen föregående revision";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "fil(er) ändrade";
@@ -116,6 +117,3 @@ $lang["FILEADDED"] = "Ny fil";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

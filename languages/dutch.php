@@ -28,7 +28,8 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Dutch";
-$lang['LANGUAGETAG'] = 'nl';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "nl";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -59,7 +60,7 @@ $lang["HIDECHANGED"] = "Verberg gewijzigde bestanden";
 $lang["NEWFILES"] = "Nieuwe bestanden";
 $lang["CHANGEDFILES"] = "Gewijzigde bestanden";
 $lang["DELETEDFILES"] = "Gewiste files";
-$lang["VIEWLOG"] = "Toon&nbsp;Log";
+$lang["VIEWLOG"] = "Toon Log";
 $lang["PATH"] = "Pad";
 $lang["AUTHOR"] = "Auteur";
 $lang["AGE"] = "Ouderdom";
@@ -74,8 +75,8 @@ $lang["SHOWALL"] = "Toon alles";
 $lang["BADCMD"] = "Een fout is opgetreden tijdens het uitvoeren van dit commando";
 
 $lang["POWERED"] = "Aangedreven door <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion&nbsp;Projecten";
-$lang["SERVER"] = "Subversion&nbsp;Server";
+$lang["PROJECTS"] = "Subversion Projecten";
+$lang["SERVER"] = "Subversion Server";
 
 $lang["SEARCHLOG"] = "Doorzoek de logs";
 $lang["CLEARLOG"] = "Wis deze zoekopdracht";
@@ -116,6 +117,3 @@ $lang["FILEADDED"] = "Nieuw bestand";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

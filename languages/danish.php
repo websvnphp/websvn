@@ -26,50 +26,51 @@
 
 // The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
 $lang["LANGUAGENAME"] = "Dansk";
-$lang['LANGUAGETAG'] = 'da';
+// The language tag (see RFC 4646) which corresponds to this translation.
+$lang["LANGUAGETAG"] = "da";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Sammenlign";
 
 $lang["NOREP"] = "Der er ikke angivet noget versionarkiv";
 $lang["NOPATH"] = "Stien blev ikke fundet";
-$lang["NOACCESS"] = "Du har ikke de n&oslash;dvendige rettigheder til at l&aelig;se denne mappe";
-$lang["RESTRICTED"] = "Begr&aelig;nset adgang";
-$lang["SUPPLYREP"] = "Konfigurer venligst stier til versionsarkiver i include/config.php ved at bruge \$config->parentPath eller \$config->addRepository<p>. Se installationsguiden for n&aelig;rmere detaljer.";
+$lang["NOACCESS"] = "Du har ikke de nødvendige rettigheder til at læse denne mappe";
+$lang["RESTRICTED"] = "Begrænset adgang";
+$lang["SUPPLYREP"] = "Konfigurer venligst stier til versionsarkiver i include/config.php ved at bruge \$config->parentPath eller \$config->addRepository<p>. Se installationsguiden for nærmere detaljer.";
 
 $lang["DIFFREVS"] = "Sammenlign revisionerne";
 $lang["AND"] = "og";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Linje";
 $lang["SHOWENTIREFILE"] = "Vis hele filen";
-$lang["SHOWCOMPACT"] = "Vis kun omr&aring;der med forskelle";
+$lang["SHOWCOMPACT"] = "Vis kun områder med forskelle";
 
 $lang["DIFFPREV"] = "Sammenlign med forrige";
-$lang["BLAME"] = "&aelig;ndringsfordeling";
+$lang["BLAME"] = "ændringsfordeling";
 
 $lang["REVINFO"] = "Informationer om revision";
-$lang["GOYOUNGEST"] = "G&aring; til nyeste revision";
-$lang["LASTMOD"] = "Sidste &aelig;ndring";
+$lang["GOYOUNGEST"] = "Gå til nyeste revision";
+$lang["LASTMOD"] = "Sidste ændring";
 $lang["LOGMSG"] = "Logbesked";
-$lang["CHANGES"] = "&aelig;ndringer";
-$lang["SHOWCHANGED"] = "Vis &aelig;ndrede filer";
-$lang["HIDECHANGED"] = "Skjul &aelig;ndrede filer";
+$lang["CHANGES"] = "ændringer";
+$lang["SHOWCHANGED"] = "Vis ændrede filer";
+$lang["HIDECHANGED"] = "Skjul ændrede filer";
 $lang["NEWFILES"] = "Nye filer";
-$lang["CHANGEDFILES"] = "&aelig;ndrede filer";
+$lang["CHANGEDFILES"] = "ændrede filer";
 $lang["DELETEDFILES"] = "Slettede filer";
-$lang["VIEWLOG"] = "Vis&nbsp;log";
+$lang["VIEWLOG"] = "Vis log";
 $lang["PATH"] = "Sti";
 $lang["AUTHOR"] = "Forfatter";
 $lang["AGE"] = "Alder";
 $lang["LOG"] = "Log";
-$lang["CURDIR"] = "Nuv&aelig;rende mappe";
+$lang["CURDIR"] = "Nuværende mappe";
 $lang["TARBALL"] = "Tar-pakke";
 
 $lang["PREV"] = "Forrige";
-$lang["NEXT"] = "N&aelig;ste";
+$lang["NEXT"] = "Næste";
 $lang["SHOWALL"] = "Vis alle";
 
-$lang["BADCMD"] = "Fejl ved udf&oslash;relse af kommandoen";
+$lang["BADCMD"] = "Fejl ved udførelse af kommandoen";
 $lang["UNKNOWNREVISION"] = "Revisionen findes ikke";
 
 $lang["POWERED"] = "Leveret af <a href=\"http://www.websvn.info/\">WebSVN</a>";
@@ -79,32 +80,32 @@ $lang["SERVER"] = "Subversion-server";
 $lang["FILTER"] = "Filter-indstillinger";
 $lang["STARTLOG"] = "Fra rev";
 $lang["ENDLOG"] = "Til rev";
-$lang["SEARCHLOG"] = "S&oslash;g efter";
+$lang["SEARCHLOG"] = "Søg efter";
 $lang["CLEARLOG"] = "Ryd aktuelle filter";
 $lang["MORERESULTS"] = "Vis flere resultater...";
-$lang["NORESULTS"] = "Der er ingen logbeskeder, der passer p&aring; s&oslash;gningen";
-$lang["NOMORERESULTS"] = "Der er ikke flere logbeskeder, som svarer til s&oslash;gningen";
-$lang['NOPREVREV'] = 'Ingen forrige revision';
+$lang["NORESULTS"] = "Der er ingen logbeskeder, der passer på søgningen";
+$lang["NOMORERESULTS"] = "Der er ikke flere logbeskeder, som svarer til søgningen";
+$lang["NOPREVREV"] = "Ingen forrige revision";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS-feed";
-$lang["FILESMODIFIED"] = "fil(er) &aelig;ndret";
+$lang["FILESMODIFIED"] = "fil(er) ændret";
 $lang["RSSFEED"] = "RSS-feed";
 
 $lang["LINENO"] = "Linjenr.";
-$lang["BLAMEFOR"] = "&aelig;ndringsfordeling for revision";
+$lang["BLAMEFOR"] = "ændringsfordeling for revision";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "t";
 $lang["MINUTELETTER"] = "m";
 $lang["SECONDLETTER"] = "s";
 
-$lang["GO"] = "G&aring; til";
+$lang["GO"] = "Gå til";
 
 $lang["PATHCOMPARISON"] = "Sammenligning af stier";
 $lang["COMPAREPATHS"] = "Sammenlign stier";
 $lang["COMPAREREVS"] = "Sammenlign revisioner";
-$lang["PROPCHANGES"] = "&aelig;ndringer i egenskaber:";
-$lang["CONVFROM"] = "Denne sammenligning viser de &aelig;ndringer, der skal til for at konvertere stien ";
+$lang["PROPCHANGES"] = "ændringer i egenskaber:";
+$lang["CONVFROM"] = "Denne sammenligning viser de ændringer, der skal til for at konvertere stien ";
 $lang["TO"] = "til";
 $lang["REVCOMP"] = "Omvendt sammenligning";
 $lang["COMPPATH"] = "Sammenlign sti:";
@@ -117,6 +118,3 @@ $lang["FILEADDED"] = "Ny fil";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";
