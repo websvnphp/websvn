@@ -51,10 +51,12 @@ function createDirLinks($rep, $path, $rev) {
     $vars["curdirlinks"] .= "<a href=\"${pathSoFarURL}\">".$pathComponents[$n]."</a>/";
   }
   
-  if ($dir) {
-    $vars["curdirlinks"] .= "<span class=\"dir\">".$pathComponents[$n]."/</span>";
-  } else {
-    $vars["curdirlinks"] .= "<span class=\"file\">".$pathComponents[$n]."</span>";
+  if (!empty($pathComponents[$n])) {
+    if ($dir) {
+      $vars["curdirlinks"] .= "<span class=\"dir\">".$pathComponents[$n]."/</span>";
+    } else {
+      $vars["curdirlinks"] .= "<span class=\"file\">".$pathComponents[$n]."</span>";
+    }
   }
 }
 
