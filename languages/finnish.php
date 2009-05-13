@@ -24,27 +24,35 @@
 // Finnish language strings
 // Matti Pöllä <mpo@iki.fi>
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Finnish";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "fi";
+$lang["LANGUAGETAG"] = "fi"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Finnish";
+$lang["LANGUAGENAMENATIVE"] = "Suomi";
+$lang["LANGUAGENAMEHTML"] = "Suomi";
 
 $lang["LOG"] = "Loki";
 $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Tietokantaa ei ole valittu";
 $lang["NOPATH"] = "Polkua ei löydy";
+// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
+// $lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "Aseta tietokannan polku tiedostossa include/config.php käyttäen muuttujaa \$config->parentPath tai \$config->addRepository<p>Katso asennusoppaasta yksityiskohtaiset ohjeet";
 
 $lang["DIFFREVS"] = "Versioiden väliset muutokset";
 $lang["AND"] = "ja";
 $lang["REV"] = "Versio";
 $lang["LINE"] = "Rivi";
+$lang["LINENO"] = "Rivi Nro.";
 $lang["SHOWENTIREFILE"] = "Näytä koko tiedosto";
 $lang["SHOWCOMPACT"] = "Näytä vain muutoksia sisältävät alueet";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Vertaa Edelliseen";
 $lang["BLAME"] = "Blame";
+$lang["BLAMEFOR"] = "Blame-tiedot versiolle";
 
 $lang["REVINFO"] = "Version Tiedot";
 $lang["GOYOUNGEST"] = "Siirry uusimpaan versioon";
@@ -60,39 +68,40 @@ $lang["VIEWLOG"] = "Näytä Loki";
 $lang["PATH"] = "Polku";
 $lang["AUTHOR"] = "Tekijä";
 $lang["AGE"] = "Ikä";
-$lang["LOG"] = "Loki";
 $lang["CURDIR"] = "Tämä Hakemisto";
 $lang["TARBALL"] = "Tar-tiedosto";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Edellinen";
 $lang["NEXT"] = "Seuraava";
 $lang["SHOWALL"] = "Näytä Kaikki";
 
 $lang["BADCMD"] = "Virhe komennon suorittamisessa";
+// $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Moottorina <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projektit";
 $lang["SERVER"] = "Subversion-palvelin";
 
+// $lang["FILTER"] = "Filtering Options";
+// $lang["STARTLOG"] = "From rev";
+// $lang["ENDLOG"] = "To rev";
+// $lang["MAXLOG"] = "Max revs";
 $lang["SEARCHLOG"] = "Etsi lokista";
 $lang["CLEARLOG"] = "Tyhjennä tämä haku";
 $lang["MORERESULTS"] = "Hae lisää osumia...";
 $lang["NORESULTS"] = "Mikään loki ei vastaa kyselyä";
 $lang["NOMORERESULTS"] = "Kyselyä vastaavia lokeja ei ole enemmän";
+// $lang["NOPREVREV"] = "No previous revision";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS-syöte";
 $lang["FILESMODIFIED"] = "tiedosto(a) muokattu";
 $lang["RSSFEED"] = "RSS-syöte";
 
-$lang["LINENO"] = "Rivi Nro.";
-$lang["BLAMEFOR"] = "Blame-tiedot versiolle";
-
-$lang["YEARS"] = "vuotta";
-$lang["MONTHS"] = "kuukautta";
-$lang["WEEKS"] = "viikkoa";
-$lang["DAYS"] = "päivää";
-$lang["HOURS"] = "tuntia";
-$lang["MINUTES"] = "minuuttia";
+$lang["DAYLETTER"] = "p";
+$lang["HOURLETTER"] = "t";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Siirry";
 
@@ -101,7 +110,7 @@ $lang["COMPAREPATHS"] = "Vertaa Polkuja";
 $lang["COMPAREREVS"] = "Vertaile Versioita";
 $lang["PROPCHANGES"] = "Ominaisuuksien muutokset :";
 $lang["CONVFROM"] = "Tämä vertailu näyttää polun muuntamiseen tarvittavat muutokset ";
-$lang["TO"] = "TO";
+// $lang["TO"] = "to";
 $lang["REVCOMP"] = "Vertailu käänteiseen suuntaan";
 $lang["COMPPATH"] = "Vertaile Polkua:";
 $lang["WITHPATH"] = "Vertailtava Polku:";

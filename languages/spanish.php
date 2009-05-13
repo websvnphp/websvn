@@ -21,29 +21,37 @@
 //
 // spanish.php
 //
-// Spanish language strings
+// Spanish language strings (UTF-8 encoding)
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Spanish";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "es";
+$lang["LANGUAGETAG"] = "es"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Spanish";
+$lang["LANGUAGENAMENATIVE"] = "Español";
+$lang["LANGUAGENAMEHTML"] = "Espa&ntilde;ol";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "No se especificó un repositorio";
 $lang["NOPATH"] = "Ruta no encontrada";
+// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
+// $lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "Por favor, configure una ruta a un repositorio en include/config.php usando \$config->parentPath o \$config->addRepository<p>Verifique la guía de instalación para mas detalles";
 
 $lang["DIFFREVS"] = "Diff entre versiones";
 $lang["AND"] = "y";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Línea";
+$lang["LINENO"] = "Línea Nro.";
 $lang["SHOWENTIREFILE"] = "Mostrar el archivo completo";
 $lang["SHOWCOMPACT"] = "Solo mostrar áreas con diferencias";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Comparar con el anterior";
 $lang["BLAME"] = "Autoría";
+$lang["BLAMEFOR"] = "Información de culpa para rev";
 
 $lang["REVINFO"] = "Información sobre la revisión";
 $lang["GOYOUNGEST"] = "Ir a la última revisión";
@@ -59,20 +67,25 @@ $lang["VIEWLOG"] = "Ver Log";
 $lang["PATH"] = "Ruta";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Antigüedad";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Directorio Actual";
 $lang["TARBALL"] = "Tarball";
+$lang["DOWNLOAD"] = "Descargar";
 
 $lang["PREV"] = "Ant";
 $lang["NEXT"] = "Sig";
 $lang["SHOWALL"] = "Mostrar todo";
 
 $lang["BADCMD"] = "Error ejecutando ese comando";
+// $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Proyectos de Subversion";
 $lang["SERVER"] = "Servidor de Subversion";
 
+// $lang["FILTER"] = "Filtering Options";
+// $lang["STARTLOG"] = "From rev";
+// $lang["ENDLOG"] = "To rev";
+// $lang["MAXLOG"] = "Max revs";
 $lang["SEARCHLOG"] = "Buscar en el log";
 $lang["CLEARLOG"] = "Limpiar la búsqueda actual";
 $lang["MORERESULTS"] = "Buscar mas coincidencias";
@@ -84,8 +97,10 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "Archivo(s) modificados";
 $lang["RSSFEED"] = "RSS feed";
 
-$lang["LINENO"] = "Línea Nro.";
-$lang["BLAMEFOR"] = "Información de culpa para rev";
+$lang["DAYLETTER"] = "d";
+$lang["HOURLETTER"] = "h";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Ir";
 

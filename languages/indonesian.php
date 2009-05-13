@@ -24,10 +24,10 @@
 // Indonesian language strings
 // by Zaenal Muttaqin <public@lokamaya.com>
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Indonesian";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "id";
+$lang["LANGUAGETAG"] = "id"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Indonesian";
+$lang["LANGUAGENAMENATIVE"] = "Bahasa Indonesia";
+$lang["LANGUAGENAMEHTML"] = "Bahasa Indonesia";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Perbedaan";
@@ -42,12 +42,17 @@ $lang["DIFFREVS"] = "Perbedaan antar revisi";
 $lang["AND"] = "dan";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Baris";
+$lang["LINENO"] = "Baris No.";
 $lang["SHOWENTIREFILE"] = "Tampilkan Semua";
 $lang["SHOWCOMPACT"] = "Tampilkan bagian yang berbeda saja";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Detail";
 $lang["DIFFPREV"] = "Bandingkan";
 $lang["BLAME"] = "Bubuhi";
+$lang["BLAMEFOR"] = "Bubuhi (blame) informasi for rev";
 
 $lang["REVINFO"] = "Informasi Revisi";
 $lang["GOYOUNGEST"] = "Tampilkan revisi terbaru";
@@ -63,9 +68,9 @@ $lang["VIEWLOG"] = "Lihat Log";
 $lang["PATH"] = "Path";
 $lang["AUTHOR"] = "Pemrakarsa";
 $lang["AGE"] = "Usia";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Direktori saat ini";
-$lang["TARBALL"] = "Tarball";
+// $lang["TARBALL"] = "Tarball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Kembali";
 $lang["NEXT"] = "Lanjut";
@@ -92,9 +97,6 @@ $lang["NOPREVREV"] = "Tidak ada lagi revisi yang lebih lama";
 $lang["RSSFEEDTITLE"] = "Feed RSS WebSVN";
 $lang["FILESMODIFIED"] = "file yang berubah";
 $lang["RSSFEED"] = "Feed RSS";
-
-$lang["LINENO"] = "Baris No.";
-$lang["BLAMEFOR"] = "Bubuhi (blame) informasi for rev";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";

@@ -23,10 +23,10 @@
 //
 // English language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "English";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "en";
+$lang["LANGUAGETAG"] = "en"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "English";
+$lang["LANGUAGENAMENATIVE"] = "English";
+$lang["LANGUAGENAMEHTML"] = "English";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";

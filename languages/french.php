@@ -24,10 +24,10 @@
 // French language strings
 // Translated by Yokav (mailme@yokav.info)
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "French";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "fr";
+$lang["LANGUAGETAG"] = "fr"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "French";
+$lang["LANGUAGENAMENATIVE"] = "Français";
+$lang["LANGUAGENAMEHTML"] = "Fran&ccedil;ais";
 
 $lang["LOG"] = "Journal";
 $lang["DIFF"] = "Diffé.";
@@ -68,7 +68,6 @@ $lang["VIEWLOG"] = "Afficher le Journal";
 $lang["PATH"] = "Chemin";
 $lang["AUTHOR"] = "Auteur";
 $lang["AGE"] = "Ancienneté";
-$lang["LOG"] = "Journal";
 $lang["CURDIR"] = "Répertoire courant";
 $lang["TARBALL"] = "Tarball";
 $lang["DOWNLOAD"] = "Télécharger";

@@ -21,12 +21,12 @@
 //
 // slovenian.php
 //
-// Slovenian language strings
+// Slovenian language strings (UTF-8 encoding)
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Slovenian";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "sl";
+$lang["LANGUAGETAG"] = "sl"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Slovenian";
+$lang["LANGUAGENAMENATIVE"] = "Slovenčina";
+$lang["LANGUAGENAMEHTML"] = "Sloven&#269;ina";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -41,11 +41,17 @@ $lang["DIFFREVS"] = "Razlika med različicama";
 $lang["AND"] = "in";
 $lang["REV"] = "Različica";
 $lang["LINE"] = "Vrstica";
+$lang["LINENO"] = "Vrstica št.";
 $lang["SHOWENTIREFILE"] = "Prikaži celo datoteko";
 $lang["SHOWCOMPACT"] = "Prikaži samo področja z razlikami";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Primerjaj s prejšno";
 $lang["BLAME"] = "Blame";
+$lang["BLAMEFOR"] = "Blame informacije za različico";
 
 $lang["REVINFO"] = "Informacija o različici";
 $lang["GOYOUNGEST"] = "Skoči na zadnjo različico";
@@ -61,9 +67,9 @@ $lang["VIEWLOG"] = "Poglej Opombe";
 $lang["PATH"] = "Pot";
 $lang["AUTHOR"] = "Avtor";
 $lang["AGE"] = "Starost";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Trenutni direktorij";
 $lang["TARBALL"] = "Tarball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Nazaj";
 $lang["NEXT"] = "Naprej";
@@ -85,20 +91,12 @@ $lang["CLEARLOG"] = "Pobriši trenutno iskanje";
 $lang["MORERESULTS"] = "Poišči še...";
 $lang["NORESULTS"] = "Med zapisi ni opomb z iskalno zahtevo";
 $lang["NOMORERESULTS"] = "Med zapisi ni več opomb z iskalno zahtevo";
+// $lang["NOPREVREV"] = "No previous revision";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "datotek spremenjenih";
 $lang["RSSFEED"] = "RSS feed";
 
-$lang["LINENO"] = "Vrstica št.";
-$lang["BLAMEFOR"] = "Blame informacije za različico";
-
-//$lang["YEARS"] = "let";
-//$lang["MONTHS"] = "mesecev";
-//$lang["WEEKS"] = "tednov";
-//$lang["DAYS"] = "dni";
-//$lang["HOURS"] = "ur";
-//$lang["MINUTES"] = "minute";
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";
 $lang["MINUTELETTER"] = "m";

@@ -23,10 +23,10 @@
 //
 // German language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "German";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang['LANGUAGETAG'] = 'de';
+$lang['LANGUAGETAG'] = 'de'; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "German";
+$lang["LANGUAGENAMENATIVE"] = "Deutsch";
+$lang["LANGUAGENAMEHTML"] = "Deutsch";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -41,6 +41,7 @@ $lang["DIFFREVS"] = "Vergleich zwischen Revisionen";
 $lang["AND"] = "und";
 $lang["REV"] = "Revision";
 $lang["LINE"] = "Zeile";
+$lang["LINENO"] = "Zeilennr.";
 $lang["SHOWENTIREFILE"] = "Ganze Datei anzeigen";
 $lang["SHOWCOMPACT"] = "Nur geänderte Bereiche";
 $lang["IGNOREWHITESPACE"] = "Leerzeichen ignorieren";
@@ -50,6 +51,7 @@ $lang["LISTING"] = "Verzeichnisansicht";
 $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
 $lang["BLAME"] = "Blame";
+$lang["BLAMEFOR"] = "Blame-Information für Rev.";
 
 $lang["REVINFO"] = "Revisionsinformation";
 $lang["GOYOUNGEST"] = "Zur aktuellen Revision";
@@ -65,7 +67,6 @@ $lang["VIEWLOG"] = "Log anzeigen";
 $lang["PATH"] = "Pfad";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Alter";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Aktuelles Verzeichnis";
 $lang["TARBALL"] = "Archiv Download";
 $lang["DOWNLOAD"] = "Download";
@@ -95,9 +96,6 @@ $lang['NOPREVREV'] = 'Keine vorherige Revision';
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "Veränderte Dateien";
 $lang["RSSFEED"] = "RSS feed";
-
-$lang["LINENO"] = "Zeilennr.";
-$lang["BLAMEFOR"] = "Blame-Information für Rev.";
 
 $lang["DAYLETTER"] = "t";
 $lang["HOURLETTER"] = "h";
