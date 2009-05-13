@@ -28,33 +28,33 @@
 
 function createDirLinks($rep, $path, $rev) {
   global $vars, $config;
-
-  $subs = explode('/', htmlentities($path, ENT_QUOTES, 'UTF-8'));
-
-  $sofar = "";
-  $count = count($subs);
-  $vars["curdirlinks"] = "";
-
-  // The number of links depends on the last item.  It's empty if
-  // we're looing at a directory, and full if it's a file
-  if (empty($subs[$count - 1])) {
+  
+  $pathComponents = explode("/", htmlentities($path, ENT_QUOTES, "UTF-8"));
+  $count = count($pathComponents);
+  
+  // The number of links depends on the last item.  It's empty if we're looking 
+  // at a directory, and non-empty if we're looking at a file.
+  if (empty($pathComponents[$count - 1])) {
     $limit = $count - 2;
     $dir = true;
   } else {
     $limit = $count - 1;
     $dir = false;
   }
-
-  for ($n = 0; $n < $limit; $n++) {
-    $sofar .= html_entity_decode($subs[$n])."/";
-    $sofarurl = $config->getURL($rep, $sofar, "dir");
-    $vars["curdirlinks"] .= "[<a href=\"${sofarurl}rev=$rev\">".$subs[$n]."/</a>] ";
+  
+  $pathSoFar = "/";
+  $pathSoFarURL = $config->getURL($rep, $pathSoFar, "dir").($rev ? "rev=$rev" : "");
+  $vars["curdirlinks"] = "<a href=\"${pathSoFarURL}\" class=\"root\"><span>(root)</span></a>/";
+  for ($n = 1; $n < $limit; $n++) {
+    $pathSoFar .= html_entity_decode($pathComponents[$n])."/";
+    $pathSoFarURL = $config->getURL($rep, $pathSoFar, "dir").($rev ? "rev=$rev" : "");
+    $vars["curdirlinks"] .= "<a href=\"${pathSoFarURL}\">".$pathComponents[$n]."</a>/";
   }
-
+  
   if ($dir) {
-    $vars["curdirlinks"] .= "[<b>".$subs[$n]."</b>/]";
+    $vars["curdirlinks"] .= "<span class=\"dir\">".$pathComponents[$n]."/</span>";
   } else {
-    $vars["curdirlinks"] .= "[<b>".$subs[$n]."</b>]";
+    $vars["curdirlinks"] .= "<span class=\"file\">".$pathComponents[$n]."</span>";
   }
 }
 
