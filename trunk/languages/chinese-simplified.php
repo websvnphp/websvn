@@ -25,27 +25,36 @@
 //
 // Author: Liangxu Wang <wlx@mygis.org>
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Simplified Chinese";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "zh-CN";
+$lang["LANGUAGETAG"] = "zh-CN"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Simplified Chinese";
+$lang["LANGUAGENAMENATIVE"] = "中文";
+$lang["LANGUAGENAMEHTML"] = "&#20013;&#25991;";
+
 
 $lang["LOG"] = "记录";
 $lang["DIFF"] = "差异";
 
 $lang["NOREP"] = "没有仓库";
 $lang["NOPATH"] = "找不到路径";
+// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
+// $lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "请在include/config.php中使用\$config->parentPath或\$config->addRepository设置仓库的路径<p>更详细的内容请参考安装手册";
 
 $lang["DIFFREVS"] = "修订版本之间的差异";
 $lang["AND"] = "和";
 $lang["REV"] = "修订";
 $lang["LINE"] = "行";
+$lang["LINENO"] = "行号";
 $lang["SHOWENTIREFILE"] = "显示整个文件";
 $lang["SHOWCOMPACT"] = "只显示差异处";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "与前一次版本进行比较";
-$lang["BLAME"] = "Blame";
+// $lang["BLAME"] = "Blame";
+// $lang["BLAMEFOR"] = "Blame information for rev";
 
 $lang["REVINFO"] = "修订版信息";
 $lang["GOYOUNGEST"] = "到最新的修订版";
@@ -61,20 +70,25 @@ $lang["VIEWLOG"] = "查看记录";
 $lang["PATH"] = "路径";
 $lang["AUTHOR"] = "作者";
 $lang["AGE"] = "年龄";
-$lang["LOG"] = "记录";
 $lang["CURDIR"] = "当前目录";
 $lang["TARBALL"] = "Tarball格式";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "前";
 $lang["NEXT"] = "后";
 $lang["SHOWALL"] = "全部显示";
 
 $lang["BADCMD"] = "命令执行错误";
+// $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projects";
 $lang["SERVER"] = "Subversion Server";
 
+// $lang["FILTER"] = "Filtering Options";
+// $lang["STARTLOG"] = "From rev";
+// $lang["ENDLOG"] = "To rev";
+// $lang["MAXLOG"] = "Max revs";
 $lang["SEARCHLOG"] = "搜索记录内容";
 $lang["CLEARLOG"] = "清除当前搜索";
 $lang["MORERESULTS"] = "找个更多符合的...";
@@ -85,15 +99,10 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "个文件被改动";
 $lang["RSSFEED"] = "RSS feed";
 
-$lang["LINENO"] = "行号";
-$lang["BLAMEFOR"] = "Blame information for rev";
-
-$lang["YEARS"] = "年";
-$lang["MONTHS"] = "月";
-$lang["WEEKS"] = "周";
-$lang["DAYS"] = "日";
-$lang["HOURS"] = "小时";
-$lang["MINUTES"] = "分钟";
+$lang["DAYLETTER"] = "日";
+$lang["HOURLETTER"] = "小时";
+$lang["MINUTELETTER"] = "分钟";
+$lang["SECONDLETTER"] = "秒";
 
 $lang["GO"] = "Go";
 
@@ -105,7 +114,7 @@ $lang["CONVFROM"] = "这个比较必须转换路径，从";
 $lang["TO"] = "到";
 $lang["REVCOMP"] = "颠倒比较";
 $lang["COMPPATH"] = "路径比较:";
-$lang["WITHPATH"] = "With Path:";
+// $lang["WITHPATH"] = "With Path:";
 $lang["FILEDELETED"] = "已删除文件";
 $lang["FILEADDED"] = "新文件";
 
@@ -114,6 +123,3 @@ $lang["FILEADDED"] = "新文件";
 
 $lang["NOBR"] = "";
 $lang["ENDNOBR"] = "";
-
-// $lang["NOBR"] = "<nobr>";
-// $lang["ENDNOBR"] = "</nobr>";

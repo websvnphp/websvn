@@ -25,27 +25,35 @@
 //
 // Author: Yuan-Chung Hsiao <ychsiao@ychsiao.idv.tw>
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Traditional Chinese";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "zh-TW";
+$lang["LANGUAGETAG"] = "zh-TW"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Traditional Chinese";
+$lang["LANGUAGENAMENATIVE"] = "中文";
+$lang["LANGUAGENAMEHTML"] = "&#20013;&#25991;";
 
 $lang["LOG"] = "歷史記錄";
 $lang["DIFF"] = "比對";
 
 $lang["NOREP"] = "沒有檔案庫";
 $lang["NOPATH"] = "找不到路徑";
+// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
+// $lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "請在include/config.php中設定檔案庫位置為 \$config->parentPath 或 \$config->addRepository<p>更詳細的內容請見安裝手冊";
 
 $lang["DIFFREVS"] = "不同版本間的差異";
 $lang["AND"] = "與";
 $lang["REV"] = "修訂版號";
 $lang["LINE"] = "行";
+$lang["LINENO"] = "行";
 $lang["SHOWALL"] = "顯示完整的檔案";
 $lang["SHOWCOMPACT"] = "只顯示不同處";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "與前一版次比較";
 $lang["BLAME"] = "譴責";
+$lang["BLAMEFOR"] = "版本譴責資訊";
 
 $lang["REVINFO"] = "修訂版次資訊";
 $lang["GOYOUNGEST"] = "到最新的修訂";
@@ -61,20 +69,25 @@ $lang["VIEWLOG"] = "看歷史記錄";
 $lang["PATH"] = "路徑";
 $lang["AUTHOR"] = "作者";
 $lang["AGE"] = "更動時間";
-$lang["LOG"] = "歷史記錄";
 $lang["CURDIR"] = "目前目錄";
 $lang["TARBALL"] = "Tarball 格式";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "上一筆";
 $lang["NEXT"] = "下一筆";
 $lang["SHOWALL"] = "顯示全部";
 
 $lang["BADCMD"] = "執行錯誤";
+// $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "採用 <a href=\"http://www.websvn.info/\">WebSVN</a>架設";
 $lang["PROJECTS"] = "Subversion 專案";
 $lang["SERVER"] = "Subversion Server";
 
+// $lang["FILTER"] = "Filtering Options";
+// $lang["STARTLOG"] = "From rev";
+// $lang["ENDLOG"] = "To rev";
+// $lang["MAXLOG"] = "Max revs";
 $lang["SEARCHLOG"] = "搜尋記錄內容";
 $lang["CLEARLOG"] = "清除目前搜尋";
 $lang["MORERESULTS"] = "找到更多的符合的...";
@@ -85,24 +98,24 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "個檔案變動";
 $lang["RSSFEED"] = "RSS feed";
 
-$lang["LINENO"] = "行";
-$lang["BLAMEFOR"] = "版本譴責資訊";
-
-$lang["YEARS"] = "年前";
-$lang["MONTHS"] = "月前";
-$lang["WEEKS"] = "週前";
-$lang["DAYS"] = "日前";
-$lang["HOURS"] = "小時前";
-$lang["MINUTES"] = "分鐘前";
+$lang["DAYLETTER"] = "日前";
+$lang["HOURLETTER"] = "小時前";
+$lang["MINUTELETTER"] = "分鐘前";
+$lang["SECONDLETTER"] = "秒前";
 
 $lang["GO"] = "到";
 
+// $lang["PATHCOMPARISON"] = "Path Comparison";
 $lang["COMPAREPATHS"] = "比對路徑";
 $lang["COMPAREREVS"] = "比對修訂版";
 $lang["PROPCHANGES"] = "改變屬性 :";
 $lang["CONVFROM"] = "這個比對顯示必需改變轉換路徑";
 $lang["TO"] = "到";
 $lang["REVCOMP"] = "顛倒比對";
+// $lang["COMPPATH"] = "Compare Path:";
+// $lang["WITHPATH"] = "With Path:";
+// $lang["FILEDELETED"] = "File deleted";
+// $lang["FILEADDED"] = "New file";
 
 // The following are defined by some languages to stop unwanted line splitting
 // in the template files.

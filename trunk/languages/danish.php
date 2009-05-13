@@ -24,12 +24,12 @@
 // Danish language strings based on TortoiseSVN translation.
 // by Jan Normann Nielsen, <span@dubbekarl.dk>
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Dansk";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "da";
+$lang["LANGUAGETAG"] = "da"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Danish";
+$lang["LANGUAGENAMENATIVE"] = "Dansk";
+$lang["LANGUAGENAMEHTML"] = "Dansk";
 
-$lang["LOG"] = "Log";
+// $lang["LOG"] = "Log";
 $lang["DIFF"] = "Sammenlign";
 
 $lang["NOREP"] = "Der er ikke angivet noget versionarkiv";
@@ -42,11 +42,17 @@ $lang["DIFFREVS"] = "Sammenlign revisionerne";
 $lang["AND"] = "og";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Linje";
+$lang["LINENO"] = "Linjenr.";
 $lang["SHOWENTIREFILE"] = "Vis hele filen";
 $lang["SHOWCOMPACT"] = "Vis kun områder med forskelle";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Sammenlign med forrige";
 $lang["BLAME"] = "ændringsfordeling";
+$lang["BLAMEFOR"] = "ændringsfordeling for revision";
 
 $lang["REVINFO"] = "Informationer om revision";
 $lang["GOYOUNGEST"] = "Gå til nyeste revision";
@@ -62,9 +68,9 @@ $lang["VIEWLOG"] = "Vis log";
 $lang["PATH"] = "Sti";
 $lang["AUTHOR"] = "Forfatter";
 $lang["AGE"] = "Alder";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Nuværende mappe";
 $lang["TARBALL"] = "Tar-pakke";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Forrige";
 $lang["NEXT"] = "Næste";
@@ -80,6 +86,7 @@ $lang["SERVER"] = "Subversion-server";
 $lang["FILTER"] = "Filter-indstillinger";
 $lang["STARTLOG"] = "Fra rev";
 $lang["ENDLOG"] = "Til rev";
+// $lang["MAXLOG"] = "Max revisions";
 $lang["SEARCHLOG"] = "Søg efter";
 $lang["CLEARLOG"] = "Ryd aktuelle filter";
 $lang["MORERESULTS"] = "Vis flere resultater...";
@@ -90,9 +97,6 @@ $lang["NOPREVREV"] = "Ingen forrige revision";
 $lang["RSSFEEDTITLE"] = "WebSVN RSS-feed";
 $lang["FILESMODIFIED"] = "fil(er) ændret";
 $lang["RSSFEED"] = "RSS-feed";
-
-$lang["LINENO"] = "Linjenr.";
-$lang["BLAMEFOR"] = "ændringsfordeling for revision";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "t";

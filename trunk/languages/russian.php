@@ -24,10 +24,10 @@
 // Russian language strings (UTF-8 encoding)
 // by Alexey Chumakov <alex@chumakov.ru>
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Russian";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "ru";
+$lang["LANGUAGETAG"] = "ru"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Russian";
+$lang["LANGUAGENAMENATIVE"] = "Русский";
+$lang["LANGUAGENAMEHTML"] = "&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;";
 
 $lang["LOG"] = "Журнал";
 $lang["DIFF"] = "Различия";
@@ -42,11 +42,17 @@ $lang["DIFFREVS"] = "Различия между редакциями";
 $lang["AND"] = "и";
 $lang["REV"] = "Редакция";
 $lang["LINE"] = "Строка";
+$lang["LINENO"] = "№ строки";
 $lang["SHOWENTIREFILE"] = "показать весь файл";
 $lang["SHOWCOMPACT"] = "показать только места с различиями";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+$lang["FILEDETAIL"] = "Деталы";
 $lang["DIFFPREV"] = "сравнить с предыдущей";
 $lang["BLAME"] = "авторство";
+$lang["BLAMEFOR"] = "Сведения об авторстве для редакции ";
 
 $lang["REVINFO"] = "Сведения о редакции";
 $lang["GOYOUNGEST"] = "перейти к новейшей редакции";
@@ -62,9 +68,9 @@ $lang["VIEWLOG"] = "открыть журнал";
 $lang["PATH"] = "Путь";
 $lang["AUTHOR"] = "Автор";
 $lang["AGE"] = "Давность";
-$lang["LOG"] = "Журнал";
 $lang["CURDIR"] = "Текущий каталог";
 $lang["TARBALL"] = "Архив";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "пред.";
 $lang["NEXT"] = "след.";
@@ -86,13 +92,11 @@ $lang["CLEARLOG"] = "очистить текущий фильтр";
 $lang["MORERESULTS"] = "найти еще совпадения...";
 $lang["NORESULTS"] = "Нет записей, совпадающих с вашим запросом";
 $lang["NOMORERESULTS"] = "Больше нет записей, совпадающих с вашим запросом";
+//$lang["NOPREVREV"] = "No previous revision";
 
 $lang["RSSFEEDTITLE"] = "RSS-канал WebSVN";
 $lang["FILESMODIFIED"] = "файл(ов) изменено";
 $lang["RSSFEED"] = "канал RSS";
-
-$lang["LINENO"] = "№ строки";
-$lang["BLAMEFOR"] = "Сведения об авторстве для редакции ";
 
 $lang["DAYLETTER"] = "д";
 $lang["HOURLETTER"] = "ч";

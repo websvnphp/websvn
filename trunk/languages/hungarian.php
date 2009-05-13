@@ -23,10 +23,10 @@
 //
 // Hungarian language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Magyar";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "hu";
+$lang["LANGUAGETAG"] = "hu"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Hungarian";
+$lang["LANGUAGENAMENATIVE"] = "Magyar";
+$lang["LANGUAGENAMEHTML"] = "Magyar";
 
 $lang["LOG"] = "Napló";
 $lang["DIFF"] = "Diff";
@@ -41,12 +41,17 @@ $lang["DIFFREVS"] = "Revíziók közti diff-ek";
 $lang["AND"] = "és";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Sor";
+$lang["LINENO"] = "Sor száma.";
 $lang["SHOWENTIREFILE"] = "A teljes file mutatása";
 $lang["SHOWCOMPACT"] = "Csak a különbségeket tartalmazó területeket mutassuk";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Részletek";
 $lang["DIFFPREV"] = "Összehasonlítás az előzővel";
 $lang["BLAME"] = "Felelős";
+$lang["BLAMEFOR"] = "A revízió felelőse";
 
 $lang["REVINFO"] = "Revízió információ";
 $lang["GOYOUNGEST"] = "Ugrás a legfrissebb revízióhoz";
@@ -62,9 +67,9 @@ $lang["VIEWLOG"] = "Napló megtekintése";
 $lang["PATH"] = "Útvonal";
 $lang["AUTHOR"] = "Szerző";
 $lang["AGE"] = "Kor";
-$lang["LOG"] = "Napló";
 $lang["CURDIR"] = "Aktuális könyvtár";
-$lang["TARBALL"] = "Tarball";
+// $lang["TARBALL"] = "Tarball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Előző";
 $lang["NEXT"] = "Következő";
@@ -91,9 +96,6 @@ $lang["NOPREVREV"] = "Nincs előző revízió";
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "file(-ok) módosultak";
 $lang["RSSFEED"] = "RSS feed";
-
-$lang["LINENO"] = "Sor száma.";
-$lang["BLAMEFOR"] = "A revízió felelőse";
 
 $lang["DAYLETTER"] = "n";
 $lang["HOURLETTER"] = "ó";

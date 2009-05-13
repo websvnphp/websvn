@@ -23,10 +23,10 @@
 //
 // Portuguese language strings (UTF-8)
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Portuguese";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "pt";
+$lang["LANGUAGETAG"] = "pt"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Portuguese";
+$lang["LANGUAGENAMENATIVE"] = "Português";
+$lang["LANGUAGENAMEHTML"] = "Portugu&ecirc;s";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diferenças";
@@ -68,7 +68,6 @@ $lang["PATH"] = "Caminho";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Idade";
 $lang["CURDIR"] = "Directoria currente";
-$lang["NOPREVREV"] = "Nenhuma revisão anterior";
 $lang["TARBALL"] = "Baixar";
 $lang["DOWNLOAD"] = "Baixar";
 
@@ -92,10 +91,16 @@ $lang["CLEARLOG"] = "Limpar pesquisa";
 $lang["MORERESULTS"] = "Encontrar mais...";
 $lang["NORESULTS"] = "A pesquisa não devolveu nenhum log";
 $lang["NOMORERESULTS"] = "Não existem mais resultados (logs) para a pesquisa";
+$lang["NOPREVREV"] = "Nenhuma revisão anterior";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "ficheiro(s) modificado(s)";
 $lang["RSSFEED"] = "RSS feed";
+
+$lang["DAYLETTER"] = "d";
+$lang["HOURLETTER"] = "h";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Go";
 
@@ -110,3 +115,9 @@ $lang["COMPPATH"] = "Comparar caminho:";
 $lang["WITHPATH"] = "Com caminho:";
 $lang["FILEDELETED"] = "Arquivo apagado";
 $lang["FILEADDED"] = "Arquivo adicionado";
+
+// The following are defined by some languages to stop unwanted line splitting
+// in the template files.
+
+$lang["NOBR"] = "";
+$lang["ENDNOBR"] = "";

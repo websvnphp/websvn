@@ -23,10 +23,10 @@
 //
 // Catalan language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Català-Valencià";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "ca";
+$lang["LANGUAGETAG"] = "ca"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Catalan";
+$lang["LANGUAGENAMENATIVE"] = "Català-Valencià";
+$lang["LANGUAGENAMEHTML"] = "Catal&agrave;-Valenci&agrave;";
 
 $lang["LOG"] = "Registre";
 $lang["DIFF"] = "Diferència";
@@ -41,11 +41,17 @@ $lang["DIFFREVS"] = "Diferències entre revisions";
 $lang["AND"] = "i";
 $lang["REV"] = "Revisió";
 $lang["LINE"] = "Línia";
+$lang["LINENO"] = "Línia núm.";
 $lang["SHOWENTIREFILE"] = "Mostra el fitxer sencer";
 $lang["SHOWCOMPACT"] = "Mostra només les àrees amb diferències";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Compara amb l'anterior";
 $lang["BLAME"] = "Culpa";
+$lang["BLAMEFOR"] = "Informació de culpa per a la revisió";
 
 $lang["REVINFO"] = "Informació de la revisió";
 $lang["GOYOUNGEST"] = "Vés a la revisió més recent";
@@ -61,9 +67,9 @@ $lang["VIEWLOG"] = "Visualitza el registre";
 $lang["PATH"] = "Camí";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Edat";
-$lang["LOG"] = "Registre";
 $lang["CURDIR"] = "Directori actual";
 $lang["TARBALL"] = "Arxiu tar";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Anterior";
 $lang["NEXT"] = "Següent";
@@ -90,9 +96,6 @@ $lang["NOPREVREV"] = "No hi ha cap revisió anterior.";
 $lang["RSSFEEDTITLE"] = "Canal RSS del WebSVN";
 $lang["FILESMODIFIED"] = "fitxer(s) modificat(s)";
 $lang["RSSFEED"] = "Canal RSS";
-
-$lang["LINENO"] = "Línia núm.";
-$lang["BLAMEFOR"] = "Informació de culpa per a la revisió";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";

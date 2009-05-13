@@ -24,17 +24,17 @@
 // Japanese(UTF-8) language strings
 // Translator: BEPPU Masamichi
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Japanese";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "ja";
+$lang["LANGUAGETAG"] = "ja"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Japanese";
+$lang["LANGUAGENAMENATIVE"] = "日本語";
+$lang["LANGUAGENAMEHTML"] = "&#26085;&#26412;&#35486;";
 
 $lang["LOG"] = "ログ";
 $lang["DIFF"] = "差分";
 
 $lang["NOREP"] = "リポジトリが指定されていません";
 $lang["NOPATH"] = "パスが見付かりません";
-
+// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
 $lang["RESTRICTED"] = "アクセスが制限されています";
 $lang["SUPPLYREP"] = "ファイル include/config.php 内に \$config->parentPath もしくは \$config->addRepository を使用してリポジトリパスを設定してください。<p>詳しくはインストールガイドを参照してください。";
 
@@ -42,11 +42,17 @@ $lang["DIFFREVS"] = "リビジョン間の差分";
 $lang["AND"] = "と";
 $lang["REV"] = "リビジョン";
 $lang["LINE"] = "行";
+$lang["LINENO"] = "行番号";
 $lang["SHOWENTIREFILE"] = "全て表示";
 $lang["SHOWCOMPACT"] = "異なる行の周辺だけ表示";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "前のリビジョンとの差分";
 $lang["BLAME"] = "詳細表示";
+$lang["BLAMEFOR"] = "詳細表示 対象リビジョン";
 
 $lang["REVINFO"] = "リビジョン情報";
 $lang["GOYOUNGEST"] = "最新のリビジョンへ";
@@ -62,9 +68,9 @@ $lang["VIEWLOG"] = "ログを見る";
 $lang["PATH"] = "パス";
 $lang["AUTHOR"] = "修正者";
 $lang["AGE"] = "無修正時間";
-$lang["LOG"] = "ログ";
 $lang["CURDIR"] = "カレントディレクトリ";
-$lang["TARBALL"] = "Tarball";
+// $lang["TARBALL"] = "Tarball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "前";
 $lang["NEXT"] = "次";
@@ -92,15 +98,6 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "ファイルが修正されました";
 $lang["RSSFEED"] = "RSS feed";
 
-$lang["LINENO"] = "行番号";
-$lang["BLAMEFOR"] = "詳細表示 対象リビジョン";
-
-$lang["YEARS"] = "年間";
-$lang["MONTHS"] = "ヵ月間";
-$lang["WEEKS"] = "週間";
-$lang["DAYS"] = "日間";
-$lang["HOURS"] = "時間";
-$lang["MINUTES"] = "分";
 $lang["DAYLETTER"] = "日間";
 $lang["HOURLETTER"] = "時間";
 $lang["MINUTELETTER"] = "分";

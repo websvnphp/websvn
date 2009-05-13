@@ -24,10 +24,10 @@
 // Uzbek language strings (UTF-8 encoding)
 // by Behzod Saidov <behzodsaidov@gmail.com>
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Uzbek";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "uz";
+$lang["LANGUAGETAG"] = "uz"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Uzbek";
+$lang["LANGUAGENAMENATIVE"] = "Oëzbekcha";
+$lang["LANGUAGENAMEHTML"] = "O&euml;zbekcha";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Farq";
@@ -42,11 +42,17 @@ $lang["DIFFREVS"] = "Tahrirlar orasidagi farq";
 $lang["AND"] = "va";
 $lang["REV"] = "Tahrir";
 $lang["LINE"] = "Satr";
+$lang["LINENO"] = "Satr raqami";
 $lang["SHOWENTIREFILE"] = "faylni toʻliq koʻrsatish";
 $lang["SHOWCOMPACT"] = "faqat farqli qismlarini koʻrsatish";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "oldingisi bilan taqqoslash";
 $lang["BLAME"] = "mualliflik";
+$lang["BLAMEFOR"] = "Tahrir muallifi haqida maʼlumot";
 
 $lang["REVINFO"] = "Tahrir haqida maʼlimot";
 $lang["GOYOUNGEST"] = "eng yangi tahrirga oʻtish";
@@ -62,9 +68,9 @@ $lang["VIEWLOG"] = "loglarni ochish";
 $lang["PATH"] = "Yoʻl";
 $lang["AUTHOR"] = "Muallif";
 $lang["AGE"] = "Yoshi";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Joriy katalog";
 $lang["TARBALL"] = "Arxiv";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "old.";
 $lang["NEXT"] = "key.";
@@ -86,13 +92,11 @@ $lang["CLEARLOG"] = "joriy filtrni tozalash";
 $lang["MORERESULTS"] = "yana qidirish...";
 $lang["NORESULTS"] = "Soʻrovingizga toʻgʻri keladigan yozuv topilmadi";
 $lang["NOMORERESULTS"] = "Soʻrovingizga toʻgʻri keladigan yozuvlar boshqa topilmadi";
+// $lang["NOPREVREV"] = "No previous revision";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS tarmasi";
 $lang["FILESMODIFIED"] = "fayl(lar) oʻzgartirilgan";
 $lang["RSSFEED"] = "RSS tasma";
-
-$lang["LINENO"] = "Satr raqami";
-$lang["BLAMEFOR"] = "Tahrir muallifi haqida maʼlumot";
 
 $lang["DAYLETTER"] = "kun";
 $lang["HOURLETTER"] = "soat";

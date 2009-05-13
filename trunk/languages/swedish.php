@@ -21,12 +21,12 @@
 //
 // swedish.php
 //
-// Swedish language strings
+// Swedish language strings (UTF-8 encoding)
 
-// The language name is displayed in the drop down box. It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Swedish";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "sv";
+$lang["LANGUAGETAG"] = "sv"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Swedish";
+$lang["LANGUAGENAMENATIVE"] = "Svenska";
+$lang["LANGUAGENAMEHTML"] = "Svenska";
 
 $lang["LOG"] = "Logg";
 $lang["DIFF"] = "Skillnad";
@@ -41,11 +41,17 @@ $lang["DIFFREVS"] = "Skillnad mellan rev.";
 $lang["AND"] = "och";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Rad";
+$lang["LINENO"] = "Radnr.";
 $lang["SHOWENTIREFILE"] = "Visa hela filen";
 $lang["SHOWCOMPACT"] = "Visa bara områden med skillnader";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Skillnad mot föregående";
 $lang["BLAME"] = "Ansvarig";
+$lang["BLAMEFOR"] = "Ansvariginformation för rev";
 
 $lang["REVINFO"] = "Revisionsinformation";
 $lang["GOYOUNGEST"] = "Gå till senaste revision";
@@ -61,15 +67,16 @@ $lang["VIEWLOG"] = "Visa Logg";
 $lang["PATH"] = "Sökväg";
 $lang["AUTHOR"] = "Författare";
 $lang["AGE"] = "Ålder";
-$lang["LOG"] = "Logg";
 $lang["CURDIR"] = "Nuvarande folder";
 $lang["TARBALL"] = "Tarball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Föreg.";
 $lang["NEXT"] = "Nästa";
 $lang["SHOWALL"] = "Visa alla";
 
 $lang["BADCMD"] = "Fel vid körning av kommando";
+// $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projekt";
@@ -90,11 +97,8 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "fil(er) ändrade";
 $lang["RSSFEED"] = "RSS";
 
-$lang["LINENO"] = "Radnr.";
-$lang["BLAMEFOR"] = "Ansvariginformation för rev";
-
 $lang["DAYLETTER"] = "d";
-$lang["HOURLETTER"] = "h";
+$lang["HOURLETTER"] = "t";
 $lang["MINUTELETTER"] = "m";
 $lang["SECONDLETTER"] = "s";
 

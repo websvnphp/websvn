@@ -23,10 +23,10 @@
 //
 // Hebrew language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "עברית";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "he-IL";
+$lang["LANGUAGETAG"] = "he-IL"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Hebrew";
+$lang["LANGUAGENAMENATIVE"] = "עברית";
+$lang["LANGUAGENAMEHTML"] = "&#1506;&#1489;&#1512;&#1497;&#1514;";
 
 $lang["LOG"] = "לוג";
 $lang["DIFF"] = "שוני";
@@ -36,15 +36,22 @@ $lang["NOPATH"] = "נתיב לא נמצא";
 $lang["NOACCESS"] = "אין לך את ההרשאות הנחוצות לתיקייה זו";
 $lang["RESTRICTED"] = "גישה מוגבלת";
 $lang["SUPPLYREP"] = 'אנא הוסף את הנתיב לגנזך ב include/config.php ע"י $config->parentPath או $config->addRepository<p>בדוק את מדריך ההתקנה עבור הפרטים';
+
 $lang["DIFFREVS"] = "שוני בין גרסאות";
 $lang["AND"] = "ו";
 $lang["REV"] = "גרסה";
 $lang["LINE"] = "שורה";
+$lang["LINENO"] = "מס שורה";
 $lang["SHOWENTIREFILE"] = "הראה את כל הקובץ";
 $lang["SHOWCOMPACT"] = "הראה רק חלקים ששונו";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "השווה עם הקודם";
 $lang["BLAME"] = "האשם";
+$lang["BLAMEFOR"] = "האשמה בגרסה";
 
 $lang["REVINFO"] = "מידע על הגרסה";
 $lang["GOYOUNGEST"] = "לך לגרסה האחרונה";
@@ -60,9 +67,9 @@ $lang["VIEWLOG"] = "הראה לוג";
 $lang["PATH"] = "נתיב";
 $lang["AUTHOR"] = "כותב";
 $lang["AGE"] = "גיל";
-$lang["LOG"] = "לוג";
 $lang["CURDIR"] = "תיקייה נוכחית";
 $lang["TARBALL"] = "אוסך מכווץ";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "הקודם";
 $lang["NEXT"] = "הבא";
@@ -89,9 +96,6 @@ $lang["NOPREVREV"] = "אין גרסה קודמת";
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "קבצים ששונו";
 $lang["RSSFEED"] = "RSS feed";
-
-$lang["LINENO"] = "מס שורה";
-$lang["BLAMEFOR"] = "האשמה בגרסה";
 
 $lang["DAYLETTER"] = "יום";
 $lang["HOURLETTER"] = "שעה";
