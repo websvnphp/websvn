@@ -42,6 +42,7 @@ $lang["DIFFREVS"] = "Différences entre les révisions";
 $lang["AND"] = "et";
 $lang["REV"] = "Révision";
 $lang["LINE"] = "Ligne";
+$lang["LINENO"] = "Ligne Num.";
 $lang["SHOWENTIREFILE"] = "Afficher tout le fichier";
 $lang["SHOWCOMPACT"] = "Afficher seulement les passages avec des différences";
 $lang["IGNOREWHITESPACE"] = "Ignorer les espaces blanc";
@@ -51,6 +52,7 @@ $lang["LISTING"] = "Arborescence";
 $lang["FILEDETAIL"] = "Détails";
 $lang["DIFFPREV"] = "Différence avec la précédente";
 $lang["BLAME"] = "Responsabilité";
+$lang["BLAMEFOR"] = "Information sur la responsabilité de la rev";
 
 $lang["REVINFO"] = "Information sur la Révision";
 $lang["GOYOUNGEST"] = "Aller à la révision la plus récente";
@@ -96,9 +98,6 @@ $lang["NOPREVREV"] = "Pas de révision antérieur";
 $lang["RSSFEEDTITLE"] = "Flux RSS de WebSVN";
 $lang["FILESMODIFIED"] = "fichier(s) modifié(s)";
 $lang["RSSFEED"] = "Flux RSS";
-
-$lang["LINENO"] = "Ligne";
-$lang["BLAMEFOR"] = "Dernier responsable";
 
 $lang["DAYLETTER"] = "j";
 $lang["HOURLETTER"] = "h";
