@@ -29,27 +29,35 @@
 //   of "Version Control with Subversion"
 // - I've kept the abbreviation "diff"
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Norwegian";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "no";
+$lang["LANGUAGETAG"] = "no"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Norwegian";
+$lang["LANGUAGENAMENATIVE"] = "Norsk";
+$lang["LANGUAGENAMEHTML"] = "Norsk";
 
 $lang["LOG"] = "Logg";
 $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Depot ble ikke angitt";
 $lang["NOPATH"] = "Stien ble ikke funnet";
+// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
+// $lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "Vennligst sett opp en depotsti i include/config.php ved hjelp av \$config->parentPath eller \$config->addRepository.<p>Se installasjonsguiden for detaljer.";
 
 $lang["DIFFREVS"] = "Diff mellom revisjoner";
 $lang["AND"] = "og";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Linje";
+$lang["LINENO"] = "Linjenr.";
 $lang["SHOWENTIREFILE"] = "Vis hele filen";
 $lang["SHOWCOMPACT"] = "Vis kun områder med forskjeller";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Sammenlign med forrige";
 $lang["BLAME"] = "Ansvarlig";
+$lang["BLAMEFOR"] = "Ansvarliginformasjon for rev.";
 
 $lang["REVINFO"] = "Revisjonsinformasjon";
 $lang["GOYOUNGEST"] = "Gå til nyeste revisjon";
@@ -65,20 +73,25 @@ $lang["VIEWLOG"] = "Vis logg";
 $lang["PATH"] = "Sti";
 $lang["AUTHOR"] = "Forfatter";
 $lang["AGE"] = "Alder";
-$lang["LOG"] = "Logg";
 $lang["CURDIR"] = "Gjeldende katalog";
 $lang["TARBALL"] = "Tar-ball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Forrige";
 $lang["NEXT"] = "Neste";
 $lang["SHOWALL"] = "Vis alle";
 
 $lang["BADCMD"] = "En feil oppstod under utførelse av denne kommandoen";
+// $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Kjører på <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversionprosjekter";
 $lang["SERVER"] = "Subversiontjener";
 
+// $lang["FILTER"] = "Filtering Options";
+// $lang["STARTLOG"] = "From rev";
+// $lang["ENDLOG"] = "To rev";
+// $lang["MAXLOG"] = "Max revs";
 $lang["SEARCHLOG"] = "Søk i loggen etter";
 $lang["CLEARLOG"] = "Tøm gjeldende søk";
 $lang["MORERESULTS"] = "Finn flere treff...";
@@ -90,15 +103,10 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS-strøm";
 $lang["FILESMODIFIED"] = "fil(er) endret";
 $lang["RSSFEED"] = "RSS-strøm";
 
-$lang["LINENO"] = "Linjenr.";
-$lang["BLAMEFOR"] = "Ansvarliginformasjon for rev.";
-
-$lang["YEARS"] = "år";
-$lang["MONTHS"] = "måneder";
-$lang["WEEKS"] = "uker";
-$lang["DAYS"] = "dager";
-$lang["HOURS"] = "timer";
-$lang["MINUTES"] = "minutter";
+$lang["DAYLETTER"] = "d";
+$lang["HOURLETTER"] = "t";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Gå";
 

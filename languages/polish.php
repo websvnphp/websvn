@@ -21,18 +21,20 @@
 //
 // polish.php
 //
-// Polish language strings in UTF-8 encoding
+// Polish language strings (UTF-8 encoding)
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Polish";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "pl";
+$lang["LANGUAGETAG"] = "pl"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Polish";
+$lang["LANGUAGENAMENATIVE"] = "Polski";
+$lang["LANGUAGENAMEHTML"] = "Polski";
 
 $lang["LOG"] = "Dziennik zmian";
 $lang["DIFF"] = "Różnice";
 
 $lang["NOREP"] = "Nie podano żadnego repozytorium";
 $lang["NOPATH"] = "Nie odnaleziono ścieżki";
+// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
+// $lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "Proszę ustawić ścieżkę do repozytoriów w
 include/config.php za pomocą \$config->parentPath lub
 \$config->addRepository<p>Aby uzyskać więcej szczegółów zapoznaj się z
@@ -42,11 +44,17 @@ $lang["DIFFREVS"] = "Różnice pomiędzy wersjami";
 $lang["AND"] = "i";
 $lang["REV"] = "Wersja";
 $lang["LINE"] = "Linia";
+$lang["LINENO"] = "Linia nr";
 $lang["SHOWENTIREFILE"] = "Pokaż cały plik";
 $lang["SHOWCOMPACT"] = "Pokaż tylko fragmety w których zaszły zmiany";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Porównaj z poprzednią wersją";
 $lang["BLAME"] = "Wkład pracy";
+$lang["BLAMEFOR"] = "Wkład pracy dla wersji";
 
 $lang["REVINFO"] = "Informacje o wersji";
 $lang["GOYOUNGEST"] = "Przejdź do najnowszej wersji";
@@ -62,40 +70,41 @@ $lang["VIEWLOG"] = "Pokaż dziennik zmian";
 $lang["PATH"] = "Ścieżka";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Wiek";
-$lang["LOG"] = "Dziennik zmian";
 $lang["CURDIR"] = "Aktualny katalog";
 $lang["TARBALL"] = "Archiwum tar";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Poprzednia strona";
 $lang["NEXT"] = "Następna strona";
 $lang["SHOWALL"] = "Pokaż wszyskie";
 
 $lang["BADCMD"] = "Błąd podczas wykonywania polecenia";
+// $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Obsługiwane przez <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Projekty Subversion";
 $lang["SERVER"] = "Serwer Subversion";
 
+// $lang["FILTER"] = "Filtering Options";
+// $lang["STARTLOG"] = "From rev";
+// $lang["ENDLOG"] = "To rev";
+// $lang["MAXLOG"] = "Max revs";
 $lang["SEARCHLOG"] = "Przeszukaj dziennik zmian";
 $lang["CLEARLOG"] = "Usuń rezulaty wyszukiwania";
 $lang["MORERESULTS"] = "Znajdź więcej dopasowań...";
 $lang["NORESULTS"] = "Żaden wpis w dzinniku zmian nie pasuje do zapytania";
 $lang["NOMORERESULTS"] = "Nie ma już więcej wpisów pasujących do
 zadanych kryterów";
+// $lang["NOPREVREV"] = "No previous revision";
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "zmienione pliki";
 $lang["RSSFEED"] = "RSS feed";
 
-$lang["LINENO"] = "Linia nr";
-$lang["BLAMEFOR"] = "Wkład pracy dla wersji";
-
-$lang["YEARS"] = "lat";
-$lang["MONTHS"] = "miesięcy";
-$lang["WEEKS"] = "tygodni";
-$lang["DAYS"] = "dni";
-$lang["HOURS"] = "godzin";
-$lang["MINUTES"] = "minut";
+=$lang["DAYLETTER"] = "d";
+$lang["HOURLETTER"] = "g";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Przejdź";
 

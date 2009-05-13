@@ -23,13 +23,13 @@
 //
 // Czech language strings
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Česky";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "cs";
+$lang["LANGUAGETAG"] = "cs"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Czech";
+$lang["LANGUAGENAMENATIVE"] = "Česky";
+$lang["LANGUAGENAMEHTML"] = "&#268;esky";
 
-$lang["LOG"] = "Log";
-$lang["DIFF"] = "Diff";
+$lang["LOG"] = "Záznam";
+// $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Není určen žádný repozitář";
 $lang["NOPATH"] = "Cesta nebyla nalezena";
@@ -40,12 +40,18 @@ $lang["SUPPLYREP"] = "Nastavte prosím cestu k repozitáři v include/config.php
 $lang["DIFFREVS"] = "Rozdíly mezi revizemi";
 $lang["AND"] = "a";
 $lang["REV"] = "Revize";
-$lang["LINE"] = "Line";
+// $lang["LINE"] = "Line";
+$lang["LINENO"] = "Číslo řádky";
 $lang["SHOWENTIREFILE"] = "Zobraz celý soubor";
 $lang["SHOWCOMPACT"] = "Zobraz pouze rozdílné části";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Porovnej s předchozí";
-$lang["BLAME"] = "Blame";
+// $lang["BLAME"] = "Blame";
+// $lang["BLAMEFOR"] = "Blame information for rev";
 
 $lang["REVINFO"] = "Informace o revizi";
 $lang["GOYOUNGEST"] = "Přejdi na současnou revizi";
@@ -61,9 +67,9 @@ $lang["VIEWLOG"] = "Ukaž";
 $lang["PATH"] = "Cesta";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Stáří";
-$lang["LOG"] = "Záznam";
 $lang["CURDIR"] = "Aktuální adresář";
-$lang["TARBALL"] = "Tarball";
+// $lang["TARBALL"] = "Tarball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Předchozí";
 $lang["NEXT"] = "Následující";
@@ -90,9 +96,6 @@ $lang["NOPREVREV"] = "Není předchozí revize.";
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "soubor(y) změněn(y)";
 $lang["RSSFEED"] = "RSS";
-
-$lang["LINENO"] = "Číslo řádky";
-$lang["BLAMEFOR"] = "Blame information for rev";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";

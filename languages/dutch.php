@@ -26,29 +26,35 @@
 // By David Gartner david A.T net2ftp D-O-T com
 // Comments welcome.
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Dutch";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "nl";
+$lang["LANGUAGETAG"] = "nl"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Dutch";
+$lang["LANGUAGENAMENATIVE"] = "Nederlands";
+$lang["LANGUAGENAMEHTML"] = "Nederlands";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Geen repository ingegeven";
 $lang["NOPATH"] = "Pad niet gevonden";
+// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
+// $lang["RESTRICTED"] = "Restricted access";
 $lang["SUPPLYREP"] = "Gelieve een repository pad aan te maken in include/config.php met behulp van \$config->parentPath of \$config->addRepository<p>Zie de installatiegids voor meer details";
 
 $lang["DIFFREVS"] = "Verschil tussen de revisies";
 $lang["AND"] = "en";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Lijn";
+$lang["LINENO"] = "Lijn Nr.";
 $lang["SHOWENTIREFILE"] = "Toon volledig bestand";
 $lang["SHOWCOMPACT"] = "Toon enkel de delen met verschillen";
 $lang["IGNOREWHITESPACE"] = "Negeer witruimtes";
 $lang["REGARDWHITESPACE"] = "Toon witruimtes";
 
+// $lang["LISTING"] = "Directory listing";
+// $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Vergelijk met vorige";
 $lang["BLAME"] = "Blame";
+$lang["BLAMEFOR"] = "Blame informatie voor revisie";
 
 $lang["REVINFO"] = "Revisie Informatie";
 $lang["GOYOUNGEST"] = "Ga naar de meest recente revisie";
@@ -64,39 +70,40 @@ $lang["VIEWLOG"] = "Toon Log";
 $lang["PATH"] = "Pad";
 $lang["AUTHOR"] = "Auteur";
 $lang["AGE"] = "Ouderdom";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Huidige map";
-$lang["TARBALL"] = "Tarball";
+// $lang["TARBALL"] = "Tarball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Vorige";
 $lang["NEXT"] = "Volgende";
 $lang["SHOWALL"] = "Toon alles";
 
 $lang["BADCMD"] = "Een fout is opgetreden tijdens het uitvoeren van dit commando";
+// $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Aangedreven door <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projecten";
 $lang["SERVER"] = "Subversion Server";
 
+// $lang["FILTER"] = "Filtering Options";
+// $lang["STARTLOG"] = "From rev";
+// $lang["ENDLOG"] = "To rev";
+// $lang["MAXLOG"] = "Max revs";
 $lang["SEARCHLOG"] = "Doorzoek de logs";
 $lang["CLEARLOG"] = "Wis deze zoekopdracht";
 $lang["MORERESULTS"] = "Vind meer resultaten...";
 $lang["NORESULTS"] = "Er zijn geen logs die aan de zoekcriteria voldoen";
 $lang["NOMORERESULTS"] = "Er zijn geen logs meer die aan de zoekcriteria voldoen";
+// $lang["NOPREVREV"] = "No previous revision";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "bestand(en) gewijzigd";
-$lang["RSSFEED"] = "RSS feed";
+// $lang["RSSFEED"] = "RSS feed";
 
-$lang["LINENO"] = "Lijn Nr.";
-$lang["BLAMEFOR"] = "Blame informatie voor revisie";
-
-$lang["YEARS"] = "jaren";
-$lang["MONTHS"] = "maanden";
-$lang["WEEKS"] = "weken";
-$lang["DAYS"] = "dagen";
-$lang["HOURS"] = "uren";
-$lang["MINUTES"] = "minuten";
+$lang["DAYLETTER"] = "d";
+$lang["HOURLETTER"] = "u";
+$lang["MINUTELETTER"] = "m";
+$lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Ga";
 

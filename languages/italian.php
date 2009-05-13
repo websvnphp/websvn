@@ -24,10 +24,10 @@
 // Italian language strings
 // Translated by Andrea Visinoni (andrea.visinoni@gmail.com)
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Italian";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "it";
+$lang["LANGUAGETAG"] = "it"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Italian";
+$lang["LANGUAGENAMENATIVE"] = "Italiano";
+$lang["LANGUAGENAMEHTML"] = "Italiano";
 
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
@@ -42,6 +42,7 @@ $lang["DIFFREVS"] = "Differenze tra le revisioni";
 $lang["AND"] = "e";
 $lang["REV"] = "Revisione";
 $lang["LINE"] = "Linea";
+$lang["LINENO"] = "Linea Num.";
 $lang["SHOWENTIREFILE"] = "Mostra tutto il file";
 $lang["SHOWCOMPACT"] = "Mostra solo aree con differenze";
 $lang["IGNOREWHITESPACE"] = "Ignora gli spazi vuoti";
@@ -51,6 +52,7 @@ $lang["LISTING"] = "Lista directory";
 $lang["FILEDETAIL"] = "Dettagli";
 $lang["DIFFPREV"] = "Confronta con la precedente";
 $lang["BLAME"] = "Responsabilità";
+$lang["BLAMEFOR"] = "Informazioni sui responsabili della revisione";
 
 $lang["REVINFO"] = "Informazioni sulla revisione";
 $lang["GOYOUNGEST"] = "Vai alla revisione più recente";
@@ -66,7 +68,6 @@ $lang["VIEWLOG"] = "Visualizza Log";
 $lang["PATH"] = "Percorso";
 $lang["AUTHOR"] = "Autore";
 $lang["AGE"] = "Anzianità";
-$lang["LOG"] = "Log";
 $lang["CURDIR"] = "Directory corrente";
 $lang["TARBALL"] = "Archivio";
 $lang["DOWNLOAD"] = "Download";
@@ -96,9 +97,6 @@ $lang["NOPREVREV"] = "Nessuna revisione precedente";
 $lang["RSSFEEDTITLE"] = "WebSVN feed RSS";
 $lang["FILESMODIFIED"] = "file modificati";
 $lang["RSSFEED"] = "feed RSS";
-
-$lang["LINENO"] = "Linea Num.";
-$lang["BLAMEFOR"] = "Informazioni sui responsabili della revisione";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";

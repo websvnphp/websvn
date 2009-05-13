@@ -21,14 +21,14 @@
 //
 // slovak.php
 //
-// Slovak language strings
+// Slovak language strings (UTF-8 encoding)
 
-// The language name is displayed in the drop down box.  It MUST be encoded as Unicode (no HTML entities).
-$lang["LANGUAGENAME"] = "Slovak";
-// The language tag (see RFC 4646) which corresponds to this translation.
-$lang["LANGUAGETAG"] = "sk";
+$lang["LANGUAGETAG"] = "sk"; // Language tag (RFC 4646) for this translation.
+$lang["LANGUAGENAMEENGLISH"] = "Slovak";
+$lang["LANGUAGENAMENATIVE"] = "Slovenčina";
+$lang["LANGUAGENAMEHTML"] = "Sloven&#269;ina";
 
-$lang["LOG"] = "Log";
+$lang["LOG"] = "Denník";
 $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Neurčené úložisko";
@@ -41,12 +41,17 @@ $lang["DIFFREVS"] = "Rozdiel medzi revíziami";
 $lang["AND"] = "a";
 $lang["REV"] = "Rev";
 $lang["LINE"] = "Riadok";
+$lang["LINENO"] = "Riadok č.";
 $lang["SHOWENTIREFILE"] = "Ukáž celý súbor";
 $lang["SHOWCOMPACT"] = "Ukáž len oblasti s rozdielmi";
+// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
+// $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
+// $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Podrobnosti";
 $lang["DIFFPREV"] = "Porovnaj s predchádzajúcou";
 $lang["BLAME"] = "Blame";
+$lang["BLAMEFOR"] = "Blame informácie pre rev.";
 
 $lang["REVINFO"] = "Informácie o revízii";
 $lang["GOYOUNGEST"] = "Choď na aktuálnu revíziu";
@@ -62,9 +67,9 @@ $lang["VIEWLOG"] = "Zobraz denník";
 $lang["PATH"] = "Cesta";
 $lang["AUTHOR"] = "Autor";
 $lang["AGE"] = "Vek";
-$lang["LOG"] = "Denník";
 $lang["CURDIR"] = "Aktuálny priečinok";
 $lang["TARBALL"] = "Tarball";
+// $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "Predch";
 $lang["NEXT"] = "Ďalší";
@@ -91,9 +96,6 @@ $lang["NOPREVREV"] = "Žiadna predchádzajúca revízia";
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "súbor(y) zmenený(/é)";
 $lang["RSSFEED"] = "RSS feed";
-
-$lang["LINENO"] = "Riadok č.";
-$lang["BLAMEFOR"] = "Blame informácie pre rev.";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";
