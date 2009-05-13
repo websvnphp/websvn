@@ -29,12 +29,13 @@ require_once("include/utils.php");
 ini_set('include_path', $locwebsvnreal.'/lib/pear'.$config->pathSeparator.ini_get('include_path'));
 @include_once("Archive/Tar.php");
 
-function setDirectoryTimestamp($dir, $ts) {
+function setDirectoryTimestamp($dir, $timestamp) {
   global $config;
-  // changing the modification time of a directory under windows is only supported since php 5.3.0
+  // Changing the timestamp of a directory in Windows is only supported in PHP 5.3.0+
   if (!$config->serverIsWindows || version_compare(PHP_VERSION, '5.3.0alpha') !== -1) {
-    touch($dir, $ts);
-
+    touch($dir, $timestamp);
+    
+    // Set timestamp for all contents, recursing into subdirectories
     $handle = opendir($dir);
     if ($handle) {
       while (($file = readdir($handle)) !== false) {
@@ -43,7 +44,7 @@ function setDirectoryTimestamp($dir, $ts) {
         }
         $f = $dir.DIRECTORY_SEPARATOR.$file;
         if (is_dir($f)) {
-          setDirectoryTimestamp($f, $ts);
+          setDirectoryTimestamp($f, $timestamp);
         }
       }
       closedir($handle);
@@ -59,7 +60,6 @@ function removeDirectory($dir) {
       if ($file == '.' || $file == '..') {
         continue;
       }
-
       $f = $dir.DIRECTORY_SEPARATOR.$file;
       if (!is_link($f) && is_dir($f)) {
         removeDirectory($f);
@@ -74,7 +74,7 @@ function removeDirectory($dir) {
   return false;
 }
 
-// Make sure that this operation is allowed
+// Make sure that downloading the specified file/directory is permitted
 
 if (!$rep->isDownloadAllowed($path)) {
   header('HTTP/1.x 403 Forbidden', true, 403);
@@ -84,7 +84,7 @@ if (!$rep->isDownloadAllowed($path)) {
 
 $svnrep = new SVNRepository($rep);
 
-// Fetch information about latest revision for this path
+// Fetch information about a revision (if unspecified, the latest) for this path
 if (empty($rev)) {
   $history = $svnrep->getLog($path, 'HEAD', '', true, 1);
 } else {
@@ -100,96 +100,108 @@ if (empty($rev)) {
   $rev = $logEntry->rev;
 }
 
-// Create a temporary directory.  Here we have an unavoidable but highly
-// unlikely to occure race condition
+// Create a temporary filename to be used for a directory to archive a download.
+// Here we have an unavoidable but highly unlikely to occur race condition.
+$tempDir = tempnam($config->getTarballTmpDir(), "websvn");
 
-$tmpname = tempnam($config->getTarballTmpDir(), 'wsvn');
-@unlink($tmpname);
-
-if (mkdir($tmpname)) {
-  // Get the name of the directory being archived
-  $arcname = $path;
-  $isDir = (substr($arcname, -1) == '/');
+if ($tempDir == false) {
+  header('HTTP/1.x 500 Internal Server Error', true, 500);
+  print "Unable to create temporary directory\n";
+  exit(0);
+}
+else {
+  @unlink($tempDir);
+  mkdir($tempDir);
+  // Create the name of the directory being archived
+  $archiveName = $path;
+  $isDir = (substr($archiveName, -1) == '/');
   if ($isDir) {
-    $arcname = substr($arcname, 0, -1);
+    $archiveName = substr($archiveName, 0, -1);
   }
-  $arcname = basename($arcname);
-  if ($arcname == '') {
-    $arcname = $rep->name;
+  $archiveName = basename($archiveName);
+  if ($archiveName == '') {
+    $archiveName = $rep->name;
   }
+  $plainfilename = $archiveName;
+  $archiveName .= ".r$rev";
 
-  $plainfilename = $arcname;
-  $arcname = $arcname.'.r'.$rev;
-
-  $exportRC = $svnrep->exportDirectory($path, $tmpname.DIRECTORY_SEPARATOR.$arcname, $rev);
-  if ($exportRC != 0) {
+  // Export the requested path from SVN repository to the temp directory
+  $svnExportResult = $svnrep->exportDirectory($path, $tempDir.DIRECTORY_SEPARATOR.$archiveName, $rev);
+  if ($svnExportResult != 0) {
     header('HTTP/1.x 500 Internal Server Error', true, 500);
-    print '"svn export" failed for '.$arcname.' - see webserver error log for details'."\n";
-    removeDirectory($tmpname);
+    print '"svn export" failed for '.$archiveName.' - see webserver error log for details'."\n";
+    removeDirectory($tempDir);
     exit(0);
   }
 
-  // Set datetime of exported directory (and subdirectories) to datetime of revision so that every archive is equal
-  $date = $logEntry->date;
-  $ts = mktime(substr($date, 11, 2), substr($date, 14, 2), substr($date, 17, 2), substr($date, 5, 2), substr($date, 8, 2), substr($date, 0, 4));
-  setDirectoryTimestamp($tmpname.DIRECTORY_SEPARATOR.$arcname, $ts);
+  // Set timestamp of exported directory (and subdirectories) to timestamp of
+  // the revision so every archive of a given revision has the same timestamp.
+  $revDate = $logEntry->date;
+  $timestamp = mktime(substr($revDate, 11, 2), // hour
+                      substr($revDate, 14, 2), // minute
+                      substr($revDate, 17, 2), // second
+                      substr($revDate, 5, 2),  // month
+                      substr($revDate, 8, 2),  // day
+                      substr($revDate, 0, 4)); // year
+  setDirectoryTimestamp($tempDir, $timestamp);
 
-  // change to temp directory so that only relative paths are stored in tar
+  // Change to temp directory so that only relative paths are stored in archive.
   $oldcwd = getcwd();
-  chdir($tmpname);
+  chdir($tempDir);
 
   if ($isDir) {
-    $dlmode = $config->getDefaultFolderDlMode();
+    $downloadMode = $config->getDefaultFolderDlMode();
   } else {
-    $dlmode = $config->getDefaultFileDlMode();
+    $downloadMode = $config->getDefaultFileDlMode();
   }
 
   // $_REQUEST parameter can override dlmode
   if (!empty($_REQUEST['dlmode'])) {
-    $dlmode = $_REQUEST['dlmode'];
+    $downloadMode = $_REQUEST['dlmode'];
     if (substr($logEntry->path, -1) == '/') {
-      if (!in_array($dlmode, $config->validFolderDlModes)) {
-        $dlmode = $config->getDefaultFolderDlMode();
+      if (!in_array($downloadMode, $config->validFolderDlModes)) {
+        $downloadMode = $config->getDefaultFolderDlMode();
       }
-    } else {
-      if (!in_array($dlmode, $config->validFileDlModes)) {
-        $dlmode = $config->getDefaultFileDlMode();
+    }
+    else {
+      if (!in_array($downloadMode, $config->validFileDlModes)) {
+        $downloadMode = $config->getDefaultFileDlMode();
       }
     }
   }
 
-  if ($dlmode == 'plain') {
-    $dlarc  = $arcname;
-    $dlmime = 'application/octetstream';
-
-  } else if ($dlmode == 'zip') {
-    $dlarc  = $arcname.'.zip';
-    $dlmime = 'application/x-zip';
+  $downloadArchive = $archiveName;
+  if ($downloadMode == 'plain') {
+    $downloadMimeType = 'application/octetstream';
+  }
+  else if ($downloadMode == 'zip') {
+    $downloadMimeType = 'application/x-zip';
+    $downloadArchive .= '.zip';
     // Create zip file
-    $cmd = $config->zip.' -r '.quote($dlarc).' '.quote($arcname);
+    $cmd = $config->zip.' -r '.quote($downloadArchive).' '.quote($archiveName);
     execCommand($cmd, $retcode);
     if ($retcode != 0) {
       print'Unable to call zip command "'.$config->zip.'"';
     }
-
-  } else {
-    $tararc = $arcname.'.tar';
-    $dlarc = $arcname.'.tar.gz';
-    $dlmime = 'application/x-gzip';
+  }
+  else {
+    $downloadMimeType = 'application/x-gzip';
+    $downloadArchive .= '.tar.gz';
+    $tarArchive = $archiveName.'.tar';
 
     // Create the tar file
     $retcode = 0;
     if (class_exists('Archive_Tar')) {
-      $tar = new Archive_Tar($tararc);
-      $created = $tar->create($arcname);
+      $tar = new Archive_Tar($tarArchive);
+      $created = $tar->create($archiveName);
       if (!$created) {
         $retcode = 1;
         header('HTTP/1.x 500 Internal Server Error', true, 500);
         print'Unable to create tar archive';
       }
-
-    } else {
-      $cmd = $config->tar.' -cf '.quote($tararc).' '.quote($arcname);
+    }
+    else {
+      $cmd = $config->tar.' -cf '.quote($tarArchive).' '.quote($archiveName);
       execCommand($cmd, $retcode);
       if ($retcode != 0) {
         header('HTTP/1.x 500 Internal Server Error', true, 500);
@@ -199,22 +211,22 @@ if (mkdir($tmpname)) {
     }
     if ($retcode != 0) {
       chdir($oldcwd);
-      removeDirectory($tmpname);
+      removeDirectory($tempDir);
       exit(0);
     }
 
-    // Set datetime of tar file to datetime of revision
-    touch($tararc, $ts);
+    // Set timestamp of tar file to timestamp of revision
+    touch($tarArchive, $timestamp);
 
     // GZIP it up
     if (function_exists('gzopen')) {
-      $srcHandle = fopen($tararc, 'rb');
-      $dstHandle = gzopen($dlarc, 'wb');
+      $srcHandle = fopen($tarArchive, 'rb');
+      $dstHandle = gzopen($downloadArchive, 'wb');
       if (!$srcHandle || !$dstHandle) {
         header('HTTP/1.x 500 Internal Server Error', true, 500);
         print'Unable to open file for gz-compression';
         chdir($oldcwd);
-        removeDirectory($tmpname);
+        removeDirectory($tempDir);
         exit(0);
       }
       while (!feof($srcHandle)) {
@@ -222,9 +234,9 @@ if (mkdir($tmpname)) {
       }
       fclose($srcHandle);
       gzclose($dstHandle);
-
-    } else {
-      $cmd = $config->gzip.' '.quote($tararc);
+    }
+    else {
+      $cmd = $config->gzip.' '.quote($tarArchive);
       $retcode = 0;
       execCommand($cmd, $retcode);
       if ($retcode != 0) {
@@ -232,35 +244,29 @@ if (mkdir($tmpname)) {
         error_log('Unable to call gzip command "'.$cmd.'"');
         print'Unable to call gzip command - see webserver error log for details';
         chdir($oldcwd);
-        removeDirectory($tmpname);
+        removeDirectory($tempDir);
         exit(0);
       }
     }
   }
 
   // Give the file to the browser
-  if (is_readable($dlarc)) {
-    $size = filesize($dlarc);
-
-    if ($dlmode == 'plain') {
-      $dlfilename = $plainfilename;
+  if (is_readable($downloadArchive)) {
+    if ($downloadMode == 'plain') {
+      $downloadFilename = $plainfilename;
     } else {
-      $dlfilename = $rep->name.'-'.$dlarc;
+      $downloadFilename = $rep->name.'-'.$downloadArchive;
     }
-
-    header('Content-Type: '.$dlmime);
-    header('Content-Length: '.$size);
-    header('Content-Disposition: attachment; filename="'. $dlfilename .'"');
-
-    readfile($dlarc);
-
-  } else {
+    header('Content-Type: '.$downloadMimeType);
+    header('Content-Length: '.filesize($downloadArchive));
+    header('Content-Disposition: attachment; filename="'. $downloadFilename .'"');
+    readfile($downloadArchive);
+  }
+  else {
     header('HTTP/1.x 404 Not Found', true, 404);
-
-    print 'Unable to open file '.$dlarc."\n";
+    print 'Unable to open file '.$downloadArchive."\n";
   }
 
   chdir($oldcwd);
-
-  removeDirectory($tmpname);
+  removeDirectory($tempDir);
 }
