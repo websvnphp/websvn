@@ -1,10 +1,10 @@
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
   <tr>
     <td align="left" rowspan="2"><h1>[websvn:repname]</h1></td>
-    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_hidden][websvn:projects_endform]</td>
+    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
   </tr>
   <tr>
-    <td align="right"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_hidden][websvn:revision_endform]</td>
+    <td align="right"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</td>
   </tr>
 </table>
 
@@ -67,19 +67,19 @@
             <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
             [websvn-test:allowdownload]
                [websvn-test:rssurl]
-                  <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-                  <th class="HdrClmn"><b>[lang:TARBALL]</b></th>
+                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
+                  <th class="HdrClmn"><b>[lang:DOWNLOAD]</b></th>
                   <th class="HdrClmnEnd"><b>RSS</b></th>
                [websvn-else]
-                  <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-                  <th class="HdrClmnEnd"><b>[lang:TARBALL]</b></th>
+                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
+                  <th class="HdrClmnEnd"><b>[lang:DOWNLOAD]</b></th>
                [websvn-endtest]
             [websvn-else]
                [websvn-test:rssurl]
-                  <th class="HdrClmn"><b>[lang:LOG]</b></th>
+                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
                   <th class="HdrClmnEnd"><b>RSS</b></th>
                [websvn-else]
-                  <th class="HdrClmnEnd"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
+                  <th class="HdrClmnEnd"><b>[lang:VIEWLOG]</b></th>
                [websvn-endtest]
             [websvn-endtest]
          </tr>
@@ -92,7 +92,7 @@
                [websvn:filelink]
             </td>
             [websvn-test:allowdownload]
-               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR]<a href="[websvn:logurl]">[lang:VIEWLOG]</a>[lang:ENDNOBR]</td>
+               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]"><a href="[websvn:logurl]">[lang:LOG]</a></td>
                [websvn-test:rssurl]
                   <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">
                      [websvn-test:downloadurl]
@@ -125,8 +125,6 @@
          [websvn-endlisting]
       </table>
    <p>
-   [websvn:compare_submit]
-   [websvn:compare_hidden] 
-   [websvn:compare_endform]
+   [websvn:compare_submit][websvn:compare_endform]
    <hr>
 [websvn-endtest]

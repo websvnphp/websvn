@@ -1,11 +1,11 @@
-<div id="select">[websvn:projects_form]<div>[websvn:projects_hidden][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
+<div id="select">[websvn:projects_form]<div>[websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform]</div>
 <h1><a href="[websvn:indexurl]" title="[lang:PROJECTS]">[lang:PROJECTS]</a> <span><a href="[websvn:repurl]">[websvn:repname]</a></span></h1>
 
 [websvn-test:noaccess]
    [lang:NOACCESS]
 [websvn-else]
 <h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
-<div id="input">[websvn:revision_form]<div>[lang:REV] [websvn:revision_hidden][websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
+<div id="input">[websvn:revision_form]<div>[lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
 <p>
 [websvn-test:goyoungesturl]
 	<span class="goyoungest"><a href="[websvn:goyoungesturl]">[lang:GOYOUNGEST]</a></span> &#124;
@@ -66,9 +66,9 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
         [websvn-test:showlastmod]
         <th scope="col" class="colmod" colspan="3">[lang:LASTMOD]</th>
         [websvn-endtest]
-        <th scope="col" class="collog">[lang:NOBR][lang:LOG][lang:ENDNOBR]</th>
+        <th scope="col" class="collog">[lang:NOBR][lang:VIEWLOG][lang:ENDNOBR]</th>
         [websvn-test:allowdownload]
-        <th scope="col" class="coltar">[lang:TARBALL]</th>
+        <th scope="col" class="coltar">[lang:DOWNLOAD]</th>
         [websvn-endtest]
         [websvn-test:rssurl]
         <th scope="col" class="colrss">[lang:RSSFEED]</th>
@@ -93,7 +93,7 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
          [websvn-endtest]
          <td class="author">[websvn:author]</td>
          [websvn-endtest]
-         <td class="log">[lang:NOBR]<a href="[websvn:logurl]">[lang:VIEWLOG]</a>[lang:ENDNOBR]</td>
+         <td class="log"><a href="[websvn:logurl]">[lang:LOG]</a></td>
          [websvn-test:allowdownload]
          <td class="compress">
            [websvn-test:downloadurl]
@@ -113,7 +113,7 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
 
    </table>
 <p class="submit">
-    [websvn:compare_submit][websvn:compare_hidden]
+    [websvn:compare_submit]
 </p>
 [websvn:compare_endform]
 </div>
