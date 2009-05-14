@@ -53,128 +53,133 @@ if (empty($locwebsvnreal)) {
 
 $vars['locwebsvnhttp'] = $locwebsvnhttp;
 
-// {{{ Content-Type's
+// {{{ Content Types
 // Set up the default content-type extension handling
 
-$contentType = array (
-'.dwg' => 'application/acad', // AutoCAD Drawing files
-'.arj' => 'application/arj', //  
-'.ccad' => 'application/clariscad', // ClarisCAD files
-'.drw' => 'application/drafting', // MATRA Prelude drafting
-'.dxf' => 'application/dxf', // DXF (AutoCAD)
-'.xl' => 'application/excel', // Microsoft Excel
-'.unv' => 'application/i-deas', //SDRC I-DEAS files
-'.igs' => 'application/iges', // IGES graphics format
-'.iges' => 'application/iges', // IGES graphics format
-'.hqx' => 'application/mac-binhex40', // Macintosh BinHex format
-'.word' => 'application/msword', // Microsoft Word
-'.w6w' => 'application/msword', // Microsoft Word
-'.doc' => 'application/msword', // Microsoft Word
-'.wri' => 'application/mswrite', // Microsoft Write
-'.bin' => 'application/octet-stream', // Uninterpreted binary
-'.exe' => 'application/x-msdownload', // Windows EXE
-'.oda' => 'application/oda', //  
-'.pdf' => 'application/pdf', // PDF (Adobe Acrobat)
-'.ai' => 'application/postscript', // PostScript
-'.ps' => 'application/postscript', // PostScript
-'.eps' => 'application/postscript', // PostScript
-'.prt' => 'application/pro_eng', // PTC Pro/ENGINEER
-'.part' => 'application/pro_eng', // PTC Pro/ENGINEER
-'.rtf' => 'application/rtf', // Rich Text Format
-'.set' => 'application/set', // SET (French CAD standard)
-'.stl' => 'application/sla', // Stereolithography
-'.sol' => 'application/solids', // MATRA Prelude Solids
-'.stp' => 'application/STEP', // ISO-10303 STEP data files
-'.step' => 'application/STEP', // ISO-10303 STEP data files
-'.vda' => 'application/vda', // VDA-FS Surface data
-'.dir' => 'application/x-director', // Macromedia Director
-'.dcr' => 'application/x-director', // Macromedia Director
-'.dxr' => 'application/x-director', // Macromedia Director
-'.mif' => 'application/x-mif', // FrameMaker MIF Format
-'.csh' => 'application/x-csh', // C-shell script
-'.dvi' => 'application/x-dvi', // TeX DVI
-'.gz' => 'application/x-gzip', // GNU Zip
-'.gzip' => 'application/x-gzip', // GNU Zip
-'.hdf' => 'application/x-hdf', // ncSA HDF Data File
-'.latex' => 'application/x-latex', // LaTeX source
-'.nc' => 'application/x-netcdf', // Unidata netCDF
-'.cdf' => 'application/x-netcdf', // Unidata netCDF
-'.sit' => 'application/x-stuffit', // Stiffut Archive
-'.tcl' => 'application/x-tcl', // TCL script
-'.texinfo' => 'application/x-texinfo', // Texinfo (Emacs)
-'.texi' => 'application/x-texinfo', // Texinfo (Emacs)
-'.t' => 'application/x-troff', // Troff
-'.tr' => 'application/x-troff', // Troff
-'.roff' => 'application/x-troff', // Troff
-'.man' => 'application/x-troff-man', // Troff with MAN macros
-'.me' => 'application/x-troff-me', // Troff with ME macros
-'.ms' => 'application/x-troff-ms', // Troff with MS macros
-'.src' => 'application/x-wais-source', // WAIS source
-'.bcpio' => 'application/x-bcpio', // Old binary CPIO
-'.cpio' => 'application/x-cpio', // POSIX CPIO
-'.gtar' => 'application/x-gtar', // GNU tar
-'.shar' => 'application/x-shar', // Shell archive
-'.sv4cpio' => 'application/x-sv4cpio', // SVR4 CPIO
-'.sv4crc' => 'application/x-sv4crc', // SVR4 CPIO with CRC
-'.tar' => 'application/x-tar', // 4.3BSD tar format
-'.ustar' => 'application/x-ustar', // POSIX tar format
-'.hlp' => 'application/x-winhelp', // Windows Help
-'.zip' => 'application/zip', // ZIP archive
-'.au' => 'audio/basic', // Basic audio (usually m-law)
-'.snd' => 'audio/basic', // Basic audio (usually m-law)
-'.aif' => 'audio/x-aiff', // AIFF audio
-'.aiff' => 'audio/x-aiff', // AIFF audio
-'.aifc' => 'audio/x-aiff', // AIFF audio
-'.ra' => 'audio/x-pn-realaudio', // RealAudio
-'.ram' => 'audio/x-pn-realaudio', // RealAudio
-'.rpm' => 'audio/x-pn-realaudio-plugin', // RealAudio (plug-in)
-'.wav' => 'audio/x-wav', // Windows WAVE audio
-'.mp3' => 'audio/x-mp3', // MP3 files
-'.gif' => 'image/gif', // gif image
-'.ief' => 'image/ief', // Image Exchange Format
-'.jpg' => 'image/jpeg', // JPEG image
-'.jpe' => 'image/jpeg', // JPEG image
-'.jpeg' => 'image/jpeg', // JPEG image
-'.pict' => 'image/pict', // Macintosh PICT
-'.tiff' => 'image/tiff', // TIFF image
-'.tif' => 'image/tiff', // TIFF image
-'.ras' => 'image/x-cmu-raster', // CMU raster
-'.pnm' => 'image/x-portable-anymap', // PBM Anymap format
-'.pbm' => 'image/x-portable-bitmap', // PBM Bitmap format
-'.pgm' => 'image/x-portable-graymap', // PBM Graymap format
-'.ppm' => 'image/x-portable-pixmap', // PBM Pixmap format
-'.rgb' => 'image/x-rgb', // RGB Image
-'.xbm' => 'image/x-xbitmap', // X Bitmap
-'.xpm' => 'image/x-xpixmap', // X Pixmap
-'.xwd' => 'image/x-xwindowdump', // X Windows dump (xwd) format
-'.zip' => 'multipart/x-zip', // PKZIP Archive
-'.gzip' => 'multipart/x-gzip', // GNU ZIP Archive
-'.mpeg' => 'video/mpeg', // MPEG video
-'.mpg' => 'video/mpeg', // MPEG video
-'.mpe' => 'video/mpeg', // MPEG video
-'.mpeg' => 'video/mpeg', // MPEG video
-'.qt' => 'video/quicktime', // QuickTime Video
-'.mov' => 'video/quicktime', // QuickTime Video
-'.avi' => 'video/msvideo', // Microsoft Windows Video
-'.movie' => 'video/x-sgi-movie', // SGI Movieplayer format
-'.wrl' => 'x-world/x-vrml', // VRML Worlds
-'.odt' => 'application/vnd.oasis.opendocument.text',            // OpenDocument Text
-'.ott' => 'application/vnd.oasis.opendocument.text-template',      // OpenDocument Text Template
-'.ods' => 'application/vnd.oasis.opendocument.spreadsheet',        // OpenDocument Spreadsheet
-'.ots' => 'application/vnd.oasis.opendocument.spreadsheet-template',  // OpenDocument Spreadsheet Template
-'.odp' => 'application/vnd.oasis.opendocument.presentation',       // OpenDocument Presentation
-'.otp' => 'application/vnd.oasis.opendocument.presentation-template', // OpenDocument Presentation Template
-'.odg' => 'application/vnd.oasis.opendocument.graphics',          // OpenDocument Drawing
-'.otg' => 'application/vnd.oasis.opendocument.graphics-template',    // OpenDocument Drawing Template
-'.odc' => 'application/vnd.oasis.opendocument.chart',            // OpenDocument Chart
-'.otc' => 'application/vnd.oasis.opendocument.chart-template',      // OpenDocument Chart Template
-'.odf' => 'application/vnd.oasis.opendocument.formula',          // OpenDocument Formula
-'.otf' => 'application/vnd.oasis.opendocument.formula-template',    // OpenDocument Formula Template
-'.odi' => 'application/vnd.oasis.opendocument.image',            // OpenDocument Image
-'.oti' => 'application/vnd.oasis.opendocument.image-template',      // OpenDocument Image Template
-'.odm' => 'application/vnd.oasis.opendocument.text-master',        // OpenDocument Master Document
-'.oth' => 'application/vnd.oasis.opendocument.text-web',          // HTML Document Template
-'.odb' => 'application/vnd.oasis.opendocument.database',          // OpenDocument Database
+$contentType = array(
+  '.dwg'     => 'application/acad', // AutoCAD Drawing files
+  '.arj'     => 'application/arj', //  
+  '.ccad'    => 'application/clariscad', // ClarisCAD files
+  '.drw'     => 'application/drafting', // MATRA Prelude drafting
+  '.dxf'     => 'application/dxf', // DXF (AutoCAD)
+  '.xl'      => 'application/excel', // Microsoft Excel
+  '.unv'     => 'application/i-deas', //SDRC I-DEAS files
+  '.igs'     => 'application/iges', // IGES graphics format
+  '.iges'    => 'application/iges', // IGES graphics format
+  '.hqx'     => 'application/mac-binhex40', // Macintosh BinHex format
+  '.word'    => 'application/msword', // Microsoft Word
+  '.w6w'     => 'application/msword', // Microsoft Word
+  '.doc'     => 'application/msword', // Microsoft Word
+  '.wri'     => 'application/mswrite', // Microsoft Write
+  '.bin'     => 'application/octet-stream', // Uninterpreted binary
+  '.exe'     => 'application/x-msdownload', // Windows EXE
+  '.oda'     => 'application/oda', //  
+  '.pdf'     => 'application/pdf', // PDF (Adobe Acrobat)
+  '.ai'      => 'application/postscript', // PostScript
+  '.ps'      => 'application/postscript', // PostScript
+  '.eps'     => 'application/postscript', // PostScript
+  '.prt'     => 'application/pro_eng', // PTC Pro/ENGINEER
+  '.part'    => 'application/pro_eng', // PTC Pro/ENGINEER
+  '.rtf'     => 'application/rtf', // Rich Text Format
+  '.set'     => 'application/set', // SET (French CAD standard)
+  '.stl'     => 'application/sla', // Stereolithography
+  '.sol'     => 'application/solids', // MATRA Prelude Solids
+  '.stp'     => 'application/STEP', // ISO-10303 STEP data files
+  '.step'    => 'application/STEP', // ISO-10303 STEP data files
+  '.vda'     => 'application/vda', // VDA-FS Surface data
+  '.dir'     => 'application/x-director', // Macromedia Director
+  '.dcr'     => 'application/x-director', // Macromedia Director
+  '.dxr'     => 'application/x-director', // Macromedia Director
+  '.mif'     => 'application/x-mif', // FrameMaker MIF Format
+  '.csh'     => 'application/x-csh', // C-shell script
+  '.dvi'     => 'application/x-dvi', // TeX DVI
+  '.gz'      => 'application/x-gzip', // GNU Zip
+  '.gzip'    => 'application/x-gzip', // GNU Zip
+  '.hdf'     => 'application/x-hdf', // ncSA HDF Data File
+  '.latex'   => 'application/x-latex', // LaTeX source
+  '.nc'      => 'application/x-netcdf', // Unidata netCDF
+  '.cdf'     => 'application/x-netcdf', // Unidata netCDF
+  '.sit'     => 'application/x-stuffit', // Stiffut Archive
+  '.tcl'     => 'application/x-tcl', // TCL script
+  '.texinfo' => 'application/x-texinfo', // Texinfo (Emacs)
+  '.texi'    => 'application/x-texinfo', // Texinfo (Emacs)
+  '.t'       => 'application/x-troff', // Troff
+  '.tr'      => 'application/x-troff', // Troff
+  '.roff'    => 'application/x-troff', // Troff
+  '.man'     => 'application/x-troff-man', // Troff with MAN macros
+  '.me'      => 'application/x-troff-me', // Troff with ME macros
+  '.ms'      => 'application/x-troff-ms', // Troff with MS macros
+  '.src'     => 'application/x-wais-source', // WAIS source
+  '.bcpio'   => 'application/x-bcpio', // Old binary CPIO
+  '.cpio'    => 'application/x-cpio', // POSIX CPIO
+  '.gtar'    => 'application/x-gtar', // GNU tar
+  '.shar'    => 'application/x-shar', // Shell archive
+  '.sv4cpio' => 'application/x-sv4cpio', // SVR4 CPIO
+  '.sv4crc'  => 'application/x-sv4crc', // SVR4 CPIO with CRC
+  '.tar'     => 'application/x-tar', // 4.3BSD tar format
+  '.ustar'   => 'application/x-ustar', // POSIX tar format
+  '.hlp'     => 'application/x-winhelp', // Windows Help
+  '.zip'     => 'application/zip', // ZIP archive
+  
+  '.au'   => 'audio/basic', // Basic audio (usually m-law)
+  '.snd'  => 'audio/basic', // Basic audio (usually m-law)
+  '.aif'  => 'audio/x-aiff', // AIFF audio
+  '.aiff' => 'audio/x-aiff', // AIFF audio
+  '.aifc' => 'audio/x-aiff', // AIFF audio
+  '.ra'   => 'audio/x-pn-realaudio', // RealAudio
+  '.ram'  => 'audio/x-pn-realaudio', // RealAudio
+  '.rpm'  => 'audio/x-pn-realaudio-plugin', // RealAudio (plug-in)
+  '.wav'  => 'audio/x-wav', // Windows WAVE audio
+  '.mp3'  => 'audio/x-mp3', // MP3 files
+  
+  '.gif'  => 'image/gif', // gif image
+  '.ief'  => 'image/ief', // Image Exchange Format
+  '.jpg'  => 'image/jpeg', // JPEG image
+  '.jpe'  => 'image/jpeg', // JPEG image
+  '.jpeg' => 'image/jpeg', // JPEG image
+  '.pict' => 'image/pict', // Macintosh PICT
+  '.tiff' => 'image/tiff', // TIFF image
+  '.tif'  => 'image/tiff', // TIFF image
+  '.ras'  => 'image/x-cmu-raster', // CMU raster
+  '.pnm'  => 'image/x-portable-anymap', // PBM Anymap format
+  '.pbm'  => 'image/x-portable-bitmap', // PBM Bitmap format
+  '.pgm'  => 'image/x-portable-graymap', // PBM Graymap format
+  '.ppm'  => 'image/x-portable-pixmap', // PBM Pixmap format
+  '.rgb'  => 'image/x-rgb', // RGB Image
+  '.xbm'  => 'image/x-xbitmap', // X Bitmap
+  '.xpm'  => 'image/x-xpixmap', // X Pixmap
+  '.xwd'  => 'image/x-xwindowdump', // X Windows dump (xwd) format
+  
+  '.zip'  => 'multipart/x-zip', // PKZIP Archive
+  '.gzip' => 'multipart/x-gzip', // GNU ZIP Archive
+  
+  '.mpeg'  => 'video/mpeg', // MPEG video
+  '.mpg'   => 'video/mpeg', // MPEG video
+  '.mpe'   => 'video/mpeg', // MPEG video
+  '.mpeg'  => 'video/mpeg', // MPEG video
+  '.qt'    => 'video/quicktime', // QuickTime Video
+  '.mov'   => 'video/quicktime', // QuickTime Video
+  '.avi'   => 'video/msvideo', // Microsoft Windows Video
+  '.movie' => 'video/x-sgi-movie', // SGI Movieplayer format
+  '.wrl'   => 'x-world/x-vrml', // VRML Worlds
+  
+  '.ods'  => 'application/vnd.oasis.opendocument.spreadsheet',           // OpenDocument Spreadsheet
+  '.ots'  => 'application/vnd.oasis.opendocument.spreadsheet-template',  // OpenDocument Spreadsheet Template
+  '.odp'  => 'application/vnd.oasis.opendocument.presentation',          // OpenDocument Presentation
+  '.otp'  => 'application/vnd.oasis.opendocument.presentation-template', // OpenDocument Presentation Template
+  '.odg'  => 'application/vnd.oasis.opendocument.graphics',              // OpenDocument Drawing
+  '.otg'  => 'application/vnd.oasis.opendocument.graphics-template',     // OpenDocument Drawing Template
+  '.odc'  => 'application/vnd.oasis.opendocument.chart',                 // OpenDocument Chart
+  '.otc'  => 'application/vnd.oasis.opendocument.chart-template',        // OpenDocument Chart Template
+  '.odf'  => 'application/vnd.oasis.opendocument.formula',               // OpenDocument Formula
+  '.otf'  => 'application/vnd.oasis.opendocument.formula-template',      // OpenDocument Formula Template
+  '.odi'  => 'application/vnd.oasis.opendocument.image',                 // OpenDocument Image
+  '.oti'  => 'application/vnd.oasis.opendocument.image-template',        // OpenDocument Image Template
+  '.odb'  => 'application/vnd.oasis.opendocument.database',              // OpenDocument Database
+  '.odt'  => 'application/vnd.oasis.opendocument.text',                  // OpenDocument Text
+  '.ott'  => 'application/vnd.oasis.opendocument.text-template',         // OpenDocument Text Template
+  '.odm'  => 'application/vnd.oasis.opendocument.text-master',           // OpenDocument Master Document
+  '.oth'  => 'application/vnd.oasis.opendocument.text-web',              // OpenDocument HTML Template
 );
 
 // }}}
@@ -183,8 +188,7 @@ $contentType = array (
 
 // List of extensions recognised by enscript.
 
-$extEnscript = array
-(
+$extEnscript = array(
   '.ada'     => 'ada',
   '.adb'     => 'ada',
   '.ads'     => 'ada',
@@ -253,8 +257,7 @@ $extEnscript = array
 
 // List of extensions recognised by GeSHi.
 
-$extGeshi = array
-(
+$extGeshi = array(
   'actionscript3' => array('as'),
   'ada' => array('ada', 'adb', 'ads'),
   'asm' => array('ash', 'asi', 'asm'),
@@ -319,7 +322,7 @@ require 'languages/english.php';
 if (file_exists(dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php')) {
   require_once 'config.php';
 } else {
-  die('File "includes'.DIRECTORY_SEPARATOR.'config.php" does not exists, please create one. The example is located under "includes'.DIRECTORY_SEPARATOR.'distconfig.php"');
+  die('File "includes/config.php" does not exist, please create one. The example file "includes/distconfig.php" may be copied and modified as needed.');
 }
 
 require_once 'include/svnlook.php';
@@ -376,17 +379,17 @@ require 'languages/'.$file.'.php';
 $vars['lang_code'] = $userLang;
 
 $url = '?'.buildQuery($_GET + $_POST);
-$vars["lang_form"] = "<form action=\"$url\" method=\"post\" id=\"langform\">";
-$vars["lang_select"] = "<select name=\"langchoice\" onchange=\"javascript:this.form.submit();\">";
+$vars['lang_form'] = '<form action="'.$url.'" method="post" id="langform">';
+$vars['lang_select'] = '<select name="langchoice" onchange="javascript:this.form.submit();">';
 
 foreach ($languages as $code => $names) {
-  $sel = ($code == $userLang) ? ' selected="selected"' : '';
-  $vars["lang_select"] .= "<option value=\"$code\"$sel>{$names[2]} - {$names[1]}</option>";
+  $sel = ($code == $userLang) ? '" selected="selected' : '';
+  $vars['lang_select'] .= '<option value="'.$code.$sel.'">'.$names[2].' - '.$names[1].'</option>';
 }
 
-$vars["lang_select"] .= "</select>";
-$vars["lang_submit"] = "<noscript><input type=\"submit\" value=\"${lang[GO]}\" /></noscript>";
-$vars["lang_endform"] = "</form>";
+$vars['lang_select'] .= '</select>';
+$vars['lang_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
+$vars['lang_endform'] = '</form>';
 
 // Set up headers
 
@@ -397,7 +400,7 @@ header('Content-Language: '.$userLang);
 if (!$config->multiViews) {
   // if the repoparameter has been set load the corresponding
   // repository, else load the default
-  $repname = @$_REQUEST["repname"];
+  $repname = @$_REQUEST['repname'];
   if (isset($repname)) {
     $rep = $config->findRepository($repname);
   } else {
@@ -407,7 +410,7 @@ if (!$config->multiViews) {
 
   // Make sure that the user has set up a repository
   if ($rep == null) {
-    echo $lang["SUPPLYREP"];
+    echo $lang['SUPPLYREP'];
     exit;
   }
 }
@@ -418,45 +421,42 @@ if (!$config->multiViews) {
 // due to possible XSS exploit, we need to clean up path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 if ($path === null || $path === '') $path = '/';
-$vars['safepath'] = htmlentities($path, ENT_QUOTES, "UTF-8");
-$rev = (int)@$_REQUEST["rev"];
+$vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
+$rev = (int)@$_REQUEST['rev'];
 
 // Function to create the project selection HTML form
 function createProjectSelectionForm() {
   global $config, $vars, $rep, $lang;
 
   if (!$config->showRepositorySelectionForm()) {
-    $vars["projects_form"] = '';
-    $vars["projects_select"] = '';
-    $vars["projects_submit"] = '';
-    $vars["projects_hidden"] = '';
-    $vars["projects_endform"] = '';
+    $vars['projects_form'] = '';
+    $vars['projects_select'] = '';
+    $vars['projects_submit'] = '';
+    $vars['projects_endform'] = '';
     return;
   }
 
-  $url = $config->getURL(-1, "", "form");
-  $hidden = ($config->multiViews) ? "<input type=\"hidden\" name=\"op\" value=\"form\" />" : "";
-  $hidden .= "<input type=\"hidden\" name=\"selectproj\" value=\"1\" />";
-  $vars["projects_form"] = "<form action=\"$url\" method=\"post\" id=\"projectform\">".$hidden;
+  $url = $config->getURL(-1, '', 'form');
+  $hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="form" />' : '';
+  $hidden .= '<input type="hidden" name="selectproj" value="1" />';
+  $vars['projects_form'] = '<form action="'.$url.'" method="post" id="projectform">'.$hidden;
 
   $reps = $config->getRepositories();
-  $vars["projects_select"] = "<select name=\"repname\" onchange=\"javascript:this.form.submit();\">";
-
+  $vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">';
   foreach ($reps as $project) {
-    if ($project->hasReadAccess("/", true)) {
+    if ($project->hasReadAccess('/', true)) {
       if ($rep->getDisplayName() == $project->getDisplayName()) {
-        $sel = ' selected="selected"';
+        $sel = '" selected="selected';
       } else {
-        $sel = "";
+        $sel = '';
       }
-      $vars["projects_select"] .= "<option value=\"".$project->getDisplayName()."\"$sel>".$project->getDisplayName()."</option>";
+      $vars['projects_select'] .= '<option value="'.$project->getDisplayName().$sel.'">'.$project->getDisplayName().'</option>';
     }
   }
-  $vars["projects_select"] .= "</select>";
+  $vars['projects_select'] .= '</select>';
 
-  $vars["projects_submit"] = "<noscript><input type=\"submit\" value=\"${lang[GO]}\" /></noscript>";
-  $vars["projects_hidden"] = ""; // TODO: Remove this completely at some point
-  $vars["projects_endform"] = "</form>";
+  $vars['projects_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
+  $vars['projects_endform'] = '</form>';
 }
 
 // Function to create the revision selection HTML form
@@ -469,16 +469,15 @@ function createRevisionSelectionForm() {
     $thisrev = $rev;
   }
 
-  list($url, $params) = $config->getUrlParts($rep, "", "revision");
-  $hidden = "";
+  list($url, $params) = $config->getUrlParts($rep, '', 'revision');
+  $hidden = '';
   foreach ($params as $k => $v) {
-    $hidden .= "<input type=\"hidden\" name=\"$k\" value=\"".htmlspecialchars($v)."\" />";
+    $hidden .= '<input type="hidden" name="'.$k.'" value="'.htmlspecialchars($v).'" />';
   }
-  $vars["revision_form"] = "<form action=\"$url\" method=\"get\" id=\"revisionform\">".$hidden;
-  $vars["revision_input"] = "<input type=\"text\" size=\"5\" name=\"rev\" value=\"$thisrev\" />";
-  $vars["revision_hidden"] = ""; // TODO: Remove this completely at some point
-  $vars["revision_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-  $vars["revision_endform"] = "</form>";
+  $vars['revision_form'] = '<form action="'.$url.'" method="get" id="revisionform">'.$hidden;
+  $vars['revision_input'] = '<input type="text" size="5" name="rev" value="'.$thisrev.'" />';
+  $vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
+  $vars['revision_endform'] = '</form>';
 }
 
 // Create the form if we're not in MultiViews.  Otherwise, wsvn must create the
@@ -490,12 +489,12 @@ if (!$config->multiViews) {
 }
 
 if (!$config->multiViews && $rep) {
-  $vars["allowdownload"] = $rep->getAllowDownload();
-  $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, "UTF-8");
+  $vars['allowdownload'] = $rep->getAllowDownload();
+  $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 }
 
 // As of version 1.70 the output encoding is forced to be UTF-8, since this is the output
 // encoding returned by svn log --xml.  This is good, since we are no longer reliant on PHP's
 // rudimentary conversions.
 
-$vars["charset"] = "UTF-8";
+$vars['charset'] = 'UTF-8';
