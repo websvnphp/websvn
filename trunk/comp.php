@@ -113,7 +113,6 @@ $vars["compare_rev1input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev
 $vars["compare_path2input"] = "<input type=\"text\" size=\"40\" name=\"compare[1]\" value=\"".htmlentities($path2, ENT_QUOTES, 'UTF-8')."\" />";
 $vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev[1]\" value=\"$rev2\" />";
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
-$vars["compare_hidden"] = ""; // TODO: Remove this completely at some point
 $vars["compare_endform"] = "</form>";
 
 // safe paths are a hack for fixing XSS sploit
