@@ -136,11 +136,11 @@ $vars["indexurl"] = $config->getURL($rep, '', "index");
 $vars["repurl"] = $config->getURL($rep, '', "dir");
 
 $url = $config->getURL($rep, $path, "log");
-$vars["fileviewloglink"] = "<a href=\"${url}rev=$passrev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
+$vars["loglink"] = "<a href=\"${url}rev=$passrev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
 if (sizeof($history->entries) > 1) {
   $url = $config->getURL($rep, $path, "diff");
-  $vars["prevdifflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>";
+  $vars["difflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>";
 }
 
 $url = $config->getURL($rep, $path, "blame");
@@ -148,7 +148,7 @@ $vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
 
 if ($rep->isDownloadAllowed($path)) {
   $url = $config->getURL($rep, $path, "dl");
-  $vars["dllink"] = "<a href=\"${url}rev=$passrev\">${lang["DOWNLOAD"]}</a>";
+  $vars["downloadlink"] = "<a href=\"${url}rev=$passrev\">${lang["DOWNLOAD"]}</a>";
 }
 
 if ($rep->getHideRss()) {

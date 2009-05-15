@@ -118,7 +118,7 @@ if (!$isDir) {
   $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
 
   $url = $config->getURL($rep, $path, "diff");
-  $vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
+  $vars["difflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
 
   $url = $config->getURL($rep, $path, "blame");
   $vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
@@ -326,7 +326,6 @@ $vars["logsearch_inputbox"] = "<input name=\"search\" value=\"".htmlentities($se
 $vars["logsearch_showall"] = '<input type="checkbox" name="all" value="1"'.($all ? ' checked="checked"' : '').' />';
 
 $vars["logsearch_submit"] = "<input type=\"submit\" value=\"${lang["GO"]}\" />";
-$vars["logsearch_hidden"] = ""; // TODO: Remove this completely at some point
 $vars["logsearch_endform"] = "</form>";
 
 if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 30) {
@@ -338,7 +337,6 @@ $url = $config->getURL($rep, "/", "comp");
 $hidden = ($config->multiViews) ? "<input type=\"hidden\" name=\"op\" value=\"log\" />" : "";
 $vars["compare_form"] = "<form action=\"$url\" method=\"post\">".$hidden;
 $vars["compare_submit"] = "<input type=\"submit\" value=\"${lang["COMPAREREVS"]}\" />";
-$vars["compare_hidden"] = ""; // TODO: Remove this completely at some point
 $vars["compare_endform"] = "</form>";
 
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
