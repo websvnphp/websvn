@@ -921,7 +921,7 @@ class SVNRepository {
 
   // {{{ getLog
 
-  function getLog($path, $brev = "", $erev = 1, $quiet = false, $limit = 2) {
+  function getLog($path, $brev = '', $erev = 1, $quiet = false, $limit = 2, $pegRev = '') {
     global $config, $curLog, $vars, $lang;
 
     $xml_parser = xml_parser_create("UTF-8");
@@ -957,10 +957,11 @@ class SVNRepository {
     $info = "--verbose";
     if ($quiet) $info = "--quiet";
 
-    $pegRev = '';
-    if ($brev) {
-      $pegRev = '@'.$brev;
+    if (empty($pegRev)) {
+      $pegRev = $brev;
     }
+    $pegRev = '@'.$pegRev;
+    
     $cmd = quoteCommand($config->svn." log --xml $info $revStr ".$this->repConfig->svnParams().quote($path.$pegRev));
 
     $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
