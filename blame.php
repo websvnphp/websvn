@@ -216,7 +216,7 @@ HTML;
     if (!is_string($history)) {
       $vars['javascript'] .= '  rev['.$key.'] = \'';
       $vars['javascript'] .= '<div class="date">'.$history->curEntry->date.'</div>';
-      $vars['javascript'] .= '<div class="msg">'.addslashes(preg_replace('/\n/', '<br />', $history->curEntry->msg)).'</div>';
+      $vars['javascript'] .= '<div class="msg">'.addslashes(preg_replace('/\n/', ' ', $history->curEntry->msg)).'</div>';
       $vars['javascript'] .= "';\n";
     }
   }
