@@ -22,21 +22,21 @@
 //
 // Simply lists the contents of a file
 
-require_once("include/setup.php");
-require_once("include/svnlook.php");
-require_once("include/utils.php");
-require_once("include/template.php");
+require_once('include/setup.php');
+require_once('include/svnlook.php');
+require_once('include/utils.php');
+require_once('include/template.php');
 
 // Make sure that we have a repository
 if (!isset($rep)) {
-  echo $lang["NOREP"];
+  echo $lang['NOREP'];
   exit;
 }
 
 $svnrep = new SVNRepository($rep);
 
-if ($path{0} != "/") {
-  $ppath = "/".$path;
+if ($path{0} != '/') {
+  $ppath = '/'.$path;
 } else {
   $ppath = $path;
 }
@@ -44,7 +44,7 @@ if ($path{0} != "/") {
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, "", "", true);
+$history = $svnrep->getLog($path, '', '', true);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -57,19 +57,19 @@ if (empty($rev)) {
   $history = $svnrep->getLog($path, $rev, '', true);
 }
 
-$extn = strtolower(strrchr($path, "."));
+$extn = strtolower(strrchr($path, '.'));
 
 // Check to see if the user has requested that this type be zipped and sent
 // to the browser as an attachment
 
 if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
   $base = basename($path);
-  header("Content-Type: application/x-gzip");
-  header("Content-Disposition: attachment; filename=".urlencode($base).".gz");
+  header('Content-Type: application/x-gzip');
+  header('Content-Disposition: attachment; filename='.urlencode($base).'.gz');
 
   // Get the file contents and pipe into gzip.  All this without creating
   // a temporary file.  Damn clever.
-  $svnrep->getFileContents($path, "", $rev, "| ".$config->gzip." -n -f");
+  $svnrep->getFileContents($path, '', $rev, '| '.$config->gzip.' -n -f');
 
   exit;
 }
@@ -79,7 +79,7 @@ if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
 // file, or from the $contentType array in setup.php.
 
 if (!$rep->getIgnoreSvnMimeTypes()) {
-  $svnMimeType = $svnrep->getProperty($path, "svn:mime-type", $rev);
+  $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
 }
 
 if (!$rep->getIgnoreWebSVNContentTypes()) {
@@ -87,12 +87,12 @@ if (!$rep->getIgnoreWebSVNContentTypes()) {
 }
 
 // Use the documented priorities when establishing what content-type to use.
-if (!empty($svnMimeType) && $svnMimeType != "application/octet-stream") {
+if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') {
   $mimeType = $svnMimeType;
 } else if (!empty($setupContentType)) {
   $mimeType = $setupContentType;
 } else if (!empty($svnMimeType)) {
-  $mimeType = $svnMimeType; // Use SVN's default of "application/octet-stream"
+  $mimeType = $svnMimeType; // Use SVN's default of 'application/octet-stream'
 }
 
 // If the MIME type exists but is set to be ignored, set it to an empty string.
@@ -108,62 +108,61 @@ if (!empty($mimeType)) {
 // If a MIME type is associated with the file, deliver with Content-Type header.
 if (!empty($mimeType) && $rep->hasReadAccess($path, false)) {
   $base = basename($path);
-  header("Content-Type: $mimeType");
-  //header("Content-Length: $size");
-  header("Content-Disposition: inline; filename=".urlencode($base));
-  $svnrep->getFileContents($path, "", $rev);
+  header('Content-Type: '.$mimeType);
+  //header('Content-Length: '.$size);
+  header('Content-Disposition: inline; filename='.urlencode($base));
+  $svnrep->getFileContents($path, '', $rev);
   exit;
 }
 
 // Display the file inline using WebSVN.
 
-$url = $config->getURL($rep, $path, "file");
+$url = $config->getURL($rep, $path, 'file');
 
 if ($rev != $youngest) {
-  $vars["goyoungestlink"] = "<a href=\"${url}\">${lang["GOYOUNGEST"]}</a>";
-} else {
-  $vars["goyoungestlink"] = "";
+  $vars['goyoungestlink'] = '<a href="'.$url.'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
-$vars["action"] = "";
-$vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
-$vars["rev"] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
-$vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+$vars['action'] = '';
+$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+$vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
+$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-createDirLinks($rep, $ppath, $passrev);
+createDirLinks($rep, $ppath, $passrev);$
+$passRevString = ($passrev) ? 'rev='.$passrev : '';
 
-$vars["indexurl"] = $config->getURL($rep, '', "index");
-$vars["repurl"] = $config->getURL($rep, '', "dir");
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
-$url = $config->getURL($rep, $path, "log");
-$vars["loglink"] = "<a href=\"${url}rev=$passrev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
+$url = $config->getURL($rep, $path, 'blame').$passRevString;
+$vars['blamelink'] = '<a href="'.$url.'">'.$lang['BLAME'].'</a>';
+
+$url = $config->getURL($rep, $path, 'log').$passRevString;
+$vars['loglink'] = '<a href="'.$url.'">'.$lang['VIEWLOG'].'</a>';
 
 if (sizeof($history->entries) > 1) {
-  $url = $config->getURL($rep, $path, "diff");
-  $vars["difflink"] = "<a href=\"${url}rev=$passrev\">${lang["DIFFPREV"]}</a>";
+  $url = $config->getURL($rep, $path, 'diff').$passRevString;
+  $vars['difflink'] = '<a href="'.$url.'">'.$lang['DIFFPREV'].'</a>';
 }
 
-$url = $config->getURL($rep, $path, "blame");
-$vars["blamelink"] = "<a href=\"${url}rev=$passrev\">${lang["BLAME"]}</a>";
-
 if ($rep->isDownloadAllowed($path)) {
-  $url = $config->getURL($rep, $path, "dl");
-  $vars["downloadlink"] = "<a href=\"${url}rev=$passrev\">${lang["DOWNLOAD"]}</a>";
+  $url = $config->getURL($rep, $path, 'dl').$passRevString;
+  $vars['downloadlink'] = '<a href="'.$url.'">'.$lang['DOWNLOAD'].'</a>';
 }
 
 if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, "rss");
-  $vars["rssurl"] = $url;
-  $vars["rsslink"] = "<a href=\"${url}rev=$passrev\">${lang["RSSFEED"]}</a>";
+  $url = $config->getURL($rep, $path, 'rss');
+  $vars['rssurl'] = $url;
+  $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
 }
 
 $listing = array();
 
 if (!$rep->hasReadAccess($path, false)) {
-  $vars["noaccess"] = true;
+  $vars['noaccess'] = true;
 }
 
-$vars["template"] = "file";
-parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."file.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
+$vars['template'] = 'file';
+parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
+parseTemplate($rep->getTemplatePath().'file.tmpl', $vars, $listing);
+parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
