@@ -86,9 +86,9 @@ $svnrep = new SVNRepository($rep);
 
 // Fetch information about a revision (if unspecified, the latest) for this path
 if (empty($rev)) {
-  $history = $svnrep->getLog($path, 'HEAD', '', true, 1);
+  $history = $svnrep->getLog($path, 'HEAD', '', true, 1, $peg);
 } else {
-  $history = $svnrep->getLog($path, $rev, $rev - 1, true, 1);
+  $history = $svnrep->getLog($path, $rev, $rev - 1, true, 1, $peg);
 }
 if (is_string($history)) {
   echo $history;
@@ -126,7 +126,7 @@ else {
   $archiveName .= ".r$rev";
 
   // Export the requested path from SVN repository to the temp directory
-  $svnExportResult = $svnrep->exportDirectory($path, $tempDir.DIRECTORY_SEPARATOR.$archiveName, $rev);
+  $svnExportResult = $svnrep->exportRepositoryPath($path, $tempDir.DIRECTORY_SEPARATOR.$archiveName, $rev, $peg);
   if ($svnExportResult != 0) {
     header('HTTP/1.x 500 Internal Server Error', true, 500);
     print '"svn export" failed for '.$archiveName.' - see webserver error log for details'."\n";
