@@ -12,17 +12,10 @@
 
 <h1>WebSVN Templating System</h1>
 
-<div class="misc">
-<h2><a name="content"></a>Content</h2>
-<ul>
-	<li><a href="#intro">Introduction</a></li>
-</ul>
-</div>
-
-<div class="content">
+<div class="content" style="margin-left: 0;">
 <h2><a name="intro"></a>Introduction</h2>
 
-<p><em>The documentation of the variables for each template is currently not up to date due to major changes on the trunk. User defined templates will not work with the current development version.</em></p>
+<p><em>The documentation of the variables for each template is currently not up to date due to major changes on the trunk. User-defined templates will not work (completely, or even at all) with the current development version.</em></p>
 
 <p>Everyone wants their view onto their SVN repository to fit in with their look
 and feel.  With WebSVN's templating system this is very possible.</p>
@@ -174,7 +167,6 @@ access your template files in all cases.</p>
                   options</dd>
 <dt>projects_submit</dt><dd>HTML &lt;input> specification for the projects selection GO
                   button</dd>
-<dt>projects_hidden</dt><dd>Hidden parameters that need to be passed from this form</dd>
 <dt>projects_endform</dt><dd>HTML &lt;/form> specification for the projects selection
                    box (includes hidden field declarations)</dd>
 
@@ -202,7 +194,7 @@ access your template files in all cases.</p>
 <dt>groupcount</dt><dd>The number of project groups (0 or more)</dd>
 </dl>
 
-<p>Defined only in [websvn-startlisting] ... [websvn-endlisting] blocks:</p>
+<h3>Defined only in [websvn-startlisting] ... [websvn-endlisting] block:</h3>
 
 <dl>
 <dt>projectlink</dt><dd>HTML link to a project (not set for group headers)</dd>
@@ -223,34 +215,21 @@ access your template files in all cases.</p>
 <dt>restricted</dt><dd>True if the users has restricted access to this directory (to
              allow access to a readable directory lower down only)</dd>
 <dt>repname</dt><dd>Name of the repository</dd>
-<dt>rev</dt><dd>Revision being viewed</dd>
 <dt>path</dt><dd>Path of item being logged</dd>
-<dt>author</dt><dd>Author of current revision</dd>
-<dt>date</dt><dd>Date that revision was committed</dd>
-<dt>log</dt><dd>Log message of revision</dd>
+
+<dt>rev</dt><dd>Revision being viewed</dd>
+<dt>date</dt><dd>Commit date of latest revision of current directory</dd>
+<dt>author</dt><dd>Author of latest revision of current directory</dd>
+<dt>log</dt><dd>Log message of latest revision of current directory</dd>
 <dt>lastchangedrev</dt><dd>Revision of the last modification to current directory</dd>
 <dt>goyoungestlink</dt><dd>Link to head revision of repository</dd>
 
-<dt>showchanges</dt><dd>1 if showing changes (for websvn-test)</dd>
-<dt>hidechanges</dt><dd>1 if hiding changes (for websvn-test)</dd>
-<dt>showchangeslink</dt><dd>Link to page with changes hidden</dd>
-<dt>hidechangeslink</dt><dd>Link to page with changes shown</dd>
-
-<dt>newfilesbr</dt><dd>list of the new files separated by &lt;BR>'s</dd>
-<dt>changedfilesbr</dt><dd>list of the changed files separated by &lt;BR>'s</dd>
-<dt>deletedfilesbr</dt><dd>list of the deleted files separated by &lt;BR>'s</dd>
-
-<dt>newfiles</dt><dd>list of the new files separated by spaces</dd>
-<dt>changedfiles</dt><dd>list of the changed files separated by spaces</dd>
-<dt>deletedfiles</dt><dd>list of the deleted files separated by spaces</dd>
-
 <dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
-<dt>curdirloglink</dt><dd>Link to the log view of current directory</dd>
-<dt>curdirrsslink</dt><dd>Link to the RSS feed for the current directory</dd>
-<dt>curdirrssanchor</dt><dd>The &lt;a href=...> tag to the RSS feed for the current directory</dd>
-<dt>curdirrsshref</dt><dd>URL of the feed for the current directory (without anchor tag)</dd>
-<dt>curdirdllink</dt><dd>Link to the tarball of current directory</dd>
-<dt>curdircomplink</dt><dd>Link to comparison with previously changed revision</dd>
+<dt>logurl</dt><dd>URL to the log view of current directory</dd>
+<dt>rssurl</dt><dd>URL to the RSS feed for the current directory</dd>
+<dt>downloadurl</dt><dd>URL to download an archive for the current directory</dd>
+<dt>changesurl</dt><dd>URL to examine the latest revision within the directory</dd>
+<dt>compareurl</dt><dd>URL to comparison with previously changed revision</dd>
 
 <dt>allowdownload</dt><dd>True if downloading has been configured</dd>
 
@@ -259,18 +238,29 @@ access your template files in all cases.</p>
 <dt>compare_endform</dt><dd>HTML &lt;/form> specification for the comparison form</dd>
 </dl>
 
-Used in [websvn-startlisting] ... [websvn-endlisting] block:
+<h3>Defined only in [websvn-startlisting] ... [websvn-endlisting] block:</h3>
 
 <dl>
 <dt>compare_box</dt><dd>HTML checkbox specification for the comparison option</dd>
-<dt>filelink</dt><dd>Link to the file</dd>
 <dt>rowparity</dt><dd>Parity of the row (0 or 1).  Used to generate striped tables</dd>
-<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
-<dt>fileviewdllink</dt><dd>Link to the tarball of current directory</dd>
+<dt>filetype</dt><dd>Type of the current entry (file, dir, opendir, etc.)</dd>
 <dt>isDir</dt><dd>true if the current file is a directory (use with [websvn-test:isDir]
         to display icons)</dd>
-<dt>rsslink</dt><dd>Link to the RSS feed for this file/directory</dd>
-<dt>rssanchor</dt><dd>The &lt;a href=...> tag to the RSS feed for this file/directory</dd>
+<dt>openDir</dt><dd>true if the current file is a directory on the current path</dd>
+<dt>filelink</dt><dd>Link to the file</dd>
+<dt>downloadurl</dt><dd>URL to download the current entry (only for files)</dd>
+<dt>downloadplainurl</dt><dd>URL to download the current entry (only for directories)</dd>
+<dt>logurl</dt><dd>URL to the log page for the current file/directory</dd>
+<dt>rssurl</dt><dd>URL to the RSS feed for the current file/directory</dd>
+</dl>
+
+<dl>
+<dt>revurl</dt><dd>URL for examining the latest revision in detail</dd>
+<dt>revision</dt><dd>Number of the latest revision affecting the current element</dd>
+<dt>committime</dt><dd>Timestamp of latest revision</dd>
+<dt>date</dt><dd>Date of the latest revision (yyyy-mm-dd) </dd>
+<dt>age</dt><dd>Age of the latest revision in days, hours, etc.</dd>
+<dt>author</dt><dd>Author of the latest revision</dd>
 </dl>
 
 <h2><a name="varslog"></a>Variables defined for log.tmpl</h2>
@@ -287,9 +277,8 @@ Used in [websvn-startlisting] ... [websvn-endlisting] block:
 <dt>pagelinks</dt><dd>List of list to all the pages of the log</dd>
 <dt>showalllink</dt><dd>Link to show the entire log in one go</dd>
 
-<dt>prevdifflink</dt><dd>Link to comparison with previous revision</dd>
+<dt>difflink</dt><dd>Link to comparison with previous revision</dd>
 <dt>blamelink</dt><dd>Link to the blame information for this file</dd>
-<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
 
 <dt>logsearch_form</dt><dd>HTML &lt;form> specification for the log search box</dd>
 <dt>logsearch_inputbox</dt><dd>HTML &lt;input> specification for the log search box</dd>
@@ -310,7 +299,7 @@ Used in [websvn-startlisting] ... [websvn-endlisting] block:
 <dt>compare_endform </dt><dd>HTML &lt;/form> specification for the comparison form</dd>
 </dl>
 
-Used in [websvn-startlisting] ... [websvn-endlisting] block:
+<h3>Defined only in [websvn-startlisting] ... [websvn-endlisting] block:</h3>
 
 <dl>
 <dt>compare_box</dt><dd>HTML checkbox specification for the comparison option</dd>
@@ -330,9 +319,10 @@ Used in [websvn-startlisting] ... [websvn-endlisting] block:
 <dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
 <dt>goyoungestlink</dt><dd>Link to head revision of repository</dd>
 
-<dt>prevdifflink</dt><dd>Link to comparison with previous revision</dd>
 <dt>blamelink</dt><dd>Link to the blame information for this file</dd>
-<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
+<dt>difflink</dt><dd>Link to comparison with previous revision</dd>
+<dt>downloadlink</dt><dd>Link to download this file</dd>
+<dt>loglink</dt><dd>Link to the log page for this file</dd>
 </dl>
 
 Note: Use command [websvn-getlisting] to display the listing.
@@ -351,9 +341,9 @@ Note: Use command [websvn-getlisting] to display the listing.
 <dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
 <dt>goyoungestlink</dt><dd>Link to head revision of repository</dd>
 
-<dt>prevdifflink</dt><dd>Link to comparison with previous revision</dd>
+<dt>difflink</dt><dd>Link to comparison with previous revision</dd>
 <dt>blamelink</dt><dd>Link to the blame information for this file</dd>
-<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
+<dt>loglink</dt><dd>Link to the log page for this file</dd>
 
 <dt>rev1</dt><dd>Revision of the older file</dd>
 <dt>rev2</dt><dd>Revision of the newer file</dd>
@@ -362,7 +352,7 @@ Note: Use command [websvn-getlisting] to display the listing.
 <dt>showalllink</dt><dd>Link to full view</dd>
 </dl>
 
-Used in [websvn-startlisting] ... [websvn-endlisting] block:
+<h3>Defined only in [websvn-startlisting] ... [websvn-endlisting] block:</h3>
 
 <dl>
 <dt>rev1lineno / rev2lineno</dt><dd>Line number of the next difference block.  Only
@@ -387,12 +377,12 @@ Used in [websvn-startlisting] ... [websvn-endlisting] block:
 <dt>path</dt><dd>Path of item being logged</dd>
 <dt>curdirlinks</dt><dd>List of the path of this directory with links to each one</dd>
 
-<dt>prevdifflink</dt><dd>Link to comparison with previous revision</dd>
 <dt>blamelink</dt><dd>Link to the blame information for this file</dd>
-<dt>fileviewloglink</dt><dd>Link to the log page for the file</dd>
+<dt>difflink</dt><dd>Link to comparison with previous revision</dd>
+<dt>loglink</dt><dd>Link to the log page for this file</dd>
 </dl>
 
-Used in [websvn-startlisting] ... [websvn-endlisting] block:
+<h3>Defined only in [websvn-startlisting] ... [websvn-endlisting] block:</h3>
 
 <dl>
 <dt>lineno</dt><dd>Line number of the line</dd>
@@ -422,7 +412,7 @@ Used in [websvn-startlisting] ... [websvn-endlisting] block:
 <dt>compare_endform</dt><dd>HTML &lt;/form> specification for the comparison form</dd>
 </dl>
 
-Used in [websvn-startlisting] ... [websvn-endlisting] block:
+<h3>Defined only in [websvn-startlisting] ... [websvn-endlisting] block:</h3>
 
 <dl>
 <dt>newpath</dt><dd>Name of new file under comparison (only defined at start of block)</dd>

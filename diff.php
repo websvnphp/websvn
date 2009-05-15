@@ -94,10 +94,10 @@ $url = $config->getURL($rep, $path, "file");
 $vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
 
 $url = $config->getURL($rep, $path, "log");
-$vars["fileviewloglink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
+$vars["loglink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
 
 $url = $config->getURL($rep, $path, "diff");
-$vars["prevdifflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
+$vars["difflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
 
 $url = $config->getURL($rep, $path, "blame");
 $vars["blamelink"] = "<a href=\"${url}rev=$rev\">${lang["BLAME"]}</a>";
