@@ -187,6 +187,7 @@ div.blame-popup
    background-color: white;
    border: solid 2px #809cc8;
    padding: 5px;
+   max-width: 600px;
 }
 
 div.blame-popup .date

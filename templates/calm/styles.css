@@ -738,6 +738,7 @@ div.blame-popup {
   padding: 5px;
   border:1px solid darkkhaki;
   background-color: khaki;
+  max-width: 600px;
 }
 
 div.blame-popup .date {
