@@ -33,7 +33,7 @@ $vars['action'] = $lang['BLAME'];
 $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, '', '', true);
+$history = $svnrep->getLog($path, '', '', true, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -43,7 +43,7 @@ $youngest = $history->entries[0]->rev;
 if (empty($rev)) {
   $rev = $youngest;
 } else {
-  $history = $svnrep->getLog($path, $rev, '', true);
+  $history = $svnrep->getLog($path, $rev, '', true, 2, $peg);
 }
 
 if ($path{0} != '/') {
@@ -60,8 +60,10 @@ $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-createDirLinks($rep, $ppath, $rev);
-$passRevString = ($passrev) ? 'rev='.$passrev : '';
+createDirLinks($rep, $ppath, $rev, $peg);
+$passRevString = ($rev) ? 'rev='.$rev : '';
+if ($peg)
+  $passRevString .= '&amp;peg='.$peg;
 
 if ($rev != $youngest) {
   $url = $config->getURL($rep, $path, 'blame');
@@ -91,7 +93,7 @@ if ($rep->getHideRss()) {
 $listing = array();
 
 // Check for binary file type before grabbing blame information.
-$svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
+$svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev, $peg);
 
 if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType)) {
   $vars['warning'] = 'Cannot display blame info for binary file. (svn:mime-type = '.$svnMimeType.')';
@@ -104,8 +106,9 @@ else {
   if ($file = fopen($tfname, 'r')) {
     // Get the blame info
     $tbname = tempnam('temp', '');
-    $svnrep->getBlameDetails($path, $tbname, $rev);
-  
+
+    $svnrep->getBlameDetails($path, $tbname, $rev, $peg);
+    
     if ($blame = fopen($tbname, 'r')) {
       // Create an array of version/author/line
   
@@ -205,8 +208,11 @@ else {
 
 HTML;
 
+  if (empty($peg))
+    $peg = $rev;
+  krsort($seen_rev); // Sort revisions in descending order by key
   foreach ($seen_rev as $key => $val) {
-    $history = $svnrep->getLog($path, $key, $key, false, 1, $rev);
+    $history = $svnrep->getLog($path, $key, $key, false, 1, $peg);
     if (!is_string($history)) {
       $vars['javascript'] .= '  rev['.$key.'] = \'';
       $vars['javascript'] .= '<div class="date">'.$history->curEntry->date.'</div>';

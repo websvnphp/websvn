@@ -87,10 +87,10 @@ function parseCommand($line, $vars, $handle) {
   }
 
   if (strncmp(trim($line), "[websvn-getlisting]", 19) == 0) {
-    global $path, $rev, $svnrep;
+    global $svnrep, $path, $rev, $peg;
 
     if (!$ignore) {
-      $svnrep->listFileContents($path, $rev);
+      $svnrep->listFileContents($path, $rev, $peg);
     }
 
     return true;

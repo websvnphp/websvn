@@ -423,6 +423,7 @@ $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 if ($path === null || $path === '') $path = '/';
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST['rev'];
+$peg = (int)@$_REQUEST['peg'];
 
 // Function to create the project selection HTML form
 function createProjectSelectionForm() {

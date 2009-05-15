@@ -33,7 +33,7 @@ function removeURLSeparator($url) {
 }
 
 function fileLink($path, $file, $returnjoin = false) {
-  global $rep, $passrev, $passrevstring, $config;
+  global $config, $rep, $passrev, $passRevString, $peg;
 
   if ($path == '' || $path{0} != '/') {
     $ppath = '/'.$path;
@@ -57,21 +57,21 @@ function fileLink($path, $file, $returnjoin = false) {
 
   $isDir = $pfile{strlen($pfile) - 1} == '/';
   if ($isDir) {
-    $url = $config->getURL($rep, $ppath.$pfile, 'dir').$passrevstring;
+    $url = $config->getURL($rep, $ppath.$pfile, 'dir').$passRevString;
     if ($config->treeView) {
       // XHTML doesn't allow slashes in IDs and must begin with a letter
       $id = str_replace('/', '_', 'path'.$ppath.$pfile);
       $url .= '#'.$id.'" id="'.$id;
     }
   } else {
-    $url = $config->getURL($rep, $ppath.$pfile, 'file').$passrevstring;
+    $url = $config->getURL($rep, $ppath.$pfile, 'file').$passRevString;
   }
   // NOTE: If it's a directory in tree view, this also injects an "id" attribute
   return '<a href="'.removeURLSeparator($url).'">'.$pfile.'</a>';
 }
 
 function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $treeview = true) {
-  global $rep, $passrev, $passrevstring, $config, $lang;
+  global $config, $lang, $rep, $passrev, $passRevString;
 
   $path = '';
 
@@ -79,6 +79,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
     $level = $limit;
   }
 
+  // TODO: Fix node links to use the path and number of peg revision (if exists)
+  // This applies to file detail, log, and RSS -- leave the download link as-is
   for ($n = 0; $n <= $level; $n++) {
     $path .= $subs[$n].'/';
   }
@@ -90,6 +92,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
   $last_index = 0;
   $accessToThisDir = $rep->hasReadAccess($path, false);
   
+  $downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev : '';
+  
   foreach ($logList->entries as $entry) {
     $isDir = $entry->isdir;
     if (!$isDir && $level != $limit) {
@@ -98,7 +102,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
     $file = $entry->file;
     $urlPartIsDir = ($isDir) ? 'isdir=1' : '';
     
-    // Only list files/directories that are not marked as off-limits
+    // Only list files/directories that are not designated as off-limits
     $access = ($isDir) ? $rep->hasReadAccess($path.$file, true)
                        : $accessToThisDir;
     if ($access) {
@@ -117,7 +121,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       $listing[$index]['level'] = ($treeview) ? $level : 0;
       $listing[$index]['node'] = 0; // t-node
       $listing[$index]['filelink'] = fileLink($path, $file);
-      $listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$passrevstring.$urlPartIsDir;
+      $listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$passRevString.$urlPartIsDir;
       
       if ($treeview) {
         $listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.fileLink($path, $file, true).'@'.$passrev.'" onclick="checkCB(this)" />';
@@ -132,7 +136,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         $listing[$index]['revurl'] = $config->getURL($rep, '', 'revision').'rev='.$entry->rev;
       }
       if ($rep->isDownloadAllowed($path.$file)) {
-        $downloadurl = $config->getURL($rep, $path.$file, 'dl').$passrevstring;
+        $downloadurl = $config->getURL($rep, $path.$file, 'dl').$downloadRevString;
         if ($isDir) {
           $listing[$index]['downloadurl'] = $downloadurl.'isdir=1';
           $listing[$index]['downloadplainurl'] = '';
@@ -197,11 +201,12 @@ $svnrep = new SVNRepository($rep);
 
 // Revision info to pass along chain
 $passrev = $rev;
-$passrevstring = ($passrev) ? 'rev='.$passrev.'&amp;' : '';
+$passRevString = ($passrev) ? 'rev='.$passrev.'&amp;' : '';
+if ($peg)
+  $passRevString .= 'peg='.$peg.'&amp;';
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $passrev, '', false);
-// TODO: Check this for the same problem that log.php has with move/delete.
+$history = $svnrep->getLog($path, $passrev, '', false, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -274,10 +279,10 @@ if (sizeof($history->entries) > 1) {
   $vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
 }
 
-createDirLinks($rep, $ppath, $passrev);
+createDirLinks($rep, $ppath, $passrev, $peg);
 
 $logurl = $config->getURL($rep, $path, 'log');
-$vars['logurl'] = $logurl.'rev='.$passrev.'&amp;isdir=1';
+$vars['logurl'] = $logurl.$passRevString.'isdir=1';
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
@@ -291,7 +296,7 @@ if ($rep->getHideRss()) {
 $subs = explode('/', $path);
 $level = count($subs) - 2;
 if ($rep->isDownloadAllowed($path)) {
-  $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').'rev='.$passrev.'&amp;isdir=1';
+  $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$passRevString.'isdir=1';
 }
 
 $url = $config->getURL($rep, '/', 'comp');

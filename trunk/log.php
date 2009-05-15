@@ -56,7 +56,6 @@ function removeAccents($string) {
   $string = htmlentities($string, ENT_QUOTES, 'ISO-8859-1');
   $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron);/','$1',$string);
   $string = preg_replace('/&([A-Z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron);/','$1',$string);
-
   return $string;
 }
 
@@ -65,13 +64,16 @@ foreach ($words as $index => $word) {
   $words[$index] = strtolower(removeAccents($word));
 
   // Remove empty string introduced by multiple spaces
-  if (empty($words[$index])) unset($words[$index]);
+  if (empty($words[$index]))
+    unset($words[$index]);
 }
 
-if (empty($page)) $page = 1;
+if (empty($page))
+  $page = 1;
 
 // If searching, display all the results
-if ($dosearch) $all = true;
+if ($dosearch)
+  $all = true;
 
 $maxperpage = 20;
 
@@ -86,7 +88,7 @@ $svnrep = new SVNRepository($rep);
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $startrev, $endrev, true);
+$history = $svnrep->getLog($path, $startrev, $endrev, true, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -108,7 +110,13 @@ $vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars["rev"] = $rev;
 $vars["path"] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-createDirLinks($rep, $ppath, $passrev);
+// TODO: If the rev is less than the head, get the path (may have been renamed!)
+// Will probably need to call `svn info`, parse XML output, and substring a path
+
+createDirLinks($rep, $ppath, $passrev, $peg);
+$passRevString = ($passrev) ? 'rev='.$passrev : '';
+if ($peg)
+  $passRevString .= '&amp;peg='.$peg;
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
@@ -144,10 +152,14 @@ if ($rev != $youngest) {
 // We get the bugtraq variable just once based on the HEAD
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
-if ($startrev != "HEAD" && $startrev != "BASE" && $startrev != "PREV" && $startrev != "COMMITTED") $startrev = (int)$startrev;
-if ($endrev != "HEAD" && $endrev != "BASE" && $endrev != "PREV" && $endrev != "COMMITTED") $endrev = (int)$endrev;
-if (empty($startrev)) $startrev = $rev;
-if (empty($endrev)) $endrev = 1;
+if ($startrev != "HEAD" && $startrev != "BASE" && $startrev != "PREV" && $startrev != "COMMITTED")
+  $startrev = (int)$startrev;
+if ($endrev != "HEAD" && $endrev != "BASE" && $endrev != "PREV" && $endrev != "COMMITTED")
+  $endrev = (int)$endrev;
+if (empty($startrev))
+  $startrev = $rev;
+if (empty($endrev))
+  $endrev = 1;
 
 if ($max === false) {
   $max = $dosearch ? 0 : 30;
@@ -155,7 +167,7 @@ if ($max === false) {
   if ($max < 0) $max = 30;
 }
 
-$history = $svnrep->getLog($path, $startrev, $endrev, true, $max);
+$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -180,10 +192,9 @@ if (!empty($history)) {
 
     if ($page > $pages) $page = $pages;
 
-    // Word out where to start and stop
+    // Work out where to start and stop
     $firstrevindex = ($page - 1) * $maxperpage;
-    $lastrevindex = $firstrevindex + $maxperpage - 1;
-    if ($lastrevindex > $revisions - 1) $lastrevindex = $revisions - 1;
+    $lastrevindex = min($firstrevindex + $maxperpage - 1, $revisions - 1);
   }
 
   $brev = isset($history->entries[$firstrevindex ]) ? $history->entries[$firstrevindex ]->rev : false;
@@ -191,7 +202,7 @@ if (!empty($history)) {
 
   $entries = array();
   if ($brev && $erev) {
-    $history = $svnrep->getLog($path, $brev, $erev, false, 0);
+    $history = $svnrep->getLog($path, $brev, $erev, false, 0, $peg);
     if (is_string($history)) {
       echo $history;
       exit;
@@ -203,11 +214,11 @@ if (!empty($history)) {
   $index = 0;
   $listing = array();
   $found = false;
-
-  foreach ($entries as $r) {
+  
+  foreach ($entries as $revision) {
     // Assume a good match
     $match = true;
-    $thisrev = $r->rev;
+    $thisrev = $revision->rev;
 
     // Check the log for the search words, if searching
     if ($dosearch) {
@@ -216,7 +227,7 @@ if (!empty($history)) {
 
         // Make sure that each word in the search in also in the log
         foreach ($words as $word) {
-          if (strpos(strtolower(removeAccents($r->msg)), $word) === false && strpos(strtolower(removeAccents($r->author)), $word) === false) {
+          if (strpos(strtolower(removeAccents($revision->msg)), $word) === false && strpos(strtolower(removeAccents($revision->author)), $word) === false) {
             $match = false;
             break;
           }
@@ -231,10 +242,9 @@ if (!empty($history)) {
       }
     }
 
-    if ($match)
-    {
+    if ($match) {
       // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
-      $rpath = $r->path;
+      $rpath = $revision->path;
 
       if (empty($rpath)) {
         $rpath = "/";
@@ -245,24 +255,25 @@ if (!empty($history)) {
       // Find the parent path (or the whole path if it's already a directory)
       $pos = strrpos($rpath, "/");
       $parent = substr($rpath, 0, $pos + 1);
+      
+      $thisRevStr = 'rev='.$thisrev.'&amp;peg='.$rev;
 
-      $url = $config->getURL($rep, $parent, "revision");
-      $listing[$index]["revlink"] = "<a href=\"${url}rev=$thisrev\">$thisrev</a>";
+      $url = $config->getURL($rep, '', "revision");
+      $listing[$index]["revlink"] = "<a href=\"${url}$thisRevStr\">$thisrev</a>";
 
       if ($isDir) {
         $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$parent@$thisrev\" onclick=\"checkCB(this)\" />";
-        $url = $config->getURL($rep, $rpath, "dir");
-        $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev\">$rpath</a>";
+        $url = $config->getURL($rep, $path, 'dir');
       } else {
         $listing[$index]["compare_box"] = "<input type=\"checkbox\" name=\"compare[]\" value=\"$rpath@$thisrev\" onclick=\"checkCB(this)\" />";
-        $url = $config->getURL($rep, $rpath, "file");
-        $listing[$index]["revpathlink"] = "<a href=\"${url}rev=$thisrev\">$rpath</a>";
+        $url = $config->getURL($rep, $path, 'file');
       }
+      $listing[$index]["revpathlink"] = "<a href=\"${url}$thisRevStr\">$rpath</a>";
 
-      $listing[$index]["revauthor"] = $r->author;
-      $listing[$index]["revdate"] = $r->date;
-      $listing[$index]["revage"] = $r->age;
-      $listing[$index]["revlog"] = nl2br($bugtraq->replaceIDs(create_anchors($r->msg)));
+      $listing[$index]["revauthor"] = $revision->author;
+      $listing[$index]["revdate"] = $revision->date;
+      $listing[$index]["revage"] = $revision->age;
+      $listing[$index]["revlog"] = nl2br($bugtraq->replaceIDs(create_anchors($revision->msg)));
       $listing[$index]["rowparity"] = $row;
 
       $row = 1 - $row;

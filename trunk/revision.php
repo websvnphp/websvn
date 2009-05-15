@@ -119,16 +119,22 @@ usort($changes, 'SVNLogEntry_compare');
 $row = 0;
 $listing = array();
 
+$prevRevString = ($passrev) ? 'rev='.($passrev-1) : '';
+$thisRevString = ($passrev) ? 'rev='.$passrev : '';
+if ($peg)
+  $thisRevString .= '&amp;peg='.$peg;
+
 foreach ($changes as $file) {
+  $passRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
   $listing[] = array(
     'file' => $file->path,
-    'added' => $file->action == 'A',
+    'added'    => $file->action == 'A',
+    'deleted'  => $file->action == 'D',
     'modified' => $file->action == 'M',
-    'deleted' => $file->action == 'D',
      // TODO: Figure out how to differentiate directories (detailurl / logurl)
-    'detailurl' => $config->getURL($rep, $file->path, 'file').($passrev ? 'rev='.$passrev : ''),
+    'detailurl' => $config->getURL($rep, $file->path, 'file').$passRevString,
     // For deleted resources, make log link start at previous revision
-    'logurl' => $config->getURL($rep, $file->path, 'log').($file->action == 'D' ? 'sr='.($passrev-1) : ($passrev ? 'rev='.$passrev : '')),
+    'logurl' => $config->getURL($rep, $file->path, 'log').$passRevString,
     'diffurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').($passrev ? 'rev='.$passrev : '') : '',
     'blameurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').($passrev ? 'rev='.$passrev : '') : '',
     'rowparity' => $row,
