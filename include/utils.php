@@ -26,7 +26,7 @@
 //
 // Create a list of links to the current path that'll be available from the template
 
-function createDirLinks($rep, $path, $rev) {
+function createDirLinks($rep, $path, $rev, $peg = '') {
   global $vars, $config;
   
   $pathComponents = explode("/", htmlentities($path, ENT_QUOTES, "UTF-8"));
@@ -45,17 +45,22 @@ function createDirLinks($rep, $path, $rev) {
   $pathSoFar = "/";
   $pathSoFarURL = $config->getURL($rep, $pathSoFar, "dir").($rev ? "rev=$rev" : "");
   $vars["curdirlinks"] = "<a href=\"${pathSoFarURL}\" class=\"root\"><span>(root)</span></a>/";
+  
+  $revString = ($rev) ? 'rev='.$rev : '';
+  if ($peg)
+    $revString .= '&amp;peg='.$peg;
   for ($n = 1; $n < $limit; $n++) {
     $pathSoFar .= html_entity_decode($pathComponents[$n])."/";
-    $pathSoFarURL = $config->getURL($rep, $pathSoFar, "dir").($rev ? "rev=$rev" : "");
+    $pathSoFarURL = $config->getURL($rep, $pathSoFar, "dir").$revString;
     $vars["curdirlinks"] .= "<a href=\"${pathSoFarURL}\">".$pathComponents[$n]."</a>/";
   }
   
   if (!empty($pathComponents[$n])) {
+    $pegrev = ($peg) ? ' @ r'.$peg : '';
     if ($dir) {
-      $vars["curdirlinks"] .= "<span class=\"dir\">".$pathComponents[$n]."/</span>";
+      $vars["curdirlinks"] .= "<span class=\"dir\">".$pathComponents[$n].'/'.$pegrev."</span>";
     } else {
-      $vars["curdirlinks"] .= "<span class=\"file\">".$pathComponents[$n]."</span>";
+      $vars["curdirlinks"] .= "<span class=\"file\">".$pathComponents[$n].$pegrev."</span>";
     }
   }
 }

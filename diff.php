@@ -43,7 +43,7 @@ if (!isset($rep)) {
 $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, "", "", true);
+$history = $svnrep->getLog($path, '', '', true, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -54,29 +54,29 @@ if (empty($rev)) {
   $rev = $youngest;
 }
 
-$history = $svnrep->getLog($path, $rev);
+$history = $svnrep->getLog($path, $rev, '', true, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
 }
 
-if ($path{0} != "/") {
-  $ppath = "/".$path;
+if ($path{0} != '/') {
+  $ppath = '/'.$path;
 } else {
   $ppath = $path;
 }
 
 $prevrev = @$history->entries[1]->rev;
 
-$vars["repname"] = htmlentities($rep->getDisplayName(), ENT_QUOTES, "UTF-8");
-$vars["rev"] = $rev;
-$vars["path"] = htmlentities($ppath, ENT_QUOTES, "UTF-8");
-$vars["prevrev"] = $prevrev;
+$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+$vars['rev'] = $rev;
+$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+$vars['prevrev'] = $prevrev;
 
-$vars["rev1"] = $history->entries[0]->rev;
-$vars["rev2"] = $prevrev;
+$vars['rev1'] = $history->entries[0]->rev;
+$vars['rev2'] = $prevrev;
 
-createDirLinks($rep, $ppath, $rev);
+createDirLinks($rep, $ppath, $rev, $peg);
 
 $listing = array();
 
@@ -133,11 +133,11 @@ else {
   }
 
   // Get the contents of the two files
-  $newtname = tempnam("temp", "");
-  $highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, "", true);
+  $newtname = tempnam('temp', '');
+  $highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, '', true, $pegrev);
 
-  $oldtname = tempnam("temp", "");
-  $highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, "", true);
+  $oldtname = tempnam('temp', '');
+  $highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, '', true, $pegrev);
 
   $ent = (!$highlightedNew && !$highlightedOld);
   $listing = do_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname);
@@ -148,10 +148,10 @@ else {
 }
 
 if (!$rep->hasReadAccess($path, false)) {
-  $vars["noaccess"] = true;
+  $vars['noaccess'] = true;
 }
 
-$vars["template"] = "diff";
-parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."diff.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
+$vars['template'] = 'diff';
+parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
+parseTemplate($rep->getTemplatePath().'diff.tmpl', $vars, $listing);
+parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);

@@ -44,7 +44,7 @@ if ($path{0} != '/') {
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, '', '', true);
+$history = $svnrep->getLog($path, $rev, '', true, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -53,8 +53,6 @@ $youngest = isset($history->entries[0]) ? $history->entries[0]->rev: false;
 
 if (empty($rev)) {
   $rev = $youngest;
-} else {
-  $history = $svnrep->getLog($path, $rev, '', true);
 }
 
 $extn = strtolower(strrchr($path, '.'));
@@ -70,7 +68,6 @@ if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
   // Get the file contents and pipe into gzip.  All this without creating
   // a temporary file.  Damn clever.
   $svnrep->getFileContents($path, '', $rev, '| '.$config->gzip.' -n -f');
-
   exit;
 }
 
@@ -127,8 +124,10 @@ $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-createDirLinks($rep, $ppath, $passrev);$
+createDirLinks($rep, $ppath, $passrev, $peg);
 $passRevString = ($passrev) ? 'rev='.$passrev : '';
+if ($peg)
+  $passRevString .= '&amp;peg='.$peg;
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
@@ -156,6 +155,8 @@ if ($rep->getHideRss()) {
 }
 
 $listing = array();
+
+// $listing is populated with file data when file.tmpl calls [websvn-getlisting]
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['noaccess'] = true;
