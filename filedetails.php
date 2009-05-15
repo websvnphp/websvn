@@ -117,9 +117,8 @@ if (!empty($mimeType) && $rep->hasReadAccess($path, false)) {
 
 // Display the file inline using WebSVN.
 
-$url = $config->getURL($rep, $path, 'file');
-
 if ($rev != $youngest) {
+  $url = $config->getURL($rep, $path, 'file');
   $vars['goyoungestlink'] = '<a href="'.$url.'">'.$lang['GOYOUNGEST'].'</a>';
 }
 

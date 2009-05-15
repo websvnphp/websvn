@@ -61,32 +61,31 @@ $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 createDirLinks($rep, $ppath, $rev);
+$passRevString = ($passrev) ? 'rev='.$passrev : '';
 
 if ($rev != $youngest) {
   $url = $config->getURL($rep, $path, 'blame');
-  $vars["goyoungestlink"] = '<a href="'.$url.'">'.$lang["GOYOUNGEST"].'</a>';
-} else {
-  $vars["goyoungestlink"] = "";
+  $vars['goyoungestlink'] = '<a href="'.$url.'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
-$url = $config->getURL($rep, $path, "file");
-$vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
+$url = $config->getURL($rep, $path, 'file').$passRevString;
+$vars['filedetaillink'] = '<a href="'.$url.'">'.$lang['FILEDETAIL'].'</a>';
 
-$url = $config->getURL($rep, $path, "log");
-$vars["loglink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
+$url = $config->getURL($rep, $path, 'log').$passRevString;
+$vars['loglink'] = '<a href="'.$url.'">'.$lang['VIEWLOG'].'</a>';
 
 if (sizeof($history->entries) > 1) {
-  $url = $config->getURL($rep, $path, "diff");
-  $vars["difflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
+  $url = $config->getURL($rep, $path, 'diff').$passRevString;
+  $vars['difflink'] = '<a href="'.$url.'">'.$lang['DIFFPREV'].'</a>';
 }
 
 if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, 'rss')."rev=".$rev;
-  $vars["rssurl"] = $url;
-  $vars["rsslink"] = "<a href=\"${url}\">${lang["RSSFEED"]}</a>";
+  $url = $config->getURL($rep, $path, 'rss');
+  $vars['rssurl'] = $url;
+  $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
 }
 
 $listing = array();
@@ -94,8 +93,8 @@ $listing = array();
 // Check for binary file type before grabbing blame information.
 $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
 
-if (!$rep->getIgnoreSvnMimeTypes() && preg_match("~application/*~", $svnMimeType)) {
-  $vars["warning"] = "Cannot display blame info for binary file. (svn:mime-type = $svnMimeType)";
+if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType)) {
+  $vars['warning'] = 'Cannot display blame info for binary file. (svn:mime-type = '.$svnMimeType.')';
 }
 else {
   // Get the contents of the file
@@ -131,7 +130,7 @@ else {
             $row_class = ($row_class == 'light') ? 'dark' : 'light';
             $listing[$index]['author'] = $author;
           } else {
-            $listing[$index]['revision'] = "";
+            $listing[$index]['revision'] = '';
             $listing[$index]['author'] = '';
           }
   
@@ -141,21 +140,18 @@ else {
           $line = rtrim(fgets($file));
           if (!$highlighted) $line = replaceEntities($line, $rep);
   
-          if ($empty) $line = '&nbsp;';
+          if ($empty)
+            $line = '&nbsp;';
           $listing[$index]['line'] = hardspace($line);
   
           $index++;
         }
       }
-  
       fclose($blame);
     }
-  
     fclose($file);
-  
     @unlink($tbname);
   }
-  
   @unlink($tfname);
   
   if (!$rep->hasReadAccess($path, false)) {
@@ -210,20 +206,18 @@ else {
 HTML;
 
   foreach ($seen_rev as $key => $val) {
-    $history = $svnrep->getLog($path, $key, $key, false, 1);
+    $history = $svnrep->getLog($path, $key, $key, false, 1, $rev);
     if (!is_string($history)) {
-      $vars['javascript'] .= "rev[$key] = '";
-      $vars['javascript'] .= "<div class=\"info\">";
-      $vars['javascript'] .= "<span class=\"date\">".$history->curEntry->date."<\/span>";
-      $vars['javascript'] .= "<\/div>";
-      $vars['javascript'] .= "<div class=\"msg\">".addslashes(preg_replace('/\n/', "<br />", $history->curEntry->msg))."<\/div>";
+      $vars['javascript'] .= '  rev['.$key.'] = \'';
+      $vars['javascript'] .= '<div class="date">'.$history->curEntry->date.'</div>';
+      $vars['javascript'] .= '<div class="msg">'.addslashes(preg_replace('/\n/', '<br />', $history->curEntry->msg)).'</div>';
       $vars['javascript'] .= "';\n";
     }
   }
   $vars['javascript'] .= "/* ]]> */\n</script>";
 }
 
-$vars["template"] = "blame";
+$vars['template'] = 'blame';
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'blame.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
