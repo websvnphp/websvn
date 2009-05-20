@@ -768,6 +768,10 @@ div.blame-popup .date {
 	text-align: right;
 }
 
+#wrap p.pagelinks > * {
+	padding: 0 3px;
+}
+
 div.warning {
 	font-weight: bold;
 	border:  1px solid #d5ce00;

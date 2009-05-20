@@ -4,15 +4,14 @@
 <div id="input">[websvn:revision_form]<div>[lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
 <p>
 [websvn-test:goyoungestlink]
-<span class="goyoungest">[websvn:goyoungestlink]</span>
-[websvn-test:filedetaillink]
-&#124;
-[websvn-endtest]
+<span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
 [websvn-endtest]
 [websvn-test:filedetaillink]
 <span class="detail">[websvn:filedetaillink]</span> &#124;
 <span class="diff">[websvn:difflink]</span> &#124;
 <span class="blame">[websvn:blamelink]</span>
+[websvn-else]
+<span class="listing">[websvn:directorylink]</span>
 [websvn-endtest]
 </p>
 
@@ -91,11 +90,12 @@
 [websvn-endtest]
 
 [websvn-test:logsearch_nomorematches]
-   <p>[lang:NOMORERESULTS]</p>
+  <p>[lang:NOMORERESULTS]</p>
 [websvn-endtest]
-      
-<p>[websvn:logsearch_moreresultslink]</p>
-<p>[websvn:pagelinks]</p>
+[websvn-test:logsearch_moreresultslink]
+  <p>[websvn:logsearch_moreresultslink]</p>
+[websvn-endtest]
+<p class="pagelinks">[websvn:pagelinks]</p>
 <p>[websvn:showalllink]</p>
 
 [websvn-endtest]
