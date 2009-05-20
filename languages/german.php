@@ -34,7 +34,7 @@ $lang["DIFF"] = "Diff";
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";
 $lang["NOACCESS"] = "Sie haben keine ausreichende Berechtigungen um diese Inhalte zu lesen";
-$lang["RESTRICTED"] = "Beschränkter Zugriff";
+$lang["RESTRICTED"] = "BeschrÃ¤nkter Zugriff";
 $lang["SUPPLYREP"] = "Bitte den Repository-Pfad in include/config.php mit \$config->parentPath oder \$config->addRepository angeben.<p>Genauere Informationen finden sich in der Installationsanleitung";
 
 $lang["DIFFREVS"] = "Vergleich zwischen Revisionen";
@@ -43,26 +43,26 @@ $lang["REV"] = "Revision";
 $lang["LINE"] = "Zeile";
 $lang["LINENO"] = "Zeilennr.";
 $lang["SHOWENTIREFILE"] = "Ganze Datei anzeigen";
-$lang["SHOWCOMPACT"] = "Nur geänderte Bereiche";
+$lang["SHOWCOMPACT"] = "Nur geÃ¤nderte Bereiche";
 $lang["IGNOREWHITESPACE"] = "Leerzeichen ignorieren";
-$lang["REGARDWHITESPACE"] = "Leerzeichen berücksichtigen";
+$lang["REGARDWHITESPACE"] = "Leerzeichen berÃ¼cksichtigen";
 
 $lang["LISTING"] = "Verzeichnisansicht";
 $lang["FILEDETAIL"] = "Details";
 $lang["DIFFPREV"] = "Vergleich mit vorheriger";
 $lang["BLAME"] = "Blame";
-$lang["BLAMEFOR"] = "Blame-Information für Rev.";
+$lang["BLAMEFOR"] = "Blame-Information fÃ¼r Rev.";
 
 $lang["REVINFO"] = "Revisionsinformation";
 $lang["GOYOUNGEST"] = "Zur aktuellen Revision";
-$lang["LASTMOD"] = "Letzte Änderung";
+$lang["LASTMOD"] = "Letzte Ã„nderung";
 $lang["LOGMSG"] = "Logeintrag";
-$lang["CHANGES"] = "Änderungen";
-$lang["SHOWCHANGED"] = "Geänderte Dateien anzeigen";
-$lang["HIDECHANGED"] = "Geänderte Dateien verstecken";
+$lang["CHANGES"] = "Ã„nderungen";
+$lang["SHOWCHANGED"] = "GeÃ¤nderte Dateien anzeigen";
+$lang["HIDECHANGED"] = "GeÃ¤nderte Dateien verstecken";
 $lang["NEWFILES"] = "Neue Dateien";
-$lang["CHANGEDFILES"] = "Geänderte Dateien";
-$lang["DELETEDFILES"] = "Gelöschte Dateien";
+$lang["CHANGEDFILES"] = "GeÃ¤nderte Dateien";
+$lang["DELETEDFILES"] = "GelÃ¶schte Dateien";
 $lang["VIEWLOG"] = "Log anzeigen";
 $lang["PATH"] = "Pfad";
 $lang["AUTHOR"] = "Autor";
@@ -71,11 +71,11 @@ $lang["CURDIR"] = "Aktuelles Verzeichnis";
 $lang["TARBALL"] = "Archiv Download";
 $lang["DOWNLOAD"] = "Download";
 
-$lang["PREV"] = "Zurück";
+$lang["PREV"] = "ZurÃ¼ck";
 $lang["NEXT"] = "Weiter";
 $lang["SHOWALL"] = "Alles anzeigen";
 
-$lang["BADCMD"] = "Fehler beim Ausführen des Befehls";
+$lang["BADCMD"] = "Fehler beim AusfÃ¼hren des Befehls";
 $lang["UNKNOWNREVISION"] = "Revision nicht gefunden";
 
 $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info\">WebSVN</a>";
@@ -87,14 +87,14 @@ $lang["STARTLOG"] = "Von Rev.";
 $lang["ENDLOG"] = "bis Rev.";
 $lang["MAXLOG"] = "Max. Rev.";
 $lang["SEARCHLOG"] = "Suche im Log nach";
-$lang["CLEARLOG"] = "Aktuelle Suche löschen";
+$lang["CLEARLOG"] = "Aktuelle Suche lÃ¶schen";
 $lang["MORERESULTS"] = "Weitere Ergebnisse finden...";
 $lang["NORESULTS"] = "Es wurden keine Treffer erzielt";
-$lang["NOMORERESULTS"] = "Keine weiteren Treffer für diese Suche";
+$lang["NOMORERESULTS"] = "Keine weiteren Treffer fÃ¼r diese Suche";
 $lang['NOPREVREV'] = 'Keine vorherige Revision';
 
 $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
-$lang["FILESMODIFIED"] = "Veränderte Dateien";
+$lang["FILESMODIFIED"] = "VerÃ¤nderte Dateien";
 $lang["RSSFEED"] = "RSS feed";
 
 $lang["DAYLETTER"] = "t";
@@ -107,13 +107,13 @@ $lang["GO"] = "Los";
 $lang["PATHCOMPARISON"] = "Pfadvergleich";
 $lang["COMPAREPATHS"] = "Vergleiche Pfade";
 $lang["COMPAREREVS"] = "Vergleiche Revisionen";
-$lang["PROPCHANGES"] = "Geänderte Eigenschaften :";
-$lang["CONVFROM"] = "Dieser Vergleich zeigt die Änderungen zwischen ";
+$lang["PROPCHANGES"] = "GeÃ¤nderte Eigenschaften :";
+$lang["CONVFROM"] = "Dieser Vergleich zeigt die Ã„nderungen zwischen ";
 $lang["TO"] = "und";
 $lang["REVCOMP"] = "Revisionen vertauschen";
 $lang["COMPPATH"] = "Vergleiche Pfad:";
 $lang["WITHPATH"] = "Mit Pfad:";
-$lang["FILEDELETED"] = "Datei gelöscht";
+$lang["FILEDELETED"] = "Datei gelÃ¶scht";
 $lang["FILEADDED"] = "Neue Datei";
 
 // The following are defined by some languages to stop unwanted line splitting
