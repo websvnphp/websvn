@@ -204,3 +204,7 @@ div.warning
 	padding: 5px;
 	margin: 0 auto;
 }
+
+.logpagelinks > * {
+	padding: 0 3px;
+}
