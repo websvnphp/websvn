@@ -134,10 +134,10 @@ else {
 
   // Get the contents of the two files
   $newtname = tempnam('temp', '');
-  $highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, '', true, $pegrev);
+  $highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, '', true, $peg);
 
   $oldtname = tempnam('temp', '');
-  $highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, '', true, $pegrev);
+  $highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, '', true, $peg);
 
   $ent = (!$highlightedNew && !$highlightedOld);
   $listing = do_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname);

@@ -94,6 +94,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
   
   $downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev : '';
   
+  $openDir = false;
   foreach ($logList->entries as $entry) {
     $isDir = $entry->isdir;
     if (!$isDir && $level != $limit) {
