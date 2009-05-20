@@ -589,6 +589,16 @@ code, pre {
 .diff a:hover {
   background:khaki url(images/diff.png) no-repeat 2px 50%;
 }
+.geshi a:link,
+.geshi a:visited,
+.geshi a:focus,
+.geshi a:hover {
+	padding-left:0;
+	background: none;
+}
+.geshi a:hover {
+	text-decoration: underline;
+}
 tbody tr.diffcode td {
   text-align:left;
 }
