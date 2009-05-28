@@ -97,6 +97,7 @@ $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev, $peg);
 
 if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType)) {
   $vars['warning'] = 'Cannot display blame info for binary file. (svn:mime-type = '.$svnMimeType.')';
+  $vars['javascript'] = '';
 }
 else {
   // Get the contents of the file
