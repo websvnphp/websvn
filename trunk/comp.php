@@ -115,14 +115,23 @@ $vars["compare_rev2input"] = "<input type=\"text\" size=\"5\" name=\"compare_rev
 $vars["compare_submit"] = "<input name=\"comparesubmit\" type=\"submit\" value=\"${lang["COMPAREPATHS"]}\" />";
 $vars["compare_endform"] = "</form>";
 
-// safe paths are a hack for fixing XSS sploit
-$vars["path1"] = htmlentities($path1, ENT_QUOTES, 'UTF-8');
+// safe paths are a hack for fixing XSS exploit
+$vars['path1']     = htmlentities($path1, ENT_QUOTES, 'UTF-8');
 $vars['safepath1'] = htmlentities($path1, ENT_QUOTES, 'UTF-8');
-$vars["path2"] = htmlentities($path2, ENT_QUOTES, 'UTF-8');
+$vars['path2']     = htmlentities($path2, ENT_QUOTES, 'UTF-8');
 $vars['safepath2'] = htmlentities($path2, ENT_QUOTES, 'UTF-8');
 
-$vars["rev1"] = $rev1;
-$vars["rev2"] = $rev2;
+$vars['rev1'] = $rev1;
+$vars['rev2'] = $rev2;
+
+// Set variables used for the later of the two revisions
+$rev = max($rev1, $rev2);
+$logEntry = $svnrep->getLog($path, $rev, $rev, false, 1)->curEntry;
+
+$vars['rev'] = $logEntry->rev;
+$vars['date'] = $logEntry->date;
+$vars['author'] = $logEntry->author;
+$vars['log'] = $logEntry->msg;
 
 $noinput = empty($path1) || empty($path2);
 $listing = array();

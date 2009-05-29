@@ -33,7 +33,7 @@ $vars['action'] = $lang['BLAME'];
 $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, '', '', true, 2, $peg);
+$history = $svnrep->getLog($path, '', '', false, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -43,7 +43,7 @@ $youngest = $history->entries[0]->rev;
 if (empty($rev)) {
   $rev = $youngest;
 } else {
-  $history = $svnrep->getLog($path, $rev, '', true, 2, $peg);
+  $history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
 }
 
 if ($path{0} != '/') {
@@ -59,6 +59,10 @@ $parent = substr($ppath, 0, $pos + 1);
 $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+
+$vars['log'] = $history->entries[0]->msg;
+$vars['date'] = $history->entries[0]->date;
+$vars['author'] = $history->entries[0]->author;
 
 createDirLinks($rep, $ppath, $rev, $peg);
 $passRevString = ($rev) ? 'rev='.$rev : '';

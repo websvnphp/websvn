@@ -44,7 +44,7 @@ if ($path{0} != '/') {
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $rev, '', true, 2, $peg);
+$history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -123,6 +123,10 @@ $vars['action'] = '';
 $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+
+$vars['log'] = $history->entries[0]->msg;
+$vars['date'] = $history->entries[0]->date;
+$vars['author'] = $history->entries[0]->author;
 
 createDirLinks($rep, $ppath, $passrev, $peg);
 $passRevString = ($passrev) ? 'rev='.$passrev : '';
