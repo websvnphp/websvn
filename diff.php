@@ -54,7 +54,7 @@ if (empty($rev)) {
   $rev = $youngest;
 }
 
-$history = $svnrep->getLog($path, $rev, '', true, 2, $peg);
+$history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -69,12 +69,16 @@ if ($path{0} != '/') {
 $prevrev = @$history->entries[1]->rev;
 
 $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
-$vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars['prevrev'] = $prevrev;
+$vars['rev'] = $history->entries[0]->rev;
 
 $vars['rev1'] = $history->entries[0]->rev;
 $vars['rev2'] = $prevrev;
+
+$vars['log'] = $history->entries[0]->msg;
+$vars['date'] = $history->entries[0]->date;
+$vars['author'] = $history->entries[0]->author;
 
 createDirLinks($rep, $ppath, $rev, $peg);
 
