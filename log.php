@@ -87,7 +87,7 @@ $svnrep = new SVNRepository($rep);
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $startrev, $endrev, true, 2, $peg);
+$history = $svnrep->getLog($path, $startrev, $endrev, false, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -108,6 +108,10 @@ $vars['action'] = $lang['LOG'];
 $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+
+$vars['log'] = $history->entries[0]->msg;
+$vars['date'] = $history->entries[0]->date;
+$vars['author'] = $history->entries[0]->author;
 
 // TODO: If the rev is less than the head, get the path (may have been renamed!)
 // Will probably need to call `svn info`, parse XML output, and substring a path
