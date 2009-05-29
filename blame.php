@@ -133,7 +133,7 @@ else {
   
           if ($last_rev != $revision) {
             $url = $config->getURL($rep, $parent, 'revision');
-            $listing[$index]['revision'] = "<a id=\"l$index-rev\" class=\"blame-revision\" href=\"${url}rev=$revision\">$revision</a>";
+            $listing[$index]['revision'] = '<a id="l'.$index.'-rev" class="blame-revision" href="'.$url.'rev='.$revision.'&amp;peg='.$rev.'">'.$revision.'</a>';
             $seen_rev[$revision] = 1;
             $row_class = ($row_class == 'light') ? 'dark' : 'light';
             $listing[$index]['author'] = $author;

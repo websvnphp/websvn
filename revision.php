@@ -40,7 +40,7 @@ $svnrep = new SVNRepository($rep);
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, '', '', false);
+$history = $svnrep->getLog($path, '', '', false, 2, $peg);
 if (is_string($history)) {
   echo $history;
   exit;
@@ -60,7 +60,7 @@ if (empty($rev)) {
 }
 
 if ($logrev != $youngest) {
-  $logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
+  $logEntry = $svnrep->getLog($path, $logrev, $logrev, false, 2, $peg);
   if (is_string($logEntry)) {
     echo $logEntry;
     exit;
@@ -70,7 +70,7 @@ if ($logrev != $youngest) {
   $logEntry = isset($history->entries[0]) ? $history->entries[0]: false;
 }
 
-$headlog = $svnrep->getLog('/', '', '', true, 1);
+$headlog = $svnrep->getLog('/', '', '', true, 1, $peg);
 if (is_string($headlog)) {
   echo $headlog;
   exit;
@@ -143,7 +143,7 @@ foreach ($changes as $file) {
   $row = 1 - $row;
 }
 
-createDirLinks($rep, $ppath, $passrev);
+createDirLinks($rep, $ppath, $passrev, $peg);
 
 $logurl = $config->getURL($rep, $path, 'log');
 $vars['logurl'] = $logurl.'rev='.$passrev.'&amp;isdir=1';
@@ -152,7 +152,7 @@ $vars['indexurl'] = $config->getURL($rep, '', 'index');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if ($rev != $headrev) {
-  $history = $svnrep->getLog($ppath, $rev, '', false);
+  $history = $svnrep->getLog($ppath, $rev, '', false, 2, $peg);
   if (is_string($history)) {
     echo $history;
     exit;
