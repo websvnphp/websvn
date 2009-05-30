@@ -275,7 +275,13 @@ $vars['date'] = $logEntry ? $logEntry->date : '';
 $vars['author'] = $logEntry ? $logEntry->author : '';
 $vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
 
-$vars['changesurl'] = $config->getURL($rep, $path, 'revision').'rev='.$passrev;
+$revString = '';
+if ($passrev) {
+  $revString = 'rev='.$passrev;
+  if ($peg && $path != '/')
+    $revString .= '&amp;peg='.$peg;
+}
+$vars['changesurl'] = $config->getURL($rep, $path, 'revision').$revString;
 if (sizeof($history->entries) > 1) {
   $vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
 }
