@@ -92,8 +92,10 @@ if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') {
   $mimeType = $svnMimeType; // Use SVN's default of 'application/octet-stream'
 }
 
-// If the MIME type exists but is set to be ignored, set it to an empty string.
-if (!empty($mimeType)) {
+$useMime = ($mimeType) ? @$_REQUEST['usemime'] : false;
+if (!empty($mimeType) && !$useMime) {
+  $useMime = $mimeType; // Save MIME type for later before possibly clobbering
+  // If a MIME type exists but is set to be ignored, set it to an empty string.
   foreach ($config->inlineMimeTypes as $inlineType) {
     if (preg_match('|'.$inlineType.'|', $mimeType)) {
       $mimeType = '';
@@ -156,6 +158,13 @@ if ($rep->getHideRss()) {
   $url = $config->getURL($rep, $path, 'rss');
   $vars['rssurl'] = $url;
   $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
+}
+  
+$mimeType = $useMime; // Restore preserved value to use for 'mimelink' variable.
+// If there was a MIME type, create a link to display file with that type.
+if ($mimeType) {
+  $url = $config->getURL($rep, $path, 'file').'usemime=1&amp;'.$passRevString;
+  $vars['mimelink'] = '<a href="'.$url.'">View as '.$mimeType.'</a>';
 }
 
 $listing = array();
