@@ -166,66 +166,25 @@ else {
     $vars['noaccess'] = true;
   }
   
-  $vars['javascript'] =  <<<HTML
-  
-  <script type='text/javascript'>
-  /* <![CDATA[ */
-  var rev = new Array();
-  var a = document.getElementsByTagName('a');
-  for (var i = 0; i < a.length; i++) {
-    if (a[i].className == 'blame-revision') {
-      var id = a[i].id;
-      addEvent(a[i], 'mouseover', function() { mouseover(this) } );
-      addEvent(a[i], 'mouseout', function() { mouseout(this) } );
-    }
-  }
-  
-  function mouseover(a) {
-    // Find the revision by using the link
-    var m = /rev=(\d+)/.exec(a.href);
-    var r = m[1];
-  
-    div = document.createElement('div');
-    div.className = 'blame-popup';
-    div.innerHTML = rev[r];
-    a.parentNode.appendChild(div);
-  }
+  // Build the necessary JavaScript as an array of lines, then join them with \n
+  $javascript = array();
+  $javascript[] = '<script type="text/javascript" src="'.$locwebsvnhttp.'/javascript/blame-popup.js"></script>';
+  $javascript[] = '<script type="text/javascript">';
+  $javascript[] = '/* <![CDATA[ */';
+  $javascript[] = 'var rev = new Array();';
 
-  function mouseout(a) {
-    var div = a.parentNode.parentNode.getElementsByTagName('div');
-    for (var i = 0; i < div.length; i++) {
-      if (div[i].className = 'blame-popup') {
-        div[i].parentNode.removeChild(div[i]);
-      }
-    }
-  }
-  
-  function addEvent(obj, type, func) {
-    if (obj.addEventListener) {
-      obj.addEventListener(type, func, false);
-      return true;
-    } else if (obj.attachEvent) {
-      return obj.attachEvent('on' + type, func);
-    } else {
-      return false;
-    }
-  }
-
-HTML;
-
+  ksort($seen_rev); // Sort revisions in descending order by key
   if (empty($peg))
     $peg = $rev;
-  krsort($seen_rev); // Sort revisions in descending order by key
   foreach ($seen_rev as $key => $val) {
     $history = $svnrep->getLog($path, $key, $key, false, 1, $peg);
     if (!is_string($history)) {
-      $vars['javascript'] .= '  rev['.$key.'] = \'';
-      $vars['javascript'] .= '<div class="date">'.$history->curEntry->date.'</div>';
-      $vars['javascript'] .= '<div class="msg">'.addslashes(preg_replace('/\n/', ' ', $history->curEntry->msg)).'</div>';
-      $vars['javascript'] .= "';\n";
+      $javascript[] = 'rev['.$key.'] = \'<div class="date">'.$history->curEntry->date.'</div><div class="msg">'.addslashes(preg_replace('/\n/', ' ', $history->curEntry->msg)).'</div>\';';
     }
   }
-  $vars['javascript'] .= "/* ]]> */\n</script>";
+  $javascript[] = '/* ]]> */';
+  $javascript[] = '</script>';
+  $vars['javascript'] = implode("\n", $javascript);
 }
 
 $vars['template'] = 'blame';
