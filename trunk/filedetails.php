@@ -90,6 +90,8 @@ if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') {
   $mimeType = $setupContentType;
 } else if (!empty($svnMimeType)) {
   $mimeType = $svnMimeType; // Use SVN's default of 'application/octet-stream'
+} else {
+  $mimeType = '';
 }
 
 $useMime = ($mimeType) ? @$_REQUEST['usemime'] : false;
