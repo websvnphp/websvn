@@ -64,22 +64,22 @@
    [websvn:compare_form]
       <table cellpadding="2" cellspacing="0" width="100%" class="outline">
          <tr>
-            <th class="HdrClmn" width="60%"><b>[lang:PATH]</b></th>
+            <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
             [websvn-test:allowdownload]
                [websvn-test:rssurl]
-                  <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-                  <th class="HdrClmn"><b>[lang:TARBALL]</b></th>
+                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
+                  <th class="HdrClmn"><b>[lang:DOWNLOAD]</b></th>
                   <th class="HdrClmnEnd"><b>RSS</b></th>
                [websvn-else]
-                  <th class="HdrClmn"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
-                  <th class="HdrClmnEnd"><b>[lang:TARBALL]</b></th>
+                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
+                  <th class="HdrClmnEnd"><b>[lang:DOWNLOAD]</b></th>
                [websvn-endtest]
             [websvn-else]
                [websvn-test:rssurl]
-                  <th class="HdrClmn"><b>[lang:LOG]</b></th>
+                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
                   <th class="HdrClmnEnd"><b>RSS</b></th>
                [websvn-else]
-                  <th class="HdrClmnEnd"><b>[lang:NOBR][lang:LOG][lang:ENDNOBR]</b></th>
+                  <th class="HdrClmnEnd"><b>[lang:VIEWLOG]</b></th>
                [websvn-endtest]
             [websvn-endtest]
          </tr>
@@ -92,7 +92,7 @@
                [websvn:filelink]
             </td>
             [websvn-test:allowdownload]
-               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR]<a href="[websvn:logurl]">[lang:VIEWLOG]</a>[lang:ENDNOBR]</td>
+               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]"><a href="[websvn:logurl]">[lang:LOG]</a></td>
                [websvn-test:rssurl]
                   <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">
                      [websvn-test:downloadurl]
