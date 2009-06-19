@@ -139,7 +139,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       if ($rep->isDownloadAllowed($path.$file)) {
         $downloadurl = $config->getURL($rep, $path.$file, 'dl').$downloadRevString;
         if ($isDir) {
-          $listing[$index]['downloadurl'] = $downloadurl.'isdir=1';
+          $listing[$index]['downloadurl'] = $downloadurl.'&amp;isdir=1';
           $listing[$index]['downloadplainurl'] = '';
         }
         else {
