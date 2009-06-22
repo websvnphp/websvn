@@ -141,11 +141,13 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         if ($isDir) {
           $listing[$index]['downloadurl'] = $downloadurl.'&amp;isdir=1';
           $listing[$index]['downloadplainurl'] = '';
-        }
-        else {
+        } else {
           $listing[$index]['downloadplainurl'] = $downloadurl;
           $listing[$index]['downloadurl'] = '';
         }
+      } else {
+        $listing[$index]['downloadplainurl'] = '';
+        $listing[$index]['downloadurl'] = '';
       }
       if ($rep->getHideRss()) {
         $rssurl = $config->getURL($rep, $path.$file, 'rss');
