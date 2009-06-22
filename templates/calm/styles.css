@@ -51,6 +51,9 @@ strong, b {
   padding:10px 10px 0 10px;
   height:2em;
 }
+#select form, #select div {
+  display: inline;
+}
 #input {
   margin:-3.7em 2% 0 2%;
   text-align:right;
