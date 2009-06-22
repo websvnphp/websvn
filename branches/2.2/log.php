@@ -85,6 +85,19 @@ $svnrep = new SVNRepository($rep);
 
 $passrev = $rev;
 
+if ($startrev != "HEAD" && $startrev != "BASE" && $startrev != "PREV" && $startrev != "COMMITTED") {
+  $startrev = (int)$startrev;
+}
+if ($endrev != "HEAD" && $endrev != "BASE" && $endrev != "PREV" && $endrev != "COMMITTED") {
+  $endrev = (int)$endrev;
+}
+if (empty($startrev)) {
+  $startrev = $rev;
+}
+if (empty($endrev)) {
+  $endrev = 1;
+}
+
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, $startrev, $endrev, true);
 if (is_string($history)) {
@@ -134,11 +147,6 @@ if ($rev != $youngest) {
 
 // We get the bugtraq variable just once based on the HEAD
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
-
-if ($startrev != "HEAD" && $startrev != "BASE" && $startrev != "PREV" && $startrev != "COMMITTED") $startrev = (int)$startrev;
-if ($endrev != "HEAD" && $endrev != "BASE" && $endrev != "PREV" && $endrev != "COMMITTED") $endrev = (int)$endrev;
-if (empty($startrev)) $startrev = $rev;
-if (empty($endrev)) $endrev = 1;
 
 if ($max === false) {
   $max = $dosearch ? 0 : 30;
