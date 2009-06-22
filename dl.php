@@ -34,19 +34,20 @@ function setDirectoryTimestamp($dir, $ts) {
   // changing the modification time of a directory under windows is only supported since php 5.3.0
   if (!$config->serverIsWindows || version_compare(PHP_VERSION, '5.3.0alpha') !== -1) {
     touch($dir, $ts);
-
-    $handle = opendir($dir);
-    if ($handle) {
-      while (($file = readdir($handle)) !== false) {
-        if ($file == '.' || $file == '..') {
-          continue;
+    if (is_dir($dir)) {
+      $handle = opendir($dir);
+      if ($handle) {
+        while (($file = readdir($handle)) !== false) {
+          if ($file == '.' || $file == '..') {
+            continue;
+          }
+          $f = $dir.DIRECTORY_SEPARATOR.$file;
+          if (is_dir($f)) {
+            setDirectoryTimestamp($f, $ts);
+          }
         }
-        $f = $dir.DIRECTORY_SEPARATOR.$file;
-        if (is_dir($f)) {
-          setDirectoryTimestamp($f, $ts);
-        }
+        closedir($handle);
       }
-      closedir($handle);
     }
   }
 }
