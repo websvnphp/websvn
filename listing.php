@@ -241,7 +241,7 @@ $svnrep = new SVNRepository($rep);
 $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, "", "", false);
+$history = $svnrep->getLog($path, $rev, "", false);
 if (is_string($history)) {
   echo $history;
   exit;
