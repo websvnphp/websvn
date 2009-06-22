@@ -322,7 +322,7 @@ require 'languages/english.php';
 if (file_exists(dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php')) {
   require_once 'config.php';
 } else {
-  die('File "includes/config.php" does not exist, please create one. The example file "includes/distconfig.php" may be copied and modified as needed.');
+  die('File "include/config.php" does not exist, please create one. The example file "include/distconfig.php" may be copied and modified as needed.');
 }
 
 require_once 'include/svnlook.php';
