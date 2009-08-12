@@ -195,11 +195,7 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 }
 
 // Make sure that we have a repository
-if (!isset($rep)) {
-  echo $lang['NOREP'];
-  exit;
-}
-
+if ($rep) {
 $svnrep = new SVNRepository($rep);
 
 // Revision info to pass along chain
@@ -212,7 +208,6 @@ if ($peg)
 $history = $svnrep->getLog($path, $passrev, '', false, 2, $peg);
 if (is_string($history)) {
   $vars['error'] = $history;
-  $listing = array();
 } else {
 if (!empty($history->entries[0])) {
   $youngest = $history->entries[0]->rev;
@@ -257,8 +252,6 @@ if ($path == '' || $path{0} != '/') {
 } else {
   $ppath = $path;
 }
-
-$vars['repname'] = $rep->getDisplayName();
 
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
   $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir');
@@ -324,8 +317,14 @@ if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
+}
+
+if (isset($vars['error'])) {
+  $listing = array();
+}
 
 $vars['template'] = 'directory';
-parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'directory.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
+$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+parseTemplate($template.'header.tmpl', $vars, $listing);
+parseTemplate($template.'directory.tmpl', $vars, $listing);
+parseTemplate($template.'footer.tmpl', $vars, $listing);

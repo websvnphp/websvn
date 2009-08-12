@@ -29,11 +29,7 @@ require_once('include/template.php');
 require_once('include/bugtraq.php');
 
 // Make sure that we have a repository
-if (!isset($rep)) {
-  echo $lang['NOREP'];
-  exit;
-}
-
+if ($rep) {
 $svnrep = new SVNRepository($rep);
 
 // Revision info to pass along chain
@@ -43,7 +39,6 @@ $passrev = $rev;
 $history = $svnrep->getLog($path, '', '', false, 2, $peg);
 if (is_string($history)) {
   $vars['error'] = $history;
-  $listing = array();
 } else {
 if (!empty($history->entries[0])) {
   $youngest = $history->entries[0]->rev;
@@ -88,8 +83,6 @@ if ($path == '' || $path{0} != '/') {
 } else {
   $ppath = $path;
 }
-
-$vars['repname'] = $rep->getDisplayName();
 
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
   $vars['goyoungestlink'] = '<a href="'.$config->getURL($rep, $path, 'revision').'">'.$lang['GOYOUNGEST'].'</a>';
@@ -180,8 +173,14 @@ if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
+}
+
+if (isset($vars['error'])) {
+  $listing = array();
+}
 
 $vars["template"] = "revision";
-parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."revision.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
+$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+parseTemplate($template."header.tmpl", $vars, $listing);
+parseTemplate($template."revision.tmpl", $vars, $listing);
+parseTemplate($template."footer.tmpl", $vars, $listing);

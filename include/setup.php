@@ -407,11 +407,13 @@ if (!$config->multiViews) {
     $reps = $config->getRepositories();
     $rep = (isset($reps[0]) ? $reps[0] : null);
   }
-
+  
   // Make sure that the user has set up a repository
   if ($rep == null) {
-    echo $lang['SUPPLYREP'];
-    exit;
+    $vars['error'] = $lang['SUPPLYREP'];
+  } else if (is_string($rep)) {
+    $vars['error'] = $rep;
+    $rep = null;
   }
 }
 
@@ -444,9 +446,15 @@ function createProjectSelectionForm() {
 
   $reps = $config->getRepositories();
   $vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">';
+  if ($rep) {
+    $currentProjectName = $rep->getDisplayName();
+  } else {
+    $currentProjectName = "";
+    $vars['projects_select'] .= '<option value="" selected="selected"></option>';
+  }
   foreach ($reps as $project) {
     if ($project->hasReadAccess('/', true)) {
-      if ($rep->getDisplayName() == $project->getDisplayName()) {
+      if ($project->getDisplayName() == $currentProjectName) {
         $sel = '" selected="selected';
       } else {
         $sel = '';
@@ -464,6 +472,8 @@ function createProjectSelectionForm() {
 function createRevisionSelectionForm() {
   global $config, $vars, $rep, $lang, $showchanged, $rev;
 
+  if ($rep == null)
+    return;
   if ($rev == 0) {
     $thisrev = "HEAD";
   } else {
@@ -489,9 +499,10 @@ if (!$config->multiViews) {
   createRevisionSelectionForm();
 }
 
-if (!$config->multiViews && $rep) {
-  $vars['allowdownload'] = $rep->getAllowDownload();
-  $vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+if (!$config->multiViews) {
+  $vars['allowdownload'] = ($rep && $rep->getAllowDownload());
+  $displayName = ($rep) ? $rep->getDisplayName() : $repname;
+  $vars['repname'] = htmlentities($displayName, ENT_QUOTES, 'UTF-8');
 }
 
 // As of version 1.70 the output encoding is forced to be UTF-8, since this is the output

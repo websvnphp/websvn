@@ -35,21 +35,13 @@ $all = (@$_REQUEST["all"] == 1);
 $ignoreWhitespace = (@$_REQUEST["ignorews"] == 1);
 
 // Make sure that we have a repository
-if (!isset($rep)) {
-  echo $lang["NOREP"];
-  exit;
-}
-
+if ($rep) {
 $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', true, 2, $peg);
 if (is_string($history)) {
   $vars['error'] = $history;
-  $vars['curdirlinks'] = '';
-  $vars['rev1'] = '?';
-  $vars['rev2'] = '?';
-  $listing = array();
 } else {
 $youngest = $history->entries[0]->rev;
 
@@ -71,7 +63,6 @@ if ($path{0} != '/') {
 
 $prevrev = @$history->entries[1]->rev;
 
-$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars['prevrev'] = $prevrev;
 $vars['rev'] = $history->entries[0]->rev;
@@ -158,8 +149,14 @@ $vars["repurl"] = $config->getURL($rep, "", "dir");
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];
 }
+}
+
+if (isset($vars['error'])) {
+  $listing = array();
+}
 
 $vars['template'] = 'diff';
-parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'diff.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
+$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+parseTemplate($template.'header.tmpl', $vars, $listing);
+parseTemplate($template.'diff.tmpl', $vars, $listing);
+parseTemplate($template.'footer.tmpl', $vars, $listing);

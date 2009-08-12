@@ -47,6 +47,8 @@ function checkRevision($rev) {
   return "HEAD";
 }
 
+// Make sure that we have a repository
+if ($rep) {
 $svnrep = new SVNRepository($rep);
 
 // Retrieve the request information
@@ -130,8 +132,6 @@ $history = $svnrep->getLog($path, $rev, $rev, false, 1);
 
 if (is_string($history)) {
   $vars['error'] = $history;
-  $vars['rev1'] =  $vars['rev2'] = '?';
-  $listing = array();
 } else {
 $logEntry = $history->curEntry;
 $vars['rev'] = $logEntry->rev;
@@ -402,8 +402,14 @@ if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedRe
   $vars["error"] = $lang['NOACCESS'];
 }
 }
+}
+
+if (isset($vars['error'])) {
+  $listing = array();
+}
 
 $vars["template"] = "compare";
-parseTemplate($rep->getTemplatePath()."header.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."compare.tmpl", $vars, $listing);
-parseTemplate($rep->getTemplatePath()."footer.tmpl", $vars, $listing);
+$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+parseTemplate($template."header.tmpl", $vars, $listing);
+parseTemplate($template."compare.tmpl", $vars, $listing);
+parseTemplate($template."footer.tmpl", $vars, $listing);
