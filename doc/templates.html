@@ -174,7 +174,7 @@ access your template files in all cases.</p>
 <dt>lang_submit</dt><dd>HTML &lt;input> specification for the language selection GO button</dd>
 <dt>lang_endform</dt><dd>HTML &lt;/form> specification for the language selection box</dd>
 
-<dt>noaccess</dt><dd>True if the user should be blocked from accessing this page due to insufficient access rights.</dd>
+<dt>error</dt><dd>A string representing an error condition, or empty if there is non. This subsumes the previous "noaccess" variable; in that case, the text of the variable is [lang:NOACCESS].</dd>
 </dl>
 
 <h2><a name="varsindex"></a>Variables defined for index.tmpl</h2>
@@ -208,8 +208,7 @@ access your template files in all cases.</p>
 <h2><a name="varsdir"></a>Variables defined for directory.tmpl</h2>
 
 <dl>
-<dt>restricted</dt><dd>True if the users has restricted access to this directory (to
-             allow access to a readable directory lower down only)</dd>
+<dt>restricted</dt><dd>True if the users has restricted access to this directory (to allow access to a readable directory lower down only)</dd>
 <dt>repname</dt><dd>Name of the repository</dd>
 <dt>path</dt><dd>Path of item being logged</dd>
 
