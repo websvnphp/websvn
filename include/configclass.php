@@ -722,8 +722,10 @@ class WebSvnConfig {
       }
     }
 
-    print "ERROR: Unable to find repository '".htmlentities($name, ENT_QUOTES, 'UTF-8')."'";
-    exit;
+    // Hack to return a string by reference; value retrieved at setup.php:414
+    $str = "ERROR: Unable to find repository '".htmlentities($name, ENT_QUOTES, 'UTF-8')."'.";
+    $error =& $str;
+    return $error;
   }
 
   // }}}

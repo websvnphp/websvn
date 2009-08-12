@@ -28,11 +28,7 @@ require_once('include/utils.php');
 require_once('include/template.php');
 
 // Make sure that we have a repository
-if (!isset($rep)) {
-  echo $lang['NOREP'];
-  exit;
-}
-
+if ($rep) {
 $svnrep = new SVNRepository($rep);
 
 if ($path{0} != '/') {
@@ -124,7 +120,6 @@ if ($rev != $youngest) {
 }
 
 $vars['action'] = '';
-$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
@@ -170,14 +165,16 @@ if ($mimeType) {
 }
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
-$listing = array();
-// $listing is populated with file data when file.tmpl calls [websvn-getlisting]
-
 if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
+}
+
+$listing = array();
+// $listing is populated with file data when file.tmpl calls [websvn-getlisting]
 
 $vars['template'] = 'file';
-parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'file.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
+$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+parseTemplate($template.'header.tmpl', $vars, $listing);
+parseTemplate($template.'file.tmpl', $vars, $listing);
+parseTemplate($template.'footer.tmpl', $vars, $listing);

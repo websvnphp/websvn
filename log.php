@@ -77,11 +77,7 @@ if ($dosearch)
 $maxperpage = 20;
 
 // Make sure that we have a repository
-if (!isset($rep)) {
-  echo $lang['NOREP'];
-  exit;
-}
-
+if ($rep) {
 $svnrep = new SVNRepository($rep);
 
 $passrev = $rev;
@@ -103,8 +99,6 @@ if (empty($endrev)) {
 $history = $svnrep->getLog($path, $startrev, $endrev, false, 2, $peg);
 if (is_string($history)) {
   $vars['error'] = $history;
-
-  $listing = array();
 } else {
 $youngest = isset($history->entries[0]) ? $history->entries[0]->rev : 0;
 
@@ -119,7 +113,6 @@ if ($path == '' || $path{0} != '/') {
 }
 
 $vars['action'] = $lang['LOG'];
-$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
@@ -383,8 +376,14 @@ $vars['repurl'] = $config->getURL($rep, '', 'dir');
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];
 }
+}
+
+if (isset($vars['error'])) {
+  $listing = array();
+}
 
 $vars['template'] = 'log';
-parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'log.tmpl',    $vars, $listing);
-parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
+$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+parseTemplate($template.'header.tmpl', $vars, $listing);
+parseTemplate($template.'log.tmpl',    $vars, $listing);
+parseTemplate($template.'footer.tmpl', $vars, $listing);
