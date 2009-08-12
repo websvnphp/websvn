@@ -1028,6 +1028,9 @@ class SVNRepository {
     proc_close($resource);
 
     if (!empty($error)) {
+      if (strstr($error, 'found format')) {
+        return 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read.';
+      }
       return '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
     }
 

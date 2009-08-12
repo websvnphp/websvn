@@ -1,21 +1,24 @@
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
   <tr>
-    <td align="left" rowspan="2"><h1>[websvn:repname] - [lang:REV] [websvn:rev]</h1></td>
+    [websvn-test:rev]
+    <td align="left"><h1>[websvn:repname] - [lang:REV] [websvn:rev]</h1></td>
+    [websvn-else]
+    <td align="left"><h1>[websvn:repname]</h1></td>
+    [websvn-endtest]
     <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
-  </tr>
-  <tr>
-    <td align="right"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</td>
   </tr>
 </table>
 
+[websvn-test:error]
+   <div id="error">[websvn:error]</div>
+[websvn-else]
+   <div style="float: right;"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
 [websvn:curdirlinks]<p>
 [websvn-test:goyoungestlink]
-[websvn:goyoungestlink]<p>
+   [websvn:goyoungestlink]<p>
 [websvn-endtest]
+   <div style="clear: right;"/>
 <hr>
-[websvn-test:noaccess]
-   [lang:NOACCESS]
-[websvn-else]
    [websvn:logsearch_form]
      <p style="text-align: center;">
       <b>[lang:FILTER]</b>

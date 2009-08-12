@@ -102,9 +102,10 @@ if (empty($endrev)) {
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, $startrev, $endrev, false, 2, $peg);
 if (is_string($history)) {
-  echo $history;
-  exit;
-}
+  $vars['error'] = $history;
+
+  $listing = array();
+} else {
 $youngest = isset($history->entries[0]) ? $history->entries[0]->rev : 0;
 
 if (empty($rev)) {
@@ -137,7 +138,6 @@ if (empty($peg))
   $peg = $rev;
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$isDir) {
   $url = $config->getURL($rep, $path, 'file').'rev='.$rev;
@@ -377,9 +377,11 @@ $vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'"
 $vars['compare_endform'] = '</form>';
 
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
+}
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, false)) {
-  $vars['noaccess'] = true;
+  $vars['error'] = $lang['NOACCESS'];
 }
 
 $vars['template'] = 'log';

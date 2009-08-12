@@ -211,10 +211,9 @@ if ($peg)
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, $passrev, '', false, 2, $peg);
 if (is_string($history)) {
-  echo $history;
-  exit;
-}
-
+  $vars['error'] = $history;
+  $listing = array();
+} else {
 if (!empty($history->entries[0])) {
   $youngest = $history->entries[0]->rev;
 } else {
@@ -294,7 +293,6 @@ $logurl = $config->getURL($rep, $path, 'log');
 $vars['logurl'] = $logurl.$passRevString.'isdir=1';
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if ($rep->getHideRss()) {
   $vars['rssurl'] = $config->getURL($rep, $path, 'rss').'isdir=1';
@@ -319,13 +317,13 @@ $vars['showlastmod'] = $config->showLastMod;
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
 $listing = showTreeDir($svnrep, $path, $rev, array());
+}
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, true)) {
-  $vars['noaccess'] = true;
+  $vars['error'] = $lang['NOACCESS'];
 }
-if (!$rep->hasReadAccess($path, false)) {
-  $vars['restricted'] = true;
-}
+$vars['restricted'] = !$rep->hasReadAccess($path, false);
 
 $vars['template'] = 'directory';
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);

@@ -208,3 +208,10 @@ div.warning
 .logpagelinks > * {
 	padding: 0 3px;
 }
+
+div#error {
+	text-align: center;
+	font-size: 110%;
+	color: #b00;
+	margin: 10px 0 30px;
+}

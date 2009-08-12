@@ -5,35 +5,35 @@
   </tr>
 </table>
 
-[websvn:curdirlinks] - [lang:BLAMEFOR] <b>[websvn:rev]</b>
-<p>&nbsp;</p>
-
-[websvn-test:noaccess]
-	[lang:NOACCESS]
+[websvn-test:error]
+	<div id="error">[websvn:error]</div>
 [websvn-else]
   [websvn-test:warning]
   <div class="warning">[websvn:warning]</div>
   [websvn-else]
-  <table cellpadding="2" cellspacing="0" width="100%" class="blameTbl">
-    <thead>
-      <tr>
-        <th class="HdrClmn"><b>[lang:REV]</b></th>
-        <th class="HdrClmn"><b>[lang:AUTHOR]</b></th>
-        <th class="HdrClmn"><b>[lang:LINENO]</b></th>
-        <th class="HdrClmnEnd"><b>[lang:LINE]</b></th>
-      </tr>
-    </thead>
-    <tbody>
-      [websvn-startlisting]
-      <tr class="[websvn:row_class]">
-        <th>[websvn:revision]</th>
-        <th>[websvn:author]</th>
-        <th><a name="l[websvn:lineno]">[websvn:lineno]</a></th>
-        <td>[websvn:line]</td>
-      </tr>
-      [websvn-endlisting]
-    </tbody>
-  </table> 
-  [websvn:javascript]
+    [websvn:curdirlinks] - [lang:BLAMEFOR] <b>[websvn:rev]</b>
+    <p>&nbsp;</p>
+  
+    <table cellpadding="2" cellspacing="0" width="100%" class="blameTbl">
+      <thead>
+        <tr>
+          <th class="HdrClmn"><b>[lang:REV]</b></th>
+          <th class="HdrClmn"><b>[lang:AUTHOR]</b></th>
+          <th class="HdrClmn"><b>[lang:LINENO]</b></th>
+          <th class="HdrClmnEnd"><b>[lang:LINE]</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        [websvn-startlisting]
+        <tr class="[websvn:row_class]">
+          <th>[websvn:revision]</th>
+          <th>[websvn:author]</th>
+          <th><a name="l[websvn:lineno]">[websvn:lineno]</a></th>
+          <td>[websvn:line]</td>
+        </tr>
+        [websvn-endlisting]
+      </tbody>
+    </table> 
+    [websvn:javascript]
   [websvn-endtest]
 [websvn-endtest]
