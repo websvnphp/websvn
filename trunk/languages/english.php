@@ -31,11 +31,11 @@ $lang["LANGUAGENAMEHTML"] = "English";
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 
-$lang["NOREP"] = "No repository given";
-$lang["NOPATH"] = "Path not found";
-$lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
-$lang["RESTRICTED"] = "Restricted access";
-$lang["SUPPLYREP"] = "Please set up a repository in include/config.php using \$config->parentPath or \$config->addRepository<p>See the installation guide for more details";
+$lang["NOREP"] = "No repository given.";
+$lang["NOPATH"] = "Path not found.";
+$lang["NOACCESS"] = "You do not have the necessary permissions to view this content.";
+$lang["RESTRICTED"] = "Restricted access.";
+$lang["SUPPLYREP"] = "Please set up a repository in include/config.php using <code>\$config->parentPath</code> or <code>\$config->addRepository</code>. See the installation guide for more details.";
 
 $lang["DIFFREVS"] = "Diff between revs";
 $lang["AND"] = "and";

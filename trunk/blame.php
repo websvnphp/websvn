@@ -30,14 +30,14 @@ require_once'include/template.php';
 
 $vars['action'] = $lang['BLAME'];
 
+// Make sure that we have a repository
+if ($rep) {
 $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false, 2, $peg);
 if (is_string($history)) {
   $vars['error'] = $history;
-
-  $listing = array();
 } else {
 $youngest = $history->entries[0]->rev;
 
@@ -57,7 +57,6 @@ if ($path{0} != '/') {
 $pos = strrpos($ppath, '/');
 $parent = substr($ppath, 0, $pos + 1);
 
-$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
@@ -188,8 +187,14 @@ $vars['repurl'] = $config->getURL($rep, '', 'dir');
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];
 }
-    
+}
+
+if (isset($vars['error'])) {
+  $listing = array();
+}
+
 $vars['template'] = 'blame';
-parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'blame.tmpl', $vars, $listing);
-parseTemplate($rep->getTemplatePath().'footer.tmpl', $vars, $listing);
+$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+parseTemplate($template.'header.tmpl', $vars, $listing);
+parseTemplate($template.'blame.tmpl', $vars, $listing);
+parseTemplate($template.'footer.tmpl', $vars, $listing);
