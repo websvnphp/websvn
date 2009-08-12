@@ -783,3 +783,8 @@ div.warning {
 	padding: 5px;
 	margin: 0 auto;
 }
+
+div#error {
+	font-size: 140%;
+	color: #b00;
+}

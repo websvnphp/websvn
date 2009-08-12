@@ -42,10 +42,9 @@ $passrev = $rev;
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false, 2, $peg);
 if (is_string($history)) {
-  echo $history;
-  exit;
-}
-
+  $vars['error'] = $history;
+  $listing = array();
+} else {
 if (!empty($history->entries[0])) {
   $youngest = $history->entries[0]->rev;
 } else {
@@ -149,7 +148,6 @@ $logurl = $config->getURL($rep, $path, 'log');
 $vars['logurl'] = $logurl.'rev='.$passrev.'&amp;isdir=1';
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if ($rev != $headrev) {
   $history = $svnrep->getLog($ppath, $rev, '', false, 2, $peg);
@@ -174,8 +172,13 @@ if ($rep->getHideRss()) {
   $vars['rssurl'] = $url;
   $vars['rsslink'] = "<a href=\"${url}\">${lang["RSSFEED"]}</a>";
 }
+}
 
-$vars['noaccess'] = !$rep->hasReadAccess($path, true);
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
+
+if (!$rep->hasReadAccess($path, true)) {
+  $vars['error'] = $lang['NOACCESS'];
+}
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
 
 $vars["template"] = "revision";

@@ -46,9 +46,9 @@ $passrev = $rev;
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
 if (is_string($history)) {
-  echo $history;
-  exit;
-}
+  $vars['error'] = $history;
+
+} else {
 $youngest = isset($history->entries[0]) ? $history->entries[0]->rev: false;
 
 if (empty($rev)) {
@@ -138,7 +138,6 @@ if ($peg)
   $passRevString .= '&amp;peg='.$peg;
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $url = $config->getURL($rep, $path, 'blame').$passRevString;
 $vars['blamelink'] = '<a href="'.$url.'">'.$lang['BLAME'].'</a>';
@@ -168,13 +167,14 @@ if ($mimeType) {
   $url = $config->getURL($rep, $path, 'file').'usemime=1&amp;'.$passRevString;
   $vars['mimelink'] = '<a href="'.$url.'">View as '.$mimeType.'</a>';
 }
+}
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $listing = array();
-
 // $listing is populated with file data when file.tmpl calls [websvn-getlisting]
 
-if (!$rep->hasReadAccess($path, false)) {
-  $vars['noaccess'] = true;
+if (!$rep->hasReadAccess($path, true)) {
+  $vars['error'] = $lang['NOACCESS'];
 }
 
 $vars['template'] = 'file';

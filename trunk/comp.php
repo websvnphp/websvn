@@ -126,8 +126,14 @@ $vars['rev2'] = $rev2;
 
 // Set variables used for the later of the two revisions
 $rev = max($rev1, $rev2);
-$logEntry = $svnrep->getLog($path, $rev, $rev, false, 1)->curEntry;
+$history = $svnrep->getLog($path, $rev, $rev, false, 1);
 
+if (is_string($history)) {
+  $vars['error'] = $history;
+  $vars['rev1'] =  $vars['rev2'] = '?';
+  $listing = array();
+} else {
+$logEntry = $history->curEntry;
 $vars['rev'] = $logEntry->rev;
 $vars['date'] = $logEntry->date;
 $vars['author'] = $logEntry->author;
@@ -393,7 +399,8 @@ if (!$noinput) {
 }
 
 if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false)) {
-  $vars["noaccess"] = true;
+  $vars["error"] = $lang['NOACCESS'];
+}
 }
 
 $vars["template"] = "compare";

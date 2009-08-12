@@ -35,9 +35,10 @@ $svnrep = new SVNRepository($rep);
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false, 2, $peg);
 if (is_string($history)) {
-  echo $history;
-  exit;
-}
+  $vars['error'] = $history;
+
+  $listing = array();
+} else {
 $youngest = $history->entries[0]->rev;
 
 if (empty($rev)) {
@@ -75,7 +76,6 @@ if ($rev != $youngest) {
 }
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 $url = $config->getURL($rep, $path, 'file').$passRevString;
 $vars['filedetaillink'] = '<a href="'.$url.'">'.$lang['FILEDETAIL'].'</a>';
@@ -162,10 +162,6 @@ else {
   }
   @unlink($tfname);
   
-  if (!$rep->hasReadAccess($path, false)) {
-    $vars['noaccess'] = true;
-  }
-  
   // Build the necessary JavaScript as an array of lines, then join them with \n
   $javascript = array();
   $javascript[] = '<script type="text/javascript" src="'.$locwebsvnhttp.'/javascript/blame-popup.js"></script>';
@@ -186,7 +182,13 @@ else {
   $javascript[] = '</script>';
   $vars['javascript'] = implode("\n", $javascript);
 }
+}
+$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
+if (!$rep->hasReadAccess($path, false)) {
+  $vars['error'] = $lang['NOACCESS'];
+}
+    
 $vars['template'] = 'blame';
 parseTemplate($rep->getTemplatePath().'header.tmpl', $vars, $listing);
 parseTemplate($rep->getTemplatePath().'blame.tmpl', $vars, $listing);
