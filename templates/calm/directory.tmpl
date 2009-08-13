@@ -7,21 +7,24 @@
 <h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
 <div id="input">[websvn:revision_form]<div>[lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
 <p>
-[websvn-test:goyoungesturl]
-	<span class="goyoungest"><a href="[websvn:goyoungesturl]">[lang:GOYOUNGEST]</a></span> &#124;
+[websvn-test:goyoungestlink]
+	<span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
 [websvn-endtest]
-	<span class="changes"><a href="[websvn:changesurl]">[lang:CHANGES]</a></span> &#124;
-	<span class="log"><a href="[websvn:logurl]">[lang:VIEWLOG]</a></span> &#124;
+	<span class="changes">[websvn:changeslink]</span> &#124;
+[websvn-test:comparelink]
+	<span class="diff">[websvn:comparelink]</span> &#124;
+[websvn-endtest]
+	<span class="log">[websvn:loglink]</span> &#124;
 [websvn-test:downloadurl]
-	<span class="compress"><a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a></span> &#124;
+	<span class="compress"><a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a></span> &#124;
 [websvn-endtest]
-[websvn-test:rssurl]
-    <span class="feed"><a href="[websvn:rssurl]">[lang:RSSFEED]</a></span>
+[websvn-test:rsslink]
+    <span class="feed">[websvn:rsslink]</span>
 [websvn-endtest]
 </p>
 
 [websvn-test:warning]
-<div class="warning">[websvn:warning]</div>
+<div id="warning">[websvn:warning]</div>
 [websvn-else]
 <div id="info">
 <h2>[lang:LASTMOD]</h2>
@@ -100,7 +103,7 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
          [websvn-test:allowdownload]
          <td class="compress">
            [websvn-test:downloadurl]
-             <a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a>
+             <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a>
            [websvn-endtest]
            [websvn-test:downloadplainurl]
              <a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a>
