@@ -205,15 +205,8 @@ if ($peg)
   $passRevString .= 'peg='.$peg.'&amp;';
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $passrev, '', false, 2, $peg);
-if (is_string($history)) {
-  $vars['error'] = $history;
-} else {
-if (!empty($history->entries[0])) {
-  $youngest = $history->entries[0]->rev;
-} else {
-  $youngest = -1;
-}
+$history = $svnrep->getLog($path, '', '', false, 2, $peg);
+$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
 // Unless otherwise specified, we get the log details of the latest change
 if (empty($rev)) {
@@ -223,22 +216,12 @@ if (empty($rev)) {
 }
 
 if ($logrev != $youngest) {
-  $logEntry = $svnrep->getLog($path, $logrev, $logrev, false);
-  if (is_string($logEntry)) {
-    echo $logEntry;
-    exit;
-  }
-  $logEntry = isset($logEntry->entries[0]) ? $logEntry->entries[0] : false;
-} else {
-  $logEntry = isset($history->entries[0]) ? $history->entries[0] : false;
+  $history = $svnrep->getLog($path, $logrev, $logrev, false);
 }
+$logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : false;
 
 $headlog = $svnrep->getLog('/', '', '', true, 1);
-if (is_string($headlog)) {
-  echo $headlog;
-  exit;
-}
-$headrev = isset($headlog->entries[0]) ? $headlog->entries[0]->rev : 0;
+$headrev = ($headlog && isset($headlog->entries[0])) ? $headlog->entries[0]->rev : 0;
 
 // If we're not looking at a specific revision, get the HEAD revision number
 // (the revision of the rest of the tree display)
@@ -255,8 +238,6 @@ if ($path == '' || $path{0} != '/') {
 
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
   $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir');
-} else {
-  $vars['goyoungesturl'] = '';
 }
 
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
@@ -292,7 +273,6 @@ if ($rep->getHideRss()) {
 }
 
 // Set up the tarball link
-
 $subs = explode('/', $path);
 $level = count($subs) - 2;
 if ($rep->isDownloadAllowed($path)) {
@@ -317,7 +297,6 @@ if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
-}
 
 if (isset($vars['error'])) {
   $listing = array();

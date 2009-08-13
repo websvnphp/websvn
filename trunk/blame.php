@@ -34,12 +34,11 @@ $vars['action'] = $lang['BLAME'];
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
+$listing = array();
+
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false, 2, $peg);
-if (is_string($history)) {
-  $vars['error'] = $history;
-} else {
-$youngest = $history->entries[0]->rev;
+$youngest = ($history) ? $history->entries[0]->rev : 0;
 
 if (empty($rev)) {
   $rev = $youngest;
@@ -60,9 +59,11 @@ $parent = substr($ppath, 0, $pos + 1);
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-$vars['log'] = $history->entries[0]->msg;
-$vars['date'] = $history->entries[0]->date;
-$vars['author'] = $history->entries[0]->author;
+if ($history) {
+  $vars['log'] = $history->entries[0]->msg;
+  $vars['date'] = $history->entries[0]->date;
+  $vars['author'] = $history->entries[0]->author;
+}
 
 createDirLinks($rep, $ppath, $rev, $peg);
 $passRevString = ($rev) ? 'rev='.$rev : '';
@@ -82,7 +83,7 @@ $vars['filedetaillink'] = '<a href="'.$url.'">'.$lang['FILEDETAIL'].'</a>';
 $url = $config->getURL($rep, $path, 'log').$passRevString;
 $vars['loglink'] = '<a href="'.$url.'">'.$lang['VIEWLOG'].'</a>';
 
-if (sizeof($history->entries) > 1) {
+if ($history == null || sizeof($history->entries) > 1) {
   $url = $config->getURL($rep, $path, 'diff').$passRevString;
   $vars['difflink'] = '<a href="'.$url.'">'.$lang['DIFFPREV'].'</a>';
 }
@@ -171,10 +172,12 @@ else {
   ksort($seen_rev); // Sort revisions in descending order by key
   if (empty($peg))
     $peg = $rev;
-  foreach ($seen_rev as $key => $val) {
-    $history = $svnrep->getLog($path, $key, $key, false, 1, $peg);
-    if (!is_string($history)) {
-      $javascript[] = 'rev['.$key.'] = \'<div class="date">'.$history->curEntry->date.'</div><div class="msg">'.addslashes(preg_replace('/\n/', ' ', $history->curEntry->msg)).'</div>\';';
+  if (!isset($vars['warning'])) {
+    foreach ($seen_rev as $key => $val) {
+      $history = $svnrep->getLog($path, $key, $key, false, 1, $peg);
+      if ($history) {
+        $javascript[] = 'rev['.$key.'] = \'<div class="date">'.$history->curEntry->date.'</div><div class="msg">'.addslashes(preg_replace('/\n/', ' ', $history->curEntry->msg)).'</div>\';';
+      }
     }
   }
   $javascript[] = '/* ]]> */';
@@ -186,11 +189,6 @@ $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];
-}
-}
-
-if (isset($vars['error'])) {
-  $listing = array();
 }
 
 $vars['template'] = 'blame';

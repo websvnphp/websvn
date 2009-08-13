@@ -573,7 +573,6 @@ class SVNRepository {
     $highlighted = true;
     if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
       $this->applyGeshi($path, $tempname, $rev, $geshiLang);
-
     } else if ($config->useEnscript) {
       // Get the files, feed it through enscript, then remove the enscript headers using sed
       //
@@ -586,28 +585,28 @@ class SVNRepository {
         $config->enscript." --language=html ".
         ($l ? "--color --pretty-print=$l" : "")." -o - | ".
         $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $tempname";
-      $retcode = 0;
-      execCommand($cmd, $retcode);
-      if ($retcode != 0) {
-        print'Unable to call svn command "'.$config->svn.'"';
-        if ($tempname != $filename) {
-          @unlink($tempname);
-        }
-        exit(0);
-      }
-
     } else {
       $highlighted = false;
       $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->getSvnpath($path)));
       $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path.'@'.$rev).' > '.quote($filename);
-      $retcode = 0;
-      execCommand($cmd, $retcode);
-      if ($retcode != 0) {
-        print'Unable to call svn command "'.$config->svn.'"';
-        if ($tempname != $filename) {
-          @unlink($tempname);
-        }
-        exit(0);
+    }
+    if (isset($cmd)) {
+      $descriptorspec = array(2 => array('pipe', 'w')); // stderr
+      $resource = proc_open($cmd, $descriptorspec, $pipes);
+      $error = '';
+      while (!feof($pipes[2])) {
+        $error .= fgets($pipes[2]);
+      }
+      $error = trim($error);
+      fclose($pipes[2]);
+      proc_close($resource);
+      
+      if (!empty($error)) {
+        $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+        error_log($lang['BADCMD'].': '.$cmd);
+        error_log($error);
+        global $vars;
+        $vars['warning'] = "Unable to cat file: ".$error.'.';
       }
     }
 
@@ -684,11 +683,24 @@ class SVNRepository {
     // Output the file to the filename
     $path = encodepath($this->getSvnpath($path));
     $cmd = $config->svn." cat -r $rev ".$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename);
-    $retcode = 0;
-    execCommand($cmd, $retcode);
-    if ($retcode != 0) {
-      print'Unable to call svn command "'.$config->svn.'"';
-      exit(0);
+    
+    $descriptorspec = array(2 => array('pipe', 'w')); // stderr
+    $resource = proc_open($cmd, $descriptorspec, $pipes);
+    $error = '';
+    while (!feof($pipes[2])) {
+      $error .= fgets($pipes[2]);
+    }
+    $error = trim($error);
+    fclose($pipes[2]);
+    proc_close($resource);
+    
+    if (!empty($error)) {
+      $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+      error_log($lang['BADCMD'].': '.$cmd);
+      error_log($error);
+      global $vars;
+      $vars['warning'] = "Unable to cat file: ".$error.'.';
+      return;
     }
 
     $source = file_get_contents($filename);
@@ -781,11 +793,22 @@ class SVNRepository {
     $path = encodepath($this->getSvnpath($path));
     $cmd = $config->svn." blame ".$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename);
 
-    $retcode = 0;
-    execCommand($cmd, $retcode);
-    if ($retcode != 0) {
-      print'Unable to call svn command "'.$config->svn.'"';
-      exit(0);
+    $descriptorspec = array(2 => array('pipe', 'w')); // stderr
+    $resource = proc_open($cmd, $descriptorspec, $pipes);
+    $error = '';
+    while (!feof($pipes[2])) {
+      $error .= fgets($pipes[2]);
+    }
+    $error = trim($error);
+    fclose($pipes[2]);
+    proc_close($resource);
+    
+    if (!empty($error)) {
+      $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+      error_log($lang['BADCMD'].': '.$cmd);
+      error_log($error);
+      global $vars;
+      $vars['warning'] = "No blame info: ".$error.'.';
     }
   }
 
@@ -834,7 +857,8 @@ class SVNRepository {
     $retcode = 0;
     execCommand($cmd, $retcode);
     if ($retcode != 0) {
-      error_log('Unable to call svn command "'.$cmd.'"');
+      global $lang;
+      error_log($lang['BADCMD'].': '.$cmd);
     }
     return $retcode;
   }
@@ -867,11 +891,8 @@ class SVNRepository {
 
     if ($rev == 0) {
       $headlog = $this->getLog("/", "", "", true, 1);
-      if (is_string($headlog)) {
-        echo $headlog;
-        exit;
-      }
-      if (isset($headlog->entries[0])) $rev = $headlog->entries[0]->rev;
+      if ($headlog && isset($headlog->entries[0]))
+        $rev = $headlog->entries[0]->rev;
     }
 
     $cmd = quoteCommand($config->svn.' list --xml '.$this->repConfig->svnParams().quote($path.'@'.$rev));
@@ -881,7 +902,7 @@ class SVNRepository {
     $resource = proc_open($cmd, $descriptorspec, $pipes);
 
     if (!is_resource($resource)) {
-      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+      echo $lang['BADCMD'].": <code>".$cmd."</code>";
       exit;
     }
 
@@ -911,7 +932,6 @@ class SVNRepository {
     while (!feof($pipes[2])) {
       $error .= fgets($pipes[2]);
     }
-
     $error = toOutputEncoding(trim($error));
 
     fclose($pipes[0]);
@@ -919,17 +939,24 @@ class SVNRepository {
     fclose($pipes[2]);
 
     proc_close($resource);
+    xml_parser_free($xml_parser);
 
     if (!empty($error)) {
-      echo '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
-      exit;
+      $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+      error_log($lang['BADCMD'].': '.$cmd);
+      error_log($error);
+      global $vars;
+      if (strstr($error, 'No such revision')) {
+        $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
+      }
+      else {
+        $vars['error'] = $lang['BADCMD'].':<br/><br/><code>'.$cmd.'</code><br/><br/>'.$error;
+      }
+      return null;
     }
-
-    xml_parser_free($xml_parser);
 
     // Sort the entries into alphabetical order
     usort($curList->entries, "_listSort");
-
     return $curList;
   }
 
@@ -988,7 +1015,7 @@ class SVNRepository {
     $resource = proc_open($cmd, $descriptorspec, $pipes);
 
     if (!is_resource($resource)) {
-      echo "<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+      echo $lang['BADCMD'].": <br/><br/><code>".$cmd."</code>";
       exit;
     }
 
@@ -1018,8 +1045,7 @@ class SVNRepository {
     while (!feof($pipes[2])) {
       $error .= fgets($pipes[2]);
     }
-
-    $error = toOutputEncoding(trim($error));
+    $error = trim($error);
 
     fclose($pipes[0]);
     fclose($pipes[1]);
@@ -1028,10 +1054,20 @@ class SVNRepository {
     proc_close($resource);
 
     if (!empty($error)) {
+      $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+      error_log($lang['BADCMD'].': '.$cmd);
+      error_log($error);
+      global $vars;
       if (strstr($error, 'found format')) {
-        return 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read.';
+        $vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read.';
       }
-      return '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
+      else if (strstr($error, 'No such revision')) {
+        $vars['warning'] = 'Revision '.$brev.' of this resource does not exist.';
+      }
+      else {
+        $vars['error'] = $lang['BADCMD'].':<br/><br/><code>'.$cmd.'</code><br/><br/>'.nl2br($error);
+      }
+      return null;
     }
 
     xml_parser_free($xml_parser);

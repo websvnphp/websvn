@@ -40,20 +40,13 @@ $svnrep = new SVNRepository($rep);
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', true, 2, $peg);
-if (is_string($history)) {
-  $vars['error'] = $history;
-} else {
-$youngest = $history->entries[0]->rev;
+$youngest = ($history) ? $history->entries[0]->rev : 0;
 
 if (empty($rev)) {
   $rev = $youngest;
 }
 
 $history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
-if (is_string($history)) {
-  echo $history;
-  exit;
-}
 
 if ($path{0} != '/') {
   $ppath = '/'.$path;
@@ -64,25 +57,24 @@ if ($path{0} != '/') {
 $prevrev = @$history->entries[1]->rev;
 
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
-$vars['prevrev'] = $prevrev;
-$vars['rev'] = $history->entries[0]->rev;
-
-$vars['rev1'] = $history->entries[0]->rev;
+$vars['rev1'] = $rev;
 $vars['rev2'] = $prevrev;
+$vars['prevrev'] = $prevrev;
 
-$vars['log'] = $history->entries[0]->msg;
-$vars['date'] = $history->entries[0]->date;
-$vars['author'] = $history->entries[0]->author;
+if ($history) {
+  $vars['log'] = $history->entries[0]->msg;
+  $vars['date'] = $history->entries[0]->date;
+  $vars['author'] = $history->entries[0]->author;
+  $vars['rev'] = $vars['rev1'] = $history->entries[0]->rev;
+}
 
 createDirLinks($rep, $ppath, $rev, $peg);
 
 $listing = array();
 
-$url = $config->getURL($rep, $path, "file");
+$url = $config->getURL($rep, $path, "diff");
 if ($rev != $youngest) {
   $vars["goyoungestlink"] = "<a href=\"${url}\">${lang["GOYOUNGEST"]}</a>";
-} else {
-  $vars["goyoungestlink"] = "";
 }
 
 $vars["indexurl"] = $config->getURL($rep, "", "index");
@@ -99,6 +91,12 @@ $vars["difflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
 $url = $config->getURL($rep, $path, "blame");
 $vars["blamelink"] = "<a href=\"${url}rev=$rev\">${lang["BLAME"]}</a>";
 
+if ($rep->getHideRss()) {
+  $url = $config->getURL($rep, $path, 'rss');
+  $vars['rssurl'] = $url;
+  $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
+}
+  
 // Check for binary file type before diffing.
 $svnMimeType = $svnrep->getProperty($path, "svn:mime-type", $rev);
 
@@ -148,7 +146,6 @@ $vars["repurl"] = $config->getURL($rep, "", "dir");
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];
-}
 }
 
 if (isset($vars['error'])) {
