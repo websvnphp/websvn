@@ -32,19 +32,11 @@ function checkRevision($rev) {
   if (is_numeric($rev) && ((int)$rev > 0)) {
     return $rev;
   }
-
   $rev = strtoupper($rev);
-
-  switch($rev) {
-    case "HEAD":
-      // fall through
-    case "PREV":
-      // fall through
-    case "COMMITTED":
-      return $rev;
-  }
-
-  return "HEAD";
+  if ($rev == "HEAD" || $rev == "PREV" || $rev == "COMMITTED")
+    return $rev;
+  else
+    return "HEAD";
 }
 
 // Make sure that we have a repository
@@ -126,18 +118,19 @@ $vars['safepath2'] = htmlentities($path2, ENT_QUOTES, 'UTF-8');
 $vars['rev1'] = $rev1;
 $vars['rev2'] = $rev2;
 
-// Set variables used for the later of the two revisions
+// Set variables used for the more recent of the two revisions
 $rev = max($rev1, $rev2);
 $history = $svnrep->getLog($path, $rev, $rev, false, 1);
 
-if (is_string($history)) {
-  $vars['error'] = $history;
+if ($history) {
+  $logEntry = $history->curEntry;
+  $vars['rev'] = $logEntry->rev;
+  $vars['date'] = $logEntry->date;
+  $vars['author'] = $logEntry->author;
+  $vars['log'] = $logEntry->msg;
 } else {
-$logEntry = $history->curEntry;
-$vars['rev'] = $logEntry->rev;
-$vars['date'] = $logEntry->date;
-$vars['author'] = $logEntry->author;
-$vars['log'] = $logEntry->msg;
+  $vars['warning'] = 'Problem with comparison.';
+}
 
 $noinput = empty($path1) || empty($path2);
 $listing = array();
@@ -154,7 +147,8 @@ $debug = false;
 
 if (!$noinput) {
   $cmd = $config->svn." diff ".($ignoreWhitespace ? '-x -w ' : '').$rep->svnParams().quote($svnpath1."@".$rev1)." ".quote($svnpath2."@".$rev2);
-  if ($debug) echo "$cmd\n";
+  if ($debug)
+    echo "$cmd\n";
 }
 
 function clearVars() {
@@ -172,6 +166,7 @@ function clearVars() {
 $vars["success"] = false;
 
 if (!$noinput) {
+  // TODO: Report warning/error if comparison encounters any problems
   if ($diff = popenCommand($cmd, "r")) {
     $index = 0;
     $indiff = false;
@@ -400,7 +395,6 @@ if (!$noinput) {
 
 if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false)) {
   $vars["error"] = $lang['NOACCESS'];
-}
 }
 }
 

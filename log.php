@@ -88,23 +88,24 @@ if ($startrev != 'HEAD' && $startrev != 'BASE' && $startrev != 'PREV' && $startr
 if ($endrev != 'HEAD' && $endrev != 'BASE' && $endrev != 'PREV' && $endrev != 'COMMITTED') {
   $endrev = (int)$endrev;
 }
-if (empty($startrev)) {
-  $startrev = $rev;
-}
 if (empty($endrev)) {
   $endrev = 1;
 }
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, $startrev, $endrev, false, 2, $peg);
-if (is_string($history)) {
-  $vars['error'] = $history;
-} else {
-$youngest = isset($history->entries[0]) ? $history->entries[0]->rev : 0;
+$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
+
+if (empty($startrev)) {
+  $startrev = $rev;
+}
 
 if (empty($rev)) {
   $rev = $youngest;
+} else if ($rev > $youngest) {
+  $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
 }
+
 
 // make sure path is prefixed by a /
 $ppath = $path;
@@ -116,9 +117,13 @@ $vars['action'] = $lang['LOG'];
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-$vars['log'] = $history->entries[0]->msg;
-$vars['date'] = $history->entries[0]->date;
-$vars['author'] = $history->entries[0]->author;
+if ($history) {
+  $vars['log'] = $history->entries[0]->msg;
+  $vars['date'] = $history->entries[0]->date;
+  $vars['author'] = $history->entries[0]->author;
+} else {
+  $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
+}
 
 // TODO: If the rev is less than the head, get the path (may have been renamed!)
 // Will probably need to call `svn info`, parse XML output, and substring a path
@@ -132,7 +137,10 @@ if (empty($peg))
 
 $vars['indexurl'] = $config->getURL($rep, '', 'index');
 
-if (!$isDir) {
+if ($isDir) {
+  $url = $config->getURL($rep, $path, 'dir').'rev='.$passrev;
+  $vars['directorylink'] = '<a href="'.$url.'">'.$lang['LISTING'].'</a>';
+} else {
   $url = $config->getURL($rep, $path, 'file').'rev='.$rev;
   $vars['filedetaillink'] = '<a href="'.$url.'">'.$lang['FILEDETAIL'].'</a>';
 
@@ -141,23 +149,18 @@ if (!$isDir) {
 
   $url = $config->getURL($rep, $path, 'blame').'rev='.$passrev;
   $vars['blamelink'] = '<a href="'.$url.'">'.$lang['BLAME'].'</a>';
-} else {
-  $url = $config->getURL($rep, $path, 'dir');
-  $vars['directorylink'] = '<a href="'.$url.'">'.$lang['LISTING'].'</a>';
 }
 
 if ($rep->getHideRss()) {
   $url = $config->getURL($rep, $path, 'rss').($isDir?'&amp;isdir=1':'');
   $vars['rssurl'] = $url;
-  $vars['rsslink'] = '<a href="'.$url.'rev='.$passrev.'">'.$lang['RSSFEED'].'</a>';
+  $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
 }
 
 $logurl = $config->getURL($rep, $path, 'log');
 
 if ($rev != $youngest) {
-  $vars['goyoungestlink'] = '<a href="'.$logurl.'isdir='.$isDir.'">'.$lang['GOYOUNGEST'].'</a>';
-} else {
-  $vars['goyoungestlink'] = '';
+  $vars['goyoungestlink'] = '<a href="'.$logurl.($isDir?'&amp;isdir=1':'').'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
 // We get the bugtraq variable just once based on the HEAD
@@ -171,10 +174,6 @@ if ($max === false) {
 }
 
 $history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
-if (is_string($history)) {
-  echo $history;
-  exit;
-}
 $vars['logsearch_moreresultslink'] = '';
 $vars['pagelinks'] = '';
 $vars['showalllink'] = '';
@@ -206,11 +205,8 @@ if (!empty($history)) {
   $entries = array();
   if ($brev && $erev) {
     $history = $svnrep->getLog($path, $brev, $erev, false, 0, $peg);
-    if (is_string($history)) {
-      echo $history;
-      exit;
-    }
-    $entries = $history->entries;
+    if ($history)
+      $entries = $history->entries;
   }
 
   $row = 0;
@@ -370,7 +366,7 @@ $vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'"
 $vars['compare_endform'] = '</form>';
 
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
-}
+
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, false)) {

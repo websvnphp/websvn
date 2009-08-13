@@ -38,17 +38,16 @@ if ($path{0} != '/') {
 }
 
 $passrev = $rev;
+$useMime = false;
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
-if (is_string($history)) {
-  $vars['error'] = $history;
-
-} else {
-$youngest = isset($history->entries[0]) ? $history->entries[0]->rev: false;
+$history = $svnrep->getLog($path, '', '', false, 2, $peg);
+$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev: false;
 
 if (empty($rev)) {
   $rev = $youngest;
+} else if ($rev > $youngest) {
+  $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
 }
 
 $extn = strtolower(strrchr($path, '.'));
@@ -120,13 +119,13 @@ if ($rev != $youngest) {
 }
 
 $vars['action'] = '';
-$vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-$vars['log'] = $history->entries[0]->msg;
-$vars['date'] = $history->entries[0]->date;
-$vars['author'] = $history->entries[0]->author;
-
+if ($history) {
+  $vars['log'] = $history->entries[0]->msg;
+  $vars['date'] = $history->entries[0]->date;
+  $vars['author'] = $history->entries[0]->author;
+}
 createDirLinks($rep, $ppath, $passrev, $peg);
 $passRevString = ($passrev) ? 'rev='.$passrev : '';
 if ($peg)
@@ -140,7 +139,7 @@ $vars['blamelink'] = '<a href="'.$url.'">'.$lang['BLAME'].'</a>';
 $url = $config->getURL($rep, $path, 'log').$passRevString;
 $vars['loglink'] = '<a href="'.$url.'">'.$lang['VIEWLOG'].'</a>';
 
-if (sizeof($history->entries) > 1) {
+if ($history == null || sizeof($history->entries) > 1) {
   $url = $config->getURL($rep, $path, 'diff').$passRevString;
   $vars['difflink'] = '<a href="'.$url.'">'.$lang['DIFFPREV'].'</a>';
 }
@@ -158,17 +157,19 @@ if ($rep->getHideRss()) {
   
 $mimeType = $useMime; // Restore preserved value to use for 'mimelink' variable.
 // If there was a MIME type, create a link to display file with that type.
-if ($mimeType) {
+if ($mimeType && !isset($vars['warning'])) {
   $url = $config->getURL($rep, $path, 'file').'usemime=1&amp;'.$passRevString;
   $vars['mimelink'] = '<a href="'.$url.'">View as '.$mimeType.'</a>';
 }
+
 }
+$vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
-}
+
 
 $listing = array();
 // $listing is populated with file data when file.tmpl calls [websvn-getlisting]
