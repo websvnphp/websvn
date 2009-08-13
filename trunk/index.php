@@ -43,7 +43,6 @@ if (count($projects) == 1 && $projects[0]->hasReadAccess('/', true)) {
 $i = 0;
 $parity = 0; // Alternates between every entry, whether it is a group or project
 $groupparity = 0; // The first project (and first of any group) resets this to 0
-$listing = array();
 $curgroup = NULL;
 $groupcount = 0;
 // Create listing of all configured projects (includes groups if they are used).

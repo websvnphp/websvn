@@ -34,8 +34,6 @@ $vars['action'] = $lang['BLAME'];
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
-$listing = array();
-
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false, 2, $peg);
 $youngest = ($history) ? $history->entries[0]->rev : 0;
@@ -93,8 +91,6 @@ if ($rep->getHideRss()) {
   $vars['rssurl'] = $url;
   $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
 }
-
-$listing = array();
 
 // Check for binary file type before grabbing blame information.
 $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev, $peg);
@@ -184,11 +180,11 @@ else {
   $javascript[] = '</script>';
   $vars['javascript'] = implode("\n", $javascript);
 }
-}
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];
+}
 }
 
 $vars['template'] = 'blame';

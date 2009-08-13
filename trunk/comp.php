@@ -133,7 +133,6 @@ if ($history) {
 }
 
 $noinput = empty($path1) || empty($path2);
-$listing = array();
 
 // Generate the diff listing
 
@@ -396,10 +395,6 @@ if (!$noinput) {
 if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false)) {
   $vars["error"] = $lang['NOACCESS'];
 }
-}
-
-if (isset($vars['error'])) {
-  $listing = array();
 }
 
 $vars["template"] = "compare";

@@ -177,7 +177,6 @@ $history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
 $vars['logsearch_moreresultslink'] = '';
 $vars['pagelinks'] = '';
 $vars['showalllink'] = '';
-$listing = array();
 
 if (!empty($history)) {
   // Get the number of separate revisions
@@ -211,7 +210,6 @@ if (!empty($history)) {
 
   $row = 0;
   $index = 0;
-  $listing = array();
   $found = false;
   
   foreach ($entries as $revision) {
@@ -372,10 +370,6 @@ $vars['repurl'] = $config->getURL($rep, '', 'dir');
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];
 }
-}
-
-if (isset($vars['error'])) {
-  $listing = array();
 }
 
 $vars['template'] = 'log';
