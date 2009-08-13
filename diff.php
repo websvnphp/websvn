@@ -70,8 +70,6 @@ if ($history) {
 
 createDirLinks($rep, $ppath, $rev, $peg);
 
-$listing = array();
-
 $url = $config->getURL($rep, $path, "diff");
 if ($rev != $youngest) {
   $vars["goyoungestlink"] = "<a href=\"${url}\">${lang["GOYOUNGEST"]}</a>";
@@ -141,15 +139,11 @@ else {
   @unlink($oldtname);
   @unlink($newtname);
 }
-}
 $vars["repurl"] = $config->getURL($rep, "", "dir");
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];
 }
-
-if (isset($vars['error'])) {
-  $listing = array();
 }
 
 $vars['template'] = 'diff';

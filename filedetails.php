@@ -162,16 +162,14 @@ if ($mimeType && !isset($vars['warning'])) {
   $vars['mimelink'] = '<a href="'.$url.'">View as '.$mimeType.'</a>';
 }
 
-}
 $vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
+}
 
-
-$listing = array();
 // $listing is populated with file data when file.tmpl calls [websvn-getlisting]
 
 $vars['template'] = 'file';

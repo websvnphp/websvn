@@ -291,16 +291,12 @@ $vars['showlastmod'] = $config->showLastMod;
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
 $listing = showTreeDir($svnrep, $path, $rev, array());
-}
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
-
-if (isset($vars['error'])) {
-  $listing = array();
 }
 
 $vars['template'] = 'directory';
