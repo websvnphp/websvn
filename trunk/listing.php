@@ -217,7 +217,7 @@ if (empty($rev)) {
 }
 
 if ($logrev != $youngest) {
-  $history = $svnrep->getLog($path, $logrev, $logrev, false);
+  $history = $svnrep->getLog($path, $logrev, '', false, 2);
 }
 $logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : false;
 
@@ -239,6 +239,7 @@ if ($path == '' || $path{0} != '/') {
 
 if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
   $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir');
+  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
@@ -257,26 +258,31 @@ if ($passrev) {
   if ($peg && $path != '/')
     $revString .= '&amp;peg='.$peg;
 }
+
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
+
 $vars['changesurl'] = $config->getURL($rep, $path, 'revision').$revString;
+$vars['changeslink'] = '<a href="'.$vars['changesurl'].'">'.$lang['CHANGES'].'</a>';
+
 if ($history && sizeof($history->entries) > 1) {
   $vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
+  $vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
 createDirLinks($rep, $ppath, $passrev, $peg);
 
-$logurl = $config->getURL($rep, $path, 'log');
-$vars['logurl'] = $logurl.$passRevString.'isdir=1';
-
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'isdir=1';
+$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
 if ($rep->getHideRss()) {
   $vars['rssurl'] = $config->getURL($rep, $path, 'rss').'isdir=1';
+  $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
 // Set up the tarball link
 $subs = explode('/', $path);
 $level = count($subs) - 2;
-if ($rep->isDownloadAllowed($path)) {
+if ($rep->isDownloadAllowed($path) && !isset($vars['warning'])) {
   $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$passRevString.'isdir=1';
 }
 
