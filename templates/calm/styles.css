@@ -783,16 +783,21 @@ div.blame-popup .date {
 	padding: 0 3px;
 }
 
-div.warning {
+div#error, div#warning {
 	font-weight: bold;
-	border:  1px solid #d5ce00;
-	background-color: #ffffdc;
 	display: table;
 	padding: 5px;
 	margin: 0 auto;
+	border:  1px solid;
 }
 
 div#error {
-	font-size: 140%;
-	color: #b00;
+	border-color: #cb6565;
+	background-color: #ffe2e2;
 }
+
+div#warning {
+	border-color: #d5ce00;
+	background-color: #ffd;
+}
+

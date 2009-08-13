@@ -63,11 +63,15 @@ if ($path == '' || $path{0} != '/') {
   $ppath = $path;
 }
 
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
+
 if ($passrev != 0 && $passrev != $headrev && $youngest != 0) {
-  $vars['goyoungestlink'] = '<a href="'.$config->getURL($rep, $path, 'revision').'">'.$lang['GOYOUNGEST'].'</a>';
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
+  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
 $vars['listingurl'] = $config->getURL($rep, $path, 'dir').'rev='.$passrev;
+$vars['listinglink'] = '<a href="'.$vars['listingurl'].'">'.$lang['LISTING'].'</a>';
 
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
@@ -113,29 +117,21 @@ foreach ($changes as $file) {
 
 createDirLinks($rep, $ppath, $passrev, $peg);
 
-$logurl = $config->getURL($rep, $path, 'log');
-$vars['logurl'] = $logurl.'rev='.$passrev.'&amp;isdir=1';
-
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['logurl'] = $config->getURL($rep, $path, 'log').'rev='.$passrev.'&amp;isdir=1';
+$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
 if ($rev != $headrev) {
   $history = $svnrep->getLog($ppath, $rev, '', false, 2, $peg);
 }
 
 if ($history && isset($history->entries[1]->rev)) {
-  $compareurl = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
-  
-  $vars['compareurl'] = $compareurl;
-  $vars['curdircomplink'] = '<a href="'.$compareurl.'</a>';
-} else {
-  $vars['compareurl'] = '';
-  $vars['curdircomplink'] = '';
+  $vars['compareurl'] = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
+  $vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
 if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, 'rss');
-  $vars['rssurl'] = $url;
-  $vars['rsslink'] = "<a href=\"${url}\">${lang["RSSFEED"]}</a>";
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss');
+  $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
