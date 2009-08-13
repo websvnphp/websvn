@@ -10,6 +10,8 @@
 [websvn-else]
    <div style="float: right;"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
    <div style="clear: right;"/>
+  [websvn-test:warning]
+  [websvn-else]
    <table cellpadding="2" cellspacing="0" class="outline">
    <tr><th colspan=2 class="HdrClmnEnd">[lang:REVINFO]</th></tr>
    <tr><td class="CatClmn1" valign="top">[lang:CURDIR]:</td><td class="row1">[websvn:path]</td></tr>
@@ -24,6 +26,7 @@
       <tr><td class="CatClmn0" valign="top">[lang:LOGMSG]:</td><td class="row0">[websvn:log]</td></tr>
    [websvn-endtest]
    </table>
+  [websvn-endtest]
    
    [websvn-defineicons]
    dir=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[FOLDER]">
@@ -60,6 +63,9 @@
     - <a href="[websvn:rssurl]"><img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"></a>
    [websvn-endtest]
    <p>
+  [websvn-test:warning]
+  <div class="warning">[websvn:warning]</div>
+  [websvn-else]
    [websvn:compare_form]
       <table cellpadding="2" cellspacing="0" width="100%" class="outline">
          <tr>
@@ -126,4 +132,5 @@
    <p>
    [websvn:compare_submit][websvn:compare_endform]
    <hr>
+  [websvn-endtest]
 [websvn-endtest]
