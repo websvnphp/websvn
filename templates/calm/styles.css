@@ -497,6 +497,14 @@ td.blame a {
   background-repeat:no-repeat;
   background-position:3px 50%;
 }
+span.mime a,
+td.mime a {
+  padding-left:22px;
+  background-image:url(images/eye.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+
 li.compress a,
 span.compress a,
 tbody tr td.compress a:link,
