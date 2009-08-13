@@ -947,7 +947,10 @@ class SVNRepository {
       error_log($lang['BADCMD'].': '.$cmd);
       error_log($error);
       global $vars;
-      if (strstr($error, 'No such revision')) {
+      if (strstr($error, 'found format')) {
+        $vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read.';
+      }
+      else if (strstr($error, 'No such revision')) {
         $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
       }
       else {
