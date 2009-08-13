@@ -83,6 +83,7 @@ if (!$rep->isDownloadAllowed($path)) {
   exit;
 }
 
+if ($rep) {
 $svnrep = new SVNRepository($rep);
 
 // Fetch information about a revision (if unspecified, the latest) for this path
@@ -91,11 +92,7 @@ if (empty($rev)) {
 } else {
   $history = $svnrep->getLog($path, $rev, $rev - 1, true, 1, $peg);
 }
-if (is_string($history)) {
-  echo $history;
-  exit;
-}
-$logEntry = $history->entries[0];
+$logEntry = ($history) ? $history->entries[0] : null;
 
 if (empty($rev)) {
   $rev = $logEntry->rev;
@@ -266,6 +263,7 @@ else {
   else {
     header('HTTP/1.x 404 Not Found', true, 404);
     print 'Unable to open file '.$downloadArchive."\n";
+  }
   }
 
   chdir($oldcwd);

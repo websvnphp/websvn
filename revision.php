@@ -37,39 +37,18 @@ $passrev = $rev;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false, 2, $peg);
-if (is_string($history)) {
-  $vars['error'] = $history;
-} else {
-if (!empty($history->entries[0])) {
-  $youngest = $history->entries[0]->rev;
-} else {
-  $youngest = -1;
-}
+$youngest = ($history) ? $history->entries[0]->rev : 0;
 
 // Unless otherwise specified, we get the log details of the latest change
-if (empty($rev)) {
-  $logrev = $youngest;
-} else {
-  $logrev = $rev;
-}
+$logrev = (empty($rev)) ? $youngest : $rev;
 
 if ($logrev != $youngest) {
-  $logEntry = $svnrep->getLog($path, $logrev, $logrev, false, 2, $peg);
-  if (is_string($logEntry)) {
-    echo $logEntry;
-    exit;
-  }
-  $logEntry = $logEntry ? $logEntry->entries[0] : false;
-} else {
-  $logEntry = isset($history->entries[0]) ? $history->entries[0]: false;
+  $history = $svnrep->getLog($path, $logrev, $logrev, false, 2, $peg);
 }
+$logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : null;
 
 $headlog = $svnrep->getLog('/', '', '', true, 1, $peg);
-if (is_string($headlog)) {
-  echo $headlog;
-  exit;
-}
-$headrev = isset($headlog->entries[0]) ? $headlog->entries[0]->rev: 0;
+$headrev = ($headlog && isset($headlog->entries[0])) ? $headlog->entries[0]->rev : 0;
 
 // If we're not looking at a specific revision, get the HEAD revision number
 // (the revision of the rest of the tree display)
@@ -84,10 +63,8 @@ if ($path == '' || $path{0} != '/') {
   $ppath = $path;
 }
 
-if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
+if ($passrev != 0 && $passrev != $headrev && $youngest != 0) {
   $vars['goyoungestlink'] = '<a href="'.$config->getURL($rep, $path, 'revision').'">'.$lang['GOYOUNGEST'].'</a>';
-} else {
-  $vars['goyoungestlink'] = '';
 }
 
 $vars['listingurl'] = $config->getURL($rep, $path, 'dir').'rev='.$passrev;
@@ -144,13 +121,9 @@ $vars['indexurl'] = $config->getURL($rep, '', 'index');
 
 if ($rev != $headrev) {
   $history = $svnrep->getLog($ppath, $rev, '', false, 2, $peg);
-  if (is_string($history)) {
-    echo $history;
-    exit;
-  }
 }
 
-if (isset($history->entries[1]->rev)) {
+if ($history && isset($history->entries[1]->rev)) {
   $compareurl = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
   
   $vars['compareurl'] = $compareurl;
@@ -173,7 +146,6 @@ if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
-}
 
 if (isset($vars['error'])) {
   $listing = array();
