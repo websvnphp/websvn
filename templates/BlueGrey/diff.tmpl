@@ -7,12 +7,17 @@
 [websvn-test:error]
    <div id="error">[websvn:error]</div>
 [websvn-else]
+      [websvn:curdirlinks] - [lang:DIFFREVS] <b>[websvn:rev2]</b> [lang:AND] <b>[websvn:rev1]</b>
+      <hr>
+  <p></p>
+  [websvn-test:warning]
+  <div class="warning">[websvn:warning]</div>
+  [websvn-else]
    [websvn-test:noprev]
      [lang:NOPREVREV]. [websvn:filedetaillink]
    [websvn-else]
-      [websvn:curdirlinks] - [lang:DIFFREVS] <b>[websvn:rev2]</b> [lang:AND] <b>[websvn:rev1]</b>
-      
-      <p><center>
+      <p>
+      <center>
       [websvn-test:showcompactlink]
         [websvn:showcompactlink]
       [websvn-endtest]
@@ -54,5 +59,6 @@
       </table>
      [websvn-endtest]
    [websvn-endtest]
+  [websvn-endtest]
 [websvn-endtest]
 

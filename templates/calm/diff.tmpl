@@ -28,35 +28,39 @@
 <span class="log">[websvn:loglink]</span>
 </p>
 
-[websvn-test:noprev]
-<p>[lang:NOPREVREV]</p>
+[websvn-test:warning]
+<div class="warning">[websvn:warning]</div>
 [websvn-else]
-  [websvn-test:warning]
-    <div class="warning">[websvn:warning]</div>
+  [websvn-test:noprev]
+  <p>[lang:NOPREVREV]</p>
   [websvn-else]
-   <table>
-    <thead>
-      <tr>
-         <th>[lang:REV] [websvn:rev2]</th>
-         <th>[lang:REV] [websvn:rev1]</th>
-      </tr>
-    </thead>
-    <tbody>
-    [websvn-startlisting]
-    [websvn-test:rev1lineno]
-      <tr class="diffcode">
-        <td class="row1"><strong>[lang:LINE] [websvn:rev1lineno]...</strong></td>
-        <td class="row1"><strong>[lang:LINE] [websvn:rev2lineno]...</strong></td>
-      </tr>
-      [websvn-else]
-      <tr class="diffcode">
-        <td class="[websvn:rev1diffclass]"><pre>[websvn:rev1line]</pre></td>
-        <td class="[websvn:rev2diffclass]"><pre>[websvn:rev2line]</pre></td>
-      </tr>
+    [websvn-test:warning]
+    <div class="warning">[websvn:warning]</div>
+    [websvn-else]
+     <table>
+      <thead>
+        <tr>
+           <th>[lang:REV] [websvn:rev2]</th>
+           <th>[lang:REV] [websvn:rev1]</th>
+        </tr>
+      </thead>
+      <tbody>
+      [websvn-startlisting]
+      [websvn-test:rev1lineno]
+        <tr class="diffcode">
+          <td class="row1"><strong>[lang:LINE] [websvn:rev1lineno]...</strong></td>
+          <td class="row1"><strong>[lang:LINE] [websvn:rev2lineno]...</strong></td>
+        </tr>
+        [websvn-else]
+        <tr class="diffcode">
+          <td class="[websvn:rev1diffclass]"><pre>[websvn:rev1line]</pre></td>
+          <td class="[websvn:rev2diffclass]"><pre>[websvn:rev2line]</pre></td>
+        </tr>
+      [websvn-endtest]
+      [websvn-endlisting]
+      </tbody>
+     </table>
     [websvn-endtest]
-    [websvn-endlisting]
-    </tbody>
-   </table>
   [websvn-endtest]
 [websvn-endtest]
 </div>

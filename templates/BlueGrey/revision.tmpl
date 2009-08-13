@@ -10,6 +10,8 @@
 [websvn-else]
    <div style="float: right;"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
    <div style="clear: right;"/>
+  [websvn-test:warning]
+  [websvn-else]
    <table cellpadding="2" cellspacing="0" class="outline">
    <tr><th colspan=2 class="HdrClmnEnd">[lang:REVINFO]</th></tr>
    <tr><td class="CatClmn1" valign="top">[lang:CURDIR]:</td><td class="row1">[websvn:path]</td></tr>
@@ -24,27 +26,9 @@
       <tr><td class="CatClmn0" valign="top">[lang:LOGMSG]:</td><td class="row0">[websvn:log]</td></tr>
    [websvn-endtest]
    </table>
-   
-   [websvn-defineicons]
-   dir=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[FOLDER]">
-   diropen=<img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[OPEN-FOLDER]">
-   *=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/file.png" alt="[FILE]">
-   .c=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filec.png" alt="[C-FILE]">
-   .cpp=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filecpp.png" alt="[CPP-FILE]">
-   .h=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/fileh.png" alt="[H-FILE]">
-   .html=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filehtml.png" alt="[HTML-FILE]">
-   .java=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filejava.png" alt="[JAVA-FILE]">
-   .m=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filem.png" alt="[M-FILE]">
-   .py=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filepy.png" alt="[PY-FILE]">
-   .s=<img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/files.png" alt="[S-FILE]">
-   
-   i-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/i-node.png" alt="[NODE]">
-   t-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/t-node.png" alt="[NODE]">
-   l-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/l-node.png" alt="[NODE]">
-   e-node=<img align="middle" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/e-node.png" alt="[NODE]">
-   [websvn-enddefineicons]
-   
-   <p><hr>
+  [websvn-endtest]
+      
+   <p>
    [websvn:curdirlinks]
    - <a href="[websvn:listingurl]">[lang:LISTING]</a>
    - <a href="[websvn:logurl]">[lang:VIEWLOG]</a>
@@ -57,8 +41,11 @@
    [websvn-test:rssurl]
     - <a href="[websvn:rssurl]"><img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"></a>
    [websvn-endtest]
+   <hr>
    <p>
-   
+  [websvn-test:warning]
+  <div class="warning">[websvn:warning]</div>
+  [websvn-else]
     <table cellpadding="2" cellspacing="0" width="100%" class="outline">
       <thead>
       <tr align="left" valign="middle">
@@ -101,4 +88,5 @@
    </table>
    
    <hr>
+  [websvn-endtest]
 [websvn-endtest]
