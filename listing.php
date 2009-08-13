@@ -85,8 +85,6 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
     $path .= $subs[$n].'/';
   }
 
-  $logList = $svnrep->getList($path, $rev);
-
   // List each file in the current directory
   $loop = 0;
   $last_index = 0;
@@ -95,6 +93,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
   $downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev : '';
   
   $openDir = false;
+  $logList = $svnrep->getList($path, $rev);
+  if ($logList) {
   foreach ($logList->entries as $entry) {
     $isDir = $entry->isdir;
     if (!$isDir && $level != $limit) {
@@ -166,6 +166,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         }
       }
     }
+  }
   }
 
   // For an expanded tree, give the last entry an "L" node to close the grouping
@@ -257,7 +258,7 @@ if ($passrev) {
     $revString .= '&amp;peg='.$peg;
 }
 $vars['changesurl'] = $config->getURL($rep, $path, 'revision').$revString;
-if (sizeof($history->entries) > 1) {
+if ($history && sizeof($history->entries) > 1) {
   $vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
 }
 
