@@ -86,7 +86,6 @@ if (!is_array($changes)) {
 usort($changes, 'SVNLogEntry_compare');
 
 $row = 0;
-$listing = array();
 
 $prevRevString = ($passrev) ? 'rev='.($passrev-1) : '';
 $thisRevString = ($passrev) ? 'rev='.$passrev : '';
@@ -138,7 +137,6 @@ if ($rep->getHideRss()) {
   $vars['rssurl'] = $url;
   $vars['rsslink'] = "<a href=\"${url}\">${lang["RSSFEED"]}</a>";
 }
-}
 
 $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
@@ -146,9 +144,6 @@ if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
 }
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
-
-if (isset($vars['error'])) {
-  $listing = array();
 }
 
 $vars["template"] = "revision";
