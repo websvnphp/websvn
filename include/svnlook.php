@@ -948,7 +948,7 @@ class SVNRepository {
       error_log($error);
       global $vars;
       if (strstr($error, 'found format')) {
-        $vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read.';
+        $vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.substr($error, strrpos($error, 'Expected')).'.")';
       }
       else if (strstr($error, 'No such revision')) {
         $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
@@ -1063,7 +1063,7 @@ class SVNRepository {
       error_log($error);
       global $vars;
       if (strstr($error, 'found format')) {
-        $vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read.';
+        $vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.substr($error, strrpos($error, 'Expected')).'.")';
       }
       else if (strstr($error, 'No such revision')) {
         $vars['warning'] = 'Revision '.$brev.' of this resource does not exist.';
