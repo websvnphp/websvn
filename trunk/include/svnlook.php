@@ -603,10 +603,11 @@ class SVNRepository {
       
       if (!empty($error)) {
         $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+        global $lang;
         error_log($lang['BADCMD'].': '.$cmd);
         error_log($error);
         global $vars;
-        $vars['warning'] = "Unable to cat file: ".$error.'.';
+        $vars['warning'] = $error.'.';
       }
     }
 
