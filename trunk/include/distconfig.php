@@ -396,6 +396,18 @@ $config->useGeshi();
 // $config->hideRSS('myrep'); // Specifically hide RSS links for 'myrep'
 // $config->showRSS('myrep'); // Specifically show RSS links for 'myrep'
 
+// Uncomment this line if you wish to enable caching RSS feeds across all repositories
+// This may create a very high number of cache entries which are currently not garbaged automatically
+//
+// $config->enableRSSCaching();
+//
+// To change the global option for individual repositories, uncomment and replicate
+// the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Use the convention 'groupname.myrep' if your repository is in a group.
+
+// $config->enableRSSCaching('myrep'); // Specifically enable RSS feeds for 'myrep'
+// $config->disableRSSCaching('myrep'); // Specifically disable RSS feeds for 'myrep'
+
 // }}}
 
 // {{{ BUGTRAQ ---

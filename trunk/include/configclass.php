@@ -293,6 +293,24 @@ class Repository {
     return $config->getHideRSS();
   }
 
+  function enableRSSCaching() {
+    $this->rssCaching = true;
+  }
+
+  function disableRSSCaching() {
+    $this->rssCaching = false;
+  }
+
+  function getRSSCaching() {
+    global $config;
+
+    if (isset($this->rssCaching)) {
+      return $this->rssCaching;
+    }
+
+    return $config->getRSSCaching();
+  }
+
   // }}}
 
   // {{{ Download
@@ -603,6 +621,7 @@ class WebSvnConfig {
   var $allowedExceptions = array();
   var $disallowedExceptions = array();
   var $rss = true;
+  var $rssCaching = false;
   var $spaces = 8;
   var $bugtraq = false;
   var $auth = "";
@@ -829,7 +848,7 @@ class WebSvnConfig {
 
   // offerRSS
   //
-  // Use Enscript to colourise listings
+  // Allow RSS feeds
 
   function hideRSS($myrep = 0) {
     if (empty($myrep)) {
@@ -842,6 +861,23 @@ class WebSvnConfig {
 
   function getHideRSS() {
     return $this->rss;
+  }
+
+  // cacheRSS
+  //
+  // Enable caching of RSS feeds
+
+  function enableRSSCaching($myrep = 0) {
+    if (empty($myrep)) {
+      $this->rssCaching = true;
+    } else {
+      $repo =& $this->findRepository($myrep);
+      $repo->enableRSSCaching();
+    }
+  }
+
+  function getRSSCaching() {
+    return $this->rssCaching;
   }
 
   // }}}
