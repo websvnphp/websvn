@@ -71,7 +71,9 @@ $cachename = strtr(getFullURL($listurl), ":/\\?", "____");
 $cachename = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$cachename.$rev.'_rssfeed.xml';
 
 $rss = new UniversalFeedCreator();
-$rss->useCached($feedformat, $cachename);
+if ($rep->getRSSCaching()) {
+  $rss->useCached($feedformat, $cachename);
+}
 $rss->title = $rep->getDisplayName();
 $rss->description = $lang['RSSFEEDTITLE'].' - '.$repname;
 $rss->link = htmlspecialchars(html_entity_decode(getFullURL($baseurl.$listurl)));
@@ -149,7 +151,9 @@ if ($history && is_array($history->entries)) {
   }
 }
 
-// Save the feed
-@$rss->saveFeed($feedformat, $cachename, false);
+if ($rep->getRSSCaching()) {
+  // Save the feed
+  @$rss->saveFeed($feedformat, $cachename, false);
+}
 header('Content-Type: application/xml');
 echo @$rss->createFeed($feedformat);
