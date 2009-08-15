@@ -79,10 +79,6 @@ $vars['treeview'] = !$config->flatIndex;
 $vars['opentree'] = $config->openTree;
 $vars['groupcount'] = $groupcount; // Indicates whether any groups were present.
 
-if (!$config->multiViews) {
-  $vars['indexurl'] = $config->getURL($rep, '', 'index');
-}
-
 $vars['template'] = 'index';
 parseTemplate($config->getTemplatePath().'header.tmpl', $vars, $listing);
 parseTemplate($config->getTemplatePath().'index.tmpl', $vars, $listing);

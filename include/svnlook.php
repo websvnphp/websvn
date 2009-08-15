@@ -550,7 +550,7 @@ class SVNRepository {
   //
   // Dump the content of a file to the given filename
 
-  function getFileContents($path, $filename, $rev = 0, $pipe = '', $perLineHighlighting = false) {
+  function getFileContents($path, $filename, $rev = 0, $peg = '', $pipe = '', $perLineHighlighting = false) {
     global $config, $extEnscript;
 
     $highlighted = false;
@@ -572,7 +572,7 @@ class SVNRepository {
     }
     $highlighted = true;
     if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
-      $this->applyGeshi($path, $tempname, $rev, $geshiLang);
+      $this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg);
     } else if ($config->useEnscript) {
       // Get the files, feed it through enscript, then remove the enscript headers using sed
       //
@@ -672,7 +672,7 @@ class SVNRepository {
   //
   // perform syntax highlighting using geshi
 
-  function applyGeshi($path, $filename, $rev, $lang, $return = false, $peg = '') {
+  function applyGeshi($path, $filename, $lang, $rev, $peg = '', $return = false) {
     global $config;
 
     if ($peg) {
@@ -737,7 +737,7 @@ class SVNRepository {
 
     if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
       $tmp = tempnam("temp", "wsvn");
-      print toOutputEncoding($this->applyGeshi($path, $tmp, $rev, $geshiLang, true, $peg), $this->repConfig->getContentEncoding());
+      print toOutputEncoding($this->applyGeshi($path, $tmp, $geshiLang, $rev, $peg, true), $this->repConfig->getContentEncoding());
       @unlink($tmp);
     } else {
       $pre = false;
