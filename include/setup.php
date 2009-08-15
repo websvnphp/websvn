@@ -24,7 +24,7 @@
 
 // --- DON'T CHANGE THIS FILE ---
 //
-// User changes should be done in config.ini
+// User changes should be done in config.php
 
 // Include the configuration class
 require_once 'include/configclass.php';
@@ -359,7 +359,8 @@ require 'languages/languages.php';
 
 // Get the default language as defined as the default by config.php
 $defaultLang = $config->getDefaultLanguage();
-if (!isset($languages[$defaultLang])) $defaultLang = 'en';
+if (!isset($languages[$defaultLang]))
+  $defaultLang = 'en';
 
 // Negotiate language
 $userLang = getUserLanguage($languages, $defaultLang, $userLang);
@@ -426,6 +427,7 @@ if ($path === null || $path === '') $path = '/';
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
+$passrev = $rev;
 
 // Function to create the project selection HTML form
 function createProjectSelectionForm() {
@@ -504,6 +506,10 @@ if (!$config->multiViews) {
   $displayName = ($rep) ? $rep->getDisplayName() : $repname;
   $vars['repname'] = htmlentities($displayName, ENT_QUOTES, 'UTF-8');
 }
+
+$vars['indexurl'] = $config->getURL($rep, '', 'index');
+if ($rep)
+  $vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 // As of version 1.70 the output encoding is forced to be UTF-8, since this is
 // the output encoding returned by svn log --xml.  This is good, since we are 

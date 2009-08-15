@@ -63,8 +63,6 @@ if ($path == '' || $path{0} != '/') {
   $ppath = $path;
 }
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
-
 if ($passrev != 0 && $passrev != $headrev && $youngest != 0) {
   $vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
   $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
@@ -91,24 +89,22 @@ usort($changes, 'SVNLogEntry_compare');
 
 $row = 0;
 
-$prevRevString = ($passrev) ? 'rev='.($passrev-1) : '';
-$thisRevString = ($passrev) ? 'rev='.$passrev : '';
-if ($peg)
-  $thisRevString .= '&amp;peg='.$peg;
+$prevRevString = createRevAndPegString($passrev-1, $passrev-1);
+$thisRevString = createRevAndPegString($passrev, $peg);
 
 foreach ($changes as $file) {
-  $passRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
+  $linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
   $listing[] = array(
     'file' => $file->path,
     'added'    => $file->action == 'A',
     'deleted'  => $file->action == 'D',
     'modified' => $file->action == 'M',
      // TODO: Figure out how to differentiate directories (detailurl / logurl)
-    'detailurl' => $config->getURL($rep, $file->path, 'file').$passRevString,
+    'detailurl' => $config->getURL($rep, $file->path, 'file').$linkRevString,
     // For deleted resources, make log link start at previous revision
-    'logurl' => $config->getURL($rep, $file->path, 'log').$passRevString,
-    'diffurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').($passrev ? 'rev='.$passrev : '') : '',
-    'blameurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').($passrev ? 'rev='.$passrev : '') : '',
+    'logurl' => $config->getURL($rep, $file->path, 'log').$linkRevString,
+    'diffurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').$linkRevString : '',
+    'blameurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').$linkRevString : '',
     'rowparity' => $row,
   );
 
@@ -130,11 +126,10 @@ if ($history && isset($history->entries[1]->rev)) {
 }
 
 if ($rep->getHideRss()) {
-  $vars['rssurl'] = $config->getURL($rep, $path, 'rss');
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];

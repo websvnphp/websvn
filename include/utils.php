@@ -29,7 +29,7 @@
 function createDirLinks($rep, $path, $rev, $peg = '') {
   global $vars, $config;
   
-  $pathComponents = explode("/", htmlentities($path, ENT_QUOTES, "UTF-8"));
+  $pathComponents = explode('/', htmlentities($path, ENT_QUOTES, 'UTF-8'));
   $count = count($pathComponents);
   
   // The number of links depends on the last item.  It's empty if we're looking 
@@ -42,30 +42,36 @@ function createDirLinks($rep, $path, $rev, $peg = '') {
     $dir = false;
   }
   
-  $pathSoFar = "/";
-  $pathSoFarURL = $config->getURL($rep, $pathSoFar, "dir").($rev ? "rev=$rev" : "");
-  $vars["curdirlinks"] = "<a href=\"${pathSoFarURL}\" class=\"root\"><span>(root)</span></a>/";
+  $passRevString = createRevAndPegString($rev, $peg);
   
-  $revString = ($rev) ? 'rev='.$rev : '';
-  if ($peg)
-    $revString .= '&amp;peg='.$peg;
+  $pathSoFar = '/';
+  $pathSoFarURL = $config->getURL($rep, $pathSoFar, 'dir').$passRevString;
+  $vars['curdirlinks'] = '<a href="'.$pathSoFarURL.'" class="root"><span>(root)</span></a>/';
+  
   for ($n = 1; $n < $limit; $n++) {
-    $pathSoFar .= html_entity_decode($pathComponents[$n])."/";
-    $pathSoFarURL = $config->getURL($rep, $pathSoFar, "dir").$revString;
-    $vars["curdirlinks"] .= "<a href=\"${pathSoFarURL}\">".$pathComponents[$n]."</a>/";
+    $pathSoFar .= html_entity_decode($pathComponents[$n]).'/';
+    $pathSoFarURL = $config->getURL($rep, $pathSoFar, 'dir').$passRevString;
+    $vars['curdirlinks'] .= '<a href="'.$pathSoFarURL.'">'.$pathComponents[$n].'</a>/';
   }
   
   if (!empty($pathComponents[$n])) {
     $pegrev = ($peg) ? ' @ r'.$peg : '';
     if ($dir) {
-      $vars["curdirlinks"] .= "<span class=\"dir\">".$pathComponents[$n].'/'.$pegrev."</span>";
+      $vars['curdirlinks'] .= '<span class="dir">'.$pathComponents[$n].'/'.$pegrev.'</span>';
     } else {
-      $vars["curdirlinks"] .= "<span class=\"file\">".$pathComponents[$n].$pegrev."</span>";
+      $vars['curdirlinks'] .= '<span class="file">'.$pathComponents[$n].$pegrev.'</span>';
     }
   }
 }
 
 // }}}
+
+function createRevAndPegString($rev, $peg) {
+  $params = array();
+  if ($rev) $params[] = 'rev='.$rev;
+  if ($peg) $params[] = 'peg='.$peg;
+  return implode('&amp;', $params);
+}
 
 // {{{ create_anchors
 //

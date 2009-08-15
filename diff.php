@@ -68,78 +68,69 @@ if ($history) {
   $vars['rev'] = $vars['rev1'] = $history->entries[0]->rev;
 }
 
-createDirLinks($rep, $ppath, $rev, $peg);
+createDirLinks($rep, $ppath, $passrev, $peg);
+$passRevString = createRevAndPegString($passrev, $peg);
 
-$url = $config->getURL($rep, $path, "diff");
 if ($rev != $youngest) {
-  $vars["goyoungestlink"] = "<a href=\"${url}\">${lang["GOYOUNGEST"]}</a>";
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'diff').($peg ? 'peg='.$peg : '');
+  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
-$vars["indexurl"] = $config->getURL($rep, "", "index");
+$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString;
+$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
-$url = $config->getURL($rep, $path, "file");
-$vars["filedetaillink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["FILEDETAIL"]}</a>";
+$vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;
+$vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDETAIL'].'</a>';
 
-$url = $config->getURL($rep, $path, "log");
-$vars["loglink"] = "<a href=\"${url}rev=$rev&amp;isdir=0\">${lang["VIEWLOG"]}</a>";
-
-$url = $config->getURL($rep, $path, "diff");
-$vars["difflink"] = "<a href=\"${url}rev=$rev\">${lang["DIFFPREV"]}</a>";
-
-$url = $config->getURL($rep, $path, "blame");
-$vars["blamelink"] = "<a href=\"${url}rev=$rev\">${lang["BLAME"]}</a>";
+$vars['blameurl'] = $config->getURL($rep, $path, 'blame').$passRevString;
+$vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
 
 if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, 'rss');
-  $vars['rssurl'] = $url;
-  $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
+  $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
   
 // Check for binary file type before diffing.
-$svnMimeType = $svnrep->getProperty($path, "svn:mime-type", $rev);
+$svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
 
-if (!$rep->getIgnoreSvnMimeTypes() && preg_match("~application/*~", $svnMimeType)) {
-  $vars["warning"] = "Cannot display diff of binary file. (svn:mime-type = $svnMimeType)";
+if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType)) {
+  $vars['warning'] = "Cannot display diff of binary file. (svn:mime-type = $svnMimeType)";
 }
 // If no previous revision exists, bail out before diffing
 else if (!$prevrev) {
-  $vars["noprev"] = 1;
-  $url = $config->getURL($rep, $path, "file");
-  $vars["filedetaillink"] = "<a href=\"${url}rev=$rev\">${lang["FILEDETAIL"]}</a>";
+  $vars['noprev'] = 1;
 }
 else {
-  $url = $config->getURL($rep, $path, "diff");
+  $diff = $config->getURL($rep, $path, 'diff').$passRevString;
 
-  if (!$all) {
-    $vars["showalllink"] = '<a href="'.$url.'rev='.$rev.'&amp;all=1'.($ignoreWhitespace ? "&amp;ignorews=1" : "").'">'.$lang['SHOWENTIREFILE'].'</a>';
-    $vars["showcompactlink"] = '';
+  $passIgnoreWhitespace = ($ignoreWhitespace ? '&amp;ignorews=1' : '');
+  if ($all) {
+    $vars['showcompactlink'] = '<a href="'.$diff.$passIgnoreWhitespace.'">'.$lang['SHOWCOMPACT'].'</a>';
   } else {
-    $vars["showcompactlink"] = '<a href="'.$url.'rev='.$rev.'&amp;all=0'.($ignoreWhitespace ? "&amp;ignorews=1" : "").'">'.$lang['SHOWCOMPACT'].'</a>';
-    $vars["showalllink"] = '';
+    $vars['showalllink'] = '<a href="'.$diff.$passIgnoreWhitespace.'&amp;all=1'.'">'.$lang['SHOWENTIREFILE'].'</a>';
   }
-  if (!$ignoreWhitespace) {
-    $vars["ignorewhitespacelink"] = '<a href="'.$url.'rev='.$rev.'&amp;all='.($all ? '1' : '0').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
-    $vars["regardwhitespacelink"] = "";
+  $passShowAll = ($all ? '&amp;all=1' : '');
+  if ($ignoreWhitespace) {
+    $vars['regardwhitespacelink'] = '<a href="'.$diff.$passShowAll.'">'.$lang['REGARDWHITESPACE'].'</a>';
   } else {
-    $vars["regardwhitespacelink"] = '<a href="'.$url.'rev='.$rev.($all ? '&amp;all=1' : '').'">'.$lang['REGARDWHITESPACE'].'</a>';
-    $vars["ignorewhitespacelink"] = "";
+    $vars['ignorewhitespacelink'] = '<a href="'.$diff.$passShowAll.'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
   }
 
   // Get the contents of the two files
-  $newtname = tempnam('temp', '');
-  $highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newtname, $history->entries[0]->rev, '', true, $peg);
+  $newerFile = tempnam('temp', '');
+  $highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newerFile, $history->entries[0]->rev, $peg, '', true);
 
-  $oldtname = tempnam('temp', '');
-  $highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $oldtname, $history->entries[1]->rev, '', true, $peg);
+  $olderFile = tempnam('temp', '');
+  $highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $olderFile, $history->entries[1]->rev, $peg, '', true);
+  // TODO: Figured out why diffs across a move/rename are currently broken.
 
   $ent = (!$highlightedNew && !$highlightedOld);
-  $listing = do_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname);
+  $listing = do_diff($all, $ignoreWhitespace, $rep, $ent, $newerFile, $olderFile);
 
   // Remove our temporary files
-  @unlink($oldtname);
-  @unlink($newtname);
+  @unlink($newerFile);
+  @unlink($olderFile);
 }
-$vars["repurl"] = $config->getURL($rep, "", "dir");
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];

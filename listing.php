@@ -71,7 +71,7 @@ function fileLink($path, $file, $returnjoin = false) {
 }
 
 function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $treeview = true) {
-  global $config, $lang, $rep, $passrev, $passRevString;
+  global $config, $lang, $rep, $passrev, $peg, $passRevString;
 
   $path = '';
 
@@ -152,7 +152,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       if ($rep->getHideRss()) {
         $rssurl = $config->getURL($rep, $path.$file, 'rss');
         // RSS should always point to the latest revision, so don't include rev
-        $listing[$index]['rssurl'] = $rssurl.$urlPartIsDir;
+        $listing[$index]['rssurl'] = $rssurl.$urlPartIsDir.($peg ? '&amp;peg='.$peg : '');
       }
 
       $loop++;
@@ -199,29 +199,18 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
-// Revision info to pass along chain
-$passrev = $rev;
-$passRevString = ($passrev) ? 'rev='.$passrev.'&amp;' : '';
-if ($peg)
-  $passRevString .= 'peg='.$peg.'&amp;';
-
-// If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, '', '', false, 2, $peg);
+$history = $svnrep->getLog($path, 'HEAD', '', false, 2, $peg);
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
 // Unless otherwise specified, we get the log details of the latest change
-if (empty($rev)) {
-  $logrev = $youngest;
-} else {
-  $logrev = $passrev;
-}
+$logrev = ($passrev) ? $passrev : $youngest;
 
 if ($logrev != $youngest) {
-  $history = $svnrep->getLog($path, $logrev, '', false, 2);
+  $history = $svnrep->getLog($path, $logrev, '', false, 2, $peg);
 }
-$logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : false;
+$logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : 0;
 
-$headlog = $svnrep->getLog('/', '', '', true, 1);
+$headlog = $svnrep->getLog('/', 'HEAD', '', true, 1, $peg);
 $headrev = ($headlog && isset($headlog->entries[0])) ? $headlog->entries[0]->rev : 0;
 
 // If we're not looking at a specific revision, get the HEAD revision number
@@ -237,8 +226,13 @@ if ($path == '' || $path{0} != '/') {
   $ppath = $path;
 }
 
-if ($passrev != 0 && $passrev != $headrev && $youngest != -1) {
-  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir');
+createDirLinks($rep, $ppath, $passrev, $peg);
+
+// Revision info to pass along chain
+$passRevString = createRevAndPegString($passrev, $peg);
+
+if ($rev < $youngest) {
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg : $rev);
   $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
@@ -252,16 +246,7 @@ $vars['date'] = $logEntry ? $logEntry->date : '';
 $vars['author'] = $logEntry ? $logEntry->author : '';
 $vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
 
-$revString = '';
-if ($passrev) {
-  $revString = 'rev='.$passrev;
-  if ($peg && $path != '/')
-    $revString .= '&amp;peg='.$peg;
-}
-
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
-
-$vars['changesurl'] = $config->getURL($rep, $path, 'revision').$revString;
+$vars['changesurl'] = $config->getURL($rep, $path, 'revision').$passRevString;
 $vars['changeslink'] = '<a href="'.$vars['changesurl'].'">'.$lang['CHANGES'].'</a>';
 
 if ($history && sizeof($history->entries) > 1) {
@@ -269,13 +254,11 @@ if ($history && sizeof($history->entries) > 1) {
   $vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
-createDirLinks($rep, $ppath, $passrev, $peg);
-
-$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'isdir=1';
+$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'&amp;isdir=1';
 $vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
 if ($rep->getHideRss()) {
-  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').'isdir=1';
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg.'&amp;' : '').'isdir=1';
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
@@ -283,7 +266,7 @@ if ($rep->getHideRss()) {
 $subs = explode('/', $path);
 $level = count($subs) - 2;
 if ($rep->isDownloadAllowed($path) && !isset($vars['warning'])) {
-  $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$passRevString.'isdir=1';
+  $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$passRevString.'&amp;isdir=1';
 }
 
 $url = $config->getURL($rep, '/', 'comp');
@@ -297,7 +280,6 @@ $vars['showlastmod'] = $config->showLastMod;
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
 $listing = showTreeDir($svnrep, $path, $rev, array());
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
