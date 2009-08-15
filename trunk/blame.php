@@ -63,33 +63,28 @@ if ($history) {
   $vars['author'] = $history->entries[0]->author;
 }
 
-createDirLinks($rep, $ppath, $rev, $peg);
-$passRevString = ($rev) ? 'rev='.$rev : '';
-if ($peg)
-  $passRevString .= '&amp;peg='.$peg;
+createDirLinks($rep, $ppath, $passrev, $peg);
+$passRevString = createRevAndPegString($passrev, $peg);
 
 if ($rev != $youngest) {
-  $url = $config->getURL($rep, $path, 'blame');
-  $vars['goyoungestlink'] = '<a href="'.$url.'">'.$lang['GOYOUNGEST'].'</a>';
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'blame').($peg ? 'peg='.$peg : '');
+  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString;
+$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
-$url = $config->getURL($rep, $path, 'file').$passRevString;
-$vars['filedetaillink'] = '<a href="'.$url.'">'.$lang['FILEDETAIL'].'</a>';
-
-$url = $config->getURL($rep, $path, 'log').$passRevString;
-$vars['loglink'] = '<a href="'.$url.'">'.$lang['VIEWLOG'].'</a>';
+$vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;
+$vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDETAIL'].'</a>';
 
 if ($history == null || sizeof($history->entries) > 1) {
-  $url = $config->getURL($rep, $path, 'diff').$passRevString;
-  $vars['difflink'] = '<a href="'.$url.'">'.$lang['DIFFPREV'].'</a>';
+  $vars['diffurl'] = $config->getURL($rep, $path, 'diff').$passRevString;
+  $vars['difflink'] = '<a href="'.$vars['diffurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
 if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, 'rss');
-  $vars['rssurl'] = $url;
-  $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
+  $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
 // Check for binary file type before grabbing blame information.
@@ -102,7 +97,7 @@ if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType
 else {
   // Get the contents of the file
   $tfname = tempnam('temp', '');
-  $highlighted = $svnrep->getFileContents($path, $tfname, $rev, '', true);
+  $highlighted = $svnrep->getFileContents($path, $tfname, $rev, $peg, '', true);
   
   if ($file = fopen($tfname, 'r')) {
     // Get the blame info
@@ -180,7 +175,6 @@ else {
   $javascript[] = '</script>';
   $vars['javascript'] = implode("\n", $javascript);
 }
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];

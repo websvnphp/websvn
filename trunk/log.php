@@ -29,9 +29,9 @@ require_once('include/template.php');
 require_once('include/bugtraq.php');
 
 $page = (int)@$_REQUEST['page'];
-$all = (@$_REQUEST['all'] == 1)?1:0;
-$isDir = (@$_REQUEST['isdir'] == 1)?1:0;
-$dosearch = (@$_REQUEST['logsearch'] == 1)?1:0;
+$all = (@$_REQUEST['all'] == 1) ? 1 : 0;
+$isDir = (@$_REQUEST['isdir'] == 1) ? 1 : 0;
+$dosearch = (@$_REQUEST['logsearch'] == 1) ? 1 : 0;
 $search = trim(@$_REQUEST['search']);
 $words = preg_split('#\s+#', $search);
 $fromRev = (int)@$_REQUEST['fr'];
@@ -80,25 +80,21 @@ $maxperpage = 20;
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
-$passrev = $rev;
-
-if ($startrev != 'HEAD' && $startrev != 'BASE' && $startrev != 'PREV' && $startrev != 'COMMITTED') {
-  $startrev = (int)$startrev;
-}
-if ($endrev != 'HEAD' && $endrev != 'BASE' && $endrev != 'PREV' && $endrev != 'COMMITTED') {
-  $endrev = (int)$endrev;
-}
-if (empty($endrev)) {
-  $endrev = 1;
-}
-
-// If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $startrev, $endrev, false, 2, $peg);
+$history = $svnrep->getLog($path, '', '', false, 1, $peg);
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
 if (empty($startrev)) {
+//  $startrev = ($rev) ? $rev : 'HEAD';
   $startrev = $rev;
+} else if ($startrev != 'HEAD' && $startrev != 'BASE' && $startrev != 'PREV' && $startrev != 'COMMITTED') {
+  $startrev = (int)$startrev;
 }
+if (empty($endrev)) {
+  $endrev = 1;
+} else if ($endrev != 'HEAD' && $endrev != 'BASE' && $endrev != 'PREV' && $endrev != 'COMMITTED') {
+  $endrev = (int)$endrev;
+}
+
 
 if (empty($rev)) {
   $rev = $youngest;
@@ -106,6 +102,9 @@ if (empty($rev)) {
   $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
 }
 
+if (empty($startrev)) {
+  $startrev = $rev;
+}
 
 // make sure path is prefixed by a /
 $ppath = $path;
@@ -117,6 +116,7 @@ $vars['action'] = $lang['LOG'];
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
+$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
 if ($history) {
   $vars['log'] = $history->entries[0]->msg;
   $vars['date'] = $history->entries[0]->date;
@@ -129,38 +129,30 @@ if ($history) {
 // Will probably need to call `svn info`, parse XML output, and substring a path
 
 createDirLinks($rep, $ppath, $passrev, $peg);
-$passRevString = ($passrev) ? 'rev='.$passrev : '';
-if ($peg)
-  $passRevString .= '&amp;peg='.$peg;
-if (empty($peg))
-  $peg = $rev;
-
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
+$passRevString = createRevAndPegString($passrev, $peg);
 
 if ($isDir) {
-  $url = $config->getURL($rep, $path, 'dir').'rev='.$passrev;
-  $vars['directorylink'] = '<a href="'.$url.'">'.$lang['LISTING'].'</a>';
+  $vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
+  $vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
 } else {
-  $url = $config->getURL($rep, $path, 'file').'rev='.$rev;
-  $vars['filedetaillink'] = '<a href="'.$url.'">'.$lang['FILEDETAIL'].'</a>';
+  $vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;
+  $vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDETAIL'].'</a>';
 
-  $url = $config->getURL($rep, $path, 'diff').'rev='.$rev;
-  $vars['difflink'] = '<a href="'.$url.'">'.$lang['DIFFPREV'].'</a>';
+  $vars['blameurl'] = $config->getURL($rep, $path, 'blame').$passRevString;
+  $vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
 
-  $url = $config->getURL($rep, $path, 'blame').'rev='.$passrev;
-  $vars['blamelink'] = '<a href="'.$url.'">'.$lang['BLAME'].'</a>';
+  $vars['diffurl'] = $config->getURL($rep, $path, 'diff').$passRevString;
+  $vars['difflink'] = '<a href="'.$vars['diffurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
 if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, 'rss').($isDir?'&amp;isdir=1':'');
-  $vars['rssurl'] = $url;
-  $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '').($isDir ? '&amp;isdir=1' : '');
+  $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
-$logurl = $config->getURL($rep, $path, 'log');
-
 if ($rev != $youngest) {
-  $vars['goyoungestlink'] = '<a href="'.$logurl.($isDir?'&amp;isdir=1':'').'">'.$lang['GOYOUNGEST'].'</a>';
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'log').($isDir?'isdir=1&amp;':'').($peg ? 'peg='.$peg : '');
+  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
 // We get the bugtraq variable just once based on the HEAD
@@ -173,7 +165,6 @@ if ($max === false) {
     $max = 30;
 }
 
-$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
 $vars['logsearch_moreresultslink'] = '';
 $vars['pagelinks'] = '';
 $vars['showalllink'] = '';
@@ -239,7 +230,7 @@ if (!empty($history)) {
       }
     }
 
-    $thisRevStr = 'rev='.$thisrev.'&amp;peg='.$rev;
+    $thisRevStr = 'rev='.$thisrev.'&amp;peg='.$thisrev;
 
     if ($match) {
       // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
@@ -262,7 +253,7 @@ if (!empty($history)) {
       $url = $config->getURL($rep, '', 'revision').$thisRevStr;
       $listing[$index]['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
       
-      $url = $config->getURL($rep, $path, ($isDir ? 'dir' : 'file')).$thisRevStr;
+      $url = $config->getURL($rep, $rpath, ($isDir ? 'dir' : 'file')).$thisRevStr;
       $listing[$index]['revpathlink'] = '<a href="'.$url.'">'.$rpath.'</a>';
 
       $listing[$index]['revauthor'] = $revision->author;
@@ -277,8 +268,8 @@ if (!empty($history)) {
 
     // If we've reached the search limit, stop here...
     if (!$numSearchResults) {
-      $url = $config->getURL($rep, $path, 'log').$thisRevStr.($isDir?'&amp;isdir=1':'');
-      $vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;logsearch=1&amp;search=$search&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
+      $url = $config->getURL($rep, $path, 'log').$thisRevStr.($isDir ? '&amp;isdir=1' : '');
+      $vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;logsearch=1&amp;search='.$search.'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
       break;
     }
   }
@@ -301,7 +292,9 @@ if (!empty($history)) {
     $prev = $page - 1;
     $next = $page + 1;
     
-    $logurl .= 'rev='.$rev.'&amp;sr='.$startrev.'&amp;er='.$endrev.'&amp;max='.$max;
+    $logurl = $config->getURL($rep, $path, 'log').$passRevString;
+
+    $logurl .= '&amp;sr='.$startrev.'&amp;er='.$endrev.'&amp;max='.$max;
     if ($isDir)
       $logurl .= '&amp;isdir='.$isDir;
     
@@ -365,7 +358,6 @@ $vars['compare_endform'] = '</form>';
 
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];

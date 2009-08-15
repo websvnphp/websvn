@@ -37,7 +37,6 @@ if ($path{0} != '/') {
   $ppath = $path;
 }
 
-$passrev = $rev;
 $useMime = false;
 
 // If there's no revision info, go to the lastest revision for this path
@@ -62,7 +61,7 @@ if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
 
   // Get the file contents and pipe into gzip.  All this without creating
   // a temporary file.  Damn clever.
-  $svnrep->getFileContents($path, '', $rev, '| '.$config->gzip.' -n -f');
+  $svnrep->getFileContents($path, '', $rev, $peg, '| '.$config->gzip.' -n -f');
   exit;
 }
 
@@ -107,16 +106,11 @@ if (!empty($mimeType) && $rep->hasReadAccess($path, false)) {
   header('Content-Type: '.$mimeType);
   //header('Content-Length: '.$size);
   header('Content-Disposition: inline; filename='.urlencode($base));
-  $svnrep->getFileContents($path, '', $rev);
+  $svnrep->getFileContents($path, '', $rev, $peg);
   exit;
 }
 
 // Display the file inline using WebSVN.
-
-if ($rev != $youngest) {
-  $url = $config->getURL($rep, $path, 'file');
-  $vars['goyoungestlink'] = '<a href="'.$url.'">'.$lang['GOYOUNGEST'].'</a>';
-}
 
 $vars['action'] = '';
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
@@ -127,43 +121,42 @@ if ($history) {
   $vars['author'] = $history->entries[0]->author;
 }
 createDirLinks($rep, $ppath, $passrev, $peg);
-$passRevString = ($passrev) ? 'rev='.$passrev : '';
-if ($peg)
-  $passRevString .= '&amp;peg='.$peg;
+$passRevString = createRevAndPegString($passrev, $peg);
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
+if ($rev != $youngest) {
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'file').($peg ? 'peg='.$peg : '');
+  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+}
 
-$url = $config->getURL($rep, $path, 'blame').$passRevString;
-$vars['blamelink'] = '<a href="'.$url.'">'.$lang['BLAME'].'</a>';
+$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString;
+$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
-$url = $config->getURL($rep, $path, 'log').$passRevString;
-$vars['loglink'] = '<a href="'.$url.'">'.$lang['VIEWLOG'].'</a>';
+$vars['blameurl'] = $config->getURL($rep, $path, 'blame').$passRevString;
+$vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
 
 if ($history == null || sizeof($history->entries) > 1) {
-  $url = $config->getURL($rep, $path, 'diff').$passRevString;
-  $vars['difflink'] = '<a href="'.$url.'">'.$lang['DIFFPREV'].'</a>';
+  $vars['diffurl'] = $config->getURL($rep, $path, 'diff').$passRevString;
+  $vars['difflink'] = '<a href="'.$vars['diffurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
 if ($rep->isDownloadAllowed($path)) {
-  $url = $config->getURL($rep, $path, 'dl').$passRevString;
-  $vars['downloadlink'] = '<a href="'.$url.'">'.$lang['DOWNLOAD'].'</a>';
+  $vars['downloadlurl'] = $config->getURL($rep, $path, 'dl').$passRevString;
+  $vars['downloadlink'] = '<a href="'.$vars['downloadlurl'].'">'.$lang['DOWNLOAD'].'</a>';
 }
 
 if ($rep->getHideRss()) {
-  $url = $config->getURL($rep, $path, 'rss');
-  $vars['rssurl'] = $url;
-  $vars['rsslink'] = '<a href="'.$url.'">'.$lang['RSSFEED'].'</a>';
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
+  $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
   
 $mimeType = $useMime; // Restore preserved value to use for 'mimelink' variable.
 // If there was a MIME type, create a link to display file with that type.
 if ($mimeType && !isset($vars['warning'])) {
-  $url = $config->getURL($rep, $path, 'file').'usemime=1&amp;'.$passRevString;
-  $vars['mimelink'] = '<a href="'.$url.'">View as '.$mimeType.'</a>';
+  $vars['mimeurl'] = $config->getURL($rep, $path, 'file').$passRevString.'&amp;usemime=1';
+  $vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">View as '.$mimeType.'</a>';
 }
 
 $vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
-$vars['repurl'] = $config->getURL($rep, '', 'dir');
 
 if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];
