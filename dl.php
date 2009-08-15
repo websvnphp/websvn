@@ -20,14 +20,14 @@
 //
 // dl.php
 //
-// Create gz/tar files of the requested item
+// Allow for file and directory downloads, creating zip/tar/gz files if needed.
 
-require_once("include/setup.php");
-require_once("include/svnlook.php");
-require_once("include/utils.php");
+require_once('include/setup.php');
+require_once('include/svnlook.php');
+require_once('include/utils.php');
 
 ini_set('include_path', $locwebsvnreal.'/lib/pear'.$config->pathSeparator.ini_get('include_path'));
-@include_once("Archive/Tar.php");
+@include_once('Archive/Tar.php');
 
 function setDirectoryTimestamp($dir, $timestamp) {
   global $config;
@@ -79,7 +79,8 @@ function removeDirectory($dir) {
 
 if (!$rep->isDownloadAllowed($path)) {
   header('HTTP/1.x 403 Forbidden', true, 403);
-  print 'Unable to download path '.$path."\n";
+  error_log('Unable to download resource at path:  '.$path);
+  print 'Unable to download resource at path:  '.$path;
   exit;
 }
 
@@ -100,11 +101,12 @@ if (empty($rev)) {
 
 // Create a temporary filename to be used for a directory to archive a download.
 // Here we have an unavoidable but highly unlikely to occur race condition.
-$tempDir = tempnam($config->getTarballTmpDir(), "websvn");
+$tempDir = tempnam($config->getTarballTmpDir(), 'websvn');
 
 if ($tempDir == false) {
   header('HTTP/1.x 500 Internal Server Error', true, 500);
-  print "Unable to create temporary directory\n";
+  error_log('Unable to create a temporary directory.');
+  print 'Unable to create a temporary directory.';
   exit(0);
 }
 else {
@@ -121,13 +123,14 @@ else {
     $archiveName = $rep->name;
   }
   $plainfilename = $archiveName;
-  $archiveName .= ".r$rev";
+  $archiveName .= '.r'.$rev;
 
   // Export the requested path from SVN repository to the temp directory
   $svnExportResult = $svnrep->exportRepositoryPath($path, $tempDir.DIRECTORY_SEPARATOR.$archiveName, $rev, $peg);
   if ($svnExportResult != 0) {
     header('HTTP/1.x 500 Internal Server Error', true, 500);
-    print '"svn export" failed for '.$archiveName.' - see webserver error log for details'."\n";
+    error_log('svn export failed for:  '.$archiveName);
+    print 'svn export failed for "'.$archiveName.'".';
     removeDirectory($tempDir);
     exit(0);
   }
@@ -179,7 +182,8 @@ else {
     $cmd = $config->zip.' -r '.quote($downloadArchive).' '.quote($archiveName);
     execCommand($cmd, $retcode);
     if ($retcode != 0) {
-      print'Unable to call zip command "'.$config->zip.'"';
+      error_log('Unable to call zip command:  '.$cmd);
+      print 'Unable to call zip command. See webserver error log for details.';
     }
   }
   else {
@@ -195,7 +199,7 @@ else {
       if (!$created) {
         $retcode = 1;
         header('HTTP/1.x 500 Internal Server Error', true, 500);
-        print'Unable to create tar archive';
+        print 'Unable to create tar archive.';
       }
     }
     else {
@@ -203,8 +207,8 @@ else {
       execCommand($cmd, $retcode);
       if ($retcode != 0) {
         header('HTTP/1.x 500 Internal Server Error', true, 500);
-        error_log('Unable to call tar command "'.$cmd.'"');
-        print'Unable to call tar command - see webserver error log for details';
+        error_log('Unable to call tar command:  '.$cmd);
+        print 'Unable to call tar command. See webserver error log for details.';
       }
     }
     if ($retcode != 0) {
@@ -222,7 +226,7 @@ else {
       $dstHandle = gzopen($downloadArchive, 'wb');
       if (!$srcHandle || !$dstHandle) {
         header('HTTP/1.x 500 Internal Server Error', true, 500);
-        print'Unable to open file for gz-compression';
+        print 'Unable to open file for gz-compression.';
         chdir($oldcwd);
         removeDirectory($tempDir);
         exit(0);
@@ -239,8 +243,8 @@ else {
       execCommand($cmd, $retcode);
       if ($retcode != 0) {
         header('HTTP/1.x 500 Internal Server Error', true, 500);
-        error_log('Unable to call gzip command "'.$cmd.'"');
-        print'Unable to call gzip command - see webserver error log for details';
+        error_log('Unable to call gzip command:  '.$cmd);
+        print 'Unable to call gzip command. See webserver error log for details.';
         chdir($oldcwd);
         removeDirectory($tempDir);
         exit(0);
@@ -262,7 +266,7 @@ else {
   }
   else {
     header('HTTP/1.x 404 Not Found', true, 404);
-    print 'Unable to open file '.$downloadArchive."\n";
+    print 'Unable to open file: '.$downloadArchive;
   }
   }
 
