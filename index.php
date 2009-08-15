@@ -20,16 +20,16 @@
 //
 // index.php
 //
-// Main page.  Lists all the projects
+// Main page which lists all configured repositories (optionally by groups).
 
-require_once("include/setup.php");
-require_once("include/svnlook.php");
-require_once("include/template.php");
+require_once('include/setup.php');
+require_once('include/svnlook.php');
+require_once('include/template.php');
 
-$vars["action"] = $lang["PROJECTS"];
-$vars["repname"] = "";
-$vars["rev"] = 0;
-$vars["path"] = "";
+$vars['action'] = $lang['PROJECTS'];
+$vars['repname'] = '';
+$vars['rev'] = 0;
+$vars['path'] = '';
 
 // Sort the repositories by group
 $config->sortByGroup();
@@ -47,43 +47,43 @@ $curgroup = NULL;
 $groupcount = 0;
 // Create listing of all configured projects (includes groups if they are used).
 foreach ($projects as $project) {
-  if (!$project->hasReadAccess("/", true))
+  if (!$project->hasReadAccess('/', true))
     continue;
 
   // If this is the first project in a group, add an entry for the group.
   if ($curgroup != $project->group) {
     $groupcount++;
     $groupparity = 0;
-    $listing[$i]["notfirstgroup"] = !empty($curgroup);
+    $listing[$i]['notfirstgroup'] = !empty($curgroup);
     $curgroup = $project->group;
-    $listing[$i]["groupname"] = $curgroup; // Applies until next group is set.
-    $listing[$i]["groupid"] = strtr(base64_encode('grp'.$curgroup),
+    $listing[$i]['groupname'] = $curgroup; // Applies until next group is set.
+    $listing[$i]['groupid'] = strtr(base64_encode('grp'.$curgroup),
                                     array('+' => '-', '/' => '_', '=' => ''));
 
-    $listing[$i]["projectlink"] = NULL; // Because template.php won't unset this
+    $listing[$i]['projectlink'] = NULL; // Because template.php won't unset this
     $i++; // Causes the subsequent lines to store data in the next array slot.
-    $listing[$i]["groupid"] = NULL; // Because template.php won't unset this
+    $listing[$i]['groupid'] = NULL; // Because template.php won't unset this
   }
   
   // Create project (repository) listing
-  $url = str_replace("&amp;", "", $config->getURL($project, '', "dir"));
+  $url = str_replace('&amp;', '', $config->getURL($project, '', 'dir'));
   $name = ($config->flatIndex) ? $project->getDisplayName() : $project->name;
-  $listing[$i]["projectlink"] = "<a href=\"${url}\">".$name."</a>";
-  $listing[$i]["rowparity"] = $parity++ % 2;
-  $listing[$i]["groupparity"] = $groupparity++ % 2;
+  $listing[$i]['projectlink'] = '<a href="'.$url.'">'.$name.'</a>';
+  $listing[$i]['rowparity'] = $parity++ % 2;
+  $listing[$i]['groupparity'] = $groupparity++ % 2;
   $i++;
 }
 
-$vars["flatview"] = $config->flatIndex;
-$vars["treeview"] = !$config->flatIndex;
-$vars["opentree"] = $config->openTree;
-$vars["groupcount"] = $groupcount; // Indicates whether any groups were present.
+$vars['flatview'] = $config->flatIndex;
+$vars['treeview'] = !$config->flatIndex;
+$vars['opentree'] = $config->openTree;
+$vars['groupcount'] = $groupcount; // Indicates whether any groups were present.
 
 if (!$config->multiViews) {
   $vars['indexurl'] = $config->getURL($rep, '', 'index');
 }
 
-$vars["template"] = "index";
-parseTemplate($config->getTemplatePath()."header.tmpl", $vars, $listing);
-parseTemplate($config->getTemplatePath()."index.tmpl", $vars, $listing);
-parseTemplate($config->getTemplatePath()."footer.tmpl", $vars, $listing);
+$vars['template'] = 'index';
+parseTemplate($config->getTemplatePath().'header.tmpl', $vars, $listing);
+parseTemplate($config->getTemplatePath().'index.tmpl', $vars, $listing);
+parseTemplate($config->getTemplatePath().'footer.tmpl', $vars, $listing);
