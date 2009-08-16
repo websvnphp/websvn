@@ -90,7 +90,7 @@ usort($changes, 'SVNLogEntry_compare');
 $row = 0;
 
 $prevRevString = createRevAndPegString($passrev-1, $passrev-1);
-$thisRevString = createRevAndPegString($passrev, $peg);
+$thisRevString = createRevAndPegString($passrev, ($peg ? $peg : $passrev));
 
 foreach ($changes as $file) {
   $linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
