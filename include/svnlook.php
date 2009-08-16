@@ -429,15 +429,20 @@ function _topLevel($entry) {
 function _listSort($e1, $e2) {
   global $config;
 
-  if (!$config->isAlphabeticOrder()) {
-    $isDir1 = $e1->file{strlen($e1->file) - 1} == "/";
-    $isDir2 = $e2->file{strlen($e2->file) - 1} == "/";
+  $file1 = $e1->file;
+  $file2 = $e2->file;
+  $isDir1 = ($file1{strlen($file1) - 1} == '/');
+  $isDir2 = ($file2{strlen($file2) - 1} == '/');
 
+  if (!$config->isAlphabeticOrder()) {
     if ($isDir1 && !$isDir2) return -1;
     if ($isDir2 && !$isDir1) return 1;
   }
 
-  return strnatcasecmp($e1->file, $e2->file);
+  if ($isDir1) $file1 = substr($file1, 0, -1);
+  if ($isDir2) $file2 = substr($file2, 0, -1);
+
+  return strnatcasecmp($file1, $file2);
 }
 
 // }}}
