@@ -116,6 +116,12 @@ $vars['action'] = $lang['LOG'];
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
+if ($max === false) {
+  $max = ($dosearch) ? 0 : 30;
+} else if ($max < 0) {
+  $max = 30;
+}
+
 $history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
 if ($history) {
   $vars['log'] = $history->entries[0]->msg;
@@ -158,13 +164,6 @@ if ($rev != $youngest) {
 // We get the bugtraq variable just once based on the HEAD
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
-if ($max === false) {
-  $max = ($dosearch) ? 0 : 30;
-} else {
-  if ($max < 0)
-    $max = 30;
-}
-
 $vars['logsearch_moreresultslink'] = '';
 $vars['pagelinks'] = '';
 $vars['showalllink'] = '';
@@ -202,6 +201,9 @@ if (!empty($history)) {
   $row = 0;
   $index = 0;
   $found = false;
+  
+// TODO: http://websvn.tigris.org/issues/show_bug.cgi?id=151
+// Aggregate type and number of changes (and paths?) for each revision
   
   foreach ($entries as $revision) {
     // Assume a good match
