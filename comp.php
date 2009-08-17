@@ -195,8 +195,7 @@ if (!$noinput) {
         if ($indiffproper) {
           if (strlen($line) > 0 && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-')) {
             $subline = replaceEntities(substr($line, 1), $rep);
-            if ($subline == '') $subline = '&nbsp;';
-            $subline = hardspace($subline);
+            $subline = ($subline) ? hardspace($subline) : '&nbsp;';
             $listing[$index]['line'] = $subline;
 
             switch ($line[0]) {
@@ -215,21 +214,14 @@ if (!$noinput) {
                 if ($debug) print "Including as removed: $subline<br />";
                 break;
             }
-
             $index++;
-
-            continue;
-
-          } else if ($line == '\ No newline at end of file') {
-            continue;
-
-          } else {
+          } else if ($line != '\ No newline at end of file') {
             $indiffproper = false;
             $listing[$index++]['enddifflines'] = true;
             $getLine = false;
             if ($debug) print "Ending lines<br />";
-            continue;
           }
+          continue;
         }
 
         // Check for the start of a new diff area
