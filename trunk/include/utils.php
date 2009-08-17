@@ -158,6 +158,11 @@ function hardspace($s) {
 
 // }}}
 
+function wrapInCodeTagIfNecessary($string) {
+  global $config;
+  return ($config->getUseGeshi()) ? $string : '<code>'.$string.'</code>';
+}
+
 // {{{ expandTabs
 
 /**

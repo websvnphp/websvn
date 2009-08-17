@@ -82,7 +82,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
           else $line = toOutputEncoding($line, $contentEncoding);
           if (strip_tags($line) == '') $line = '&nbsp;';
 
-          $listing[$index]["rev1line"] = hardspace($line);
+          $listing[$index]["rev1line"] = wrapInCodeTagIfNecessary($line);
         }
 
         $curoline++;
@@ -99,7 +99,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
           else $line = toOutputEncoding($line, $contentEncoding);
           if (strip_tags($line) == '') $line = '&nbsp;';
 
-          $listing[$index]["rev2line"] = hardspace($line);
+          $listing[$index]["rev2line"] = wrapInCodeTagIfNecessary($line);
         }
         $curnline++;
 
@@ -137,7 +137,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
         if ($ent) $line = replaceEntities($line, $rep);
         else $line = toOutputEncoding($line, $contentEncoding);
         if (strip_tags($line) == '') $line = '&nbsp;';
-        $text = hardspace($line);
+        $text = wrapInCodeTagIfNecessary($line);
         $listing[$index]["rev1line"] = $text;
 
         switch ($mod) {
@@ -192,7 +192,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
             if ($ent) $line = replaceEntities($line, $rep);
             else $line = toOutputEncoding($line, $contentEncoding);
             if (strip_tags($line) == '') $line = '&nbsp;';
-            $listing[$index]["rev1line"] = hardspace($line);
+            $listing[$index]["rev1line"] = wrapInCodeTagIfNecessary($line);
             $curoline++;
 
             $nl = fgets($nfile);
@@ -200,7 +200,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
             if ($ent) $line = replaceEntities($line, $rep);
             else $line = toOutputEncoding($line, $contentEncoding);
             if (strip_tags($line) == '') $line = '&nbsp;';
-            $listing[$index]["rev2line"] = hardspace($line);
+            $listing[$index]["rev2line"] = wrapInCodeTagIfNecessary($line);
             $curnline++;
 
             break;
@@ -225,7 +225,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
       if (strip_tags($line) == '') $line = '&nbsp;';
 
       if (!feof($ofile)) {
-        $listing[$index]["rev1line"] = hardspace($line);
+        $listing[$index]["rev1line"] = wrapInCodeTagIfNecessary($line);
       } else {
         $listing[$index]["rev1line"] = "&nbsp;";
       }
@@ -236,7 +236,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
       if (strip_tags($line) == '') $line = '&nbsp;';
 
       if (!feof($nfile)) {
-        $listing[$index]["rev2line"] = hardspace($line);
+        $listing[$index]["rev2line"] = wrapInCodeTagIfNecessary($line);
       } else {
         $listing[$index]["rev2line"] = "&nbsp;";
       }
