@@ -199,7 +199,7 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
-$history = $svnrep->getLog($path, 'HEAD', '', false, 2, $peg);
+$history = $svnrep->getLog($path, '', '', false, 2, $peg);
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
 // Unless otherwise specified, we get the log details of the latest change
@@ -210,7 +210,7 @@ if ($logrev != $youngest) {
 }
 $logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : 0;
 
-$headlog = $svnrep->getLog('/', 'HEAD', '', true, 1, $peg);
+$headlog = $svnrep->getLog('/', '', '', true, 1, $peg);
 $headrev = ($headlog && isset($headlog->entries[0])) ? $headlog->entries[0]->rev : 0;
 
 // If we're not looking at a specific revision, get the HEAD revision number
