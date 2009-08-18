@@ -1,92 +1,81 @@
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
-  <tr>
-    <td align="left"><h1>[websvn:repname]</h1></td>
-    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
-  </tr>
-</table>
-
+    <h1 style="float: left;">[websvn:repname] - [lang:REV] [websvn:rev]</h1>
+    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+    <div class="clearer">&nbsp;</div>
 [websvn-test:error]
-   <div id="error">[websvn:error]</div>
+    <div id="error">[websvn:error]</div>
 [websvn-else]
-   <div style="float: right;"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
-   <div style="clear: right;"/>
+    <div style="float: right;">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    [websvn-test:warning]
+    [websvn-else]
+    <table cellpadding="2" cellspacing="0" class="outline">
+      <thead>
+      <tr><th colspan="2">[lang:REVINFO]</th></tr>
+      </thead>
+      <tr class="row0"><th>[lang:CURDIR]:</th><td>[websvn:path]</td></tr>
+      [websvn-test:goyoungestlink]
+      <tr class="row1"><th>[lang:REV] &amp; [lang:AUTHOR]:</th><td>[lang:REV] [websvn:rev] - [websvn:author]- [websvn:goyoungestlink]</td></tr>
+      [websvn-else]
+      <tr class="row1"><th>[lang:REV] &amp; [lang:AUTHOR]:</th><td>[lang:REV] [websvn:rev] - [websvn:author]</td></tr>
+      [websvn-endtest]
+      [websvn-test:restricted]
+      [websvn-else]
+      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:lastchangedrev] - [websvn:date]</td></tr>
+      <tr class="row1"><th>[lang:LOGMSG]:</th><td>[websvn:log]</td></tr>
+      [websvn-endtest]
+    </table>
+    [websvn-endtest]
+    <div id="nav">
+      [websvn:curdirlinks]<br/>
+      [websvn:loglink]
+      - [websvn:listinglink]
+      [websvn-test:comparelink]
+      - [websvn:comparelink]
+      [websvn-endtest]    
+      [websvn-test:downloadurl]
+      - <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a>
+      [websvn-endtest]
+      [websvn-test:rssurl]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
   [websvn-test:warning]
-  [websvn-else]
-   <table cellpadding="2" cellspacing="0" class="outline">
-   <tr><th colspan=2 class="HdrClmnEnd">[lang:REVINFO]</th></tr>
-   <tr><td class="CatClmn1" valign="top">[lang:CURDIR]:</td><td class="row1">[websvn:path]</td></tr>
-   <tr><td class="CatClmn0">[lang:REV] &amp; [lang:AUTHOR]:</td><td class="row0">[lang:REV] [websvn:rev] - [websvn:author]
-   [websvn-test:goyoungestlink]
-    - [websvn:goyoungestlink]
-   [websvn-endtest]
-   </td></tr>
-   [websvn-test:restricted]
-   [websvn-else]
-      <tr><td class="CatClmn1" valign="top">[lang:LASTMOD]:</td><td class="row1">[lang:REV] [websvn:lastchangedrev] - [websvn:date]</td></tr>
-      <tr><td class="CatClmn0" valign="top">[lang:LOGMSG]:</td><td class="row0">[websvn:log]</td></tr>
-   [websvn-endtest]
-   </table>
-  [websvn-endtest]
-      
-   <p>
-   [websvn:curdirlinks]
-   - [websvn:listinglink]
-   - [websvn:loglink]
-   [websvn-test:comparelink]
-    - [websvn:comparelink]
-   [websvn-endtest]    
-   [websvn-test:downloadurl]
-    - <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a>
-   [websvn-endtest]
-   [websvn-test:rssurl]
-    - <a href="[websvn:rssurl]"><img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"></a>
-   [websvn-endtest]
-   <hr>
-   <p>
-  [websvn-test:warning]
-  <div class="warning">[websvn:warning]</div>
+    <div id="warning">[websvn:warning]</div>
   [websvn-else]
     <table cellpadding="2" cellspacing="0" width="100%" class="outline">
       <thead>
-      <tr align="left" valign="middle">
-        <th class="HdrClmn">[lang:PATH]</th>
-        <th class="HdrClmn">[lang:VIEWLOG]</th>
-        <th class="HdrClmn">[lang:DIFFPREV]</th>
-        <th class="HdrClmn">[lang:BLAME]</th>
+      <tr>
+        <th>[lang:PATH]</th>
+        <th>[lang:VIEWLOG]</th>
+        <th>[lang:DIFF]</th>
+        <th>[lang:BLAME]</th>
       </tr>
       </thead>
       <tbody>
       [websvn-startlisting]
       <tr class="row[websvn:rowparity]">
-        <td style="border-right: 1px solid black; padding: 0 2px 0 2px;">
-         	[websvn-test:modified]
-         		M
-         	[websvn-endtest]
-         	[websvn-test:added]
-         		A
-         	[websvn-endtest]
-         	[websvn-test:deleted]
-         		D
-         	[websvn-endtest]
-      		<a href="[websvn:detailurl]">[websvn:file]</a>
-        </td>
-        <td style="border-right: 1px solid black; padding: 0 2px 0 2px;"><a href="[websvn:logurl]">[lang:NOBR][lang:VIEWLOG][lang:ENDNOBR]</a></td>
-        <td style="border-right: 1px solid black; padding: 0 2px 0 2px;">
-          [websvn-test:diffurl]
-          <a href="[websvn:diffurl]">[lang:NOBR][lang:DIFFPREV][lang:ENDNOBR]</a>
-          [websvn-endtest]
-        </td>
-        <td>
-          [websvn-test:blameurl]
-          <a href="[websvn:blameurl]">[lang:NOBR][lang:BLAME][lang:ENDNOBR]</a>
-          [websvn-endtest]
-        </td>
+        [websvn-test:modified]
+         <td>M <a href="[websvn:detailurl]">[websvn:file]</a></td>
+        [websvn-endtest]
+        [websvn-test:added]
+         <td>A <a href="[websvn:detailurl]">[websvn:file]</a></td>
+        [websvn-endtest]
+        [websvn-test:deleted]
+         <td>D <a href="[websvn:detailurl]">[websvn:file]</a></td>
+        [websvn-endtest]
+        <td><a href="[websvn:logurl]">[lang:LOG]</a></td>
+        [websvn-test:diffurl]
+        <td><a href="[websvn:diffurl]">[lang:NOBR][lang:DIFF][lang:ENDNOBR]</a></td>
+        [websvn-else]
+        <td></td>
+        [websvn-endtest]
+        [websvn-test:blameurl]
+        <td><a href="[websvn:blameurl]">[lang:BLAME]</a></td>
+        [websvn-else]
+        <td></td>
+        [websvn-endtest]
       </tr>
       [websvn-endlisting]
-    </tbody>
-
-   </table>
-   
-   <hr>
+      </tbody>
+    </table>
   [websvn-endtest]
 [websvn-endtest]
