@@ -677,6 +677,8 @@ table.diff tbody tr td {
   padding-left:22px;
   background-color:#f8f8f8;
   border:1px solid #f0f0f0;
+  white-space: pre-wrap;
+  font-family: monospace;
 }
 table.diff tbody tr:hover {
   background:#FFF;
@@ -722,10 +724,17 @@ table.diff tbody tr:hover {
 }
 
 code {
-  white-space: pre;
-}
-code {
   white-space: pre-wrap;
+}
+
+/* Whitespace hacks for IE 4-7  */
+
+* html code, *:first-child+html code {
+	white-space: pre;
+}
+
+* html table.diff td, *:first-child+html table.diff td {
+	white-space: pre;
 }
 
 /* Log View */

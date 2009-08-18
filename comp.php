@@ -195,7 +195,7 @@ if (!$noinput) {
         if ($indiffproper) {
           if (strlen($line) > 0 && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-')) {
             $subline = replaceEntities(substr($line, 1), $rep);
-            $subline = ($subline) ? hardspace($subline) : '&nbsp;';
+            $subline = ($subline) ? expandTabs($subline) : '&nbsp;';
             $listing[$index]['line'] = $subline;
 
             switch ($line[0]) {
