@@ -1,38 +1,50 @@
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
-  <tr>
-    <td align="left"><h1>[websvn:repname]</h1></td>
-    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
-  </tr>
-</table>
-
+    <h1 style="float: left;">[websvn:repname] - [lang:BLAMEFOR] [websvn:rev]</h1>
+    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+    <div class="clearer">&nbsp;</div>
 [websvn-test:error]
-	<div id="error">[websvn:error]</div>
+    <div id="error">[websvn:error]</div>
 [websvn-else]
-    [websvn:curdirlinks] - [lang:BLAMEFOR] <b>[websvn:rev]</b>
-    <hr>
-    <p></p>
-  
+    <div id="nav">
+      [websvn:curdirlinks]<br/>
+      [websvn-test:goyoungestlink]
+      [websvn:goyoungestlink] -
+      [websvn-endtest]
+      [websvn-test:mimelink]
+      [websvn:mimelink] -
+      [websvn-endtest]
+      [websvn:filedetaillink] -
+      [websvn-test:difflink]
+      [websvn:difflink] -
+      [websvn-endtest]
+      [websvn-test:downloadlink]
+      [websvn:downloadlink] -
+      [websvn-endtest]
+      [websvn:loglink]
+      [websvn-test:rssurl]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
   [websvn-test:warning]
-  <div class="warning">[websvn:warning]</div>
+    <div id="warning">[websvn:warning]</div>
   [websvn-else]
-    <table cellpadding="2" cellspacing="0" width="100%" class="blameTbl">
+    <table>
       <thead>
-        <tr>
-          <th class="HdrClmn"><b>[lang:REV]</b></th>
-          <th class="HdrClmn"><b>[lang:AUTHOR]</b></th>
-          <th class="HdrClmn"><b>[lang:LINENO]</b></th>
-          <th class="HdrClmnEnd"><b>[lang:LINE]</b></th>
-        </tr>
+      <tr>
+        <th>[lang:REV]</th>
+        <th>[lang:AUTHOR]</th>
+        <th>[lang:LINENO]</th>
+        <th>[lang:LINE]</th>
+      </tr>
       </thead>
-      <tbody>
-        [websvn-startlisting]
-        <tr class="[websvn:row_class]">
-          <th>[websvn:revision]</th>
-          <th>[websvn:author]</th>
-          <th><a name="l[websvn:lineno]">[websvn:lineno]</a></th>
-          <td>[websvn:line]</td>
-        </tr>
-        [websvn-endlisting]
+      <tbody style="font-size: 90%;">
+      [websvn-startlisting]
+      <tr class="[websvn:row_class]">
+        <th>[websvn:revision]</th>
+        <th>[websvn:author]</th>
+        <th><a name="l[websvn:lineno]">[websvn:lineno]</a></th>
+        <td>[websvn:line]</td>
+      </tr>
+      [websvn-endlisting]
       </tbody>
     </table> 
     [websvn:javascript]

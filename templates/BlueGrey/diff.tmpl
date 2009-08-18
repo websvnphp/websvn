@@ -1,64 +1,72 @@
-	<table cellspacing="0" cellpadding="0" border="0" width="100%">
-	  <tr>
-		<td align="left"><h1>[websvn:repname]</h1></td>
-		<td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
-	  </tr>
-	</table>
+    [websvn-test:rev2]
+    <h1 style="float: left;">[websvn:repname] - [lang:DIFFREVS] [websvn:rev2] [lang:AND] [websvn:rev1]</h1>
+    [websvn-else]
+    <h1 style="float: left;">[websvn:repname] - [lang:DIFF]</h1>
+    [websvn-endtest]
+    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+    <div class="clearer">&nbsp;</div>
 [websvn-test:error]
-   <div id="error">[websvn:error]</div>
+    <div id="error">[websvn:error]</div>
 [websvn-else]
-      [websvn:curdirlinks] - [lang:DIFFREVS] <b>[websvn:rev2]</b> [lang:AND] <b>[websvn:rev1]</b>
-      <hr>
-  <p></p>
+    <div id="nav">
+      [websvn:curdirlinks]<br/>
+      [websvn-test:goyoungestlink]
+      [websvn:goyoungestlink] -
+      [websvn-endtest]
+      [websvn:filedetaillink] -
+      [websvn:blamelink] -
+      [websvn-test:downloadlink]
+      [websvn:downloadlink] -
+      [websvn-endtest]
+      [websvn:loglink]
+      [websvn-test:rssurl]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
   [websvn-test:warning]
-  <div class="warning">[websvn:warning]</div>
+    <div id="warning">[websvn:warning]</div>
   [websvn-else]
-   [websvn-test:noprev]
-     [lang:NOPREVREV]. [websvn:filedetaillink]
-   [websvn-else]
-      <p>
-      <center>
-      [websvn-test:showcompactlink]
-        [websvn:showcompactlink]
+    [websvn-test:noprev]
+    <div id="warning">[lang:NOPREVREV].</div>
+    [websvn-else]
+    <center>
+    [websvn-test:showcompactlink]
+      [websvn:showcompactlink] -
+    [websvn-endtest]
+    [websvn-test:showalllink]
+      [websvn:showalllink] -
+    [websvn-endtest]
+    [websvn-test:regardwhitespacelink]
+      [websvn:regardwhitespacelink]
+    [websvn-endtest]
+    [websvn-test:ignorewhitespacelink]
+      [websvn:ignorewhitespacelink]
+    [websvn-endtest]
+    </center>
+    <table class="diff" width="100%" cellspacing="0">
+      <thead>
+      <tr>
+        <th width="50%"><b>[lang:REV] [websvn:rev2]</b></th>
+        <td width="5"></td>
+        <th width="50%"><b>[lang:REV] [websvn:rev1]</b></th>
+      </tr>
+      </thead>
+      [websvn-startlisting]
+      <tr>
+      [websvn-test:rev1lineno]
+        <th class="row1">[lang:LINE] [websvn:rev1lineno]...</th>
+        <td width="5" style="background: none;"></td>
+        <th class="row1">[lang:LINE] [websvn:rev2lineno]...</th>
+      [websvn-else]
+        <td class="[websvn:rev1diffclass]">[websvn:rev1line]</td>
+        <td width="5"></td>
+        <td class="[websvn:rev2diffclass]">[websvn:rev2line]</td>
       [websvn-endtest]
-      [websvn-test:showalllink]
-        [websvn:showalllink]
-      [websvn-endtest]
-      [websvn-test:regardwhitespacelink]
-        [websvn:regardwhitespacelink]
-      [websvn-endtest]
-      [websvn-test:ignorewhitespacelink]
-        [websvn:ignorewhitespacelink]
-      [websvn-endtest]
-      </center>
-      <p>
-   [websvn-test:warning]
-      <div class="warning">[websvn:warning]</div>
-   [websvn-else]
-      <table class="diff" width="100%" cellspacing="0">
-         <tr>
-            <th class="HdrClmnEnd" style="padding-bottom: 5px" width="50%" align="left"><b>[lang:REV] [websvn:rev2]</b></th>
-            <th width="5"></th>
-            <th class="HdrClmnEnd" style="padding-bottom: 5px" width="50%" align="left"><b>[lang:REV] [websvn:rev1]</b></th>
-         </tr>
-      
-         [websvn-startlisting]
-            [websvn-test:rev1lineno]
-               <tr>
-                  <td width="50%" style="padding: 3px 0 3px 0" align="center" class="row1"><b>[lang:LINE] [websvn:rev1lineno]...</b></td>
-                  <td width="5"></td>
-                  <td width="50%" style="padding: 3px 0 3px 0" align="center" class="row1"><b>[lang:LINE] [websvn:rev2lineno]...</b></td>
-               </tr>
-            [websvn-else]
-               <tr><td class="[websvn:rev1diffclass]">[websvn:rev1line]</td>
-               <td width="5"></td>
-               <td class="[websvn:rev2diffclass]">[websvn:rev2line]</td></tr>
-            [websvn-endtest]
-         [websvn-endlisting]
-      
-      </table>
-     [websvn-endtest]
-   [websvn-endtest]
+      </tr>
+      [websvn-endlisting]
+    </table>
+    [websvn-endtest]
+    [websvn-endtest]
   [websvn-endtest]
 [websvn-endtest]
 

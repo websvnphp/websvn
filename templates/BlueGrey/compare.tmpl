@@ -1,65 +1,61 @@
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
-  <tr>
-    <td align="left"><h1>[websvn:repname]</h1></td>
-    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
-  </tr>
-</table>
-
+    <h1 style="float: left;">[websvn:repname]</h1>
+    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+    <div class="clearer">&nbsp;</div>
 [websvn-test:error]
-   <div id="error">[websvn:error]</div>
+    <div id="error">[websvn:error]</div>
 [websvn-else]
-   [websvn:compare_form]
-   <table>
-      <tr><td>[lang:COMPPATH]&nbsp;</td><td>[websvn:compare_path1input] [lang:REV] [websvn:compare_rev1input]</td></tr>
-      <tr><td>[lang:WITHPATH]</td><td>[websvn:compare_path2input] [lang:REV] [websvn:compare_rev2input]</td></tr>
-   </table>
-   [websvn:compare_submit][websvn:compare_endform]
-   
-   [websvn-test:success]
-         <hr>
-         <p>[lang:CONVFROM] <b>[websvn:path1] ([lang:REV] [websvn:rev1])</b> [lang:TO] <b>[websvn:path2] ([lang:REV] [websvn:rev2])</b>
-         <p>
-         [websvn:revlink] &#124;
-         [websvn:regardwhitespacelink]
-         [websvn:ignorewhitespacelink]
-      <p>
-   [websvn-endtest]
-   
-   [websvn-startlisting]
+    <center>
+      [websvn:compare_form]
+      <table id="params">
+        <tr>
+          <td>[lang:COMPPATH]</td>
+          <td>[websvn:compare_path1input] [lang:REV] [websvn:compare_rev1input]</td>
+          <td rowspan="2">[websvn:compare_submit]</td>
+        </tr>
+        <tr>
+          <td>[lang:WITHPATH]</td>
+          <td>[websvn:compare_path2input] [lang:REV] [websvn:compare_rev2input]</td>
+        </tr>
+      </table>
+      [websvn:compare_endform]
+    [websvn-test:warning]
+      <div id="warning">[websvn:warning]</div>
+    [websvn-else]
+    [websvn-test:success]
+      <div id="nav">
+        [websvn:revlink] &#124;
+        [websvn-test:regardwhitespacelink]
+        [websvn:regardwhitespacelink]
+        [websvn-else]
+        [websvn:ignorewhitespacelink]
+        [websvn-endtest]
+      </div>
+    [websvn-endtest]
+    </center>
+    [websvn-startlisting]
       [websvn-test:newpath]
-         <p>
-         <div class="newpath">
-            <b>[websvn:newpath]</b><br>
+      <table class="comparison">
+        <thead>
+        <tr><th>[websvn:newpath]</th></tr>
+        </thead>
       [websvn-endtest]
-   
       [websvn-test:info]
-         [websvn:info]<br>
+        [websvn:info]<br>
       [websvn-endtest]
-   
       [websvn-test:difflines]
-         <div class="difflines">
-            <p>
-            [websvn:difflines]<br>
-            <table class="diff" cellspacing="0">
+        <tr class="row1"><th>[websvn:difflines]</th></tr>
       [websvn-endtest]
-      
       [websvn-test:diffclass]
-               <tr><td class="[websvn:diffclass]">[websvn:line]</td></tr>
+        <tr><td class="[websvn:diffclass]">[websvn:line]</td></tr>
       [websvn-endtest]
-   
-      [websvn-test:enddifflines]
-            </table>
-         </div>
-      [websvn-endtest]
-   
       [websvn-test:endpath]
-         </div>
-         <p><hr>
+      </table>
       [websvn-endtest]
-   
+      [websvn-test:endpath]
+      [websvn-endtest]
       [websvn-test:properties]
-         <p><i>[lang:PROPCHANGES]</i><p>
+        <p><i>[lang:PROPCHANGES]</i><p>
       [websvn-endtest]
-   
-   [websvn-endlisting]
+    [websvn-endlisting]
+  [websvn-endtest]
 [websvn-endtest]
