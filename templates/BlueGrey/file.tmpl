@@ -1,35 +1,35 @@
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
-  <tr>
-    <td align="left"><h1>[websvn:repname]</h1></td>
-    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
-  </tr>
-</table>
-
+    <h1 style="float: left;">[websvn:repname] - [lang:REV] [websvn:rev]</h1>
+    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+    <div class="clearer">&nbsp;</div>
 [websvn-test:error]
-   <div id="error">[websvn:error]</div>
+    <div id="error">[websvn:error]</div>
 [websvn-else]
-   [websvn:curdirlinks] - [lang:REV] <b>[websvn:rev]</b>
-   <p>
-    [websvn-test:goyoungestlink]
-     [websvn:goyoungestlink] -
+    <div id="nav">
+      [websvn:curdirlinks]
+      [websvn-test:mimelink]
+      - [websvn:mimelink]
+      [websvn-endtest]
+      <br/>
+      [websvn-test:goyoungestlink]
+      [websvn:goyoungestlink] -
+      [websvn-endtest]
+      [websvn:blamelink] -
+      [websvn-test:difflink]
+      [websvn:difflink] -
+      [websvn-endtest]
+      [websvn-test:downloadlink]
+      [websvn:downloadlink] -
+      [websvn-endtest]
+      [websvn:loglink]
+      [websvn-test:rssurl]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
+    [websvn-test:warning]
+    <div id="warning">[websvn:warning]</div>
+    [websvn-else]
+    <div id="listing">
+    [websvn-getlisting]
+    </div>
     [websvn-endtest]
-    [websvn-test:mimelink]
-     [websvn:mimelink] -
-    [websvn-endtest]
-    [websvn-test:difflink]
-     [websvn:difflink] -
-    [websvn-endtest]
-     [websvn:blamelink] -
-    [websvn-test:downloadlink]
-     [websvn:downloadlink] -
-    [websvn-endtest]
-     [websvn:loglink]
-   </p>
-   <hr />
-  [websvn-test:warning]
-  <div class="warning">[websvn:warning]</div>
-  [websvn-else]
-   [websvn-getlisting]
-   <hr />
-  [websvn-endtest]
 [websvn-endtest]

@@ -1,136 +1,102 @@
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
-  <tr>
-    <td align="left"><h1>[websvn:repname]</h1></td>
-    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
-  </tr>
-</table>
-
+    <h1 style="float: left;">[websvn:repname]</h1>
+    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+    <div class="clearer">&nbsp;</div>
 [websvn-test:error]
-   <div id="error">[websvn:error]</div>
+    <div id="error">[websvn:error]</div>
 [websvn-else]
-   <div style="float: right;"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
-   <div style="clear: right;"/>
+    <div style="float: right;">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    [websvn-test:warning]
+    [websvn-else]
+    <table cellpadding="2" cellspacing="0" class="outline">
+      <thead>
+      <tr><th colspan="2">[lang:REVINFO]</th></tr>
+      </thead>
+      <tr class="row0"><th>[lang:CURDIR]:</th><td>[websvn:path]</td></tr>
+      [websvn-test:goyoungestlink]
+      <tr class="row1"><th>[lang:REV] &amp; [lang:AUTHOR]:</th><td>[lang:REV] [websvn:rev] - [websvn:author] - [websvn:goyoungestlink]</td></tr>
+      [websvn-else]
+      <tr class="row1"><th>[lang:REV] &amp; [lang:AUTHOR]:</th><td>[lang:REV] [websvn:rev] - [websvn:author]</td></tr>
+      [websvn-endtest]
+      [websvn-test:restricted]
+      [websvn-else]
+      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:lastchangedrev] - [websvn:date]</td></tr>
+      <tr class="row1"><th>[lang:LOGMSG]:</th><td>[websvn:log]</td></tr>
+      [websvn-endtest]
+    </table>
+    [websvn-endtest]
+   
+    <div id="nav">
+      [websvn:curdirlinks]<br/>
+      [websvn:changeslink] - 
+      [websvn-test:comparelink]
+      [websvn:comparelink] -
+      [websvn-endtest]    
+      [websvn-test:downloadurl]
+      <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a> -
+      [websvn-endtest]
+      [websvn:loglink]
+      [websvn-test:rssurl]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
   [websvn-test:warning]
+    <div id="warning">[websvn:warning]</div>
   [websvn-else]
-   <table cellpadding="2" cellspacing="0" class="outline">
-   <tr><th colspan=2 class="HdrClmnEnd">[lang:REVINFO]</th></tr>
-   <tr><td class="CatClmn1" valign="top">[lang:CURDIR]:</td><td class="row1">[websvn:path]</td></tr>
-   <tr><td class="CatClmn0">[lang:REV] &amp; [lang:AUTHOR]:</td><td class="row0">[lang:REV] [websvn:rev] - [websvn:author]
-   [websvn-test:goyoungestlink]
-    - [websvn:goyoungestlink]
-   [websvn-endtest]
-   </td></tr>
-   [websvn-test:restricted]
-   [websvn-else]
-      <tr><td class="CatClmn1" valign="top">[lang:LASTMOD]:</td><td class="row1">[lang:REV] [websvn:lastchangedrev] - [websvn:date]</td></tr>
-      <tr><td class="CatClmn0" valign="top">[lang:LOGMSG]:</td><td class="row0">[websvn:log]</td></tr>
-   [websvn-endtest]
-   </table>
-  [websvn-endtest]
-   
-   [websvn-defineicons]
-   dir=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[FOLDER]">
-   diropen=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[OPEN-FOLDER]">
-   *=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/file.png" alt="[FILE]">
-   .c=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filec.png" alt="[C-FILE]">
-   .cpp=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filecpp.png" alt="[CPP-FILE]">
-   .h=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/fileh.png" alt="[H-FILE]">
-   .html=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filehtml.png" alt="[HTML-FILE]">
-   .java=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filejava.png" alt="[JAVA-FILE]">
-   .m=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filem.png" alt="[M-FILE]">
-   .py=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filepy.png" alt="[PY-FILE]">
-   .s=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/files.png" alt="[S-FILE]">
-   
-   i-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/i-node.png" alt="[NODE]">
-   t-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/t-node.png" alt="[NODE]">
-   l-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/l-node.png" alt="[NODE]">
-   e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/e-node.png" alt="[NODE]">
-   [websvn-enddefineicons]
-   
-   <p><hr>
-   [websvn:curdirlinks]
-   
-   - <a href="[websvn:changesurl]">[lang:CHANGES]</a>
-   - <a href="[websvn:logurl]">[lang:VIEWLOG]</a>
-    
-   [websvn-test:comparelink]
-    - [websvn:comparelink]
-   [websvn-endtest]    
-   [websvn-test:downloadurl]
-    - <a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a>
-   [websvn-endtest]
-   [websvn-test:rssurl]
-    - <a href="[websvn:rssurl]"><img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"></a>
-   [websvn-endtest]
-   <p>
-  [websvn-test:warning]
-  <div class="warning">[websvn:warning]</div>
-  [websvn-else]
-   [websvn:compare_form]
-      <table cellpadding="2" cellspacing="0" width="100%" class="outline">
-         <tr>
-            <th class="HdrClmn" width="100%"><b>[lang:PATH]</b></th>
-            [websvn-test:allowdownload]
-               [websvn-test:rssurl]
-                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
-                  <th class="HdrClmn"><b>[lang:DOWNLOAD]</b></th>
-                  <th class="HdrClmnEnd"><b>RSS</b></th>
-               [websvn-else]
-                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
-                  <th class="HdrClmnEnd"><b>[lang:DOWNLOAD]</b></th>
-               [websvn-endtest]
-            [websvn-else]
-               [websvn-test:rssurl]
-                  <th class="HdrClmn"><b>[lang:VIEWLOG]</b></th>
-                  <th class="HdrClmnEnd"><b>RSS</b></th>
-               [websvn-else]
-                  <th class="HdrClmnEnd"><b>[lang:VIEWLOG]</b></th>
-               [websvn-endtest]
-            [websvn-endtest]
-         </tr>
-         [websvn-startlisting]
-         <tr>
-            <td valign="middle" style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">
-               [websvn:compare_box]
-               [websvn-treenode]
-               [websvn-icon]
-               [websvn:filelink]
-            </td>
-            [websvn-test:allowdownload]
-               <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]"><a href="[websvn:logurl]">[lang:LOG]</a></td>
-               [websvn-test:rssurl]
-                  <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">
-                     [websvn-test:downloadurl]
-                        <a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a>
-                     [websvn-endtest]
-                     [websvn-test:downloadplainurl]
-                       <a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a>
-                     [websvn-endtest]
-                  </td>
-                  <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]"><a href="[websvn:rssurl]"><img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"></a></td>
-               [websvn-else]
-                  <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">
-                     [websvn-test:downloadurl]
-                        <a href="[websvn:downloadurl]" rel="nofollow">[lang:TARBALL]</a>
-                     [websvn-endtest]
-                     [websvn-test:downloadplainurl]
-                       <a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a>
-                     [websvn-endtest]
-                  </td>
-               [websvn-endtest]
-            [websvn-else]
-               [websvn-test:rssurl]
-                  <td style="border-right: 1px solid black; padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR]<a href="[websvn:logurl]">[lang:VIEWLOG]</a>[lang:ENDNOBR]</td>
-                  <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]"><a href="[websvn:rssurl]"><img style="border: 0;" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"></a></td>
-               [websvn-else]
-                  <td style="padding: 0 2px 0 2px;" class="row[websvn:rowparity]">[lang:NOBR]<a href="[websvn:logurl]">[lang:VIEWLOG]</a>[lang:ENDNOBR]</td>
-               [websvn-endtest]
-            [websvn-endtest]   
-         </tr>
-         [websvn-endlisting]
+[websvn-defineicons]
+dir=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[FOLDER]"/>
+diropen=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[OPEN-FOLDER]"/>
+*=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/file.png" alt="[FILE]"/>
+.c=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filec.png" alt="[C-FILE]"/>
+.cpp=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filecpp.png" alt="[CPP-FILE]"/>
+.h=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/fileh.png" alt="[H-FILE]"/>
+.html=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filehtml.png" alt="[HTML-FILE]"/>
+.java=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filejava.png" alt="[JAVA-FILE]"/>
+.m=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filem.png" alt="[M-FILE]"/>
+.py=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filepy.png" alt="[PY-FILE]"/>
+.s=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/files.png" alt="[S-FILE]"/>
+
+i-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/i-node.png" alt="[NODE]"/>
+t-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/t-node.png" alt="[NODE]"/>
+l-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/l-node.png" alt="[NODE]"/>
+e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/e-node.png" alt="[NODE]"/>
+[websvn-enddefineicons]
+    [websvn:compare_form]
+      <table cellpadding="2" cellspacing="0" width="100%" id="listing">
+        <thead>
+        <tr>
+          <th width="100%">[lang:PATH]</th>
+          <th nowrap="nowrap">[lang:VIEWLOG]</th>
+        [websvn-test:allowdownload]
+          <th>[lang:DOWNLOAD]</th>
+        [websvn-endtest]
+        [websvn-test:rssurl]
+          <th>RSS</th>
+        [websvn-endtest]
+        </tr>
+        </thead>
+      [websvn-startlisting]
+        <tr class="row[websvn:rowparity]">
+          <td valign="middle" class="row[websvn:rowparity]">
+            [websvn:compare_box]
+            [websvn-treenode]
+            [websvn-icon]
+            [websvn:filelink]
+          </td>
+          <td><a href="[websvn:logurl]">[lang:LOG]</a></td>
+          [websvn-test:allowdownload]
+          [websvn-test:downloadurl]
+          <td><a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a></td>
+          [websvn-endtest]
+          [websvn-test:downloadplainurl]
+          <td><a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a></td>
+          [websvn-endtest]
+          [websvn-endtest]
+          [websvn-test:rssurl]
+          <td><a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a></td>
+          [websvn-endtest]
+        </tr>
+      [websvn-endlisting]
       </table>
-   <p>
-   [websvn:compare_submit][websvn:compare_endform]
-   <hr>
+    [websvn:compare_submit][websvn:compare_endform]
   [websvn-endtest]
 [websvn-endtest]

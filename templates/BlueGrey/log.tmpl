@@ -1,87 +1,77 @@
-<table cellspacing="0" cellpadding="0" border="0" width="100%">
-  <tr>
-    [websvn-test:rev]
-    <td align="left"><h1>[websvn:repname] - [lang:REV] [websvn:rev]</h1></td>
-    [websvn-else]
-    <td align="left"><h1>[websvn:repname]</h1></td>
-    [websvn-endtest]
-    <td align="right"><b>[lang:PROJECTS]:</b> [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</td>
-  </tr>
-</table>
-
+    <h1 style="float: left;">[websvn:repname] - [lang:REV] [websvn:rev]</h1>
+    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+    <div class="clearer">&nbsp;</div>
 [websvn-test:error]
-   <div id="error">[websvn:error]</div>
+    <div id="error">[websvn:error]</div>
 [websvn-else]
-   <div style="float: right;"><b>[lang:REV]:</b>[websvn:revision_form][websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
-[websvn:curdirlinks]<p>
-[websvn-test:goyoungestlink]
-   [websvn:goyoungestlink]<p>
-[websvn-endtest]
-   <div style="clear: right;"/>
-<hr>
-  [websvn-test:warning]
-  <div class="warning">[websvn:warning]</div>
-  [websvn-else]
-   [websvn:logsearch_form]
-     <p style="text-align: center;">
-      <b>[lang:FILTER]</b>
-     </p>
-     <p style="text-align: center;">
-      [lang:STARTLOG]:[websvn:logsearch_startbox] [lang:ENDLOG]:[websvn:logsearch_endbox] [lang:MAXLOG]:[websvn:logsearch_maxbox] [lang:SEARCHLOG]:[websvn:logsearch_inputbox] [lang:SHOWALL]:[websvn:logsearch_showall]
-      [websvn:logsearch_submit]
-      [websvn-test:logsearch_clearloglink]
-        </p>
-        <p style="text-align: center;">
-         <font size="-1">[websvn:logsearch_clearloglink]</font>
+    <div style="float: right;">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    <div id="nav">
+      [websvn:curdirlinks]
+      [websvn-test:goyoungestlink]
+      - [websvn:goyoungestlink]
       [websvn-endtest]
-     </p>
-   [websvn:logsearch_endform]
-   
-   [websvn-test:logsearch_nomatches]
-      <p style="text-align: center;">[lang:NORESULTS]</p>
-   [websvn-endtest]
-   
-   [websvn-test:error]
-      <p style="text-align: center;">[websvn:error]</p>
-   [websvn-endtest]
+      <br/>
+      [websvn-test:filedetaillink]
+      [websvn:filedetaillink] -
+      [websvn:blamelink] -
+      [websvn:difflink]
+      [websvn-else]
+      [websvn:directorylink]
+      [websvn-endtest]
+      [websvn-test:rsslink]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
+    <div class="clearer">&nbsp;</div>
+  [websvn-test:warning]
+    <div id="warning">[websvn:warning]</div>
+  [websvn-else]
+    <center>
+    [websvn:logsearch_form]
+    [lang:STARTLOG]:[websvn:logsearch_startbox] [lang:ENDLOG]:[websvn:logsearch_endbox] [lang:MAXLOG]:[websvn:logsearch_maxbox] [lang:SEARCHLOG]:[websvn:logsearch_inputbox] [lang:SHOWALL]:[websvn:logsearch_showall]
+    [websvn:logsearch_submit]
+    [websvn-test:logsearch_clearloglink]
+    <br/>[websvn:logsearch_clearloglink]
+    [websvn-endtest]
+    [websvn:logsearch_endform]
+    [websvn-test:logsearch_nomatches]
+      <p>[lang:NORESULTS]</p>
+    [websvn-endtest]
+    [websvn-test:logsearch_nomorematches]
+    <p>[lang:NOMORERESULTS]</p>
+    [websvn-endtest]
+    [websvn:logsearch_moreresultslink]
+    <span id="logpagelinks">[websvn:pagelinks]</span> &nbsp; &nbsp; [websvn:showalllink]
+    </center>
 
-   [websvn-test:logsearch_resultsfound]
-      [websvn:compare_form]
-         <table cellpadding="2" cellspacing="0" width="100%">
-            <tr>
-               <th class="HdrClmn">[lang:REV]</th>
-               <th class="HdrClmn">[lang:PATH]</th>
-               <th class="HdrClmn">[lang:AUTHOR]</th>
-               <th class="HdrClmn">[lang:AGE]</th>
-               <th class="HdrClmnEnd">[lang:LOGMSG]</th>
-            </tr>
-         
-            [websvn-startlisting]
-            <tr>
-               <td style="border-right: 1px solid black; white-space: nowrap;" valign="top" class="row[websvn:rowparity]">[websvn:compare_box][websvn:revlink]</td>
-               <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revpathlink]</td>
-               <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]">[websvn:revauthor]</td>
-               [websvn-test:showageinsteadofdate]
-                 <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]" title="[websvn:revdate]">[websvn:revage]</td>
-               [websvn-else]
-                 <td style="border-right: 1px solid black" valign="top" class="row[websvn:rowparity]" title="[websvn:revage]">[websvn:revdate]</td>
-               [websvn-endtest]
-               <td valign="top" class="row[websvn:rowparity]">[websvn:revlog]</td>
-            </tr>
-            [websvn-endlisting]
-         </table>
-         <p>[websvn:compare_submit]</p>
-      [websvn:compare_endform]
-   [websvn-endtest]
-   
-   [websvn-test:logsearch_nomorematches]
-      <p style="text-align: center;">[lang:NOMORERESULTS]</p>
-   [websvn-endtest]
-   <center>
-   <p>[websvn:logsearch_moreresultslink]</p>
-   <hr>
-   <p class="logpagelinks">[websvn:pagelinks]</p>
-   <p>[websvn:showalllink]</p>
-   </center>
-[websvn-endtest]
+    [websvn-test:logsearch_resultsfound]
+    [websvn:compare_form]
+      <table cellpadding="2" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th>[lang:REV]</th>
+          <th>[lang:PATH]</th>
+          <th>[lang:AUTHOR]</th>
+          <th>[lang:AGE]</th>
+          <th>[lang:LOGMSG]</th>
+        </tr>
+        </thead>
+        [websvn-startlisting]
+        <tr class="row[websvn:rowparity]">
+          <td style="white-space: nowrap;">[websvn:compare_box][websvn:revlink]</td>
+          <td>[websvn:revpathlink]</td>
+          <td>[websvn:revauthor]</td>
+          [websvn-test:showageinsteadofdate]
+          <td title="[websvn:revdate]">[websvn:revage]</td>
+          [websvn-else]
+          <td title="[websvn:revage]">[websvn:revdate]</td>
+          [websvn-endtest]
+          <td valign="top" class="row[websvn:rowparity]">[websvn:revlog]</td>
+        </tr>
+        [websvn-endlisting]
+      </table>
+      <center>[websvn:compare_submit]</center>
+    [websvn:compare_endform]
+    [websvn-endtest]
+  [websvn-endtest]
 [websvn-endtest]  
