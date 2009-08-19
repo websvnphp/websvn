@@ -51,11 +51,11 @@ code {
 	border-bottom: 1px solid #555;
 }
 
-#projects, #revision {
+div#projects, div#revision {
 	float: right;
 }
 
-#revision, #error {
+div#revision, div#error {
 	clear: both;
 }
 
@@ -136,7 +136,7 @@ div#error, div#warning {
 	display: table;
 	padding: 5px;
 	margin: 10px auto;
-	border:  1px solid;
+	border: 1px solid;
 }
 
 div#error {
