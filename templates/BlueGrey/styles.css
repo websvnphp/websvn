@@ -51,11 +51,11 @@ code {
 	border-bottom: 1px solid #555;
 }
 
-div#projects, div#revision {
+#projects, #revjump {
 	float: right;
 }
 
-div#revision, div#error {
+#revjump, #error {
 	clear: both;
 }
 
