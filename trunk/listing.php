@@ -246,7 +246,7 @@ $vars['date'] = $logEntry ? $logEntry->date : '';
 $vars['author'] = $logEntry ? $logEntry->author : '';
 $vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
 
-$vars['changesurl'] = $config->getURL($rep, $path, 'revision').$passRevString;
+$vars['changesurl'] = $config->getURL($rep, ($path == '/' ? '' : $path), 'revision').$passRevString;
 $vars['changeslink'] = '<a href="'.$vars['changesurl'].'">'.$lang['CHANGES'].'</a>';
 
 if ($history && sizeof($history->entries) > 1) {
