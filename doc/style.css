@@ -2,70 +2,120 @@ body {
 	font-family: 'Trebuchet MS', Verdana, Arial, sans-serif;
 	font-size: 10pt;
 	padding: 0;
-	margin: 14px 28px;
-	color: gray;
+	margin: 15px;
+	line-height: 1.35em;
 }
+
 h1, h2, h3 {
-	font-weight: normal;
+	margin: 15px 0 10px;
 }
+
+h2, h3 {
+	border-bottom: 1px solid gray;
+}
+
 h1 {
 	font-size: 1.7em;
-	color: gray;
-	border-bottom: 1px solid gray;
-	padding: 10px 5px;
-	margin: 0;
+	padding-bottom: 0;
+	margin-bottom: 20px;
+	border: none;
+	text-align: center;
 }
+
 h2 {
-	font-size: 1.4em;
-	margin: 0;
-	padding: 10px 5px;
-	border-bottom: 1px solid gray;
+	padding-bottom: 4px;
+	font-size: 1.5em;
+}
+
+h3 {
+	padding-bottom: 2px;
+	font-size: 1.25em;
+	margin-left: 10px;
+}
+
+h4 {
+	font-size: 1.1em;
+	margin: 8px 10px 4px 20px;
 }
 
 a, a:visited {
 	color: black;
-	text-decoration: none;
+}
+
+a:visited {
+	color: #777;
 }
 
 a:hover, a:active {
-	background-color: khaki;
+	color: #555;
+	text-decoration: none;
 }
 
-.misc {
-	width: 250px;
-	float: left;
-	margin: 0;
-	padding: 0;
-	margin-top: 22px;
+p {
+	margin: 8px 0 8px 20px;
 }
 
-.misc ul {
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th {
+	text-align: left;
+	font-weight: normal;
+	padding-left: 30px;
+	padding-right: 5px;
+	width: 25%;
+}
+
+th, td {
+	vertical-align: top;
+}
+
+pre, code {
+	background-color: #eee;
+	border: 1px dotted lightgray;
+}
+
+pre {
+	white-space: pre-wrap;
+	margin-left: 30px;
+	padding: 3px;
+	overflow: hidden;
+	line-height: 1.2em;
+}
+
+code {
+}
+
+dt {
+	margin-top: 4px;
+	font-weight: bold;
+}
+
+#contents {
+	display: table;
+	border: 1px solid gray;
+	float: right;
+	background-color: white;
+	margin: -5px 0 0 15px;
+}
+
+#contents h2 {
+	padding: 4px 5px;
+	margin-top: 0;
+	margin-bottom: 5px;
+	background-color: #eee;
+}
+
+#contents ul {
 	list-style-type: none;
 	margin: 0;
-	padding: 0;
-}
-.misc ul li {
-  padding:3px 0 5px 10px;
-  border-top:1px dotted lightgray;  
-
+	padding: 0 5px 5px;
+	line-height: 1.2em;
 }
 
-.content {
-	padding: 0;
-	margin: 0;
-	margin-left: 270px;
-	margin-top: 22px;
-}
-
-.code {
-	border: 1px dotted lightgray;
-	background-color: #f7f7f7;
+#contents ul ul {
 	margin-left: 20px;
-	margin-right: 20px;
-	padding: 5px;
-}
-
-em {
-	font-style: normal;
-	color: #e25f53;
+	padding: 0;
 }
