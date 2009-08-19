@@ -260,7 +260,7 @@ if (!empty($history)) {
 
       $listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$compareValue.'" onclick="checkCB(this)" />';
       
-      $url = $config->getURL($rep, '', 'revision').$thisRevStr;
+      $url = $config->getURL($rep, $rpath, 'revision').$thisRevStr;
       $listing[$index]['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
       
       $url = $config->getURL($rep, $rpath, ($isDir ? 'dir' : 'file')).$thisRevStr;
