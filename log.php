@@ -80,7 +80,12 @@ $maxperpage = 20;
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
-$history = $svnrep->getLog($path, 'HEAD', '', false, 1, $peg);
+$history = $svnrep->getLog($path, 'HEAD', '', false, 1, ($path == '/') ? '' : $peg);
+if (!$history) {
+  unset($vars['error']);
+  $history = $svnrep->getLog($path, '', '', false, 1, ($path == '/') ? '' : $peg);
+}
+
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
 if (empty($startrev)) {
@@ -94,7 +99,6 @@ if (empty($endrev)) {
 } else if ($endrev != 'HEAD' && $endrev != 'BASE' && $endrev != 'PREV' && $endrev != 'COMMITTED') {
   $endrev = (int)$endrev;
 }
-
 
 if (empty($rev)) {
   $rev = $youngest;

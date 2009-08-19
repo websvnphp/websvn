@@ -90,7 +90,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
   $last_index = 0;
   $accessToThisDir = $rep->hasReadAccess($path, false);
   
-  $downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev : '';
+  $downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev.'&amp;' : '';
   
   $openDir = false;
   $logList = $svnrep->getList($path, $rev);
@@ -122,7 +122,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       $listing[$index]['level'] = ($treeview) ? $level : 0;
       $listing[$index]['node'] = 0; // t-node
       $listing[$index]['filelink'] = fileLink($path, $file);
-      $listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$passRevString.$urlPartIsDir;
+      $listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').($passRevString ? $passRevString.'&amp;' : '').$urlPartIsDir;
       
       if ($treeview) {
         $listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.fileLink($path, $file, true).'@'.$passrev.'" onclick="checkCB(this)" />';
@@ -139,7 +139,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       if ($rep->isDownloadAllowed($path.$file)) {
         $downloadurl = $config->getURL($rep, $path.$file, 'dl').$downloadRevString;
         if ($isDir) {
-          $listing[$index]['downloadurl'] = $downloadurl.'&amp;isdir=1';
+          $listing[$index]['downloadurl'] = $downloadurl.'isdir=1';
           $listing[$index]['downloadplainurl'] = '';
         } else {
           $listing[$index]['downloadplainurl'] = $downloadurl;
@@ -199,7 +199,7 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
-$history = $svnrep->getLog($path, '', '', false, 2, $peg);
+$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
 // Unless otherwise specified, we get the log details of the latest change
@@ -232,7 +232,11 @@ createDirLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($passrev, $peg);
 
 if ($rev < $youngest) {
-  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg : $rev);
+  if ($path == '/') {
+    $vars['goyoungesturl'] = $config->getURL($rep, '', 'dir');
+  } else {
+    $vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev);
+  }
   $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
@@ -266,7 +270,7 @@ if ($rep->getHideRss()) {
 $subs = explode('/', $path);
 $level = count($subs) - 2;
 if ($rep->isDownloadAllowed($path) && !isset($vars['warning'])) {
-  $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$passRevString.'&amp;isdir=1';
+  $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').($passRevString ? $passRevString.'&amp;' : '').'isdir=1';
 }
 
 $url = $config->getURL($rep, '/', 'comp');
