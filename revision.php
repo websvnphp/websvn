@@ -95,13 +95,13 @@ $thisRevString = createRevAndPegString($passrev, ($peg ? $peg : $passrev));
 foreach ($changes as $file) {
   $linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
   $listing[] = array(
-    'file' => $file->path,
+    'path'     => $file->path,
     'added'    => $file->action == 'A',
     'deleted'  => $file->action == 'D',
     'modified' => $file->action == 'M',
      // TODO: Figure out how to differentiate directories (detailurl / logurl)
     'detailurl' => $config->getURL($rep, $file->path, 'file').$linkRevString,
-    // For deleted resources, make log link start at previous revision
+    // For deleted resources, the log link points to the previous revision.
     'logurl' => $config->getURL($rep, $file->path, 'log').$linkRevString,
     'diffurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').$linkRevString : '',
     'blameurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').$linkRevString : '',
@@ -137,8 +137,8 @@ if (!$rep->hasReadAccess($path, true)) {
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
 }
 
-$vars["template"] = "revision";
+$vars['template'] = 'revision';
 $template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
-parseTemplate($template."header.tmpl", $vars, $listing);
-parseTemplate($template."revision.tmpl", $vars, $listing);
-parseTemplate($template."footer.tmpl", $vars, $listing);
+parseTemplate($template.'header.tmpl', $vars, $listing);
+parseTemplate($template.'revision.tmpl', $vars, $listing);
+parseTemplate($template.'footer.tmpl', $vars, $listing);
