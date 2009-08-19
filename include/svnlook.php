@@ -878,7 +878,8 @@ class SVNRepository {
   function getList($path, $rev = 0) {
     global $config, $curList, $vars, $lang;
 
-    $xml_parser = xml_parser_create("UTF-8");
+    $contentEncoding = $this->repConfig->getContentEncoding();
+    $xml_parser = xml_parser_create(($contentEncoding) ? $contentEncoding : "UTF-8");
     xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
     xml_set_element_handler($xml_parser, "listStartElement", "listEndElement");
     xml_set_character_data_handler($xml_parser, "listCharacterData");
@@ -978,7 +979,8 @@ class SVNRepository {
   function getLog($path, $brev = '', $erev = 1, $quiet = false, $limit = 2, $peg = '') {
     global $config, $curLog, $vars, $lang;
 
-    $xml_parser = xml_parser_create("UTF-8");
+    $contentEncoding = $this->repConfig->getContentEncoding();
+    $xml_parser = xml_parser_create(($contentEncoding) ? $contentEncoding : "UTF-8");
     xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
     xml_set_element_handler($xml_parser, "logStartElement", "logEndElement");
     xml_set_character_data_handler($xml_parser, "logCharacterData");
