@@ -80,7 +80,7 @@ $maxperpage = 20;
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
-$history = $svnrep->getLog($path, '', '', false, 1, $peg);
+$history = $svnrep->getLog($path, 'HEAD', '', false, 1, $peg);
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
 if (empty($startrev)) {
@@ -157,7 +157,11 @@ if ($rep->getHideRss()) {
 }
 
 if ($rev != $youngest) {
-  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'log').($isDir?'isdir=1&amp;':'').($peg ? 'peg='.$peg : '');
+  if ($path == '/') {
+    $vars['goyoungesturl'] = $config->getURL($rep, '', 'log').($isDir?'isdir=1':'');
+  } else {
+    $vars['goyoungesturl'] = $config->getURL($rep, $path, 'log').'peg='.($peg ? $peg: $rev).'&amp;'.($isDir?'isdir=1':'');
+  }
   $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
 
