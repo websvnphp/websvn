@@ -474,23 +474,20 @@ function createProjectSelectionForm() {
 
 // Function to create the revision selection HTML form
 function createRevisionSelectionForm() {
-  global $config, $vars, $rep, $lang, $showchanged, $rev;
-
+  global $config, $lang, $vars, $rep, $path, $rev, $peg;
+  
   if ($rep == null)
     return;
-  if ($rev == 0) {
-    $thisrev = "HEAD";
-  } else {
-    $thisrev = $rev;
-  }
-
-  list($url, $params) = $config->getUrlParts($rep, '', 'revision');
+  
+  $params = array('repname' => $rep->getDisplayName(), 'path' => $path, 'peg' => ($peg ? $peg : $rev));
   $hidden = '';
-  foreach ($params as $k => $v) {
-    $hidden .= '<input type="hidden" name="'.$k.'" value="'.htmlspecialchars($v).'" />';
+  foreach ($params as $key => $value) {
+    if ($value)
+      $hidden .= '<input type="hidden" name="'.$key.'" value="'.htmlspecialchars($value).'" />';
   }
-  $vars['revision_form'] = '<form action="'.$url.'" method="get" id="revisionform">'.$hidden;
-  $vars['revision_input'] = '<input type="text" size="5" name="rev" value="'.$thisrev.'" />';
+  // The blank "action" attribute makes form link back to the containing page.
+  $vars['revision_form'] = '<form action="" method="get" id="revisionform">'.$hidden;
+  $vars['revision_input'] = '<input type="text" size="5" name="rev" value="'.($rev ? $rev : 'HEAD').'" />';
   $vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
   $vars['revision_endform'] = '</form>';
 }
