@@ -63,23 +63,34 @@ if ($path == '' || $path{0} != '/') {
   $ppath = $path;
 }
 
-if ($passrev != 0 && $passrev != $headrev && $youngest != 0) {
-  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
-  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
-}
-
-$vars['listingurl'] = $config->getURL($rep, $path, 'dir').'rev='.$passrev;
-$vars['listinglink'] = '<a href="'.$vars['listingurl'].'">'.$lang['LISTING'].'</a>';
-
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
 $vars['action'] = '';
 $vars['rev'] = $rev;
-$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+//$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars['lastchangedrev'] = $logrev;
 $vars['date'] = $logEntry ? $logEntry->date: '';
 $vars['author'] = $logEntry ? $logEntry->author: '';
 $vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))): '';
+
+createDirLinks($rep, $ppath, $passrev, $peg);
+$passRevString = createRevAndPegString($passrev, $peg);
+
+$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'&amp;isdir=1';
+$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
+
+$vars['listingurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
+$vars['listinglink'] = '<a href="'.$vars['listingurl'].'">'.$lang['LISTING'].'</a>';
+
+if ($rep->getHideRss()) {
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
+  $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
+}
+
+if ($passrev != 0 && $passrev != $headrev && $youngest != 0) {
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
+  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+}
 
 $changes = $logEntry ? $logEntry->mods : array();
 if (!is_array($changes)) {
@@ -111,11 +122,6 @@ foreach ($changes as $file) {
   $row = 1 - $row;
 }
 
-createDirLinks($rep, $ppath, $passrev, $peg);
-
-$vars['logurl'] = $config->getURL($rep, $path, 'log').'rev='.$passrev.'&amp;isdir=1';
-$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
-
 if ($rev != $headrev) {
   $history = $svnrep->getLog($ppath, $rev, '', false, 2, $peg);
 }
@@ -123,11 +129,6 @@ if ($rev != $headrev) {
 if ($history && isset($history->entries[1]->rev)) {
   $vars['compareurl'] = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
   $vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
-}
-
-if ($rep->getHideRss()) {
-  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
-  $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
 
