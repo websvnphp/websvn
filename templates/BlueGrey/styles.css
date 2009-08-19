@@ -10,6 +10,7 @@ body {
 h1 {
 	font-size: 150%;
 	margin: 0;
+	float: left;
 }
 h2 {
 	font-size: 125%;
@@ -48,6 +49,22 @@ code {
 #header {
 	padding: 5px 0;
 	border-bottom: 1px solid #555;
+}
+
+#projects, #revision {
+	float: right;
+}
+
+#revision, #error {
+	clear: both;
+}
+
+#curdirlinks {
+	clear: left;
+	padding-top: 5px;
+}
+#nav {
+	margin: 10px 0;
 }
 
 #content {
@@ -98,10 +115,6 @@ tr.row1 th {
 th.row1 {
 	background-color: #d0d0ee;
 	border-right: 1px solid #555;
-}
-
-#content #nav {
-	margin: 10px 0;
 }
 div.clearer {
 	clear: both;

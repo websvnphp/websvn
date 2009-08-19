@@ -1,32 +1,29 @@
-    <h1 style="float: left;">[websvn:repname]</h1>
-    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
-    <div class="clearer">&nbsp;</div>
+    <h1>[websvn:repname] - [lang:REV] [websvn:rev]</h1>
+    <div id="projects">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
 [websvn-test:error]
     <div id="error">[websvn:error]</div>
 [websvn-else]
-    <div style="float: right;">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    <div id="revision">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    <div id="curdirlinks">[websvn:curdirlinks]</div>
     [websvn-test:warning]
     [websvn-else]
     <table cellpadding="2" cellspacing="0" class="outline">
       <thead>
       <tr><th colspan="2">[lang:REVINFO]</th></tr>
       </thead>
-      <tr class="row0"><th>[lang:CURDIR]:</th><td>[websvn:path]</td></tr>
-      [websvn-test:goyoungestlink]
-      <tr class="row1"><th>[lang:REV] &amp; [lang:AUTHOR]:</th><td>[lang:REV] [websvn:rev] - [websvn:author] - [websvn:goyoungestlink]</td></tr>
-      [websvn-else]
-      <tr class="row1"><th>[lang:REV] &amp; [lang:AUTHOR]:</th><td>[lang:REV] [websvn:rev] - [websvn:author]</td></tr>
-      [websvn-endtest]
       [websvn-test:restricted]
       [websvn-else]
-      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:lastchangedrev] - [websvn:date]</td></tr>
+      [websvn-test:goyoungestlink]
+      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:lastchangedrev] - [websvn:author] - [websvn:date] - [websvn:goyoungestlink]</td></tr>
+      [websvn-else]
+      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:lastchangedrev] - [websvn:author] - [websvn:date]</td></tr>
+      [websvn-endtest]
       <tr class="row1"><th>[lang:LOGMSG]:</th><td>[websvn:log]</td></tr>
       [websvn-endtest]
     </table>
     [websvn-endtest]
    
     <div id="nav">
-      [websvn:curdirlinks]<br/>
       [websvn:changeslink] - 
       [websvn-test:comparelink]
       [websvn:comparelink] -

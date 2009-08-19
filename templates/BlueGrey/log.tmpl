@@ -1,16 +1,14 @@
-    <h1 style="float: left;">[websvn:repname] - [lang:REV] [websvn:rev]</h1>
-    <div style="float: right;">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
-    <div class="clearer">&nbsp;</div>
+    <h1>[websvn:repname]</h1>
+    <div id="projects">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
 [websvn-test:error]
     <div id="error">[websvn:error]</div>
 [websvn-else]
-    <div style="float: right;">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    <div id="revision">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    <div id="curdirlinks">[websvn:curdirlinks]</div>
     <div id="nav">
-      [websvn:curdirlinks]
       [websvn-test:goyoungestlink]
-      - [websvn:goyoungestlink]
+      [websvn:goyoungestlink] -
       [websvn-endtest]
-      <br/>
       [websvn-test:filedetaillink]
       [websvn:filedetaillink] -
       [websvn:blamelink] -
@@ -22,7 +20,6 @@
       - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
       [websvn-endtest]
     </div>
-    <div class="clearer">&nbsp;</div>
   [websvn-test:warning]
     <div id="warning">[websvn:warning]</div>
   [websvn-else]
