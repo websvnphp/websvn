@@ -319,8 +319,8 @@ $extGeshi = array(
 require 'languages/english.php';
 
 // Get the user's personalised config (requires the locwebsvnhttp stuff above)
-if (file_exists(dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php')) {
-  require_once 'config.php';
+if (file_exists('include/config.php')) {
+  require_once 'include/config.php';
 } else {
   die('File "include/config.php" does not exist, please create one. The example file "include/distconfig.php" may be copied and modified as needed.');
 }
