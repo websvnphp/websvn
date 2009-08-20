@@ -199,18 +199,21 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 if ($rep) {
 $svnrep = new SVNRepository($rep);
 
-$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
+if (!$history) {
+  unset($vars['error']);
+  $history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+}
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
 // Unless otherwise specified, we get the log details of the latest change
-$logrev = ($passrev) ? $passrev : $youngest;
-
-if ($logrev != $youngest) {
-  $history = $svnrep->getLog($path, $logrev, '', false, 2, $peg);
+$lastChangedRev = ($passrev) ? $passrev : $youngest;
+if ($lastChangedRev != $youngest) {
+  $history = $svnrep->getLog($path, $lastChangedRev, '', false, 2, $peg);
 }
 $logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : 0;
 
-$headlog = $svnrep->getLog('/', '', '', true, 1, $peg);
+$headlog = $svnrep->getLog('/', '', '', true, 1);
 $headrev = ($headlog && isset($headlog->entries[0])) ? $headlog->entries[0]->rev : 0;
 
 // If we're not looking at a specific revision, get the HEAD revision number
@@ -245,7 +248,7 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 $vars['action'] = '';
 $vars['rev'] = $rev;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
-$vars['lastchangedrev'] = $logrev;
+$vars['lastchangedrev'] = $lastChangedRev;
 $vars['date'] = $logEntry ? $logEntry->date : '';
 $vars['author'] = $logEntry ? $logEntry->author : '';
 $vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
