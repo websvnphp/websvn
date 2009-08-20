@@ -54,11 +54,11 @@ strong, b {
 #select form, #select div {
   display: inline;
 }
-#input {
-  margin:-3.7em 2% 0 2%;
+#revjump {
+  margin:-3.7em 2% 0;
   text-align:right;
-  padding:10px 10px 0 10px;
   height:2em;
+  padding: 10px 10px 0;
 }
 #wrap {
   margin:0 2% 0 32%;
@@ -547,8 +547,9 @@ td.code {
 /*
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ File, Blame, Diff
 */
-h2.path {
+h2#pathlinks {
   text-transform:none;
+  margin:0 2% 15px;
 }
 div.listing {
   overflow:auto;
