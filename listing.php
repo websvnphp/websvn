@@ -59,8 +59,10 @@ function fileLink($path, $file, $returnjoin = false) {
   if ($isDir) {
     $url = $config->getURL($rep, $ppath.$pfile, 'dir').$passRevString;
     if ($config->treeView) {
-      // XHTML doesn't allow slashes in IDs and must begin with a letter
-      $id = str_replace('/', '_', 'path'.$ppath.$pfile);
+      // (X)HMTL id/name attribute must be this format: [A-Za-z][A-Za-z0-9-_.:]*
+      // MD5 hashes are 32 characters, deterministic, quite collision-resistant,
+      // and work for any string, regardless of encoding or special characters.
+      $id = 'A'.md5($ppath.$pfile);
       $url .= '#'.$id.'" id="'.$id;
     }
   } else {
