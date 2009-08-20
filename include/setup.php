@@ -479,7 +479,7 @@ function createRevisionSelectionForm() {
   if ($rep == null)
     return;
   
-  $params = array('repname' => $rep->getDisplayName(), 'path' => $path, 'peg' => ($peg ? $peg : $rev));
+  $params = array('repname' => $rep->getDisplayName(), 'path' => ($path == '/' ? '' : $path), 'peg' => ($peg ? $peg : $rev));
   $hidden = '';
   foreach ($params as $key => $value) {
     if ($value)
