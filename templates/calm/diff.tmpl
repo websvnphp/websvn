@@ -4,9 +4,8 @@
 [websvn-test:error]
   <div id="error">[websvn:error]</div>
 [websvn-else]
-  <div style="margin:0 2% 0 2%">
-  <h2 class="path">[websvn:curdirlinks] - [lang:DIFFREVS] [websvn:rev2] [lang:AND] [websvn:rev1]</h2>
-  
+  <h2 id="pathlinks">[websvn:curdirlinks] - [lang:REV] [websvn:rev2] &rarr; [websvn:rev1]</h2>
+  <div id="revjump">[websvn:revision_form][lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span>[websvn:revision_endform]</div>
   <p>
     [websvn-test:goyoungestlink]
     <span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
@@ -31,6 +30,7 @@
   [websvn-test:warning]
   <div id="warning">[websvn:warning]</div>
   [websvn-else]
+  <div style="margin:0 2%">
     [websvn-test:noprev]
     <p>[lang:NOPREVREV]</p>
     [websvn-else]
@@ -59,6 +59,6 @@
        </table>
       [websvn-endtest]
     [websvn-endtest]
-  [websvn-endtest]
   </div>
+  [websvn-endtest]
 [websvn-endtest]
