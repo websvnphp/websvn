@@ -682,11 +682,7 @@ class SVNRepository {
   function applyGeshi($path, $filename, $lang, $rev, $peg = '', $return = false) {
     global $config;
 
-    if ($peg) {
-      $pegrev = '@'.$peg;
-    } else {
-      $pegrev = '';
-    }
+    $pegrev = ($peg) ? '@'.$peg : '';
 
     // Output the file to the filename
     $path = encodepath($this->getSvnpath($path));
@@ -749,11 +745,7 @@ class SVNRepository {
     } else {
       $pre = false;
       $path = encodepath($this->getSvnpath($path));
-      if ($peg) {
-        $pegrev = '@'.$peg;
-      } else {
-        $pegrev = '';
-      }
+      $pegrev = ($peg) ? '@'.$peg : '';
       $cmd = $config->svn." cat -r $rev ".$this->repConfig->svnParams().quote($path.$pegrev);
       if ($config->useEnscript) {
         $l = @$extEnscript[$ext];
@@ -792,14 +784,10 @@ class SVNRepository {
   function getBlameDetails($path, $filename, $rev = 0, $peg = '') {
     global $config;
 
-    if ($peg) {
-      $pegrev = '@'.$peg;
-    } else {
-      $pegrev = '';
-    }
+    $pegrev = ($peg) ? '@'.$peg : '';
     
     $path = encodepath($this->getSvnpath($path));
-    $cmd = $config->svn." blame ".$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename);
+    $cmd = $config->svn." blame -r $rev ".$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename);
 
     $descriptorspec = array(2 => array('pipe', 'w')); // stderr
     $resource = proc_open($cmd, $descriptorspec, $pipes);
@@ -828,11 +816,7 @@ class SVNRepository {
     global $config;
 
     $path = encodepath($this->getSvnpath($path));
-    if ($peg) {
-      $pegrev = '@'.$peg;
-    } else {
-      $pegrev = '';
-    }
+    $pegrev = ($peg) ? '@'.$peg : '';
 
     $ret = runCommand($config->svn." propget -r $rev $property ".$this->repConfig->svnParams().quote($path.$pegrev), true);
     
@@ -854,11 +838,7 @@ class SVNRepository {
     global $config;
 
     $path = encodepath($this->getSvnpath($path));
-    if ($peg) {
-      $pegrev = '@'.$peg;
-    } else {
-      $pegrev = '';
-    }
+    $pegrev = ($peg) ? '@'.$peg : '';
 
     $cmd = $config->svn." export -r $rev ".$this->repConfig->svnParams().quote($path.$pegrev).' '.quote($filename);
 
