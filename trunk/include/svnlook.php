@@ -1096,19 +1096,13 @@ class SVNRepository {
 
   // }}}
 
-  function isFile($path, $rev = 0) {
+  function isFile($path, $rev = '') {
     global $config;
 
     $path = encodepath($this->getSvnpath($path));
-    if ($rev != 0) {
-      $rev = '@'.$rev;
-    } else {
-      $rev = '';
-    }
-    $cmd = $config->svn." info --xml ".$this->repConfig->svnParams().quote($path.$rev);
-    $output = runCommand($cmd, true);
-
-    return strpos(implode(' ', $output), 'kind="file"') !== false;
+    $pegrev = ($rev) ? '@'.$rev : '';
+    $cmd = $config->svn.' info --xml '.$this->repConfig->svnParams().quote($path.$pegrev);
+    return strpos(implode(' ', runCommand($cmd, true)), 'kind="file"') !== false;
   }
 
   // {{{ getSvnpath

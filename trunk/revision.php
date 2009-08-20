@@ -105,17 +105,22 @@ $thisRevString = createRevAndPegString($passrev, ($peg ? $peg : $passrev));
 
 foreach ($changes as $file) {
   $linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
+  // NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
+  // `svn log --verbose --xml` should really provide this info, but doesn't yet.
+  $isFile = $svnrep->isFile($file->path, $rev);
+  if (!$isFile) {
+    $file->path .= '/';
+  }
   $listing[] = array(
     'path'     => $file->path,
     'added'    => $file->action == 'A',
     'deleted'  => $file->action == 'D',
     'modified' => $file->action == 'M',
-     // TODO: Figure out how to differentiate directories (detailurl / logurl)
-    'detailurl' => $config->getURL($rep, $file->path, 'file').$linkRevString,
+    'detailurl' => $config->getURL($rep, $file->path, ($isFile ? 'file' : 'dir')).$linkRevString,
     // For deleted resources, the log link points to the previous revision.
-    'logurl' => $config->getURL($rep, $file->path, 'log').$linkRevString,
-    'diffurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').$linkRevString : '',
-    'blameurl' => ($file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').$linkRevString : '',
+    'logurl' => $config->getURL($rep, $file->path, 'log').$linkRevString.($isFile ? '' : '&amp;isdir=1'),
+    'diffurl' => ($isFile && $file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').$linkRevString : '',
+    'blameurl' => ($isFile && $file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').$linkRevString : '',
     'rowparity' => $row,
   );
 
