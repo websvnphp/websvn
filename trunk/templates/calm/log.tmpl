@@ -1,10 +1,10 @@
-<div id="select">[websvn:projects_form]<div>[websvn:projects_select]<span class="submit">[websvn:projects_submit]</span></div>[websvn:projects_endform] [websvn:lang_form]<div>[websvn:lang_select]<span class="submit">[websvn:lang_submit]</span></div>[websvn:lang_endform]</div>
+<div id="select">[websvn:projects_form][websvn:projects_select]<span class="submit">[websvn:projects_submit]</span>[websvn:projects_endform] [websvn:lang_form][websvn:lang_select]<span class="submit">[websvn:lang_submit]</span>[websvn:lang_endform]</div>
 <h1><a href="[websvn:indexurl]" title="[lang:PROJECTS]">[lang:PROJECTS]</a> <span><a href="[websvn:repurl]">[websvn:repname]</a></span></h1>
 [websvn-test:error]
    <div id="error">[websvn:error]</div>
 [websvn-else]
-  <h2 class="path" style="margin:0 2% 15px 2%;">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
-  <div id="input">[websvn:revision_form]<div>[lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
+  <h2 id="pathlinks">[websvn:curdirlinks] - [lang:REV] [websvn:rev]</h2>
+  <div id="revjump">[websvn:revision_form]<div>[lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
   <p>
     [websvn-test:goyoungestlink]
     <span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
