@@ -114,6 +114,8 @@ $config->setTemplatePath($locwebsvnreal.'/templates/calm/', 'My Repository');
 <tr><th>locwebsvnhttp</th><td>Root of the WebSVN directory</td></tr>
 <tr><th>indexurl</th><td>URL for the WebSVN index page</td></tr>
 <tr><th>repname</th><td>Name of the repository</td></tr>
+<tr><th>clientrooturl</th><td>The root URL for SVN clients to use (only if provided in <code>config.php</code>)</td></tr>
+<tr><th>peg</th><td>The peg revision passed to the page (can use with <code>clientrooturl</code>)</td></tr>
 <tr><th>charset</th><td>The charset requested by the user</td></tr>
 <tr><th>lang_code</th><td>The <a href="http://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a> language code of the selected language</td></tr>
 <tr><th>lang_form</th><td>Language selection menu &lt;form&gt; element</td></tr>
@@ -178,7 +180,7 @@ $config->useTreeIndex(true);
 
 <table>
 <tr><th>restricted</th><td>True if the users has restricted access to this directory (to allow access to a readable directory lower down only)</td></tr>
-<tr><th>path</th><td>Path of item being logged</td></tr>
+<tr><th>path</th><td>Path of the directory being listed</td></tr>
 <tr><th>rev</th><td>Revision being viewed</td></tr>
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
@@ -332,6 +334,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
+<tr><th>path</th><td>Path of the resource passed to this page</td></tr>
 <tr><th>curdirlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>listinglink</th><td>Link to the directory listing for the current path at this revision</td></tr>
 <tr><th>loglink</th><td>Link to the log page for the current path, from the current revision backward</td></tr>

@@ -37,6 +37,7 @@ $ignoreWhitespace = (@$_REQUEST["ignorews"] == 1);
 // Make sure that we have a repository
 if ($rep) {
 $svnrep = new SVNRepository($rep);
+$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', true, 2, $peg);
@@ -66,6 +67,7 @@ if ($history) {
   $vars['date'] = $history->entries[0]->date;
   $vars['author'] = $history->entries[0]->author;
   $vars['rev'] = $vars['rev1'] = $history->entries[0]->rev;
+  $vars['peg'] = $peg;
 }
 
 createDirLinks($rep, $ppath, $passrev, $peg);

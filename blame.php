@@ -33,6 +33,7 @@ $vars['action'] = $lang['BLAME'];
 // Make sure that we have a repository
 if ($rep) {
 $svnrep = new SVNRepository($rep);
+$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, '', '', false, 2, $peg);
@@ -55,6 +56,7 @@ $pos = strrpos($ppath, '/');
 $parent = substr($ppath, 0, $pos + 1);
 
 $vars['rev'] = $rev;
+$vars['peg'] = $peg;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 if ($history) {
