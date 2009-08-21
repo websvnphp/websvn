@@ -106,7 +106,7 @@ class ParentPath {
 
   // }}}
 
-  // {{{ __construct($path, [$group, [$pattern, [$skipAlreadyAdded]]])
+  // {{{ __construct($path [, $group [, $pattern [, $skipAlreadyAdded]]])
   function ParentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true) {
     $this->path = $path;
     $this->group = $group;
@@ -215,6 +215,7 @@ class Repository {
   var $group;
   var $username;
   var $password;
+  var $clientRootURL;
 
   // Local configuration options must start off unset
 
@@ -233,16 +234,17 @@ class Repository {
 
   // }}}
 
-  // {{{ __construct($name, $svnName, $path, [$group, [$username, [$password]]])
+  // {{{ __construct($name, $svnName, $serverRootURL [, $group [, $username [, $password [, $clientRootURL]]]])
 
-  function Repository($name, $svnName, $path, $group = NULL, $username = NULL, $password = NULL, $subpath = NULL) {
+  function Repository($name, $svnName, $serverRootURL, $group = NULL, $username = NULL, $password = NULL, $subpath = NULL, $clientRootURL = NULL) {
     $this->name = $name;
     $this->svnName = $svnName;
-    $this->path = $path;
+    $this->path = $serverRootURL;
     $this->subpath = $subpath;
     $this->group = $group;
     $this->username = $username;
     $this->password = $password;
+    $this->clientRootURL = trim($clientRootURL, '/');
   }
 
   // }}}
@@ -665,29 +667,18 @@ class WebSvnConfig {
 
   // {{{ Repository configuration
 
-  function addRepository($name, $url, $group = NULL, $username = NULL, $password = NULL) {
-    $url = str_replace(DIRECTORY_SEPARATOR, "/", $url);
-
-    if ($url{strlen($url) - 1} == "/") {
-      $url = substr($url, 0, -1);
-    }
-
-    $svnName = substr($url, strrpos($url, "/") + 1);
-    $this->_repositories[] = new Repository($name, $svnName, $url, $group, $username, $password);
+  function addRepository($name, $serverRootURL, $group = NULL, $username = NULL, $password = NULL, $clientRootURL = NULL) {
+    $this->addRepositorySubpath($name, $serverRootURL, NULL, $group, $username, $password, $clientRootURL);
   }
 
-  function addRepositorySubpath($name, $url, $subpath, $group = NULL, $username = NULL, $password = NULL) {
-    $url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-    $subpath = str_replace(DIRECTORY_SEPARATOR, '/', $subpath);
-
-    if ($url{strlen($url) - 1} == '/') {
-      $url = substr($url, 0, -1);
+  function addRepositorySubpath($name, $serverRootURL, $subpath, $group = NULL, $username = NULL, $password = NULL, $clientRootURL = NULL) {
+    if (DIRECTORY_SEPARATOR != '/') {
+      list($serverRootURL, $subpath) = str_replace(DIRECTORY_SEPARATOR, '/', array($serverRootURL, $subpath));
     }
-
-    $svnName = substr($url, strrpos($url, '/') + 1);
-    $this->_repositories[] = new Repository($name, $svnName, $url, $group, $username, $password, $subpath);
+    $serverRootURL = trim($serverRootURL, '/');
+    $svnName = substr($serverRootURL, strrpos($serverRootURL, '/') + 1);
+    $this->_repositories[] = new Repository($name, $svnName, $serverRootURL, $group, $username, $password, $subpath, $clientRootURL);
   }
-
 
   function getRepositories() {
     // lazily load parent paths

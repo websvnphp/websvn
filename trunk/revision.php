@@ -31,6 +31,7 @@ require_once('include/bugtraq.php');
 // Make sure that we have a repository
 if ($rep) {
 $svnrep = new SVNRepository($rep);
+$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 // Revision info to pass along chain
 $passrev = $rev;
@@ -67,7 +68,8 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
 $vars['action'] = '';
 $vars['rev'] = $rev;
-//$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+$vars['peg'] = $peg;
+$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars['lastchangedrev'] = $lastChangedRev;
 $vars['date'] = $logEntry ? $logEntry->date: '';
 $vars['author'] = $logEntry ? $logEntry->author: '';
@@ -135,7 +137,6 @@ if ($history && isset($history->entries[1]->rev)) {
   $vars['compareurl'] = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
   $vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
-
 
 if (!$rep->hasReadAccess($path, true)) {
   $vars['error'] = $lang['NOACCESS'];

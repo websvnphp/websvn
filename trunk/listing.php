@@ -123,6 +123,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       $listing[$index]['openDir'] = $openDir;
       $listing[$index]['level'] = ($treeview) ? $level : 0;
       $listing[$index]['node'] = 0; // t-node
+      $listing[$index]['path'] = $path.$file;
       $listing[$index]['filelink'] = fileLink($path, $file);
       $listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').($passRevString ? $passRevString.'&amp;' : '').$urlPartIsDir;
       
@@ -200,6 +201,7 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 // Make sure that we have a repository
 if ($rep) {
 $svnrep = new SVNRepository($rep);
+$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 $history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
 if (!$history) {
@@ -232,8 +234,6 @@ if ($path == '' || $path{0} != '/') {
 }
 
 createDirLinks($rep, $ppath, $passrev, $peg);
-
-// Revision info to pass along chain
 $passRevString = createRevAndPegString($passrev, $peg);
 
 if ($rev < $youngest) {
@@ -249,6 +249,7 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
 $vars['action'] = '';
 $vars['rev'] = $rev;
+$vars['peg'] = $peg;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 $vars['lastchangedrev'] = $lastChangedRev;
 $vars['date'] = $logEntry ? $logEntry->date : '';
