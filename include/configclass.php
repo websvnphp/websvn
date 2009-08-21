@@ -103,15 +103,17 @@ class ParentPath {
   var $group;
   var $pattern;
   var $skipAlreadyAdded;
+  var $clientRootURL;
 
   // }}}
 
-  // {{{ __construct($path [, $group [, $pattern [, $skipAlreadyAdded]]])
-  function ParentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true) {
+  // {{{ __construct($path [, $group [, $pattern [, $skipAlreadyAdded [, $clientRootURL]]]])
+  function ParentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true, $clientRootURL = '') {
     $this->path = $path;
     $this->group = $group;
     $this->pattern = $pattern;
     $this->skipAlreadyAdded = $skipAlreadyAdded;
+    $this->clientRootURL = trim($clientRootURL, '/');
   }
   // }}}
 
@@ -144,7 +146,8 @@ class ParentPath {
             }
 
             if (!in_array($url, $config->_excluded, true)) {
-              $rep = new Repository($name, $name, $url, $this->group, null, null);
+              $clientRootURL = ($this->clientRootURL) ? $this->clientRootURL.'/'.$name : '';
+              $rep = new Repository($name, $name, $url, $this->group, null, null, null, $clientRootURL);
               return $rep;
             }
           }
@@ -176,8 +179,8 @@ class ParentPath {
               if ($url{strlen($url) - 1} == "/") {
                 $url = substr($url, 0, -1);
               }
-
-              $repos[] = new Repository($name, $name, $url, $this->group, null, null);
+              $clientRootURL = ($this->clientRootURL) ? $this->clientRootURL.'/'.$name : '';
+              $repos[] = new Repository($name, $name, $url, $this->group, null, null, null, $clientRootURL);
             }
           }
         }
@@ -1260,8 +1263,8 @@ class WebSvnConfig {
   //
   // Automatically set up the repositories based on a parent path
 
-  function parentPath($path, $group = NULL, $pattern = false, $skipAlreadyAdded = true) {
-    $this->_parentPaths[] = new ParentPath($path, $group, $pattern, $skipAlreadyAdded);
+  function parentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true, $clientRootURL = '') {
+    $this->_parentPaths[] = new ParentPath($path, $group, $pattern, $skipAlreadyAdded, $clientRootURL);
   }
 
   function addExcludedPath($path) {
