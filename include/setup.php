@@ -425,7 +425,8 @@ if (!$config->multiViews) {
 
 // due to possible XSS exploit, we need to clean up path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
-if ($path === null || $path === '') $path = '/';
+if ($path === null || $path === '')
+  $path = '/';
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
@@ -435,7 +436,8 @@ $passrev = $rev;
 function createProjectSelectionForm() {
   global $config, $vars, $rep, $lang;
 
-  if (!$config->showRepositorySelectionForm()) {
+  $reps = $config->getRepositories();
+  if (!$config->showRepositorySelectionForm() || count($reps) < 2) {
     $vars['projects_form'] = '';
     $vars['projects_select'] = '';
     $vars['projects_submit'] = '';
@@ -448,12 +450,11 @@ function createProjectSelectionForm() {
   $hidden .= '<input type="hidden" name="selectproj" value="1" />';
   $vars['projects_form'] = '<form action="'.$url.'" method="post" id="projectform">'.$hidden;
 
-  $reps = $config->getRepositories();
   $vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">';
   if ($rep) {
     $currentProjectName = $rep->getDisplayName();
   } else {
-    $currentProjectName = "";
+    $currentProjectName = '';
     $vars['projects_select'] .= '<option value="" selected="selected"></option>';
   }
   foreach ($reps as $project) {
