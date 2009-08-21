@@ -110,7 +110,7 @@ foreach ($changes as $file) {
   // NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
   // `svn log --verbose --xml` should really provide this info, but doesn't yet.
   $isFile = $svnrep->isFile($file->path, $rev);
-  if (!$isFile) {
+  if (!$isFile && $file->path != '/') {
     $file->path .= '/';
   }
   $listing[] = array(
