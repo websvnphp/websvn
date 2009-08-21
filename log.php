@@ -79,6 +79,7 @@ $maxperpage = 20;
 // Make sure that we have a repository
 if ($rep) {
 $svnrep = new SVNRepository($rep);
+$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 $history = $svnrep->getLog($path, 'HEAD', '', false, 1, ($path == '/') ? '' : $peg);
 if (!$history) {
@@ -118,6 +119,7 @@ if ($path == '' || $path{0} != '/') {
 
 $vars['action'] = $lang['LOG'];
 $vars['rev'] = $rev;
+$vars['peg'] = $peg;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 if ($max === false) {
@@ -265,7 +267,7 @@ if (!empty($history)) {
       
       $url = $config->getURL($rep, $rpath, ($isDir ? 'dir' : 'file')).$thisRevStr;
       $listing[$index]['revpathlink'] = '<a href="'.$url.'">'.$rpath.'</a>';
-
+      $listing[$index]['revpath'] = $rpath;
       $listing[$index]['revauthor'] = $revision->author;
       $listing[$index]['revdate'] = $revision->date;
       $listing[$index]['revage'] = $revision->age;
@@ -367,7 +369,6 @@ $vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'"
 $vars['compare_endform'] = '</form>';
 
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
-
 
 if (!$rep->hasReadAccess($path, false)) {
   $vars['error'] = $lang['NOACCESS'];

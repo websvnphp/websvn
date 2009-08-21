@@ -42,6 +42,7 @@ function checkRevision($rev) {
 // Make sure that we have a repository
 if ($rep) {
 $svnrep = new SVNRepository($rep);
+$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 // Retrieve the request information
 $path1 = @$_REQUEST['compare'][0];
@@ -121,6 +122,7 @@ $history = $svnrep->getLog($path, $rev, $rev, false, 1);
 if ($history) {
   $logEntry = $history->curEntry;
   $vars['rev'] = $logEntry->rev;
+  $vars['peg'] = $peg;
   $vars['date'] = $logEntry->date;
   $vars['author'] = $logEntry->author;
   $vars['log'] = $logEntry->msg;
