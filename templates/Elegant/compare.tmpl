@@ -1,0 +1,69 @@
+    [websvn-test:error]
+    </div>
+    [websvn-else]
+      <h2><span>[websvn:path1] ([lang:REV] [websvn:rev1])</span> &nbsp; &rarr; &nbsp; <span>[websvn:path2] ([lang:REV] [websvn:rev2])</span></h2>
+      <div class="clearer"></div>
+    </div>
+    <ul id="links">
+      [websvn-test:ignorewhitespacelink]
+      <li class="ignore">[websvn:ignorewhitespacelink]</li>
+      [websvn-else]
+      <li class="regard">[websvn:regardwhitespacelink]</li>
+      [websvn-endtest]
+      <li class="reverse">[websvn:revlink]</li>
+      [websvn-test:clientrooturl]
+      <li class="svn"><a href="[websvn:clientrooturl][websvn:path2]">SVN</a></li>
+      [websvn-endtest]
+    </ul>
+    [websvn-endtest]
+  </div>
+  <div id="content">
+  [websvn-test:error]
+    <div class="error"><span>[websvn:error]</span></div>
+  [websvn-else]
+    <div id="compare_form">
+    [websvn:compare_form]
+    <table>
+      <tr>
+        <td class="path"><label>[lang:COMPPATH]</label> [websvn:compare_path1input]</td>
+        <td><label>[lang:REV]</label> [websvn:compare_rev1input]</td>
+        <td rowspan="2">[websvn:compare_submit]</td>
+      </tr>
+      <tr>
+        <td class="path"><label>[lang:WITHPATH]</label> [websvn:compare_path2input]</td>
+        <td><label>[lang:REV]</label> [websvn:compare_rev2input]</td>
+      </tr>
+    </table>
+    [websvn:compare_endform]
+    </div>
+
+    <!-- TODO: Figure out how to link the revision #'s to revision.php?... -->
+    
+    <div id="comparisons">
+    [websvn-startlisting]
+      [websvn-test:newpath]
+      <table>
+        <thead>
+        <tr><th><a href="[websvn:fileurl]">[websvn:newpath]</a></th></tr>
+        </thead>
+        <tbody>
+      [websvn-endtest]
+      [websvn-test:info]
+        <tr><td align="center">[websvn:info]</td></tr>
+      [websvn-endtest]
+      [websvn-test:difflines]
+        <tr><th>[websvn:rev1line],[websvn:rev1len] &rarr; [websvn:rev2line],[websvn:rev2len]</th></tr>
+      [websvn-endtest]    
+      [websvn-test:diffclass]
+        <tr><td class="[websvn:diffclass]">[websvn:line]</td></tr>
+      [websvn-endtest]    
+      [websvn-test:properties]
+        <tr><td>[lang:PROPCHANGES]</td></tr>
+      [websvn-endtest]
+      [websvn-test:endpath]
+        </tbody>
+      </table>
+      [websvn-endtest]
+    [websvn-endlisting]
+    </div>
+  [websvn-endtest]
