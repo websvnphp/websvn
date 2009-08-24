@@ -337,17 +337,19 @@ tbody tr:hover td {
 /* @group Navigation */
 
 #links {
-	padding: 0 0 4px;
+	padding: 0;
 	margin: 0;
 	text-align: center;
 	background: url(images/bg-gray-light.png) repeat-x 0 top;
 	border-bottom: solid 1px #a1a5a9;
+	white-space: nowrap;
 }
 
 #links li {
 	font-size: 110%;
 	display: inline-block;
-	padding: 5px 5px 0;
+	padding: 4px 3px 3px;
+	margin: 0;
 	white-space: nowrap;
 }
 
