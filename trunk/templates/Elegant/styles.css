@@ -851,6 +851,35 @@ table#logs {
 	white-space: normal;
 }
 
+#logs td.changes {
+	color: #777;
+	padding: 0;
+}
+
+#logs td.changes table {
+	border-width: 0;
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+#logs td.changes td {
+	border-width: 0;
+	padding-left: 20px;
+	background: url(images/added.png) no-repeat 3px 3px;
+}
+
+#logs td.changes td.add {
+	background-image: url(images/added.png);
+}
+
+#logs td.changes td.del {
+	background-image: url(images/deleted.png);
+}
+
+#logs td.changes td.mod {
+	background-image: url(images/modified.png);
+}
+
 #filternav {
 	font-weight: bold;
 }
