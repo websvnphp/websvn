@@ -9,6 +9,7 @@
       [websvn-test:goyoungestlink]
       [websvn:goyoungestlink] -
       [websvn-endtest]
+      [websvn:changeslink] -
       [websvn-test:filedetaillink]
       [websvn:filedetaillink] -
       [websvn:blamelink] -
@@ -47,23 +48,39 @@
         <thead>
         <tr>
           <th>[lang:REV]</th>
-          <th>[lang:PATH]</th>
-          <th>[lang:AUTHOR]</th>
           <th>[lang:AGE]</th>
+          <th>[lang:AUTHOR]</th>
+          <th>[lang:PATH]</th>
           <th>[lang:LOGMSG]</th>
+          [websvn-test:showchanges]
+          <th>[lang:CHANGES]</th>
+          [websvn-endtest]
         </tr>
         </thead>
         [websvn-startlisting]
         <tr class="row[websvn:rowparity]">
           <td style="white-space: nowrap;">[websvn:compare_box][websvn:revlink]</td>
-          <td>[websvn:revpathlink]</td>
-          <td>[websvn:revauthor]</td>
           [websvn-test:showageinsteadofdate]
           <td title="[websvn:revdate]">[websvn:revage]</td>
           [websvn-else]
           <td title="[websvn:revage]">[websvn:revdate]</td>
           [websvn-endtest]
+          <td>[websvn:revauthor]</td>
+          <td>[websvn:revpathlink]</td>
           <td valign="top" class="row[websvn:rowparity]">[websvn:revlog]</td>
+          [websvn-test:showchanges]
+          <td class="changes"><table>
+          [websvn-test:revadded]
+            <tr><td>A</td><td>[websvn:revadded]</td></tr>
+          [websvn-endtest]
+          [websvn-test:revdeleted]
+            <tr><td>D</td><td>[websvn:revdeleted]</td></tr>
+          [websvn-endtest]
+          [websvn-test:revmodified]
+            <tr><td>M</td><td>[websvn:revmodified]</td></tr>
+          [websvn-endtest]
+          </table></td>
+          [websvn-endtest]
         </tr>
         [websvn-endlisting]
       </table>
