@@ -518,7 +518,7 @@ body > #wrapper {
 	cursor: default;
 }
 
-#rev-popup, .blame-popup {
+#header #rev-popup, .blame-popup {
 	font-size: 11px;
 	color: black;
 	background-color: rgba(255,255,255,0.9);
