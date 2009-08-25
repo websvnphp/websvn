@@ -119,6 +119,8 @@ tbody tr:hover td {
 	margin: 0;
 }
 
+/* @group Header */
+
 #header {
 	margin: 0;
 	padding: 0;
@@ -130,6 +132,10 @@ tbody tr:hover td {
 	padding: 0 10px;
 	background: url(images/bg-blue-gradient.png) repeat-x 0 top;
 	border-bottom: solid 1px #4b4b4b;
+}
+
+#header #info, #header #info * {
+	position: relative;
 }
 
 #header #info, h1, h2 {
@@ -148,7 +154,6 @@ tbody tr:hover td {
 #header h1 {
 	margin: 0;
 	padding: 8px 0;
-	position: relative;
 }
 
 * html #header h1 {
@@ -170,6 +175,22 @@ tbody tr:hover td {
 
 #header h2#revnum {
 	float: right;
+}
+
+#header #menus {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 9px;
+}
+
+#header #menus form {
+	display: inline;
+}
+
+#header #menus * {
+	margin: 0;
+	padding: 0;
 }
 
 #header #revjump {
@@ -208,133 +229,9 @@ tbody tr:hover td {
 	display: none;
 }
 
-#content {
-	padding: 10px;
-	border-top: 1px solid #cfcfcf;
-}
-
-.error, .warning, .information {
-	display: table;
-	font-weight: bold;
-	margin: 0 auto;
-	padding: 5px 7px 3px 10px;
-	border: solid 1px;
-	vertical-align: middle;
-	background-repeat: no-repeat;
-	background-position: 6px 4px;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-}
-
-.error span, .warning span, .information span {
-	display: block;
-	max-width: 400px;
-	margin-left: 33px;
-	padding: 10px 0;
-	position: relative;
-	top: -2px;
-}
-
-.error a, .warning a, .information a {
-	text-decoration: underline;
-}
-
-.error a:hover, .warning a:hover, .information a:hover {
-	text-decoration: none;
-}
-
-.error {
-	border-color: red;
-	background-color: #fcc;
-	background-image: url(images/stop.png);
-}
-
-.warning {
-	border-color: #d5ce00;
-	background-color: #ffc;
-	background-image: url(images/warning.png);
-}
-
-.information {
-	border-color: #4467aa;
-	background-color: #d5e0ee;
-	background-image: url(images/information.png);
-}
-
-#comparesubmit {
-	margin-top: 10px;
-	text-align: center;
-}
-
-#comparesubmit input {
-	margin: 0;
-}
-
-#footer {
-	text-align: center;	
-	clear: both;
-}
-
-#footer a {
-	font-weight: bold;
-}
-
-#footer #poweredby {
-	padding: 3px 3px 4px;
-	border-top: solid 1px #a1a5a9;
-	background: #f0f0f0 url(images/bg-gray-light.png) repeat-x 0 top;
-}
-
-#footer #valid {
-	padding: 3px 5px;
-	vertical-align: middle;
-	position: absolute;
-	border: 0;
-	right: 0;
-}
-
-#footer #valid img {
-	position: relative;
-	top: 2px;
-}
-
-@media print {
-	#header {
-		border: solid 1px #4b4b4b;
-	}
-
-	#footer {
-		border-width: 1px;
-	}
-	
-	#comparesubmit {
-		display: none;
-	}
-}
-
 /* @end */
 
-/* @group Project / Language */
-
-#dropdowns {
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: 9px;
-}
-
-#dropdowns form {
-	display: inline;
-}
-
-#dropdowns * {
-	margin: 0;
-	padding: 0;
-}
-
-/* @end */
-
-/* @group Navigation */
+/* @group Navigation Links */
 
 #links {
 	padding: 0;
@@ -439,6 +336,116 @@ tbody tr:hover td {
 
 @media print {
 	#dropdowns, #links {
+		display: none;
+	}
+}
+
+/* @end */
+
+/* @group Footer */
+
+#footer {
+	text-align: center;	
+	clear: both;
+}
+
+#footer a {
+	font-weight: bold;
+}
+
+#footer #poweredby {
+	padding: 3px 3px 4px;
+	border-top: solid 1px #a1a5a9;
+	background: #f0f0f0 url(images/bg-gray-light.png) repeat-x 0 top;
+}
+
+#footer #valid {
+	padding: 3px 5px;
+	vertical-align: middle;
+	position: absolute;
+	border: 0;
+	right: 0;
+}
+
+#footer #valid img {
+	position: relative;
+	top: 2px;
+}
+
+/* @end */
+
+#content {
+	padding: 10px;
+	border-top: 1px solid #cfcfcf;
+}
+
+.error, .warning, .information {
+	display: table;
+	font-weight: bold;
+	margin: 0 auto;
+	padding: 5px 7px 3px 10px;
+	border: solid 1px;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: 6px 4px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+}
+
+.error span, .warning span, .information span {
+	display: block;
+	max-width: 400px;
+	margin-left: 33px;
+	padding: 10px 0;
+	position: relative;
+	top: -2px;
+}
+
+.error a, .warning a, .information a {
+	text-decoration: underline;
+}
+
+.error a:hover, .warning a:hover, .information a:hover {
+	text-decoration: none;
+}
+
+.error {
+	border-color: red;
+	background-color: #fcc;
+	background-image: url(images/stop.png);
+}
+
+.warning {
+	border-color: #d5ce00;
+	background-color: #ffc;
+	background-image: url(images/warning.png);
+}
+
+.information {
+	border-color: #4467aa;
+	background-color: #d5e0ee;
+	background-image: url(images/information.png);
+}
+
+#comparesubmit {
+	margin-top: 10px;
+	text-align: center;
+}
+
+#comparesubmit input {
+	margin: 0;
+}
+
+@media print {
+	#header {
+		border: solid 1px #4b4b4b;
+	}
+
+	#footer {
+		border-width: 1px;
+	}
+	
+	#comparesubmit {
 		display: none;
 	}
 }
