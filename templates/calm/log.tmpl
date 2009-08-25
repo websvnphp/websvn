@@ -9,6 +9,7 @@
     [websvn-test:goyoungestlink]
     <span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
     [websvn-endtest]
+    <span class="changes">[websvn:changeslink]</span> &#124;
     [websvn-test:filedetaillink]
     <span class="detail">[websvn:filedetaillink]</span> &#124;
     <span class="diff">[websvn:difflink]</span> &#124;
@@ -61,23 +62,39 @@
            <thead>
            <tr>
               <th class="HdrClmn">[lang:REV]</th>
-              <th class="HdrClmn">[lang:LOGMSG]</th>
-              <th class="HdrClmn">[lang:AUTHOR]</th>
               <th class="HdrClmn">[lang:AGE]</th>
-              <th class="HdrClmnEnd">[lang:PATH]</th>
+              <th class="HdrClmn">[lang:AUTHOR]</th>
+              <th class="HdrClmn">[lang:PATH]</th>
+              <th class="HdrClmnEnd">[lang:LOGMSG]</th>
+              [websvn-test:showchanges]
+              <th class="HdrClmnEnd">[lang:CHANGES]</th>
+              [websvn-endtest]
            </tr>
            </thead>
            [websvn-startlisting]
            <tr class="row[websvn:rowparity]">
               <td>[websvn:compare_box][websvn:revlink]</td>
-              <td valign="middle" class="logmsg">[websvn:revlog]</td>
-              <td>[websvn:revauthor]</td>
               [websvn-test:showageinsteadofdate]
                 <td title="[websvn:revdate]">[websvn:revage]</td>
               [websvn-else]
                 <td title="[websvn:revage]">[websvn:revdate]</td>
               [websvn-endtest]
+              <td>[websvn:revauthor]</td>
               <td>[websvn:revpathlink]</td>
+              <td valign="middle" class="logmsg">[websvn:revlog]</td>
+              [websvn-test:showchanges]
+              <td class="changes">
+              [websvn-test:revadded]
+                <div class="add">[websvn:revadded]</div>        
+              [websvn-endtest]
+              [websvn-test:revdeleted]
+                <div class="del">[websvn:revdeleted]</div>        
+              [websvn-endtest]
+              [websvn-test:revmodified]
+                <div class="mod">[websvn:revmodified]</div>        
+              [websvn-endtest]
+              </td>
+              [websvn-endtest]
            </tr>
            [websvn-endlisting]
         </table>
