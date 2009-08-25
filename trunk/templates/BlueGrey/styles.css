@@ -340,5 +340,13 @@ img.icon {
 	padding: 0 3px;
 }
 
+#content td.changes table {
+	margin: 0;
+}
+
+#content td.changes * {
+	border-width: 0;
+}
+
 /* @end */
 

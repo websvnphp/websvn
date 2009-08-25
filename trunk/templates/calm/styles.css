@@ -308,9 +308,6 @@ dd.curdir pre {
   overflow:hidden;
 }
 
-.mod br, .new br {
-  display:none;
-}
 li.mod a, li.new a, #info li.del {
   padding:5px 5px 5px 26px;
   margin:2px 0 2px -2px;
@@ -809,5 +806,27 @@ div#error {
 div#warning {
 	border-color: #d5ce00;
 	background-color: #ffd;
+}
+
+#wrap table td {
+	vertical-align: top;
+	padding: 2px;
+}
+
+div#wrap table td.changes div {
+	background-repeat: no-repeat;
+	padding-left: 18px;
+}
+
+td.changes .add {
+	background-image: url(images/add.png);
+}
+
+td.changes .del {
+	background-image: url(images/delete.png);
+}
+
+td.changes .mod {
+	background-image: url(images/page_white_edit.png);
 }
 
