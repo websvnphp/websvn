@@ -31,6 +31,7 @@ require_once('include/bugtraq.php');
 $page = (int)@$_REQUEST['page'];
 $all = (@$_REQUEST['all'] == 1) ? 1 : 0;
 $isDir = (@$_REQUEST['isdir'] == 1) ? 1 : 0;
+$showchanges = (@$_REQUEST['showchanges'] == 1) ? 1 : 0;
 $dosearch = (@$_REQUEST['logsearch'] == 1) ? 1 : 0;
 $search = trim(@$_REQUEST['search']);
 $words = preg_split('#\s+#', $search);
@@ -40,7 +41,7 @@ $endrev = strtoupper(trim(@$_REQUEST['er']));
 $max = isset($_REQUEST['max']) ? (int)$_REQUEST['max'] : false;
 
 // Max number of results to find at a time
-$numSearchResults = 15;
+$numSearchResults = 20;
 
 if ($search == '') {
   $dosearch = false;
@@ -122,19 +123,16 @@ $vars['rev'] = $rev;
 $vars['peg'] = $peg;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
-if ($max === false) {
-  $max = ($dosearch) ? 0 : 30;
-} else if ($max < 0) {
-  $max = 30;
-}
-
-$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
-if ($history) {
+if ($history->curEntry) {
   $vars['log'] = $history->entries[0]->msg;
   $vars['date'] = $history->entries[0]->date;
   $vars['author'] = $history->entries[0]->author;
-} else {
-  $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
+}
+
+if ($max === false) {
+  $max = ($dosearch) ? 0 : 40;
+} else if ($max < 0) {
+  $max = 40;
 }
 
 // TODO: If the rev is less than the head, get the path (may have been renamed!)
@@ -142,6 +140,13 @@ if ($history) {
 
 createDirLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($passrev, $peg);
+
+$vars['showchanges'] = $showchanges;
+$vars['changesurl'] = $config->getURL($rep, $path, 'log').$passRevString;
+$vars['changesurl'] .= (@$_REQUEST['sr'] ? '&amp;sr='.$startrev : '').(@$_REQUEST['er'] ? '&amp;er='.$endrev : '');
+$vars['changesurl'] .= (@$_REQUEST['max'] ? '&amp;max='.$max : '').($isDir ? '&amp;isdir=1' : '');
+$vars['changesurl'] .= (@$_REQUEST['page'] ? '&amp;page='.$page : '').($showchanges ? '' : '&amp;showchanges=1');
+$vars['changeslink'] = '<a href="'.$vars['changesurl'].'">'.$lang[($showchanges ? 'HIDECHANGED' : 'SHOWCHANGED')].'</a>';
 
 if ($isDir) {
   $vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
@@ -178,7 +183,10 @@ $vars['logsearch_moreresultslink'] = '';
 $vars['pagelinks'] = '';
 $vars['showalllink'] = '';
 
-if (!empty($history)) {
+$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
+if (empty($history)) {
+  $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
+} else {
   // Get the number of separate revisions
   $revisions = count($history->entries);
 
@@ -211,9 +219,6 @@ if (!empty($history)) {
   $row = 0;
   $index = 0;
   $found = false;
-  
-// TODO: http://websvn.tigris.org/issues/show_bug.cgi?id=151
-// Aggregate type and number of changes (and paths?) for each revision
   
   foreach ($entries as $revision) {
     // Assume a good match
@@ -273,6 +278,23 @@ if (!empty($history)) {
       $listing[$index]['revage'] = $revision->age;
       $listing[$index]['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors($revision->msg)));
       $listing[$index]['rowparity'] = $row;
+      
+      if ($showchanges) {
+        // Aggregate added/deleted/modified paths for display in table
+        $modpaths = array();
+        foreach ($revision->mods as $mod) {
+          $modpaths[$mod->action][] = $mod->path;
+        }
+        ksort($modpaths);
+        foreach ($modpaths as $action => $paths) {
+          sort(&$paths);
+          $modpaths[$action] = $paths;
+        }
+        
+        $listing[$index]['revadded'] = (isset($modpaths['A'])) ? implode('<br/>', $modpaths['A']) : '';
+        $listing[$index]['revdeleted'] = (isset($modpaths['D'])) ? implode('<br/>', $modpaths['D']) : '';
+        $listing[$index]['revmodified'] = (isset($modpaths['M'])) ? implode('<br/>', $modpaths['M']) : '';
+      }
 
       $row = 1 - $row;
       $index++;
@@ -309,6 +331,8 @@ if (!empty($history)) {
     $logurl .= '&amp;sr='.$startrev.'&amp;er='.$endrev.'&amp;max='.$max;
     if ($isDir)
       $logurl .= '&amp;isdir='.$isDir;
+    if ($showchanges)
+      $logurl .= '&amp;showchanges=1';
     
     if ($page > 1)
       $vars['pagelinks'] .= '<a href="'.$logurl.'&amp;page='.$prev.'">&larr;'.$lang['PREV'].'</a>';
@@ -352,7 +376,7 @@ $vars['logsearch_submit']   = '<input type="submit" value="'.$lang['GO'].'" />';
 $vars['logsearch_endform']  = '</form>';
 
 // If a filter is in place, produce a link to clear all filter parameters
-if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 30) {
+if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 40) {
   $url = $config->getURL($rep, $path, 'log').'rev='.$rev;
   if ($peg)
     $url .= '&amp;peg='.$peg;

@@ -288,17 +288,19 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 
 <table>
 <tr><th>action</th><td>Action being performed ("Log")</td></tr>
-<tr><th>rev</th><td>Revision being viewed</td></tr>
-<tr><th>date</th><td>Commit date of the current revision</td></tr>
-<tr><th>author</th><td>Author of the current revision</td></tr>
-<tr><th>log</th><td>Log message of the current revision</td></tr>
 <tr><th>path</th><td>Path of item being logged</td></tr>
+<tr><th>rev</th><td>The most recent revision of the current path</td></tr>
+<tr><th>date</th><td>Commit date of the most recent revision</td></tr>
+<tr><th>author</th><td>Author of the most recent revision</td></tr>
+<tr><th>log</th><td>Log message of the most recent revision</td></tr>
 <tr><th>curdirlinks</th><td>List of the path of this directory with links to each one</td></tr>
 <tr><th>pagelinks</th><td>List of list to all the pages of the log</td></tr>
 <tr><th>showalllink</th><td>Link to show the entire log in one go</td></tr>
 <tr><th>difflink</th><td>Link to comparison with previous revision</td></tr>
 <tr><th>blamelink</th><td>Link to the blame information for this file</td></tr>
 <tr><th>goyoungestlink</th><td>Link to log info for the most recent revision of the resource (only if a newer revision exists)</td></tr>
+<tr><th>showchanges</th><td>Whether changed resources should be shown for each revision</td></tr>
+<tr><th>changeslink</th><td>Link to show/hide changed resources for each revision</td></tr>
 <tr><th>logsearch_form</th><td>Log search box &lt;form&gt; element, plus any hidden inputs</td></tr>
 <tr><th>logsearch_inputbox</th><td>Log search box text field for search text</td></tr>
 <tr><th>logsearch_submit</th><td>Log search box submit button</td></tr>
@@ -321,6 +323,9 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>revage</th><td>Age of revision</td></tr>
 <tr><th>revdate</th><td>Date of revision</td></tr>
 <tr><th>revlog</th><td>Log message of revision</td></tr>
+<tr><th>revadded</th><td>Resources added in this revision (only if showchanges is true)</td></tr>
+<tr><th>revdeleted</th><td>Resources deleted in this revision (only if showchanges is true)</td></tr>
+<tr><th>revmodified</th><td>Resources modified in this revision (only if showchanges is true)</td></tr>
 </table>
 
 <h3><a name="revision.tmpl"></a>revision.tmpl</h3>
