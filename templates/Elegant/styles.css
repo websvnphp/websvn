@@ -48,6 +48,10 @@ a img {
 	border: none;
 }
 
+form {
+	margin: 0;
+}
+
 /* @end */
 
 /* @group Table Elements */
@@ -827,10 +831,6 @@ tr:hover td.diffdeleted {
 #filter, #filternav {
 	text-align: center;
 	margin-bottom: 8px;
-}
-
-#filter form {
-	margin: 0;
 }
 
 table#logs {
