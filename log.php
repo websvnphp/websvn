@@ -287,7 +287,7 @@ if (empty($history)) {
         }
         ksort($modpaths);
         foreach ($modpaths as $action => $paths) {
-          sort(&$paths);
+          sort($paths);
           $modpaths[$action] = $paths;
         }
         
