@@ -494,16 +494,16 @@ class FeedCreator extends HtmlDescribable {
 	 * This feed's character encoding.
 	 * @since 1.6.1
 	 **/
-	var $encoding = "ISO-8859-1";
+	var $encoding = "utf-8";
 	
 	
 	/**
-	 * Any additional elements to include as an assiciated array. All $key => $value pairs
-	 * will be included unencoded in the feed in the form
+	 * Any additional elements to include as an associative array; $key => $value 
+	 * pairs will be included unencoded in the feed in the form:
 	 *     <$key>$value</$key>
-	 * Again: No encoding will be used! This means you can invalidate or enhance the feed
-	 * if $value contains markup. This may be abused to embed tags not implemented by
-	 * the FeedCreator class used.
+	 * Again: No encoding will be used! This means you can invalidate or enhance
+	 * the feed if $value contains markup. This may be abused to embed tags not
+	 * implemented by the FeedCreator class used.
 	 */
 	var $additionalElements = Array();
    
