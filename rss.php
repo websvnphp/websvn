@@ -61,90 +61,53 @@ if (!$rep->hasReadAccess($path, false)) {
   exit;
 }
 
-$listurl = $config->getURL($rep, $path, 'dir');
-
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $rev, '', false, $maxmessages);
+$history = $svnrep->getLog($path, $rev, '', false, $maxmessages, $peg);
 
 // Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
-$cachename = strtr(getFullURL($listurl), ":/\\?", "____");
-$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$cachename.$rev.'_rssfeed.xml';
+$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ":/\\?", "____").($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'.xml';
 
 $rss = new UniversalFeedCreator();
 if ($rep->getRSSCaching()) {
   $rss->useCached($feedformat, $cachename);
+  // TODO If a recent-enough cached version exists, avoid all the work below...
 }
-$rss->title = $rep->getDisplayName();
+$rss->title = $rep->getDisplayName().' - '.$path;
 $rss->description = $lang['RSSFEEDTITLE'].' - '.$repname;
-$rss->link = htmlspecialchars(html_entity_decode(getFullURL($baseurl.$listurl)));
+$rss->link = htmlspecialchars(html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg))));
 $rss->syndicationURL = $rss->link;
-$rss->xslStyleSheet = ''; //required for UniversalFeedCreator since 1.7
-$rss->cssStyleSheet = ''; //required for UniversalFeedCreator since 1.7
 
 if ($history && is_array($history->entries)) {
   foreach ($history->entries as $r) {
-    $thisrev = $r->rev;
-    $changes = $r->mods;
-    $files = count($changes);
-
-    // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
-    $rpath = $r->path;
-    if ($isDir && $rpath{strlen($rpath) - 1} != '/') {
-      $rpath .= '/';
+    // For the title, display only up to the first 10 words of the description.
+    $title = trim($r->msg);
+    if ($title == '') {
+      $title = $lang['REV'].' '.$r->rev;
+    } else {
+      $wordLimit = 10;
+      $words = explode(' ', $title, $wordLimit + 1);
+      if (count($words) > $wordLimit) {
+        $title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
+      }
     }
-
-    // Find the parent path (or the whole path if it's already a directory)
-    $pos = strrpos($rpath, '/');
-    $parent = substr($rpath, 0, $pos + 1);
-
-    $url = $config->getURL($rep, $parent, 'revision');
-
-    $desc = $r->msg;
+    // Description includes rev number/author/message and changes sorted by path
+    $description = '<div><strong>'.$lang['REV'].' '.$r->rev.' - '.$r->author.'</strong> ('.count($r->mods).' '.$lang['FILESMODIFIED'].')</div><div>'.nl2br(create_anchors($r->msg)).'</div>';
+    usort($r->mods, 'SVNLogEntry_compare');
+    foreach ($r->mods as $modifiedResource) {
+      switch ($modifiedResource->action) {
+        case 'A': $description .= '+ '; break;
+        case 'M': $description .= '~ '; break;
+        case 'D': $description .= 'x '; break;
+      }
+      $description .= $modifiedResource->path.'<br />';
+    }
+    // Create a new item and add it to the RSS feed
     $item = new FeedItem();
-
-    // For the title, we show the first 10 words of the description
-    $pos = 0;
-    $len = strlen($desc);
-    for ($i = 0; $i < 10; $i++) {
-      if ($pos >= $len) {
-        break;
-      }
-
-      $pos = strpos($desc, ' ', $pos);
-
-      if ($pos === false) {
-        break;
-      }
-      $pos++;
-    }
-
-    if ($pos !== false) {
-      $desc = substr($desc, 0, $pos).'...';
-    }
-
-    if ($desc == '') {
-      $desc = $lang['REV'].' '.$thisrev;
-    }
-
-    $item->title = $desc;
-    $item->link = html_entity_decode(getFullURL($baseurl.$url.'rev='.$thisrev));
-    $item->description = '<div><strong>'.$lang['REV'].' '.$thisrev.' - '.$r->author.'</strong> ('.$files.' '.$lang['FILESMODIFIED'].')</div><div>'.nl2br(create_anchors($r->msg)).'</div>';
-
-    if (true) {
-      usort($changes, 'SVNLogEntry_compare');
-
-      foreach ($changes as $file) {
-        switch ($file->action) {
-          case 'A': $item->description .= '+ '; break;
-          case 'M': $item->description .= '~ '; break;
-          case 'D': $item->description .= '- '; break;
-        }
-        $item->description .= $file->path.'<br />';
-      }
-    }
-
+    $item->title = $title;
+    $item->description = $description;
     $item->date = $r->committime;
     $item->author = $r->author;
+    $item->link = html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $r->path, 'revision').createRevAndPegString($r->rev, $peg).($isDir ? '&amp;isdir=1' : '')));
     $item->guid = $item->link;
 
     $rss->addItem($item);
@@ -152,7 +115,6 @@ if ($history && is_array($history->entries)) {
 }
 
 if ($rep->getRSSCaching()) {
-  // Save the feed
   @$rss->saveFeed($feedformat, $cachename, false);
 }
 header('Content-Type: application/xml');
