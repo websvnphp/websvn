@@ -32,11 +32,11 @@ $lang["LANGUAGENAMEHTML"] = "Fran&ccedil;ais";
 $lang["LOG"] = "Journal";
 $lang["DIFF"] = "Diffé.";
 
-$lang["NOREP"] = "Pas de dépôt fourni";
-$lang["NOPATH"] = "Répertoire non trouvé";
-$lang["NOACCESS"] = "Vous n'avez pas la permission nécessaire pour accéder à ce répertoire";
-$lang["RESTRICTED"] = "Accès restreint";
-$lang["SUPPLYREP"] = "Veuillez indiquer le répertoire d'un dépôt dans le fichier include/config.php en utilisant \$config->parentPath ou \$config->addRepository<p>Lire le guide d'installation pour plus de détails";
+$lang["NOREP"] = "Pas de dépôt fourni.";
+$lang["NOPATH"] = "Répertoire non trouvé.";
+$lang["NOACCESS"] = "Vous n'avez pas la permission nécessaire pour accéder à ce répertoire.";
+$lang["RESTRICTED"] = "Accès restreint.";
+$lang["SUPPLYREP"] = "Veuillez indiquer le répertoire d'un dépôt dans le fichier include/config.php en utilisant <code>\$config->parentPath</code> ou <code>\$config->addRepository</code>. Lisez le guide d'installation pour plus de détails.";
 
 $lang["DIFFREVS"] = "Différences entre les révisions";
 $lang["AND"] = "et";
