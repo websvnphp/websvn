@@ -61,18 +61,22 @@ if (!$rep->hasReadAccess($path, false)) {
   exit;
 }
 
+header('Content-Type: application/xml; charset=utf-8');
+
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, $rev, '', false, $maxmessages, $peg);
 
-// Cachename reflecting full path to and rev for rssfeed. Must end with xml to work
-$cachename = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ":/\\?", "____").($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'.xml';
+// Filename reflecting full path for a cached RSS feed for this particular query
+$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ":/\\?", "____").($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'.rss.xml';
+
+// If a recent-enough cached version exists, use it and avoid all the work below
+if ($rep->getRSSCaching() && file_exists($cache) && filemtime($cache) >= $history->curEntry->committime) {
+  readfile($cache);
+  exit();
+}
 
 $rss = new UniversalFeedCreator();
-if ($rep->getRSSCaching()) {
-  $rss->useCached($feedformat, $cachename);
-  // TODO If a recent-enough cached version exists, avoid all the work below...
-}
-$rss->title = $rep->getDisplayName().' - '.$path;
+$rss->title = $rep->getDisplayName().($path ? ' - '.$path : '');
 $rss->description = $lang['RSSFEEDTITLE'].' - '.$repname;
 $rss->link = htmlspecialchars(html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg))));
 $rss->syndicationURL = $rss->link;
@@ -115,7 +119,7 @@ if ($history && is_array($history->entries)) {
 }
 
 if ($rep->getRSSCaching()) {
-  @$rss->saveFeed($feedformat, $cachename, false);
+  @$rss->saveFeed($feedformat, $cache, false);
+  touch($cache, $history->curEntry->committime); // set timestamp to commit time
 }
-header('Content-Type: application/xml');
 echo @$rss->createFeed($feedformat);
