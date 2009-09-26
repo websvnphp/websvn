@@ -22,8 +22,6 @@
 //
 // Creates an rss feed for the given repository number
 
-include('lib/feedcreator.class.php');
-
 require_once('include/setup.php');
 require_once('include/svnlook.php');
 require_once('include/utils.php');
@@ -32,9 +30,6 @@ require_once('include/template.php');
 $isDir = @$_REQUEST['isdir'] == 1;
 
 $maxmessages = 20;
-
-// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1 (deprecated), MBOX, OPML, ATOM, ATOM0.3, HTML, JS
-$feedformat = 'RSS2.0';
 
 // Find the base URL name
 if ($config->multiViews) {
@@ -75,27 +70,25 @@ if ($rep->getRSSCaching() && file_exists($cache) && filemtime($cache) >= $histor
   exit();
 }
 
-$rss = new UniversalFeedCreator();
-$rss->title = $rep->getDisplayName().($path ? ' - '.$path : '');
-$rss->description = $lang['RSSFEEDTITLE'].' - '.$repname;
-$rss->link = htmlspecialchars(html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg))));
-$rss->syndicationURL = $rss->link;
+// Generate RSS 2.0 feed
+$rss  = '<?xml version="1.0" encoding="utf-8"?>';
+$rss .= '<rss version="2.0"><channel>';
+$rss .= '<title>'.htmlspecialchars($rep->getDisplayName().($path ? ' - '.$path : '')).'</title>';
+$rss .= '<description>'.htmlspecialchars($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
+$rss .= '<link>'.htmlspecialchars(html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg)))).'</link>';
+$rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
+$rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
 
 if ($history && is_array($history->entries)) {
   foreach ($history->entries as $r) {
-    // For the title, display only up to the first 10 words of the description.
+    $wordLimit = 10; // Display only up to the first 10 words of the log message
     $title = trim($r->msg);
-    if ($title == '') {
-      $title = $lang['REV'].' '.$r->rev;
-    } else {
-      $wordLimit = 10;
-      $words = explode(' ', $title, $wordLimit + 1);
-      if (count($words) > $wordLimit) {
-        $title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
-      }
+    $words = explode(' ', $title, $wordLimit + 1);
+    if (count($words) > $wordLimit) {
+      $title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
     }
-    // Description includes rev number/author/message and changes sorted by path
-    $description = '<div><strong>'.$lang['REV'].' '.$r->rev.' - '.$r->author.'</strong> ('.count($r->mods).' '.$lang['FILESMODIFIED'].')</div><div>'.nl2br(create_anchors($r->msg)).'</div>';
+    $title = $lang['REV'].' '.$r->rev.' - '.$title;
+    $description = '<div><strong>'.$r->author.' &mdash; '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br(create_anchors($r->msg)).'</div>';
     usort($r->mods, 'SVNLogEntry_compare');
     foreach ($r->mods as $modifiedResource) {
       switch ($modifiedResource->action) {
@@ -105,21 +98,28 @@ if ($history && is_array($history->entries)) {
       }
       $description .= $modifiedResource->path.'<br />';
     }
-    // Create a new item and add it to the RSS feed
-    $item = new FeedItem();
-    $item->title = $title;
-    $item->description = $description;
-    $item->date = $r->committime;
-    $item->author = $r->author;
-    $item->link = html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $r->path, 'revision').createRevAndPegString($r->rev, $peg).($isDir ? '&amp;isdir=1' : '')));
-    $item->guid = $item->link;
+    $itemLink = htmlspecialchars(html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $r->path, 'revision').createRevAndPegString($r->rev, $peg).($isDir ? '&amp;isdir=1' : ''))));
 
-    $rss->addItem($item);
+    $rss .= '<item>';
+    $rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
+    $rss .= '<author>'.htmlspecialchars($r->author).'</author>';
+    $rss .= '<title>'.htmlspecialchars($title).'</title>';
+    $rss .= '<description>'.htmlspecialchars($description).'</description>';
+    $rss .= '<link>'.$itemLink.'</link>';
+    $rss .= '<guid>'.$itemLink.'</guid>';
+    $rss .= '</item>';
   }
 }
+$rss .= '</channel></rss>';
 
 if ($rep->getRSSCaching()) {
-  @$rss->saveFeed($feedformat, $cache, false);
-  touch($cache, $history->curEntry->committime); // set timestamp to commit time
+  $file = fopen($cache, 'w+');
+  if ($file) {
+    fputs($file, $rss);
+    fclose($file);
+    touch($cache, $history->curEntry->committime); // set timestamp to commit time
+  } else {
+    echo 'Error creating RSS cache file, please check write permissions.';
+  }
 }
-echo @$rss->createFeed($feedformat);
+echo $rss;
