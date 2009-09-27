@@ -72,7 +72,7 @@ if ($rep->getRSSCaching() && file_exists($cache) && filemtime($cache) >= $histor
 
 // Generate RSS 2.0 feed
 $rss  = '<?xml version="1.0" encoding="utf-8"?>';
-$rss .= '<rss version="2.0"><channel>';
+$rss .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>';
 $rss .= '<title>'.htmlspecialchars($rep->getDisplayName().($path ? ' - '.$path : '')).'</title>';
 $rss .= '<description>'.htmlspecialchars($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
 $rss .= '<link>'.htmlspecialchars(html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg)))).'</link>';
@@ -102,7 +102,7 @@ if ($history && is_array($history->entries)) {
 
     $rss .= '<item>';
     $rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
-    $rss .= '<author>'.htmlspecialchars($r->author).'</author>';
+    $rss .= '<dc:creator>'.htmlspecialchars($r->author).'</dc:creator>';
     $rss .= '<title>'.htmlspecialchars($title).'</title>';
     $rss .= '<description>'.htmlspecialchars($description).'</description>';
     $rss .= '<link>'.$itemLink.'</link>';
