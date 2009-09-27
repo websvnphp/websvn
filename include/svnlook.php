@@ -195,7 +195,9 @@ function listCharacterData($parser, $data) {
     case "AUTHOR":
       if ($debugxml) print "Author: $data\n";
       if (empty($data)) return;
-      $curList->curEntry->author .= htmlentities($data, ENT_COMPAT, "UTF-8");
+      if (function_exists('mb_detect_encoding') && function_exists('mb_convert_encoding'))
+        $data = mb_convert_encoding($data, 'UTF-8', mb_detect_encoding($data));
+      $curList->curEntry->author .= $data;
       break;
 
     case "DATE":
@@ -334,7 +336,9 @@ function logCharacterData($parser, $data) {
     case "AUTHOR":
       if ($debugxml) print "Author: $data\n";
       if (empty($data)) return;
-      $curLog->curEntry->author .= htmlentities($data, ENT_COMPAT, "UTF-8");
+      if (function_exists('mb_detect_encoding') && function_exists('mb_convert_encoding'))
+        $data = mb_convert_encoding($data, 'UTF-8', mb_detect_encoding($data));
+      $curLog->curEntry->author .= $data;
       break;
 
     case "DATE":
@@ -373,7 +377,9 @@ function logCharacterData($parser, $data) {
 
     case "MSG":
       if ($debugxml) print "Msg: '$data'\n";
-      $curLog->curEntry->msg .= htmlentities($data, ENT_COMPAT, "UTF-8");
+      if (function_exists('mb_detect_encoding') && function_exists('mb_convert_encoding'))
+        $data = mb_convert_encoding($data, 'UTF-8', mb_detect_encoding($data));
+      $curLog->curEntry->msg .= $data;
       break;
 
     case "PATH":
@@ -456,14 +462,13 @@ function _listSort($e1, $e2) {
 function encodePath($uri) {
   global $config;
 
-  $uri = str_replace(DIRECTORY_SEPARATOR, "/", $uri);
+  $uri = str_replace(DIRECTORY_SEPARATOR, '/', $uri);
+  if (function_exists('mb_detect_encoding') && function_exists('mb_convert_encoding')) {
+    $uri = mb_convert_encoding($uri, 'UTF-8', mb_detect_encoding($uri));
+  }
 
   $parts = explode('/', $uri);
   for ($i = 0; $i < count($parts); $i++) {
-    if ( function_exists("mb_detect_encoding") && function_exists("mb_convert_encoding")) {
-      $parts[$i] = mb_convert_encoding($parts[$i], "UTF-8", mb_detect_encoding($parts[$i]));
-    }
-
     // do not urlencode the 'svn+ssh://' part!
     if ($i != 0 || $parts[$i] != 'svn+ssh:') {
       $parts[$i] = rawurlencode($parts[$i]);
