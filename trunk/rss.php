@@ -72,12 +72,13 @@ if ($rep->getRSSCaching() && file_exists($cache) && filemtime($cache) >= $histor
 
 // Generate RSS 2.0 feed
 $rss  = '<?xml version="1.0" encoding="utf-8"?>';
-$rss .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>';
+$rss .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel>';
 $rss .= '<title>'.htmlspecialchars($rep->getDisplayName().($path ? ' - '.$path : '')).'</title>';
 $rss .= '<description>'.htmlspecialchars($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
-$rss .= '<link>'.htmlspecialchars(html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg)))).'</link>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
+$rss .= '<link>'.htmlspecialchars(getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg))).'</link>'; // Matching WebSVN page
+$rss .= '<atom:link href="'.htmlspecialchars(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'; // Originating URL where this RSS feed can be found
 
 if ($history && is_array($history->entries)) {
   foreach ($history->entries as $r) {
