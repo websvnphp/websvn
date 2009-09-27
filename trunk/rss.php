@@ -89,7 +89,7 @@ if ($history && is_array($history->entries)) {
       $title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
     }
     $title = $lang['REV'].' '.$r->rev.' - '.$title;
-    $description = '<div><strong>'.$r->author.' &mdash; '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br(create_anchors($r->msg)).'</div>';
+    $description = '<div><strong>'.$r->author.' &mdash; '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br(create_anchors(str_replace('<', '&lt;', $r->msg))).'</div>';
     usort($r->mods, 'SVNLogEntry_compare');
     foreach ($r->mods as $modifiedResource) {
       switch ($modifiedResource->action) {
