@@ -103,7 +103,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       continue; // Skip any files outside the current directory
     }
     $file = $entry->file;
-    $urlPartIsDir = ($isDir) ? 'isdir=1' : '';
+    $isDirString = ($isDir) ? 'isdir=1&amp;' : '';
     
     // Only list files/directories that are not designated as off-limits
     $access = ($isDir) ? $rep->hasReadAccess($path.$file, true)
@@ -125,7 +125,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       $listing[$index]['node'] = 0; // t-node
       $listing[$index]['path'] = $path.$file;
       $listing[$index]['filelink'] = fileLink($path, $file);
-      $listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').($passRevString ? $passRevString.'&amp;' : '').$urlPartIsDir;
+      $listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.$passRevString;
       
       if ($treeview) {
         $listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.fileLink($path, $file, true).'@'.$passrev.'" onclick="checkCB(this)" />';
@@ -155,7 +155,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
       if ($rep->getHideRss()) {
         $rssurl = $config->getURL($rep, $path.$file, 'rss');
         // RSS should always point to the latest revision, so don't include rev
-        $listing[$index]['rssurl'] = $rssurl.$urlPartIsDir.($peg ? '&amp;peg='.$peg : '');
+        $listing[$index]['rssurl'] = $rssurl.$isDirString.($peg ? 'peg='.$peg : '');
       }
 
       $loop++;
@@ -235,6 +235,7 @@ if ($path == '' || $path{0} != '/') {
 
 createDirLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($passrev, $peg);
+$isDirString = 'isdir=1&amp;';
 
 if ($rev < $youngest) {
   if ($path == '/') {
@@ -264,11 +265,11 @@ if ($history && sizeof($history->entries) > 1) {
   $vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
-$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'&amp;isdir=1';
+$vars['logurl'] = $config->getURL($rep, $path, 'log').$isDirString.$passRevString;
 $vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
 if ($rep->getHideRss()) {
-  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg.'&amp;' : '').'isdir=1';
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.($peg ? 'peg='.$peg : '');
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
@@ -276,7 +277,7 @@ if ($rep->getHideRss()) {
 $subs = explode('/', $path);
 $level = count($subs) - 2;
 if ($rep->isDownloadAllowed($path) && !isset($vars['warning'])) {
-  $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').($passRevString ? $passRevString.'&amp;' : '').'isdir=1';
+  $vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$isDirString.$passRevString;
 }
 
 $url = $config->getURL($rep, '/', 'comp');
