@@ -77,8 +77,8 @@ $rss .= '<title>'.htmlspecialchars($rep->getDisplayName().($path ? ' - '.$path :
 $rss .= '<description>'.htmlspecialchars($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
-$rss .= '<link>'.htmlspecialchars(getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg))).'</link>'; // Matching WebSVN page
-$rss .= '<atom:link href="'.htmlspecialchars(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'; // Originating URL where this RSS feed can be found
+$rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').createRevAndPegString($passrev, $peg)).'</link>'; // Matching WebSVN page
+$rss .= '<atom:link href="'.htmlspecialchars(getFullURL($_SERVER['REQUEST_URI']), ENT_NOQUOTES).'" rel="self" type="application/rss+xml" />'; // Originating URL where this RSS feed can be found
 
 if ($history && is_array($history->entries)) {
   foreach ($history->entries as $r) {
