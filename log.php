@@ -140,13 +140,18 @@ if ($max === false) {
 
 createDirLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($passrev, $peg);
+$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
-$vars['showchanges'] = $showchanges;
-$vars['changesurl'] = $config->getURL($rep, $path, 'log').$passRevString;
-$vars['changesurl'] .= (@$_REQUEST['sr'] ? '&amp;sr='.$startrev : '').(@$_REQUEST['er'] ? '&amp;er='.$endrev : '');
-$vars['changesurl'] .= (@$_REQUEST['max'] ? '&amp;max='.$max : '').($isDir ? '&amp;isdir=1' : '');
-$vars['changesurl'] .= (@$_REQUEST['page'] ? '&amp;page='.$page : '').($showchanges ? '' : '&amp;showchanges=1');
+$extraParams = array();
+if ($passRevString)     $extraParams[] = $passRevString;
+if (!$showchanges)      $extraParams[] = 'showchanges=1';
+if (@$_REQUEST['sr'])   $extraParams[] = 'sr='.$startrev;
+if (@$_REQUEST['er'])   $extraParams[] = 'er='.$endrev;
+if (@$_REQUEST['max'])  $extraParams[] = 'max='.$max;
+if (@$_REQUEST['page']) $extraParams[] = 'page='.$page;
+$vars['changesurl'] = $config->getURL($rep, $path, 'log').$isDirString.implode('&amp;', $extraParams);
 $vars['changeslink'] = '<a href="'.$vars['changesurl'].'">'.$lang[($showchanges ? 'HIDECHANGED' : 'SHOWCHANGED')].'</a>';
+$vars['showchanges'] = $showchanges;
 
 if ($isDir) {
   $vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
@@ -163,15 +168,15 @@ if ($isDir) {
 }
 
 if ($rep->getHideRss()) {
-  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '').($isDir ? '&amp;isdir=1' : '');
+  $vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.($peg ? 'peg='.$peg : '');
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
 if ($rev != $youngest) {
   if ($path == '/') {
-    $vars['goyoungesturl'] = $config->getURL($rep, '', 'log').($isDir?'isdir=1':'');
+    $vars['goyoungesturl'] = $config->getURL($rep, '', 'log').$isDirString;
   } else {
-    $vars['goyoungesturl'] = $config->getURL($rep, $path, 'log').'peg='.($peg ? $peg: $rev).'&amp;'.($isDir?'isdir=1':'');
+    $vars['goyoungesturl'] = $config->getURL($rep, $path, 'log').$isDirString.'peg='.($peg ? $peg : $rev);
   }
   $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 }
@@ -247,7 +252,7 @@ if (empty($history)) {
       }
     }
 
-    $thisRevStr = 'rev='.$thisrev.'&amp;peg='.$thisrev;
+    $thisRevString = createRevAndPegString($thisrev, ($peg ? $peg : $thisrev));
 
     if ($match) {
       // Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
@@ -267,10 +272,10 @@ if (empty($history)) {
 
       $listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$compareValue.'" onclick="checkCB(this)" />';
       
-      $url = $config->getURL($rep, $rpath, 'revision').$thisRevStr;
+      $url = $config->getURL($rep, $rpath, 'revision').$thisRevString;
       $listing[$index]['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
       
-      $url = $config->getURL($rep, $rpath, ($isDir ? 'dir' : 'file')).$thisRevStr;
+      $url = $config->getURL($rep, $rpath, ($isDir ? 'dir' : 'file')).$thisRevString;
       $listing[$index]['revpathlink'] = '<a href="'.$url.'">'.$rpath.'</a>';
       $listing[$index]['revpath'] = $rpath;
       $listing[$index]['revauthor'] = $revision->author;
@@ -302,7 +307,7 @@ if (empty($history)) {
 
     // If we've reached the search limit, stop here...
     if (!$numSearchResults) {
-      $url = $config->getURL($rep, $path, 'log').$thisRevStr.($isDir ? '&amp;isdir=1' : '');
+      $url = $config->getURL($rep, $path, 'log').$isDirString.$thisRevString;
       $vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;logsearch=1&amp;search='.$search.'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
       break;
     }
@@ -326,11 +331,9 @@ if (empty($history)) {
     $prev = $page - 1;
     $next = $page + 1;
     
-    $logurl = $config->getURL($rep, $path, 'log').$passRevString;
+    $logurl = $config->getURL($rep, $path, 'log').$isDirString.$passRevString;
 
     $logurl .= '&amp;sr='.$startrev.'&amp;er='.$endrev.'&amp;max='.$max;
-    if ($isDir)
-      $logurl .= '&amp;isdir='.$isDir;
     if ($showchanges)
       $logurl .= '&amp;showchanges=1';
     
@@ -377,11 +380,7 @@ $vars['logsearch_endform']  = '</form>';
 
 // If a filter is in place, produce a link to clear all filter parameters
 if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 40) {
-  $url = $config->getURL($rep, $path, 'log').'rev='.$rev;
-  if ($peg)
-    $url .= '&amp;peg='.$peg;
-  if ($isDir)
-    $url .= '&amp;isdir='.$isDir;
+  $url = $config->getURL($rep, $path, 'log').$isDirString.createRevAndPegString($rev, $peg);
   $vars['logsearch_clearloglink'] = '<a href="'.$url.'">'.$lang['CLEARLOG'].'</a>';
 }
 
