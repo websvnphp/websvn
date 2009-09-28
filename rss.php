@@ -81,7 +81,6 @@ $rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').createR
 $rss .= '<atom:link href="'.htmlspecialchars(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'; // Originating URL where this RSS feed can be found
 
 if ($history && is_array($history->entries)) {
-  $mdash = html_entity_decode(' &mdash; ', ENT_NOQUOTES, 'UTF-8');
   foreach ($history->entries as $r) {
     $wordLimit = 10; // Display only up to the first 10 words of the log message
     $title = trim($r->msg);
@@ -89,8 +88,8 @@ if ($history && is_array($history->entries)) {
     if (count($words) > $wordLimit) {
       $title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
     }
-    $title = $lang['REV'].' '.$r->rev.$mdash.$title;
-    $description = '<div><strong>'.$r->author.$mdash.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br(create_anchors(str_replace('<', '&lt;', $r->msg))).'</div>';
+    $title = $lang['REV'].' '.$r->rev.' -- '.$title;
+    $description = '<div><strong>'.$r->author.' -- '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br(create_anchors(str_replace('<', '&lt;', $r->msg))).'</div>';
     usort($r->mods, 'SVNLogEntry_compare');
     foreach ($r->mods as $modifiedResource) {
       switch ($modifiedResource->action) {
