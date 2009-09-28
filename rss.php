@@ -99,7 +99,7 @@ if ($history && is_array($history->entries)) {
       }
       $description .= $modifiedResource->path.'<br />';
     }
-    $itemLink = htmlspecialchars(html_entity_decode(getFullURL($baseurl.$config->getURL($rep, $r->path, 'revision').createRevAndPegString($r->rev, $peg).($isDir ? '&amp;isdir=1' : ''))));
+    $itemLink = getFullURL($baseurl.$config->getURL($rep, $r->path, 'revision').createRevAndPegString($r->rev, $peg).($isDir ? '&amp;isdir=1' : ''));
 
     $rss .= '<item>';
     $rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
