@@ -88,7 +88,7 @@ if ($history && is_array($history->entries)) {
     if (count($words) > $wordLimit) {
       $title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
     }
-    $title = $lang['REV'].' '.$r->rev.' - '.$title;
+    $title = $lang['REV'].' '.$r->rev.' &mdash; '.$title;
     $description = '<div><strong>'.$r->author.' &mdash; '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br(create_anchors(str_replace('<', '&lt;', $r->msg))).'</div>';
     usort($r->mods, 'SVNLogEntry_compare');
     foreach ($r->mods as $modifiedResource) {
@@ -99,7 +99,7 @@ if ($history && is_array($history->entries)) {
       }
       $description .= $modifiedResource->path.'<br />';
     }
-    $itemLink = getFullURL($baseurl.$config->getURL($rep, $r->path, 'revision').createRevAndPegString($r->rev, $peg).($isDir ? '&amp;isdir=1' : ''));
+    $itemLink = getFullURL($baseurl.$config->getURL($rep, '', 'revision').'rev='.$r->rev);
 
     $rss .= '<item>';
     $rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
