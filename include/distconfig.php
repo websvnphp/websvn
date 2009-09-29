@@ -111,13 +111,14 @@
 //
 // Uncomment ONLY the template file that you want.
 
-$config->setTemplatePath("$locwebsvnreal/templates/calm/");
-// $config->setTemplatePath("$locwebsvnreal/templates/BlueGrey/");
+//$config->setTemplatePath($locwebsvnreal.'/templates/BlueGrey/');
+//$config->setTemplatePath($locwebsvnreal.'/templates/calm/');
+$config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // You may also specify a per repository template file by uncommenting and changing the following
 // line as necessary.  Use the convention "groupname.myrep" if your repository is in a group.
 
-// $config->setTemplatePath('$locwebsvnreal/templates/Standard/', 'myrep'); // Access file for myrep
+// $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/', 'myrep'); // Access file for myrep
 
 // The index page containing the projects may either be displayed as a flat view (the default),
 // where grouped repositories are displayed as "GroupName.RepName" or as a tree view.
