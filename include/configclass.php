@@ -631,7 +631,7 @@ class WebSvnConfig {
   var $bugtraq = false;
   var $auth = "";
 
-  var $templatePath = "./templates/calm/";
+  var $templatePath = "./templates/Elegant/";
 
   var $ignoreSvnMimeTypes = false;
   var $ignoreWebSVNContentTypes = false;
