@@ -185,7 +185,7 @@ $config->useTreeIndex(true);
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
-<tr><th>lastchangedrev</th><td>Revision of the last modification to current directory</td></tr>
+<tr><th>youngestrev</th><td>The most recent revision affecting the current directory</td></tr>
 <tr><th>goyoungestlink</th><td>Link to most recent revision of the current directory (only if a newer revision exists)</td></tr>
 <tr><th>curdirlinks</th><td>List of the path of this directory with links to each one</td></tr>
 <tr><th>logurl</th><td>URL to the log view of current directory</td></tr>
@@ -344,6 +344,8 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>listinglink</th><td>Link to the directory listing for the current path at this revision</td></tr>
 <tr><th>loglink</th><td>Link to the log page for the current path, from the current revision backward</td></tr>
 <tr><th>goyoungestlink</th><td>Link to most recent revision of the current path (only if a newer revision exists)</td></tr>
+<tr><th>prevrev / prevrevurl</th><td>Revision of / link to the previous modification of the current path (only if an older revision exists)</td></tr>
+<tr><th>nextrev / nextrevurl</th><td>Revision of / link to the next modification of the current path (only if a newer revision exists)</td></tr>
 </table>
 
 <h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>

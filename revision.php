@@ -33,36 +33,52 @@ if ($rep) {
 $svnrep = new SVNRepository($rep);
 $vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
-// Revision info to pass along chain
-$passrev = $rev;
+$ppath = ($path == '' || $path{0} != '/') ? '/'.$path : $path;
+createDirLinks($rep, $ppath, $rev, $peg);
+$passRevString = createRevAndPegString($rev, $peg);
+$prevRevString = createRevAndPegString($rev-1, $rev-1);
+$thisRevString = createRevAndPegString($rev, ($peg ? $peg : $rev));
 
-// If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, '', '', false, 2, $peg);
-$youngest = ($history) ? $history->entries[0]->rev : 0;
-
-// Unless otherwise specified, we get the log details of the latest change
-$lastChangedRev = ($rev) ? $rev : $youngest;
-
-if ($lastChangedRev != $youngest) {
-  $history = $svnrep->getLog($path, $lastChangedRev, $lastChangedRev, false, 2, $peg);
-}
-$logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : null;
-
-$headlog = $svnrep->getLog('/', '', '', true, 1);
-$headrev = ($headlog && isset($headlog->entries[0])) ? $headlog->entries[0]->rev : 0;
-
-// If we're not looking at a specific revision, get the HEAD revision number
-// (the revision of the rest of the tree display)
-
+// If we're not looking at a specific revision, use the HEAD revision number
 if (empty($rev)) {
-  $rev = $headrev;
+  $rev = $peg ? $peg : $svnrep->getLog('', '', '', true, 1)->entries[0]->rev;
 }
 
-if ($path == '' || $path{0} != '/') {
-  $ppath = '/'.$path;
-} else {
-  $ppath = $path;
+// Find the youngest revision for the given path
+$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
+if (!$history) {
+  unset($vars['error']);
+  $history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
 }
+$youngest = ($history) ? $history->entries[0]->rev : 0;
+$vars['youngestrev'] = $youngest;
+
+$revurl = $config->getURL($rep, $path, 'revision');
+if (strlen($path) > 1)
+  $revurl .= 'peg='.$rev.'&amp;';
+if ($rev < $youngest) {
+  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
+  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+  
+  $history = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
+  if (isset($history->entries[1])) {
+    $nextRev = $history->entries[1]->rev;
+    $vars['nextrev'] = $nextRev;
+    $vars['nextrevurl'] = $revurl.'rev='.$nextRev;
+//    echo 'NEXT='.$vars['nextrevurl'].'<br/>';
+  }
+  unset($vars['error']);
+  $history = $svnrep->getLog($path, $rev, 1, false, 2, $peg);
+}
+if (isset($history->entries[1])) {
+  $prevRev = $history->entries[1]->rev;
+  $prevPath = $history->entries[1]->path;
+  $vars['prevrev'] = $prevRev;
+  $vars['prevrevurl'] = $revurl.'rev='.$prevRev;
+//  echo 'PREV='.$vars['prevrevurl'].'<br/>';
+}
+// Save the entry from which we pull information for the current revision.
+$logEntry = (isset($history->entries[0])) ? $history->entries[0] : null;
 
 $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 
@@ -70,13 +86,9 @@ $vars['action'] = '';
 $vars['rev'] = $rev;
 $vars['peg'] = $peg;
 $vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
-$vars['lastchangedrev'] = $lastChangedRev;
 $vars['date'] = $logEntry ? $logEntry->date: '';
 $vars['author'] = $logEntry ? $logEntry->author: '';
 $vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))): '';
-
-createDirLinks($rep, $ppath, $passrev, $peg);
-$passRevString = createRevAndPegString($passrev, $peg);
 
 $vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'&amp;isdir=1';
 $vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
@@ -89,11 +101,6 @@ if ($rep->getHideRss()) {
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
-if ($passrev != 0 && $passrev != $headrev && $youngest != 0) {
-  $vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
-  $vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
-}
-
 $changes = $logEntry ? $logEntry->mods : array();
 if (!is_array($changes)) {
   $changes = array();
@@ -101,9 +108,6 @@ if (!is_array($changes)) {
 usort($changes, 'SVNLogEntry_compare');
 
 $row = 0;
-
-$prevRevString = createRevAndPegString($passrev-1, $passrev-1);
-$thisRevString = createRevAndPegString($passrev, ($peg ? $peg : $passrev));
 
 foreach ($changes as $file) {
   $linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
@@ -129,12 +133,8 @@ foreach ($changes as $file) {
   $row = 1 - $row;
 }
 
-if ($rev != $headrev) {
-  $history = $svnrep->getLog($ppath, $rev, '', false, 2, $peg);
-}
-
-if ($history && isset($history->entries[1]->rev)) {
-  $vars['compareurl'] = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
+if (isset($prevRev)) {
+  $vars['compareurl'] = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.urlencode($path).'@'.$rev;
   $vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
