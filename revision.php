@@ -41,7 +41,8 @@ $thisRevString = createRevAndPegString($rev, ($peg ? $peg : $rev));
 
 // If we're not looking at a specific revision, use the HEAD revision number
 if (empty($rev)) {
-  $rev = $peg ? $peg : $svnrep->getLog('', '', '', true, 1)->entries[0]->rev;
+  $history = $svnrep->getLog('', '', '', true, 1); // separated to work in PHP 4
+  $rev = $peg ? $peg : $history->entries[0]->rev;
 }
 
 // Find the youngest revision for the given path
