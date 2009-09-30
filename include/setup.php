@@ -346,14 +346,16 @@ $vars['svnversion'] = $config->getSubversionVersion();
 // else).  We try to memorise a permanent cookie and a per session cookie in
 // case the user has disabled permanent ones.
 
-$userLang = false;
+$userLang = '';
 if (!empty($_REQUEST['langchoice'])) {
   $userLang = $_REQUEST['langchoice'];
-  setcookie('storedlang', $_REQUEST['langchoice'], time()+(3600*24*356*10), '/');
-  setcookie('storedsesslang', $_REQUEST['langchoice']);
+  setcookie('storedlang', $userLang, time()+(3600*24*356*10), '/');
+  setcookie('storedsesslang', $userLang);
 } else { // Try to read an existing cookie if there is one
-  if (!empty($_COOKIE['storedlang'])) $userLang = $_COOKIE['storedlang'];
-  else if (!empty($_COOKIE['storedsesslang'])) $userLang = $_COOKIE['storedsesslang'];
+  if (!empty($_COOKIE['storedlang']))
+    $userLang = $_COOKIE['storedlang'];
+  else if (!empty($_COOKIE['storedsesslang']))
+    $userLang = $_COOKIE['storedsesslang'];
 }
 
 // Load available languages
