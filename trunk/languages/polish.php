@@ -101,7 +101,7 @@ $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "zmienione pliki";
 $lang["RSSFEED"] = "RSS feed";
 
-=$lang["DAYLETTER"] = "d";
+$lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "g";
 $lang["MINUTELETTER"] = "m";
 $lang["SECONDLETTER"] = "s";
