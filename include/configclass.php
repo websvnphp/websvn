@@ -18,7 +18,7 @@
 //
 // --
 //
-// configclass.php4
+// configclass.php
 //
 // General class for handling configuration options
 
@@ -267,11 +267,12 @@ class Repository {
   // {{{ svnParams
 
   function svnParams() {
-    if (!empty($this->username)) {
-      return " --username ".$this->username." --password ".$this->password." ";
-    }
-
-    return " ";
+    $params = '';
+    if (!empty($this->username))
+      $params .= '--username '.quote($this->username).' ';
+    if (!empty($this->password))
+      $params .= '--password '.quote($this->password).' ';
+    return $params;
   }
 
   // }}}
