@@ -90,6 +90,8 @@ $svnrep = new SVNRepository($rep);
 // Fetch information about a revision (if unspecified, the latest) for this path
 if (empty($rev)) {
   $history = $svnrep->getLog($path, 'HEAD', '', true, 1, $peg);
+} else if ($rev == $peg) {
+  $history = $svnrep->getLog($path, '', 1, true, 1, $peg);
 } else {
   $history = $svnrep->getLog($path, $rev, $rev - 1, true, 1, $peg);
 }
