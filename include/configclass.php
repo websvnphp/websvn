@@ -731,6 +731,7 @@ class WebSvnConfig {
       foreach ($this->_parentPaths as $parentPath) {
         $repref =& $parentPath->findRepository($name);
         if ($repref != null) {
+        	$this->_repositories[] = $repref;
           return $repref;
         }
       }
