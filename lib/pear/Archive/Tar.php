@@ -1029,7 +1029,7 @@ class Archive_Tar extends PEAR
         $v_gid = sprintf("%6s ", DecOct($v_info[5]));
         $v_perms = sprintf("%6s ", DecOct($v_info['mode']));
 
-        $v_mtime = sprintf("%11s", DecOct($v_info['mode']));
+        $v_mtime = sprintf("%11s", DecOct($v_info['mtime']));
 
         $v_linkname = '';
 
