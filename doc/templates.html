@@ -187,7 +187,7 @@ $config->useTreeIndex(true);
 <tr><th>log</th><td>Log message of the current revision</td></tr>
 <tr><th>youngestrev</th><td>The most recent revision affecting the current directory</td></tr>
 <tr><th>goyoungestlink</th><td>Link to most recent revision of the current directory (only if a newer revision exists)</td></tr>
-<tr><th>curdirlinks</th><td>List of the path of this directory with links to each one</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>logurl</th><td>URL to the log view of current directory</td></tr>
 <tr><th>rssurl</th><td>URL to the RSS feed for the current directory</td></tr>
 <tr><th>downloadurl</th><td>URL to download an archive for the current directory</td></tr>
@@ -293,11 +293,13 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>date</th><td>Commit date of the most recent revision</td></tr>
 <tr><th>author</th><td>Author of the most recent revision</td></tr>
 <tr><th>log</th><td>Log message of the most recent revision</td></tr>
-<tr><th>curdirlinks</th><td>List of the path of this directory with links to each one</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>pagelinks</th><td>List of list to all the pages of the log</td></tr>
 <tr><th>showalllink</th><td>Link to show the entire log in one go</td></tr>
-<tr><th>difflink</th><td>Link to comparison with previous revision</td></tr>
-<tr><th>blamelink</th><td>Link to the blame information for this file</td></tr>
+<tr><th>directorylink</th><td>(For directories) Link to the directory listing for the current path</td></tr>
+<tr><th>filedetaillink</th><td>(For files) Link to the listing for this file</td></tr>
+<tr><th>blamelink</th><td>(For files) Link to the blame information for this file</td></tr>
+<tr><th>difflink</th><td>(For files) Link to comparison with the previous revision</td></tr>
 <tr><th>goyoungestlink</th><td>Link to log info for the most recent revision of the resource (only if a newer revision exists)</td></tr>
 <tr><th>showchanges</th><td>Whether changed resources should be shown for each revision</td></tr>
 <tr><th>changeslink</th><td>Link to show/hide changed resources for each revision</td></tr>
@@ -340,8 +342,8 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
 <tr><th>path</th><td>Path of the resource passed to this page</td></tr>
-<tr><th>curdirlinks</th><td>List of links to each directory in the current path</td></tr>
-<tr><th>listinglink</th><td>Link to the directory listing for the current path at this revision</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
+<tr><th>directorylink</th><td>Link to the directory listing for the current path at this revision</td></tr>
 <tr><th>loglink</th><td>Link to the log page for the current path, from the current revision backward</td></tr>
 <tr><th>goyoungestlink</th><td>Link to most recent revision of the current path (only if a newer revision exists)</td></tr>
 <tr><th>prevrev / prevrevurl</th><td>Revision of / link to the previous modification of the current path (only if an older revision exists)</td></tr>
@@ -374,7 +376,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
-<tr><th>curdirlinks</th><td>List of the path of this directory with links to each one</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>goyoungestlink</th><td>Link to most recent revision of the file (only if a newer revision exists)</td></tr>
 <tr><th>blamelink</th><td>Link to the blame information for this file</td></tr>
 <tr><th>difflink</th><td>Link to comparison with previous revision</td></tr>
@@ -403,7 +405,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
-<tr><th>curdirlinks</th><td>List of the path of this directory with links to each one</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>filedetaillink</th><td>Link to the listing for this file</td></tr>
 <tr><th>difflink</th><td>Link to comparison with previous revision</td></tr>
 <tr><th>loglink</th><td>Link to the log page for this file</td></tr>
@@ -432,9 +434,9 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
-<tr><th>curdirlinks</th><td>List of the path of this directory with links to each one</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>goyoungestlink</th><td>Link to diff for the most recent revision of a resource (only if a newer revision exists)</td></tr>
-<tr><th>filedetaillink</th><td>Link to detail view for this file</td></tr>
+<tr><th>filedetaillink</th><td>Link to the listing for this file</td></tr>
 <tr><th>blamelink</th><td>Link to the blame information for this file</td></tr>
 <tr><th>loglink</th><td>Link to the log page for this file</td></tr>
 <tr><th>rev1</th><td>Revision number of the older file</td></tr>

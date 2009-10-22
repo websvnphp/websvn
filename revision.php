@@ -34,7 +34,7 @@ $svnrep = new SVNRepository($rep);
 $vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 $ppath = ($path == '' || $path{0} != '/') ? '/'.$path : $path;
-createDirLinks($rep, $ppath, $rev, $peg);
+createPathLinks($rep, $ppath, $rev, $peg);
 $passRevString = createRevAndPegString($rev, $peg);
 $prevRevString = createRevAndPegString($rev-1, $rev-1);
 $thisRevString = createRevAndPegString($rev, ($peg ? $peg : $rev));
@@ -94,8 +94,8 @@ $vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->
 $vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'&amp;isdir=1';
 $vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
-$vars['listingurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
-$vars['listinglink'] = '<a href="'.$vars['listingurl'].'">'.$lang['LISTING'].'</a>';
+$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
+$vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
 
 if ($rep->getHideRss()) {
   $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
