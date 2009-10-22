@@ -65,7 +65,7 @@ if ($history) {
   $vars['author'] = $history->entries[0]->author;
 }
 
-createDirLinks($rep, $ppath, $passrev, $peg);
+createPathLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($passrev, $peg);
 
 if ($rev != $youngest) {

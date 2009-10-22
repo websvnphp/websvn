@@ -233,7 +233,7 @@ if ($path == '' || $path{0} != '/') {
   $ppath = $path;
 }
 
-createDirLinks($rep, $ppath, $passrev, $peg);
+createPathLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($passrev, $peg);
 $isDirString = 'isdir=1&amp;';
 

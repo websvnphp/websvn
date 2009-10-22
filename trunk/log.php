@@ -138,7 +138,7 @@ if ($max === false) {
 // TODO: If the rev is less than the head, get the path (may have been renamed!)
 // Will probably need to call `svn info`, parse XML output, and substring a path
 
-createDirLinks($rep, $ppath, $passrev, $peg);
+createPathLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($passrev, $peg);
 $isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
