@@ -4,7 +4,7 @@
     <div id="error">[websvn:error]</div>
 [websvn-else]
     <div id="revjump">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
-    <div id="curdirlinks">[websvn:curdirlinks]</div>
+    <div id="pathlinks">[websvn:pathlinks]</div>
     [websvn-test:warning]
     [websvn-else]
     <table cellpadding="2" cellspacing="0" class="outline">
@@ -24,7 +24,7 @@
     [websvn-endtest]
     <div id="nav">
       [websvn:loglink]
-      - [websvn:listinglink]
+      - [websvn:directorylink]
       [websvn-test:comparelink]
       - [websvn:comparelink]
       [websvn-endtest]    

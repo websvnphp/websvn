@@ -70,7 +70,7 @@ if ($history) {
   $vars['peg'] = $peg;
 }
 
-createDirLinks($rep, $ppath, $passrev, $peg);
+createPathLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($passrev, $peg);
 
 if ($rev != $youngest) {
