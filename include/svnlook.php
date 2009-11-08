@@ -188,13 +188,13 @@ function listCharacterData($parser, $data) {
   switch ($curTag) {
     case "NAME":
       if ($debugxml) print "Name: $data\n";
-      if (empty($data)) return;
+      if ($data === false || $data === '') return;
       $curList->curEntry->file .= $data;
       break;
 
     case "AUTHOR":
       if ($debugxml) print "Author: $data\n";
-      if (empty($data)) return;
+      if ($data === false || $data === '') return;
       if (function_exists('mb_detect_encoding') && function_exists('mb_convert_encoding'))
         $data = mb_convert_encoding($data, 'UTF-8', mb_detect_encoding($data));
       $curList->curEntry->author .= $data;
@@ -203,7 +203,7 @@ function listCharacterData($parser, $data) {
     case "DATE":
       if ($debugxml) print "Date: $data\n";
       $data = trim($data);
-      if (empty($data)) return;
+      if ($data === false || $data === '') return;
 
       $y = 0;
       $mo = 0;
@@ -335,7 +335,7 @@ function logCharacterData($parser, $data) {
   switch ($curTag) {
     case "AUTHOR":
       if ($debugxml) print "Author: $data\n";
-      if (empty($data)) return;
+      if ($data === false || $data === '') return;
       if (function_exists('mb_detect_encoding') && function_exists('mb_convert_encoding'))
         $data = mb_convert_encoding($data, 'UTF-8', mb_detect_encoding($data));
       $curLog->curEntry->author .= $data;
@@ -344,7 +344,7 @@ function logCharacterData($parser, $data) {
     case "DATE":
       if ($debugxml) print "Date: $data\n";
       $data = trim($data);
-      if (empty($data)) return;
+      if ($data === false || $data === '') return;
 
       $y = 0;
       $mo = 0;
@@ -385,7 +385,7 @@ function logCharacterData($parser, $data) {
     case "PATH":
       if ($debugxml) print "Path name: '$data'\n";
       $data = trim($data);
-      if (empty($data)) return;
+      if ($data === false || $data === '') return;
 
       $curLog->curEntry->curMod->path .= $data;
 
