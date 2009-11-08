@@ -167,7 +167,7 @@ function runCommand($cmd, $mayReturnNothing = false) {
   $error = "";
 
   if (!is_resource($resource)) {
-    echo"<p>".$lang['BADCMD'].": <code>".$cmd."</code></p>";
+    echo"<p>".$lang['BADCMD'].": <code>".stripCredentialsFromCommand($cmd)."</code></p>";
     exit;
   }
 
@@ -198,11 +198,22 @@ function runCommand($cmd, $mayReturnNothing = false) {
   if (!$err) {
     return $output;
   } else {
-    echo"<p>".$lang['BADCMD'].": <code>".$cmd."</code></p><p>".nl2br($error)."</p>";
+    echo"<p>".$lang['BADCMD'].": <code>".stripCredentialsFromCommand($cmd)."</code></p><p>".nl2br($error)."</p>";
   }
 }
 
 // }}}
+
+function stripCredentialsFromCommand($cmd) {
+  global $config;
+
+  $quotingChar = ($config->serverIsWindows ? '"' : "'");
+  $patterns = array('|--username '.$quotingChar.'.*'.$quotingChar.' |U', '|--password '.$quotingChar.'.*'.$quotingChar.' |U');
+  $replacements = array('--username '.quote('***').' ', '--password '.quote('***').' ');
+  $cmd = preg_replace($patterns, $replacements, $cmd, 1);
+
+  return $cmd;
+}
 
 // {{{ quote
 //
