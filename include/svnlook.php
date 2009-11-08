@@ -896,7 +896,7 @@ class SVNRepository {
     $resource = proc_open($cmd, $descriptorspec, $pipes);
 
     if (!is_resource($resource)) {
-      echo $lang['BADCMD'].": <code>".$cmd."</code>";
+      echo $lang['BADCMD'].": <code>".stripCredentialsFromCommand($cmd)."</code>";
       exit;
     }
 
@@ -947,7 +947,7 @@ class SVNRepository {
         $vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
       }
       else {
-        $vars['error'] = $lang['BADCMD'].':<br/><br/><code>'.$cmd.'</code><br/><br/>'.$error;
+        $vars['error'] = $lang['BADCMD'].':<br/><br/><code>'.stripCredentialsFromCommand($cmd).'</code><br/><br/>'.$error;
       }
       return null;
     }
@@ -1013,7 +1013,7 @@ class SVNRepository {
     $resource = proc_open($cmd, $descriptorspec, $pipes);
 
     if (!is_resource($resource)) {
-      echo $lang['BADCMD'].": <br/><br/><code>".$cmd."</code>";
+      echo $lang['BADCMD'].": <br/><br/><code>".stripCredentialsFromCommand($cmd)."</code>";
       exit;
     }
 
@@ -1063,7 +1063,7 @@ class SVNRepository {
         $vars['warning'] = 'Revision '.$brev.' of this resource does not exist.';
       }
       else {
-        $vars['error'] = $lang['BADCMD'].':<br/><br/><code>'.$cmd.'</code><br/><br/>'.nl2br($error);
+        $vars['error'] = $lang['BADCMD'].':<br/><br/><code>'.stripCredentialsFromCommand($cmd).'</code><br/><br/>'.nl2br($error);
       }
       return null;
     }
