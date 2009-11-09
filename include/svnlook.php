@@ -183,7 +183,7 @@ function listEndElement($parser, $name) {
 // {{{ listCharacterData
 
 function listCharacterData($parser, $data) {
-  global $curList, $curTag, $lang, $debugxml;
+  global $curList, $curTag, $debugxml;
 
   switch ($curTag) {
     case "NAME":
@@ -330,7 +330,7 @@ function logEndElement($parser, $name) {
 // {{{ logCharacterData
 
 function logCharacterData($parser, $data) {
-  global $curLog, $curTag, $lang, $debugxml;
+  global $curLog, $curTag, $debugxml;
 
   switch ($curTag) {
     case "AUTHOR":
@@ -593,14 +593,14 @@ class SVNRepository {
 
       $l = @$extEnscript[$ext];
       $path = encodepath($this->getSvnpath($path));
-      $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path.'@'.$rev).' | '.
+      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path.'@'.$rev).' | '.
         $config->enscript." --language=html ".
         ($l ? "--color --pretty-print=$l" : "")." -o - | ".
-        $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $tempname";
+        $config->sed." -n ".$config->quote."1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}".$config->quote." > $tempname");
     } else {
       $highlighted = false;
       $path = encodepath(str_replace(DIRECTORY_SEPARATOR, "/", $this->getSvnpath($path)));
-      $cmd = $config->svn." cat ".$this->repConfig->svnParams().quote($path.'@'.$rev).' > '.quote($filename);
+      $cmd = quoteCommand($config->svn." cat ".$this->repConfig->svnParams().quote($path.'@'.$rev).' > '.quote($filename));
     }
     if (isset($cmd)) {
       $descriptorspec = array(2 => array('pipe', 'w')); // stderr
@@ -659,7 +659,7 @@ class SVNRepository {
     global $extGeshi;
     if (substr($ext, 0, 1) == '.') $ext = substr($ext, 1);
 
-    foreach ($extGeshi as $lang => $extensions) {
+    foreach ($extGeshi as $language => $extensions) {
       if (in_array($ext, $extensions)) {
         if ($this->geshi === null) {
           require_once 'lib/geshi.php';
@@ -667,9 +667,9 @@ class SVNRepository {
         } else {
           $this->geshi->error = false;
         }
-        $this->geshi->set_language($lang);
+        $this->geshi->set_language($language);
         if ($this->geshi->error() === false) {
-          return $lang;
+          return $language;
         }
       }
     }
@@ -684,14 +684,14 @@ class SVNRepository {
   //
   // perform syntax highlighting using geshi
 
-  function applyGeshi($path, $filename, $lang, $rev, $peg = '', $return = false) {
+  function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false) {
     global $config;
 
     $pegrev = ($peg) ? '@'.$peg : '';
 
     // Output the file to the filename
     $path = encodepath($this->getSvnpath($path));
-    $cmd = $config->svn." cat -r $rev ".$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename);
+    $cmd = quoteCommand($config->svn." cat -r $rev ".$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename));
     
     $descriptorspec = array(2 => array('pipe', 'w')); // stderr
     $resource = proc_open($cmd, $descriptorspec, $pipes);
@@ -705,6 +705,7 @@ class SVNRepository {
     
     if (!empty($error)) {
       $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+      global $lang;
       error_log($lang['BADCMD'].': '.$cmd);
       error_log($error);
       global $vars;
@@ -718,7 +719,7 @@ class SVNRepository {
       $this->geshi = new GeSHi();
     }
     $this->geshi->set_source($source);
-    $this->geshi->set_language($lang);
+    $this->geshi->set_language($language);
     $this->geshi->set_header_type(GESHI_HEADER_DIV);
     $this->geshi->set_overall_class('geshi');
     $this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
@@ -792,7 +793,7 @@ class SVNRepository {
     $pegrev = ($peg) ? '@'.$peg : '';
     
     $path = encodepath($this->getSvnpath($path));
-    $cmd = $config->svn." blame -r $rev ".$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename);
+    $cmd = quoteCommand($config->svn." blame -r $rev ".$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename));
 
     $descriptorspec = array(2 => array('pipe', 'w')); // stderr
     $resource = proc_open($cmd, $descriptorspec, $pipes);
@@ -806,6 +807,7 @@ class SVNRepository {
     
     if (!empty($error)) {
       $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+      global $lang;
       error_log($lang['BADCMD'].': '.$cmd);
       error_log($error);
       global $vars;
@@ -861,7 +863,7 @@ class SVNRepository {
   // {{{ getList
 
   function getList($path, $rev = 0) {
-    global $config, $curList, $vars, $lang;
+    global $config, $curList;
 
     $contentEncoding = $this->repConfig->getContentEncoding();
     $xml_parser = xml_parser_create(($contentEncoding) ? $contentEncoding : "UTF-8");
@@ -896,6 +898,7 @@ class SVNRepository {
     $resource = proc_open($cmd, $descriptorspec, $pipes);
 
     if (!is_resource($resource)) {
+    	global $lang;
       echo $lang['BADCMD'].": <code>".stripCredentialsFromCommand($cmd)."</code>";
       exit;
     }
@@ -937,6 +940,7 @@ class SVNRepository {
 
     if (!empty($error)) {
       $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+      global $lang;
       error_log($lang['BADCMD'].': '.$cmd);
       error_log($error);
       global $vars;
@@ -962,7 +966,7 @@ class SVNRepository {
   // {{{ getLog
 
   function getLog($path, $brev = '', $erev = 1, $quiet = false, $limit = 2, $peg = '') {
-    global $config, $curLog, $vars, $lang;
+    global $config, $curLog;
 
     $contentEncoding = $this->repConfig->getContentEncoding();
     $xml_parser = xml_parser_create(($contentEncoding) ? $contentEncoding : "UTF-8");
@@ -1013,6 +1017,7 @@ class SVNRepository {
     $resource = proc_open($cmd, $descriptorspec, $pipes);
 
     if (!is_resource($resource)) {
+    	global $lang;
       echo $lang['BADCMD'].": <br/><br/><code>".stripCredentialsFromCommand($cmd)."</code>";
       exit;
     }
@@ -1053,6 +1058,7 @@ class SVNRepository {
 
     if (!empty($error)) {
       $error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
+      global $lang;
       error_log($lang['BADCMD'].': '.$cmd);
       error_log($error);
       global $vars;
