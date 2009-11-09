@@ -208,7 +208,8 @@ function stripCredentialsFromCommand($cmd) {
   global $config;
 
   $quotingChar = ($config->serverIsWindows ? '"' : "'");
-  $patterns = array('|--username '.$quotingChar.'.*'.$quotingChar.' |U', '|--password '.$quotingChar.'.*'.$quotingChar.' |U');
+  $quotedString = $quotingChar.'([^'.$quotingChar.'\\\\]*(\\\\.[^'.$quotingChar.'\\\\]*)*)'.$quotingChar;
+  $patterns = array('|--username '.$quotedString.' |U', '|--password '.$quotedString.' |U');
   $replacements = array('--username '.quote('***').' ', '--password '.quote('***').' ');
   $cmd = preg_replace($patterns, $replacements, $cmd, 1);
 
@@ -223,7 +224,7 @@ function quote($str) {
   global $config;
 
   if ($config->serverIsWindows) {
-    return "\"$str\"";
+    return '"'.$str.'"';
   } else {
     return escapeshellarg($str);
   }
