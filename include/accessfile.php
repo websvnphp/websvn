@@ -57,11 +57,8 @@ class IniFile {
       if ($str != $line && !empty($cursection) && !empty($curkey)) {
         // line starts with whitespace
         $this->sections[$cursection][$curkey] .= strtolower($str);
-      } else if ($str{0} == '[') {
+      } else if ($str{0} == '[' && $str{strlen($str) - 1} == ']') {
         $cursection = strtolower(substr($str, 1, strlen($str) - 2));
-        if (!($str{strlen($str) - 2} == '/' || $str == '[aliases]' || $str == '[groups]')) {
-          $cursection .= '/';
-        }
         $first = true;
       } else if (!empty($cursection)) {
         if ($first) {

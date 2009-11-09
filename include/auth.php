@@ -161,6 +161,9 @@ class Authentication {
     if ($access != ALLOW) {
       $access = UNDEFINED;
 
+      if ($path != '/' && substr($path, -1) == '/') {
+        $path = substr($path, 0, -1);
+      }
       do {
         $accessers = $this->rights->getValues($repos.":".$path);
         if (!empty($accessers)) {
@@ -179,7 +182,8 @@ class Authentication {
           if ($path == "/") {
             break;
           }
-          $path = substr($path, 0, strrpos(substr($path, 0, -1), "/") + 1);
+          $path = substr($path, 0, strrpos($path, "/"));
+          if ($path == '') $path = '/';
         }
 
       } while ($access == UNDEFINED && $path != "");
@@ -205,6 +209,9 @@ class Authentication {
     // Now check to see if there is a sub folder that's protected
     $repos = strtolower($repos); // .ini parser converts groups to lower-case
     $path = strtolower($path);
+    if ($path != '/' && substr($path, -1) == '/') {
+      $path = substr($path, 0, -1);
+    }
 
     $sections = $this->rights->getSections();
 
