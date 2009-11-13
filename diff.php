@@ -87,7 +87,7 @@ $vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDET
 $vars['blameurl'] = $config->getURL($rep, $path, 'blame').$passRevString;
 $vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
 
-if ($rep->getHideRss()) {
+if ($rep->isRssEnabled()) {
   $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }

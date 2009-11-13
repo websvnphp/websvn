@@ -84,7 +84,7 @@ if ($history == null || sizeof($history->entries) > 1) {
   $vars['difflink'] = '<a href="'.$vars['diffurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
-if ($rep->getHideRss()) {
+if ($rep->isRssEnabled()) {
   $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }

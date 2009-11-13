@@ -118,7 +118,7 @@ $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // You may also specify a per repository template file by uncommenting and changing the following
 // line as necessary.  Use the convention "groupname.myrep" if your repository is in a group.
 
-// $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/', 'myrep'); // Access file for myrep
+// $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/', 'myrep');
 
 // The index page containing the projects may either be displayed as a flat view (the default),
 // where grouped repositories are displayed as "GroupName.RepName" or as a tree view.
@@ -304,7 +304,7 @@ $config->addInlineMimeType("text/plain");
 // $config->setTarballTmpDir('temp');
 //
 // To change the global option for individual repositories, uncomment and replicate
-// the required line below (replacing 'myrep' for the name of the repository to be changed).
+// the appropriate line below (replacing 'myrep' with the name of the repository).
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->allowDownload('myrep'); // Specifically allow downloading for 'myrep'
@@ -324,7 +324,7 @@ $config->addInlineMimeType("text/plain");
 $config->setMinDownloadLevel(2);
 
 // To change the level for individual repositories, uncomment and replicate
-// the required line below (replacing 'myrep' for the name of the repository to be changed).
+// the appropriate line below (replacing 'myrep' with the name of the repository).
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->setMinDownloadLevel(2, 'myrep');
@@ -386,44 +386,54 @@ $config->useGeshi();
 
 // {{{ RSSFEED ---
 
-// Uncomment this line if you wish to hide the RSS feed links across all repositories
-//
-// $config->hideRSS();
-//
-// To change the global option for individual repositories, uncomment and replicate
-// the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Uncomment this line to hide the RSS feed links across all repositories
+
+// $config->setRssEnabled(false);
+
+// To override the global setting for individual repositories, uncomment and replicate
+// the appropriate line below (replacing 'myrep' with the name of the repository).
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->hideRSS('myrep'); // Specifically hide RSS links for 'myrep'
-// $config->showRSS('myrep'); // Specifically show RSS links for 'myrep'
+// $config->setRssEnabled(false, 'myrep');
+// $config->setRssEnabled(true,  'myrep');
 
-// Uncomment this line if you wish to enable caching RSS feeds across all repositories
-// This may create a very high number of cache entries which are currently not garbaged automatically
-//
-// $config->enableRSSCaching();
-//
-// To change the global option for individual repositories, uncomment and replicate
-// the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Uncomment this line to enable caching RSS feeds across all repositories
+// This may create a large number of cache files which are currently not garbaged automatically
+
+// $config->setRssCachingEnabled(true);
+
+// To override the global setting for individual repositories, uncomment and replicate
+// the appropriate line below (replacing 'myrep' with the name of the repository).
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->enableRSSCaching('myrep'); // Specifically enable RSS feeds for 'myrep'
-// $config->disableRSSCaching('myrep'); // Specifically disable RSS feeds for 'myrep'
+// $config->setRssCachingEnabled(true,  'myrep');
+// $config->setRssCachingEnabled(false, 'myrep');
+
+// Uncomment this line to change the maximum number of RSS entries to display across all repositories
+
+// $config->setRssMaxEntries(50);
+
+// To override the global setting for individual repositories, uncomment and replicate
+// the line below (replacing 'myrep' with the name of the repository).
+// Use the convention 'groupname.myrep' if your repository is in a group.
+
+// $config->setRssMaxEntries(50, 'myrep');
 
 // }}}
 
 // {{{ BUGTRAQ ---
 
-// Uncomment this line if you wish to use bugtraq: properties to show links to your BugTracker
-// from the log messages.
-//
-// $config->useBugtraqProperties();
-//
-// To change the global option for individual repositories, uncomment and replicate
-// the required line below (replacing 'myrep' for the name of the repository to be changed).
+// Uncomment this line to use bugtraq: properties to show links to your BugTracker
+// from log messages.
+
+// $config->setBugtraqEnabled(true);
+
+// To override the global setting for individual repositories, uncomment and replicate
+// the appropriate line below (replacing 'myrep' with the name of the repository).
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->useBugtraqProperties('myrep'); // Specifically use bugtraq properties for 'myrep'
-// $config->ignoreBugtraqProperties('myrep'); // Specifically ignore bugtraq properties for 'myrep'
+// $config->setBugtraqEnabled(true,  'myrep');
+// $config->setBugtraqEnabled(false, 'myrep');
 
 // }}}
 
@@ -436,8 +446,8 @@ set_time_limit(0);
 
 $config->expandTabsBy(8);
 
-// To change the global option for individual repositories, uncomment and replicate
-// the required line below (replacing 'myrep' for the name of the repository to be changed).
+// To override the global setting for individual repositories, uncomment and replicate
+// the line below (replacing 'myrep' with the name of the repository).
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->expandTabsBy(3, 'myrep'); // Expand Tabs by 3 for repository 'myrep'
