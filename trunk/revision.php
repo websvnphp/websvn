@@ -97,7 +97,7 @@ $vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 $vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
 $vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
 
-if ($rep->getHideRss()) {
+if ($rep->isRssEnabled()) {
   $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }

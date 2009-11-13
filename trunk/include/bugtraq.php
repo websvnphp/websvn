@@ -48,7 +48,7 @@ class Bugtraq {
   function Bugtraq($rep, $svnrep, $path) {
     global $config;
 
-    if ($rep->getBugtraq()) {
+    if ($rep->isBugtraqEnabled()) {
       $pos = strrpos($path, "/");
       $parent = substr($path, 0, $pos + 1);
       $this->append = true;

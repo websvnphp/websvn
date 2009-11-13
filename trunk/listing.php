@@ -152,7 +152,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
         $listing[$index]['downloadplainurl'] = '';
         $listing[$index]['downloadurl'] = '';
       }
-      if ($rep->getHideRss()) {
+      if ($rep->isRssEnabled()) {
         $rssurl = $config->getURL($rep, $path.$file, 'rss');
         // RSS should always point to the latest revision, so don't include rev
         $listing[$index]['rssurl'] = $rssurl.$isDirString.($peg ? 'peg='.$peg : '');
@@ -268,7 +268,7 @@ if ($history && sizeof($history->entries) > 1) {
 $vars['logurl'] = $config->getURL($rep, $path, 'log').$isDirString.$passRevString;
 $vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
-if ($rep->getHideRss()) {
+if ($rep->isRssEnabled()) {
   $vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.($peg ? 'peg='.$peg : '');
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }

@@ -145,7 +145,7 @@ if ($rep->isDownloadAllowed($path)) {
   $vars['downloadlink'] = '<a href="'.$vars['downloadlurl'].'">'.$lang['DOWNLOAD'].'</a>';
 }
 
-if ($rep->getHideRss()) {
+if ($rep->isRssEnabled()) {
   $vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
   $vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }

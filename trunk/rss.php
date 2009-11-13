@@ -29,7 +29,9 @@ require_once('include/template.php');
 
 $isDir = @$_REQUEST['isdir'] == 1;
 
-$maxmessages = 20;
+$max = (int)@$_REQUEST['max'];
+if ($max == 0)
+  $max = $config->getRssMaxEntries();
 
 // Find the base URL name
 if ($config->multiViews) {
@@ -66,13 +68,13 @@ if (!$rep->hasReadAccess($path, false)) {
 header('Content-Type: application/xml; charset=utf-8');
 
 // If there's no revision info, go to the lastest revision for this path
-$history = $svnrep->getLog($path, $rev, '', false, $maxmessages, $peg);
+$history = $svnrep->getLog($path, $rev, '', false, $max, $peg);
 
 // Filename reflecting full path for a cached RSS feed for this particular query
-$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ":/\\?", "____").($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'.rss.xml';
+$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ":/\\?", "____").($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'#'.$max.'.rss.xml';
 
 // If a recent-enough cached version exists, use it and avoid all the work below
-if ($rep->getRSSCaching() && file_exists($cache) && filemtime($cache) >= $history->curEntry->committime) {
+if ($rep->isRssCachingEnabled() && file_exists($cache) && filemtime($cache) >= $history->curEntry->committime) {
   readfile($cache);
   exit();
 }
@@ -120,7 +122,7 @@ if ($history && is_array($history->entries)) {
 }
 $rss .= '</channel></rss>';
 
-if ($rep->getRSSCaching()) {
+if ($rep->isRssCachingEnabled()) {
   $file = fopen($cache, 'w+');
   if ($file) {
     fputs($file, $rss);
