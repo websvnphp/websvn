@@ -227,6 +227,8 @@ class Repository {
   var $allowedExceptions = array();
   var $disallowedExceptions = array();
   var $rss;
+  var $rssCaching;
+  var $rssMaxEntries;
   var $spaces;
   var $ignoreSvnMimeTypes;
   var $ignoreWebSVNContentTypes;
@@ -281,40 +283,43 @@ class Repository {
 
   // {{{ RSS Feed
 
-  function hideRSS() {
-    $this->rss = false;
+  function setRssEnabled($enabled) {
+    $this->rss = $enabled;
   }
 
-  function showRSS() {
-    $this->rss = true;
-  }
-
-  function getHideRSS() {
+  function isRssEnabled() {
     global $config;
 
-    if (isset($this->rss)) {
+    if (isset($this->rss))
       return $this->rss;
-    }
-
-    return $config->getHideRSS();
+    else
+      return $config->isRssEnabled();
   }
 
-  function enableRSSCaching() {
-    $this->rssCaching = true;
+  function setRssCachingEnabled($enabled = true) {
+    $this->rssCaching = $enabled;
   }
 
-  function disableRSSCaching() {
-    $this->rssCaching = false;
-  }
-
-  function getRSSCaching() {
+  function isRssCachingEnabled() {
     global $config;
 
-    if (isset($this->rssCaching)) {
+    if (isset($this->rssCaching))
       return $this->rssCaching;
-    }
+    else
+      return $config->isRssCachingEnabled();
+  }
 
-    return $config->getRSSCaching();
+  function setRssMaxEntries($max) {
+    $this->rssMaxEntries = $max;
+  }
+  
+  function getRssMaxEntries() {
+    global $config;
+
+    if (isset($this->rssMaxEntries))
+      return $this->rssMaxEntries;
+    else
+      return $config->getRssMaxEntries();
   }
 
   // }}}
@@ -490,24 +495,19 @@ class Repository {
 
   // }}}
 
-  // {{{ Issue Tracking
+  // {{{ Bugtraq issue tracking
 
-  function useBugtraqProperties() {
-    $this->bugtraq = true;
+  function setBugtraqEnabled($enabled) {
+    $this->bugtraq = $enabled;
   }
 
-  function ignoreBugtraqProperties() {
-    $this->bugtraq = false;
-  }
-
-  function getBugtraq() {
+  function isBugtraqEnabled() {
     global $config;
 
-    if (isset($this->bugtraq)) {
+    if (isset($this->bugtraq))
       return $this->bugtraq;
-    }
-
-    return $config->getBugtraq();
+    else
+      return $config->isBugtraqEnabled();
   }
 
   // }}}
@@ -628,6 +628,7 @@ class WebSvnConfig {
   var $disallowedExceptions = array();
   var $rss = true;
   var $rssCaching = false;
+  var $rssMaxEntries = 50;
   var $spaces = 8;
   var $bugtraq = false;
   var $auth = "";
@@ -846,16 +847,16 @@ class WebSvnConfig {
   //
   // Allow RSS feeds
 
-  function hideRSS($myrep = 0) {
+  function setRssEnabled($enabled = true, $myrep = 0) {
     if (empty($myrep)) {
-      $this->rss = false;
+      $this->rss = $enabled;
     } else {
       $repo =& $this->findRepository($myrep);
-      $repo->hideRSS();
+      $repo->setRssEnabled($enabled);
     }
   }
 
-  function getHideRSS() {
+  function isRssEnabled() {
     return $this->rss;
   }
 
@@ -863,17 +864,32 @@ class WebSvnConfig {
   //
   // Enable caching of RSS feeds
 
-  function enableRSSCaching($myrep = 0) {
+  function setRssCachingEnabled($enabled = true, $myrep = 0) {
     if (empty($myrep)) {
       $this->rssCaching = true;
     } else {
       $repo =& $this->findRepository($myrep);
-      $repo->enableRSSCaching();
+      $repo->setRssCachingEnabled($enabled);
     }
   }
 
-  function getRSSCaching() {
+  function isRssCachingEnabled() {
     return $this->rssCaching;
+  }
+  
+  // Maximum number of entries in RSS feed
+  
+  function setRssMaxEntries($max, $myrep = 0) {
+    if (empty($myrep)) {
+      $this->rssMaxEntries = $max;
+    } else {
+      $repo =& $this->findRepository($myrep);
+      $repo->setRssMaxEntries($max);
+    }
+  }
+  
+  function getRssMaxEntries() {
+    return $this->rssMaxEntries;
   }
 
   // }}}
@@ -1342,6 +1358,23 @@ class WebSvnConfig {
 
   // }}}
 
+  // {{{ Bugtraq issue tracking
+
+  function setBugtraqEnabled($enabled, $myrep = 0) {
+    if (empty($myrep)) {
+      $this->bugtraq = $enabled;
+    } else {
+      $repo =& $this->findRepository($myrep);
+      $repo->setBugtraqEnabled($enabled);
+    }
+  }
+
+  function isBugtraqEnabled() {
+    return $this->bugtraq;
+  }
+
+  // }}}
+
   // {{{ Misc settings
 
   function ignoreSvnMimeTypes() {
@@ -1358,19 +1391,6 @@ class WebSvnConfig {
 
   function getIgnoreWebSVNContentTypes() {
     return $this->ignoreWebSVNContentTypes;
-  }
-
-  function useBugtraqProperties($myrep = 0) {
-    if (empty($myrep)) {
-      $this->bugtraq = true;
-    } else {
-      $repo =& $this->findRepository($myrep);
-      $repo->useBugtraqProperties();
-    }
-  }
-
-  function getBugtraq() {
-    return $this->bugtraq;
   }
 
   function useAuthenticationFile($file, $myrep = 0) {
