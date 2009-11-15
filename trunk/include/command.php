@@ -9,12 +9,12 @@
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA	02111-1307	USA
 //
 // --
 //
@@ -30,52 +30,52 @@
 // line command).
 
 function replaceEntities($str, $rep) {
-  global $config;
+	global $config;
 
-  // Ideally, we'd do this:
-  //
-  // $str = htmlentities($str, ENT_COMPAT, $config->inputEnc);
-  //
-  // However, htmlentities is very limited in it's ability to process
-  // character encodings.  We have to rely on something more powerful.
+	// Ideally, we'd do this:
+	//
+	// $str = htmlentities($str, ENT_COMPAT, $config->inputEnc);
+	//
+	// However, htmlentities is very limited in it's ability to process
+	// character encodings.	We have to rely on something more powerful.
 
-  if (version_compare(phpversion(), "4.1.0", "<")) {
-    // In this case, we can't do any better than assume that the
-    // input encoding is ISO-8859-1.
+	if (version_compare(phpversion(), '4.1.0', '<')) {
+		// In this case, we can't do any better than assume that the
+		// input encoding is ISO-8859-1.
 
-    $str = htmlentities($str, ENT_COMPAT);
-  } else {
-    $str = toOutputEncoding($str, $rep->getContentEncoding());
+		$str = htmlentities($str, ENT_COMPAT);
+	} else {
+		$str = toOutputEncoding($str, $rep->getContentEncoding());
 
-    // $str is now encoded as UTF-8.
-    $str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
-  }
+		// $str is now encoded as UTF-8.
+		$str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
+	}
 
-  return $str;
+	return $str;
 }
 
 // }}}
 
 // {{{ toOutputEncoding
 
-function toOutputEncoding($str, $inputEncoding = "") {
-  global $config;
+function toOutputEncoding($str, $inputEncoding = '') {
+	global $config;
 
-  if (empty($inputEncoding)) {
-    $inputEncoding = $config->inputEnc;
-  }
+	if (empty($inputEncoding)) {
+		$inputEncoding = $config->inputEnc;
+	}
 
-  // Try to convert the messages based on the locale information
-  if ($config->inputEnc && $config->outputEnc) {
-    if (function_exists("iconv")) {
-      $output = @iconv($inputEncoding, $config->outputEnc, $str);
-      if (!empty($output)) {
-        $str = $output;
-      }
-    }
-  }
+	// Try to convert the messages based on the locale information
+	if ($config->inputEnc && $config->outputEnc) {
+		if (function_exists('iconv')) {
+			$output = @iconv($inputEncoding, $config->outputEnc, $str);
+			if (!empty($output)) {
+				$str = $output;
+			}
+		}
+	}
 
-  return $str;
+	return $str;
 }
 
 // }}}
@@ -83,16 +83,16 @@ function toOutputEncoding($str, $inputEncoding = "") {
 // {{{ quoteCommand
 
 function quoteCommand($cmd) {
-  global $config;
+	global $config;
 
-  // On Windows machines, the whole line needs quotes round it so that it's
-  // passed to cmd.exe correctly
+	// On Windows machines, the whole line needs quotes round it so that it's
+	// passed to cmd.exe correctly
 
-  if ($config->serverIsWindows) {
-    $cmd = "\"$cmd\"";
-  }
+	if ($config->serverIsWindows) {
+		$cmd = '"'.$cmd.'"';
+	}
 
-  return $cmd;
+	return $cmd;
 }
 
 // }}}
@@ -100,17 +100,17 @@ function quoteCommand($cmd) {
 // {{{ execCommand
 
 function execCommand($cmd, &$retcode) {
-  global $config;
+	global $config;
 
-  // On Windows machines, the whole line needs quotes round it so that it's
-  // passed to cmd.exe correctly
-  // Since php 5.3.0 the quoting seems to be done internally
+	// On Windows machines, the whole line needs quotes round it so that it's
+	// passed to cmd.exe correctly
+	// Since php 5.3.0 the quoting seems to be done internally
 
-  if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-    $cmd = "\"$cmd\"";
-  }
+	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
+		$cmd = '"'.$cmd.'"';
+	}
 
-  return @exec($cmd, $tmp, $retcode);
+	return @exec($cmd, $tmp, $retcode);
 }
 
 // }}}
@@ -118,17 +118,17 @@ function execCommand($cmd, &$retcode) {
 // {{{ popenCommand
 
 function popenCommand($cmd, $mode) {
-  global $config;
+	global $config;
 
-  // On Windows machines, the whole line needs quotes round it so that it's
-  // passed to cmd.exe correctly
-  // Since php 5.3.0 the quoting seems to be done internally
+	// On Windows machines, the whole line needs quotes round it so that it's
+	// passed to cmd.exe correctly
+	// Since php 5.3.0 the quoting seems to be done internally
 
-  if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-    $cmd = "\"$cmd\"";
-  }
+	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
+		$cmd = '"'.$cmd.'"';
+	}
 
-  return popen($cmd, $mode);
+	return popen($cmd, $mode);
 }
 
 // }}}
@@ -136,17 +136,17 @@ function popenCommand($cmd, $mode) {
 // {{{ passthruCommand
 
 function passthruCommand($cmd) {
-  global $config;
+	global $config;
 
-  // On Windows machines, the whole line needs quotes round it so that it's
-  // passed to cmd.exe correctly
-  // Since php 5.3.0 the quoting seems to be done internally
+	// On Windows machines, the whole line needs quotes round it so that it's
+	// passed to cmd.exe correctly
+	// Since php 5.3.0 the quoting seems to be done internally
 
-  if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-    $cmd = "\"$cmd\"";
-  }
+	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
+		$cmd = '"'.$cmd.'"';
+	}
 
-  return passthru($cmd);
+	return passthru($cmd);
 }
 
 // }}}
@@ -154,66 +154,66 @@ function passthruCommand($cmd) {
 // {{{ runCommand
 
 function runCommand($cmd, $mayReturnNothing = false) {
-  global $lang;
+	global $lang;
 
-  $output = array();
-  $err = false;
+	$output = array();
+	$err = false;
 
-  $c = quoteCommand($cmd);
+	$c = quoteCommand($cmd);
 
-  $descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
-  $resource = proc_open($c, $descriptorspec, $pipes);
-  $error = "";
+	$resource = proc_open($c, $descriptorspec, $pipes);
+	$error = '';
 
-  if (!is_resource($resource)) {
-    echo"<p>".$lang['BADCMD'].": <code>".stripCredentialsFromCommand($cmd)."</code></p>";
-    exit;
-  }
+	if (!is_resource($resource)) {
+		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p>';
+		exit;
+	}
 
-  $handle = $pipes[1];
-  $firstline = true;
-  while (!feof($handle)) {
-    $line = fgets($handle);
-    if ($firstline && empty($line) && !$mayReturnNothing) {
-      $err = true;
-    }
+	$handle = $pipes[1];
+	$firstline = true;
+	while (!feof($handle)) {
+		$line = fgets($handle);
+		if ($firstline && empty($line) && !$mayReturnNothing) {
+			$err = true;
+		}
 
-    $firstline = false;
-    $output[] = toOutputEncoding(rtrim($line));
-  }
+		$firstline = false;
+		$output[] = toOutputEncoding(rtrim($line));
+	}
 
-  while (!feof($pipes[2])) {
-    $error .= fgets($pipes[2]);
-  }
+	while (!feof($pipes[2])) {
+		$error .= fgets($pipes[2]);
+	}
 
-  $error = toOutputEncoding(trim($error));
+	$error = toOutputEncoding(trim($error));
 
-  fclose($pipes[0]);
-  fclose($pipes[1]);
-  fclose($pipes[2]);
+	fclose($pipes[0]);
+	fclose($pipes[1]);
+	fclose($pipes[2]);
 
-  proc_close($resource);
+	proc_close($resource);
 
-  if (!$err) {
-    return $output;
-  } else {
-    echo"<p>".$lang['BADCMD'].": <code>".stripCredentialsFromCommand($cmd)."</code></p><p>".nl2br($error)."</p>";
-  }
+	if (!$err) {
+		return $output;
+	} else {
+		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p><p>'.nl2br($error).'</p>';
+	}
 }
 
 // }}}
 
 function stripCredentialsFromCommand($cmd) {
-  global $config;
+	global $config;
 
-  $quotingChar = ($config->serverIsWindows ? '"' : "'");
-  $quotedString = $quotingChar.'([^'.$quotingChar.'\\\\]*(\\\\.[^'.$quotingChar.'\\\\]*)*)'.$quotingChar;
-  $patterns = array('|--username '.$quotedString.' |U', '|--password '.$quotedString.' |U');
-  $replacements = array('--username '.quote('***').' ', '--password '.quote('***').' ');
-  $cmd = preg_replace($patterns, $replacements, $cmd, 1);
+	$quotingChar = ($config->serverIsWindows ? '"' : "'");
+	$quotedString = $quotingChar.'([^'.$quotingChar.'\\\\]*(\\\\.[^'.$quotingChar.'\\\\]*)*)'.$quotingChar;
+	$patterns = array('|--username '.$quotedString.' |U', '|--password '.$quotedString.' |U');
+	$replacements = array('--username '.quote('***').' ', '--password '.quote('***').' ');
+	$cmd = preg_replace($patterns, $replacements, $cmd, 1);
 
-  return $cmd;
+	return $cmd;
 }
 
 // {{{ quote
@@ -221,13 +221,13 @@ function stripCredentialsFromCommand($cmd) {
 // Quote a string to send to the command line
 
 function quote($str) {
-  global $config;
+	global $config;
 
-  if ($config->serverIsWindows) {
-    return '"'.$str.'"';
-  } else {
-    return escapeshellarg($str);
-  }
+	if ($config->serverIsWindows) {
+		return '"'.$str.'"';
+	} else {
+		return escapeshellarg($str);
+	}
 }
 
 // }}}

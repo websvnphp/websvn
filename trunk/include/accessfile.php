@@ -9,12 +9,12 @@
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA	02111-1307	USA
 //
 // --
 //
@@ -23,81 +23,81 @@
 // Read a .ini style file
 
 class IniFile {
-  var $sections;
+	var $sections;
 
-  // {{{ __construct
+	// {{{ __construct
 
-  function IniFile() {
-    $this->sections = array();
-  }
+	function IniFile() {
+		$this->sections = array();
+	}
 
-  // }}}
+	// }}}
 
-  // {{{ readIniFile
+	// {{{ readIniFile
 
-  function readIniFile($name) {
-    // does not use parse_ini_file function since php 5.3 does not support comment lines starting with #
-    $contents = file($name);
-    $cursection = '';
-    $curkey = '';
-    $first = true;
+	function readIniFile($name) {
+		// does not use parse_ini_file function since php 5.3 does not support comment lines starting with #
+		$contents = file($name);
+		$cursection = '';
+		$curkey = '';
+		$first = true;
 
-    foreach ($contents as $line) {
-      $line = rtrim($line);
-      $str = ltrim($line);
-      if (empty($str)) {
-        continue;
-      }
+		foreach ($contents as $line) {
+			$line = rtrim($line);
+			$str = ltrim($line);
+			if (empty($str)) {
+				continue;
+			}
 
-      // @todo remove ' in the next major release to be in line with the svn book
-      if ($str{0} == '#' or $str{0} == "'") {
-        continue;
-      }
+			// @todo remove ' in the next major release to be in line with the svn book
+			if ($str{0} == '#' || $str{0} == "'") {
+				continue;
+			}
 
-      if ($str != $line && !empty($cursection) && !empty($curkey)) {
-        // line starts with whitespace
-        $this->sections[$cursection][$curkey] .= strtolower($str);
-      } else if ($str{0} == '[' && $str{strlen($str) - 1} == ']') {
-        $cursection = strtolower(substr($str, 1, strlen($str) - 2));
-        $first = true;
-      } else if (!empty($cursection)) {
-        if ($first) {
-          if (($cursection != 'aliases' && $cursection != 'groups') || !isset($this->sections[$cursection])) {
-            $this->sections[$cursection] = array();
-          }
-        }
-        list($key, $val) = explode('=', $str, 2);
-        $key = strtolower(trim($key));
-        $curkey = $key;
-        $this->sections[$cursection][$key] = strtolower(trim($val));
-        $first = false;
-      }
-    }
-  }
+			if ($str != $line && !empty($cursection) && !empty($curkey)) {
+				// line starts with whitespace
+				$this->sections[$cursection][$curkey] .= strtolower($str);
+			} else if ($str{0} == '[' && $str{strlen($str) - 1} == ']') {
+				$cursection = strtolower(substr($str, 1, strlen($str) - 2));
+				$first = true;
+			} else if (!empty($cursection)) {
+				if ($first) {
+					if (($cursection != 'aliases' && $cursection != 'groups') || !isset($this->sections[$cursection])) {
+						$this->sections[$cursection] = array();
+					}
+				}
+				list($key, $val) = explode('=', $str, 2);
+				$key = strtolower(trim($key));
+				$curkey = $key;
+				$this->sections[$cursection][$key] = strtolower(trim($val));
+				$first = false;
+			}
+		}
+	}
 
-  // }}}
+	// }}}
 
-  // {{{ getSections
+	// {{{ getSections
 
-  function &getSections() {
-    return $this->sections;
-  }
+	function &getSections() {
+		return $this->sections;
+	}
 
-  // }}}
+	// }}}
 
-  // {{{ getValues
+	// {{{ getValues
 
-  function getValues($section) {
-    return @$this->sections[strtolower($section)];
-  }
+	function getValues($section) {
+		return @$this->sections[strtolower($section)];
+	}
 
-  // }}}
+	// }}}
 
-  // {{{ getValue
+	// {{{ getValue
 
-  function getValue($section, $key) {
-    return @$this->sections[strtolower($section)][strtolower($key)];
-  }
+	function getValue($section, $key) {
+		return @$this->sections[strtolower($section)][strtolower($key)];
+	}
 
-  // }}}
+	// }}}
 }
