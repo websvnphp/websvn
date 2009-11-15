@@ -9,12 +9,12 @@
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 // --
 //
@@ -52,16 +52,16 @@
 
 // {{{ REPOSITORY SETUP ---
 
-// There are 2 methods for defining the repositiories available on the system.  Either you list
+// There are 2 methods for defining the repositiories available on the system. Either you list
 // them by hand, in which case you can give each one the name of your choice, or you use the
 // parent path function, in which case the name of the directory is used as the repository name.
 //
-// In all cases, you may optionally supply a group name to the repositories.  This is useful in the
-// case that you need to separate your projects.  Grouped Repositories are referred to using the
+// In all cases, you may optionally supply a group name to the repositories. This is useful in the
+// case that you need to separate your projects. Grouped Repositories are referred to using the
 // convention GroupName.RepositoryName
 //
-// Performance is much better on local repositories (e.g. accessed by file:///).  However, you
-// can also provide an interface onto a remote repository.  In this case you should supply the
+// Performance is much better on local repositories (e.g. accessed by file:///). However, you
+// can also provide an interface onto a remote repository. In this case you should supply the
 // username and password needed to access it.
 //
 // To configure the repositories by hand, copy the appropriate line below, uncomment it and
@@ -74,7 +74,7 @@
 //
 // Remote repositories (without and with optional group):
 //
-// $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', NULL, 'username', 'password');
+// $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', null, 'username', 'password');
 // $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'group', 'username', 'password');
 //
 // Display Part of a repository as if it was a repository.
@@ -86,7 +86,7 @@
 //
 // Remote repositories (without and with optional group):
 //
-// $config->addRepositorySubpath('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'subpath', NULL, 'username', 'password');
+// $config->addRepositorySubpath('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'subpath', null, 'username', 'password');
 // $config->addRepositorySubpath('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'subpath', 'group', 'username', 'password');
 //
 // To use the parent path method (without and with optional group), uncomment the next line
@@ -116,20 +116,20 @@
 $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // You may also specify a per repository template file by uncommenting and changing the following
-// line as necessary.  Use the convention "groupname.myrep" if your repository is in a group.
+// line as necessary. Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/', 'myrep');
 
 // The index page containing the projects may either be displayed as a flat view (the default),
-// where grouped repositories are displayed as "GroupName.RepName" or as a tree view.
+// where grouped repositories are displayed as 'GroupName.RepName' or as a tree view.
 // In the case of a tree view, you may choose whether the entire tree is open by default.
 
 // $config->useTreeIndex(false); // Tree index, closed by default
-// $config->useTreeIndex(true);  // Tree index, open by default
+// $config->useTreeIndex(true); // Tree index, open by default
 
-// By default, WebSVN displays a tree view onto the current directory.  You can however
+// By default, WebSVN displays a tree view onto the current directory. You can however
 // choose to display a flat view of the current directory only, which may make the display
-// load faster.  Uncomment this line if you want that.
+// load faster. Uncomment this line if you want that.
 
 // $config->useFlatView();
 
@@ -168,28 +168,28 @@ $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // You may also specify the character encoding of the repository contents if different from
 // the system encoding. This is typically the case for windows users, whereby the command
 // line returns, for example, CP850 encoded strings, whereas the source files are encoded
-// as iso-8859-1 by Windows based text editors.  When display text file, WebSVN will convert
+// as iso-8859-1 by Windows based text editors. When display text file, WebSVN will convert
 // them from the content encoding to the output encoding (UTF-8).
 //
 // WebSVN does its best to automate all this, so only use the following if it doesn't work
 // "out of the box". Uncomment and change one of the examples below.
 //
-// $config->setInputEncoding('CP850');  // Encoding of result returned by svn command line, etc.
-// $config->setContentEncoding('iso-8859-1');  // Content encoding of all your repositories
+// $config->setInputEncoding('CP850'); // Encoding of result returned by svn command line, etc.
+// $config->setContentEncoding('iso-8859-1'); // Content encoding of all your repositories
 
-// You may also specify a content encoding on a per repository basis.  Uncomment and copy this
+// You may also specify a content encoding on a per repository basis. Uncomment and copy this
 // line as necessary.
 //
 // $config->setContentEncoding('iso-8859-1', 'MyEnc');
 
-// Note for Windows users:  To enable iconv you'll need to enable the extension in your php.ini file
-// AND copy iconv.dll (not php_iconv.dll) to your Windows system folder.  In most cases the correct
+// Note for Windows users: To enable iconv you'll need to enable the extension in your php.ini file
+// AND copy iconv.dll (not php_iconv.dll) to your Windows system folder. In most cases the correct
 // encoding is set when you call $config->setServerIsWindows();.
 
-// Note for *nix users.  You'll need to have iconv compiled into your binary.  The default input and
-// output encodings are taken from your locale informations.  Override these if they aren't correct.
+// Note for *nix users. You'll need to have iconv compiled into your binary. The default input and
+// output encodings are taken from your locale informations. Override these if they aren't correct.
 
-// Set the default language.  If you want English then don't do anything here.
+// Set the default language. If you want English then don't do anything here.
 //
 // $config->setDefaultLanguage('en');
 
@@ -206,8 +206,7 @@ $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
 //
 // http://servername/wsvn/repname/path/in/repository
 //
-// Note: The websvn directory will need to have Multiviews turned on in Apache, and you'll need to configure
-//       wsvn.php
+// Note: The websvn directory will need to have Multiviews turned on in Apache, and you'll need to configure wsvn.php
 
 // $config->useMultiViews();
 
@@ -216,14 +215,14 @@ $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // {{{ ACCESS RIGHTS ---
 
 // Uncomment this line if you want to use your Subversion access file to control access
-// rights via WebSVN.  For this to work, you'll need to set up the same Apache based authentication
-// to the WebSVN (or wsvn) directory as you have for Subversion itself.  More information can be
+// rights via WebSVN. For this to work, you'll need to set up the same Apache based authentication
+// to the WebSVN (or wsvn) directory as you have for Subversion itself. More information can be
 // found in install.txt
 
 // $config->useAuthenticationFile('/path/to/accessfile'); // Global access file
 
 // You may also specify a per repository access file by uncommenting and copying the following
-// line as necessary.  Use the convention 'groupname.myrep' if your repository is in a group.
+// line as necessary. Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->useAuthenticationFile('/path/to/accessfile', 'myrep'); // Access file for myrep
 
@@ -234,7 +233,7 @@ $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // You may wish certain file types to be GZIP'd and delieved to the user when clicked apon.
 // This is useful for binary files and the like that don't display well in a browser window!
 // Copy, uncomment and modify this line for each extension to which this rule should apply.
-// (Don't forget the . before the extension.  You don't need an index between the []'s).
+// (Don't forget the . before the extension. You don't need an index between the []'s).
 // If you'd rather that the files were delivered uncompressed with the associated MIME type,
 // then read below.
 //
@@ -281,14 +280,14 @@ $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // all svn:mime-type properties, and displaying matching files inline such that
 // they are highlighted correctly. (Regular expression matching is used.)
 
-$config->addInlineMimeType("text/plain");
-// $config->addInlineMimeType("text/*");
+$config->addInlineMimeType('text/plain');
+// $config->addInlineMimeType('text/*');
 
 // }}}
 
 // {{{ TARBALLS ---
 
-// You need tar and gzip installed on your system.  Set the paths above if necessary
+// You need tar and gzip installed on your system. Set the paths above if necessary
 //
 // Uncomment the line below to offer a tarball download option across all your
 // repositories.
@@ -311,12 +310,12 @@ $config->addInlineMimeType("text/plain");
 // $config->disallowDownload('myrep'); // Specifically disallow downloading for 'myrep'
 
 // You can also choose the minimum directory level from which you'll allow downloading.
-// A value of zero will allow downloading from the root.  1 will allow downloding of directories
+// A value of zero will allow downloading from the root. 1 will allow downloding of directories
 // in the root, etc.
 //
 // If your project is arranged with trunk, tags and branches at the root level, then a value of 2
 // would allow the downloading of directories within branches/tags while disallowing the download
-// of the entire branches or tags directories.  This would also stop downloading of the trunk, but
+// of the entire branches or tags directories. This would also stop downloading of the trunk, but
 // see after for path exceptions.
 //
 // Change the line below to set the download level across all your repositories.
@@ -330,9 +329,9 @@ $config->setMinDownloadLevel(2);
 // $config->setMinDownloadLevel(2, 'myrep');
 
 // Finally, you may add or remove certain directories (and their contents) either globally
-// or on a per repository basis.  Uncomment and copy the following lines as necessary.  Note
+// or on a per repository basis. Uncomment and copy the following lines as necessary. Note
 // that the these are searched in the order than you give them until a match is made (with the
-// exception that all the per repository exceptions are tested before the global ones).  This means
+// exception that all the per repository exceptions are tested before the global ones). This means
 // that you must disallow /a/b/c/ before you allow /a/b/ otherwise the allowed match on /a/b/ will
 // stop any further searching, thereby allowing downloads on /a/b/c/.
 
@@ -359,7 +358,7 @@ $config->setMinDownloadLevel(2);
 // $config->useEnscript();
 
 // Enscript need to be told what the contents of a file are so that it can be colourised
-// correctly.  WebSVN includes a predefined list of mappings from file extension to Enscript
+// correctly. WebSVN includes a predefined list of mappings from file extension to Enscript
 // file type (viewable in setup.php).
 //
 // Here you should add and other extensions not already listed or redefine the default ones. eg:
@@ -373,7 +372,7 @@ $config->setMinDownloadLevel(2);
 $config->useGeshi();
 
 // GeSHi need to be told what the contents of a file are so that it can be colourised
-// correctly.  WebSVN includes a predefined list of mappings from file extension to GeSHi
+// correctly. WebSVN includes a predefined list of mappings from file extension to GeSHi
 // languages (viewable in setup.php).
 //
 // Here you should add and other extensions not already listed or redefine the default ones. eg:
@@ -439,7 +438,7 @@ $config->useGeshi();
 
 // {{{ MISCELLANEOUS ---
 
-// Comment out this if you don't have the right to use it.  Be warned that you may need it however!
+// Comment out this if you don't have the right to use it. Be warned that you may need it however!
 set_time_limit(0);
 
 // Number of spaces to expand tabs to in diff/listing view across all repositories
