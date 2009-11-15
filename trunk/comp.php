@@ -386,7 +386,7 @@ if ($rep) {
 }
 
 $vars['template'] = 'compare';
-$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
 parseTemplate($template.'header.tmpl', $vars, $listing);
 parseTemplate($template.'compare.tmpl', $vars, $listing);
 parseTemplate($template.'footer.tmpl', $vars, $listing);
