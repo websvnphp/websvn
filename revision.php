@@ -146,7 +146,7 @@ if ($rep) {
 }
 
 $vars['template'] = 'revision';
-$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
 parseTemplate($template.'header.tmpl', $vars, $listing);
 parseTemplate($template.'revision.tmpl', $vars, $listing);
 parseTemplate($template.'footer.tmpl', $vars, $listing);
