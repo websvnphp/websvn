@@ -45,7 +45,7 @@ function parseCommand($line, $vars, $handle) {
 		if (!$ignore) {
 			$line = trim($line);
 			$file = substr($line, 16, -1);
-			parseTemplate($config->templatePath.$file, $vars, $listing);
+			parseTemplate($config->getTemplatePath().$file, $vars, $listing);
 		}
 		return true;
 	}

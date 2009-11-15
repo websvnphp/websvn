@@ -298,7 +298,7 @@ if ($rep) {
 }
 
 $vars['template'] = 'directory';
-$template = ($rep) ? $rep->getTemplatePath() : $config->templatePath;
+$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
 parseTemplate($template.'header.tmpl', $vars, $listing);
 parseTemplate($template.'directory.tmpl', $vars, $listing);
 parseTemplate($template.'footer.tmpl', $vars, $listing);

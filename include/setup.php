@@ -425,6 +425,75 @@ if (!$config->multiViews) {
 }
 
 
+// check for user specific template
+$userTemplate = false;
+if (!empty($_REQUEST['templatechoice'])) {
+	$userTemplate = $_REQUEST['templatechoice'];
+	setcookie('storedtemplate', $userTemplate, time() + (3600 * 24 * 365 * 10), '/');
+	setcookie('storedsesstemplate', $userTemplate);
+} else {
+	// Try to read an existing cookie if there is one
+	if (!empty($_COOKIE['storedtemplate'])) {
+		$userTemplate = $_COOKIE['storedtemplate'];
+	} else if (!empty($_COOKIE['storedsesstemplate'])) {
+		$userTemplate = $_COOKIE['storedsesstemplate'];
+	}
+}
+
+// Get all templates as defined in config.php
+$templates = $config->templatePaths;
+$templateNames = array();
+foreach ($config->templatePaths as $path) {
+	// use last directory part as template name
+	$name = $path;
+	if (substr($name, -1) == '/' || substr($name, -1) == '\\') $name = substr($name, 0, -1);
+	$posSlash = strrpos($name, '/');
+	$posBackslash = strrpos($name, '\\');
+	if ($posSlash !== false || $posBackslash !== false) {
+		$pos = ($posSlash !== false && $posBackslash !== false) ? max($posSlash, $posBackslash) : ($posSlash !== false ? $posSlash : $posBackslash);
+		$name = substr($name, $pos + 1);
+	}
+	$templateNames[$path] = $name;
+}
+
+$selectedTemplate = false;
+if ($userTemplate !== false) {
+	if (in_array($userTemplate, $templateNames)) {
+		$selectedTemplate = array_search($userTemplate, $templateNames);
+		$config->userTemplate = $selectedTemplate;
+	} else {
+		$selectedTemplate = $config->getTemplatePath();
+	}
+}
+
+if ($rep) {
+	// skip template list when selected repository has specific template
+	if ($rep->templatePath !== false) {
+		$templateNames = array();
+	}
+}
+
+if (count($templateNames) > 1) {
+	$url = '?'.buildQuery($_GET + $_POST);
+	$vars['template_form'] = '<form action="'.$url.'" method="post" id="templateform">';
+	$vars['template_select'] = '<select name="templatechoice" onchange="javascript:this.form.submit();">';
+
+	foreach ($templateNames as $path => $name) {
+		$sel = ($path == $selectedTemplate) ? ' selected="selected"' : '';
+		$vars['template_select'] .= '<option value="'.$name.'"'.$sel.'>'.$name.'</option>';
+	}
+
+	$vars['template_select'] .= '</select>';
+	$vars['template_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
+	$vars['template_endform'] = '</form>';
+} else {
+	$vars['template_form'] = '';
+	$vars['template_select'] = '';
+	$vars['template_submit'] = '';
+	$vars['template_endform'] = '';
+}
+
+
 // Retrieve other standard parameters
 
 // due to possible XSS exploit, we need to clean up path first

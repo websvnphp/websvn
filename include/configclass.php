@@ -239,7 +239,7 @@ class Repository {
 	var $bugtraq;
 	var $auth;
 	var $contentEnc;
-	var $templatePath;
+	var $templatePath = false;
 
 	// }}}
 
@@ -423,7 +423,7 @@ class Repository {
 
 	function setTemplatePath($path) {
 		$lastchar = substr($path, -1, 1);
-		if (!($lastchar == DIRECTORY_SEPARATOR || $lastchar == '/' || $lastchar == '\\')) {
+		if ($lastchar != '/' && $lastchar != '\\') {
 			$path .= DIRECTORY_SEPARATOR;
 		}
 
@@ -637,7 +637,8 @@ class WebSvnConfig {
 	var $bugtraq = false;
 	var $auth = '';
 
-	var $templatePath = './templates/Elegant/';
+	var $templatePaths = array();
+	var $userTemplate = false;
 
 	var $ignoreSvnMimeTypes = false;
 	var $ignoreWebSVNContentTypes = false;
@@ -1267,22 +1268,27 @@ class WebSvnConfig {
 
 	// Templates
 
-	function setTemplatePath($path, $myrep = 0) {
-		if (empty($myrep)) {
-			$lastchar = substr($path, -1, 1);
-			if (!($lastchar == DIRECTORY_SEPARATOR || $lastchar == '/' || $lastchar == '\\')) {
-				$path .= DIRECTORY_SEPARATOR;
-			}
-
-			$this->templatePath = $path;
-		} else {
-			$repo =& $this->findRepository($myrep);
-			$repo->setTemplatePath($path);
+	function addTemplatePath($path) {
+		$lastchar = substr($path, -1, 1);
+		if ($lastchar != '/' && $lastchar != '\\') {
+			$path .= DIRECTORY_SEPARATOR;
 		}
+
+		$this->templatePaths[] = $path;
+	}
+
+	function setTemplatePath($path, $myrep) {
+		$repo =& $this->findRepository($myrep);
+		$repo->setTemplatePath($path);
 	}
 
 	function getTemplatePath() {
-		return $this->templatePath;
+		if (count($this->templatePaths) == 0) {
+			echo 'No template path added in config file';
+			exit;
+		}
+		if ($this->userTemplate !== false) return $this->userTemplate;
+		return $this->templatePaths[0];
 	}
 
 	// }}}

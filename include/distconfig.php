@@ -109,13 +109,14 @@
 
 // {{{ LOOK AND FEEL ---
 //
-// Uncomment ONLY the template file that you want.
+// Add custom template paths or comment out templates to modify the list of user selectable templates.
+// The first added template serves as a default.
 
-//$config->setTemplatePath($locwebsvnreal.'/templates/BlueGrey/');
-//$config->setTemplatePath($locwebsvnreal.'/templates/calm/');
-$config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
+$config->addTemplatePath($locwebsvnreal.'/templates/calm/');
+$config->addTemplatePath($locwebsvnreal.'/templates/BlueGrey/');
+$config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
-// You may also specify a per repository template file by uncommenting and changing the following
+// You may also specify a per repository fixed template by uncommenting and changing the following
 // line as necessary. Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/', 'myrep');
