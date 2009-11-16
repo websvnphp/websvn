@@ -1027,6 +1027,10 @@ class WebSvnConfig {
 				$path = '/'.$path;
 			}
 
+			if (substr($url, -5) == 'index') {
+				$url = substr($url, 0, -5).'wsvn';
+			}
+
 			if ($op == 'index') {
 				$url .= '/';
 			} else if (is_object($rep)) {

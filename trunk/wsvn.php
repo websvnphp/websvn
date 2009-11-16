@@ -83,11 +83,12 @@ if ($config->multiViews) {
 	$name = substr($path, 0, $pos);
 
 	$rep =& $config->findRepository($name);
-	if ($rep != null) {
+	if ($rep != null && is_object($rep)) {
 		$path = substr($path, $pos);
 		if ($path == '') {
 			$path = '/';
 		}
+		$repname = $name;
 	} else {
 		include $locwebsvnreal.'/index.php';
 		exit;

@@ -422,6 +422,8 @@ if (!$config->multiViews) {
 		$vars['error'] = $rep;
 		$rep = null;
 	}
+} else {
+	$rep = null;
 }
 
 
