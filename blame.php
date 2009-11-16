@@ -121,8 +121,7 @@ if ($rep) {
 						list($revision, $author, $remainder) = sscanf($blameline, '%d %s %s');
 						$empty = !$remainder;
 
-						$listing[$index]['lineno'] = $index;
-						$index++;
+						$listing[$index]['lineno'] = $index + 1;
 
 						if ($last_rev != $revision) {
 							$url = $config->getURL($rep, $parent, 'revision');
