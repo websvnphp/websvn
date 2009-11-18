@@ -463,9 +463,10 @@ if ($userTemplate !== false) {
 	if (in_array($userTemplate, $templateNames)) {
 		$selectedTemplate = array_search($userTemplate, $templateNames);
 		$config->userTemplate = $selectedTemplate;
-	} else {
-		$selectedTemplate = $config->getTemplatePath();
 	}
+}
+if ($selectedTemplate === false) {
+	$selectedTemplate = $config->getTemplatePath();
 }
 
 if ($rep) {
@@ -480,6 +481,7 @@ if (count($templateNames) > 1) {
 	$vars['template_form'] = '<form action="'.$url.'" method="post" id="templateform">';
 	$vars['template_select'] = '<select name="templatechoice" onchange="javascript:this.form.submit();">';
 
+	natcasesort($templateNames);
 	foreach ($templateNames as $path => $name) {
 		$sel = ($path == $selectedTemplate) ? ' selected="selected"' : '';
 		$vars['template_select'] .= '<option value="'.$name.'"'.$sel.'>'.$name.'</option>';

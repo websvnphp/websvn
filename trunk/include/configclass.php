@@ -422,11 +422,6 @@ class Repository {
 	// {{{ Templates
 
 	function setTemplatePath($path) {
-		$lastchar = substr($path, -1, 1);
-		if ($lastchar != '/' && $lastchar != '\\') {
-			$path .= DIRECTORY_SEPARATOR;
-		}
-
 		$this->templatePath = $path;
 	}
 
@@ -1278,12 +1273,28 @@ class WebSvnConfig {
 			$path .= DIRECTORY_SEPARATOR;
 		}
 
-		$this->templatePaths[] = $path;
+		if (!in_array($path, $this->templatePaths)) {
+			$this->templatePaths[] = $path;
+		}
 	}
 
-	function setTemplatePath($path, $myrep) {
-		$repo =& $this->findRepository($myrep);
-		$repo->setTemplatePath($path);
+	function setTemplatePath($path, $myrep = null) {
+		$lastchar = substr($path, -1, 1);
+		if ($lastchar != '/' && $lastchar != '\\') {
+			$path .= DIRECTORY_SEPARATOR;
+		}
+
+		if ($myrep !== null) {
+			// fixed template for specific repository
+			$repo =& $this->findRepository($myrep);
+			$repo->setTemplatePath($path);
+		} else {
+			// for backward compatibility
+			if (in_array($path, $this->templatePaths)) {
+				array_splice($this->templatePaths, array_search($path, $this->templatePaths), 1);
+			}
+			array_unshift($this->templatePaths, $path);
+		}
 	}
 
 	function getTemplatePath() {
