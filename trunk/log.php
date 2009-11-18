@@ -211,6 +211,7 @@ if ($rep) {
 			$lastrevindex = min($firstrevindex + $maxperpage - 1, $revisions - 1);
 		}
 
+		$frev = isset($history->entries[0]) ? $history->entries[0]->rev : false;
 		$brev = isset($history->entries[$firstrevindex]) ? $history->entries[$firstrevindex]->rev : false;
 		$erev = isset($history->entries[$lastrevindex]) ? $history->entries[$lastrevindex]->rev : false;
 
@@ -336,23 +337,25 @@ if ($rep) {
 			if ($showchanges)
 				$logurl .= '&amp;showchanges=1';
 
-			if ($page > 1)
-				$vars['pagelinks'] .= '<a href="'.$logurl.'&amp;page='.$prev.'">&larr;'.$lang['PREV'].'</a>';
-			else
+			if ($page > 1) {
+				$vars['pagelinks'] .= '<a href="'.$logurl.($frev && $prev != 1 ? '&amp;peg='.$frev : '').'&amp;page='.$prev.'">&larr;'.$lang['PREV'].'</a>';
+			} else {
 				$vars['pagelinks'] .= '<span>&larr;'.$lang['PREV'].'</span>';
+			}
 
 			for ($p = 1; $p <= $pages; $p++) {
 				if ($p != $page) {
-					$vars['pagelinks'] .= '<a href="'.$logurl.'&amp;page='.$p.'">'.$p.'</a>';
+					$vars['pagelinks'] .= '<a href="'.$logurl.($frev && $p != 1 ? '&amp;peg='.$frev : '').'&amp;page='.$p.'">'.$p.'</a>';
 				} else {
 					$vars['pagelinks'] .= '<span id="curpage">'.$p.'</span>';
 				}
 			}
 
-			if ($page < $pages)
-				$vars['pagelinks'] .= '<a href="'.$logurl.'&amp;page='.$next.'">'.$lang['NEXT'].'&rarr;</a>';
-			else
+			if ($page < $pages) {
+				$vars['pagelinks'] .= '<a href="'.$logurl.($frev ? '&amp;peg='.$frev : '').'&amp;page='.$next.'">'.$lang['NEXT'].'&rarr;</a>';
+			} else {
 				$vars['pagelinks'] .= '<span>'.$lang['NEXT'].'&rarr;</span>';
+			}
 
 			$vars['showalllink'] = '<a href="'.$logurl.'&amp;all=1">'.$lang['SHOWALL'].'</a>';
 		}
