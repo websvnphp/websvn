@@ -116,6 +116,11 @@ $config->addTemplatePath($locwebsvnreal.'/templates/calm/');
 $config->addTemplatePath($locwebsvnreal.'/templates/BlueGrey/');
 $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
+// You may also specify a default template by uncommenting and changing the following line as necessary.
+// If no default template is set the first added template is used.
+
+// $config->setTemplatePath($locwebsvnreal.'/templates/Elegant/');
+
 // You may also specify a per repository fixed template by uncommenting and changing the following
 // line as necessary. Use the convention 'groupname.myrep' if your repository is in a group.
 
