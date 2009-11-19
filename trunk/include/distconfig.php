@@ -26,13 +26,13 @@
 
 // {{{ PLATFORM CONFIGURATION ---
 
-// Configure the path to your subversion config file
+// Configure the path for Subversion to use for --config-dir
 // (e.g. if accepting certificates is required when using repositories via https)
-// $config->setConfigPath('/tmp');
+// $config->setSvnConfigDir('/tmp');
 
 // Configure these lines if your commands aren't on your path.
 //
-// $config->setSVNCommandPath('Path/to/svn and svnlook/ e.g. c:\\program files\\subversion\\bin');
+// $config->setSVNCommandPath('Path/to/svn/command/'); //  e.g. c:\\program files\\subversion\\bin
 // $config->setDiffPath('Path/to/diff/command/');
 
 // For syntax colouring, if option enabled...

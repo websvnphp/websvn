@@ -586,11 +586,10 @@ class WebSvnConfig {
 
 	// Tool path locations
 
-	var $svnlook = 'svnlook';
-	var $_commandPath = '';
-	var $_configPath = '/tmp';
+	var $_svnCommandPrefix = '';
+	var $_svnCommandPath = '';
+	var $_svnConfigDir = '/tmp';
 	var $svn = 'svn --non-interactive --config-dir /tmp';
-	var $svn_noparams = 'svn --config-dir /tmp';
 	var $diff = 'diff';
 	var $enscript = 'enscript -q';
 	var $sed = 'sed';
@@ -1102,7 +1101,7 @@ class WebSvnConfig {
 	//
 	// Set the location of the given path
 
-	function setPath(&$var, $path, $name, $params = '') {
+	function _setPath(&$var, $path, $name, $params = '') {
 		if ($path == '') {
 			// Search in system search path. No check for existence possible
 			$var = $name;
@@ -1117,8 +1116,8 @@ class WebSvnConfig {
 				exit;
 			}
 
-			// On a windows machine we need to put spaces around the entire command
-			// to allow for spaces in the path
+			// On a windows machine we need to put quotes around the
+			// entire command to allow for spaces in the path
 			if ($this->serverIsWindows) {
 				$var = '"'.$path.$name.'"';
 			} else {
@@ -1129,37 +1128,32 @@ class WebSvnConfig {
 		// Append parameters
 		if ($params != '') $var .= ' '.$params;
 	}
-
-	function setConfigPath($path) {
-		$this->_configPath = $path;
-		$this->updateSVNCommands();
+	
+	// Define directory path to use for --config-dir parameter
+	function setSvnConfigDir($path) {
+		$this->_svnConfigDir = $path;
+		$this->_updateSVNCommand();
+	}
+	
+	// Define the location of the svn command (e.g. '/usr/bin')
+	function setSvnCommandPath($path) {
+		$this->_svnCommandPath = $path;
+		$this->_updateSVNCommand();
+	}
+	
+	// Define a prefix to include before every SVN command (e.g. 'arch -i386')
+	function setSvnCommandPrefix($prefix) {
+		$this->_svnCommandPrefix = $prefix;
+		$this->_updateSVNCommand();
 	}
 
-	// setSVNCommandPath
-	//
-	// Define the location of the svn and svnlook commands
-
-	function setSVNCommandPath($path) {
-		$this->_commandPath = $path;
-		$this->updateSVNCommands();
-	}
-
-	function updateSVNCommands() {
-		$this->setPath($this->svn, $this->_commandPath, 'svn', '--non-interactive --config-dir '.$this->_configPath);
-		$this->setPath($this->svn_noparams, $this->_commandPath, 'svn', ' --config-dir '.$this->_configPath);
-		$this->setPath($this->svnlook, $this->_commandPath, 'svnlook');
+	function _updateSVNCommand() {
+		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir);
+		$this->svn = $this->_svnCommandPrefix.' '.$this->svn;
 	}
 
 	function getSvnCommand() {
 		return $this->svn;
-	}
-
-	function getCleanSvnCommand() {
-		return $this->svn_noparams;
-	}
-
-	function getSvnlookCommand() {
-		return $this->svnlook;
 	}
 
 	// setDiffPath
@@ -1167,7 +1161,7 @@ class WebSvnConfig {
 	// Define the location of the diff command
 
 	function setDiffPath($path) {
-		$this->setPath($this->diff, $path, 'diff');
+		$this->_setPath($this->diff, $path, 'diff');
 	}
 
 	function getDiffCommand() {
@@ -1179,7 +1173,7 @@ class WebSvnConfig {
 	// Define the location of the enscript command
 
 	function setEnscriptPath($path) {
-		$this->setPath($this->enscript, $path, 'enscript');
+		$this->_setPath($this->enscript, $path, 'enscript');
 	}
 
 	function getEnscriptCommand() {
@@ -1191,7 +1185,7 @@ class WebSvnConfig {
 	// Define the location of the sed command
 
 	function setSedPath($path) {
-		$this->setPath($this->sed, $path, 'sed');
+		$this->_setPath($this->sed, $path, 'sed');
 	}
 
 	function getSedCommand() {
@@ -1203,7 +1197,7 @@ class WebSvnConfig {
 	// Define the location of the tar command
 
 	function setTarPath($path) {
-		$this->setPath($this->tar, $path, 'tar');
+		$this->_setPath($this->tar, $path, 'tar');
 	}
 
 	function getTarCommand() {
@@ -1215,7 +1209,7 @@ class WebSvnConfig {
 	// Define the location of the GZip command
 
 	function setGzipPath($path) {
-		$this->setPath($this->gzip, $path, 'gzip');
+		$this->_setPath($this->gzip, $path, 'gzip');
 	}
 
 	function getGzipCommand() {
@@ -1226,7 +1220,7 @@ class WebSvnConfig {
 	//
 	// Define the location of the zip command
 	function setZipPath($path) {
-		$this->setPath($this->zip, $path, 'zip');
+		$this->_setPath($this->zip, $path, 'zip');
 	}
 
 	function getZipPath() {
@@ -1545,3 +1539,4 @@ class WebSvnConfig {
 
 	// }}}
 }
+	
