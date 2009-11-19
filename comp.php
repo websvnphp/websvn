@@ -137,13 +137,13 @@ if ($rep) {
 	$relativePath1 = $path1;
 	$relativePath2 = $path2;
 
-	$svnpath1 = encodepath($svnrep->getSvnpath(str_replace(DIRECTORY_SEPARATOR, '/', $path1)));
-	$svnpath2 = encodepath($svnrep->getSvnpath(str_replace(DIRECTORY_SEPARATOR, '/', $path2)));
+	$svnpath1 = encodepath($svnrep->getSvnPath(str_replace(DIRECTORY_SEPARATOR, '/', $path1)));
+	$svnpath2 = encodepath($svnrep->getSvnPath(str_replace(DIRECTORY_SEPARATOR, '/', $path2)));
 
 	$debug = false;
 
 	if (!$noinput) {
-		$cmd = $config->svn.' diff '.($ignoreWhitespace ? '-x -w ' : '').$rep->svnParams().quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
+		$cmd = $config->getSvnCommand().' diff '.($ignoreWhitespace ? '-x -w ' : '').$rep->svnParams().quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
 	}
 
 	function clearVars() {
