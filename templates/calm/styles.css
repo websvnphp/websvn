@@ -38,7 +38,7 @@ a:link {
 a img {border:0;}
 
 a:hover {
-  background-color:khaki;
+  background-color:#F0E68C;
 }
 strong, b {
   color:gray;
@@ -170,7 +170,7 @@ input, select {
   border-bottom:1px solid #000;
   border-left:1px solid #b2b2b2;
   border-top:1px solid #b2b2b2;
-  background-color:cornsilk;
+  background-color:#FFF8DC;
 }
 
 input {
@@ -225,7 +225,7 @@ select:hover,
 select:active,
 select:focus {
   border:1px solid #666;
-  background-color:beige;
+  background-color:#F5F5DC;
   background-repeat:no-repeat;
   background-position:2px 50%;
   background-image:url(images/cube_green.png);
@@ -270,7 +270,7 @@ dl.projectlist dd a {
   background-repeat:no-repeat;
   background-position:12px 50%;
   padding:3px 0 5px 32px;
-  border-top:1px dotted lightgray;
+  border-top:1px dotted #D3D3D3;
 }
 
 #info dl {
@@ -283,7 +283,7 @@ dl.projectlist dd a {
 #info dd, #wrap dd {
   margin:0;
   padding:3px 0 5px 10px;
-  border-top:1px dotted lightgray;
+  border-top:1px dotted #D3D3D3;
 }
 dd.curdir {
   padding:2px 0;
@@ -308,7 +308,7 @@ dd.curdir pre {
 #info ul li {
   padding:5px;
   margin:3px 0;
-  border-bottom:1px dotted lightgray;
+  border-bottom:1px dotted #D3D3D3;
   overflow:hidden;
 }
 
@@ -336,13 +336,13 @@ li.mod a {
   display:block;
   color:#545400;
   border:1px solid #f2f2c7;
-  background-color:lightyellow;
+  background-color:#FFFFE0;
   background-image:url(images/page_white_edit.png);
 }
 li.mod a:hover {
   color:#000;
-  border:1px solid darkkhaki;
-  background-color:khaki;
+  border:1px solid #BDB76B;
+  background-color:#F0E68C;
 }
 li.new a {
   display:block;
@@ -354,16 +354,16 @@ li.new a {
 li.new a:hover {
   color:#000;
   border:1px solid #669900;
-  background-color:yellowgreen;
+  background-color:#9ACD32;
 }
 
 #info ul li.del {
   display:block;
-  color:rosybrown;
-  border:1px solid rosybrown;
+  color:#BC8F8F;
+  border:1px solid #BC8F8F;
   padding:5px 5px 5px 26px;
   margin:5px;
-  background-color:papayawhip;
+  background-color:#FFEFD5;
   background-image:url(images/page_white_delete.png);
   background-position:5px 5px;
   text-align:left;
@@ -554,7 +554,7 @@ h2#pathlinks {
 }
 div.listing {
   overflow:auto;
-  border:1px solid lightgray;
+  border:1px solid #D3D3D3;
   text-align:left;
   margin:0 2%;
   padding:3px;
@@ -582,7 +582,7 @@ code, pre {
   background:url(images/toggleup.png) no-repeat 2px 50%;
 }
 .toggleup a:hover {
-  background:khaki url(images/toggleup.png) no-repeat 2px 50%;
+  background:#F0E68C url(images/toggleup.png) no-repeat 2px 50%;
 }
 .toggledown a:link,
 .toggledown a:visited,
@@ -591,7 +591,7 @@ code, pre {
   background:url(images/toggledown.png) no-repeat 2px 50%;
 }
 .toggledown a:hover {
-  background:khaki url(images/toggledown.png) no-repeat 2px 50%;
+  background:#F0E68C url(images/toggledown.png) no-repeat 2px 50%;
 }
 .diff a:link,
 .diff a:visited,
@@ -600,7 +600,7 @@ code, pre {
   background:url(images/diff.png) no-repeat 2px 50%;
 }
 .diff a:hover {
-  background:khaki url(images/diff.png) no-repeat 2px 50%;
+  background:#F0E68C url(images/diff.png) no-repeat 2px 50%;
 }
 .geshi a:link,
 .geshi a:visited,
@@ -768,8 +768,8 @@ div.blame-popup {
   text-align: left;
   background-color: white;
   padding: 5px;
-  border:1px solid darkkhaki;
-  background-color: khaki;
+  border:1px solid #BDB76B;
+  background-color: #F0E68C;
   max-width: 600px;
 }
 
