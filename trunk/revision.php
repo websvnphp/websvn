@@ -41,7 +41,7 @@ if ($rep) {
 
 	// If we're not looking at a specific revision, use the HEAD revision number
 	if (empty($rev)) {
-		$history = $svnrep->getLog('', '', '', true, 1); // separated to work in PHP 4
+		$history = $svnrep->getLog('/', '', '', true, 1); // separated to work in PHP 4
 		$rev = $peg ? $peg : $history->entries[0]->rev;
 	}
 
