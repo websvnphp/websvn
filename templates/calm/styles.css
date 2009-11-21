@@ -240,6 +240,10 @@ option:active {
   background-position:2px 50%;
 }
 
+#index #projectform {
+	display: none;
+}
+
 /*
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Left Column
 */
