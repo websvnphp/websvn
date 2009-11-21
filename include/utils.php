@@ -55,7 +55,7 @@ function createPathLinks($rep, $path, $rev, $peg = '') {
 	}
 
 	if (!empty($pathComponents[$n])) {
-		$pegrev = ($peg) ? ' @ r'.$peg : '';
+		$pegrev = ($peg) ? ' <a class="peg" href="'.'?'.htmlspecialchars(str_replace('&peg='.$peg, '', $_SERVER['QUERY_STRING']), ENT_NOQUOTES).'">@ r'.$peg.'</a>' : '';
 		if ($dir) {
 			$vars['pathlinks'] .= '<span class="dir">'.$pathComponents[$n].'/'.$pegrev.'</span>';
 		} else {

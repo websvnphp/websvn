@@ -243,6 +243,11 @@ tbody tr:hover td {
 	display: none;
 }
 
+#header h2#pathlinks a.peg {
+	background: url(images/remove.png) no-repeat right 1px;
+	padding-right: 20px;
+}
+
 /* @end */
 
 /* @group Navigation Links */
