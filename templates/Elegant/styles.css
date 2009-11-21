@@ -181,6 +181,16 @@ tbody tr:hover td {
 	float: right;
 }
 
+#header h2#revnum {
+	background: url(images/information.png) no-repeat;
+	padding-left: 22px;
+}
+
+#revision #header h2#revnum {
+	background: none;
+	padding-left: 0;
+}
+
 #header #menus {
 	position: absolute;
 	top: 0;
