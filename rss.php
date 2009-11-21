@@ -27,8 +27,6 @@ require_once 'include/svnlook.php';
 require_once 'include/utils.php';
 require_once 'include/template.php';
 
-$isDir = @$_REQUEST['isdir'] == 1;
-
 $max = (int)@$_REQUEST['max'];
 if ($max == 0)
   $max = $config->getRssMaxEntries();
@@ -86,7 +84,7 @@ $rss .= '<title>'.htmlspecialchars($rep->getDisplayName().($path ? ' - '.$path :
 $rss .= '<description>'.htmlspecialchars($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
-$rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').($isDir ? 'isdir=1&amp;' : '').createRevAndPegString($passrev, $peg)).'</link>'; // Matching WebSVN page
+$rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').(@$_REQUEST['isdir'] == 1 ? 'isdir=1&amp;' : '').createRevAndPegString($passrev, $peg)).'</link>'; // Matching WebSVN page
 $rss .= '<atom:link href="'.htmlspecialchars(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'; // Originating URL where this RSS feed can be found
 
 if ($history && is_array($history->entries)) {
