@@ -95,7 +95,7 @@ if ($rep) {
 	$vars['author'] = $logEntry ? $logEntry->author: '';
 	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))): '';
 
-	$isDir = (@$_REQUEST['isdir'] == 1 || $path == '' || $path{0} != '/');
+	$isDir = @$_REQUEST['isdir'] == 1 || $path == '' || $path == '/';
 	$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.($isDir ?  '&amp;isdir=1' : '');
 	$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
