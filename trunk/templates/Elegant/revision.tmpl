@@ -14,6 +14,12 @@
       <li class="diff">[websvn:comparelink]</li>
       [websvn-endtest]
       <li class="dir">[websvn:directorylink]</li>
+      [websvn-test:filedetaillink]
+      <li class="file">[websvn:filedetaillink]</li>
+      [websvn-endtest]
+      [websvn-test:blamelink]
+      <li class="blame">[websvn:blamelink]</li>
+      [websvn-endtest]
       <li class="log">[websvn:loglink]</li>
       [websvn-test:clientrooturl]
       <li class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></li>
@@ -39,8 +45,8 @@
       <thead>
       <tr align="left" valign="middle">
         <th>[lang:PATH]</th>
-        <th>[lang:DIFF]</th>
         <th>[lang:BLAME]</th>
+        <th>[lang:DIFF]</th>
         <th>[lang:LOG]</th>
         [websvn-test:clientrooturl]
         <th>SVN</th>
@@ -63,13 +69,13 @@
         [websvn-test:deleted]
         <td class="path"><a href="[websvn:detailurl]" class="deleted">[websvn:path]</a></td>
         [websvn-endtest]
-        [websvn-test:diffurl]
-        <td class="diff"><a href="[websvn:diffurl]" title="[lang:DIFF]">[lang:DIFF]</a></td>
+        [websvn-test:blameurl]
+        <td class="blame"><a href="[websvn:blameurl]" title="[lang:BLAME]">[lang:BLAME]</a></td>
         [websvn-else]
         <td></td>
         [websvn-endtest]
-        [websvn-test:blameurl]
-        <td class="blame"><a href="[websvn:blameurl]" title="[lang:BLAME]">[lang:BLAME]</a></td>
+        [websvn-test:diffurl]
+        <td class="diff"><a href="[websvn:diffurl]" title="[lang:DIFF]">[lang:DIFF]</a></td>
         [websvn-else]
         <td></td>
         [websvn-endtest]

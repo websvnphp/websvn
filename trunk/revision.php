@@ -95,11 +95,20 @@ if ($rep) {
 	$vars['author'] = $logEntry ? $logEntry->author: '';
 	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))): '';
 
-	$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'&amp;isdir=1';
+	$isDir = (@$_REQUEST['isdir'] == 1 || $path == '' || $path{0} != '/');
+	$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.($isDir ?  '&amp;isdir=1' : '');
 	$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
-	$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString.'#'.anchorForPath($path);
+	$dirPath = $isDir ? $path : dirname($path).'/';
+	$vars['directoryurl'] = $config->getURL($rep, $dirPath, 'dir').$passRevString.'#'.anchorForPath($dirPath);
 	$vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
+	
+	if ($path != $dirPath) {
+		$vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;
+		$vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDETAIL'].'</a>';
+		$vars['blameurl'] = $config->getURL($rep, $path, 'blame').$passRevString;
+		$vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
+	}
 
 	if ($rep->isRssEnabled()) {
 		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
