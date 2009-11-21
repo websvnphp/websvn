@@ -78,6 +78,9 @@ if ($rep) {
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 	}
 
+	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$passRevString;
+	$vars['revlink'] = '<a href="'.$vars['revurl'].'">'.$lang['LASTMOD'].'</a>';
+
 	$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString;
 	$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
