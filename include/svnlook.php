@@ -979,7 +979,7 @@ class SVNRepository {
 
 		// Since directories returned by svn log don't have trailing slashes (:-(),
 		// we must remove the trailing slash from the path for comparison purposes.
-		if ($path{strlen($path) - 1} == '/' && $path != '/') {
+		if ($path != '/' && $path{strlen($path) - 1} == '/') {
 			$path = substr($path, 0, -1);
 		}
 
