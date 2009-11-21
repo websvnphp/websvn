@@ -36,16 +36,8 @@ if ($rep) {
 	$ppath = ($path == '' || $path{0} != '/') ? '/'.$path : $path;
 	createPathLinks($rep, $ppath, $rev, $peg);
 	$passRevString = createRevAndPegString($rev, $peg);
-	$prevRevString = createRevAndPegString($rev - 1, $rev - 1);
-	$thisRevString = createRevAndPegString($rev, ($peg ? $peg : $rev));
-
-	// If we're not looking at a specific revision, use the HEAD revision number
-	if (empty($rev)) {
-		$history = $svnrep->getLog('/', '', '', true, 1); // separated to work in PHP 4
-		$rev = $peg ? $peg : $history->entries[0]->rev;
-	}
-
-	// Find the youngest revision for the given path
+	
+	// Find the youngest revision containing changes for the given path
 	$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
 		unset($vars['error']);
@@ -54,6 +46,18 @@ if ($rep) {
 	$youngest = ($history) ? $history->entries[0]->rev : 0;
 	$vars['youngestrev'] = $youngest;
 
+	// TODO The "youngest" rev is often incorrect when both path and rev are specified.
+	// If a path was last modified at rev M and the URL contains rev N, it uses rev N.
+
+	// Unless otherwise specified, we get the log details of the latest change
+	$lastChangedRev = ($rev) ? $rev : $youngest;
+	if ($lastChangedRev != $youngest) {
+		$history = $svnrep->getLog($path, $lastChangedRev, $lastChangedRev, false, 2, $peg);
+	}
+	if (empty($rev))
+		$rev = $lastChangedRev;
+
+	// Generate links to newer and older revisions
 	$revurl = $config->getURL($rep, $path, 'revision');
 	if (strlen($path) > 1)
 		$revurl .= 'peg='.$rev.'&amp;';
@@ -110,6 +114,8 @@ if ($rep) {
 
 	$row = 0;
 
+	$prevRevString = createRevAndPegString($rev - 1, $rev - 1);
+	$thisRevString = createRevAndPegString($rev, ($peg ? $peg : $rev));
 	foreach ($changes as $file) {
 		$linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
 		// NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
