@@ -98,7 +98,7 @@ if ($rep) {
 	$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.'&amp;isdir=1';
 	$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
-	$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
+	$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString.'#'.anchorForPath($path);
 	$vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
 
 	if ($rep->isRssEnabled()) {
