@@ -29,10 +29,10 @@ require_once 'include/template.php';
 require_once 'include/bugtraq.php';
 
 $page = (int)@$_REQUEST['page'];
-$all = (@$_REQUEST['all'] == 1) ? 1 : 0;
-$isDir = (@$_REQUEST['isdir'] == 1) ? 1 : 0;
-$showchanges = (@$_REQUEST['showchanges'] == 1) ? 1 : 0;
-$dosearch = (@$_REQUEST['logsearch'] == 1) ? 1 : 0;
+$all = @$_REQUEST['all'] == 1;
+$isDir = @$_REQUEST['isdir'] == 1;
+$showchanges = @$_REQUEST['showchanges'] == 1;
+$dosearch = @$_REQUEST['logsearch'] == 1;
 $search = trim(@$_REQUEST['search']);
 $words = preg_split('#\s+#', $search);
 $fromRev = (int)@$_REQUEST['fr'];
