@@ -30,7 +30,7 @@ require_once 'include/bugtraq.php';
 
 $page = (int)@$_REQUEST['page'];
 $all = @$_REQUEST['all'] == 1;
-$isDir = @$_REQUEST['isdir'] == 1;
+$isDir = @$_REQUEST['isdir'] == 1 || $path == '' || $path == '/';
 $showchanges = @$_REQUEST['showchanges'] == 1;
 $dosearch = @$_REQUEST['logsearch'] == 1;
 $search = trim(@$_REQUEST['search']);
