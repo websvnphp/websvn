@@ -383,20 +383,20 @@ require 'languages/english.php';
 // Reload the default language
 require 'languages/'.$file.'.php';
 
-$vars['lang_code'] = $userLang;
+$vars['language_code'] = $userLang;
 
 $url = '?'.buildQuery($_GET + $_POST);
-$vars['lang_form'] = '<form action="'.$url.'" method="post" id="langform">';
-$vars['lang_select'] = '<select name="langchoice" onchange="javascript:this.form.submit();">';
+$vars['language_form'] = '<form action="'.$url.'" method="post" id="langform">';
+$vars['language_select'] = '<select name="langchoice" onchange="javascript:this.form.submit();">';
 
 foreach ($languages as $code => $names) {
 	$sel = ($code == $userLang) ? '" selected="selected' : '';
-	$vars['lang_select'] .= '<option value="'.$code.$sel.'">'.$names[2].' - '.$names[1].'</option>';
+	$vars['language_select'] .= '<option value="'.$code.$sel.'">'.$names[2].' - '.$names[1].'</option>';
 }
 
-$vars['lang_select'] .= '</select>';
-$vars['lang_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
-$vars['lang_endform'] = '</form>';
+$vars['language_select'] .= '</select>';
+$vars['language_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
+$vars['language_endform'] = '</form>';
 
 // Set up headers
 
