@@ -59,10 +59,7 @@ function fileLink($path, $file, $returnjoin = false) {
 	if ($isDir) {
 		$url = $config->getURL($rep, $ppath.$pfile, 'dir').$passRevString;
 		if ($config->treeView) {
-			// (X)HMTL id/name attribute must be this format: [A-Za-z][A-Za-z0-9-_.:]*
-			// MD5 hashes are 32 characters, deterministic, quite collision-resistant,
-			// and work for any string, regardless of encoding or special characters.
-			$id = 'A'.md5($ppath.$pfile);
+			$id = anchorForPath($ppath.$pfile);
 			$url .= '#'.$id.'" id="'.$id;
 		}
 	} else {
@@ -240,7 +237,7 @@ if ($rep) {
 		if ($path == '/') {
 			$vars['goyoungesturl'] = $config->getURL($rep, '', 'dir');
 		} else {
-			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev);
+			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev).'#'.anchorForPath($path);
 		}
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
 	}

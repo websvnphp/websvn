@@ -154,7 +154,7 @@ if ($rep) {
 	$vars['showchanges'] = $showchanges;
 
 	if ($isDir) {
-		$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString;
+		$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString.'#'.anchorForPath($path);
 		$vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
 	} else {
 		$vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;

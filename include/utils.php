@@ -73,6 +73,18 @@ function createRevAndPegString($rev, $peg) {
 	return implode('&amp;', $params);
 }
 
+function anchorForPath($path) {
+	global $config;
+
+	// (X)HMTL id/name attribute must be this format: [A-Za-z][A-Za-z0-9-_.:]*
+	// MD5 hashes are 32 characters, deterministic, quite collision-resistant,
+	// and work for any string, regardless of encoding or special characters.
+	if ($config->treeView)
+		return 'a'.md5($path);
+	else
+		return '';
+}
+
 // {{{ create_anchors
 //
 // Create links out of http:// and mailto: tags
