@@ -992,14 +992,12 @@ class WebSvnConfig {
 
 	function getURL($rep, $path, $op) {
 		list($base, $params) = $this->getUrlParts($rep, $path, $op);
-
 		$url = $base.'?';
 		foreach ($params as $k => $v) {
 			$url .= $k.'='.urlencode($v).'&amp;';
 		}
-
 		return $url;
- }
+	}
 
 	// }}}
 
