@@ -16,7 +16,7 @@
 <h2><a name="content"></a>Content</h2>
 <ul>
   <li><a href="#introduction">Introduction</a></li>
-  <li><a href="#variables">Variables</li>
+  <li><a href="#variables">Variables</a></li>
   <li><a href="#commands">Commands</a></li>
   <li><a href="#templatefiles">Template Files</a>
     <ul>
@@ -62,7 +62,7 @@ $config->setTemplatePath($locwebsvnreal.'/templates/calm/', 'My Repository');
 
 <p>The specific variables defined for individual template files (and those defined for all templates) are described under <a href="#templatefiles">Template Files</a>.</p>
 
-<p><b>NOTE:</b> When there are two similarly-named variables of the form <code>some<u>url</u></code> and <code>some<u>link</u></code>, the former is the bare URL while the latter is an HTML anchor tag with the URL in the href attribute and with a localized string as the link title. It is generally cleaner to use the latter, but the former is useful for creating a linked image, etc.<p>
+<p><b>NOTE:</b> When there are two similarly-named variables of the form <code>some<strong>url</strong></code> and <code>some<strong>link</strong></code>, the former is the bare URL while the latter is an HTML anchor tag with the URL in the href attribute and with a localized string as the link title. It is generally cleaner to use the latter, but the former is useful for creating a linked image, etc.</p>
 
 <h2><a name="commands"></a>Commands</h2>
 
@@ -107,7 +107,7 @@ $config->setTemplatePath($locwebsvnreal.'/templates/calm/', 'My Repository');
 
 <p>WebSVN expects a template to provide to provide a number of <code>.tmpl</code> files, each of which is explained in detail below. If any of these files are missing, errors will occur when trying to view the associated WebSVN page.</p>
 
-<a href=""></a><h4><a name="allfiles"></a>Variables defined for all template files</h4>
+<h4><a name="allfiles"></a>Variables defined for all template files</h4>
 
 <table>
 <tr><th>version</th><td>The version of WebSVN</td></tr>
@@ -119,11 +119,11 @@ $config->setTemplatePath($locwebsvnreal.'/templates/calm/', 'My Repository');
 <tr><th>clientrooturl</th><td>The root URL for SVN clients to use (only if provided in <code>config.php</code>)</td></tr>
 <tr><th>peg</th><td>The peg revision passed to the page (can use with <code>clientrooturl</code>)</td></tr>
 <tr><th>charset</th><td>The charset requested by the user</td></tr>
-<tr><th>lang_code</th><td>The <a href="http://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a> language code of the selected language</td></tr>
-<tr><th>lang_form</th><td>Language selection menu &lt;form&gt; element</td></tr>
-<tr><th>lang_select</th><td>Language selection menu &lt;select&gt;...&lt;/select&gt; element</td></tr>
-<tr><th>lang_submit</th><td>Language selection menu submit button</td></tr>
-<tr><th>lang_endform</th><td>Language selection menu &lt;/form&gt; element</td></tr>
+<tr><th>language_code</th><td>The <a href="http://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a> language code of the selected language</td></tr>
+<tr><th>language_form</th><td>Language selection menu &lt;form&gt; element</td></tr>
+<tr><th>language_select</th><td>Language selection menu &lt;select&gt;...&lt;/select&gt; element</td></tr>
+<tr><th>language_submit</th><td>Language selection menu submit button</td></tr>
+<tr><th>language_endform</th><td>Language selection menu &lt;/form&gt; element</td></tr>
 <tr><th>projects_form</th><td>Project selection menu &lt;form&gt; element, plus any hidden inputs</td></tr>
 <tr><th>projects_select</th><td>Project selection menu &lt;select&gt;...&lt;/select&gt; element</td></tr>
 <tr><th>projects_submit</th><td>Project selection menu submit button</td></tr>
