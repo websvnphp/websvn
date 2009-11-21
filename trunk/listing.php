@@ -252,8 +252,8 @@ if ($rep) {
 	$vars['author'] = $logEntry ? $logEntry->author : '';
 	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
 
-	$vars['changesurl'] = $config->getURL($rep, ($path == '/' ? '' : $path), 'revision').$passRevString;
-	$vars['changeslink'] = '<a href="'.$vars['changesurl'].'">'.$lang['CHANGES'].'</a>';
+	$vars['revurl'] = $config->getURL($rep, ($path == '/' ? '' : $path), 'revision').$passRevString;
+	$vars['revlink'] = '<a href="'.$vars['revurl'].'">'.$lang['LASTMOD'].'</a>';
 
 	if ($history && count($history->entries) > 1) {
 		$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
