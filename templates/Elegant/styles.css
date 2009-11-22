@@ -923,8 +923,12 @@ table#logs {
 }
 
 #filternav #pagelinks span#curpage {
-	background-color: #3875d7;
+	background-color: #999;
 	color: white;
+	padding-bottom: 1px;
+	padding-left: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
 }
 
 @media print {
