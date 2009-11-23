@@ -11,6 +11,7 @@ html, body {
 body {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
 	font-size: 8pt;
+	background-color: white;
 }
 
 @media print {
