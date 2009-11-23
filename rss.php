@@ -29,7 +29,8 @@ require_once 'include/template.php';
 
 $max = (int)@$_REQUEST['max'];
 if ($max == 0)
-  $max = $config->getRssMaxEntries();
+	$max = $config->getRssMaxEntries();
+$quiet = (isset($_REQUEST['quiet']));
 
 // Find the base URL name
 if ($config->multiViews) {
@@ -97,14 +98,16 @@ if ($history && is_array($history->entries)) {
 		}
 		$title = $lang['REV'].' '.$r->rev.' -- '.$title;
 		$description = '<div><strong>'.$r->author.' -- '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br(create_anchors(str_replace('<', '&lt;', $r->msg))).'</div>';
-		usort($r->mods, 'SVNLogEntry_compare');
-		foreach ($r->mods as $modifiedResource) {
-			switch ($modifiedResource->action) {
-				case 'A': $description .= '+ '; break;
-				case 'M': $description .= '~ '; break;
-				case 'D': $description .= 'x '; break;
+		if (!$quiet) {
+			usort($r->mods, 'SVNLogEntry_compare');
+			foreach ($r->mods as $modifiedResource) {
+				switch ($modifiedResource->action) {
+					case 'A': $description .= '+ '; break;
+					case 'M': $description .= '~ '; break;
+					case 'D': $description .= 'x '; break;
+				}
+				$description .= $modifiedResource->path.'<br />';
 			}
-			$description .= $modifiedResource->path.'<br />';
 		}
 		$itemLink = getFullURL($baseurl.$config->getURL($rep, '', 'revision').'rev='.$r->rev);
 
