@@ -238,7 +238,6 @@ class Repository {
 	var $ignoreWebSVNContentTypes;
 	var $bugtraq;
 	var $auth;
-	var $contentEnc;
 	var $templatePath = false;
 
 	// }}}
@@ -511,24 +510,6 @@ class Repository {
 
 	// }}}
 
-	// {{{ Encodings
-
-	function setContentEncoding($contentEnc) {
-		$this->contentEnc = $contentEnc;
-	}
-
-	function getContentEncoding() {
-		global $config;
-
-		if (isset($this->contentEnc)) {
-			return $this->contentEnc;
-		}
-
-		return $config->getContentEncoding();
-	}
-
-	// }}}
-
 	// {{{ Authentication
 
 	function useAuthenticationFile($file) {
@@ -641,11 +622,6 @@ class WebSvnConfig {
 	var $subversionMajorVersion = '';
 	var $subversionMinorVersion = '';
 
-	// Default character encodings
-	var $inputEnc = ''; // Encoding of output returned from command line
-	var $contentEnc = ''; // Encoding of repository content
-	var $outputEnc = 'UTF-8'; // Encoding of web page.	Now forced to UTF-8
-
 	var $defaultLanguage = 'en';
 	var $ignoreAcceptedLanguages = false;
 
@@ -750,21 +726,6 @@ class WebSvnConfig {
 
 	function setServerIsWindows() {
 		$this->serverIsWindows = true;
-
-		// Try to set the input encoding intelligently
-
-		$cp = 0;
-		if ($cp = @shell_exec('CHCP')) {
-			$cp = trim(substr($cp, strpos($cp, ':') + 1));
-			settype($cp, 'integer');
-		}
-
-		// Use the most sensible default value if that failed
-		if ($cp == 0) $cp = 850;
-
-		// We assume, as a default, that the encoding of the repository contents is
-		// in iso-8859-1, to be compatible with compilers and the like.
-		$this->setInputEncoding('CP'.$cp, 'iso-8859-1');
 
 		// On Windows machines, use double quotes around command line parameters
 		$this->quote = '"';
@@ -1315,35 +1276,6 @@ class WebSvnConfig {
 			$url = substr($url, 0, -1);
 		}
 		$this->_excluded[] = $url;
-	}
-
-	// }}}
-
-	// {{{ Encoding functions
-
-	function setInputEncoding($systemEnc) {
-		$this->inputEnc = $systemEnc;
-
-		if (!isset($this->contentEnc)) {
-			$this->contentEnc = $systemEnc;
-		}
-	}
-
-	function getInputEncoding() {
-		return $this->inputEnc;
-	}
-
-	function setContentEncoding($contentEnc, $myrep = 0) {
-		if (empty($myrep)) {
-			$this->contentEnc = $contentEnc;
-		} else {
-			$repo =& $this->findRepository($myrep);
-			$repo->setContentEncoding($contentEnc);
-		}
-	}
-
-	function getContentEncoding() {
-		return $this->contentEnc;
 	}
 
 	// }}}

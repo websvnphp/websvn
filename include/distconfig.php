@@ -167,34 +167,6 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // {{{ LANGUAGE SETUP ---
 
-// WebSVN uses the iconv module to convert messages from your system's character set to the
-// UTF-8 output encoding. If you find that your log messages aren't displayed correctly then
-// you'll need to change the value here.
-//
-// You may also specify the character encoding of the repository contents if different from
-// the system encoding. This is typically the case for windows users, whereby the command
-// line returns, for example, CP850 encoded strings, whereas the source files are encoded
-// as iso-8859-1 by Windows based text editors. When display text file, WebSVN will convert
-// them from the content encoding to the output encoding (UTF-8).
-//
-// WebSVN does its best to automate all this, so only use the following if it doesn't work
-// "out of the box". Uncomment and change one of the examples below.
-//
-// $config->setInputEncoding('CP850'); // Encoding of result returned by svn command line, etc.
-// $config->setContentEncoding('iso-8859-1'); // Content encoding of all your repositories
-
-// You may also specify a content encoding on a per repository basis. Uncomment and copy this
-// line as necessary.
-//
-// $config->setContentEncoding('iso-8859-1', 'MyEnc');
-
-// Note for Windows users: To enable iconv you'll need to enable the extension in your php.ini file
-// AND copy iconv.dll (not php_iconv.dll) to your Windows system folder. In most cases the correct
-// encoding is set when you call $config->setServerIsWindows();.
-
-// Note for *nix users. You'll need to have iconv compiled into your binary. The default input and
-// output encodings are taken from your locale informations. Override these if they aren't correct.
-
 // Set the default language. If you want English then don't do anything here.
 //
 // $config->setDefaultLanguage('en');

@@ -36,11 +36,6 @@ if (DIRECTORY_SEPARATOR == '\\') {
 	$config->setServerIsWindows();
 }
 
-// Set up the default character encodings
-if (function_exists('iconv_get_encoding')) {
-	$config->setInputEncoding(iconv_get_encoding('input_encoding'));
-}
-
 // Set up locwebsvnhttp
 // Note: we will use nothing in MultiViews mode so that the URLs use the root
 //		 directory by default.
