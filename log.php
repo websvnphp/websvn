@@ -124,7 +124,7 @@ if ($rep) {
 	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 	if ($history->curEntry) {
-		$vars['log'] = $history->entries[0]->msg;
+		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
 		$vars['author'] = $history->entries[0]->author;
 	}
@@ -281,7 +281,7 @@ if ($rep) {
 				$listing[$index]['revauthor'] = $revision->author;
 				$listing[$index]['revdate'] = $revision->date;
 				$listing[$index]['revage'] = $revision->age;
-				$listing[$index]['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors($revision->msg)));
+				$listing[$index]['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($revision->msg))));
 				$listing[$index]['rowparity'] = $row;
 
 				if ($showchanges) {

@@ -125,7 +125,7 @@ if ($rep) {
 		$vars['peg'] = $peg;
 		$vars['date'] = $logEntry->date;
 		$vars['author'] = $logEntry->author;
-		$vars['log'] = $logEntry->msg;
+		$vars['log'] = xml_entities($logEntry->msg);
 	} else {
 		$vars['warning'] = 'Problem with comparison.';
 	}
