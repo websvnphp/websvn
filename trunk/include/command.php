@@ -22,6 +22,23 @@
 //
 // External command handling
 
+function detectCharacterEncoding($str) {
+	if (function_exists('mb_detect_encoding')) {
+		// @see http://de3.php.net/manual/en/function.mb-detect-encoding.php#81936
+		// why appending an 'a' and specifying an encoding list is necessary
+		return mb_detect_encoding($str.'a', 'UTF-8,ISO-8859-1');
+
+	} else if (function_exists('iconv')) {
+		$list = array('UTF-8', 'ISO-8859-1');
+		foreach ($list as $item) {
+			$encstr = iconv($item, $item.'//TRANSLIT//IGNORE', $str);
+			if (md5($encstr) == md5($str)) return $item;
+		}
+	}
+
+	return null;
+}
+
 // {{{ replaceEntities
 //
 // Replace character codes with HTML entities for display purposes.
@@ -29,27 +46,18 @@
 // that of the local system (i.e., it's a string returned from a command
 // line command).
 
-function replaceEntities($str, $rep) {
+function replaceEntities($str) {
 	global $config;
 
 	// Ideally, we'd do this:
 	//
-	// $str = htmlentities($str, ENT_COMPAT, $config->inputEnc);
+	// $str = htmlentities($str, ENT_COMPAT, detectCharacterEncoding($str));
 	//
 	// However, htmlentities is very limited in it's ability to process
 	// character encodings.	We have to rely on something more powerful.
 
-	if (version_compare(phpversion(), '4.1.0', '<')) {
-		// In this case, we can't do any better than assume that the
-		// input encoding is ISO-8859-1.
-
-		$str = htmlentities($str, ENT_COMPAT);
-	} else {
-		$str = toOutputEncoding($str, $rep->getContentEncoding());
-
-		// $str is now encoded as UTF-8.
-		$str = htmlentities($str, ENT_COMPAT, $config->outputEnc);
-	}
+	$str = toOutputEncoding($str);
+	$str = htmlentities($str, ENT_COMPAT, 'UTF-8');
 
 	return $str;
 }
@@ -58,21 +66,31 @@ function replaceEntities($str, $rep) {
 
 // {{{ toOutputEncoding
 
-function toOutputEncoding($str, $inputEncoding = '') {
+function toOutputEncoding($str) {
 	global $config;
 
-	if (empty($inputEncoding)) {
-		$inputEncoding = $config->inputEnc;
-	}
+	$enc = detectCharacterEncoding($str);
 
-	// Try to convert the messages based on the locale information
-	if ($config->inputEnc && $config->outputEnc) {
-		if (function_exists('iconv')) {
-			$output = @iconv($inputEncoding, $config->outputEnc, $str);
-			if (!empty($output)) {
-				$str = $output;
-			}
-		}
+	if ($enc !== null && function_exists('mb_convert_encoding')) {
+		$str = mb_convert_encoding($str, 'UTF-8', $enc);
+
+	} else if ($enc !== null && function_exists('iconv')) {
+		$str = iconv($enc, 'UTF-8//TRANSLIT//IGNORE', $str);
+
+	} else {
+		// @see http://w3.org/International/questions/qa-forms-utf-8.html
+		$isUtf8 = preg_match('%^(?:
+			[\x09\x0A\x0D\x20-\x7E]              # ASCII
+			| [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
+			|  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
+			| [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}  # straight 3-byte
+			|  \xED[\x80-\x9F][\x80-\xBF]        # excluding surrogates
+			|  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
+			| [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
+			|  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
+			)*$%xs', $str
+		);
+		if (!$isUtf8) $str = utf8_encode($str);
 	}
 
 	return $str;
