@@ -117,7 +117,7 @@ if ($rep) {
 	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 
 	if ($history) {
-		$vars['log'] = $history->entries[0]->msg;
+		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
 		$vars['author'] = $history->entries[0]->author;
 	}

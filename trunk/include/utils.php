@@ -156,6 +156,16 @@ function getFullURL($loc) {
 
 // }}}
 
+function xml_entities($str) {
+	$entities = array();
+	$entities['&'] = '&amp;';
+	$entities['<'] = '&lt;';
+	$entities['>'] = '&gt;';
+	$entities['"'] = '&quot;';
+	$entities['\''] = '&apos;';
+	return str_replace(array_keys($entities), array_values($entities), $str);
+}
+
 // {{{ hardspace
 //
 // Replace the spaces at the front of a line with hard spaces
