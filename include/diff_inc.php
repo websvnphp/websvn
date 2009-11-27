@@ -44,9 +44,7 @@ function endOfFile(&$obj) {
 	return true;
 }
 
-function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
-	$contentEncoding = $rep->getContentEncoding();
-
+function diff_result($all, $ent, $newtname, $oldtname, $obj) {
 	$ofile = fopen($oldtname, 'r');
 	$nfile = fopen($newtname, 'r');
 
@@ -78,8 +76,8 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 
 				if ($all) {
 					$line = rtrim($nl);
-					if ($ent) $line = replaceEntities($line, $rep);
-					else $line = toOutputEncoding($line, $contentEncoding);
+					if ($ent) $line = replaceEntities($line);
+					else $line = toOutputEncoding($line);
 					if (strip_tags($line) == '') $line = '&nbsp;';
 
 					$listing[$index]['rev1line'] = wrapInCodeTagIfNecessary($line);
@@ -95,8 +93,8 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 
 				if ($all) {
 					$line = rtrim($nl);
-					if ($ent) $line = replaceEntities($line, $rep);
-					else $line = toOutputEncoding($line, $contentEncoding);
+					if ($ent) $line = replaceEntities($line);
+					else $line = toOutputEncoding($line);
 					if (strip_tags($line) == '') $line = '&nbsp;';
 
 					$listing[$index]['rev2line'] = wrapInCodeTagIfNecessary($line);
@@ -134,8 +132,8 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 				$mod = $line{0};
 
 				$line = rtrim(substr($line, 1));
-				if ($ent) $line = replaceEntities($line, $rep);
-				else $line = toOutputEncoding($line, $contentEncoding);
+				if ($ent) $line = replaceEntities($line);
+				else $line = toOutputEncoding($line);
 				if (strip_tags($line) == '') $line = '&nbsp;';
 				$text = wrapInCodeTagIfNecessary($line);
 				$listing[$index]['rev1line'] = $text;
@@ -189,16 +187,16 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 
 						$nl = fgets($ofile);
 						$line = rtrim($nl);
-						if ($ent) $line = replaceEntities($line, $rep);
-						else $line = toOutputEncoding($line, $contentEncoding);
+						if ($ent) $line = replaceEntities($line);
+						else $line = toOutputEncoding($line);
 						if (strip_tags($line) == '') $line = '&nbsp;';
 						$listing[$index]['rev1line'] = wrapInCodeTagIfNecessary($line);
 						$curoline++;
 
 						$nl = fgets($nfile);
 						$line = rtrim($nl);
-						if ($ent) $line = replaceEntities($line, $rep);
-						else $line = toOutputEncoding($line, $contentEncoding);
+						if ($ent) $line = replaceEntities($line);
+						else $line = toOutputEncoding($line);
 						if (strip_tags($line) == '') $line = '&nbsp;';
 						$listing[$index]['rev2line'] = wrapInCodeTagIfNecessary($line);
 						$curnline++;
@@ -220,8 +218,8 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 			$listing[$index]['rev2diffclass'] = 'diff';
 
 			$line = rtrim(fgets($ofile));
-			if ($ent) $line = replaceEntities($line, $rep);
-			else $line = toOutputEncoding($line, $contentEncoding);
+			if ($ent) $line = replaceEntities($line);
+			else $line = toOutputEncoding($line);
 			if (strip_tags($line) == '') $line = '&nbsp;';
 
 			if (!feof($ofile)) {
@@ -231,8 +229,8 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 			}
 
 			$line = rtrim(fgets($nfile));
-			if ($ent) $line = replaceEntities(rtrim(fgets($nfile)), $rep);
-			else $line = toOutputEncoding($line, $contentEncoding);
+			if ($ent) $line = replaceEntities(rtrim(fgets($nfile)));
+			else $line = toOutputEncoding($line);
 			if (strip_tags($line) == '') $line = '&nbsp;';
 
 			if (!feof($nfile)) {
@@ -254,7 +252,7 @@ function diff_result($all, $rep, $ent, $newtname, $oldtname, $obj) {
 	return $listing;
 }
 
-function command_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname) {
+function command_diff($all, $ignoreWhitespace, $ent, $newtname, $oldtname) {
 	global $config, $lang, $arrayBased, $fileBased;
 
 	$context = 5;
@@ -285,7 +283,7 @@ function command_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname)
 
 		$arrayBased = false;
 		$fileBased = true;
-		$listing = diff_result($all, $rep, $ent, $newtname, $oldtname, $diff);
+		$listing = diff_result($all, $ent, $newtname, $oldtname, $diff);
 		fclose($pipes[1]);
 
 		while (!feof($pipes[2])) {
@@ -320,7 +318,7 @@ function command_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname)
 	return $listing;
 }
 
-function inline_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname) {
+function inline_diff($all, $ignoreWhitespace, $ent, $newtname, $oldtname) {
 	global $arrayBased, $fileBased;
 
 	$context = 5;
@@ -365,15 +363,15 @@ function inline_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname) 
 
 	$arrayBased = true;
 	$fileBased = false;
-	$listing = diff_result($all, $rep, $ent, $newtname, $oldtname, $rendered);
+	$listing = diff_result($all, $ent, $newtname, $oldtname, $rendered);
 
 	return $listing;
 }
 
-function do_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname) {
+function do_diff($all, $ignoreWhitespace, $ent, $newtname, $oldtname) {
 	if (class_exists('Text_Diff')) {
-		return inline_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname);
+		return inline_diff($all, $ignoreWhitespace, $ent, $newtname, $oldtname);
 	} else {
-		return command_diff($all, $ignoreWhitespace, $rep, $ent, $newtname, $oldtname);
+		return command_diff($all, $ignoreWhitespace, $ent, $newtname, $oldtname);
 	}
 }

@@ -130,7 +130,7 @@ if ($rep) {
 		// TODO: Figured out why diffs across a move/rename are currently broken.
 
 		$ent = (!$highlightedNew && !$highlightedOld);
-		$listing = do_diff($all, $ignoreWhitespace, $rep, $ent, $newerFile, $olderFile);
+		$listing = do_diff($all, $ignoreWhitespace, $ent, $newerFile, $olderFile);
 
 		// Remove our temporary files
 		@unlink($newerFile);

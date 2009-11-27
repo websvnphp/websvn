@@ -751,7 +751,7 @@ class SVNRepository {
 
 		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
 			$tmp = tempnam('temp', 'wsvn');
-			print toOutputEncoding($this->applyGeshi($path, $tmp, $geshiLang, $rev, $peg, true), $this->repConfig->getContentEncoding());
+			print toOutputEncoding($this->applyGeshi($path, $tmp, $geshiLang, $rev, $peg, true));
 			@unlink($tmp);
 		} else {
 			$pre = false;
@@ -770,13 +770,12 @@ class SVNRepository {
 			if ($result = popenCommand($cmd, 'r')) {
 				if ($pre)
 					echo '<pre>';
-				$contentEncoding = $this->repConfig->getContentEncoding();
 				while (!feof($result)) {
 					$line = fgets($result, 1024);
 					if ($pre)
 						$line = replaceEntities($line, $this->repConfig);
 					else
-						$line = toOutputEncoding($line, $contentEncoding);
+						$line = toOutputEncoding($line);
 					print hardspace($line);
 				}
 				if ($pre)
@@ -870,8 +869,7 @@ class SVNRepository {
 	function getList($path, $rev = 0) {
 		global $config, $curList;
 
-		$contentEncoding = $this->repConfig->getContentEncoding();
-		$xml_parser = xml_parser_create(($contentEncoding) ? $contentEncoding : 'UTF-8');
+		$xml_parser = xml_parser_create('UTF-8');
 		xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
 		xml_set_element_handler($xml_parser, 'listStartElement', 'listEndElement');
 		xml_set_character_data_handler($xml_parser, 'listCharacterData');
@@ -971,8 +969,7 @@ class SVNRepository {
 	function getLog($path, $brev = '', $erev = 1, $quiet = false, $limit = 2, $peg = '') {
 		global $config, $curLog;
 
-		$contentEncoding = $this->repConfig->getContentEncoding();
-		$xml_parser = xml_parser_create(($contentEncoding) ? $contentEncoding : 'UTF-8');
+		$xml_parser = xml_parser_create('UTF-8');
 		xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, true);
 		xml_set_element_handler($xml_parser, 'logStartElement', 'logEndElement');
 		xml_set_character_data_handler($xml_parser, 'logCharacterData');

@@ -196,7 +196,7 @@ if ($rep) {
 					// If we're in a diff proper, just set up the line
 					if ($indiffproper) {
 						if (strlen($line) > 0 && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-')) {
-							$subline = replaceEntities(substr($line, 1), $rep);
+							$subline = replaceEntities(substr($line, 1));
 							$subline = ($subline) ? expandTabs($subline) : '&nbsp;';
 							$listing[$index]['line'] = $subline;
 
