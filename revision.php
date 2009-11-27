@@ -93,7 +93,7 @@ if ($rep) {
 	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
 	$vars['date'] = $logEntry ? $logEntry->date: '';
 	$vars['author'] = $logEntry ? $logEntry->author: '';
-	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))): '';
+	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg)))): '';
 
 	$isDir = @$_REQUEST['isdir'] == 1 || $path == '' || $path == '/';
 	$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.($isDir ?  '&amp;isdir=1' : '');

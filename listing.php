@@ -250,7 +250,7 @@ if ($rep) {
 	$vars['lastchangedrev'] = $lastChangedRev;
 	$vars['date'] = $logEntry ? $logEntry->date : '';
 	$vars['author'] = $logEntry ? $logEntry->author : '';
-	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors($logEntry->msg))) : '';
+	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg)))) : '';
 
 	$vars['revurl'] = $config->getURL($rep, ($path == '/' ? '' : $path), 'revision').$passRevString;
 	$vars['revlink'] = '<a href="'.$vars['revurl'].'">'.$lang['LASTMOD'].'</a>';
