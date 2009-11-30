@@ -1,16 +1,16 @@
     [websvn-test:error]
     </div>
     [websvn-else]
-      <h2><span>[websvn:path1] ([lang:REV] [websvn:rev1])</span> &nbsp; &rarr; &nbsp; <span>[websvn:path2] ([lang:REV] [websvn:rev2])</span></h2>
+      <h2><a href="[websvn:rev1url]">[websvn:path1] @ [websvn:rev1]</a> &nbsp; &rarr; &nbsp; <a href="[websvn:rev2url]">[websvn:path2] @ [websvn:rev2]</a></h2>
       <div class="clearer"></div>
     </div>
     <ul id="links">
+      <li class="reverse">[websvn:reverselink]</li>
       [websvn-test:ignorewhitespacelink]
       <li class="ignore">[websvn:ignorewhitespacelink]</li>
       [websvn-else]
       <li class="regard">[websvn:regardwhitespacelink]</li>
       [websvn-endtest]
-      <li class="reverse">[websvn:reverselink]</li>
       [websvn-test:clientrooturl]
       <li class="svn"><a href="[websvn:clientrooturl][websvn:path2]">SVN</a></li>
       [websvn-endtest]
@@ -36,9 +36,6 @@
     </table>
     [websvn:compare_endform]
     </div>
-
-    <!-- TODO: Figure out how to link the revision #'s to revision.php?... -->
-    
     <div id="comparisons">
     [websvn-startlisting]
       [websvn-test:newpath]
