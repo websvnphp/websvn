@@ -285,21 +285,6 @@ dl.projectlist dd a {
   padding:3px 0 5px 10px;
   border-top:1px dotted #D3D3D3;
 }
-dd.curdir {
-  padding:2px 0;
-  margin:5px 0 0 0;
-}
-dd.curdir pre {
-  font-family: 'Trebuchet MS', verdana, sans-serif;
-  background:url(images/folder.png) no-repeat 2px 50%;
-  margin:2px 2px 0 -2px;
-  padding:2px 2px 2px 22px;
-  display:block;
-}
-dd.curdir pre {
-  color:#545400;
-  font-size:1em;
-}
 #info ul {
   list-style-type:none;
   padding:0 0;
