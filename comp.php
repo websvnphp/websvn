@@ -83,7 +83,7 @@ if ($rep) {
 	}
 
 	$url = $config->getURL($rep, '/', 'comp');
-	$vars['revlink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
+	$vars['reverselink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
 	if (!$ignoreWhitespace) {
 		$vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
 	} else {
