@@ -299,7 +299,6 @@ tbody tr:hover td {
 
 #links li.regard a, #links li.ignore a {
 	background-image: url(images/pilcrow.png);	
-	padding-left: 14px;
 }
 
 #links li.blame a {
