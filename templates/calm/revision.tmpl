@@ -7,16 +7,17 @@
   [websvn-test:goyoungestlink]
 	<span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
   [websvn-endtest]
+  [websvn-test:comparelink]
+	<span class="diff">[websvn:comparelink]</span> &#124;
+  [websvn-endtest]
 	<span class="listing">[websvn:directorylink]</span> &#124;
   [websvn-test:filedetaillink]
 	<span class="detail">[websvn:filedetaillink]</span> &#124;
-  [websvn-endtest]
-  [websvn-test:blamelink]
 	<span class="blame">[websvn:blamelink]</span> &#124;
   [websvn-endtest]
 	<span class="log">[websvn:loglink]</span>
-  [websvn-test:comparelink]
-	&#124; <span class="diff">[websvn:comparelink]</span>
+  [websvn-test:clientrooturl]
+    &#124; <span class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></span>
   [websvn-endtest]
   [websvn-test:rsslink]
     &#124; <span class="feed">[websvn:rsslink]</span>
@@ -37,21 +38,21 @@
 
 <div id="wrap">
    <table>
-   	<colgroup>
-   		<col width="*" />
-   		<col width="16px" />
-   		<col width="16px" />
-   		<col width="16px" />
-   	</colgroup>
       <thead>
       <tr align="left" valign="middle">
-        <th scope="col" class="path" colspan="4">[lang:PATH]</th>
+        <th scope="col" class="path">[lang:PATH]</th>
+        <th scope="col">[lang:BLAME]</th>
+        <th scope="col">[lang:DIFF]</th>
+        <th scope="col">[lang:LOG]</th>
+        [websvn-test:clientrooturl]
+        <th scope="col">SVN</th>
+        [websvn-endtest]
       </tr>
       </thead>
       <tbody>
       [websvn-startlisting]
       <tr class="row[websvn:rowparity]">
-        <td>
+        <td width="100%">
           [websvn-test:modified]
           <a href="[websvn:detailurl]" class="modified">[websvn:path]</a>
           [websvn-endtest]
@@ -62,17 +63,20 @@
           <a href="[websvn:detailurl]" class="deleted">[websvn:path]</a>
           [websvn-endtest]
         </td>
-        <td><a href="[websvn:logurl]" title="[lang:VIEWLOG]"><img src="[websvn:locwebsvnhttp]/templates/calm/images/log.png" class="icon" alt="" /></a></td>
-        <td>
-          [websvn-test:diffurl]
-          <a href="[websvn:diffurl]" title="[lang:DIFFPREV]"><img src="[websvn:locwebsvnhttp]/templates/calm/images/diff.png" class="icon" alt="" /></a>
-          [websvn-endtest]
-        </td>
         <td>
           [websvn-test:blameurl]
           <a href="[websvn:blameurl]" title="[lang:BLAME]"><img src="[websvn:locwebsvnhttp]/templates/calm/images/blame.png" class="icon" alt="" /></a>
           [websvn-endtest]
         </td>
+        <td>
+          [websvn-test:diffurl]
+          <a href="[websvn:diffurl]" title="[lang:DIFFPREV]"><img src="[websvn:locwebsvnhttp]/templates/calm/images/diff.png" class="icon" alt="" /></a>
+          [websvn-endtest]
+        </td>
+        <td><a href="[websvn:logurl]" title="[lang:VIEWLOG]"><img src="[websvn:locwebsvnhttp]/templates/calm/images/log.png" class="icon" alt="" /></a></td>
+        [websvn-test:clientrooturl]
+        <td><a href="[websvn:clientrooturl][websvn:path]" title="SVN"><img src="[websvn:locwebsvnhttp]/templates/calm/images/link.png" class="icon" alt="" /></a></td>
+        [websvn-endtest]
       </tr>
       [websvn-endlisting]
     </tbody>
