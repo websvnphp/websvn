@@ -583,10 +583,4 @@ if ($rep) {
 	$vars['repurl'] = $config->getURL($rep, '', 'dir');
 }
 
-// As of version 1.70 the output encoding is forced to be UTF-8, since this is
-// the output encoding returned by svn log --xml.	This is good, since we are
-// no longer reliant on PHP's rudimentary conversions.
-
-$vars['charset'] = 'UTF-8';
-
 $listing = array();
