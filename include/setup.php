@@ -508,39 +508,38 @@ $passrev = $rev;
 function createProjectSelectionForm() {
 	global $config, $vars, $rep, $lang;
 
+	$vars['projects_form'] = '';
+	$vars['projects_select'] = '';
+	$vars['projects_submit'] = '';
+	$vars['projects_endform'] = '';
+		
 	$reps = $config->getRepositories();
-	if (!$config->showRepositorySelectionForm() || count($reps) < 2) {
-		$vars['projects_form'] = '';
-		$vars['projects_select'] = '';
-		$vars['projects_submit'] = '';
-		$vars['projects_endform'] = '';
+	if (!$config->showRepositorySelectionForm() || count($config->getRepositories()) < 2)
 		return;
-	}
+	
+	$options = '';
 
+	if ($rep) {
+		$currentRepoName = $rep->getDisplayName();
+	} else {
+		$currentRepoName = '';
+		$options .= '<option value="" selected="selected"></option>';
+	}
+	foreach ($config->getRepositories() as $repository) {
+		if ($repository->hasReadAccess('/', true)) {
+			$repoName = $repository->getDisplayName();
+			$selected = ($repoName == $currentRepoName) ? $sel = '" selected="selected' : '';
+			$options .= '<option value="'.$repoName.$selected.'">'.$repoName.'</option>';
+		}
+	}
+	if (strlen($options) === 0)
+		return;
+	
 	$url = $config->getURL(-1, '', 'form');
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="form" />' : '';
 	$hidden .= '<input type="hidden" name="selectproj" value="1" />';
 	$vars['projects_form'] = '<form action="'.$url.'" method="post" id="projectform">'.$hidden;
-
-	$vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">';
-	if ($rep) {
-		$currentProjectName = $rep->getDisplayName();
-	} else {
-		$currentProjectName = '';
-		$vars['projects_select'] .= '<option value="" selected="selected"></option>';
-	}
-	foreach ($reps as $project) {
-		if ($project->hasReadAccess('/', true)) {
-			if ($project->getDisplayName() == $currentProjectName) {
-				$sel = '" selected="selected';
-			} else {
-				$sel = '';
-			}
-			$vars['projects_select'] .= '<option value="'.$project->getDisplayName().$sel.'">'.$project->getDisplayName().'</option>';
-		}
-	}
-	$vars['projects_select'] .= '</select>';
-
+	$vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">'.$options.'</select>';
 	$vars['projects_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
 	$vars['projects_endform'] = '</form>';
 }
