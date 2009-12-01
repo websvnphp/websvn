@@ -809,28 +809,16 @@ tr:hover td.diffdeleted {
 	margin: 0;
 }
 
-#repositories div a {
-	padding-left: 24px;
-	background: url(images/subversion-s.png) no-repeat 0 0;
-}
-
 #repositories div.shaded {
 	background-color: #ecf3fe;
 }
 
 #repositories div.groupname {
 	cursor: pointer;
-	/*
-	padding-left: 27px;
-	background: url(images/repository.png) no-repeat 5px 5px;
-	*/
 	background-color: #ddd;
 }
 
 #repositories div.groupname.closed {
-	/*
-	background-image: url(images/diff.png);
-	*/
 	margin-bottom: 4px;
 }
 
