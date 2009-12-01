@@ -79,6 +79,8 @@ class Authentication {
 		$groups = $this->rights->getValues('groups');
 		if (is_array($groups)) {
 			foreach ($groups as $group => $names) {
+				if (empty($names))
+					continue;
 				if (in_array(strtolower($this->user), preg_split('/\s*,\s*/', $names))) {
 					$this->usersGroups[] = '@'.$group;
 				}
@@ -102,7 +104,7 @@ class Authentication {
 	function inList($accessors, $user) {
 		$output = UNDEFINED;
 		foreach ($accessors as $key => $rights) {
-			if (in_array($key, $this->usersGroups) || !strcmp($key, strtolower($user))) {
+			if (in_array($key, $this->usersGroups) || strcasecmp($key, $user) === 0) {
 				if (strpos($rights, 'r') !== false) {
 					return ALLOW;
 				} else {
@@ -110,7 +112,6 @@ class Authentication {
 				}
 			}
 		}
-
 		return $output;
 	}
 
@@ -169,7 +170,6 @@ class Authentication {
 				if (!empty($accessers)) {
 					$access = $this->inList($accessers, $this->user);
 				}
-
 				if ($access == UNDEFINED) {
 					$accessers = $this->rights->getValues($path);
 					if (!empty($accessers)) {
