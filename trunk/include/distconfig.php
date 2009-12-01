@@ -52,20 +52,26 @@
 
 // {{{ REPOSITORY SETUP ---
 
-// There are 2 methods for defining the repositiories available on the system. Either you list
-// them by hand, in which case you can give each one the name of your choice, or you use the
-// parent path function, in which case the name of the directory is used as the repository name.
+// There are 2 methods for defining the repositiories available on the system.
+// Either you list them by hand, in which case you can give each one the name of
+// your choice, or you use the parent path function, in which case the name of
+// the directory is used as the repository name.
 //
-// In all cases, you may optionally supply a group name to the repositories. This is useful in the
-// case that you need to separate your projects. Grouped Repositories are referred to using the
-// convention GroupName.RepositoryName
+// In all cases, you may optionally supply a group name to the repositories.
+// This is useful in the case that you need to separate your projects. Grouped
+// repositories are referred to using the convention GroupName.RepositoryName
 //
-// Performance is much better on local repositories (e.g. accessed by file:///). However, you
-// can also provide an interface onto a remote repository. In this case you should supply the
-// username and password needed to access it.
+// You may also optionally specify the URL that clients should use to check out
+// a working copy. If used, it must be specified after the group, username, and
+// password; if these arguments are not needed, then pass null instead. Consult
+// the WebSvnConfig class in include/configclass.php for function details.
 //
-// To configure the repositories by hand, copy the appropriate line below, uncomment it and
-// replace the name and URL of your repository.
+// Performance is much better on local repositories (e.g. accessed by file:///).
+// However, you can also provide an interface onto a remote repository. In this
+// case you should supply the username and password needed to access it.
+//
+// To configure the repositories by hand, copy the appropriate line below,
+// uncomment it and replace the name and URL of your repository.
 
 // Local repositories (without and with optional group):
 //

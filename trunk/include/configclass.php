@@ -660,6 +660,21 @@ class WebSvnConfig {
 		$this->_repositories[] = new Repository($name, $svnName, $serverRootURL, $group, $username, $password, $subpath, $clientRootURL);
 	}
 
+	// Automatically set up the repositories based on a parent path
+
+	function parentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true, $clientRootURL = '') {
+		$this->_parentPaths[] = new ParentPath($path, $group, $pattern, $skipAlreadyAdded, $clientRootURL);
+	}
+
+	function addExcludedPath($path) {
+		$url = 'file:///'.$path;
+		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+		if ($url{strlen($url) - 1} == '/') {
+			$url = substr($url, 0, -1);
+		}
+		$this->_excluded[] = $url;
+	}
+
 	function getRepositories() {
 		// lazily load parent paths
 		if ($this->_parentPathsLoaded) return $this->_repositories;
@@ -1257,25 +1272,6 @@ class WebSvnConfig {
 		}
 		if ($this->userTemplate !== false) return $this->userTemplate;
 		return $this->templatePaths[0];
-	}
-
-	// }}}
-
-	// {{{ parentPath
-	//
-	// Automatically set up the repositories based on a parent path
-
-	function parentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true, $clientRootURL = '') {
-		$this->_parentPaths[] = new ParentPath($path, $group, $pattern, $skipAlreadyAdded, $clientRootURL);
-	}
-
-	function addExcludedPath($path) {
-		$url = 'file:///'.$path;
-		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-		if ($url{strlen($url) - 1} == '/') {
-			$url = substr($url, 0, -1);
-		}
-		$this->_excluded[] = $url;
 	}
 
 	// }}}
