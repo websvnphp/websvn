@@ -785,6 +785,10 @@ tr:hover td.diffdeleted {
 
 /* @group index.tmpl */
 
+#index #menus #projectform {
+	display: none;
+}
+
 #repositories {
 	margin: 0 auto;
 	display: table;
