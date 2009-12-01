@@ -30,7 +30,6 @@ require_once 'include/template.php';
 // Make sure that we have a repository
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
-	$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 	if ($path{0} != '/') {
 		$ppath = '/'.$path;
