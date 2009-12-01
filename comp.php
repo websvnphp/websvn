@@ -42,7 +42,6 @@ function checkRevision($rev) {
 // Make sure that we have a repository
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
-	$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 	// Retrieve the request information
 	$path1 = @$_REQUEST['compare'][0];

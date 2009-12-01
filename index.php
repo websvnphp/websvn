@@ -63,6 +63,7 @@ foreach ($projects as $project) {
 		$i++; // Causes the subsequent lines to store data in the next array slot.
 		$listing[$i]['groupid'] = null; // Because template.php won't unset this
 	}
+	$listing[$i]['clientrooturl'] = $project->clientRootURL;
 
 	// Create project (repository) listing
 	$url = str_replace('&amp;', '', $config->getURL($project, '', 'dir'));

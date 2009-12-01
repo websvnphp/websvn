@@ -37,7 +37,6 @@ $ignoreWhitespace = (@$_REQUEST['ignorews'] == 1);
 // Make sure that we have a repository
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
-	$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 	// If there's no revision info, go to the lastest revision for this path
 	$history = $svnrep->getLog($path, '', '', true, 2, $peg);

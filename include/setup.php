@@ -465,6 +465,7 @@ if ($selectedTemplate === false) {
 }
 
 if ($rep) {
+	$vars['clientrooturl'] = $rep->clientRootURL;
 	// skip template list when selected repository has specific template
 	if ($rep->templatePath !== false) {
 		$templateNames = array();
@@ -578,7 +579,7 @@ if (!$config->multiViews) {
 	$vars['repname'] = htmlentities($displayName, ENT_QUOTES, 'UTF-8');
 }
 
-$vars['indexurl'] = $config->getURL($rep, '', 'index');
+$vars['indexurl'] = $config->getURL('', '', 'index');
 if ($rep) {
 	$vars['repurl'] = $config->getURL($rep, '', 'dir');
 }

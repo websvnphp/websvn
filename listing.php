@@ -196,7 +196,6 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 // Make sure that we have a repository
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
-	$vars['clientrooturl'] = $svnrep->repConfig->clientRootURL;
 
 	$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
