@@ -74,6 +74,8 @@ foreach ($projects as $project) {
 	$groupparity++;
 	$i++;
 }
+if (empty($listing) && !empty($projects))
+	$vars['error'] = $lang['NOACCESS'];
 
 $vars['flatview'] = $config->flatIndex;
 $vars['treeview'] = !$config->flatIndex;
