@@ -11,12 +11,15 @@
 [websvn-test:comparelink]
 	<span class="diff">[websvn:comparelink]</span> &#124;
 [websvn-endtest]
-	<span class="log">[websvn:loglink]</span> &#124;
+	<span class="log">[websvn:loglink]</span>
 [websvn-test:downloadurl]
-	<span class="compress"><a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a></span> &#124;
+	&#124; <span class="compress"><a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a></span>
+[websvn-endtest]
+[websvn-test:clientrooturl]
+	&#124; <span class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></span>
 [websvn-endtest]
 [websvn-test:rsslink]
-    <span class="feed">[websvn:rsslink]</span>
+    &#124; <span class="feed">[websvn:rsslink]</span>
 [websvn-endtest]
 </p>
 
@@ -67,14 +70,17 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
       <tr align="left" valign="middle">
         <th scope="col" class="path">[lang:PATH]</th>
         [websvn-test:showlastmod]
-        <th scope="col" class="colmod" colspan="3">[lang:LASTMOD]</th>
+        <th scope="col" colspan="3">[lang:LASTMOD]</th>
         [websvn-endtest]
-        <th scope="col" class="collog">[lang:NOBR][lang:VIEWLOG][lang:ENDNOBR]</th>
+        <th scope="col">[lang:LOG]</th>
         [websvn-test:allowdownload]
-        <th scope="col" class="coltar">[lang:DOWNLOAD]</th>
+        <th scope="col">[lang:DOWNLOAD]</th>
+        [websvn-endtest]
+        [websvn-test:clientrooturl]
+        <th scope="col">SVN</th>
         [websvn-endtest]
         [websvn-test:rssurl]
-        <th scope="col" class="colrss">[lang:RSSFEED]</th>
+        <th scope="col">RSS</th>
         [websvn-endtest]
       </tr>
       </thead>
@@ -107,13 +113,15 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
            [websvn-endtest]
          </td>
          [websvn-endtest]
+         [websvn-test:clientrooturl]
+         <td class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></td>
+         [websvn-endtest]
          [websvn-test:rssurl]
          <td class="feed"><a href="[websvn:rssurl]">RSS</a></td>
          [websvn-endtest]
       </tr>
       [websvn-endlisting]
-    </tbody>
-
+      </tbody>
    </table>
 <p class="submit">
     [websvn:compare_submit]

@@ -28,10 +28,13 @@
       [websvn-test:comparelink]
       [websvn:comparelink] -
       [websvn-endtest]    
-      [websvn-test:downloadurl]
-      <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a> -
-      [websvn-endtest]
       [websvn:loglink]
+      [websvn-test:downloadurl]
+      - <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a>
+      [websvn-endtest]
+      [websvn-test:clientrooturl]
+      - <a href="[websvn:clientrooturl][websvn:path]">SVN</a>
+      [websvn-endtest]
       [websvn-test:rssurl]
       - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
       [websvn-endtest]
@@ -66,6 +69,9 @@ e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsv
         [websvn-test:allowdownload]
           <th>[lang:DOWNLOAD]</th>
         [websvn-endtest]
+        [websvn-test:clientrooturl]
+          <th>SVN</th>
+        [websvn-endtest]
         [websvn-test:rssurl]
           <th>RSS</th>
         [websvn-endtest]
@@ -87,6 +93,9 @@ e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsv
           [websvn-test:downloadplainurl]
           <td><a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a></td>
           [websvn-endtest]
+          [websvn-endtest]
+          [websvn-test:clientrooturl]
+          <td><a href="[websvn:clientrooturl][websvn:path]">SVN</a></td>
           [websvn-endtest]
           [websvn-test:rssurl]
           <td><a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a></td>
