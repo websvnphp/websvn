@@ -490,6 +490,13 @@ td.mime a {
   background-repeat:no-repeat;
   background-position:3px 50%;
 }
+span.svn a,
+td.svn a {
+  padding-left:22px;
+  background-image:url(images/link);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
 
 li.compress a,
 span.compress a,

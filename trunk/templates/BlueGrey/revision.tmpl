@@ -23,19 +23,19 @@
     </table>
     [websvn-endtest]
     <div id="nav">
-      [websvn:loglink]
-      - [websvn:directorylink]
+      [websvn-test:comparelink]
+        [websvn:comparelink] -
+      [websvn-endtest]    
+        [websvn:directorylink] -
+        [websvn:loglink]
       [websvn-test:filedetaillink]
       - [websvn:filedetaillink]
       [websvn-endtest]    
       [websvn-test:blamelink]
       - [websvn:blamelink]
       [websvn-endtest]    
-      [websvn-test:comparelink]
-      - [websvn:comparelink]
-      [websvn-endtest]    
-      [websvn-test:downloadurl]
-      - <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a>
+      [websvn-test:clientrooturl]
+      - <a href="[websvn:clientrooturl][websvn:path]">SVN</a>
       [websvn-endtest]
       [websvn-test:rssurl]
       - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
@@ -48,9 +48,12 @@
       <thead>
       <tr>
         <th>[lang:PATH]</th>
-        <th>[lang:VIEWLOG]</th>
-        <th>[lang:DIFF]</th>
         <th>[lang:BLAME]</th>
+        <th>[lang:DIFF]</th>
+        <th>[lang:VIEWLOG]</th>
+        [websvn-test:clientrooturl]
+        <th>SVN</th>
+        [websvn-endtest]
       </tr>
       </thead>
       <tbody>
@@ -65,16 +68,19 @@
         [websvn-test:deleted]
          <td>D <a href="[websvn:detailurl]">[websvn:path]</a></td>
         [websvn-endtest]
-        <td><a href="[websvn:logurl]">[lang:LOG]</a></td>
-        [websvn-test:diffurl]
-        <td><a href="[websvn:diffurl]">[lang:NOBR][lang:DIFF][lang:ENDNOBR]</a></td>
-        [websvn-else]
-        <td></td>
-        [websvn-endtest]
         [websvn-test:blameurl]
-        <td><a href="[websvn:blameurl]">[lang:BLAME]</a></td>
+         <td><a href="[websvn:blameurl]">[lang:BLAME]</a></td>
         [websvn-else]
-        <td></td>
+         <td></td>
+        [websvn-endtest]
+        [websvn-test:diffurl]
+         <td><a href="[websvn:diffurl]">[lang:DIFF]</a></td>
+        [websvn-else]
+         <td></td>
+        [websvn-endtest]
+         <td><a href="[websvn:logurl]">[lang:LOG]</a></td>
+        [websvn-test:clientrooturl]
+         <td><a href="[websvn:clientrooturl][websvn:path]">SVN</a></td>
         [websvn-endtest]
       </tr>
       [websvn-endlisting]
