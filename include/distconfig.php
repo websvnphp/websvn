@@ -282,10 +282,6 @@ $config->addInlineMimeType('text/plain');
 // $config->setDefaultFileDlMode('plain');
 // $config->setDefaultFolderDlMode('gzip');
 //
-// Change the line below to set the temporary directory where to store generated tarball.
-//
-// $config->setTarballTmpDir('temp');
-//
 // To change the global option for individual repositories, uncomment and replicate
 // the appropriate line below (replacing 'myrep' with the name of the repository).
 // Use the convention 'groupname.myrep' if your repository is in a group.
@@ -424,6 +420,10 @@ $config->useGeshi();
 
 // Comment out this if you don't have the right to use it. Be warned that you may need it however!
 set_time_limit(0);
+
+// Change the line below to specify a temporary directory other than the one PHP uses.
+
+// $config->setTempDir('temp');
 
 // Number of spaces to expand tabs to in diff/listing view across all repositories
 

@@ -585,7 +585,7 @@ class SVNRepository {
 
 		$tempname = $filename;
 		if ($perLineHighlighting) {
-			$tempname = tempnam('temp', '');
+			$tempname = tempnam($config->getTempDir(), '');
 		}
 		$highlighted = true;
 		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
@@ -750,9 +750,9 @@ class SVNRepository {
 		$ext = strrchr($path, '.');
 
 		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
-			$tmp = tempnam('temp', 'wsvn');
-			print toOutputEncoding($this->applyGeshi($path, $tmp, $geshiLang, $rev, $peg, true));
-			@unlink($tmp);
+			$tempname = tempnam($config->getTempDir(), 'wsvn');
+			print toOutputEncoding($this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, true));
+			@unlink($tempname);
 		} else {
 			$pre = false;
 			$path = encodepath($this->getSvnPath($path));
