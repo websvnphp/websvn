@@ -99,12 +99,12 @@ if ($rep) {
 		$vars['javascript'] = '';
 	} else {
 		// Get the contents of the file
-		$tfname = tempnam('temp', '');
+		$tfname = tempnam($config->getTempDir(), '');
 		$highlighted = $svnrep->getFileContents($path, $tfname, $rev, $peg, '', true);
 
 		if ($file = fopen($tfname, 'r')) {
 			// Get the blame info
-			$tbname = tempnam('temp', '');
+			$tbname = tempnam($config->getTempDir(), '');
 
 			$svnrep->getBlameDetails($path, $tbname, $rev, $peg);
 
