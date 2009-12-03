@@ -103,7 +103,7 @@ if ($rep) {
 
 	// Create a temporary filename to be used for a directory to archive a download.
 	// Here we have an unavoidable but highly unlikely to occur race condition.
-	$tempDir = tempnam($config->getTarballTmpDir(), 'websvn');
+	$tempDir = tempnam($config->getTempDir(), 'websvn');
 
 	if ($tempDir == false) {
 		header('HTTP/1.x 500 Internal Server Error', true, 500);

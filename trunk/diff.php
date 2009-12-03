@@ -121,10 +121,10 @@ if ($rep) {
 		}
 
 		// Get the contents of the two files
-		$newerFile = tempnam('temp', '');
+		$newerFile = tempnam($config->getTempDir(), '');
 		$highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newerFile, $history->entries[0]->rev, $peg, '', true);
 
-		$olderFile = tempnam('temp', '');
+		$olderFile = tempnam($config->getTempDir(), '');
 		$highlightedOld = $svnrep->getFileContents($history->entries[1]->path, $olderFile, $history->entries[1]->rev, $peg, '', true);
 		// TODO: Figured out why diffs across a move/rename are currently broken.
 
