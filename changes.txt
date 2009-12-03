@@ -1,8 +1,19 @@
 /* NEXT MINOR RELEASE - 2.3.0 */
 
-* Added http header 500 for errors with downloading archives/files. (Issue 240)
-* Modified various things in templates.
-* Fixed issues: 189, 214, 233, 235, 236, 239, 240
+* Better support for moved, renamed and deleted items.
+* Improved handling of errors, show useful messages without exposing auth data.
+* Improved handling of different character encodings.
+  Replaced manual per-repository configuration with automatic handling
+  (using either multibyte string or iconv extension).
+* Modified various things in templates (see doc/templates.html).
+  * Added new theme called "Elegant".
+  * Added combobox to select template on a per-user base.
+* Fixed plain file downloading.
+  * Added http header 500 for errors with downloading archives/files.
+* Updated rss generation.
+* Updated french translation.
+* Fixed issues: 64, 84, 151, 155, 236, 240, 242, 243, 244, 245, 246, 247, 248,
+  251, 253, 254, 255, 256, 257, 259
 
 
 2.2.1
