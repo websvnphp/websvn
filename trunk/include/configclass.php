@@ -607,7 +607,7 @@ class WebSvnConfig {
 	var $disallowedExceptions = array();
 	var $rss = true;
 	var $rssCaching = false;
-	var $rssMaxEntries = 50;
+	var $rssMaxEntries = 40;
 	var $spaces = 8;
 	var $bugtraq = false;
 	var $auth = '';
