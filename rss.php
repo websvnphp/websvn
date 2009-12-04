@@ -44,8 +44,6 @@ if ($config->multiViews) {
 	}
 }
 
-$svnrep = new SVNRepository($rep);
-
 if ($path == '' || $path{0} != '/') {
 	$ppath = '/'.$path;
 } else {
@@ -67,15 +65,17 @@ if (!$rep->hasReadAccess($path, false)) {
 header('Content-Type: application/xml; charset=utf-8');
 
 // If there's no revision info, go to the lastest revision for this path
+$svnrep = new SVNRepository($rep);
 $history = $svnrep->getLog($path, $rev, '', false, $max, $peg);
 
-// Filename reflecting full path for a cached RSS feed for this particular query
-$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ':/\\?', '____').($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'#'.$max.'.rss.xml';
-
-// If a recent-enough cached version exists, use it and avoid all the work below
-if ($rep->isRssCachingEnabled() && file_exists($cache) && filemtime($cache) >= $history->curEntry->committime) {
-	readfile($cache);
-	exit();
+if ($rep->isRssCachingEnabled()) {
+	// Filename for storing a cached RSS feed for this particular path/revision
+	$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ':/\\?', '____').($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'m'.$max.($quiet ? 'q' : '').'.rss.xml';
+	// If a recent-enough cached version exists, use it and avoid the work below
+	if (file_exists($cache) && filemtime($cache) >= $history->curEntry->committime) {
+		readfile($cache);
+		exit();
+	}
 }
 
 // Generate RSS 2.0 feed
@@ -85,9 +85,10 @@ $rss .= '<title>'.htmlspecialchars($rep->getDisplayName().($path ? ' - '.$path :
 $rss .= '<description>'.htmlspecialchars($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
-$rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').(@$_REQUEST['isdir'] == 1 ? 'isdir=1&amp;' : '').createRevAndPegString($passrev, $peg)).'</link>'; // Matching WebSVN page
-$rss .= '<atom:link href="'.htmlspecialchars(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'; // Originating URL where this RSS feed can be found
-
+// URL for matching WebSVN log page
+$rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').(@$_REQUEST['isdir'] == 1 ? 'isdir=1&amp;' : '').'max='.$max.'&amp;'.createRevAndPegString($passrev, $peg)).'</link>';
+// URL where this original RSS feed can be found
+$rss .= '<atom:link href="'.htmlspecialchars(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
 if ($history && is_array($history->entries)) {
 	foreach ($history->entries as $r) {
 		$wordLimit = 10; // Display only up to the first 10 words of the log message
@@ -118,7 +119,7 @@ if ($history && is_array($history->entries)) {
 		$rss .= '<description>'.htmlspecialchars($description).'</description>';
 		$rss .= '<link>'.$itemLink.'</link>';
 		$rss .= '<guid>'.$itemLink.'</guid>';
-		$rss .= '</item>';
+		$rss .= '</item>'."\n";
 	}
 }
 $rss .= '</channel></rss>';
