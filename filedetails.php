@@ -155,7 +155,7 @@ if ($rep) {
 	$mimeType = $useMime; // Restore preserved value to use for 'mimelink' variable.
 	// If there was a MIME type, create a link to display file with that type.
 	if ($mimeType && !isset($vars['warning'])) {
-		$vars['mimeurl'] = $config->getURL($rep, $path, 'file').$passRevString.'&amp;usemime=1';
+		$vars['mimeurl'] = $config->getURL($rep, $path, 'file').'usemime=1&amp;'.$passRevString;
 		$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">View as '.$mimeType.'</a>';
 	}
 
