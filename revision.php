@@ -35,7 +35,7 @@ if ($rep) {
 	$ppath = ($path == '' || $path{0} != '/') ? '/'.$path : $path;
 	createPathLinks($rep, $ppath, $rev, $peg);
 	$passRevString = createRevAndPegString($rev, $peg);
-	
+
 	// Find the youngest revision containing changes for the given path
 	$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
@@ -101,7 +101,7 @@ if ($rep) {
 	$dirPath = $isDir ? $path : dirname($path).'/';
 	$vars['directoryurl'] = $config->getURL($rep, $dirPath, 'dir').$passRevString.'#'.anchorForPath($dirPath);
 	$vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
-	
+
 	if ($path != $dirPath) {
 		$vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;
 		$vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDETAIL'].'</a>';
