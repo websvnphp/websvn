@@ -924,7 +924,7 @@ class WebSvnConfig {
 					return null;
 				}
 			}
-			$this->tempDir = sys_get_temp_dir();	
+			$this->tempDir = sys_get_temp_dir();
 		}
 		return $this->tempDir;
 	}
@@ -1120,19 +1120,19 @@ class WebSvnConfig {
 		// Append parameters
 		if ($params != '') $var .= ' '.$params;
 	}
-	
+
 	// Define directory path to use for --config-dir parameter
 	function setSvnConfigDir($path) {
 		$this->_svnConfigDir = $path;
 		$this->_updateSVNCommand();
 	}
-	
+
 	// Define the location of the svn command (e.g. '/usr/bin')
 	function setSvnCommandPath($path) {
 		$this->_svnCommandPath = $path;
 		$this->_updateSVNCommand();
 	}
-	
+
 	// Define a prefix to include before every SVN command (e.g. 'arch -i386')
 	function setSvnCommandPrefix($prefix) {
 		$this->_svnCommandPrefix = $prefix;
