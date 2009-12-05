@@ -513,11 +513,11 @@ function createProjectSelectionForm() {
 	$vars['projects_select'] = '';
 	$vars['projects_submit'] = '';
 	$vars['projects_endform'] = '';
-		
+
 	$reps = $config->getRepositories();
 	if (!$config->showRepositorySelectionForm() || count($config->getRepositories()) < 2)
 		return;
-	
+
 	$options = '';
 
 	if ($rep) {
@@ -535,7 +535,7 @@ function createProjectSelectionForm() {
 	}
 	if (strlen($options) === 0)
 		return;
-	
+
 	$url = $config->getURL(-1, '', 'form');
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="form" />' : '';
 	$hidden .= '<input type="hidden" name="selectproj" value="1" />';
