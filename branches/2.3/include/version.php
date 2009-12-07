@@ -22,4 +22,4 @@
 //
 // Version information
 
-$version = '[trunk]';
+$version = '2.3.x [branch]';
