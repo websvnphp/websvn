@@ -1,4 +1,7 @@
-/* NEXT MINOR RELEASE - 2.3.0 */
+/* NEXT RELEASE */
+
+
+2.3.0
 
 * Better support for moved, renamed and deleted items.
 * Improved handling of errors, show useful messages without exposing auth data.
