@@ -1,0 +1,352 @@
+/* @group General Styles */
+
+body {
+	margin: 0;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 10pt;
+	color: black;
+	background-color: white;
+}
+h1 {
+	font-size: 150%;
+	margin: 0;
+	float: left;
+}
+h2 {
+	font-size: 125%;
+}
+h3 {
+	font-size: 105%;
+}
+a:link, a:visited {
+	color: #004080;
+	text-decoration: none;
+}
+a:hover, a:active {
+	text-decoration: underline;
+}
+a img {
+	border: none;
+}
+
+table {
+	border-width: 0px;
+	border-collapse: collapse;
+}
+
+pre {
+	padding: 4px;
+	background-color: #eee;
+	border: solid 1px #ccc;
+}
+
+code {
+	white-space: pre-wrap;
+}
+
+/* Semantic sections */
+
+#header {
+	padding: 5px 0;
+	border-bottom: 1px solid #555;
+}
+
+#projects, #revjump {
+	float: right;
+}
+
+#revjump, #error {
+	clear: both;
+}
+
+#pathlinks {
+	clear: left;
+	padding-top: 5px;
+}
+#nav {
+	margin: 10px 0;
+}
+
+#content {
+	margin: 10px;
+}
+#content table {
+	border: 1px solid #555;
+	margin: 10px 0;
+}
+#content th, #content td {
+	padding: 0 3px;
+}
+#content thead th {
+	border: 1px solid #555;
+	font-weight: bold;
+	color: white;
+	background-color: #809cc8;
+	padding: 1px 4px 2px 1px;
+}
+
+.row0, .row1 {
+	border-width: 0px;
+}
+.row0 img, .row1 img {
+	padding: 0px;
+	margin: 0px;
+	vertical-align: middle;
+}
+.row0 {
+	background-color: #f0f0f0;
+}
+.row1 {
+	background-color: #e0e0e0;
+}
+
+tr.row0 th, tr.row1 th, #content td {
+	font-weight: normal;
+	text-align: left;
+	vertical-align: top;
+	border-right: 1px solid #555;
+}
+tr.row0 th {
+	background-color: #e0e0ff	
+}
+tr.row1 th {
+	background-color: #d0d0ee;
+}
+th.row1 {
+	background-color: #d0d0ee;
+	border-right: 1px solid #555;
+}
+div.clearer {
+	clear: both;
+	height: 0;
+}
+
+#footer {
+	padding: 3px;
+	text-align: center;
+	font-size: 80%;
+	font-weight: bold;
+	background-color: #e5e9fe;
+	border: solid #555;
+	border-width: 1px 0;
+}
+
+div#error, div#warning {
+	font-weight: bold;
+	display: table;
+	padding: 5px;
+	margin: 10px auto;
+	border: 1px solid;
+}
+
+div#error {
+	border-color: #b2595a;
+	background-color: #ffe2e2;
+}
+
+div#warning {
+	border-color: #b2ac00;
+	background-color: #ffd;
+}
+
+/* @end */
+
+/* @group blame.tmpl */
+
+#blame #content table {
+	width: 100%;
+}
+
+#blame #content table tbody th {
+	font-weight: normal;
+	text-align: right;
+}
+
+#blame #content table tbody .light th {
+	border-right: black 1px solid;
+	background-color: #e0e0ff;
+}
+
+#blame #content table tbody .dark th {
+	border-right: black 1px solid;
+	background-color: #d0d0ee;
+}
+
+div.blame-popup {
+	position: absolute;
+	text-align: left;
+	background-color: white;
+	border: solid 2px #809cc8;
+	padding: 5px;
+	max-width: 600px;
+}
+
+div.blame-popup .date {
+	font-weight: bold;
+}
+
+/* @end */
+
+/* @group compare.tmpl */
+
+#compare #params, #params td {
+	border-width: 0;
+}
+
+#compare #params td {
+	vertical-align: middle;	
+}
+
+#compare .comparison {
+	width: 100%;
+	margin: 20px 0 10px;
+}
+
+#compare .comparison tbody th {
+	text-align: center;
+	font-weight: bold;
+	border: 1px solid #555;
+}
+
+#compare .comparison td {
+	font-family: monospace;
+	font-size: 90%;
+	white-space: pre-wrap;
+}
+
+/* Whitespace hacks for IE 4-7  */
+
+* html #compare .comparison td {
+	white-space: pre;
+}
+
+*:first-child+html #compare .comparison td {
+	white-space: pre;
+}
+
+/* @end */
+
+/* @group diff.tmpl */
+
+#diff td {
+	font-size: 90%;
+}
+
+td.diffdeleted {
+	background-color: #ff8888;
+}
+
+td.diffchanged {
+	background-color: #ffff88;
+}
+
+td.diffadded {
+	background-color: #88ff88;
+}
+
+td.diff {
+	background-color: #f0f0f0;
+}
+
+div.newpath {
+	padding: 10px;
+	background-color: #d0d0ee;
+}
+
+div.difflines {
+}
+
+/* @end */
+
+/* @group directory.tmpl */
+
+#directory table#listing tbody tr {
+	height: 22px;
+}
+
+img.icon {
+	vertical-align: middle;
+}
+
+/* @end */
+
+/* @group file.tmpl */
+
+#file #listing {
+	font-size: 90%;
+	border: 1px solid #999;
+	padding: 5px;
+	background-color: #f0f0f0;
+}
+
+/* @end */
+
+/* @group index.tmpl */
+
+#index #repositories {
+	margin: 0 auto;
+}
+
+#index #repositories th {
+	padding: 4px;
+}
+
+#index #repositories td {
+	padding: 0px;
+}
+
+#index #repositories div {
+	padding: 2px;
+}
+
+.plusbox, .minusbox {
+	display: inline;
+	font-size: 13px;
+	font-weight: bold;
+	width: 16px;
+	text-indent: 0;
+	height: 16px;
+	color: black;
+	text-align: center;
+	padding: 0px 2px 0px 3px;
+	border: black solid 1px;
+	margin-right: 5px;
+}
+
+.plusbox {
+	background-color: #D0D0D0;
+}
+
+.minusbox {
+	background-color: #809cc8;
+}
+
+.groupname {
+	font-weight: bold;
+	padding-left: 0px;
+	text-indent: 4px;
+	margin: 3px 0 3px 0;
+}
+
+.switchcontent {
+	margin: 3px 0 0 20px;
+}
+
+/* @end */
+
+/* @group log.tmpl */
+
+#logpagelinks > * {
+	padding: 0 3px;
+}
+
+#content td.changes table {
+	margin: 0;
+}
+
+#content td.changes * {
+	border-width: 0;
+}
+
+/* @end */
+

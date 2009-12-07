@@ -1,0 +1,975 @@
+/* @group Global Styles */
+
+/* @group Common Elements */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+	font-size: 8pt;
+	background-color: white;
+}
+
+@media print {
+	body {
+		font-size: 7pt;
+	}
+}
+
+h1 {
+	font-size: 2em;
+	margin-top: 0;
+	padding-top: 8px;
+}
+
+h2 {
+	font-size: 1.5em;
+	margin: 5px 0;
+}
+
+dt {
+	font-weight: bold;
+	margin-top: 6px;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a img {
+	border: none;
+}
+
+form {
+	margin: 0;
+}
+
+/* @end */
+
+/* @group Table Elements */
+
+table {
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+table, th, td {
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+}
+
+th, td {
+	vertical-align: middle;	
+	white-space: nowrap;
+	padding: 0 5px;
+}
+
+th {
+	height: 16px;
+	text-align: center;
+}
+
+thead th {
+	background-image: url(images/bg-table-header.png);
+}
+
+td {
+	border-top-width: 0;
+	border-bottom-width: 0;
+}
+
+td a {
+	padding: 1px 0;
+}
+
+td input {
+	position: relative;
+	top: -2px;
+}
+
+tbody tr.shaded {
+	background-color: #ecf3fe;
+}
+
+tbody tr:hover td {
+	background-color: #d6dde5;
+}
+
+@media print {
+	tbody tr.shaded td {
+		background-color: #ecf3fe;
+		border-width: 1px;
+	}
+	
+	tbody tr:hover td {
+		background-color: white;
+	}
+}
+
+/* @end */
+
+/* @group Semantic sections */
+
+#wrapper {
+	margin: 0;
+}
+
+/* @group Header */
+
+#header {
+	margin: 0;
+	padding: 0;
+}
+
+#header #info {
+	font-size: 85%;
+	margin: 0;
+	padding: 0 10px;
+	background: url(images/bg-blue-gradient.png) repeat-x 0 top;
+	border-bottom: solid 1px #4b4b4b;
+}
+
+#header #info, #header #info * {
+	position: relative;
+}
+
+#header #info, h1, h2 {
+	font-weight: normal;
+}
+
+#header #info, #header #info a {
+	color: white;
+}
+
+#header a {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+#header h1 {
+	margin: 0;
+	padding: 8px 0;
+}
+
+* html #header h1 {
+	padding-bottom: 15px;
+}
+
+#header h1 a {
+	padding: 0 2px;
+}
+
+#header #info a:hover, #header #info h2#pathlinks a:hover {
+	background-color: rgba(63,63,63,0.35);
+}
+
+#header h2 {
+	float: left;
+	margin: 1px 1px 5px;
+}
+
+#header h2#revnum {
+	float: right;
+}
+
+#header h2#revnum {
+	background: url(images/information.png) no-repeat;
+	padding-left: 22px;
+}
+
+#revision #header h2#revnum {
+	background: none;
+	padding-left: 0;
+}
+
+#header #menus {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 9px;
+}
+
+#header #menus form {
+	display: inline;
+}
+
+#header #menus * {
+	margin: 0;
+	padding: 0;
+}
+
+#header #revjump {
+	float: right;
+	clear: none;
+	margin: -3px -3px 0 15px;
+}
+
+#header #revjump span input  {
+	margin: 2px;
+	padding: 0 8px;
+}
+
+* html #header #revjump {
+	padding-right: 5px;
+}
+
+* html #header #revjump form {
+	margin: 0;
+}
+
+#header div {
+	clear: both;
+}
+
+#header h2#pathlinks > * {
+	padding: 1px;
+}
+
+#header h2#pathlinks a.root {
+	background: url(images/home.png) no-repeat 0 1px;
+	padding-left: 16px;
+}
+
+#header h2#pathlinks a.root span {
+	display: none;
+}
+
+#header h2#pathlinks a.peg {
+	background: url(images/remove.png) no-repeat right 1px;
+	padding-right: 20px;
+}
+
+/* @end */
+
+/* @group Navigation Links */
+
+#links {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	background: url(images/bg-gray-light.png) repeat-x 0 top;
+	border-bottom: solid 1px #a1a5a9;
+	white-space: nowrap;
+}
+
+#links li {
+	font-size: 110%;
+	display: inline-block;
+	padding: 4px 3px 3px;
+	margin: 0;
+	white-space: nowrap;
+}
+
+* html #links li {
+	display: inline;
+}
+
+#links li:hover {
+	background: url(images/bg-gray-dark.png) repeat-x 0 top;
+}
+
+#links a:hover {
+	text-decoration: none;
+}
+
+#links li a {
+	padding-left: 18px;
+	background-repeat: no-repeat;
+}
+
+#links li.entire a {
+	background-image: url(images/arrow-out.png);	
+	padding-left: 20px;
+}
+
+#links li.compact a {
+	background-image: url(images/arrow-in.png);	
+	padding-left: 20px;
+}
+
+#links li.regard a, #links li.ignore a {
+	background-image: url(images/pilcrow.png);	
+}
+
+#links li.blame a {
+	background-image: url(images/blame.png);	
+}
+
+#links li.file a {
+	background-image: url(images/detail.png);	
+}
+
+#links li.diff a {
+	background-image: url(images/diff.png);	
+}
+
+#links li.download a {
+	background-image: url(images/download.png);	
+}
+
+#links li.dir a {
+	background-image: url(images/parent.png);	
+	padding-left: 20px;
+}
+
+#links li.log a {
+	background-image: url(images/log.png);	
+	padding-left: 16px;
+}
+
+#links li.mime a {
+	background-image: url(images/eye.png);	
+	padding-left: 20px;
+}
+
+#links li.rev a {
+	background-image: url(images/revision.png);	
+}
+
+#links li.reverse a {
+	background-image: url(images/reverse.png);	
+}
+
+#links li.rss a {
+	background-image: url(images/rss.png);	
+}
+
+#links li.svn a {
+	background-image: url(images/subversion-s.png);	
+	padding-left: 19px;
+}
+
+#links li.youngest a {
+	background-image: url(images/youngest.png);	
+}
+
+@media print {
+	#dropdowns, #links {
+		display: none;
+	}
+}
+
+/* @end */
+
+/* @group Footer */
+
+#footer {
+	text-align: center;	
+	clear: both;
+}
+
+#footer a {
+	font-weight: bold;
+}
+
+#footer #poweredby {
+	padding: 3px 3px 4px;
+	border-top: solid 1px #a1a5a9;
+	background: #f0f0f0 url(images/bg-gray-light.png) repeat-x 0 top;
+}
+
+#footer #valid {
+	padding: 3px 5px;
+	vertical-align: middle;
+	position: absolute;
+	border: 0;
+	right: 0;
+}
+
+#footer #valid img {
+	position: relative;
+	top: 2px;
+}
+
+/* @end */
+
+#content {
+	padding: 10px;
+	border-top: 1px solid #cfcfcf;
+}
+
+.error, .warning, .information {
+	display: table;
+	font-weight: bold;
+	margin: 0 auto;
+	padding: 5px 7px 3px 10px;
+	border: solid 1px;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: 6px 4px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+}
+
+.error span, .warning span, .information span {
+	display: block;
+	max-width: 400px;
+	margin-left: 33px;
+	padding: 10px 0;
+	position: relative;
+	top: -2px;
+}
+
+.error a, .warning a, .information a {
+	text-decoration: underline;
+}
+
+.error a:hover, .warning a:hover, .information a:hover {
+	text-decoration: none;
+}
+
+.error {
+	border-color: red;
+	background-color: #fcc;
+	background-image: url(images/stop.png);
+}
+
+.warning {
+	border-color: #d5ce00;
+	background-color: #ffc;
+	background-image: url(images/warning.png);
+}
+
+.information {
+	border-color: #4467aa;
+	background-color: #d5e0ee;
+	background-image: url(images/information.png);
+}
+
+#comparesubmit {
+	margin-top: 10px;
+	text-align: center;
+}
+
+#comparesubmit input {
+	margin: 0;
+}
+
+@media print {
+	#header {
+		border: solid 1px #4b4b4b;
+	}
+
+	#footer {
+		border-width: 1px;
+	}
+	
+	#comparesubmit {
+		display: none;
+	}
+}
+
+/* @end */
+
+/* @group Image-Only table links */
+/* directory / revision */
+
+td.blame a, td.download a, #revision td.diff a, td.log a, td.rss a, td.svn a {
+	text-indent: -5000px;
+	overflow: hidden;
+	display: block;
+	width: 16px;
+	margin: 0 auto;
+}
+
+td.download a {
+	background: url(images/download.png) no-repeat;	
+}
+
+td.blame a {
+	background: url(images/blame.png) no-repeat;	
+}
+
+td.diff a {
+	background: url(images/diff.png) no-repeat;	
+}
+
+#diff td.diff a {
+	background: none;
+}
+
+td.log a {
+	background: url(images/log.png) no-repeat;	
+}
+
+td.rss a {
+	background: url(images/rss.png) no-repeat;
+}
+
+td.svn a {
+	background: url(images/subversion-s.png) no-repeat;
+}
+
+/* @end */
+
+/* @group Sticky Footer */
+
+html, body, #wrapper {
+	height: 100%;
+}
+
+body > #wrapper {
+	height: auto;
+	min-height: 100%;
+}
+
+#content {
+	padding-bottom: 3em;
+}
+
+#footer {
+	clear: both;
+	height: 2em;
+	margin-top: -2em;
+}
+
+/* @end */
+
+/* @group Revision Pop-ups */
+
+#revnum:hover {
+	cursor: default;
+}
+
+#header #rev-popup, .blame-popup {
+	font-size: 11px;
+	color: black;
+	background-color: rgba(255,255,255,0.9);
+	padding: 4px;
+	white-space: normal;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	position: absolute;
+	border: solid 1px #4b4b4b;
+	max-width: 600px;
+}
+
+#rev-popup {
+	top: 5.5em;
+	right: 10px;
+	margin-left: 10px;
+	z-index: 1;
+}
+
+.blame-popup {
+	text-align: left;
+	margin-top: 4px;
+}
+
+#rev-popup .info, .blame-popup .date {
+	font-weight: bold;
+}
+
+#rev-popup .msg, .blame-popup .msg {
+	margin-top: 6px;
+}
+
+#rev-popup span {
+	margin: 0 10px;
+}
+
+#revision #rev-popup {
+	display: none;
+}
+
+/* @end */
+
+/* @end */
+
+/* @group blame.tmpl */
+
+#blame tr.dark {
+	background-color: #ecf3fe;
+}
+
+#blame td {
+	vertical-align: top;
+	text-align: right;
+}
+
+#blame td.author, #blame td.line {
+	color: #777;
+}
+
+#blame td.author {
+	text-align: center;
+}
+
+#blame td.code {
+	text-align: left;
+	white-space: normal;
+}
+
+/* @end */
+
+/* @group compare.tmpl */
+
+#compare #header h2 {
+	float: none;
+	text-align: center;
+}
+
+#compare #header h2 span {
+	white-space: pre;
+}
+
+#compare_form table {
+	border: none;
+}
+
+#compare_form table td {
+	border: none;
+	text-align: right;
+}
+
+#compare_form table tr:hover td {
+	background: none;
+}
+
+#comparisons {
+	margin: 0 auto;
+	display: table;
+}
+
+#comparisons h3 {
+	text-align: center;
+	margin-bottom: 0;	
+}
+
+#comparisons table {
+	margin-top: 10px;
+	width: 100%;
+}
+
+#comparisons tbody th {
+	background-color: #3875d7;
+	color: white;
+	border-width: 0;
+}
+
+#comparisons td {
+	padding: 1px 3px;
+	white-space: pre-wrap;
+	font-family: monospace;
+}
+
+/* @end */
+
+/* @group diff.tmpl */
+
+#diff td {
+	white-space: normal;
+}
+
+#diff tr.shaded td {
+	border-width: 1px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#diff tr.shaded:hover td {
+	background-color: #3875d7;
+	color: white;
+}
+
+td.diffadded {
+	background-color: #bfb;
+}
+tr:hover td.diffadded {
+	background-color: #5f5;
+}
+
+td.diffchanged {
+	background-color: #ffc;
+}
+tr:hover td.diffchanged {
+	background-color: #ff5;
+}
+
+td.diffdeleted {
+	background-color: #f88;
+}
+tr:hover td.diffdeleted {
+	background-color: #f55;
+}
+
+@media print {
+	tr:hover td.diffadded {
+		background-color: #bfb;
+	}
+	
+	tr:hover td.diffchanged {
+		background-color: #ffc;
+	}
+
+	tr:hover td.diffdeleted {
+		background-color: #f88;
+	}
+}
+
+/* @end */
+
+/* @group directory.tmpl */
+
+#listing td {
+	text-align: center;
+	color: #777;
+}
+
+#listing td.rev, #listing td.date, #listing td.author {
+	text-align: right;
+	border-width: 0;
+}
+
+@media print {
+	#listing td.rev, #listing td.date, #listing td.author {
+		border-width: 1px 0;
+	}
+}
+
+#listing td.path {
+	text-align: left;
+	padding-bottom: 4px;
+}
+
+#listing td img {
+	position: relative;
+	top: 3px;
+}
+
+#listing td.rev a {
+	padding-right: 18px;
+	background: url(images/revision.png) no-repeat right;	
+}
+
+#listing td input {
+	position: relative;
+	top: -1px;
+	margin: 0;
+	margin-right: 3px;
+}
+
+#compare-submit {
+	text-align: center;
+	margin-top: 10px;
+}
+
+/* @end */
+
+/* @group file.tmpl */
+
+#contents {
+	margin: 0 auto;
+	display: table;
+}
+
+#contents .geshi {
+	display: inline;
+}
+
+#contents pre {
+	white-space: pre-wrap;
+}
+
+/* @end */
+
+/* @group index.tmpl */
+
+#index #menus #projectform {
+	display: none;
+}
+
+#repositories {
+	margin: 0 auto;
+	display: table;
+	font-size: 125%;
+	border: solid 1px #ccc;
+}
+
+#repositories h4 {
+	text-align: center;
+	background-image: url(images/bg-table-header.png);
+	border-bottom: solid 1px #ccc;
+	padding: 2px 5px;
+	margin: 0;
+}
+
+#repositories div {
+	padding: 4px 5px;
+	margin: 0;
+}
+
+#repositories div.shaded {
+	background-color: #ecf3fe;
+}
+
+#repositories div.groupname {
+	cursor: pointer;
+	background-color: #ddd;
+}
+
+#repositories div.groupname.closed {
+	margin-bottom: 4px;
+}
+
+#repositories div.groupname:hover {
+	text-decoration: underline;
+}
+
+#repositories div.grouplist {
+	padding: 0;
+}
+
+#repositories div.grouplist div {
+	border: none;
+	padding-left: 30px;
+}
+
+/* @end */
+
+/* @group log.tmpl */
+
+#filter, #filternav {
+	text-align: center;
+	margin-bottom: 8px;
+}
+
+table#logs {
+	clear: both;
+}
+
+#logs td {
+	vertical-align: text-top;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+#logs td.rev a {
+	margin-left: 3px;
+	padding-left: 18px;
+	background: url(images/revision.png) no-repeat;	
+}
+
+#logs td.author, #logs td.age, #logs td.date {
+	text-align: center;
+	color: #777;
+}
+
+#logs td.logmsg {
+	white-space: normal;
+}
+
+#logs td.changes {
+	color: #777;
+	padding: 0;
+}
+
+#logs td.changes table {
+	border-width: 0;
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+#logs td.changes td {
+	border-width: 0;
+	padding-left: 20px;
+	background: url(images/added.png) no-repeat 3px 3px;
+}
+
+#logs td.changes td.add {
+	background-image: url(images/added.png);
+}
+
+#logs td.changes td.del {
+	background-image: url(images/deleted.png);
+}
+
+#logs td.changes td.mod {
+	background-image: url(images/modified.png);
+}
+
+#filternav {
+	font-weight: bold;
+}
+
+#filternav > * {
+	margin: 0 10px;
+}
+
+#filternav #pagelinks > * {
+	padding: 0 2px;
+}
+
+#filternav #pagelinks span {
+	color: #999;
+}
+
+#filternav #pagelinks span#curpage {
+	background-color: #999;
+	color: white;
+	padding-bottom: 1px;
+	padding-left: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
+@media print {
+	#filter, #filternav, #logs td.rev input {
+		display: none;
+	}
+}
+
+/* @end */
+
+/* @group revision.tmpl */
+
+#revision dl, #revision dl dt:first-child {
+	margin-top: 0;
+}
+
+#revision dl dt {
+	font-size: 120%;
+}
+
+#revision #changes td {
+	text-align: center;
+	padding-top: 3px;
+	padding-bottom: 4px;
+}
+
+#revision #changes td.path {
+	text-align: left;
+	white-space: normal;
+}
+
+#revision #changes td.path a {
+	background-repeat: no-repeat;
+	background-position: 0 1px;
+	padding: 1px 0;
+	padding-left: 18px;
+	overflow: visible;
+}
+
+#revision #changes td.path a.added {
+	background-image: url(images/added.png);
+}
+
+#revision #changes td.path a.deleted {
+	background-image: url(images/deleted.png);
+}
+
+#revision #changes td.path a.modified {
+	background-image: url(images/modified.png);
+}
+
+/* @end */

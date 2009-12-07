@@ -1,0 +1,71 @@
+    </div>
+  </div>
+  <!--
+  NOTE: This template file is not compatible with WebSVN 2.2.x and earlier since
+  the information passed from index.php uses drastically different organization.
+  -->
+  <div id="content">
+    <!--
+    <div class="information" style="margin: 0 auto 10px;">
+      <span>You can uncomment and customize this short message in the <b>index.tmpl</b> file of this template to tell your visitors what they can find in your repositories.</span>
+    </div>
+    -->
+  [websvn-test:error]
+    <div class="error"><span>[websvn:error]</span></div>
+  [websvn-else]
+    <div id="repositories">
+      <h4>[lang:PROJECTS]</h4>
+    [websvn-test:flatview]
+      [websvn-startlisting]
+      [websvn-test:groupid]
+      [websvn-else]
+      [websvn-test:rowparity]
+      <div class="project shaded">[websvn:projectlink]</div>
+      [websvn-else]
+      <div class="project">[websvn:projectlink]</div>
+      [websvn-endtest]
+      [websvn-endtest]
+      [websvn-endlisting]
+    [websvn-else]
+      [websvn-startlisting]
+      [websvn-test:groupid]
+        [websvn-test:notfirstgroup]
+        </div> <!-- grouplist -->
+        [websvn-endtest]
+        
+        [websvn-test:opentree]
+        <div class="groupname" onclick="toggleVisibility(this, '[websvn:groupid]');">[websvn:groupname]</div>
+        <div class="grouplist" id="[websvn:groupid]">
+        [websvn-else]
+        <div class="groupname closed" onclick="toggleVisibility(this, '[websvn:groupid]');">[websvn:groupname]</div>
+        <div class="grouplist" style="display: none" id="[websvn:groupid]">
+        [websvn-endtest]
+      [websvn-else]
+        [websvn-test:groupparity]
+        <div class="project shaded">[websvn:projectlink]</div>
+        [websvn-else]
+        <div class="project">[websvn:projectlink]</div>
+        [websvn-endtest]
+      [websvn-endtest]
+      [websvn-endlisting]
+      [websvn-test:groupcount]
+        </div> <!-- grouplist -->
+      [websvn-endtest] 
+      </div>
+      <script type="text/javascript">
+      //<![CDATA[
+      function toggleVisibility(currentObject, elementID) {
+        var element = document.getElementById(elementID);
+        if (element.style.display == 'none') {
+          element.style.display = 'block';
+          currentObject.className = 'groupname';
+        } else {
+          element.style.display = 'none';
+          currentObject.className = 'groupname closed';
+        }
+      }
+      //]]>
+      </script>
+    [websvn-endtest]
+    </div>
+  [websvn-endtest] 
