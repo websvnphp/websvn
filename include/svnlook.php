@@ -827,9 +827,10 @@ class SVNRepository {
 		global $config;
 
 		$path = encodepath($this->getSvnPath($path));
+		$revstr = $rev ? '-r '.$rev.' ' : '';
 		$pegrev = ($peg) ? '@'.$peg : '';
 
-		$ret = runCommand($config->getSvnCommand().' propget -r '.$rev.' '.$property.' '.$this->repConfig->svnParams().quote($path.$pegrev), true);
+		$ret = runCommand($config->getSvnCommand().' propget '.$revstr.$property.' '.$this->repConfig->svnParams().quote($path.$pegrev), true);
 
 		// Remove the surplus newline
 		if (count($ret)) {
