@@ -493,7 +493,7 @@ td.mime a {
 span.svn a,
 td.svn a {
   padding-left:22px;
-  background-image:url(images/link);
+  background-image:url(images/link.png);
   background-repeat:no-repeat;
   background-position:3px 50%;
 }
