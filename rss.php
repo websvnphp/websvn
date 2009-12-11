@@ -26,6 +26,7 @@ require_once 'include/setup.php';
 require_once 'include/svnlook.php';
 require_once 'include/utils.php';
 require_once 'include/template.php';
+require_once 'include/bugtraq.php';
 
 $max = (int)@$_REQUEST['max'];
 if ($max == 0)
@@ -78,6 +79,8 @@ if ($rep->isRssCachingEnabled()) {
 	}
 }
 
+$bugtraq = new Bugtraq($rep, $svnrep, $ppath);
+
 // Generate RSS 2.0 feed
 $rss = '<?xml version="1.0" encoding="utf-8"?>';
 $rss .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel>';
@@ -98,7 +101,7 @@ if ($history && is_array($history->entries)) {
 			$title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
 		}
 		$title = $lang['REV'].' '.$r->rev.' -- '.$title;
-		$description = '<div><strong>'.$r->author.' -- '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br(create_anchors(str_replace('<', '&lt;', $r->msg))).'</div>';
+		$description = '<div><strong>'.$r->author.' -- '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors(str_replace('<', '&lt;', $r->msg)))).'</div>';
 		if (!$quiet) {
 			usort($r->mods, 'SVNLogEntry_compare');
 			foreach ($r->mods as $modifiedResource) {
