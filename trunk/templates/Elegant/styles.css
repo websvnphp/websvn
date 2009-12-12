@@ -151,7 +151,7 @@ tbody tr:hover td {
 	color: white;
 }
 
-#header a {
+#header #info a {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
