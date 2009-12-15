@@ -497,6 +497,20 @@ td.svn a {
   background-repeat:no-repeat;
   background-position:3px 50%;
 }
+span.next a,
+td.next a {
+  padding-left:15px;
+  background-image:url(images/next.png);
+  background-repeat:no-repeat;
+  background-position:0px 50%;
+}
+span.prev a,
+td.prev a {
+  padding-left:15px;
+  background-image:url(images/previous.png);
+  background-repeat:no-repeat;
+  background-position:0px 50%;
+}
 
 li.compress a,
 span.compress a,
