@@ -332,6 +332,14 @@ tbody tr:hover td {
 	padding-left: 20px;
 }
 
+#links li.next a {
+	background-image: url(images/next.png);	
+}
+
+#links li.prev a {
+	background-image: url(images/previous.png);	
+}
+
 #links li.rev a {
 	background-image: url(images/revision.png);	
 }
@@ -351,6 +359,7 @@ tbody tr:hover td {
 
 #links li.youngest a {
 	background-image: url(images/youngest.png);	
+	padding-left: 20px;
 }
 
 @media print {
