@@ -592,16 +592,13 @@ class SVNRepository {
 			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg);
 		} else if ($config->useEnscript) {
 			// Get the files, feed it through enscript, then remove the enscript headers using sed
-			//
-			// Note that the sec command returns only the part of the file between <PRE> and </PRE>.
+			// Note that the sed command returns only the part of the file between <PRE> and </PRE>.
 			// It's complicated because it's designed not to return those lines themselves.
-
 			$l = @$extEnscript[$ext];
 			$path = encodepath($this->getSvnPath($path));
 			$cmd = quoteCommand($config->getSvnCommand().' cat '.$this->repConfig->svnParams().quote($path.'@'.$rev).' | '.
-				$config->enscript.' --language=html '.
-				($l ? '--color --pretty-print='.$l : '').' -o - | '.
-				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > $tempname');
+				$config->enscript.' --language=html '.($l ? '--color --pretty-print='.$l : '').' -o - | '.
+				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
 		} else {
 			$highlighted = false;
 			$path = encodepath(str_replace(DIRECTORY_SEPARATOR, '/', $this->getSvnPath($path)));
