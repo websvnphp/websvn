@@ -572,10 +572,12 @@ class SVNRepository {
 
 		$highlighted = false;
 
+		$revStr = $rev ? '-r '.$rev.' ' : '';
+
 		// If there's no filename, just deliver the contents as-is to the user
 		if ($filename == '') {
 			$path = encodepath($this->getSvnPath($path));
-			passthruCommand($config->getSvnCommand().' cat '.$this->repConfig->svnParams().quote($path.'@'.$rev).' '.$pipe);
+			passthruCommand($config->getSvnCommand().' cat '.$revStr.$this->repConfig->svnParams().quote($path.'@'.$peg).' '.$pipe);
 			return $highlighted;
 		}
 
@@ -596,13 +598,13 @@ class SVNRepository {
 			// It's complicated because it's designed not to return those lines themselves.
 			$l = @$extEnscript[$ext];
 			$path = encodepath($this->getSvnPath($path));
-			$cmd = quoteCommand($config->getSvnCommand().' cat '.$this->repConfig->svnParams().quote($path.'@'.$rev).' | '.
+			$cmd = quoteCommand($config->getSvnCommand().' cat '.$revStr.$this->repConfig->svnParams().quote($path.'@'.$peg).' | '.
 				$config->enscript.' --language=html '.($l ? '--color --pretty-print='.$l : '').' -o - | '.
 				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
 		} else {
 			$highlighted = false;
 			$path = encodepath(str_replace(DIRECTORY_SEPARATOR, '/', $this->getSvnPath($path)));
-			$cmd = quoteCommand($config->getSvnCommand().' cat '.$this->repConfig->svnParams().quote($path.'@'.$rev).' > '.quote($filename));
+			$cmd = quoteCommand($config->getSvnCommand().' cat '.$revStr.$this->repConfig->svnParams().quote($path.'@'.$peg).' > '.quote($filename));
 		}
 		if (isset($cmd)) {
 			$descriptorspec = array(2 => array('pipe', 'w')); // stderr
@@ -689,11 +691,11 @@ class SVNRepository {
 	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false) {
 		global $config;
 
-		$pegrev = ($peg) ? '@'.$peg : '';
+		$revStr = $rev ? '-r '.$rev.' ' : '';
 
 		// Output the file to the filename
 		$path = encodepath($this->getSvnPath($path));
-		$cmd = quoteCommand($config->getSvnCommand().' cat -r '.$rev.' '.$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename));
+		$cmd = quoteCommand($config->getSvnCommand().' cat '.$revStr.$this->repConfig->svnParams().quote($path.'@'.$peg).' > '.quote($filename));
 
 		$descriptorspec = array(2 => array('pipe', 'w')); // stderr
 		$resource = proc_open($cmd, $descriptorspec, $pipes);
@@ -753,8 +755,8 @@ class SVNRepository {
 		} else {
 			$pre = false;
 			$path = encodepath($this->getSvnPath($path));
-			$pegrev = ($peg) ? '@'.$peg : '';
-			$cmd = $config->getSvnCommand().' cat -r '.$rev.' '.$this->repConfig->svnParams().quote($path.$pegrev);
+			$revStr = $rev ? '-r '.$rev.' ' : '';
+			$cmd = $config->getSvnCommand().' cat '.$revStr.$this->repConfig->svnParams().quote($path.'@'.$peg);
 			if ($config->useEnscript) {
 				$l = @$extEnscript[$ext];
 				$cmd .= ' | '.$config->enscript.' --language=html '.
@@ -791,10 +793,10 @@ class SVNRepository {
 	function getBlameDetails($path, $filename, $rev = 0, $peg = '') {
 		global $config;
 
-		$pegrev = ($peg) ? '@'.$peg : '';
+		$revStr = $rev ? '-r '.$rev.' ' : '';
 
 		$path = encodepath($this->getSvnPath($path));
-		$cmd = quoteCommand($config->getSvnCommand().' blame -r '.$rev.' '.$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename));
+		$cmd = quoteCommand($config->getSvnCommand().' blame '.$revStr.$this->repConfig->svnParams().quote($path.'@'.$peg).' > '.quote($filename));
 
 		$descriptorspec = array(2 => array('pipe', 'w')); // stderr
 		$resource = proc_open($cmd, $descriptorspec, $pipes);
@@ -824,10 +826,9 @@ class SVNRepository {
 		global $config;
 
 		$path = encodepath($this->getSvnPath($path));
-		$revstr = $rev ? '-r '.$rev.' ' : '';
-		$pegrev = ($peg) ? '@'.$peg : '';
+		$revStr = $rev ? '-r '.$rev.' ' : '';
 
-		$ret = runCommand($config->getSvnCommand().' propget '.$revstr.$property.' '.$this->repConfig->svnParams().quote($path.$pegrev), true);
+		$ret = runCommand($config->getSvnCommand().' propget '.$revStr.$property.' '.$this->repConfig->svnParams().quote($path.'@'.$peg), true);
 
 		// Remove the surplus newline
 		if (count($ret)) {
