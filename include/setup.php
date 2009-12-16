@@ -503,6 +503,7 @@ if ($path === null || $path === '')
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
+if ($peg === 0) $peg = '';
 $passrev = $rev;
 
 // Function to create the project selection HTML form
