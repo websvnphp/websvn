@@ -229,7 +229,7 @@ function diff_result($all, $ent, $newtname, $oldtname, $obj) {
 			}
 
 			$line = rtrim(fgets($nfile));
-			if ($ent) $line = replaceEntities(rtrim(fgets($nfile)));
+			if ($ent) $line = replaceEntities($line);
 			else $line = toOutputEncoding($line);
 			if (strip_tags($line) == '') $line = '&nbsp;';
 
