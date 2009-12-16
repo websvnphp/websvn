@@ -331,6 +331,7 @@ if ($rep) {
 				if (strncmp(trim($line), 'Property changes on: ', 21) == 0) {
 					$propnode = trim($line);
 					$propnode = substr($propnode, 21);
+					if ($propnode == '' || $propnode{0} != '/') $propnode = '/'.$propnode;
 
 					if ($debug) print 'Properties on '.$propnode.' (cur node $ '.$node.')';
 					if ($propnode != $node) {
@@ -378,12 +379,32 @@ if ($rep) {
 
 			if ($debug) print_r($listing);
 
+			if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false)) {
+				// check every item for access and remove it if read access is not allowed
+				$restricted = array();
+				$inrestricted = false;
+				foreach ($listing as $i => $item) {
+					if ($item['newpath'] !== null) {
+						$newpath = $item['newpath'];
+						$inrestricted = !$rep->hasReadAccess($newpath, false);
+					}
+					if ($inrestricted) {
+						$restricted[] = $i;
+					}
+					if ($item['endpath'] !== null) {
+						$inrestricted = false;
+					}
+				}
+				foreach ($restricted as $i) {
+					unset($listing[$i]);
+				}
+				if (count($restricted) && !count($listing)) {
+					$vars['error'] = $lang['NOACCESS'];
+				}
+			}
+
 			pclose($diff);
 		}
-	}
-
-	if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false)) {
-		$vars['error'] = $lang['NOACCESS'];
 	}
 }
 
