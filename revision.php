@@ -123,12 +123,12 @@ if ($rep) {
 	$row = 0;
 
 	$prevRevString = createRevAndPegString($rev - 1, $rev - 1);
-	$thisRevString = createRevAndPegString($rev, ($peg ? $peg : $rev));
+	$thisRevString = createRevAndPegString($rev, $rev);
 	foreach ($changes as $file) {
 		$linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
 		// NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
 		// `svn log --verbose --xml` should really provide this info, but doesn't yet.
-		$isFile = $svnrep->isFile($file->path, $rev);
+		$isFile = $svnrep->isFile($file->path, ($file->action == 'D') ? $rev - 1 : $rev);
 		if (!$isFile && $file->path != '/') {
 			$file->path .= '/';
 		}
