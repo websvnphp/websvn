@@ -566,7 +566,7 @@ class SVNRepository {
 	// Private function to simplify creation of common SVN command string text.
 	function svnCommandString($command, $path, $rev, $peg) {
 		global $config;
-		return $config->getSvnCommand().' '.$command.' '.$this->repConfig->svnParams().($rev ? '-r '.$rev.' ' : '').quote(encodePath($this->getSvnPath($path)).($peg ? '@'.$peg : ''));
+		return $config->getSvnCommand().' '.$command.' '.$this->repConfig->svnParams().($rev ? '-r '.$rev.' ' : '').quote(encodePath($this->getSvnPath($path)).'@'.($peg ? $peg : ''));
 	}
 
 	// {{{ getFileContents
