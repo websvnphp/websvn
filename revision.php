@@ -128,7 +128,8 @@ if ($rep) {
 		$linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
 		// NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
 		// `svn log --verbose --xml` should really provide this info, but doesn't yet.
-		$isFile = $svnrep->isFile($file->path, ($file->action == 'D') ? $rev - 1 : $rev);
+		$lastSeenRev = ($file->action == 'D') ? $rev - 1 : $rev;
+		$isFile = $svnrep->isFile($file->path, $lastSeenRev, $lastSeenRev);
 		if (!$isFile && $file->path != '/') {
 			$file->path .= '/';
 		}
@@ -149,7 +150,7 @@ if ($rep) {
 	}
 
 	if (isset($prevRev)) {
-		$vars['compareurl'] = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.urlencode($path).'@'.$rev;
+		$vars['compareurl'] = $config->getURL($rep, '/', 'comp').'compare[]=/@'.$prevRev. '&amp;compare[]=/@'.$rev;
 		$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 	}
 
