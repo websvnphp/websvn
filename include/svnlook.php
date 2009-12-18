@@ -578,10 +578,9 @@ class SVNRepository {
 
 		$highlighted = false;
 
-		$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
-
 		// If there's no filename, just deliver the contents as-is to the user
 		if ($filename == '') {
+			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
 			passthruCommand($cmd.' '.$pipe);
 			return $highlighted;
 		}
@@ -602,11 +601,13 @@ class SVNRepository {
 			// Note that the sed command returns only the part of the file between <PRE> and </PRE>.
 			// It's complicated because it's designed not to return those lines themselves.
 			$l = @$extEnscript[$ext];
+			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
 			$cmd = quoteCommand($cmd.' | '.
 				$config->enscript.' --language=html '.($l ? '--color --pretty-print='.$l : '').' -o - | '.
 				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
 		} else {
 			$highlighted = false;
+			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
 			$cmd = quoteCommand($cmd.' > '.quote($filename));
 		}
 		if (isset($cmd)) {
