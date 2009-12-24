@@ -120,9 +120,3 @@ $lang["COMPPATH"] = "Porównaj katalog:";
 $lang["WITHPATH"] = "Z katalogiem:";
 $lang["FILEDELETED"] = "Plik usunięty";
 $lang["FILEADDED"] = "Nowy plik";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

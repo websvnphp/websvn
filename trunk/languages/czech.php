@@ -115,9 +115,3 @@ $lang["COMPPATH"] = "Porovnej cestu:";
 $lang["WITHPATH"] = "S umístěním:";
 $lang["FILEDELETED"] = "Soubor smazán";
 $lang["FILEADDED"] = "Nový soubor";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

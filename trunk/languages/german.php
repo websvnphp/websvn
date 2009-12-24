@@ -115,9 +115,3 @@ $lang["COMPPATH"] = "Vergleiche Pfad:";
 $lang["WITHPATH"] = "Mit Pfad:";
 $lang["FILEDELETED"] = "Datei gelöscht";
 $lang["FILEADDED"] = "Neue Datei";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

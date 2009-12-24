@@ -115,9 +115,3 @@ $lang["COMPPATH"] = "Comparar caminho:";
 $lang["WITHPATH"] = "Com caminho:";
 $lang["FILEDELETED"] = "Arquivo apagado";
 $lang["FILEADDED"] = "Arquivo adicionado";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

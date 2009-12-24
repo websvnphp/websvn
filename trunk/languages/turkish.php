@@ -116,9 +116,3 @@ $lang["COMPPATH"] = "Patikaları karşılaştır:";
 $lang["WITHPATH"] = "Patika ile:";
 $lang["FILEDELETED"] = "Dosya silinmiş";
 $lang["FILEADDED"] = "Yeni dosya";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

@@ -117,9 +117,3 @@ $lang["COMPPATH"] = "路径比较:";
 // $lang["WITHPATH"] = "With Path:";
 $lang["FILEDELETED"] = "已删除文件";
 $lang["FILEADDED"] = "新文件";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

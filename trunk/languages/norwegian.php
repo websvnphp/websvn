@@ -121,9 +121,3 @@ $lang["COMPPATH"] = "Sammenlign sti:";
 $lang["WITHPATH"] = "Med sti:";
 $lang["FILEDELETED"] = "Fil slettet";
 $lang["FILEADDED"] = "Ny fil";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

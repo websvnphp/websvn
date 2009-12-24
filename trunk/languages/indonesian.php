@@ -116,9 +116,3 @@ $lang["COMPPATH"] = "Bandingkan Path:";
 $lang["WITHPATH"] = "Dengan Path:";
 $lang["FILEDELETED"] = "File dihapus";
 $lang["FILEADDED"] = "File baru";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";
