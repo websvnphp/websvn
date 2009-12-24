@@ -118,9 +118,3 @@ $lang["COMPPATH"] = "मार्ग तुलना:";
 $lang["WITHPATH"] = "या मार्गाशी:";
 $lang["FILEDELETED"] = "खतावणी काढली";
 $lang["FILEADDED"] = "नवीन  खतावणी";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

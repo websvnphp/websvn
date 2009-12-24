@@ -115,9 +115,3 @@ $lang["COMPPATH"] = "Primerjaj pot:";
 $lang["WITHPATH"] = "S potjo:";
 $lang["FILEDELETED"] = "Datoteka pobrisana";
 $lang["FILEADDED"] = "Nova datoteka";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

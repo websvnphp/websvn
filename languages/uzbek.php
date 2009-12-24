@@ -116,9 +116,3 @@ $lang["COMPPATH"] = "Yoʻlni taqqoslash:";
 $lang["WITHPATH"] = "Yoʻl bilan:";
 $lang["FILEDELETED"] = "Fayl oʻchirilgan";
 $lang["FILEADDED"] = "Yangi fayl";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";
