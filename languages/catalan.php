@@ -115,9 +115,3 @@ $lang["COMPPATH"] = "Camí de comparació:";
 $lang["WITHPATH"] = "Amb el camí:";
 $lang["FILEDELETED"] = "Fitxer suprimit";
 $lang["FILEADDED"] = "Nou fitxer";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";
