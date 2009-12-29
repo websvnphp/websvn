@@ -36,6 +36,7 @@ $languages = array(
   'fr'    => array('french', 'French', 'Fran&ccedil;ais'),
   'de'    => array('german', 'German', 'Deutsch'),
   'he-IL' => array('hebrew', 'Hebrew', '&#1506;&#1489;&#1512;&#1497;&#1514;'),
+  'hin'   => array('hindi', 'Hindi', '&#2361;&#2367;&#2306;&#2342;&#2368;'),
   'hu'    => array('hungarian', 'Hungarian', 'Magyar'),
   'id'    => array('indonesian', 'Indonesian', 'Bahasa Indonesia'),
   'it'    => array('italian', 'Italian', 'Italiano'),
