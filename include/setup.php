@@ -515,7 +515,6 @@ function createProjectSelectionForm() {
 	$vars['projects_submit'] = '';
 	$vars['projects_endform'] = '';
 
-	$reps = $config->getRepositories();
 	if (!$config->showRepositorySelectionForm() || count($config->getRepositories()) < 2)
 		return;
 
