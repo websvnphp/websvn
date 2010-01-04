@@ -74,7 +74,7 @@ if ($rep) {
 
 	if ($rev != $youngest) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'diff').($peg ? 'peg='.$peg : '');
-		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
 	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$passRevString;

@@ -237,7 +237,7 @@ if ($rep) {
 		} else {
 			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev).'#'.anchorForPath($path);
 		}
-		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
 	$bugtraq = new Bugtraq($rep, $svnrep, $ppath);
