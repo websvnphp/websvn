@@ -62,7 +62,7 @@ if ($rep) {
 		$revurl .= 'peg='.$rev.'&amp;';
 	if ($rev < $youngest) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
-		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 
 		$history = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
 		if (isset($history->entries[1])) {

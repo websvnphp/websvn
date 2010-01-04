@@ -177,7 +177,7 @@ if ($rep) {
 		} else {
 			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'log').$isDirString.'peg='.($peg ? $peg : $rev);
 		}
-		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
 	// We get the bugtraq variable just once based on the HEAD
