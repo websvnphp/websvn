@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "Vis kun områder med forskelle";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Sammenlign med forrige";
 $lang["BLAME"] = "ændringsfordeling";
 $lang["BLAMEFOR"] = "ændringsfordeling for revision";

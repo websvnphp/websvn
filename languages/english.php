@@ -49,6 +49,7 @@ $lang["REGARDWHITESPACE"] = "Regard whitespace";
 
 $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Details";
+$lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Compare with Previous";
 $lang["BLAME"] = "Blame";
 $lang["BLAMEFOR"] = "Blame information for rev";

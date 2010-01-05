@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "faqat farqli qismlarini koʻrsatish";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "oldingisi bilan taqqoslash";
 $lang["BLAME"] = "mualliflik";
 $lang["BLAMEFOR"] = "Tahrir muallifi haqida maʼlumot";

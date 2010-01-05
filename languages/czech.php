@@ -49,6 +49,7 @@ $lang["SHOWCOMPACT"] = "Zobraz pouze rozdílné části";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Porovnej s předchozí";
 // $lang["BLAME"] = "Blame";
 // $lang["BLAMEFOR"] = "Blame information for rev";
