@@ -156,7 +156,7 @@ if ($rep) {
 	// If there was a MIME type, create a link to display file with that type.
 	if ($mimeType && !isset($vars['warning'])) {
 		$vars['mimeurl'] = $config->getURL($rep, $path, 'file').'usemime=1&amp;'.$passRevString;
-		$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">View as '.$mimeType.'</a>';
+		$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">'.$lang['VIEWAS'].' "'.$mimeType.'"</a>';
 	}
 
 	$vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');

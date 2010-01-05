@@ -49,6 +49,7 @@ $lang["SHOWCOMPACT"] = "Mostra només les àrees amb diferències";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Compara amb l'anterior";
 $lang["BLAME"] = "Culpa";
 $lang["BLAMEFOR"] = "Informació de culpa per a la revisió";

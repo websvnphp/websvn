@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "Näytä vain muutoksia sisältävät alueet";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Vertaa Edelliseen";
 $lang["BLAME"] = "Blame";
 $lang["BLAMEFOR"] = "Blame-tiedot versiolle";

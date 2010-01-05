@@ -50,6 +50,7 @@ $lang["REGARDWHITESPACE"] = "Prendre en compte les espaces blanc";
 
 $lang["LISTING"] = "Arborescence";
 $lang["FILEDETAIL"] = "Détails";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Différence avec la précédente";
 $lang["BLAME"] = "Responsabilité";
 $lang["BLAMEFOR"] = "Information sur la responsabilité de la rev";

@@ -52,6 +52,7 @@ $lang["REGARDWHITESPACE"] = "Toon witruimtes";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Vergelijk met vorige";
 $lang["BLAME"] = "Blame";
 $lang["BLAMEFOR"] = "Blame informatie voor revisie";
