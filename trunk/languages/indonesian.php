@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "Tampilkan bagian yang berbeda saja";
 
 // $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Detail";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Bandingkan";
 $lang["BLAME"] = "Bubuhi";
 $lang["BLAMEFOR"] = "Bubuhi (blame) informasi for rev";

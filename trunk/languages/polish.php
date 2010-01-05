@@ -52,6 +52,7 @@ $lang["SHOWCOMPACT"] = "Pokaż tylko fragmety w których zaszły zmiany";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Porównaj z poprzednią wersją";
 $lang["BLAME"] = "Wkład pracy";
 $lang["BLAMEFOR"] = "Wkład pracy dla wersji";

@@ -50,6 +50,7 @@ $lang["REGARDWHITESPACE"] = "Upoštevaj 'whitespace'";
 
 $lang["LISTING"] = "Drevesna struktura";
 $lang["FILEDETAIL"] = "Podrobnosti";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Primerjaj s prejšno";
 $lang["BLAME"] = "Krivda";
 $lang["BLAMEFOR"] = "Informacije o krivdi za različico";
@@ -79,7 +80,7 @@ $lang["SHOWALL"] = "Prikaži vse";
 $lang["BADCMD"] = "Napaka pri izvajanju tega ukaza";
 $lang["UNKNOWNREVISION"] = "Ne najdem različice";
 
-$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projekti";
 $lang["SERVER"] = "Subversion strežnik";
 
@@ -94,9 +95,9 @@ $lang["NORESULTS"] = "Med zapisi ni opomb z iskalno zahtevo";
 $lang["NOMORERESULTS"] = "Med zapisi ni več opomb z iskalno zahtevo";
 $lang["NOPREVREV"] = "Ni predhodne revizije";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "datotek spremenjenih";
-$lang["RSSFEED"] = "RSS feed";
+// $lang["RSSFEED"] = "RSS feed";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";

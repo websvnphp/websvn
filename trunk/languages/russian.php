@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "показать только места с различ
 
 // $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Деталы";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "сравнить с предыдущей";
 $lang["BLAME"] = "авторство";
 $lang["BLAMEFOR"] = "Сведения об авторстве для редакции ";

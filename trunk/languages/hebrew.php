@@ -49,6 +49,7 @@ $lang["SHOWCOMPACT"] = "הראה רק חלקים ששונו";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "השווה עם הקודם";
 $lang["BLAME"] = "האשם";
 $lang["BLAMEFOR"] = "האשמה בגרסה";

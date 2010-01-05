@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "Yalnızca değişen bölümleri göster";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Önceki ile karşılaştır";
 $lang["BLAME"] = "svn blame";
 $lang["BLAMEFOR"] = "svn blame bilgisi alınan sürüm numarası";
