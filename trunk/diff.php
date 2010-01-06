@@ -122,18 +122,28 @@ if ($rep) {
 
 		// Get the contents of the two files
 		$newerFile = tempnam($config->getTempDir(), '');
-		$highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newerFile, $history->entries[0]->rev, $peg, '', true);
+		$newerFileHl = $newerFile.'highlight';
+		$normalNew = $svnrep->getFileContents($history->entries[0]->path, $newerFile, $history->entries[0]->rev, $peg, '', 'no');
+		$highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newerFileHl, $history->entries[0]->rev, $peg, '', 'line');
 
 		$olderFile = tempnam($config->getTempDir(), '');
-		$highlightedOld = $svnrep->getFileContents($history->entries[0]->path, $olderFile, $history->entries[1]->rev, $peg, '', true);
+		$olderFileHl = $olderFile.'highlight';
+		$normalOld = $svnrep->getFileContents($history->entries[0]->path, $olderFile, $history->entries[1]->rev, $peg, '', 'no');
+		$highlightedOld = $svnrep->getFileContents($history->entries[0]->path, $olderFileHl, $history->entries[1]->rev, $peg, '', 'line');
 		// TODO: Figured out why diffs across a move/rename are currently broken.
 
-		$ent = (!$highlightedNew && !$highlightedOld);
-		$listing = do_diff($all, $ignoreWhitespace, $ent, $newerFile, $olderFile);
+		$highlighted = ($highlightedNew && $highlightedOld);
+		if ($highlighted) {
+			$listing = do_diff($all, $ignoreWhitespace, $highlighted, $newerFile, $olderFile, $newerFileHl, $olderFileHl);
+		} else {
+			$listing = do_diff($all, $ignoreWhitespace, $highlighted, $newerFile, $olderFile, null, null);
+		}
 
 		// Remove our temporary files
 		@unlink($newerFile);
 		@unlink($olderFile);
+		@unlink($newerFileHl);
+		@unlink($olderFileHl);
 	}
 
 	if (!$rep->hasReadAccess($path, false)) {
