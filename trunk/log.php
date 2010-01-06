@@ -385,7 +385,7 @@ if ($rep) {
 	}
 
 	// Create form elements for comparing selected revisions
-	$url = $config->getURL($rep, '/', 'comp');
+	$url = $config->getURL($rep, '', 'comp');
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="log" />' : '';
 	$vars['compare_form'] = '<form action="'.$url.'" method="post">'.$hidden;
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
