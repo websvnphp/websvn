@@ -573,8 +573,9 @@ class SVNRepository {
 	//
 	// Dump the content of a file to the given filename
 
-	function getFileContents($path, $filename, $rev = 0, $peg = '', $pipe = '', $perLineHighlighting = false) {
+	function getFileContents($path, $filename, $rev = 0, $peg = '', $pipe = '', $highlight = 'file') {
 		global $config, $extEnscript;
+		assert ($highlight == 'file' || $highlight == 'no' || $highlight == 'line');
 
 		$highlighted = false;
 
@@ -590,13 +591,13 @@ class SVNRepository {
 		$ext = strrchr($path, '.');
 
 		$tempname = $filename;
-		if ($perLineHighlighting) {
+		if ($highlight == 'line') {
 			$tempname = tempnam($config->getTempDir(), '');
 		}
 		$highlighted = true;
-		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
+		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
 			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg);
-		} else if ($config->useEnscript) {
+		} else if ($highlight != 'no' && $config->useEnscript) {
 			// Get the files, feed it through enscript, then remove the enscript headers using sed
 			// Note that the sed command returns only the part of the file between <PRE> and </PRE>.
 			// It's complicated because it's designed not to return those lines themselves.
@@ -631,7 +632,7 @@ class SVNRepository {
 			}
 		}
 
-		if ($highlighted && $perLineHighlighting) {
+		if ($highlighted && $highlight == 'line') {
 			// If we need each line independently highlighted (e.g. for diff or blame)
 			// then we'll need to filter the output of the highlighter
 			// to make sure tags like <font>, <i> or <b> don't span lines
