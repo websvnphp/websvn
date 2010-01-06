@@ -274,7 +274,7 @@ if ($rep) {
 		$vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$isDirString.$passRevString;
 	}
 
-	$url = $config->getURL($rep, '/', 'comp');
+	$url = $config->getURL($rep, '', 'comp');
 
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
 	$vars['compare_form'] = '<form action="'.$url.'" method="post">'.$hidden;
