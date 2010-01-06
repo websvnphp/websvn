@@ -100,7 +100,7 @@ if ($rep) {
 	} else {
 		// Get the contents of the file
 		$tfname = tempnam($config->getTempDir(), '');
-		$highlighted = $svnrep->getFileContents($path, $tfname, $rev, $peg, '', true);
+		$highlighted = $svnrep->getFileContents($path, $tfname, $rev, $peg, '', 'line');
 
 		if ($file = fopen($tfname, 'r')) {
 			// Get the blame info
