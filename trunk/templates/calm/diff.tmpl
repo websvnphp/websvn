@@ -41,20 +41,16 @@
        <table>
         <thead>
           <tr>
-             <th></th>
-             <th>[lang:REV] [websvn:rev2]</th>
-             <th></th>
-             <th>[lang:REV] [websvn:rev1]</th>
+             <th colspan="2">[lang:REV] [websvn:rev2]</th>
+             <th colspan="2">[lang:REV] [websvn:rev1]</th>
           </tr>
         </thead>
         <tbody>
         [websvn-startlisting]
-        [websvn-test:startblock]
+          [websvn-test:startblock]
           <tr class="diffcode">
-            <td class="lineno"></td>
-            <td class="row1"><strong>[lang:LINE] [websvn:rev1lineno]...</strong></td>
-            <td class="lineno"></td>
-            <td class="row1"><strong>[lang:LINE] [websvn:rev2lineno]...</strong></td>
+            <td class="row1" colspan="2"><strong>[lang:LINE] [websvn:rev1lineno]...</strong></td>
+            <td class="row1" colspan="2"><strong>[lang:LINE] [websvn:rev2lineno]...</strong></td>
           </tr>
           [websvn-else]
           <tr class="diffcode">
@@ -63,7 +59,7 @@
             <td class="lineno">[websvn:rev2lineno]</td>
             <td class="[websvn:rev2diffclass]"><pre>[websvn:rev2line]</pre></td>
           </tr>
-        [websvn-endtest]
+          [websvn-endtest]
         [websvn-endlisting]
         </tbody>
        </table>

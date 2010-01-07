@@ -614,6 +614,11 @@ tr.diffcode td {
   text-align:left;
   border: 1px solid #eeeeee;
 }
+tr.diffcode td.lineno {
+  text-align: right;
+  vertical-align: top;
+  padding: 0 2px;
+}
 tr.diffcode td.row1 {
   padding: 3px;
   border: none;
