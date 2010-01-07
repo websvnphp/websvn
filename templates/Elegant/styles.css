@@ -678,6 +678,13 @@ body > #wrapper {
 
 #diff td {
 	white-space: normal;
+	vertical-align: top;
+}
+
+#diff td.lineno {
+	text-align: right;
+	padding: 0 2px;
+	color: #777;
 }
 
 #diff tr.shaded td {
