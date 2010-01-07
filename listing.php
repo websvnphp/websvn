@@ -251,7 +251,7 @@ if ($rep) {
 	$vars['author'] = $logEntry ? $logEntry->author : '';
 	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg)))) : '';
 
-	$vars['revurl'] = $config->getURL($rep, ($path == '/' ? '' : $path), 'revision').$passRevString;
+	$vars['revurl'] = $config->getURL($rep, ($path == '/' ? '' : $path), 'revision').$isDirString.$passRevString;
 	$vars['revlink'] = '<a href="'.$vars['revurl'].'">'.$lang['LASTMOD'].'</a>';
 
 	if ($history && count($history->entries) > 1) {
@@ -274,10 +274,8 @@ if ($rep) {
 		$vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$isDirString.$passRevString;
 	}
 
-	$url = $config->getURL($rep, '', 'comp');
-
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
-	$vars['compare_form'] = '<form action="'.$url.'" method="post">'.$hidden;
+	$vars['compare_form'] = '<form action="'.$config->getURL($rep, '', 'comp').'" method="post">'.$hidden;
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREPATHS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
