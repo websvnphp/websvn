@@ -83,6 +83,8 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 			if ($all) {
 				$listing[$index]['rev1diffclass'] = 'diff';
 				$listing[$index]['rev2diffclass'] = 'diff';
+				$listing[$index]['rev1lineno'] = $curoline;
+				$listing[$index]['rev2lineno'] = $curnline;
 			}
 
 			if ($curoline < $oline) {
@@ -110,9 +112,6 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 			}
 
 			if ($all) {
-				$listing[$index]['rev1lineno'] = 0;
-				$listing[$index]['rev2lineno'] = 0;
-
 				$index++;
 			}
 		}
@@ -121,6 +120,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 			// Output the line numbers
 			$listing[$index]['rev1lineno'] = $oline;
 			$listing[$index]['rev2lineno'] = $nline;
+			$listing[$index]['startblock'] = true;
 			$index++;
 		}
 
@@ -130,44 +130,47 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 			if ($line === false || $line === '' || strncmp($line, '@@', 2) == 0) {
 				$fin = true;
 			} else {
-				$listing[$index]['rev1lineno'] = 0;
-				$listing[$index]['rev2lineno'] = 0;
+				$listing[$index]['rev1lineno'] = $curoline;
+				$listing[$index]['rev2lineno'] = $curnline;
+				$listing[$index]['startblock'] = false;
 
 				$mod = $line{0};
 
 				switch ($mod) {
 					case '-':
-						$curoline++;
 						$text = getWrappedLineFromFile($ofile, $highlighted);
 
 						$listing[$index]['rev1diffclass'] = 'diffdeleted';
 						$listing[$index]['rev2diffclass'] = 'diff';
+						$listing[$index]['rev1lineno'] = $curoline;
+						$listing[$index]['rev2lineno'] = '-';
 
 						$listing[$index]['rev1line'] = $text;
 						$listing[$index]['rev2line'] = '&nbsp;';
-
+						$curoline++;
 						break;
 
 					case '+':
 						// Try to mark "changed" line sensibly
-						if (!empty($listing[$index - 1]) && empty($listing[$index - 1]['rev1lineno']) && @$listing[$index - 1]['rev1diffclass'] == 'diffdeleted' && @$listing[$index - 1]['rev2diffclass'] == 'diff') {
+						if (!empty($listing[$index - 1]) && empty($listing[$index - 1]['startblock']) && @$listing[$index - 1]['rev1diffclass'] == 'diffdeleted' && @$listing[$index - 1]['rev2diffclass'] == 'diff') {
 							$i = $index - 1;
-							while (!empty($listing[$i - 1]) && empty($listing[$i - 1]['rev1lineno']) && $listing[$i - 1]['rev1diffclass'] == 'diffdeleted' && $listing[$i - 1]['rev2diffclass'] == 'diff') {
+							while (!empty($listing[$i - 1]) && empty($listing[$i - 1]['startblock']) && $listing[$i - 1]['rev1diffclass'] == 'diffdeleted' && $listing[$i - 1]['rev2diffclass'] == 'diff') {
 								$i--;
 							}
 
-							$curnline++;
 							$text = getWrappedLineFromFile($nfile, $highlighted);
 
 							$listing[$i]['rev1diffclass'] = 'diffchanged';
 							$listing[$i]['rev2diffclass'] = 'diffchanged';
 							$listing[$i]['rev2line'] = $text;
+							$listing[$i]['rev2lineno'] = $curnline;
+
+							$curnline++;
 
 							// Don't increment the current index count
 							$index--;
 
 						} else {
-							$curnline++;
 							$text = getWrappedLineFromFile($nfile, $highlighted);
 
 							$listing[$index]['rev1diffclass'] = 'diff';
@@ -175,12 +178,17 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 
 							$listing[$index]['rev1line'] = '&nbsp;';
 							$listing[$index]['rev2line'] = $text;
+							$listing[$index]['rev1lineno'] = '-';
+							$listing[$index]['rev2lineno'] = $curnline;
+							$curnline++;
 						}
 						break;
 
 					default:
 						$listing[$index]['rev1diffclass'] = 'diff';
 						$listing[$index]['rev2diffclass'] = 'diff';
+						$listing[$index]['rev1lineno'] = $curoline;
+						$listing[$index]['rev2lineno'] = $curnline;
 
 						$curoline++;
 						$text = getWrappedLineFromFile($ofile, $highlighted);
@@ -223,8 +231,9 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 				$listing[$index]['rev2line'] = '&nbsp;';
 			}
 
-			$listing[$index]['rev1lineno'] = 0;
-			$listing[$index]['rev2lineno'] = 0;
+			$listing[$index]['rev1lineno'] = $curoline;
+			$listing[$index]['rev2lineno'] = $curnline;
+			$listing[$index]['startblock'] = false;
 
 			$index++;
 		}
@@ -253,7 +262,7 @@ function command_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtnam
 	}
 
 	// Open a pipe to the diff command with $context lines of context
-
+    
 	$cmd = quoteCommand($config->diff.$whitespaceFlag.' -U '.$context.' "'.$oldtname.'" "'.$newtname.'"');
 
 	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
