@@ -305,6 +305,8 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false) {
 function buildQuery($data, $separator = '&amp;', $key = '') {
 	if (is_object($data)) $data = get_object_vars($data);
 	$p = array();
+	unset($data['langchoice']);
+	unset($data['templatechoice']);
 	foreach ($data as $k => $v) {
 		$k = urlencode($k);
 		if (!empty($key)) $k = $key.'['.$k.']';
