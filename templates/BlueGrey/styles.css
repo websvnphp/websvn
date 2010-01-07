@@ -232,6 +232,11 @@ div.blame-popup .date {
 	font-size: 90%;
 }
 
+#diff td.lineno {
+	text-align: right;
+	vertical-align: top;
+}
+
 td.diffdeleted {
 	background-color: #ff8888;
 }
@@ -254,6 +259,10 @@ div.newpath {
 }
 
 div.difflines {
+}
+
+#diff th.row1 {
+	border: solid 1px #555;
 }
 
 /* @end */
