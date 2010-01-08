@@ -26,9 +26,58 @@ ini_set('include_path', $locwebsvnreal.'/lib/pear'.$config->pathSeparator.ini_ge
 @include_once 'Text/Diff.php';
 @include_once 'Text/Diff/Renderer.php';
 @include_once 'Text/Diff/Renderer/unified.php';
+include_once 'include/diff_util.php';
 
 $arrayBased = false;
 $fileBased = false;
+
+class ListingHelper {
+	var $_listing = array();
+	var $_index = 0;
+	var $_blockStart = false;
+
+	function _add($text1, $lineno1, $class1, $text2, $lineno2, $class2) {
+		$listing = &$this->_listing;
+		$index = &$this->_index;
+
+		$listing[$index]['rev1diffclass'] = $class1;
+		$listing[$index]['rev2diffclass'] = $class2;
+
+		$listing[$index]['rev1line'] = $text1;
+		$listing[$index]['rev2line'] = $text2;
+
+		$listing[$index]['rev1lineno'] = $lineno1;
+		$listing[$index]['rev2lineno'] = $lineno2;
+		$listing[$index]['startblock'] = $this->_blockStart;
+		$this->_blockStart = false;
+		$index++;
+	}
+
+	function addDeletedLine($text, $lineno) {
+		$this->_add($text, $lineno, 'diffdeleted', '&nbsp;', '-', 'diffempty');
+	}
+
+	function addAddedLine($text, $lineno) {
+		$this->_add('&nbsp;', '-', 'diffempty', $text, $lineno, 'diffadded');
+	}
+
+	function addChangedLine($text1, $lineno1, $text2, $lineno2) {
+		$this->_add($text1, $lineno1, 'diffchanged', $text2, $lineno2, 'diffchanged');
+	}
+
+	// note that $text1 do not need to be equal $text2 if $ignoreWhitespace is true
+	function addLine($text1, $lineno1, $text2, $lineno2) {
+		$this->_add($text1, $lineno1, 'diff', $text2, $lineno2, 'diff');
+	}
+
+	function startNewBlock() {
+		$this->_blockStart = true;
+	}
+
+	function getListing() {
+		return $this->_listing;
+	}
+}
 
 function nextLine(&$obj) {
 	global $arrayBased, $fileBased;
@@ -66,10 +115,12 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 	$line = nextLine($obj);
 
 	$index = 0;
-	$listing = array();
+	$listingHelper = new ListingHelper();
 
 	$curoline = 1;
 	$curnline = 1;
+
+	$sensibleLineChanges = new SensibleLineChanges(new LineDiff(false));
 
 	while (!endOfFile($obj)) {
 		// Get the first line of this range
@@ -80,123 +131,66 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 		sscanf($line, '+%d', $nline);
 
 		while ($curoline < $oline || $curnline < $nline) {
-			if ($all) {
-				$listing[$index]['rev1diffclass'] = 'diff';
-				$listing[$index]['rev2diffclass'] = 'diff';
-				$listing[$index]['rev1lineno'] = $curoline;
-				$listing[$index]['rev2lineno'] = $curnline;
-			}
-
 			if ($curoline < $oline) {
-				$text = getWrappedLineFromFile($ofile, $highlighted);
-
-				if ($all) {
-					$listing[$index]['rev1line'] = $text;
-				}
-
+				$text1 = getWrappedLineFromFile($ofile, $highlighted);
+				$tmpoline = $curoline;
 				$curoline++;
-			} else if ($all) {
-				$listing[$index]['rev1line'] = '&nbsp;';
+			} else {
+				$tmpoline = '?';
+				$text1 = '&nbsp';
 			}
 
 			if ($curnline < $nline) {
-				$text = getWrappedLineFromFile($nfile, $highlighted);
-
-				if ($all) {
-					$listing[$index]['rev2line'] = $text;
-				}
+				$text2 = getWrappedLineFromFile($nfile, $highlighted);
+				$tmpnline = $curnline;
 				$curnline++;
-
-			} else if ($all) {
-				$listing[$index]['rev2line'] = '&nbsp;';
+			} else {
+				$tmpnline = '?';
+				$text2 = '&nbsp;';
 			}
 
 			if ($all) {
-				$index++;
+				$listingHelper->addLine($text1, $tmpoline, $text2, $tmpnline);
 			}
 		}
 
 		if (!$all) {
-			// Output the line numbers
-			$listing[$index]['rev1lineno'] = $oline;
-			$listing[$index]['rev2lineno'] = $nline;
-			$listing[$index]['startblock'] = true;
-			$index++;
+			$listingHelper->startNewBlock();
 		}
 
 		$fin = false;
 		while (!endOfFile($obj) && !$fin) {
 			$line = nextLine($obj);
 			if ($line === false || $line === '' || strncmp($line, '@@', 2) == 0) {
+				$sensibleLineChanges->addChangesToListing($listingHelper);
 				$fin = true;
 			} else {
-				$listing[$index]['rev1lineno'] = $curoline;
-				$listing[$index]['rev2lineno'] = $curnline;
-				$listing[$index]['startblock'] = false;
-
 				$mod = $line{0};
+				$line = rtrim(substr($line, 1));
 
 				switch ($mod) {
 					case '-':
 						$text = getWrappedLineFromFile($ofile, $highlighted);
-
-						$listing[$index]['rev1diffclass'] = 'diffdeleted';
-						$listing[$index]['rev2diffclass'] = 'diff';
-						$listing[$index]['rev1lineno'] = $curoline;
-						$listing[$index]['rev2lineno'] = '-';
-
-						$listing[$index]['rev1line'] = $text;
-						$listing[$index]['rev2line'] = '&nbsp;';
+						$sensibleLineChanges->addDeletedLine($line, $text, $curoline);
 						$curoline++;
 						break;
 
 					case '+':
-						// Try to mark "changed" line sensibly
-						if (!empty($listing[$index - 1]) && empty($listing[$index - 1]['startblock']) && @$listing[$index - 1]['rev1diffclass'] == 'diffdeleted' && @$listing[$index - 1]['rev2diffclass'] == 'diff') {
-							$i = $index - 1;
-							while (!empty($listing[$i - 1]) && empty($listing[$i - 1]['startblock']) && $listing[$i - 1]['rev1diffclass'] == 'diffdeleted' && $listing[$i - 1]['rev2diffclass'] == 'diff') {
-								$i--;
-							}
-
-							$text = getWrappedLineFromFile($nfile, $highlighted);
-
-							$listing[$i]['rev1diffclass'] = 'diffchanged';
-							$listing[$i]['rev2diffclass'] = 'diffchanged';
-							$listing[$i]['rev2line'] = $text;
-							$listing[$i]['rev2lineno'] = $curnline;
-
-							$curnline++;
-
-							// Don't increment the current index count
-							$index--;
-
-						} else {
-							$text = getWrappedLineFromFile($nfile, $highlighted);
-
-							$listing[$index]['rev1diffclass'] = 'diff';
-							$listing[$index]['rev2diffclass'] = 'diffadded';
-
-							$listing[$index]['rev1line'] = '&nbsp;';
-							$listing[$index]['rev2line'] = $text;
-							$listing[$index]['rev1lineno'] = '-';
-							$listing[$index]['rev2lineno'] = $curnline;
-							$curnline++;
-						}
+						$text = getWrappedLineFromFile($nfile, $highlighted);
+						$sensibleLineChanges->addAddedLine($line, $text, $curnline);
+						$curnline++;
 						break;
 
 					default:
-						$listing[$index]['rev1diffclass'] = 'diff';
-						$listing[$index]['rev2diffclass'] = 'diff';
-						$listing[$index]['rev1lineno'] = $curoline;
-						$listing[$index]['rev2lineno'] = $curnline;
+						$sensibleLineChanges->addChangesToListing($listingHelper);
+
+						$text1 = getWrappedLineFromFile($ofile, $highlighted);
+						$text2 = getWrappedLineFromFile($nfile, $highlighted);
+
+						$listingHelper->addLine($text1, $curoline, $text2, $curnline);
 
 						$curoline++;
-						$text = getWrappedLineFromFile($ofile, $highlighted);
-						$listing[$index]['rev1line'] = $text;
-
 						$curnline++;
-						$text = getWrappedLineFromFile($nfile, $highlighted);
-						$listing[$index]['rev2line'] = $text;
 
 						break;
 				}
@@ -207,42 +201,45 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 			}
 		}
 	}
+	$sensibleLineChanges->addChangesToListing($listingHelper);
 
 	// Output the rest of the files
 	if ($all) {
 		while (!feof($ofile) || !feof($nfile)) {
-			$listing[$index]['rev1diffclass'] = 'diff';
-			$listing[$index]['rev2diffclass'] = 'diff';
+			$noneof = false;
 
-			$text = getWrappedLineFromFile($ofile, $highlighted);
-			if ($text !== false) {
+			$text1 = getWrappedLineFromFile($ofile, $highlighted);
+			if ($text1 !== false) {
+				$tmpoline = $curoline;
 				$curoline++;
-				$listing[$index]['rev1line'] = $text;
+				$noneof = true;
 			} else {
-				$listing[$index]['rev1line'] = '&nbsp;';
+				$tmpoline = '-';
+				$text1 = '&nbsp;';
 			}
 
 
-			$text = getWrappedLineFromFile($nfile, $highlighted);
-			if ($text !== false) {
+			$text2 = getWrappedLineFromFile($nfile, $highlighted);
+			if ($text2 !== false) {
+				$tmpnline = $curnline;
 				$curnline++;
-				$listing[$index]['rev2line'] = $text;
+				$noneof = true;
 			} else {
-				$listing[$index]['rev2line'] = '&nbsp;';
+				$tmpnline = '-';
+				$text2 = '&nbsp;';
 			}
 
-			$listing[$index]['rev1lineno'] = $curoline;
-			$listing[$index]['rev2lineno'] = $curnline;
-			$listing[$index]['startblock'] = false;
+			if ($noneof) {
+				$listingHelper->addLine($text1, $tmpoline, $text2, $tmpnline);
+			}
 
-			$index++;
 		}
 	}
 
 	fclose($ofile);
 	fclose($nfile);
 
-	return $listing;
+	return $listingHelper->getListing();
 }
 
 function command_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname, $newhlname, $oldhlname) {
