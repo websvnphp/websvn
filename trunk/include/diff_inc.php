@@ -344,7 +344,7 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 	$fromLines = explode("\n", file_get_contents($oldtname));
 	$toLines = explode("\n", file_get_contents($newtname));
 	if (!$ignoreWhitespace) {
-		$diff = new Text_Diff('auto', array($fromLines, $toLines));
+		$diff = @new Text_Diff('auto', array($fromLines, $toLines));
 	} else {
 		$whitespaces = array(' ', "\t", "\n", "\r");
 		$mappedFromLines = array();
@@ -355,7 +355,7 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 		foreach ($toLines as $line) {
 			$mappedToLines[] = str_replace($whitespaces, array(), $line);
 		}
-		$diff = new Text_MappedDiff($fromLines, $toLines, $mappedFromLines, $mappedToLines);
+		$diff = @new Text_MappedDiff($fromLines, $toLines, $mappedFromLines, $mappedToLines);
 	}
 	$renderer = new Text_Diff_Renderer_unified(array('leading_context_lines' => $context, 'trailing_context_lines' => $context));
 	$rendered = explode("\n", $renderer->render($diff));
