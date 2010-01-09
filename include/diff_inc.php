@@ -107,7 +107,7 @@ function getWrappedLineFromFile($file, $is_highlighted) {
 	return wrapInCodeTagIfNecessary($line);
 }
 
-function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
+function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhitespace) {
 	$ofile = fopen($oldtname, 'r');
 	$nfile = fopen($newtname, 'r');
 
@@ -120,7 +120,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj) {
 	$curoline = 1;
 	$curnline = 1;
 
-	$sensibleLineChanges = new SensibleLineChanges(new LineDiff(false));
+	$sensibleLineChanges = new SensibleLineChanges(new LineDiff($ignoreWhitespace));
 
 	while (!endOfFile($obj)) {
 		// Get the first line of this range
@@ -281,9 +281,9 @@ function command_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtnam
 		$fileBased = true;
 
 		if ($highlighted) {
-			$listing = diff_result($all, $highlighted, $newhlname, $oldhlname, $diff);
+			$listing = diff_result($all, $highlighted, $newhlname, $oldhlname, $diff, $ignoreWhitespace);
 		} else {
-			$listing = diff_result($all, $highlighted, $newtname, $oldtname, $diff);
+			$listing = diff_result($all, $highlighted, $newtname, $oldtname, $diff, $ignoreWhitespace);
 		}
 
 		fclose($pipes[1]);
@@ -366,9 +366,9 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 	$arrayBased = true;
 	$fileBased = false;
 	if ($highlighted) {
-		$listing = diff_result($all, $highlighted, $newhlname, $oldhlname, $rendered);
+		$listing = diff_result($all, $highlighted, $newhlname, $oldhlname, $rendered, $ignoreWhitespace);
 	} else {
-		$listing = diff_result($all, $highlighted, $newtname, $oldtname, $rendered);
+		$listing = diff_result($all, $highlighted, $newtname, $oldtname, $rendered, $ignoreWhitespace);
 	}
 
 	return $listing;
