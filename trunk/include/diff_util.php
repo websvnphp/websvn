@@ -333,7 +333,7 @@ class SensibleLineChanges {
 
 	// {{{ addChangesToListing
 	// add computed changes to the listing
-	function addChangesToListing($listingHelper) {
+	function addChangesToListing(&$listingHelper) {
 		$matching = $this->_computeBestMatching();
 
 		foreach ($matching as $change) {
