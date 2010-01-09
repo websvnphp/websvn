@@ -211,7 +211,7 @@ class SensibleLineChanges {
 	var $_deleted = array();
 	var $_lineDiff = null;
 
-	function SensibleLineChanges(LineDiffInterface $lineDiff) {
+	function SensibleLineChanges($lineDiff) {
 		$this->_lineDiff = $lineDiff;
 	}
 
