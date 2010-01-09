@@ -1,6 +1,30 @@
 <?php
-
+// WebSVN - Subversion repository viewing via the web using PHP
+// Copyright (C) 2004-2006 Tim Armes
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// --
+//
+// diff_util.php
+//
 // help diff_inc.php to make sensible changes from added and deleted diff lines
+// These lines are automatically paired and also inline diff is performed to show
+// insertions/deletions on one line
+
+@include_once 'Text/Diff.php';
 
 // Interface for diffing function
 class LineDiffInterface {
@@ -11,8 +35,9 @@ class LineDiffInterface {
 	}
 
 	// return array($left, $right) annotated with <ins> and <del> 
-	// will be implemented in next patch
-	//function lineDiff($text1, $text2);
+	function inlineDiff($text1, $highlighted1, $text2, $highlighted2) {
+		assert(false);
+	}
 }
 
 // Default line diffing function
@@ -70,6 +95,114 @@ class LineDiff extends LineDiffInterface {
 		return $similarity;
 	}
 	// }}}
+
+	// {{{  tokenize whole line into words
+	// note that separators are returned as tokens of length 1
+	// and if $ignoreWhitespace is true, consecutive whitespaces are returned as one token
+	function tokenize($string, $ignoreWhitespace) {
+		$whitespaces = array("\t", "\n", "\r", ' ');
+		$separators = array('.', '-', '+', '*', '/', '<', '>', '?', '(', ')', '&', '/', '{', '}', '[', ']', ':', ';');
+
+		$data = array();
+
+		$segment = '';
+		$segmentIsWhitespace = true;
+		foreach (str_split($string) as $c) {
+			// if it is separator or whitespace and we do not consider consecutive whitespaces
+			if (in_array($c, $separators) || (!$ignoreWhitespace && in_array($c, $whitespaces))) {
+				if ($segment != '') $data[] = $segment;
+				$data[] = $c;
+				$segment = '';
+				$segmentIsWhitespace = true;
+
+			// if it is whitespace and we consider consecutive whitespaces as one token
+			} else if (in_array($c, $whitespaces)) {
+				if (!$segmentIsWhitespace) {
+					$data[] = $segment;
+					$segment = '';
+					$segmentIsWhitespace = true;
+				}
+				$segment .= $c;
+
+			// no separator or whitespace
+			} else {
+				if ($segmentIsWhitespace && $segment != '') {
+					$data[] = $segment;
+					$segment = '';
+				}
+				$segment .= $c;
+				$segmentIsWhitespace = false;
+			}
+		}
+		if ($segment != '') $data[] = $segment;
+
+		return $data;
+	}
+	// }}}	
+
+	// {{{ lineDiff
+	// we lose highlighting if we want to show diff. Therefore, we show original highlighted code in some cases.
+	function inlineDiff($text1, $highlighted1, $text2, $highlighted2) {
+		$whitespaces = array(' ', "\t", "\n", "\r");
+
+		$do_diff = true;
+		if ($text1 == '' || $text2 == '') $do_diff = false;
+
+		if ($this->ignoreWhitespace && (str_replace($whitespaces, array(), $text1) == str_replace($whitespaces, array(), $text2))) {
+			$do_diff = false;
+		}
+
+		// failback if loading of Text_Diff failed
+		if (!class_exists('Text_Diff') || !class_exists('Text_MappedDiff')) $do_diff = false;
+
+		// we do not need inline diff, return highlighted texts
+		if (!$do_diff) return array($highlighted1, $highlighted2);
+
+		$tokens1 = $this->tokenize($text1, $this->ignoreWhitespace);
+		$tokens2 = $this->tokenize($text2, $this->ignoreWhitespace);
+
+		if (!$this->ignoreWhitespace) {
+			$diff = @new Text_Diff('native', array($tokens1, $tokens2));
+		} else {
+			// we need to create mapped parts for MappedDiff
+			$mapped1 = array();
+			foreach ($tokens1 as $token) {
+				$mapped1[] = str_replace($whitespaces, array(), $token);
+			}
+
+			$mapped2 = array();
+			foreach ($tokens2 as $token) {
+				$mapped2[] = str_replace($whitespaces, array(), $token);
+			}
+
+			$diff = new Text_MappedDiff($tokens1, $tokens2, $mapped1, $mapped2);
+		}
+
+		// now, get the diff and annotate text
+		$edits = $diff->getDiff();
+
+		$line1 = '';
+		$line2 = '';
+		foreach ($edits as $edit) {
+			if (is_a($edit, 'Text_Diff_Op_add')) {
+				$line1 .= '<ins class="marker">@</ins>';
+				$line2 .= '<ins class="add">'.replaceEntities(implode('', $edit->final)).'</ins>';
+			} else if (is_a($edit, 'Text_Diff_Op_delete')) {
+				$line1 .= '<del class="del">'.replaceEntities(implode('', $edit->orig)).'</del>';
+				$line2 .= '<del class="marker">@</del>';
+			} else if (is_a($edit, 'Text_Diff_Op_copy')) {
+				$line1 .= replaceEntities(implode('', $edit->orig));
+				$line2 .= replaceEntities(implode('', $edit->final));
+			} else if (is_a($edit, 'Text_Diff_Op_change')) {
+				$line1 .= '<del class="del">'.replaceEntities(implode('', $edit->orig)).'</del>';
+				$line2 .= '<ins class="add">'.replaceEntities(implode('', $edit->final)).'</ins>';
+			} else {
+				assert(false);
+			}
+		}
+		return array('<code>'.$line1.'</code>', '<code>'.$line2.'<code>');
+	}
+	// }}}
 }
 
 // Class computing sensibly added/deleted block of lines.
@@ -91,6 +224,8 @@ class SensibleLineChanges {
 	}
 
 
+	// this function computes simple match - first min(deleted,added) lines are marked as changed
+	// it is intended to be run instead of _computeBestMatching if the diff is too big
 	function _computeFastMatching() {
 		$result = array();
 		$q = 0;
@@ -197,7 +332,6 @@ class SensibleLineChanges {
 	// }}}
 
 	// {{{ addChangesToListing
-	// takes diff.php's $listing and $index and
 	// add computed changes to the listing
 	function addChangesToListing($listingHelper) {
 		$matching = $this->_computeBestMatching();
@@ -210,10 +344,9 @@ class SensibleLineChanges {
 				// preserve original highlighted text
 				$listingHelper->addAddedLine($change[1][1], $change[1][2]);
 
-			} else { // this is fully changed line
-				// this will be changed in next patch to display inline diff
-				$listingHelper->addChangedLine($change[0][1], $change[0][2],
-						$change[1][1], $change[1][2]);
+			} else { // this is fully changed line, make inline diff
+				$diff = $this->_lineDiff->inlineDiff($change[0][0], $change[0][1], $change[1][0], $change[1][1]);
+				$listingHelper->addChangedLine($diff[0], $change[0][2], $diff[1], $change[1][2]);
 			}
 		}
 		$this->clear();
