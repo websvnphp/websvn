@@ -721,6 +721,24 @@ table.diff tr:hover {
   background-color:#ffff99;
 }
 
+ins.add {
+  background-color: #bbffbb;
+  text-decoration: none;
+}
+tr.diffcode:hover ins.add {
+  background-color: #99ff99;
+}
+del.del {
+  background-color: #ffccaa;
+  text-decoration: none;
+}
+tr.diffcode:hover del.del {
+  background-color: #ffaa88;
+}
+ins.marker, del.marker {
+  display: none;
+}
+
 code {
   white-space: pre-wrap;
 }

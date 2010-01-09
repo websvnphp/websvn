@@ -708,8 +708,25 @@ tr:hover td.diffadded {
 td.diffchanged {
 	background-color: #ffc;
 }
+td.diffchanged ins.add {
+	background-color: #bfb;
+	text-decoration: none;
+}
+td.diffchanged del.del {
+	background-color: #f88;
+	text-decoration: none;
+}
+td.diffchanged ins.marker, td.diffchanged del.marker {
+	display: none;
+}
 tr:hover td.diffchanged {
 	background-color: #ff5;
+}
+tr:hover td.diffchanged ins.add {
+	background-color: #5f5;
+}
+tr:hover td.diffchanged del.del {
+	background-color: #f55;
 }
 
 td.diffdeleted {
