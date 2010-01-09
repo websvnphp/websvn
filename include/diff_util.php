@@ -358,3 +358,15 @@ class SensibleLineChanges {
 		$this->_deleted = array();
 	}
 }
+
+if (!function_exists('str_split')) {
+	function str_split($string, $string_length = 1) {
+		if ($string_length < 1) return false;
+		$parts = array();
+		do {
+			$parts[] = substr($string, 0, $string_length);
+			$string = substr($string, $string_length);
+		} while ($string !== false);
+		return $parts;
+	}
+}
