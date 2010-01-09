@@ -693,7 +693,7 @@ class SVNRepository {
 
 	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false) {
 		// Output the file to the filename
-		$cmd = $this->svnCommandString('cat', $path, $rev, $peg).' > '.quote($filename);
+		$cmd = quoteCommand($this->svnCommandString('cat', $path, $rev, $peg).' > '.quote($filename));
 		$descriptorspec = array(2 => array('pipe', 'w')); // stderr
 		$resource = proc_open($cmd, $descriptorspec, $pipes);
 		$error = '';
@@ -786,7 +786,7 @@ class SVNRepository {
 	// Dump the blame content of a file to the given filename
 
 	function getBlameDetails($path, $filename, $rev = 0, $peg = '') {
-		$cmd = $this->svnCommandString('blame', $path, $rev, $peg).' > '.quote($filename);
+		$cmd = quoteCommand($this->svnCommandString('blame', $path, $rev, $peg).' > '.quote($filename));
 		$descriptorspec = array(2 => array('pipe', 'w')); // stderr
 		$resource = proc_open($cmd, $descriptorspec, $pipes);
 		$error = '';
