@@ -49,6 +49,7 @@ $lang["SHOWCOMPACT"] = "Ukáž len oblasti s rozdielmi";
 
 // $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Podrobnosti";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Porovnaj s predchádzajúcou";
 $lang["BLAME"] = "Blame";
 $lang["BLAMEFOR"] = "Blame informácie pre rev.";
@@ -78,7 +79,7 @@ $lang["SHOWALL"] = "Ukáž všetko";
 $lang["BADCMD"] = "Chyba pri vykonávaní tohto príkazu";
 $lang["UNKNOWNREVISION"] = "Revízia nebola nájdená";
 
-$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion úložiská";
 $lang["SERVER"] = "Subversion Server";
 
@@ -93,9 +94,9 @@ $lang["NORESULTS"] = "Vašej otázke nezodpovedajú žiadne záznamy denníka";
 $lang["NOMORERESULTS"] = "Vašej otázke zodpovedá viac záznamov denníka";
 $lang["NOPREVREV"] = "Žiadna predchádzajúca revízia";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "súbor(y) zmenený(/é)";
-$lang["RSSFEED"] = "RSS feed";
+// $lang["RSSFEED"] = "RSS feed";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";
@@ -115,9 +116,3 @@ $lang["COMPPATH"] = "Porovnaj cestu:";
 $lang["WITHPATH"] = "S cestou:";
 $lang["FILEDELETED"] = "Súbor odstránený";
 $lang["FILEADDED"] = "Nový súbor";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

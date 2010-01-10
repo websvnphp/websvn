@@ -49,6 +49,7 @@ $lang["REGARDWHITESPACE"] = "Considerar whitespace";
 
 $lang["LISTING"] = "Conteúdo do diretório";
 $lang["FILEDETAIL"] = "Detalhes";
+$lang["VIEWAS"] = "Mostrar como";
 $lang["DIFFPREV"] = "Diferenças com a anterior";
 $lang["BLAME"] = "Anotações";
 $lang["BLAMEFOR"] = "Anotações para revisão";
@@ -78,7 +79,7 @@ $lang["SHOWALL"] = "Mostrar todos";
 $lang["BADCMD"] = "Erro ao correr este comando";
 $lang["UNKNOWNREVISION"] = "Revisão não encontrada";
 
-$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projectos";
 $lang["SERVER"] = "Subversion Servidor";
 
@@ -93,16 +94,16 @@ $lang["NORESULTS"] = "A pesquisa não devolveu nenhum log";
 $lang["NOMORERESULTS"] = "Não existem mais resultados (logs) para a pesquisa";
 $lang["NOPREVREV"] = "Nenhuma revisão anterior";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "ficheiro(s) modificado(s)";
-$lang["RSSFEED"] = "RSS feed";
+// $lang["RSSFEED"] = "RSS feed";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";
 $lang["MINUTELETTER"] = "m";
 $lang["SECONDLETTER"] = "s";
 
-$lang["GO"] = "Go";
+// $lang["GO"] = "Go";
 
 $lang["PATHCOMPARISON"] = "Comparação de caminhos";
 $lang["COMPAREPATHS"] = "Comparar caminhos";
@@ -115,9 +116,3 @@ $lang["COMPPATH"] = "Comparar caminho:";
 $lang["WITHPATH"] = "Com caminho:";
 $lang["FILEDELETED"] = "Arquivo apagado";
 $lang["FILEADDED"] = "Arquivo adicionado";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

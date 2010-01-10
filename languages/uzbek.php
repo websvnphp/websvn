@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "faqat farqli qismlarini koʻrsatish";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "oldingisi bilan taqqoslash";
 $lang["BLAME"] = "mualliflik";
 $lang["BLAMEFOR"] = "Tahrir muallifi haqida maʼlumot";
@@ -116,9 +117,3 @@ $lang["COMPPATH"] = "Yoʻlni taqqoslash:";
 $lang["WITHPATH"] = "Yoʻl bilan:";
 $lang["FILEDELETED"] = "Fayl oʻchirilgan";
 $lang["FILEADDED"] = "Yangi fayl";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

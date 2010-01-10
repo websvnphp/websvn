@@ -55,6 +55,7 @@ $lang["SHOWCOMPACT"] = "Vis kun områder med forskjeller";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Sammenlign med forrige";
 $lang["BLAME"] = "Ansvarlig";
 $lang["BLAMEFOR"] = "Ansvarliginformasjon for rev.";
@@ -121,9 +122,3 @@ $lang["COMPPATH"] = "Sammenlign sti:";
 $lang["WITHPATH"] = "Med sti:";
 $lang["FILEDELETED"] = "Fil slettet";
 $lang["FILEADDED"] = "Ny fil";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

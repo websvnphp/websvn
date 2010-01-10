@@ -563,19 +563,26 @@ class SVNRepository {
 
 	// }}}
 
+	// Private function to simplify creation of common SVN command string text.
+	function svnCommandString($command, $path, $rev, $peg) {
+		global $config;
+		return $config->getSvnCommand().' '.$command.' '.$this->repConfig->svnParams().($rev ? '-r '.$rev.' ' : '').quote(encodePath($this->getSvnPath($path)).'@'.($peg ? $peg : ''));
+	}
+
 	// {{{ getFileContents
 	//
 	// Dump the content of a file to the given filename
 
-	function getFileContents($path, $filename, $rev = 0, $peg = '', $pipe = '', $perLineHighlighting = false) {
+	function getFileContents($path, $filename, $rev = 0, $peg = '', $pipe = '', $highlight = 'file') {
 		global $config, $extEnscript;
+		assert ($highlight == 'file' || $highlight == 'no' || $highlight == 'line');
 
 		$highlighted = false;
 
 		// If there's no filename, just deliver the contents as-is to the user
 		if ($filename == '') {
-			$path = encodepath($this->getSvnPath($path));
-			passthruCommand($config->getSvnCommand().' cat '.$this->repConfig->svnParams().quote($path.'@'.$rev).' '.$pipe);
+			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
+			passthruCommand($cmd.' '.$pipe);
 			return $highlighted;
 		}
 
@@ -584,28 +591,25 @@ class SVNRepository {
 		$ext = strrchr($path, '.');
 
 		$tempname = $filename;
-		if ($perLineHighlighting) {
+		if ($highlight == 'line') {
 			$tempname = tempnam($config->getTempDir(), '');
 		}
 		$highlighted = true;
-		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
+		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
 			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg);
-		} else if ($config->useEnscript) {
+		} else if ($highlight != 'no' && $config->useEnscript) {
 			// Get the files, feed it through enscript, then remove the enscript headers using sed
-			//
-			// Note that the sec command returns only the part of the file between <PRE> and </PRE>.
+			// Note that the sed command returns only the part of the file between <PRE> and </PRE>.
 			// It's complicated because it's designed not to return those lines themselves.
-
 			$l = @$extEnscript[$ext];
-			$path = encodepath($this->getSvnPath($path));
-			$cmd = quoteCommand($config->getSvnCommand().' cat '.$this->repConfig->svnParams().quote($path.'@'.$rev).' | '.
-				$config->enscript.' --language=html '.
-				($l ? '--color --pretty-print='.$l : '').' -o - | '.
-				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > $tempname');
+			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
+			$cmd = quoteCommand($cmd.' | '.
+				$config->enscript.' --language=html '.($l ? '--color --pretty-print='.$l : '').' -o - | '.
+				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
 		} else {
 			$highlighted = false;
-			$path = encodepath(str_replace(DIRECTORY_SEPARATOR, '/', $this->getSvnPath($path)));
-			$cmd = quoteCommand($config->getSvnCommand().' cat '.$this->repConfig->svnParams().quote($path.'@'.$rev).' > '.quote($filename));
+			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
+			$cmd = quoteCommand($cmd.' > '.quote($filename));
 		}
 		if (isset($cmd)) {
 			$descriptorspec = array(2 => array('pipe', 'w')); // stderr
@@ -628,7 +632,7 @@ class SVNRepository {
 			}
 		}
 
-		if ($highlighted && $perLineHighlighting) {
+		if ($highlighted && $highlight == 'line') {
 			// If we need each line independently highlighted (e.g. for diff or blame)
 			// then we'll need to filter the output of the highlighter
 			// to make sure tags like <font>, <i> or <b> don't span lines
@@ -679,8 +683,6 @@ class SVNRepository {
 			}
 		}
 		return '';
-
-
 	}
 
 	// }}}
@@ -690,14 +692,8 @@ class SVNRepository {
 	// perform syntax highlighting using geshi
 
 	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false) {
-		global $config;
-
-		$pegrev = ($peg) ? '@'.$peg : '';
-
 		// Output the file to the filename
-		$path = encodepath($this->getSvnPath($path));
-		$cmd = quoteCommand($config->getSvnCommand().' cat -r '.$rev.' '.$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename));
-
+		$cmd = quoteCommand($this->svnCommandString('cat', $path, $rev, $peg).' > '.quote($filename));
 		$descriptorspec = array(2 => array('pipe', 'w')); // stderr
 		$resource = proc_open($cmd, $descriptorspec, $pipes);
 		$error = '';
@@ -755,9 +751,7 @@ class SVNRepository {
 			@unlink($tempname);
 		} else {
 			$pre = false;
-			$path = encodepath($this->getSvnPath($path));
-			$pegrev = ($peg) ? '@'.$peg : '';
-			$cmd = $config->getSvnCommand().' cat -r '.$rev.' '.$this->repConfig->svnParams().quote($path.$pegrev);
+			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
 			if ($config->useEnscript) {
 				$l = @$extEnscript[$ext];
 				$cmd .= ' | '.$config->enscript.' --language=html '.
@@ -792,13 +786,7 @@ class SVNRepository {
 	// Dump the blame content of a file to the given filename
 
 	function getBlameDetails($path, $filename, $rev = 0, $peg = '') {
-		global $config;
-
-		$pegrev = ($peg) ? '@'.$peg : '';
-
-		$path = encodepath($this->getSvnPath($path));
-		$cmd = quoteCommand($config->getSvnCommand().' blame -r '.$rev.' '.$this->repConfig->svnParams().quote($path.$pegrev).' > '.quote($filename));
-
+		$cmd = quoteCommand($this->svnCommandString('blame', $path, $rev, $peg).' > '.quote($filename));
 		$descriptorspec = array(2 => array('pipe', 'w')); // stderr
 		$resource = proc_open($cmd, $descriptorspec, $pipes);
 		$error = '';
@@ -824,19 +812,12 @@ class SVNRepository {
 	// {{{ getProperty
 
 	function getProperty($path, $property, $rev = 0, $peg = '') {
-		global $config;
-
-		$path = encodepath($this->getSvnPath($path));
-		$revstr = $rev ? '-r '.$rev.' ' : '';
-		$pegrev = ($peg) ? '@'.$peg : '';
-
-		$ret = runCommand($config->getSvnCommand().' propget '.$revstr.$property.' '.$this->repConfig->svnParams().quote($path.$pegrev), true);
-
+		$cmd = $this->svnCommandString('propget '.$property, $path, $rev, $peg);
+		$ret = runCommand($cmd, true);
 		// Remove the surplus newline
 		if (count($ret)) {
 			unset($ret[count($ret) - 1]);
 		}
-
 		return implode("\n", $ret);
 	}
 
@@ -847,13 +828,7 @@ class SVNRepository {
 	// Exports the directory to the given location
 
 	function exportRepositoryPath($path, $filename, $rev = 0, $peg = '') {
-		global $config;
-
-		$path = encodepath($this->getSvnPath($path));
-		$pegrev = ($peg) ? '@'.$peg : '';
-
-		$cmd = $config->getSvnCommand().' export -r '.$rev.' '.$this->repConfig->svnParams().quote($path.$pegrev).' '.quote($filename);
-
+		$cmd = $this->svnCommandString('export', $path, $rev, $peg).' '.quote($filename);
 		$retcode = 0;
 		execCommand($cmd, $retcode);
 		if ($retcode != 0) {
@@ -867,7 +842,7 @@ class SVNRepository {
 
 	// {{{ getList
 
-	function getList($path, $rev = 0) {
+	function getList($path, $rev = 0, $peg = '') {
 		global $config, $curList;
 
 		$xml_parser = xml_parser_create('UTF-8');
@@ -887,7 +862,6 @@ class SVNRepository {
 		$curList->path = $path;
 
 		// Get the list info
-		$path = encodepath($this->getSvnPath($path));
 
 		if ($rev == 0) {
 			$headlog = $this->getLog('/', '', '', true, 1);
@@ -895,7 +869,7 @@ class SVNRepository {
 				$rev = $headlog->entries[0]->rev;
 		}
 
-		$cmd = quoteCommand($config->getSvnCommand().' list --xml '.$this->repConfig->svnParams().quote($path.'@'.$rev));
+		$cmd = quoteCommand($this->svnCommandString('list --xml', $path, $rev, $peg));
 
 		$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
@@ -985,33 +959,14 @@ class SVNRepository {
 		$curLog->entries = array();
 		$curLog->path = $path;
 
-		$revStr = '';
-
-		if ($brev && $erev) {
-			$revStr = '-r'.$brev.':'.$erev;
-		} else if ($brev) {
-			$revStr = '-r'.$brev.':1';
-		}
+		// Get the log info
+		$effectiveRev = ($brev && $erev ? $brev.':'.$erev : ($brev ? $brev.':1' : ''));
+		$effectivePeg = ($peg ? $peg : ($brev ? $brev : ''));
+		$cmd = quoteCommand($this->svnCommandString('log --xml '.($quiet ? '--quiet' : '--verbose'), $path, $effectiveRev, $effectivePeg));
 
 		if (($config->subversionMajorVersion > 1 || $config->subversionMinorVersion >= 2) && $limit != 0) {
-			$revStr .= ' --limit '.$limit;
+			$cmd .= ' --limit '.$limit;
 		}
-
-		// Get the log info
-		$path = encodepath($this->getSvnPath($path));
-		$info = '--verbose';
-		if ($quiet)
-			$info = '--quiet';
-
-		if ($peg) {
-			$pegrev = '@'.$peg;
-		} else if ($brev) {
-			$pegrev = '@'.$brev;
-		} else {
-			$pegrev = '';
-		}
-
-		$cmd = quoteCommand($config->getSvnCommand().' log --xml '.$info.' '.$revStr.' '.$this->repConfig->svnParams().quote($path.$pegrev));
 
 		$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
@@ -1100,18 +1055,13 @@ class SVNRepository {
 				$curLog->entries[$entryKey]->age = '';
 			}
 		}
-
 		return $curLog;
 	}
 
 	// }}}
 
-	function isFile($path, $rev = '') {
-		global $config;
-
-		$path = encodepath($this->getSvnPath($path));
-		$pegrev = ($rev) ? '@'.$rev : '';
-		$cmd = $config->getSvnCommand().' info --xml '.$this->repConfig->svnParams().quote($path.$pegrev);
+	function isFile($path, $rev = 0, $peg = '') {
+		$cmd = $this->svnCommandString('info --xml', $path, $rev, $peg);
 		return strpos(implode(' ', runCommand($cmd, true)), 'kind="file"') !== false;
 	}
 

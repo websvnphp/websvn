@@ -49,6 +49,7 @@ $lang["SHOWCOMPACT"] = "Csak a különbségeket tartalmazó területeket mutassu
 
 // $lang["LISTING"] = "Directory listing";
 $lang["FILEDETAIL"] = "Részletek";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Összehasonlítás az előzővel";
 $lang["BLAME"] = "Felelős";
 $lang["BLAMEFOR"] = "A revízió felelőse";
@@ -78,7 +79,7 @@ $lang["SHOWALL"] = "Az összes mutatása";
 $lang["BADCMD"] = "Hiba történt ennek a parancsnak a futtatásakor";
 $lang["UNKNOWNREVISION"] = "A revízió nem található";
 
-$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion repository-k";
 $lang["SERVER"] = "Subversion szerver";
 
@@ -93,9 +94,9 @@ $lang["NORESULTS"] = "Nincsenek a feltételnek megfelelő napló üzenetek";
 $lang["NOMORERESULTS"] = "Nincsen több olyan napló üzenet, ami megfelelne a feltételnek";
 $lang["NOPREVREV"] = "Nincs előző revízió";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "file(-ok) módosultak";
-$lang["RSSFEED"] = "RSS feed";
+// $lang["RSSFEED"] = "RSS feed";
 
 $lang["DAYLETTER"] = "n";
 $lang["HOURLETTER"] = "ó";
@@ -115,9 +116,3 @@ $lang["COMPPATH"] = "Útvonal hasonlítása:";
 $lang["WITHPATH"] = "ezzel az útvonallal:";
 $lang["FILEDELETED"] = "A file törölve";
 $lang["FILEADDED"] = "Új file";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

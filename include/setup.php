@@ -380,8 +380,7 @@ require 'languages/'.$file.'.php';
 
 $vars['language_code'] = $userLang;
 
-$url = '?'.buildQuery($_GET + $_POST);
-$vars['language_form'] = '<form action="'.$url.'" method="post" id="langform">';
+$vars['language_form'] = '<form action="?'.buildQuery($_GET + $_POST).'" method="post" id="langform">';
 $vars['language_select'] = '<select name="langchoice" onchange="javascript:this.form.submit();">';
 
 foreach ($languages as $code => $names) {
@@ -473,8 +472,7 @@ if ($rep) {
 }
 
 if (count($templateNames) > 1) {
-	$url = '?'.buildQuery($_GET + $_POST);
-	$vars['template_form'] = '<form action="'.$url.'" method="post" id="templateform">';
+	$vars['template_form'] = '<form action="?'.buildQuery($_GET + $_POST).'" method="post" id="templateform">';
 	$vars['template_select'] = '<select name="templatechoice" onchange="javascript:this.form.submit();">';
 
 	natcasesort($templateNames);
@@ -503,6 +501,7 @@ if ($path === null || $path === '')
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
+if ($peg === 0) $peg = '';
 $passrev = $rev;
 
 // Function to create the project selection HTML form
@@ -514,7 +513,6 @@ function createProjectSelectionForm() {
 	$vars['projects_submit'] = '';
 	$vars['projects_endform'] = '';
 
-	$reps = $config->getRepositories();
 	if (!$config->showRepositorySelectionForm() || count($config->getRepositories()) < 2)
 		return;
 

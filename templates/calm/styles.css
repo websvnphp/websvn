@@ -201,15 +201,15 @@ span.submit input,
 #wrap p.submit input {
   background-image:url(images/submitbg.png);
 }
-#info table tbody tr td input {
+#info table tr td input {
   font-size:1em;
   width:92%;
   background:#FFF url(images/textbg.png) repeat-x 0 0;
 }
-#info table tbody tr td.revcomp input {
+#info table tr td.revcomp input {
   width:50px;
 }
-#info table tbody tr td.all input {
+#info table tr td.all input {
   width:auto;
 }
 select {
@@ -364,7 +364,7 @@ table {
   border-collapse:collapse;
   width:100%;
 }
-tbody tr td {
+tr td {
   padding:0;
   text-align:left;
 }
@@ -393,38 +393,35 @@ thead tr th.colauth {
 thead tr th.colcode {
   width:73%;
 }
-tbody tr td.code {
+tr td.code {
   text-align:left;
 }
-tbody tr td.code pre {
+td.code, td.diffcode td.diff {
+  border: 1px solid #eeeeee;
+}
+tr td.code pre {
+  padding: 1px 2px 0;
   background-color:#f8f8f8;
-  border:1px solid #f0f0f0;
-  padding-left:3px;
 }
-tbody tr:hover td.code pre {
+tr:hover td.code pre {
   background-color:#e8e8e8;
-  border:1px solid #cccccc;
 }
-tbody tr:hover td.code {
+tr:hover td.code {
   background-color:#FFF;
 }
-tbody tr td.path,
-tbody tr th.path {
+tr td.path, tr th.path {
   text-align:left;
 }
-tbody tr td.path {
+tr td.path {
   padding:0;
 }
-tbody tr:hover {
-  background-color:#e8e8e8;
-}
-tbody tr.row0 td {
+tr.row0 td {
   background-color:#f0f0f0;
 }
-tbody tr.row1 td {
+tr.row1 td {
   background-color:#f8f8f8;
 }
-tbody tr.row0:hover td, tbody tr.row1:hover td {
+tr:hover, tr.row0:hover td, tr.row1:hover td {
   background-color:#e8e8e8;
 }
 span.listing a, a.listing {
@@ -497,12 +494,26 @@ td.svn a {
   background-repeat:no-repeat;
   background-position:3px 50%;
 }
+span.next a,
+td.next a {
+  padding-left:15px;
+  background-image:url(images/next.png);
+  background-repeat:no-repeat;
+  background-position:0px 50%;
+}
+span.prev a,
+td.prev a {
+  padding-left:15px;
+  background-image:url(images/previous.png);
+  background-repeat:no-repeat;
+  background-position:0px 50%;
+}
 
 li.compress a,
 span.compress a,
-tbody tr td.compress a:link,
-tbody tr td.compress a:visited,
-tbody tr td.compress a:link {
+tr td.compress a:link,
+tr td.compress a:visited,
+tr td.compress a:link {
   padding-left:22px;
   background-image:url(images/compress.png);
   background-repeat:no-repeat;
@@ -510,10 +521,10 @@ tbody tr td.compress a:link {
 }
 li.feed a,
 span.feed a,
-tbody tr td.feed a,
-tbody tr td.feed a:link,
-tbody tr td.feed a:visited,
-tbody tr td.feed a:link {
+tr td.feed a,
+tr td.feed a:link,
+tr td.feed a:visited,
+tr td.feed a:link {
   padding-left:22px;
   background-image:url(images/xml.gif);
   background-repeat:no-repeat;
@@ -529,9 +540,6 @@ tbody tr td.feed a:link {
 .goyoungest a:hover {
   background-color:#fad4c8;
   color:#000;
-}
-td.code {
-  padding:2px 2px 0 2px;
 }
 .icon {
   vertical-align: middle;
@@ -558,10 +566,8 @@ pre a, td.code pre a {
   color:blue;
   font-style:italic;
 }
-
-
 code, pre {
-  font-family:'Consolas',monospace,sans-serif;
+  font-family: Consolas, monospace;
   text-align:left;
   margin:0;
 }
@@ -604,32 +610,36 @@ code, pre {
 .geshi a:hover {
 	text-decoration: underline;
 }
-tbody tr.diffcode td {
+tr.diffcode td {
   text-align:left;
+  border: 1px solid #eeeeee;
 }
-tbody tr.diffcode td.row1 {
+tr.diffcode td.lineno {
+  text-align: right;
+  vertical-align: top;
+  padding: 0 2px;
+}
+tr.diffcode td.row1 {
   padding: 3px;
+  border: none;
 }
-tbody tr.diffcode td.row1 strong {
+tr.diffcode td.row1 strong {
   font-weight: bold;
 }
-tbody tr.diffcode td code, tbody tr.diffcode td pre {
+tr.diffcode td code, tr.diffcode td pre {
   display:block;
   height:100%;
   padding-left:22px;
 }
-tbody tr:hover td.diff, tbody tr.diffcode:hover td pre {
-  background-color:#e8e8e8;
-  border:1px solid #cccccc;
+tr.diffcode td pre {
+  padding-left: 1px 2px 0;
 }
-tbody tr.diffcode:hover td {
+tr:hover td.diff, tr.diffcode:hover td pre {
+  background-color:#e8e8e8;
+}
+tr.diffcode:hover td {
   background-color:#FFF;
 }
-tr.diffcode td {
-  color:#000;
-  padding:2px 2px 0 2px;
-}
-
 div.newpath, div.difflines {
   color:#000;
   text-align:center;
@@ -658,27 +668,21 @@ table.diff {
   padding:0 2px 2px 2px;
   margin:0 1px;
 }
-table.diff tbody tr {
-  padding:4px 4px 0 4px;
-  margin:4px 4px 0 4px;
-}
-table.diff tbody tr td {
+table.diff tr td {
   display:block;
   text-align:left;
-  padding:2px;
-  margin:2px 2px 0 2px;
-  border:1px solid #FFF;
+  padding:0px;
   padding-left:22px;
+  margin:0;
   background-color:#f8f8f8;
   border:1px solid #f0f0f0;
   white-space: pre-wrap;
-  font-family: monospace;
+  font-family: Consolas, monospace;
 }
-table.diff tbody tr:hover {
+table.diff tr:hover {
   background:#FFF;
 }
 .newpath td.diff, td.diff pre {
-  border:1px solid #f0f0f0;
   background-color:#f8f8f8;
   background-position:2px 50%;
   background-repeat:no-repeat;
@@ -717,6 +721,24 @@ table.diff tbody tr:hover {
   background-color:#ffff99;
 }
 
+ins.add {
+  background-color: #bbffbb;
+  text-decoration: none;
+}
+tr.diffcode:hover ins.add {
+  background-color: #99ff99;
+}
+del.del {
+  background-color: #ffccaa;
+  text-decoration: none;
+}
+tr.diffcode:hover del.del {
+  background-color: #ffaa88;
+}
+ins.marker, del.marker {
+  display: none;
+}
+
 code {
   white-space: pre-wrap;
 }
@@ -733,22 +755,22 @@ code {
 
 /* Log View */
 
-table tbody tr td.logmsg {
+table tr td.logmsg {
   text-align:left;
   padding: 3px 0 3px 3px;
   vertical-align:middle;
 }
 
 /* sidebar form without css-bg-colors */
-#info table tbody tr td,
-#info table tbody tr th {
+#info table tr td,
+#info table tr th {
   background:#FFF;
   padding:0;
   margin:0;
   font-weight:normal;
 }
-#info table tbody tr:hover td,
-#info table tbody tr:hover th {
+#info table tr:hover td,
+#info table tr:hover th {
   background:#FFF;
   padding:0;
   margin:0;

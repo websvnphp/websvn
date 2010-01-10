@@ -69,7 +69,7 @@ if ($rep) {
 
 	if ($rev != $youngest) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'blame').($peg ? 'peg='.$peg : '');
-		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
 	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$passRevString;
@@ -100,7 +100,7 @@ if ($rep) {
 	} else {
 		// Get the contents of the file
 		$tfname = tempnam($config->getTempDir(), '');
-		$highlighted = $svnrep->getFileContents($path, $tfname, $rev, $peg, '', true);
+		$highlighted = $svnrep->getFileContents($path, $tfname, $rev, $peg, '', 'line');
 
 		if ($file = fopen($tfname, 'r')) {
 			// Get the blame info

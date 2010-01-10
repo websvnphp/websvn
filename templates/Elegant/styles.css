@@ -151,7 +151,7 @@ tbody tr:hover td {
 	color: white;
 }
 
-#header a {
+#header #info a {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
@@ -332,6 +332,14 @@ tbody tr:hover td {
 	padding-left: 20px;
 }
 
+#links li.next a {
+	background-image: url(images/next.png);	
+}
+
+#links li.prev a {
+	background-image: url(images/previous.png);	
+}
+
 #links li.rev a {
 	background-image: url(images/revision.png);	
 }
@@ -351,6 +359,7 @@ tbody tr:hover td {
 
 #links li.youngest a {
 	background-image: url(images/youngest.png);	
+	padding-left: 20px;
 }
 
 @media print {
@@ -669,6 +678,13 @@ body > #wrapper {
 
 #diff td {
 	white-space: normal;
+	vertical-align: top;
+}
+
+#diff td.lineno {
+	text-align: right;
+	padding: 0 2px;
+	color: #777;
 }
 
 #diff tr.shaded td {
@@ -692,8 +708,25 @@ tr:hover td.diffadded {
 td.diffchanged {
 	background-color: #ffc;
 }
+td.diffchanged ins.add {
+	background-color: #bfb;
+	text-decoration: none;
+}
+td.diffchanged del.del {
+	background-color: #f88;
+	text-decoration: none;
+}
+td.diffchanged ins.marker, td.diffchanged del.marker {
+	display: none;
+}
 tr:hover td.diffchanged {
 	background-color: #ff5;
+}
+tr:hover td.diffchanged ins.add {
+	background-color: #5f5;
+}
+tr:hover td.diffchanged del.del {
+	background-color: #f55;
 }
 
 td.diffdeleted {

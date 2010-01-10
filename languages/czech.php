@@ -49,6 +49,7 @@ $lang["SHOWCOMPACT"] = "Zobraz pouze rozdílné části";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Porovnej s předchozí";
 // $lang["BLAME"] = "Blame";
 // $lang["BLAMEFOR"] = "Blame information for rev";
@@ -115,9 +116,3 @@ $lang["COMPPATH"] = "Porovnej cestu:";
 $lang["WITHPATH"] = "S umístěním:";
 $lang["FILEDELETED"] = "Soubor smazán";
 $lang["FILEADDED"] = "Nový soubor";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";
