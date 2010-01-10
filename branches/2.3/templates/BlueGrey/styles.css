@@ -232,12 +232,28 @@ div.blame-popup .date {
 	font-size: 90%;
 }
 
+#diff td.lineno {
+	text-align: right;
+	vertical-align: top;
+}
+
 td.diffdeleted {
 	background-color: #ff8888;
 }
 
 td.diffchanged {
 	background-color: #ffff88;
+}
+td.diffchanged ins.add {
+	background-color: #88ff88;
+	text-decoration: none;
+}
+td.diffchanged del.del {
+	background-color: #ff8888;
+	text-decoration: none;
+}
+td.diffchanged ins.marker, td.diffchanged del.marker {
+	display: none;
 }
 
 td.diffadded {
@@ -254,6 +270,10 @@ div.newpath {
 }
 
 div.difflines {
+}
+
+#diff th.row1 {
+	border: solid 1px #555;
 }
 
 /* @end */

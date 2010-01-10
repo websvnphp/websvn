@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "바뀐 부분만 보기";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "이전 리비전과 비교";
 $lang["BLAME"] = "수정한 사람 보기";
 $lang["BLAMEFOR"] = "수정한 사람 보기, 리비전 ";
@@ -69,7 +70,7 @@ $lang["PATH"] = "경로";
 $lang["AUTHOR"] = "작성자";
 $lang["AGE"] = "기간";
 $lang["CURDIR"] = "현재 디렉토리";
-$lang["TARBALL"] = "Tarball";
+// $lang["TARBALL"] = "Tarball";
 // $lang["DOWNLOAD"] = "Download";
 
 $lang["PREV"] = "이전";
@@ -79,7 +80,7 @@ $lang["SHOWALL"] = "모두 보기";
 $lang["BADCMD"] = "명령 실행 에러";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion 프로젝트";
 $lang["SERVER"] = "Subversion 서버";
 
@@ -94,16 +95,16 @@ $lang["NORESULTS"] = "검색 조건에 맞는 결과가 없습니다.";
 $lang["NOMORERESULTS"] = "더 이상 검색 조건에 맞는 결과가 없습니다.";
 // $lang["NOPREVREV"] = "No previous revision";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "파일 수정됨";
-$lang["RSSFEED"] = "RSS feed";
+// $lang["RSSFEED"] = "RSS feed";
 
 $lang["DAYLETTER"] = "일";
 $lang["HOURLETTER"] = "시간";
 $lang["MINUTELETTER"] = "분";
 $lang["SECONDLETTER"] = "초";
 
-$lang["GO"] = "Go";
+// $lang["GO"] = "Go";
 
 $lang["PATHCOMPARISON"] = "경로 비교";
 $lang["COMPAREPATHS"] = "경로 비교하기";
@@ -116,9 +117,3 @@ $lang["COMPPATH"] = "비교 경로:";
 $lang["WITHPATH"] = "경로:";
 // $lang["FILEDELETED"] = "File deleted";
 // $lang["FILEADDED"] = "New file";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

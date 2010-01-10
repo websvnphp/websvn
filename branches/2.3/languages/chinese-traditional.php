@@ -51,6 +51,7 @@ $lang["SHOWCOMPACT"] = "只顯示不同處";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "與前一版次比較";
 $lang["BLAME"] = "譴責";
 $lang["BLAMEFOR"] = "版本譴責資訊";
@@ -116,10 +117,4 @@ $lang["REVCOMP"] = "顛倒比對";
 // $lang["WITHPATH"] = "With Path:";
 // $lang["FILEDELETED"] = "File deleted";
 // $lang["FILEADDED"] = "New file";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";
 

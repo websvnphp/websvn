@@ -50,6 +50,7 @@ $lang["REGARDWHITESPACE"] = "Prendre en compte les espaces blanc";
 
 $lang["LISTING"] = "Arborescence";
 $lang["FILEDETAIL"] = "Détails";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Différence avec la précédente";
 $lang["BLAME"] = "Responsabilité";
 $lang["BLAMEFOR"] = "Information sur la responsabilité de la rev";
@@ -116,9 +117,3 @@ $lang["COMPPATH"] = "Comparer le dossier :";
 $lang["WITHPATH"] = "Au dossier :";
 $lang["FILEDELETED"] = "Fichier supprimé";
 $lang["FILEADDED"] = "Nouveau fichier";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

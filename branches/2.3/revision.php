@@ -62,7 +62,7 @@ if ($rep) {
 		$revurl .= 'peg='.$rev.'&amp;';
 	if ($rev < $youngest) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
-		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'">'.$lang['GOYOUNGEST'].'</a>';
+		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 
 		$history = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
 		if (isset($history->entries[1])) {
@@ -123,12 +123,13 @@ if ($rep) {
 	$row = 0;
 
 	$prevRevString = createRevAndPegString($rev - 1, $rev - 1);
-	$thisRevString = createRevAndPegString($rev, ($peg ? $peg : $rev));
+	$thisRevString = createRevAndPegString($rev, $rev);
 	foreach ($changes as $file) {
 		$linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
 		// NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
 		// `svn log --verbose --xml` should really provide this info, but doesn't yet.
-		$isFile = $svnrep->isFile($file->path, $rev);
+		$lastSeenRev = ($file->action == 'D') ? $rev - 1 : $rev;
+		$isFile = $svnrep->isFile($file->path, $lastSeenRev, $lastSeenRev);
 		if (!$isFile && $file->path != '/') {
 			$file->path .= '/';
 		}
@@ -149,7 +150,7 @@ if ($rep) {
 	}
 
 	if (isset($prevRev)) {
-		$vars['compareurl'] = $config->getURL($rep, '/', 'comp').'compare[]='.urlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.urlencode($path).'@'.$rev;
+		$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]=/@'.$prevRev. '&amp;compare[]=/@'.$rev;
 		$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 	}
 

@@ -49,6 +49,7 @@ $lang["SHOWCOMPACT"] = "Visa bara områden med skillnader";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Skillnad mot föregående";
 $lang["BLAME"] = "Ansvarig";
 $lang["BLAMEFOR"] = "Ansvariginformation för rev";
@@ -78,9 +79,9 @@ $lang["SHOWALL"] = "Visa alla";
 $lang["BADCMD"] = "Fel vid körning av kommando";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projekt";
-$lang["SERVER"] = "Subversion Server";
+// $lang["SERVER"] = "Subversion Server";
 
 $lang["FILTER"] = "Filteralternativ";
 $lang["STARTLOG"] = "Från rev";
@@ -93,7 +94,7 @@ $lang["NORESULTS"] = "Det finns ingen logg som motsvarar din sökning";
 $lang["NOMORERESULTS"] = "Det finns inga fler loggar i din sökning";
 $lang["NOPREVREV"] = "Ingen föregående revision";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "fil(er) ändrade";
 $lang["RSSFEED"] = "RSS";
 
@@ -115,9 +116,3 @@ $lang["COMPPATH"] = "Jämför sökväg:";
 $lang["WITHPATH"] = "Med sökväg:";
 $lang["FILEDELETED"] = "Filen raderad";
 $lang["FILEADDED"] = "Ny fil";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

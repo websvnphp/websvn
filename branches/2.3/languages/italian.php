@@ -50,6 +50,7 @@ $lang["REGARDWHITESPACE"] = "Rispetta gli spazi vuoti";
 
 $lang["LISTING"] = "Lista directory";
 $lang["FILEDETAIL"] = "Dettagli";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Confronta con la precedente";
 $lang["BLAME"] = "Responsabilità";
 $lang["BLAMEFOR"] = "Informazioni sui responsabili della revisione";
@@ -79,9 +80,9 @@ $lang["SHOWALL"] = "Mostra tutti";
 $lang["BADCMD"] = "Errore durante l'esecuzione del comando";
 $lang["UNKNOWNREVISION"] = "Revisione non trovata";
 
-$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Repository Subversion";
-$lang["SERVER"] = "Subversion Server";
+// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["PROJECTS"] = "Repository Subversion";
+// $lang["SERVER"] = "Subversion Server";
 
 $lang["FILTER"] = "Opzioni Filtro";
 $lang["STARTLOG"] = "Dalla  revisione";
@@ -116,9 +117,3 @@ $lang["COMPPATH"] = "Confronta percorso:";
 $lang["WITHPATH"] = "Con il percorso:";
 $lang["FILEDELETED"] = "File cancellato";
 $lang["FILEADDED"] = "Nuovo file";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "";
-$lang["ENDNOBR"] = "";

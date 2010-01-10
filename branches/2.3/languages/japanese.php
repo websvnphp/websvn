@@ -50,6 +50,7 @@ $lang["SHOWCOMPACT"] = "異なる行の周辺だけ表示";
 
 // $lang["LISTING"] = "Directory listing";
 // $lang["FILEDETAIL"] = "Details";
+// $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "前のリビジョンとの差分";
 $lang["BLAME"] = "詳細表示";
 $lang["BLAMEFOR"] = "詳細表示 対象リビジョン";
@@ -79,7 +80,7 @@ $lang["SHOWALL"] = "全て表示";
 $lang["BADCMD"] = "コマンド実行中のエラー";
 $lang["UNKNOWNREVISION"] = "指定のリビジョンがありません";
 
-$lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion リポジトリ一覧";
 $lang["SERVER"] = "Subversion サーバ";
 
@@ -94,9 +95,9 @@ $lang["NORESULTS"] = "検索条件にマッチするものはありませんで�
 $lang["NOMORERESULTS"] = "これ以上検索条件にマッチするものはありません";
 $lang["NOPREVREV"] = "前のリビジョンはありません";
 
-$lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
 $lang["FILESMODIFIED"] = "ファイルが修正されました";
-$lang["RSSFEED"] = "RSS feed";
+// $lang["RSSFEED"] = "RSS feed";
 
 $lang["DAYLETTER"] = "日間";
 $lang["HOURLETTER"] = "時間";
@@ -116,9 +117,3 @@ $lang["COMPPATH"] = "比較元パス：";
 $lang["WITHPATH"] = "比較先パス：";
 $lang["FILEDELETED"] = "ファイル削除";
 $lang["FILEADDED"] = "新規ファイル";
-
-// The following are defined by some languages to stop unwanted line splitting
-// in the template files.
-
-$lang["NOBR"] = "<nobr>";
-$lang["ENDNOBR"] = "</nobr>";
