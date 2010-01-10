@@ -197,7 +197,7 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
-	$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
@@ -207,7 +207,7 @@ if ($rep) {
 	// Unless otherwise specified, we get the log details of the latest change
 	$lastChangedRev = ($passrev) ? $passrev : $youngest;
 	if ($lastChangedRev != $youngest) {
-		$history = $svnrep->getLog($path, $lastChangedRev, '', false, 2, $peg);
+		$history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg);
 	}
 	$logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : 0;
 
@@ -231,13 +231,35 @@ if ($rep) {
 	$passRevString = createRevAndPegString($passrev, $peg);
 	$isDirString = 'isdir=1&amp;';
 
+	$revurl = $config->getURL($rep, $path != '/' ? $path : '', 'dir');
+	$revurlSuffix = $path != '/' ? '#'.anchorForPath($path) : '';
 	if ($rev < $youngest) {
 		if ($path == '/') {
 			$vars['goyoungesturl'] = $config->getURL($rep, '', 'dir');
 		} else {
-			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev).'#'.anchorForPath($path);
+			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev).$revurlSuffix;
 		}
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
+
+		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
+		if (isset($history2->entries[1])) {
+			$nextRev = $history2->entries[1]->rev;
+			if ($nextRev != $youngest) {
+				$vars['nextrev'] = $nextRev;
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg).$revurlSuffix;
+			}
+		}
+		unset($vars['error']);
+	}
+
+	if ($rev < $youngest) {
+	}
+
+	if (isset($history->entries[1])) {
+		$prevRev = $history->entries[1]->rev;
+		$prevPath = $history->entries[1]->path;
+		$vars['prevrev'] = $prevRev;
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $peg).$revurlSuffix;
 	}
 
 	$bugtraq = new Bugtraq($rep, $svnrep, $ppath);

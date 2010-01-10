@@ -37,7 +37,7 @@ if ($rep) {
 	$passRevString = createRevAndPegString($rev, $peg);
 
 	// Find the youngest revision containing changes for the given path
-	$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
@@ -51,34 +51,31 @@ if ($rep) {
 	// Unless otherwise specified, we get the log details of the latest change
 	$lastChangedRev = ($rev) ? $rev : $youngest;
 	if ($lastChangedRev != $youngest) {
-		$history = $svnrep->getLog($path, $lastChangedRev, $lastChangedRev, false, 2, $peg);
+		$history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg);
 	}
 	if (empty($rev))
 		$rev = $lastChangedRev;
 
 	// Generate links to newer and older revisions
 	$revurl = $config->getURL($rep, $path, 'revision');
-	if (strlen($path) > 1)
-		$revurl .= 'peg='.$rev.'&amp;';
 	if ($rev < $youngest) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 
-		$history = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
-		if (isset($history->entries[1])) {
-			$nextRev = $history->entries[1]->rev;
+		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
+		if (isset($history2->entries[1])) {
+			$nextRev = $history2->entries[1]->rev;
 			$vars['nextrev'] = $nextRev;
-			$vars['nextrevurl'] = $revurl.'rev='.$nextRev;
+			$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $rev : '');
 			//echo 'NEXT='.$vars['nextrevurl'].'<br/>';
 		}
 		unset($vars['error']);
-		$history = $svnrep->getLog($path, $rev, 1, false, 2, $peg);
 	}
 	if (isset($history->entries[1])) {
 		$prevRev = $history->entries[1]->rev;
 		$prevPath = $history->entries[1]->path;
 		$vars['prevrev'] = $prevRev;
-		$vars['prevrevurl'] = $revurl.'rev='.$prevRev;
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $path != '/' ? $rev : '');
 		//echo 'PREV='.$vars['prevrevurl'].'<br/>';
 	}
 	// Save the entry from which we pull information for the current revision.
