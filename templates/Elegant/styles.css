@@ -77,10 +77,16 @@ th, td {
 th {
 	height: 16px;
 	text-align: center;
+	border-width: 1px;
 }
 
 thead th {
 	background-image: url(images/bg-table-header.png);
+	border-color: #73a2be;
+}
+
+thead * {
+	color: white;
 }
 
 td {
@@ -97,8 +103,13 @@ td input {
 	top: -2px;
 }
 
-tbody tr.shaded {
+tbody tr.shaded, tbody th {
 	background-color: #ecf3fe;
+}
+
+tbody tr:hover th {
+	background-color: #3875d7;
+	color: white;
 }
 
 tbody tr:hover td {
@@ -660,12 +671,6 @@ body > #wrapper {
 	width: 100%;
 }
 
-#comparisons tbody th {
-	background-color: #3875d7;
-	color: white;
-	border-width: 0;
-}
-
 #comparisons td {
 	padding: 1px 3px;
 	white-space: pre-wrap;
@@ -685,17 +690,6 @@ body > #wrapper {
 	text-align: right;
 	padding: 0 2px;
 	color: #777;
-}
-
-#diff tr.shaded td {
-	border-width: 1px;
-	font-weight: bold;
-	text-align: center;
-}
-
-#diff tr.shaded:hover td {
-	background-color: #3875d7;
-	color: white;
 }
 
 td.diffadded {
@@ -832,6 +826,7 @@ tr:hover td.diffdeleted {
 #repositories h4 {
 	text-align: center;
 	background-image: url(images/bg-table-header.png);
+	color: white;
 	border-bottom: solid 1px #ccc;
 	padding: 2px 5px;
 	margin: 0;
