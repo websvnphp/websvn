@@ -25,6 +25,9 @@ a:link, a:visited {
 a:hover, a:active {
 	text-decoration: underline;
 }
+thead th a:link, thead th a:visited {
+	color: white;
+}
 a img {
 	border: none;
 }
