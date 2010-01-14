@@ -31,14 +31,19 @@ a {
   text-decoration:none;
   outline: none !important;
 }
-a:link {
-  color:#000;
-  text-decoration: none;
-}
-a img {border:0;}
-
 a:hover {
   background-color:#F0E68C;
+}
+a img {
+  border:0;
+}
+table thead th a {
+  color:white;
+}
+table thead th a:hover {
+  text-decoration:underline;
+  color:white;
+  background:none;
 }
 strong, b {
   color:gray;
