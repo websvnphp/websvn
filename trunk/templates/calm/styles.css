@@ -406,6 +406,9 @@ thead th.colcode {
 tbody th {
   background-color: #ddd;
 }
+tbody th.info {
+  background-color: #d0dfea;
+}
 tr td.code {
   text-align:left;
 }
