@@ -646,7 +646,7 @@ body > #wrapper {
 	text-align: right;
 }
 
-#compare_form table tr:hover td {
+#compare_form table tr:hover {
 	background: none;
 }
 
