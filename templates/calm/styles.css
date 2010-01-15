@@ -641,9 +641,6 @@ tr td code, tr td pre {
   display:block;
   height:100%;
 }
-tr td pre {
-  padding-left: 1px 2px 0;
-}
 /* compare table */
 table.diff {
   margin:10px 0 20px;
