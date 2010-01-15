@@ -66,7 +66,6 @@ a img {
   margin-left:2%;
   text-align:left;
   padding:5px 0;
-
 }
 h1, h2 {
   color:gray;
@@ -366,6 +365,10 @@ th {
 }
 td, th {
   border: 1px solid #eeeeee;
+}
+#info th, #info td {
+  border: none;
+  text-align: left;
 }
 #diff td, #blame td, table.diff td {
   vertical-align:top;
@@ -785,6 +788,7 @@ div.blame-popup .date {
 
 #wrap td.age, #wrap td.date, #wrap td.rev {
 	text-align: right;
+	white-space: pre-wrap;
 }
 
 #wrap p.pagelinks > * {
