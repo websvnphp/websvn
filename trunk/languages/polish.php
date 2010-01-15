@@ -112,7 +112,7 @@ $lang["GO"] = "Przejdź";
 $lang["PATHCOMPARISON"] = "Porównywanie katalogów";
 $lang["COMPAREPATHS"] = "Porównaj katalogi";
 $lang["COMPAREREVS"] = "Porównaj wersje";
-$lang["PROPCHANGES"] = "Zmiany właściwości :";
+$lang["PROPCHANGES"] = "Zmiany właściwości:";
 $lang["CONVFROM"] = "Poniższe zestawienie pokazuje zmiany konieczne by
 zaktualizować katalog";
 $lang["TO"] = "na";
