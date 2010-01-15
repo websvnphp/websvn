@@ -675,6 +675,11 @@ body > #wrapper {
 	font-family: monospace;
 }
 
+#comparisons th.info, #comparisons tr:hover th.info {
+	background-image: none;
+	background-color: #cde;
+}
+
 /* @end */
 
 /* @group diff.tmpl */
@@ -818,14 +823,13 @@ tr:hover td.diffdeleted {
 	margin: 0 auto;
 	display: table;
 	font-size: 125%;
-	border: solid 1px #ccc;
+	border: 1px solid #73a2be;
 }
 
 #repositories h4 {
 	text-align: center;
 	background-image: url(images/bg-table-header.png);
 	color: white;
-	border-bottom: solid 1px #ccc;
 	padding: 2px 5px;
 	margin: 0;
 }
