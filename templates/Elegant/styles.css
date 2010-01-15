@@ -80,15 +80,6 @@ th {
 	border-width: 1px;
 }
 
-thead th {
-	background-image: url(images/bg-table-header.png);
-	border-color: #73a2be;
-}
-
-thead * {
-	color: white;
-}
-
 td {
 	border-top-width: 0;
 	border-bottom-width: 0;
@@ -103,33 +94,40 @@ td input {
 	top: -2px;
 }
 
-tbody tr.shaded, tbody th {
-	background-color: #ecf3fe;
-}
-
-tbody tr:hover th {
-	background-color: #3875d7;
+thead * {
 	color: white;
 }
 
-tbody tr:hover td {
+thead th {
+	background-image: url(images/bg-table-header.png);
+	border-color: #73a2be;
+}
+
+tbody th {
+	background-image: url(images/bg-table-divider.png);
+}
+
+tbody tr.shaded {
+	background-color: #ecf3fe;
+}
+
+tbody tr:hover {
 	background-color: #d6dde5;
 }
 
 @media print {
-	tbody tr.shaded td {
-		background-color: #ecf3fe;
+	tbody tr.shaded {
 		border-width: 1px;
 	}
 	
-	tbody tr:hover td {
+	tbody tr:hover {
 		background-color: white;
 	}
 }
 
 /* @end */
 
-/* @group Semantic sections */
+/* @group Semantic Sections */
 
 #wrapper {
 	margin: 0;
@@ -146,7 +144,7 @@ tbody tr:hover td {
 	font-size: 85%;
 	margin: 0;
 	padding: 0 10px;
-	background: url(images/bg-blue-gradient.png) repeat-x 0 top;
+	background: url(images/bg-page-header.png) repeat-x 0 top;
 	border-bottom: solid 1px #4b4b4b;
 }
 
@@ -667,7 +665,7 @@ body > #wrapper {
 }
 
 #comparisons table {
-	margin-top: 10px;
+	margin: 10px 0 15px;
 	width: 100%;
 }
 
