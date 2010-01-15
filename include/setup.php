@@ -581,5 +581,6 @@ $vars['indexurl'] = $config->getURL('', '', 'index');
 if ($rep) {
 	$vars['repurl'] = $config->getURL($rep, '', 'dir');
 }
+$vars['validationurl'] = str_replace('&', '%26', getFullURL($_SERVER['REQUEST_URI']).'&templatechoice='.$userTemplate);
 
 $listing = array();
