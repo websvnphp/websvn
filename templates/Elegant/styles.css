@@ -508,12 +508,8 @@ td.blame a {
 	background: url(images/blame.png) no-repeat;	
 }
 
-td.diff a {
+#revision td.diff a {
 	background: url(images/diff.png) no-repeat;	
-}
-
-#diff td.diff a {
-	background: none;
 }
 
 td.log a {
