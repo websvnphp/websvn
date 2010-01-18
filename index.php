@@ -73,6 +73,7 @@ foreach ($projects as $project) {
 	$parity++;
 	$listing[$i]['groupparity'] = $groupparity % 2;
 	$groupparity++;
+	$listing[$i]['groupname'] = $curgroup;
 	$i++;
 }
 if (empty($listing) && !empty($projects))
