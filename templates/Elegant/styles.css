@@ -815,50 +815,44 @@ tr:hover td.diffdeleted {
 	display: none;
 }
 
-#repositories {
-	margin: 0 auto;
-	display: table;
+#index .information {
+	margin: 10px auto 20px;
+}
+
+#index table {
 	font-size: 125%;
-	border: 1px solid #73a2be;
+	margin: 10px auto;
 }
 
-#repositories h4 {
-	text-align: center;
-	background-image: url(images/bg-table-header.png);
-	color: white;
-	padding: 2px 5px;
-	margin: 0;
-}
-
-#repositories div {
-	padding: 4px 5px;
-	margin: 0;
-}
-
-#repositories div.shaded {
+#index tr.shaded {
 	background-color: #ecf3fe;
 }
 
-#repositories div.groupname {
-	cursor: pointer;
-	background-color: #ddd;
+#index tr.shaded:hover {
+	background-color: #d6dde5;
 }
 
-#repositories div.groupname.closed {
-	margin-bottom: 4px;
+#index th, #index td {
+	padding: 3px 6px;
 }
 
-#repositories div.groupname:hover {
+#index tbody th {
+	padding: 2px;
+	border-bottom-color: #bbb;
+	background-image: url(images/bg-gray-light.png);
+}
+
+#index tbody th:hover {
+	background-image: url(images/bg-gray-dark.png);
 	text-decoration: underline;
 }
 
-#repositories div.grouplist {
-	padding: 0;
+#index td a {
+	background: url(images/cube-blue.png) no-repeat 3px 1px;
 }
 
-#repositories div.grouplist div {
-	border: none;
-	padding-left: 30px;
+#index td a, #index td.group {
+	padding-left: 25px;
 }
 
 /* @end */
