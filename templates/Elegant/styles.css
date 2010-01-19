@@ -691,55 +691,28 @@ body > #wrapper {
 	color: #777;
 }
 
-td.diffadded {
+ins, del {
+	text-decoration: none;
+}
+td.diffadded, ins {
 	background-color: #bfb;
 }
-tr:hover td.diffadded {
-	background-color: #5f5;
-}
-
 td.diffchanged {
 	background-color: #ffc;
 }
-td.diffchanged ins.add {
-	background-color: #bfb;
-	text-decoration: none;
-}
-td.diffchanged del.del {
-	background-color: #f88;
-	text-decoration: none;
-}
-td.diffchanged ins.marker, td.diffchanged del.marker {
-	display: none;
-}
-tr:hover td.diffchanged {
-	background-color: #ff5;
-}
-tr:hover td.diffchanged ins.add {
-	background-color: #5f5;
-}
-tr:hover td.diffchanged del.del {
-	background-color: #f55;
-}
-
-td.diffdeleted {
+td.diffdeleted, del {
 	background-color: #f88;
 }
-tr:hover td.diffdeleted {
-	background-color: #f55;
-}
 
-@media print {
-	tr:hover td.diffadded {
-		background-color: #bfb;
+@media screen {
+	tr:hover td.diffadded, tr:hover ins {
+		background-color: #5f5;
 	}
-	
 	tr:hover td.diffchanged {
-		background-color: #ffc;
+		background-color: #ff5;
 	}
-
-	tr:hover td.diffdeleted {
-		background-color: #f88;
+	tr:hover td.diffdeleted, tr:hover del {
+		background-color: #f55;
 	}
 }
 
