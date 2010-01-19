@@ -707,22 +707,19 @@ table tr:hover td.diffchanged pre {
   border-color:#bbbb55;
 }
 
-ins.add {
+ins {
   background-color: #bbffbb;
   text-decoration: none;
 }
-tr:hover ins.add {
+tr:hover ins {
   background-color: #99ff99;
 }
-del.del {
+del {
   background-color: #ffccaa;
   text-decoration: none;
 }
-tr:hover del.del {
+tr:hover del {
   background-color: #ffaa88;
-}
-ins.marker, del.marker {
-  display: none;
 }
 
 code {
