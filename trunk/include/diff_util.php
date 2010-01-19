@@ -158,8 +158,8 @@ class LineDiff extends LineDiffInterface {
 		// we do not need inline diff, return highlighted texts
 		if (!$do_diff) return array($highlighted1, $highlighted2);
 
-		$tokens1 = $this->tokenize($text1, $this->ignoreWhitespace);
-		$tokens2 = $this->tokenize($text2, $this->ignoreWhitespace);
+		$tokens1 = $this->tokenize($highlighted1, $this->ignoreWhitespace);
+		$tokens2 = $this->tokenize($highlighted2, $this->ignoreWhitespace);
 
 		if (!$this->ignoreWhitespace) {
 			$diff = @new Text_Diff('native', array($tokens1, $tokens2));
@@ -184,23 +184,21 @@ class LineDiff extends LineDiffInterface {
 		$line1 = '';
 		$line2 = '';
 		foreach ($edits as $edit) {
-			if (is_a($edit, 'Text_Diff_Op_add')) {
-				$line1 .= '<ins class="marker">@</ins>';
-				$line2 .= '<ins class="add">'.replaceEntities(implode('', $edit->final)).'</ins>';
+			if (is_a($edit, 'Text_Diff_Op_copy')) {
+				$line1 .= implode('', $edit->orig);
+				$line2 .= implode('', $edit->final);
 			} else if (is_a($edit, 'Text_Diff_Op_delete')) {
-				$line1 .= '<del class="del">'.replaceEntities(implode('', $edit->orig)).'</del>';
-				$line2 .= '<del class="marker">@</del>';
-			} else if (is_a($edit, 'Text_Diff_Op_copy')) {
-				$line1 .= replaceEntities(implode('', $edit->orig));
-				$line2 .= replaceEntities(implode('', $edit->final));
+				$line1 .= '<del>'.implode('', $edit->orig).'</del>';
+			} else if (is_a($edit, 'Text_Diff_Op_add')) {
+				$line2 .= '<ins>'.implode('', $edit->final).'</ins>';
 			} else if (is_a($edit, 'Text_Diff_Op_change')) {
-				$line1 .= '<del class="del">'.replaceEntities(implode('', $edit->orig)).'</del>';
-				$line2 .= '<ins class="add">'.replaceEntities(implode('', $edit->final)).'</ins>';
+				$line1 .= '<del>'.implode('', $edit->orig).'</del>';
+				$line2 .= '<ins>'.implode('', $edit->final).'</ins>';
 			} else {
 				assert(false);
 			}
 		}
-		return array('<code>'.$line1.'</code>', '<code>'.$line2.'<code>');
+		return array($line1, $line2);
 	}
 	// }}}
 }
