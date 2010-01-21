@@ -369,39 +369,6 @@ $vars['language_select'] .= '</select>';
 $vars['language_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
 $vars['language_endform'] = '</form>';
 
-// Set up headers
-header('Content-Type: text/html; charset=UTF-8');
-header('Content-Language: '.$language);
-
-if ($config->multiViews) {
-	$rep = null; // MultiViews has custom code to load a repository
-} else {
-	// Load repository matching 'repname' parameter (if set) or the default.
-	$repname = @$_REQUEST['repname'];
-	if (isset($repname)) {
-		$rep = $config->findRepository($repname);
-	} else {
-		$reps = $config->getRepositories();
-		$rep = (isset($reps[0]) ? $reps[0] : null);
-	}
-	// Make sure that the user has set up a repository
-	if ($rep == null) {
-		$vars['error'] = $lang['SUPPLYREP'];
-	} else if (is_string($rep)) {
-		$vars['error'] = $rep;
-		$rep = null;
-	} else {
-		$vars['repurl'] = $config->getURL($rep, '', 'dir');
-		$vars['clientrooturl'] = $rep->clientRootURL;
-		$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
-		$vars['allowdownload'] = $rep->getAllowDownload();
-	}
-	// With MultiViews, wsvn creates the form once the current project is found.
-	createProjectSelectionForm();
-	createRevisionSelectionForm();
-}
-$vars['indexurl'] = $config->getURL('', '', 'index');
-
 // If the request specifies a template, store in a permanent/session cookie.
 // Otherwise, check for cookies specifying a particular template.
 $template = '';
@@ -448,15 +415,42 @@ if (count($templates) > 1) {
 	$vars['template_endform'] = '';
 }
 
+if ($config->multiViews) {
+	$rep = null; // MultiViews has custom code to load a repository
+} else {
+	// Load repository matching 'repname' parameter (if set) or the default.
+	$repname = @$_REQUEST['repname'];
+	if (isset($repname)) {
+		$rep = $config->findRepository($repname);
+	} else {
+		$reps = $config->getRepositories();
+		$rep = (isset($reps[0]) ? $reps[0] : null);
+	}
+	// Make sure that the user has set up a repository
+	if ($rep == null) {
+		$vars['error'] = $lang['SUPPLYREP'];
+	} else if (is_string($rep)) {
+		$vars['error'] = $rep;
+		$rep = null;
+	} else {
+		$vars['repurl'] = $config->getURL($rep, '', 'dir');
+		$vars['clientrooturl'] = $rep->clientRootURL;
+		$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+		$vars['allowdownload'] = $rep->getAllowDownload();
+	}
+	// With MultiViews, wsvn creates the form once the current project is found.
+	createProjectSelectionForm();
+	createRevisionSelectionForm();
+}
+$vars['indexurl'] = $config->getURL('', '', 'index');
 $vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($queryParams + array('template' => $template), '%26');
 
-// Retrieve other standard parameters
-
-// due to possible XSS exploit, we need to clean up path first
+// To avoid a possible XSS exploit, need to clean up the passed-in path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 if ($path === null || $path === '')
 	$path = '/';
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
+// Set operative and peg revisions (if specified) and save passed-in revision
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
 if ($peg === 0)
@@ -464,6 +458,10 @@ if ($peg === 0)
 $passrev = $rev;
 
 $listing = array();
+
+// Set up response headers
+header('Content-Type: text/html; charset=UTF-8');
+header('Content-Language: '.$language);
 
 // Function to create the project selection HTML form
 function createProjectSelectionForm() {
