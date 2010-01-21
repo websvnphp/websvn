@@ -322,18 +322,11 @@ if (file_exists('include/config.php')) {
 	die('File "include/config.php" does not exist, please create one. The example file "include/distconfig.php" may be copied and modified as needed.');
 }
 
-require_once 'include/svnlook.php';
-
 // Make sure that the input locale is set up correctly
 setlocale(LC_ALL, '');
 
-// Default 'zipped' array
-
-$zipped = array();
-
-// Set up the version info
-
-initSvnVersion();
+// Initialize the version of SVN that is being used by WebSVN internally.
+require_once 'include/svnlook.php';
 $vars['svnversion'] = $config->getSubversionVersion();
 
 // Get the user choice if there is one, and memorise the setting as a cookie
