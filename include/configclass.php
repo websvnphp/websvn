@@ -1288,8 +1288,10 @@ class WebSvnConfig {
 			echo 'No template path added in config file';
 			exit;
 		}
-		if ($this->userTemplate !== false) return $this->userTemplate;
-		return $this->templatePaths[0];
+		if ($this->userTemplate !== false)
+			return $this->userTemplate;
+		else
+			return $this->templatePaths[0];
 	}
 
 	// }}}
@@ -1477,8 +1479,9 @@ class WebSvnConfig {
 	// The mergesort function preserves this order.
 
 	function sortByGroup() {
-		if (!empty($this->_repositories))
-		mergesort($this->_repositories, 'cmpGroups');
+		if (!empty($this->_repositories)) {
+			mergesort($this->_repositories, 'cmpGroups');
+		}
 	}
 
 	// }}}
