@@ -190,7 +190,6 @@ if ($rep) {
 // $listing is populated with file data when file.tmpl calls [websvn-getlisting]
 
 $vars['template'] = 'file';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'file.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('file.tmpl');
+parseTemplate('footer.tmpl');

@@ -399,7 +399,6 @@ if ($rep) {
 }
 
 $vars['template'] = 'log';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'log.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('log.tmpl');
+parseTemplate('footer.tmpl');
