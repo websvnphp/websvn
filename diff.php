@@ -172,7 +172,6 @@ if ($rep) {
 }
 
 $vars['template'] = 'diff';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'diff.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('diff.tmpl');
+parseTemplate('footer.tmpl');

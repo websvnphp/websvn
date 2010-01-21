@@ -202,7 +202,6 @@ if ($rep) {
 }
 
 $vars['template'] = 'blame';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'blame.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('blame.tmpl');
+parseTemplate('footer.tmpl');
