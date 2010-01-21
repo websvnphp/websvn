@@ -85,6 +85,6 @@ $vars['opentree'] = $config->openTree;
 $vars['groupcount'] = $groupcount; // Indicates whether any groups were present.
 
 $vars['template'] = 'index';
-parseTemplate($config->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($config->getTemplatePath().'index.tmpl', $vars, $listing);
-parseTemplate($config->getTemplatePath().'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('index.tmpl');
+parseTemplate('footer.tmpl');

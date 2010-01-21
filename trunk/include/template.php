@@ -45,7 +45,7 @@ function parseCommand($line, $vars, $handle) {
 		if (!$ignore) {
 			$line = trim($line);
 			$file = substr($line, 16, -1);
-			parseTemplate($config->getTemplatePath().$file, $vars, $listing);
+			parseTemplate($file);
 		}
 		return true;
 	}
@@ -65,7 +65,6 @@ function parseCommand($line, $vars, $handle) {
 		} else {
 			$ignorelevel++;
 		}
-
 		return true;
 	}
 
@@ -73,7 +72,6 @@ function parseCommand($line, $vars, $handle) {
 		if ($ignorelevel == 0) {
 			$ignore = !$ignore;
 		}
-
 		return true;
 	}
 
@@ -83,7 +81,6 @@ function parseCommand($line, $vars, $handle) {
 		} else {
 			$ignore = array_pop($ignorestack);
 		}
-
 		return true;
 	}
 
@@ -93,7 +90,6 @@ function parseCommand($line, $vars, $handle) {
 		if (!$ignore) {
 			$svnrep->listFileContents($path, $rev, $peg);
 		}
-
 		return true;
 	}
 
@@ -110,20 +106,15 @@ function parseCommand($line, $vars, $handle) {
 		if (!$ignore) {
 			while (!feof($handle)) {
 				$line = trim(fgets($handle));
-
 				if (strncmp($line, '[websvn-enddefineicons]', 22) == 0) {
 					return true;
 				}
-
 				$eqsign = strpos($line, '=');
-
 				$match = substr($line, 0, $eqsign);
 				$def = substr($line, $eqsign + 1);
-
 				$icons[$match] = $def;
 			}
 		}
-
 		return true;
 	}
 
@@ -132,7 +123,6 @@ function parseCommand($line, $vars, $handle) {
 
 		if (!$ignore) {
 			// The current filetype should be defined my $vars['filetype']
-
 			if (!empty($icons[$vars['filetype']])) {
 				echo parseTags($icons[$vars['filetype']], $vars);
 			} else if (!empty($icons['*'])) {
@@ -166,10 +156,8 @@ function parseCommand($line, $vars, $handle) {
 				}
 			}
 		}
-
 		return true;
 	}
-
 	return false;
 }
 
@@ -177,9 +165,10 @@ function parseCommand($line, $vars, $handle) {
 //
 // Parse the given template, replacing the variables with the values passed
 
-function parseTemplate($template, $vars, $listing) {
-	global $ignore, $vars;
+function parseTemplate($file) {
+	global $ignore, $rep, $config, $vars, $listing;
 
+	$template = (($rep) ? $rep->getTemplatePath() : $config->getTemplatePath()).$file;
 	if (!is_file($template)) {
 		print 'No template file found ('.$template.')';
 		exit;
@@ -192,7 +181,6 @@ function parseTemplate($template, $vars, $listing) {
 
 	while (!feof($handle)) {
 		$line = fgets($handle);
-
 		// Check for the end of the file list
 		if ($inListing) {
 			if (strcmp(trim($line), '[websvn-endlisting]') == 0) {
@@ -204,26 +192,18 @@ function parseTemplate($template, $vars, $listing) {
 					foreach ($listvars as $id => $value) {
 						$vars[$id] = $value;
 					}
-
 					// Output the list item
 					foreach ($listLines as $line) {
-						if (!parseCommand($line, $vars, $handle)) {
-							if (!$ignore) {
-								print parseTags($line, $vars);
-							}
+						if (!parseCommand($line, $vars, $handle) && !$ignore) {
+							print parseTags($line, $vars);
 						}
 					}
 				}
-
-			} else {
-				if ($ignore == false) {
-					$listLines[] = $line;
-				}
+			} else if ($ignore == false) {
+				$listLines[] = $line;
 			}
-
 		} else if (parseCommand($line, $vars, $handle)) {
 			continue;
-
 		} else {
 			// Check for the start of the file list
 			if (strncmp(trim($line), '[websvn-startlisting]', 21) == 0) {
@@ -235,7 +215,6 @@ function parseTemplate($template, $vars, $listing) {
 			}
 		}
 	}
-
 	fclose($handle);
 }
 
@@ -273,10 +252,7 @@ function parseTags($line, $vars) {
 		if (!isset($lang[$matches[1]])) {
 			$lang[$matches[1]] = '?${matches[1]}?';
 		}
-
 		$line = str_replace($matches[0], $lang[$matches[1]], $line);
 	}
-
-	// Return the results
 	return $line;
 }
