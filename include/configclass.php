@@ -230,6 +230,7 @@ class Repository {
 	var $minDownloadLevel;
 	var $allowedExceptions = array();
 	var $disallowedExceptions = array();
+	var $logsShowChanges;
 	var $rss;
 	var $rssCaching;
 	var $rssMaxEntries;
@@ -283,6 +284,19 @@ class Repository {
 	// }}}
 
 	// Local configuration accessors
+
+	function setLogsShowChanges($enabled = true) {
+		$this->logsShowChanges = $enabled;
+	}
+
+	function logsShowChanges() {
+		global $config;
+
+		if (isset($this->logsShowChanges))
+			return $this->logsShowChanges;
+		else
+			return $config->logsShowChanges();
+	}
 
 	// {{{ RSS Feed
 
@@ -605,6 +619,7 @@ class WebSvnConfig {
 	var $minDownloadLevel = 0;
 	var $allowedExceptions = array();
 	var $disallowedExceptions = array();
+	var $logsShowChanges = false;
 	var $rss = true;
 	var $rssCaching = false;
 	var $rssMaxEntries = 40;
@@ -809,6 +824,27 @@ class WebSvnConfig {
 		}
 	}
 
+	// }}}
+
+	// {{{ Show changed files by default on log.php
+
+	function setLogsShowChanges($enabled = true, $myrep = 0) {
+		if (empty($myrep)) {
+			$this->logsShowChanges = $enabled;
+		} else {
+			$repo =& $this->findRepository($myrep);
+			$repo->logsShowChanges = $enabled;
+		}
+	}
+
+	function logsShowChanges() {
+		return $this->logsShowChanges;
+	}
+
+	// }}}
+
+	// {{{ RSS
+
 	function setRssEnabled($enabled = true, $myrep = 0) {
 		if (empty($myrep)) {
 			$this->rss = $enabled;
@@ -821,8 +857,6 @@ class WebSvnConfig {
 	function isRssEnabled() {
 		return $this->rss;
 	}
-
-	// {{{ RSS
 
 	function setRssCachingEnabled($enabled = true, $myrep = 0) {
 		if (empty($myrep)) {
