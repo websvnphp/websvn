@@ -400,6 +400,23 @@ $config->useGeshi();
 
 // }}}
 
+// {{{ SHOW CHANGED FILES IN LOG ---
+
+// Uncomment this line to show changed files on log.php by default. The normal
+// behavior is to do this only if the "Show changed files" link is clicked. This
+// setting reverses the default action but still allows hiding changed files.
+
+// $config->setLogsShowChanges(true);
+
+// To override the global setting for individual repositories, uncomment and replicate
+// the appropriate line below (replacing 'myrep' with the name of the repository).
+// Use the convention 'groupname.myrep' if your repository is in a group.
+
+// $config->setLogsShowChanges(true,  'myrep');
+// $config->setLogsShowChanges(false, 'myrep');
+
+// }}}
+
 // {{{ BUGTRAQ ---
 
 // Uncomment this line to use bugtraq: properties to show links to your BugTracker
