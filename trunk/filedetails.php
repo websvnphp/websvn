@@ -54,7 +54,7 @@ if ($rep) {
 	// Check to see if the user has requested that this type be zipped and sent
 	// to the browser as an attachment
 
-	if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
+	if (isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
 		$base = basename($path);
 		header('Content-Type: application/x-gzip');
 		header('Content-Disposition: attachment; filename='.urlencode($base).'.gz');
