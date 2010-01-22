@@ -437,10 +437,16 @@ th {
 td {
 	border-top-width: 0;
 	border-bottom-width: 0;
+	overflow: hidden;
 }
 
 td a {
 	padding: 1px 0;
+}
+
+td.path a {
+	display: inline-block;
+	width: 100%;
 }
 
 td input {
