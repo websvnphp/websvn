@@ -550,16 +550,12 @@ td.svn a {
 }
 
 #footer #valid {
-	padding: 3px 5px;
+	padding: 4px 5px 4px 16px;
 	vertical-align: middle;
 	position: absolute;
 	border: 0;
 	right: 0;
-}
-
-#footer #valid img {
-	position: relative;
-	top: 2px;
+	background: url(images/valid.png) no-repeat 0 5px;
 }
 
 /* @group Sticky Footer */
