@@ -330,7 +330,7 @@ require_once 'include/svnlook.php';
 $vars['svnversion'] = $config->getSubversionVersion();
 
 // Initialize an array with all query parameters except language and template.
-$queryParams = $_REQUEST;
+$queryParams = $_GET + $_POST;
 unset($queryParams['language']);
 unset($queryParams['template']);
 
