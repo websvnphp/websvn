@@ -768,16 +768,17 @@ td.diffdeleted, del {
 
 /* @group file.tmpl */
 
-#contents {
+#file #content {
+	text-align: center;
+}
+
+#file #content #contents {
+	text-align: left;
 	margin: 0 auto;
-	display: table;
+	display: inline-block;
 }
 
-#contents .geshi {
-	display: inline;
-}
-
-#contents pre {
+#file #content #contents pre {
 	white-space: pre-wrap;
 }
 
