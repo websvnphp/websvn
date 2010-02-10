@@ -467,7 +467,7 @@ tbody th {
 	background-image: url(images/bg-table-divider.png);
 }
 
-tbody tr.shaded {
+tbody tr.shaded, tbody tr.dark {
 	background-color: #ecf3fe;
 }
 
@@ -602,10 +602,6 @@ body > #wrapper {
 /* @end */
 
 /* @group blame.tmpl */
-
-#blame tr.dark {
-	background-color: #ecf3fe;
-}
 
 #blame td {
 	vertical-align: top;
