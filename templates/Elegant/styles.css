@@ -625,6 +625,10 @@ body > #wrapper {
 	white-space: normal;
 }
 
+#blame td.code, #blame td.line {
+	font-family: Consolas, Menlo, Monaco, monospace;	
+}
+
 /* @end */
 
 /* @group compare.tmpl */
@@ -669,7 +673,7 @@ body > #wrapper {
 #comparisons td {
 	padding: 1px 3px;
 	white-space: pre-wrap;
-	font-family: monospace;
+	font-family: Consolas, Menlo, Monaco, monospace;
 }
 
 #comparisons th.info, #comparisons tr:hover th.info {
@@ -684,9 +688,10 @@ body > #wrapper {
 #diff td {
 	white-space: normal;
 	vertical-align: top;
+	font-family: Consolas, Menlo, Monaco, monospace;
 }
 
-#diff td.lineno {
+#diff td.line {
 	text-align: right;
 	padding: 0 2px;
 	color: #777;
@@ -768,17 +773,11 @@ td.diffdeleted, del {
 
 /* @group file.tmpl */
 
-#file #content {
-	text-align: center;
+#file #listing {
+	font-family: Consolas, Menlo, Monaco, monospace;
 }
 
-#file #content #contents {
-	text-align: left;
-	margin: 0 auto;
-	display: inline-block;
-}
-
-#file #content #contents pre {
+#file #listing pre {
 	white-space: pre-wrap;
 }
 
