@@ -96,6 +96,8 @@ if ($config->multiViews) {
 
 	createProjectSelectionForm();
 	createRevisionSelectionForm();
+	$vars['repurl'] = $config->getURL($rep, '', 'dir');
+	$vars['clientrooturl'] = $rep->clientRootURL;
 	$vars['allowdownload'] = $rep->getAllowDownload();
 	$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
 
