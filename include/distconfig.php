@@ -335,7 +335,13 @@ $config->setMinDownloadLevel(2);
 // You'll need Enscript version 1.6 or higher AND Sed installed to use this feature.
 // Set the path above.
 //
+// If you have version 1.6.3 or newer use the following line.
+//
 // $config->useEnscript();
+//
+// If you have version 1.6.2 or older use the following line.
+//
+// $config->useEnscript(true);
 
 // Enscript need to be told what the contents of a file are so that it can be colourised
 // correctly. WebSVN includes a predefined list of mappings from file extension to Enscript

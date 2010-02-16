@@ -569,6 +569,12 @@ class SVNRepository {
 		return $config->getSvnCommand().' '.$command.' '.$this->repConfig->svnParams().($rev ? '-r '.$rev.' ' : '').quote(encodePath($this->getSvnPath($path)).'@'.($peg ? $peg : ''));
 	}
 
+	// Private function to simplify creation of enscript command string text.
+	function enscriptCommandString($l) {
+		global $config;
+		return $config->enscript.' --language=html '.($l ? '--color --'.(!$config->getUseEnscriptBefore_1_6_3() ? 'highlight' : 'pretty-print').'='.$l : '').' -o -';
+	}
+
 	// {{{ getFileContents
 	//
 	// Dump the content of a file to the given filename
@@ -603,8 +609,7 @@ class SVNRepository {
 			// It's complicated because it's designed not to return those lines themselves.
 			$l = @$extEnscript[$ext];
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
-			$cmd = quoteCommand($cmd.' | '.
-				$config->enscript.' --language=html '.($l ? '--color --pretty-print='.$l : '').' -o - | '.
+			$cmd = quoteCommand($cmd.' | '.enscriptCommandString($l).' | '.
 				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
 		} else {
 			$highlighted = false;
@@ -754,8 +759,7 @@ class SVNRepository {
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
 			if ($config->useEnscript) {
 				$l = @$extEnscript[$ext];
-				$cmd .= ' | '.$config->enscript.' --language=html '.
-					($l ? '--color --pretty-print='.$l : '').' -o - | '.
+				$cmd .= ' | '.enscriptCommandString($l).' | '.
 					$config->sed.' -n '.$config->quote.'/^<PRE.$/,/^<\\/PRE.$/p'.$config->quote;
 			} else {
 				$pre = true;
