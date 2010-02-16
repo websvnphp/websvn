@@ -612,6 +612,7 @@ class WebSvnConfig {
 	var $serverIsWindows = false;
 	var $multiViews = false;
 	var $useEnscript = false;
+	var $useEnscriptBefore_1_6_3 = false;
 	var $useGeshi = false;
 	var $inlineMimeTypes = array();
 	var $allowDownload = false;
@@ -788,12 +789,17 @@ class WebSvnConfig {
 	//
 	// Use Enscript to colourise listings
 
-	function useEnscript() {
+	function useEnscript($before_1_6_3 = false) {
 		$this->useEnscript = true;
+		$this->useEnscriptBefore_1_6_3 = $before_1_6_3;
 	}
 
 	function getUseEnscript() {
 		return $this->useEnscript;
+	}
+
+	function getUseEnscriptBefore_1_6_3() {
+		return $this->useEnscriptBefore_1_6_3;
 	}
 
 	// }}}
@@ -1199,7 +1205,7 @@ class WebSvnConfig {
 	// Define the location of the enscript command
 
 	function setEnscriptPath($path) {
-		$this->_setPath($this->enscript, $path, 'enscript');
+		$this->_setPath($this->enscript, $path, 'enscript -q');
 	}
 
 	function getEnscriptCommand() {
