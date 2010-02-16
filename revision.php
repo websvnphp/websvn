@@ -65,9 +65,11 @@ if ($rep) {
 		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
 		if (isset($history2->entries[1])) {
 			$nextRev = $history2->entries[1]->rev;
-			$vars['nextrev'] = $nextRev;
-			$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $rev : '');
-			//echo 'NEXT='.$vars['nextrevurl'].'<br/>';
+			if ($nextRev != $youngest) {
+				$vars['nextrev'] = $nextRev;
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $rev : '');
+				//echo 'NEXT='.$vars['nextrevurl'].'<br/>';
+			}
 		}
 		unset($vars['error']);
 	}
