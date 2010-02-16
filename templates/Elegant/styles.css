@@ -952,16 +952,22 @@ table#logs {
 	overflow: visible;
 }
 
-#revision #changes td.path a.added {
+#revision #changes tr.A td.path a {
 	background-image: url(images/added.png);
 }
 
-#revision #changes td.path a.deleted {
+#revision #changes tr.D td.path a {
 	background-image: url(images/deleted.png);
 }
 
-#revision #changes td.path a.modified {
+#revision #changes tr.M td.path a {
 	background-image: url(images/modified.png);
+}
+
+#revision del {
+	background: none;
+	color: gray;
+	padding-left: 18px;
 }
 
 /* @end */

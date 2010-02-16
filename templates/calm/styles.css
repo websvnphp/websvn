@@ -295,20 +295,6 @@ li.mod a, li.new a, #info li.del {
   background-position:5px 50%;
   background-repeat:no-repeat;
 }
-a.modified, a.added, a.deleted {
-  padding-left: 26px;
-  background-position:5px 50%;
-  background-repeat:no-repeat;
-}
-a.modified {
-  background-image:url(images/page_white_edit.png);
-}
-a.added {
-  background-image:url(images/page_white_add.png);
-}
-a.deleted {
-  background-image:url(images/page_white_delete.png);
-}
 li.mod a {
   display:block;
   color:#545400;
@@ -427,6 +413,7 @@ tr:hover td.code {
 }
 tr td.path, tr th.path {
   text-align:left;
+  width: 100%;
 }
 tr td.path {
   padding:0;
@@ -810,7 +797,7 @@ div#warning {
 	background-color: #ffd;
 }
 
-#log table td {
+table td {
 	vertical-align: top;
 	padding: 2px;
 }
@@ -846,4 +833,29 @@ td.changes .mod {
 
 #blame table td.code pre {
 	border: none;
+}
+
+#revision td.path a {
+	background-position:5px 50%;
+	background-repeat:no-repeat;
+	padding-left: 26px;
+	top: 2px;
+	position: relative;
+}
+
+#revision tr.M td.path a {
+	background-image:url(images/page_white_edit.png);
+}
+
+#revision tr.A td.path a {
+	background-image:url(images/page_white_add.png);
+}
+
+#revision tr.D td.path a {
+	background-image:url(images/page_white_delete.png);
+}
+
+#revision del {
+	padding-left: 26px;
+	background: none;
 }

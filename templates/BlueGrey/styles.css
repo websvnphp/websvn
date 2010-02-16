@@ -370,3 +370,11 @@ img.icon {
 
 /* @end */
 
+/* @group revision.tmpl */
+
+#revision del {
+	color: #555;
+	text-decoration: none;
+}
+
+/* @end */

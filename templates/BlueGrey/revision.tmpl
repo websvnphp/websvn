@@ -64,16 +64,12 @@
       </thead>
       <tbody>
       [websvn-startlisting]
-      <tr class="row[websvn:rowparity]">
-        [websvn-test:modified]
-         <td>M <a href="[websvn:detailurl]">[websvn:path]</a></td>
-        [websvn-endtest]
-        [websvn-test:added]
-         <td>A <a href="[websvn:detailurl]">[websvn:path]</a></td>
-        [websvn-endtest]
-        [websvn-test:deleted]
-         <td>D <a href="[websvn:detailurl]">[websvn:path]</a></td>
-        [websvn-endtest]
+      <tr class="[websvn:action] row[websvn:rowparity]">
+         <td>[websvn:action] <a href="[websvn:detailurl]">[websvn:path]</a>
+           [websvn-test:oldpath]
+           <br/>&nbsp; &nbsp;<del>[websvn:oldpath] ([lang:PREV])</del>
+           [websvn-endtest]
+         </td>
         [websvn-test:blameurl]
          <td><a href="[websvn:blameurl]">[lang:BLAME]</a></td>
         [websvn-else]
