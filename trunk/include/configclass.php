@@ -705,7 +705,7 @@ class WebSvnConfig {
 					// we have to check if we already have a repo with the same svn name
 					$duplicate = false;
 					foreach ($this->_repositories as $knownRepos) {
-						if ($knownRepos->svnName == $repo->svnName && $knownRepos->subpath == $repo->subpath) {
+						if ($knownRepos->path == $repo->path && $knownRepos->subpath == $repo->subpath) {
 							$duplicate = true;
 							break;
 						}
