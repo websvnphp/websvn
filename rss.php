@@ -111,7 +111,11 @@ if ($history && is_array($history->entries)) {
 					case 'M': $description .= '~ '; break;
 					case 'D': $description .= 'x '; break;
 				}
-				$description .= $modifiedResource->path.'<br />';
+				$description .= $modifiedResource->path;
+				if ($modifiedResource->copyfrom != '') {
+					$description .= ' <i>(copied from '.$modifiedResource->copyfrom.'@'.$modifiedResource->copyrev.')</i>';
+				}
+				$description .= '<br />';
 			}
 		}
 		$itemLink = getFullURL($baseurl.$config->getURL($rep, '', 'revision').'rev='.$r->rev);
