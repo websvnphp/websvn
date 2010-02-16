@@ -57,17 +57,12 @@
       </thead>
       <tbody>
       [websvn-startlisting]
-      <tr class="row[websvn:rowparity]">
-        <td width="100%">
-          [websvn-test:modified]
-          <a href="[websvn:detailurl]" class="modified">[websvn:path]</a>
-          [websvn-endtest]
-          [websvn-test:added]
-          <a href="[websvn:detailurl]" class="added">[websvn:path]</a>
-          [websvn-endtest]
-          [websvn-test:deleted]
-          <a href="[websvn:detailurl]" class="deleted">[websvn:path]</a>
-          [websvn-endtest]
+      <tr class="[websvn:action] row[websvn:rowparity]">
+        <td class="path">
+          <a href="[websvn:detailurl]">[websvn:path]</a>
+            [websvn-test:oldpath]
+            <br/><del>[websvn:oldpath] ([lang:PREV])</del>
+            [websvn-endtest]
         </td>
         <td>
           [websvn-test:blameurl]
