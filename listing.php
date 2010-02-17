@@ -89,6 +89,26 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 	$last_index = 0;
 	$accessToThisDir = $rep->hasReadAccess($path, false);
 
+	// If using flat view and not at the root, create a '..' entry at the top.
+	if (!$treeview && count($subs) > 2) {
+		$parentPath = $subs;
+		unset($parentPath[count($parentPath)-2]);
+		$parentPath = implode('/', $parentPath);
+		if ($rep->hasReadAccess($parentPath, false)) {
+			$listing[$index]['path'] = $parentPath;
+			$listing[$index]['filetype'] = 'dir';
+			$listing[$index]['filelink'] = '<a href="'.removeURLSeparator($config->getURL($rep, $parentPath, 'dir').$passRevString).'">..</a>';
+			$listing[$index]['level'] = 0;
+			$listing[$index]['node'] = 0; // t-node
+			$listing[$index]['revision'] = $rev;
+			$listing[$index]['revurl'] = $config->getURL($rep, $parentPath, 'revision').'rev='.$rev.'&amp;isdir=1';
+			global $vars;
+			$listing[$index]['date'] = $vars['date'];
+			$listing[$index]['age'] = datetimeFormatDuration(time() - strtotime($vars['date']), true, true);
+			$index++;
+		}
+	}
+
 	$downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev.'&amp;' : '';
 
 	$openDir = false;
