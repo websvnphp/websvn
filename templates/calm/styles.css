@@ -728,7 +728,6 @@ code {
 table tr td.logmsg {
   text-align:left;
   padding: 3px 0 3px 3px;
-  vertical-align:middle;
 }
 
 /* sidebar form without css-bg-colors */
