@@ -300,7 +300,7 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false) {
 
 function parseSvnTimestamp($dateString) {
 	// Try the simple approach of a built-in PHP function first.
-	$date = strtotime($data);
+	$date = strtotime($dateString);
 	// If the resulting timestamp isn't sane, try parsing manually.
 	if ($date <= 0) {
 		$y = 0;
@@ -309,7 +309,7 @@ function parseSvnTimestamp($dateString) {
 		$h = 0;
 		$m = 0;
 		$s = 0;
-		sscanf($data, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
+		sscanf($dateString, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
 		
 		$mo = substr('00'.$mo, -2);
 		$d = substr('00'.$d, -2);
