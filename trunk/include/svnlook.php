@@ -205,33 +205,10 @@ function listCharacterData($parser, $data) {
 			$data = trim($data);
 			if ($data === false || $data === '') return;
 
-			$y = 0;
-			$mo = 0;
-			$d = 0;
-			$h = 0;
-			$m = 0;
-			$s = 0;
-			sscanf($data, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
-
-			$mo = substr('00'.$mo, -2);
-			$d = substr('00'.$d, -2);
-			$h = substr('00'.$h, -2);
-			$m = substr('00'.$m, -2);
-			$s = substr('00'.$s, -2);
-
-			$committime = strtotime($y.'-'.$mo.'-'.$d.' '.$h.':'.$m.':'.$s.' GMT');
-
-			$curList->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
-
+			$committime = strtotime($data);
 			$curList->curEntry->committime = $committime;
-			$curtime = time();
-
-			// Get the number of seconds since the commit
-			$agesecs = $curtime - $committime;
-			if ($agesecs < 0) $agesecs = 0;
-
-			$curList->curEntry->age = datetimeFormatDuration($agesecs, true, true);
-
+			$curList->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
+			$curList->curEntry->age = datetimeFormatDuration(max(time() - $committime, 0), true, true);
 			break;
 	}
 }
@@ -346,33 +323,10 @@ function logCharacterData($parser, $data) {
 			$data = trim($data);
 			if ($data === false || $data === '') return;
 
-			$y = 0;
-			$mo = 0;
-			$d = 0;
-			$h = 0;
-			$m = 0;
-			$s = 0;
-			sscanf($data, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
-
-			$mo = substr('00'.$mo, -2);
-			$d = substr('00'.$d, -2);
-			$h = substr('00'.$h, -2);
-			$m = substr('00'.$m, -2);
-			$s = substr('00'.$s, -2);
-
-			$committime = strtotime($y.'-'.$mo.'-'.$d.' '.$h.':'.$m.':'.$s.' GMT');
-
-			$curLog->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
-
+			$committime = strtotime($data);
 			$curLog->curEntry->committime = $committime;
-			$curtime = time();
-
-			// Get the number of seconds since the commit
-			$agesecs = $curtime - $committime;
-			if ($agesecs < 0) $agesecs = 0;
-
-			$curLog->curEntry->age = datetimeFormatDuration($agesecs, true, true);
-
+			$curLog->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
+			$curLog->curEntry->age = datetimeFormatDuration(max(time() - $committime, 0), true, true);
 			break;
 
 		case 'MSG':
