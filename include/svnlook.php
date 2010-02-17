@@ -205,7 +205,7 @@ function listCharacterData($parser, $data) {
 			$data = trim($data);
 			if ($data === false || $data === '') return;
 
-			$committime = strtotime($data);
+			$committime = parseSvnTimestamp($data);
 			$curList->curEntry->committime = $committime;
 			$curList->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
 			$curList->curEntry->age = datetimeFormatDuration(max(time() - $committime, 0), true, true);
@@ -323,7 +323,7 @@ function logCharacterData($parser, $data) {
 			$data = trim($data);
 			if ($data === false || $data === '') return;
 
-			$committime = strtotime($data);
+			$committime = parseSvnTimestamp($data);
 			$curLog->curEntry->committime = $committime;
 			$curLog->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
 			$curLog->curEntry->age = datetimeFormatDuration(max(time() - $committime, 0), true, true);

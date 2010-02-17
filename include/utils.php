@@ -298,6 +298,29 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false) {
 
 // }}}
 
+function parseSvnTimestamp($dateString) {
+	// Try the simple approach of a built-in PHP function first.
+	$date = strtotime($data);
+	// If the resulting timestamp isn't sane, try parsing manually.
+	if ($date <= 0) {
+		$y = 0;
+		$mo = 0;
+		$d = 0;
+		$h = 0;
+		$m = 0;
+		$s = 0;
+		sscanf($data, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
+		
+		$mo = substr('00'.$mo, -2);
+		$d = substr('00'.$d, -2);
+		$h = substr('00'.$h, -2);
+		$m = substr('00'.$m, -2);
+		$s = substr('00'.$s, -2);
+		$date = strtotime($y.'-'.$mo.'-'.$d.' '.$h.':'.$m.':'.$s.' GMT');
+	}
+	return $date;
+}
+
 // {{{ buildQuery
 //
 // Build parameters for url query part
