@@ -95,6 +95,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 		unset($parentPath[count($parentPath)-2]);
 		$parentPath = implode('/', $parentPath);
 		if ($rep->hasReadAccess($parentPath, false)) {
+			$listing[$index]['rowparity'] = $index % 2;
 			$listing[$index]['path'] = $parentPath;
 			$listing[$index]['filetype'] = 'dir';
 			$listing[$index]['filelink'] = '<a href="'.removeURLSeparator($config->getURL($rep, $parentPath, 'dir').$passRevString).'">..</a>';
