@@ -120,14 +120,17 @@ if ($history && is_array($history->entries)) {
 		}
 		$itemLink = getFullURL($baseurl.$config->getURL($rep, '', 'revision').'rev='.$r->rev);
 
-		$rss .= '<item>';
-		$rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
-		$rss .= '<dc:creator>'.htmlspecialchars($r->author).'</dc:creator>';
-		$rss .= '<title>'.htmlspecialchars($title).'</title>';
-		$rss .= '<description>'.htmlspecialchars($description).'</description>';
-		$rss .= '<link>'.$itemLink.'</link>';
-		$rss .= '<guid>'.$itemLink.'</guid>';
-		$rss .= '</item>'."\n";
+		// skip items with no access
+		if ($r->committime) {
+			$rss .= '<item>';
+			$rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
+			$rss .= '<dc:creator>'.htmlspecialchars($r->author).'</dc:creator>';
+			$rss .= '<title>'.htmlspecialchars($title).'</title>';
+			$rss .= '<description>'.htmlspecialchars($description).'</description>';
+			$rss .= '<link>'.$itemLink.'</link>';
+			$rss .= '<guid>'.$itemLink.'</guid>';
+			$rss .= '</item>'."\n";
+		}
 	}
 }
 $rss .= '</channel></rss>';
