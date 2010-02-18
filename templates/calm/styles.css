@@ -31,18 +31,11 @@ a {
   text-decoration:none;
   outline: none !important;
 }
-a:link {
-  color:#000;
-  text-decoration: none;
-}
-a img {border:0;}
-
 a:hover {
   background-color:#F0E68C;
 }
-strong, b {
-  color:gray;
-  font-weight:normal;
+a img {
+  border:0;
 }
 
 #select {
@@ -73,7 +66,6 @@ strong, b {
   margin-left:2%;
   text-align:left;
   padding:5px 0;
-
 }
 h1, h2 {
   color:gray;
@@ -303,20 +295,6 @@ li.mod a, li.new a, #info li.del {
   background-position:5px 50%;
   background-repeat:no-repeat;
 }
-a.modified, a.added, a.deleted {
-  padding-left: 26px;
-  background-position:5px 50%;
-  background-repeat:no-repeat;
-}
-a.modified {
-  background-image:url(images/page_white_edit.png);
-}
-a.added {
-  background-image:url(images/page_white_add.png);
-}
-a.deleted {
-  background-image:url(images/page_white_delete.png);
-}
 li.mod a {
   display:block;
   color:#545400;
@@ -364,40 +342,64 @@ table {
   border-collapse:collapse;
   width:100%;
 }
-tr td {
+td {
   padding:0;
   text-align:left;
+}
+th {
+  text-align:center;
+}
+td, th {
+  border: 1px solid #eeeeee;
+}
+#info th, #info td {
+  border: none;
+  text-align: left;
+}
+#diff td, #blame td, table.diff td {
+  vertical-align:top;
+}
+thead th a {
+  color:white;
+}
+thead th a:hover {
+  text-decoration:underline;
+  color:white;
+  background:none;
 }
 thead tr {
   background:#4d4d4d;
 }
-thead tr th {
+thead th {
   background:#4d4d4d;
   border-bottom:2px solid #000;
   border-top:2px solid #808080;
   border-right:1px solid #808080;
   color:#FFF;
   margin:3px 2px;
-  padding:5px 5px 5px 10px;
-  text-align:center;
+  padding:3px 5px;
 }
-thead tr th.path {
+thead th.path {
   text-align:left;
   width:50%;
 }
-thead tr th.collno,
-thead tr th.colrev,
-thead tr th.colauth {
+thead th.collno, thead th.colrev, thead th.colauth {
   width:6%;
 }
-thead tr th.colcode {
+thead th.colcode {
   width:73%;
+}
+tbody th {
+  background-color: #ddd;
+}
+tbody th.info {
+  background-color: #d0dfea;
 }
 tr td.code {
   text-align:left;
 }
-td.code, td.diffcode td.diff {
-  border: 1px solid #eeeeee;
+td.code, td td.diff {
+  border: 1px solid #eee;
 }
 tr td.code pre {
   padding: 1px 2px 0;
@@ -411,6 +413,7 @@ tr:hover td.code {
 }
 tr td.path, tr th.path {
   text-align:left;
+  width: 100%;
 }
 tr td.path {
   padding:0;
@@ -421,7 +424,7 @@ tr.row0 td {
 tr.row1 td {
   background-color:#f8f8f8;
 }
-tr:hover, tr.row0:hover td, tr.row1:hover td {
+tr.row0:hover td, tr.row1:hover td {
   background-color:#e8e8e8;
 }
 span.listing a, a.listing {
@@ -566,10 +569,12 @@ pre a, td.code pre a {
   color:blue;
   font-style:italic;
 }
-code, pre {
-  font-family: Consolas, monospace;
-  text-align:left;
-  margin:0;
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+code, pre, table.diff td, #file div.listing {
+  font-family:Consolas, monospace;
 }
 .new a {color:green}
 .del a {color:red}
@@ -591,13 +596,13 @@ code, pre {
 .toggledown a:hover {
   background:#F0E68C url(images/toggledown.png) no-repeat 2px 50%;
 }
-.diff a:link,
-.diff a:visited,
-.diff a:focus {
+span.diff a:link,
+span.diff a:visited,
+span.diff a:focus {
   padding-left:22px;
   background:url(images/diff.png) no-repeat 2px 50%;
 }
-.diff a:hover {
+span.diff a:hover {
   background:#F0E68C url(images/diff.png) no-repeat 2px 50%;
 }
 .geshi a:link,
@@ -610,133 +615,98 @@ code, pre {
 .geshi a:hover {
 	text-decoration: underline;
 }
-tr.diffcode td {
-  text-align:left;
-  border: 1px solid #eeeeee;
-}
-tr.diffcode td.lineno {
+tr td.lineno {
   text-align: right;
   vertical-align: top;
   padding: 0 2px;
 }
-tr.diffcode td.row1 {
+tr td.row1 {
   padding: 3px;
   border: none;
 }
-tr.diffcode td.row1 strong {
-  font-weight: bold;
-}
-tr.diffcode td code, tr.diffcode td pre {
+tr td code, tr td pre {
   display:block;
   height:100%;
-  padding-left:22px;
-}
-tr.diffcode td pre {
-  padding-left: 1px 2px 0;
-}
-tr:hover td.diff, tr.diffcode:hover td pre {
-  background-color:#e8e8e8;
-}
-tr.diffcode:hover td {
-  background-color:#FFF;
-}
-div.newpath, div.difflines {
-  color:#000;
-  text-align:center;
-}
-div.newpath {
-  padding:5px 5px 5px 5px;
-  margin:10px 0 30px 0;
-  background:#FFF;
-  border:1px solid #e1e1e1;
-}
-div.newpath strong {
-  display:block;
-  color:#FFF;
-  background:#4d4d4d;
-  font-weight:bold;
-  padding:5px;
-  margin-bottom:3px;
-  border-bottom:2px solid #000;
-  border-top:2px solid #808080;
 }
 /* compare table */
 table.diff {
-  margin-top:5px;
-  margin-bottom:5px;
-  border:1px solid #f1f1f1;
-  padding:0 2px 2px 2px;
-  margin:0 1px;
+  margin:10px 0 20px;
+  border-spacing:0;
+  border-collapse:separate;
 }
-table.diff tr td {
-  display:block;
-  text-align:left;
-  padding:0px;
-  padding-left:22px;
+table.diff td {
+  color:black;
+  padding:0;
   margin:0;
-  background-color:#f8f8f8;
-  border:1px solid #f0f0f0;
-  white-space: pre-wrap;
-  font-family: Consolas, monospace;
+  border-color:#f0f0f0;
 }
-table.diff tr:hover {
-  background:#FFF;
+table.diff td, table td pre {
+  padding-left:16px;
+  background-position: 0 0;
+  background-repeat:no-repeat;
+  white-space:pre-wrap;
 }
-.newpath td.diff, td.diff pre {
+table td pre {
+  border:1px solid white;
+}
+table tr:hover {
+  background:white;
+}
+td.diffempty {
   background-color:#f8f8f8;
+}
+table tr:hover td.diff, table tr:hover td.diffempty {
+  background-color:#e8e8e8;
+}
+table td.diff pre {
   background-position:2px 50%;
   background-repeat:no-repeat;
 }
-.newpath td.diffdeleted, td.diffdeleted pre {
-  border:1px solid #e8d4bc;
+table.diff td.diffdeleted,
+table td.diffdeleted pre {
   background-color:#f8e4cc;
   background-image:url(images/bullet_delete.png);
-  background-position:2px 50%;
-  background-repeat:no-repeat;
+  border:1px solid #e8d4bc;
 }
-.newpath tr:hover td.diffdeleted, tr.diffcode:hover td.diffdeleted pre {
-  border-color:#bb9977;
+table.diff tr:hover td.diffdeleted,
+table tr:hover td.diffdeleted pre {
   background-color:#ffccaa;
+  border-color:#bb9977;
 }
-.newpath td.diffadded, td.diffadded pre {
+table.diff td.diffadded,
+table td.diffadded pre {
   border:1px solid #cdf0cd;
   background-color:#ddffdd;
   background-image:url(images/bullet_add.png);
-  background-repeat:no-repeat;
-  background-position:2px 50%;
 }
-.newpath tr:hover td.diffadded, tr.diffcode:hover td.diffadded pre {
-  border-color:#88bb88;
+table.diff tr:hover td.diffadded,
+table tr:hover td.diffadded pre {
   background-color:#bbffbb;
+  border-color:#88bb88;
 }
-.newpath td.diffchanged, td.diffchanged pre {
+table td.diffchanged pre {
   border:1px solid #f0f0bc;
   background-color:#ffffcc;
   background-image:url(images/bullet_yellow.png);
-  background-repeat:no-repeat;
-  background-position:2px 50%;
 }
-.newpath tr:hover td.diffchanged, tr.diffcode:hover td.diffchanged pre {
-  border-color:#bbbb55;
+table tr:hover td.diffchanged pre {
   background-color:#ffff99;
+  border-color:#bbbb55;
 }
 
-ins.add {
+ins {
   background-color: #bbffbb;
   text-decoration: none;
 }
-tr.diffcode:hover ins.add {
+tr:hover ins {
   background-color: #99ff99;
 }
-del.del {
+del {
   background-color: #ffccaa;
   text-decoration: none;
 }
-tr.diffcode:hover del.del {
+tr:hover del {
   background-color: #ffaa88;
-}
-ins.marker, del.marker {
-  display: none;
 }
 
 code {
@@ -758,7 +728,6 @@ code {
 table tr td.logmsg {
   text-align:left;
   padding: 3px 0 3px 3px;
-  vertical-align:middle;
 }
 
 /* sidebar form without css-bg-colors */
@@ -802,6 +771,7 @@ div.blame-popup .date {
 
 #wrap td.age, #wrap td.date, #wrap td.rev {
 	text-align: right;
+	white-space: nowrap;
 }
 
 #wrap p.pagelinks > * {
@@ -826,7 +796,7 @@ div#warning {
 	background-color: #ffd;
 }
 
-#log table td {
+table td {
 	vertical-align: top;
 	padding: 2px;
 }
@@ -848,3 +818,43 @@ td.changes .mod {
 	background-image: url(images/page_white_edit.png);
 }
 
+#blame table td {
+	text-align: right;
+	padding-right: 4px;
+	border-color: white;
+}
+
+#blame table td.code {
+	text-align: left;
+	padding: 0;
+	border-color: #eeeeee;
+}
+
+#blame table td.code pre {
+	border: none;
+}
+
+#revision td.path a {
+	background-position:5px 50%;
+	background-repeat:no-repeat;
+	padding-left: 26px;
+	top: 2px;
+	position: relative;
+}
+
+#revision tr.M td.path a {
+	background-image:url(images/page_white_edit.png);
+}
+
+#revision tr.A td.path a {
+	background-image:url(images/page_white_add.png);
+}
+
+#revision tr.D td.path a {
+	background-image:url(images/page_white_delete.png);
+}
+
+#revision del {
+	padding-left: 26px;
+	background: none;
+}

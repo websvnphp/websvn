@@ -312,7 +312,7 @@ $extGeshi = array(
 
 // }}}
 
-// Include a default language file (must go before config.php)
+// Loads English localized strings by default (must go before config.php)
 require 'languages/english.php';
 
 // Get the user's personalised config (requires the locwebsvnhttp stuff above)
@@ -322,85 +322,58 @@ if (file_exists('include/config.php')) {
 	die('File "include/config.php" does not exist, please create one. The example file "include/distconfig.php" may be copied and modified as needed.');
 }
 
-require_once 'include/svnlook.php';
-
 // Make sure that the input locale is set up correctly
 setlocale(LC_ALL, '');
 
-// Default 'zipped' array
-
-$zipped = array();
-
-// Set up the version info
-
-initSvnVersion();
+// Initialize the version of SVN that is being used by WebSVN internally.
+require_once 'include/svnlook.php';
 $vars['svnversion'] = $config->getSubversionVersion();
 
-// Get the user choice if there is one, and memorise the setting as a cookie
-// (since we don't have user accounts, we can't store the setting anywhere
-// else).	We try to memorise a permanent cookie and a per session cookie in
-// case the user has disabled permanent ones.
+// Initialize an array with all query parameters except language and template.
+$queryParams = $_GET + $_POST;
+unset($queryParams['language']);
+unset($queryParams['template']);
 
-$userLang = '';
-if (!empty($_REQUEST['langchoice'])) {
-	$userLang = $_REQUEST['langchoice'];
-	setcookie('storedlang', $userLang, time() + (3600 * 24 * 356 * 10), '/');
-	setcookie('storedsesslang', $userLang);
-} else {
-	// Try to read an existing cookie if there is one
-	if (!empty($_COOKIE['storedlang'])) {
-		$userLang = $_COOKIE['storedlang'];
-	} else if (!empty($_COOKIE['storedsesslang'])) {
-		$userLang = $_COOKIE['storedsesslang'];
-	}
+// If the request specifies a language, store in a permanent/session cookie.
+// Otherwise, check for cookies specifying a particular language.
+$language = ''; // RFC 4646 language tag for representing the selected language.
+if (!empty($_REQUEST['language'])) {
+	$language = $_REQUEST['language'];
+	setcookie('storedlang', $language, time() + (60 * 60 * 24 * 356 * 10), '/');
+	setcookie('storedsesslang', $language);
+} else if (isset($_COOKIE['storedlang'])) {
+	$language = $_COOKIE['storedlang'];
+} else if (isset($_COOKIE['storedsesslang'])) {
+	$language = $_COOKIE['storedsesslang'];
 }
-
-// Load available languages
+// Load available languages (populates $languages array)
 require 'languages/languages.php';
-
-// Get the default language as defined as the default by config.php
-$defaultLang = $config->getDefaultLanguage();
-if (!isset($languages[$defaultLang]))
-	$defaultLang = 'en';
-
-// Negotiate language
-$userLang = getUserLanguage($languages, $defaultLang, $userLang);
-$file = $languages[$userLang][0];
-
-// Define the language array
-$lang = array();
-
-// XXX: this shouldn't be necessary
-// ^ i.e. just require english.php, then the desired language
-// Reload english to get untranslated strings
-require 'languages/english.php';
-
-// Reload the default language
-require 'languages/'.$file.'.php';
-
-$vars['language_code'] = $userLang;
-
-$vars['language_form'] = '<form action="?'.buildQuery($_GET + $_POST).'" method="post" id="langform">';
-$vars['language_select'] = '<select name="langchoice" onchange="javascript:this.form.submit();">';
-
+// Get the default language as defined by config.php
+$defaultLanguage = $config->getDefaultLanguage();
+if (!isset($languages[$defaultLanguage]))
+	$defaultLanguage = 'en';
+// Determine which language to actually use
+$language = getUserLanguage($languages, $defaultLanguage, $language);
+$vars['language_code'] = $language;
+// For languages other than English, load translated strings over existing ones.
+if ($language != 'en')
+	require 'languages/'.$languages[$language][0].'.php';
+// Generate the HTML form for selecting a different language
+$vars['language_form'] = '<form action="?'.buildQuery($queryParams).'" method="post" id="langform">';
+$vars['language_select'] = '<select name="language" onchange="javascript:this.form.submit();">';
 foreach ($languages as $code => $names) {
-	$sel = ($code == $userLang) ? '" selected="selected' : '';
+	$sel = ($code == $language) ? '" selected="selected' : '';
 	$vars['language_select'] .= '<option value="'.$code.$sel.'">'.$names[2].' - '.$names[1].'</option>';
 }
-
 $vars['language_select'] .= '</select>';
 $vars['language_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
 $vars['language_endform'] = '</form>';
 
-// Set up headers
-
-header('Content-Type: text/html; charset=UTF-8');
-header('Content-Language: '.$userLang);
-
-// multiviews has custom code to load the repository
-if (!$config->multiViews) {
-	// if the repoparameter has been set load the corresponding
-	// repository, else load the default
+// Load repository if possible
+if ($config->multiViews) {
+	$rep = null; // MultiViews has custom code to load a repository
+} else {
+	// Load repository matching 'repname' parameter (if set) or the default.
 	$repname = @$_REQUEST['repname'];
 	if (isset($repname)) {
 		$rep = $config->findRepository($repname);
@@ -408,79 +381,59 @@ if (!$config->multiViews) {
 		$reps = $config->getRepositories();
 		$rep = (isset($reps[0]) ? $reps[0] : null);
 	}
-
 	// Make sure that the user has set up a repository
 	if ($rep == null) {
 		$vars['error'] = $lang['SUPPLYREP'];
 	} else if (is_string($rep)) {
 		$vars['error'] = $rep;
 		$rep = null;
+	} else {
+		$vars['repurl'] = $config->getURL($rep, '', 'dir');
+		$vars['clientrooturl'] = $rep->clientRootURL;
+		$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+		$vars['allowdownload'] = $rep->getAllowDownload();
 	}
-} else {
-	$rep = null;
+	// With MultiViews, wsvn creates the form once the current project is found.
+	createProjectSelectionForm();
+	createRevisionSelectionForm();
 }
 
+// If the request specifies a template, store in a permanent/session cookie.
+// Otherwise, check for cookies specifying a particular template.
+$template = '';
+if (!empty($_REQUEST['template'])) {
+	$template = $_REQUEST['template'];
+	setcookie('storedtemplate', $template, time() + (60 * 60 * 24 * 365 * 10), '/');
+	setcookie('storedsesstemplate', $template);
+} else if (isset($_COOKIE['storedtemplate'])) {
+	$template = $_COOKIE['storedtemplate'];
+} else if (isset($_COOKIE['storedsesstemplate'])) {
+	$template = $_COOKIE['storedsesstemplate'];
+}
 
-// check for user specific template
-$userTemplate = false;
-if (!empty($_REQUEST['templatechoice'])) {
-	$userTemplate = $_REQUEST['templatechoice'];
-	setcookie('storedtemplate', $userTemplate, time() + (3600 * 24 * 365 * 10), '/');
-	setcookie('storedsesstemplate', $userTemplate);
-} else {
-	// Try to read an existing cookie if there is one
-	if (!empty($_COOKIE['storedtemplate'])) {
-		$userTemplate = $_COOKIE['storedtemplate'];
-	} else if (!empty($_COOKIE['storedsesstemplate'])) {
-		$userTemplate = $_COOKIE['storedsesstemplate'];
+$templates = array();
+// Skip creating template list when selected repository has specific template.
+if ($rep == null || $rep->templatePath === false) {
+	// Get all templates defined in config.php; use last path component as name.
+	foreach ($config->templatePaths as $path) {
+		$templates[$path] = basename($path);
 	}
-}
-
-// Get all templates as defined in config.php
-$templates = $config->templatePaths;
-$templateNames = array();
-foreach ($config->templatePaths as $path) {
-	// use last directory part as template name
-	$name = $path;
-	if (substr($name, -1) == '/' || substr($name, -1) == '\\') $name = substr($name, 0, -1);
-	$posSlash = strrpos($name, '/');
-	$posBackslash = strrpos($name, '\\');
-	if ($posSlash !== false || $posBackslash !== false) {
-		$pos = ($posSlash !== false && $posBackslash !== false) ? max($posSlash, $posBackslash) : ($posSlash !== false ? $posSlash : $posBackslash);
-		$name = substr($name, $pos + 1);
-	}
-	$templateNames[$path] = $name;
-}
-
-$selectedTemplate = false;
-if ($userTemplate !== false) {
-	if (in_array($userTemplate, $templateNames)) {
-		$selectedTemplate = array_search($userTemplate, $templateNames);
-		$config->userTemplate = $selectedTemplate;
-	}
-}
-if ($selectedTemplate === false) {
-	$selectedTemplate = $config->getTemplatePath();
-}
-
-if ($rep) {
-	$vars['clientrooturl'] = $rep->clientRootURL;
-	// skip template list when selected repository has specific template
-	if ($rep->templatePath !== false) {
-		$templateNames = array();
+	$selectedTemplatePath = $config->getTemplatePath();
+	if ($template != '' && in_array($template, $templates)) {
+		$selectedTemplatePath = array_search($template, $templates);
+		$config->userTemplate = $selectedTemplatePath;
 	}
 }
 
-if (count($templateNames) > 1) {
-	$vars['template_form'] = '<form action="?'.buildQuery($_GET + $_POST).'" method="post" id="templateform">';
-	$vars['template_select'] = '<select name="templatechoice" onchange="javascript:this.form.submit();">';
-
-	natcasesort($templateNames);
-	foreach ($templateNames as $path => $name) {
-		$sel = ($path == $selectedTemplate) ? ' selected="selected"' : '';
+// Generate the HTML form for selecting a different template
+if (count($templates) > 1) {
+	$vars['template_form'] = '<form action="?'.buildQuery($queryParams).'" method="post" id="templateform">';
+	$vars['template_select'] = '<select name="template" onchange="javascript:this.form.submit();">';
+	natcasesort($templates);
+	foreach ($templates as $path => $name) {
+		$sel = ($path == $selectedTemplatePath) ? ' selected="selected"' : '';
 		$vars['template_select'] .= '<option value="'.$name.'"'.$sel.'>'.$name.'</option>';
 	}
-
 	$vars['template_select'] .= '</select>';
 	$vars['template_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
 	$vars['template_endform'] = '</form>';
@@ -491,18 +444,26 @@ if (count($templateNames) > 1) {
 	$vars['template_endform'] = '';
 }
 
+$vars['indexurl'] = $config->getURL('', '', 'index');
+$vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($queryParams + array('template' => $template), '%26');
 
-// Retrieve other standard parameters
-
-// due to possible XSS exploit, we need to clean up path first
+// To avoid a possible XSS exploit, need to clean up the passed-in path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 if ($path === null || $path === '')
 	$path = '/';
 $vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
+// Set operative and peg revisions (if specified) and save passed-in revision
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
-if ($peg === 0) $peg = '';
+if ($peg === 0)
+	$peg = '';
 $passrev = $rev;
+
+$listing = array();
+
+// Set up response headers
+header('Content-Type: text/html; charset=UTF-8');
+header('Content-Language: '.$language);
 
 // Function to create the project selection HTML form
 function createProjectSelectionForm() {
@@ -516,19 +477,18 @@ function createProjectSelectionForm() {
 	if (!$config->showRepositorySelectionForm() || count($config->getRepositories()) < 2)
 		return;
 
-	$options = '';
-
 	if ($rep) {
 		$currentRepoName = $rep->getDisplayName();
+		$options = '';
 	} else {
 		$currentRepoName = '';
-		$options .= '<option value="" selected="selected"></option>';
+		$options = '<option value="" selected="selected"></option>';
 	}
 	foreach ($config->getRepositories() as $repository) {
 		if ($repository->hasReadAccess('/', true)) {
 			$repoName = $repository->getDisplayName();
-			$selected = ($repoName == $currentRepoName) ? $sel = '" selected="selected' : '';
-			$options .= '<option value="'.$repoName.$selected.'">'.$repoName.'</option>';
+			$sel = ($repoName == $currentRepoName) ? '" selected="selected' : '';
+			$options .= '<option value="'.$repoName.$sel.'">'.$repoName.'</option>';
 		}
 	}
 	if (strlen($options) === 0)
@@ -550,7 +510,9 @@ function createRevisionSelectionForm() {
 	if ($rep == null)
 		return;
 
-	$params = array('repname' => $rep->getDisplayName(), 'path' => ($path == '/' ? '' : $path), 'peg' => ($peg ? $peg : $rev));
+	$params = array('repname' => $rep->getDisplayName(),
+	                'path' => ($path == '/' ? '' : $path),
+	                'peg' => ($peg ? $peg : $rev));
 	$hidden = '';
 	foreach ($params as $key => $value) {
 		if ($value)
@@ -562,24 +524,3 @@ function createRevisionSelectionForm() {
 	$vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['revision_endform'] = '</form>';
 }
-
-// Create the form if we're not in MultiViews.	Otherwise, wsvn must create the
-// form once the current project has been found.
-
-if (!$config->multiViews) {
-	createProjectSelectionForm();
-	createRevisionSelectionForm();
-}
-
-if (!$config->multiViews) {
-	$vars['allowdownload'] = ($rep && $rep->getAllowDownload());
-	$displayName = ($rep) ? $rep->getDisplayName() : $repname;
-	$vars['repname'] = htmlentities($displayName, ENT_QUOTES, 'UTF-8');
-}
-
-$vars['indexurl'] = $config->getURL('', '', 'index');
-if ($rep) {
-	$vars['repurl'] = $config->getURL($rep, '', 'dir');
-}
-
-$listing = array();

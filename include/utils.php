@@ -298,26 +298,47 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false) {
 
 // }}}
 
+function parseSvnTimestamp($dateString) {
+	// Try the simple approach of a built-in PHP function first.
+	$date = strtotime($dateString);
+	// If the resulting timestamp isn't sane, try parsing manually.
+	if ($date <= 0) {
+		$y = 0;
+		$mo = 0;
+		$d = 0;
+		$h = 0;
+		$m = 0;
+		$s = 0;
+		sscanf($dateString, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
+		
+		$mo = substr('00'.$mo, -2);
+		$d = substr('00'.$d, -2);
+		$h = substr('00'.$h, -2);
+		$m = substr('00'.$m, -2);
+		$s = substr('00'.$s, -2);
+		$date = strtotime($y.'-'.$mo.'-'.$d.' '.$h.':'.$m.':'.$s.' GMT');
+	}
+	return $date;
+}
+
 // {{{ buildQuery
 //
 // Build parameters for url query part
 
 function buildQuery($data, $separator = '&amp;', $key = '') {
-	if (is_object($data)) $data = get_object_vars($data);
+	if (is_object($data))
+		$data = get_object_vars($data);
 	$p = array();
-	unset($data['langchoice']);
-	unset($data['templatechoice']);
 	foreach ($data as $k => $v) {
 		$k = urlencode($k);
-		if (!empty($key)) $k = $key.'['.$k.']';
-
+		if (!empty($key))
+			$k = $key.'['.$k.']';
 		if (is_array($v) || is_object($v)) {
 			$p[] = buildQuery($v, $separator, $k);
 		} else {
 			$p[] = $k.'='.urlencode($v);
 		}
 	}
-
 	return implode($separator, $p);
 }
 
@@ -330,7 +351,8 @@ function getUserLanguage($languages, $default, $userchoice) {
 	if (!$config->useAcceptedLanguages()) return $default;
 
 	$acceptlangs = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : false;
-	if (!$acceptlangs) return $default;
+	if (!$acceptlangs)
+		return $default;
 
 	$langs = array();
 	$sublangs = array();
@@ -339,24 +361,27 @@ function getUserLanguage($languages, $default, $userchoice) {
 		$a = explode(';', $str, 2);
 		$lang = trim($a[0]);
 		$pos = strpos($lang, '-');
-		if ($pos !== false) $sublangs[] = substr($lang, 0, $pos);
+		if ($pos !== false)
+			$sublangs[] = substr($lang, 0, $pos);
 		$q = 1.0;
-
 		if (count($a) == 2) {
 			$v = trim($a[1]);
-			if (substr($v, 0, 2) == 'q=') $q = doubleval(substr($v, 2));
+			if (substr($v, 0, 2) == 'q=')
+				$q = doubleval(substr($v, 2));
 		}
-
-		if ($userchoice) $q *= 0.9;
+		if ($userchoice)
+			$q *= 0.9;
 		$langs[$lang] = $q;
 	}
 
-	foreach ($sublangs as $l) if (!isset($langs[$l])) $langs[$l] = 0.1;
+	foreach ($sublangs as $l)
+		if (!isset($langs[$l]))
+			$langs[$l] = 0.1;
 
-	if ($userchoice) $langs[$userchoice] = 1.0;
+	if ($userchoice)
+		$langs[$userchoice] = 1.0;
 
 	arsort($langs);
-
 	foreach ($langs as $code => $q) {
 		if (isset($languages[$code])) {
 			return $code;

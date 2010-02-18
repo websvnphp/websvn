@@ -360,12 +360,14 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 
 <table>
 <tr><th>path</th><td>Path to the resource</td></tr>
+<tr><th>oldpath</th><td>Previous path of the resource (only for move or copy)</td></tr>
+<tr><th>action</th><td>A letter (either A, D, or M) representing how the resource was changed at this revision</td></tr>
 <tr><th>added</th><td>True if the resource was added in this revision</td></tr>
 <tr><th>deleted</th><td>True if the resource was deleted in this revision</td></tr>
 <tr><th>modified</th><td>True if the resource was modified in this revision</td></tr>
 <tr><th>detailurl</th><td>Link to the listing for the resource (previous revision if deleted)</td></tr>
-<tr><th>blameurl</th><td>Link to the blame information for the resource (only for modified files)</td></tr>
-<tr><th>diffurl</th><td>Link to the diff information for the resource (only for modified files)</td></tr>
+<tr><th>blameurl</th><td>Link to the blame information for the resource (only for modified/moved/copied files)</td></tr>
+<tr><th>diffurl</th><td>Link to the diff information for the resource (only for modified/moved/copied files)</td></tr>
 <tr><th>logurl</th><td>Link to the log page for the resource</td></tr>
 <tr><th>rowparity</th><td>Parity of the row (0 or 1), used to generate striped tables</td></tr>
 </table>

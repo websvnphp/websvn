@@ -37,7 +37,7 @@ if ($rep) {
 	$passRevString = createRevAndPegString($rev, $peg);
 
 	// Find the youngest revision containing changes for the given path
-	$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
@@ -51,34 +51,33 @@ if ($rep) {
 	// Unless otherwise specified, we get the log details of the latest change
 	$lastChangedRev = ($rev) ? $rev : $youngest;
 	if ($lastChangedRev != $youngest) {
-		$history = $svnrep->getLog($path, $lastChangedRev, $lastChangedRev, false, 2, $peg);
+		$history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg);
 	}
 	if (empty($rev))
 		$rev = $lastChangedRev;
 
 	// Generate links to newer and older revisions
 	$revurl = $config->getURL($rep, $path, 'revision');
-	if (strlen($path) > 1)
-		$revurl .= 'peg='.$rev.'&amp;';
 	if ($rev < $youngest) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 
-		$history = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
-		if (isset($history->entries[1])) {
-			$nextRev = $history->entries[1]->rev;
-			$vars['nextrev'] = $nextRev;
-			$vars['nextrevurl'] = $revurl.'rev='.$nextRev;
-			//echo 'NEXT='.$vars['nextrevurl'].'<br/>';
+		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
+		if (isset($history2->entries[1])) {
+			$nextRev = $history2->entries[1]->rev;
+			if ($nextRev != $youngest) {
+				$vars['nextrev'] = $nextRev;
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $rev : '');
+				//echo 'NEXT='.$vars['nextrevurl'].'<br/>';
+			}
 		}
 		unset($vars['error']);
-		$history = $svnrep->getLog($path, $rev, 1, false, 2, $peg);
 	}
 	if (isset($history->entries[1])) {
 		$prevRev = $history->entries[1]->rev;
 		$prevPath = $history->entries[1]->path;
 		$vars['prevrev'] = $prevRev;
-		$vars['prevrevurl'] = $revurl.'rev='.$prevRev;
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $path != '/' ? $rev : '');
 		//echo 'PREV='.$vars['prevrevurl'].'<br/>';
 	}
 	// Save the entry from which we pull information for the current revision.
@@ -124,25 +123,28 @@ if ($rep) {
 
 	$prevRevString = createRevAndPegString($rev - 1, $rev - 1);
 	$thisRevString = createRevAndPegString($rev, $rev);
-	foreach ($changes as $file) {
-		$linkRevString = ($file->action == 'D') ? $prevRevString : $thisRevString;
+	foreach ($changes as $change) {
+		$linkRevString = ($change->action == 'D') ? $prevRevString : $thisRevString;
 		// NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
 		// `svn log --verbose --xml` should really provide this info, but doesn't yet.
-		$lastSeenRev = ($file->action == 'D') ? $rev - 1 : $rev;
-		$isFile = $svnrep->isFile($file->path, $lastSeenRev, $lastSeenRev);
-		if (!$isFile && $file->path != '/') {
-			$file->path .= '/';
+		$lastSeenRev = ($change->action == 'D') ? $rev - 1 : $rev;
+		$isFile = $svnrep->isFile($change->path, $lastSeenRev, $lastSeenRev);
+		if (!$isFile && $change->path != '/') {
+			$change->path .= '/';
 		}
+		$resourceExisted = $change->action == 'M' || $change->copyfrom;
 		$listing[] = array(
-			'path' => $file->path,
-			'added' => $file->action == 'A',
-			'deleted' => $file->action == 'D',
-			'modified' => $file->action == 'M',
-			'detailurl' => $config->getURL($rep, $file->path, ($isFile ? 'file' : 'dir')).$linkRevString,
+			'path' => $change->path,
+			'oldpath' => $change->copyfrom ? $change->copyfrom.' @ '.$change->copyrev : '',
+			'action' => $change->action,
+			'added' => $change->action == 'A',
+			'deleted' => $change->action == 'D',
+			'modified' => $change->action == 'M',
+			'detailurl' => $config->getURL($rep, $change->path, ($isFile ? 'file' : 'dir')).$linkRevString,
 			// For deleted resources, the log link points to the previous revision.
-			'logurl' => $config->getURL($rep, $file->path, 'log').$linkRevString.($isFile ? '' : '&amp;isdir=1'),
-			'diffurl' => ($isFile && $file->action == 'M') ? $config->getURL($rep, $file->path, 'diff').$linkRevString : '',
-			'blameurl' => ($isFile && $file->action == 'M') ? $config->getURL($rep, $file->path, 'blame').$linkRevString : '',
+			'logurl' => $config->getURL($rep, $change->path, 'log').$linkRevString.($isFile ? '' : '&amp;isdir=1'),
+			'diffurl' => $resourceExisted ? $config->getURL($rep, $change->path, 'diff').$linkRevString : '',
+			'blameurl' => $resourceExisted ? $config->getURL($rep, $change->path, 'blame').$linkRevString : '',
 			'rowparity' => $row,
 		);
 
@@ -161,7 +163,6 @@ if ($rep) {
 }
 
 $vars['template'] = 'revision';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'revision.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('revision.tmpl');
+parseTemplate('footer.tmpl');

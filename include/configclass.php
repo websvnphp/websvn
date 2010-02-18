@@ -230,6 +230,7 @@ class Repository {
 	var $minDownloadLevel;
 	var $allowedExceptions = array();
 	var $disallowedExceptions = array();
+	var $logsShowChanges;
 	var $rss;
 	var $rssCaching;
 	var $rssMaxEntries;
@@ -283,6 +284,19 @@ class Repository {
 	// }}}
 
 	// Local configuration accessors
+
+	function setLogsShowChanges($enabled = true) {
+		$this->logsShowChanges = $enabled;
+	}
+
+	function logsShowChanges() {
+		global $config;
+
+		if (isset($this->logsShowChanges))
+			return $this->logsShowChanges;
+		else
+			return $config->logsShowChanges();
+	}
 
 	// {{{ RSS Feed
 
@@ -598,6 +612,7 @@ class WebSvnConfig {
 	var $serverIsWindows = false;
 	var $multiViews = false;
 	var $useEnscript = false;
+	var $useEnscriptBefore_1_6_3 = false;
 	var $useGeshi = false;
 	var $inlineMimeTypes = array();
 	var $allowDownload = false;
@@ -605,6 +620,7 @@ class WebSvnConfig {
 	var $minDownloadLevel = 0;
 	var $allowedExceptions = array();
 	var $disallowedExceptions = array();
+	var $logsShowChanges = false;
 	var $rss = true;
 	var $rssCaching = false;
 	var $rssMaxEntries = 40;
@@ -690,7 +706,7 @@ class WebSvnConfig {
 					// we have to check if we already have a repo with the same svn name
 					$duplicate = false;
 					foreach ($this->_repositories as $knownRepos) {
-						if ($knownRepos->svnName == $repo->svnName && $knownRepos->subpath == $repo->subpath) {
+						if ($knownRepos->path == $repo->path && $knownRepos->subpath == $repo->subpath) {
 							$duplicate = true;
 							break;
 						}
@@ -773,12 +789,17 @@ class WebSvnConfig {
 	//
 	// Use Enscript to colourise listings
 
-	function useEnscript() {
+	function useEnscript($before_1_6_3 = false) {
 		$this->useEnscript = true;
+		$this->useEnscriptBefore_1_6_3 = $before_1_6_3;
 	}
 
 	function getUseEnscript() {
 		return $this->useEnscript;
+	}
+
+	function getUseEnscriptBefore_1_6_3() {
+		return $this->useEnscriptBefore_1_6_3;
 	}
 
 	// }}}
@@ -809,6 +830,27 @@ class WebSvnConfig {
 		}
 	}
 
+	// }}}
+
+	// {{{ Show changed files by default on log.php
+
+	function setLogsShowChanges($enabled = true, $myrep = 0) {
+		if (empty($myrep)) {
+			$this->logsShowChanges = $enabled;
+		} else {
+			$repo =& $this->findRepository($myrep);
+			$repo->logsShowChanges = $enabled;
+		}
+	}
+
+	function logsShowChanges() {
+		return $this->logsShowChanges;
+	}
+
+	// }}}
+
+	// {{{ RSS
+
 	function setRssEnabled($enabled = true, $myrep = 0) {
 		if (empty($myrep)) {
 			$this->rss = $enabled;
@@ -821,8 +863,6 @@ class WebSvnConfig {
 	function isRssEnabled() {
 		return $this->rss;
 	}
-
-	// {{{ RSS
 
 	function setRssCachingEnabled($enabled = true, $myrep = 0) {
 		if (empty($myrep)) {
@@ -1165,7 +1205,7 @@ class WebSvnConfig {
 	// Define the location of the enscript command
 
 	function setEnscriptPath($path) {
-		$this->_setPath($this->enscript, $path, 'enscript');
+		$this->_setPath($this->enscript, $path, 'enscript -q');
 	}
 
 	function getEnscriptCommand() {
@@ -1288,8 +1328,10 @@ class WebSvnConfig {
 			echo 'No template path added in config file';
 			exit;
 		}
-		if ($this->userTemplate !== false) return $this->userTemplate;
-		return $this->templatePaths[0];
+		if ($this->userTemplate !== false)
+			return $this->userTemplate;
+		else
+			return $this->templatePaths[0];
 	}
 
 	// }}}
@@ -1477,8 +1519,9 @@ class WebSvnConfig {
 	// The mergesort function preserves this order.
 
 	function sortByGroup() {
-		if (!empty($this->_repositories))
-		mergesort($this->_repositories, 'cmpGroups');
+		if (!empty($this->_repositories)) {
+			mergesort($this->_repositories, 'cmpGroups');
+		}
 	}
 
 	// }}}

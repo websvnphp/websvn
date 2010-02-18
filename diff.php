@@ -39,14 +39,14 @@ if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
 	// If there's no revision info, go to the lastest revision for this path
-	$history = $svnrep->getLog($path, '', '', true, 2, $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, true, 2, $peg);
 	$youngest = ($history) ? $history->entries[0]->rev : 0;
 
 	if (empty($rev)) {
 		$rev = $youngest;
 	}
 
-	$history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
+	$history = $svnrep->getLog($path, $rev, 1, false, 2, $peg);
 
 	if ($path{0} != '/') {
 		$ppath = '/'.$path;
@@ -75,6 +75,26 @@ if ($rep) {
 	if ($rev != $youngest) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'diff').($peg ? 'peg='.$peg : '');
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
+	}
+
+	$revurl = $config->getURL($rep, $path, 'diff');
+	if ($rev < $youngest) {
+		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg ? $peg : 'HEAD');
+		if (isset($history2->entries[1])) {
+			$nextRev = $history2->entries[1]->rev;
+			if ($nextRev != $youngest) {
+				$vars['nextrev'] = $nextRev;
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg);
+			}
+		}
+		unset($vars['error']);
+	}
+
+	if (isset($history->entries[1])) {
+		$prevRev = $history->entries[1]->rev;
+		$prevPath = $history->entries[1]->path;
+		$vars['prevrev'] = $prevRev;
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $peg);
 	}
 
 	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$passRevString;
@@ -152,7 +172,6 @@ if ($rep) {
 }
 
 $vars['template'] = 'diff';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'diff.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('diff.tmpl');
+parseTemplate('footer.tmpl');

@@ -35,7 +35,7 @@ if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
 	// If there's no revision info, go to the lastest revision for this path
-	$history = $svnrep->getLog($path, '', '', false, 2, $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, $peg);
 	$youngest = ($history) ? $history->entries[0]->rev : 0;
 
 	if (empty($rev)) {
@@ -70,6 +70,26 @@ if ($rep) {
 	if ($rev != $youngest) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'blame').($peg ? 'peg='.$peg : '');
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
+	}
+
+	$revurl = $config->getURL($rep, $path, 'blame');
+	if ($rev < $youngest) {
+		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
+		if (isset($history2->entries[1])) {
+			$nextRev = $history2->entries[1]->rev;
+			if ($nextRev != $youngest) {
+				$vars['nextrev'] = $nextRev;
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg);
+			}
+		}
+		unset($vars['error']);
+	}
+
+	if (isset($history->entries[1])) {
+		$prevRev = $history->entries[1]->rev;
+		$prevPath = $history->entries[1]->path;
+		$vars['prevrev'] = $prevRev;
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $peg);
 	}
 
 	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$passRevString;
@@ -126,7 +146,7 @@ if ($rep) {
 						$listing[$index]['lineno'] = $index + 1;
 
 						if ($last_rev != $revision) {
-							$url = $config->getURL($rep, $parent, 'revision');
+							$url = $config->getURL($rep, $path, 'blame');
 							$listing[$index]['revision'] = '<a id="l'.$index.'-rev" class="blame-revision" href="'.$url.'rev='.$revision.'&amp;peg='.$rev.'">'.$revision.'</a>';
 							$seen_rev[$revision] = 1;
 							$row_class = ($row_class == 'light') ? 'dark' : 'light';
@@ -182,7 +202,6 @@ if ($rep) {
 }
 
 $vars['template'] = 'blame';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'blame.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('blame.tmpl');
+parseTemplate('footer.tmpl');

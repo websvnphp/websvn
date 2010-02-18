@@ -335,7 +335,13 @@ $config->setMinDownloadLevel(2);
 // You'll need Enscript version 1.6 or higher AND Sed installed to use this feature.
 // Set the path above.
 //
+// If you have version 1.6.3 or newer use the following line.
+//
 // $config->useEnscript();
+//
+// If you have version 1.6.2 or older use the following line.
+//
+// $config->useEnscript(true);
 
 // Enscript need to be told what the contents of a file are so that it can be colourised
 // correctly. WebSVN includes a predefined list of mappings from file extension to Enscript
@@ -397,6 +403,23 @@ $config->useGeshi();
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->setRssMaxEntries(50, 'myrep');
+
+// }}}
+
+// {{{ SHOW CHANGED FILES IN LOG ---
+
+// Uncomment this line to show changed files on log.php by default. The normal
+// behavior is to do this only if the "Show changed files" link is clicked. This
+// setting reverses the default action but still allows hiding changed files.
+
+// $config->setLogsShowChanges(true);
+
+// To override the global setting for individual repositories, uncomment and replicate
+// the appropriate line below (replacing 'myrep' with the name of the repository).
+// Use the convention 'groupname.myrep' if your repository is in a group.
+
+// $config->setLogsShowChanges(true,  'myrep');
+// $config->setLogsShowChanges(false, 'myrep');
 
 // }}}
 

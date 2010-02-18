@@ -89,6 +89,27 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 	$last_index = 0;
 	$accessToThisDir = $rep->hasReadAccess($path, false);
 
+	// If using flat view and not at the root, create a '..' entry at the top.
+	if (!$treeview && count($subs) > 2) {
+		$parentPath = $subs;
+		unset($parentPath[count($parentPath)-2]);
+		$parentPath = implode('/', $parentPath);
+		if ($rep->hasReadAccess($parentPath, false)) {
+			$listing[$index]['rowparity'] = $index % 2;
+			$listing[$index]['path'] = $parentPath;
+			$listing[$index]['filetype'] = 'dir';
+			$listing[$index]['filelink'] = '<a href="'.removeURLSeparator($config->getURL($rep, $parentPath, 'dir').$passRevString).'">..</a>';
+			$listing[$index]['level'] = 0;
+			$listing[$index]['node'] = 0; // t-node
+			$listing[$index]['revision'] = $rev;
+			$listing[$index]['revurl'] = $config->getURL($rep, $parentPath, 'revision').'rev='.$rev.'&amp;isdir=1';
+			global $vars;
+			$listing[$index]['date'] = $vars['date'];
+			$listing[$index]['age'] = datetimeFormatDuration(time() - strtotime($vars['date']), true, true);
+			$index++;
+		}
+	}
+
 	$downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev.'&amp;' : '';
 
 	$openDir = false;
@@ -158,7 +179,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 				$last_index = $index;
 
 				if ($isDir && ($level != $limit)) {
-					if (isset($subs[$level + 1]) && !strcmp(htmlentities($subs[$level + 1], ENT_QUOTES).'/', htmlentities($file))) {
+					// @todo remove the alternate check with htmlentities when assured that there are not side effects
+					if (isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp(htmlentities($subs[$level + 1], ENT_QUOTES).'/', htmlentities($file)))) {
 						$listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $listing, $index);
 						$index = count($listing);
 					}
@@ -197,7 +219,7 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
-	$history = $svnrep->getLog($path, 'HEAD', '', false, 2, ($path == '/') ? '' : $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
@@ -207,7 +229,7 @@ if ($rep) {
 	// Unless otherwise specified, we get the log details of the latest change
 	$lastChangedRev = ($passrev) ? $passrev : $youngest;
 	if ($lastChangedRev != $youngest) {
-		$history = $svnrep->getLog($path, $lastChangedRev, '', false, 2, $peg);
+		$history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg);
 	}
 	$logEntry = ($history && isset($history->entries[0])) ? $history->entries[0] : 0;
 
@@ -231,13 +253,35 @@ if ($rep) {
 	$passRevString = createRevAndPegString($passrev, $peg);
 	$isDirString = 'isdir=1&amp;';
 
+	$revurl = $config->getURL($rep, $path != '/' ? $path : '', 'dir');
+	$revurlSuffix = $path != '/' ? '#'.anchorForPath($path) : '';
 	if ($rev < $youngest) {
 		if ($path == '/') {
 			$vars['goyoungesturl'] = $config->getURL($rep, '', 'dir');
 		} else {
-			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev).'#'.anchorForPath($path);
+			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev).$revurlSuffix;
 		}
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
+
+		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
+		if (isset($history2->entries[1])) {
+			$nextRev = $history2->entries[1]->rev;
+			if ($nextRev != $youngest) {
+				$vars['nextrev'] = $nextRev;
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg).$revurlSuffix;
+			}
+		}
+		unset($vars['error']);
+	}
+
+	if ($rev < $youngest) {
+	}
+
+	if (isset($history->entries[1])) {
+		$prevRev = $history->entries[1]->rev;
+		$prevPath = $history->entries[1]->path;
+		$vars['prevrev'] = $prevRev;
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $peg).$revurlSuffix;
 	}
 
 	$bugtraq = new Bugtraq($rep, $svnrep, $ppath);
@@ -291,7 +335,6 @@ if ($rep) {
 }
 
 $vars['template'] = 'directory';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'directory.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('directory.tmpl');
+parseTemplate('footer.tmpl');

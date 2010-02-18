@@ -25,6 +25,9 @@ a:link, a:visited {
 a:hover, a:active {
 	text-decoration: underline;
 }
+thead th a:link, thead th a:visited {
+	color: white;
+}
 a img {
 	border: none;
 }
@@ -244,16 +247,13 @@ td.diffdeleted {
 td.diffchanged {
 	background-color: #ffff88;
 }
-td.diffchanged ins.add {
+td.diffchanged ins {
 	background-color: #88ff88;
 	text-decoration: none;
 }
-td.diffchanged del.del {
+td.diffchanged del {
 	background-color: #ff8888;
 	text-decoration: none;
-}
-td.diffchanged ins.marker, td.diffchanged del.marker {
-	display: none;
 }
 
 td.diffadded {
@@ -370,3 +370,11 @@ img.icon {
 
 /* @end */
 
+/* @group revision.tmpl */
+
+#revision del {
+	color: #555;
+	text-decoration: none;
+}
+
+/* @end */

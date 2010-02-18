@@ -7,6 +7,12 @@
       <div class="clearer"></div>
     </div>
     <ul id="links">
+      [websvn-test:prevrevurl]
+      <li class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      <li class="next"><a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a></li>
+      [websvn-endtest]
       [websvn-test:goyoungestlink]
       <li class="youngest">[websvn:goyoungestlink]</li>
       [websvn-endtest]
@@ -38,7 +44,7 @@
     [websvn-test:warning]
     <div class="warning"><span>[websvn:warning]</span></div>
     [websvn-else]
-    <div id="contents">
+    <div id="listing">
     [websvn-getlisting]
     </div>
     [websvn-test:warning]
