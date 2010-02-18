@@ -205,33 +205,10 @@ function listCharacterData($parser, $data) {
 			$data = trim($data);
 			if ($data === false || $data === '') return;
 
-			$y = 0;
-			$mo = 0;
-			$d = 0;
-			$h = 0;
-			$m = 0;
-			$s = 0;
-			sscanf($data, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
-
-			$mo = substr('00'.$mo, -2);
-			$d = substr('00'.$d, -2);
-			$h = substr('00'.$h, -2);
-			$m = substr('00'.$m, -2);
-			$s = substr('00'.$s, -2);
-
-			$committime = strtotime($y.'-'.$mo.'-'.$d.' '.$h.':'.$m.':'.$s.' GMT');
-
-			$curList->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
-
+			$committime = parseSvnTimestamp($data);
 			$curList->curEntry->committime = $committime;
-			$curtime = time();
-
-			// Get the number of seconds since the commit
-			$agesecs = $curtime - $committime;
-			if ($agesecs < 0) $agesecs = 0;
-
-			$curList->curEntry->age = datetimeFormatDuration($agesecs, true, true);
-
+			$curList->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
+			$curList->curEntry->age = datetimeFormatDuration(max(time() - $committime, 0), true, true);
 			break;
 	}
 }
@@ -346,33 +323,10 @@ function logCharacterData($parser, $data) {
 			$data = trim($data);
 			if ($data === false || $data === '') return;
 
-			$y = 0;
-			$mo = 0;
-			$d = 0;
-			$h = 0;
-			$m = 0;
-			$s = 0;
-			sscanf($data, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
-
-			$mo = substr('00'.$mo, -2);
-			$d = substr('00'.$d, -2);
-			$h = substr('00'.$h, -2);
-			$m = substr('00'.$m, -2);
-			$s = substr('00'.$s, -2);
-
-			$committime = strtotime($y.'-'.$mo.'-'.$d.' '.$h.':'.$m.':'.$s.' GMT');
-
-			$curLog->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
-
+			$committime = parseSvnTimestamp($data);
 			$curLog->curEntry->committime = $committime;
-			$curtime = time();
-
-			// Get the number of seconds since the commit
-			$agesecs = $curtime - $committime;
-			if ($agesecs < 0) $agesecs = 0;
-
-			$curLog->curEntry->age = datetimeFormatDuration($agesecs, true, true);
-
+			$curLog->curEntry->date = strftime('%Y-%m-%d %H:%M:%S', $committime);
+			$curLog->curEntry->age = datetimeFormatDuration(max(time() - $committime, 0), true, true);
 			break;
 
 		case 'MSG':
@@ -569,6 +523,12 @@ class SVNRepository {
 		return $config->getSvnCommand().' '.$command.' '.$this->repConfig->svnParams().($rev ? '-r '.$rev.' ' : '').quote(encodePath($this->getSvnPath($path)).'@'.($peg ? $peg : ''));
 	}
 
+	// Private function to simplify creation of enscript command string text.
+	function enscriptCommandString($l) {
+		global $config;
+		return $config->enscript.' --language=html '.($l ? '--color --'.(!$config->getUseEnscriptBefore_1_6_3() ? 'highlight' : 'pretty-print').'='.$l : '').' -o -';
+	}
+
 	// {{{ getFileContents
 	//
 	// Dump the content of a file to the given filename
@@ -603,8 +563,7 @@ class SVNRepository {
 			// It's complicated because it's designed not to return those lines themselves.
 			$l = @$extEnscript[$ext];
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
-			$cmd = quoteCommand($cmd.' | '.
-				$config->enscript.' --language=html '.($l ? '--color --pretty-print='.$l : '').' -o - | '.
+			$cmd = quoteCommand($cmd.' | '.enscriptCommandString($l).' | '.
 				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
 		} else {
 			$highlighted = false;
@@ -721,7 +680,7 @@ class SVNRepository {
 		}
 		$this->geshi->set_source($source);
 		$this->geshi->set_language($language);
-		$this->geshi->set_header_type(GESHI_HEADER_DIV);
+		$this->geshi->set_header_type(GESHI_HEADER_NONE);
 		$this->geshi->set_overall_class('geshi');
 		$this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
 
@@ -754,8 +713,7 @@ class SVNRepository {
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
 			if ($config->useEnscript) {
 				$l = @$extEnscript[$ext];
-				$cmd .= ' | '.$config->enscript.' --language=html '.
-					($l ? '--color --pretty-print='.$l : '').' -o - | '.
+				$cmd .= ' | '.enscriptCommandString($l).' | '.
 					$config->sed.' -n '.$config->quote.'/^<PRE.$/,/^<\\/PRE.$/p'.$config->quote;
 			} else {
 				$pre = true;
@@ -1080,17 +1038,10 @@ class SVNRepository {
 
 }
 
-// {{{ initSvnVersion
-
-function initSvnVersion() {
-	global $config;
-
-	$ret = runCommand(str_replace('--non-interactive', '--version', $config->getSvnCommand()), false);
-	if (preg_match('~([0-9]?)\.([0-9]?)\.([0-9]?)~', $ret[0], $matches)) {
-		$config->setSubversionVersion($matches[0]);
-		$config->setSubversionMajorVersion($matches[1]);
-		$config->setSubversionMinorVersion($matches[2]);
-	}
+// Initialize SVN version information by parsing from command-line output.
+$ret = runCommand(str_replace('--non-interactive', '--version', $config->getSvnCommand()), false);
+if (preg_match('~([0-9]?)\.([0-9]?)\.([0-9]?)~', $ret[0], $matches)) {
+	$config->setSubversionVersion($matches[0]);
+	$config->setSubversionMajorVersion($matches[1]);
+	$config->setSubversionMinorVersion($matches[2]);
 }
-
-// }}}

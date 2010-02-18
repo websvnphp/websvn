@@ -4,7 +4,7 @@
   <div id="info">
     <h2>[lang:COMPAREREVS]</h2>
     <ul><li><dl>
-    	<dt><strong>[lang:CONVFROM]</strong></dt>
+    	<dt>[lang:CONVFROM]</dt>
     	<dd><span style="visibility: hidden">&rarr;</span> <a href="[websvn:rev1url]">[websvn:path1] @ [websvn:rev1]</a></dd>
     	<dd>&rarr; <a href="[websvn:rev2url]">[websvn:path2] @ [websvn:rev2]</a></dd>
     	<dd>&harr; [websvn:reverselink]</dd>
@@ -43,31 +43,29 @@
     </h2>
   
   [websvn-startlisting]
-  [websvn-test:newpath]
-    <div class="newpath">
-      <a href="[websvn:fileurl]"><strong>[websvn:newpath]</strong></a>
-  [websvn-endtest]
-  [websvn-test:info]
-    [websvn:info]<br />
-  [websvn-endtest]
-  [websvn-test:difflines]
-      <div class="difflines">
-        <strong>[websvn:rev1line],[websvn:rev1len] &rarr; [websvn:rev2line],[websvn:rev2len]</strong>
-        <table class="diff">
-  [websvn-endtest]   
-  [websvn-test:diffclass]
-          <tr><td class="[websvn:diffclass]">[websvn:line]</td></tr>
-  [websvn-endtest]
-  [websvn-test:enddifflines]
-        </table>
-      </div>
-  [websvn-endtest]
-  [websvn-test:endpath]
-    </div>
-  [websvn-endtest]
-  [websvn-test:properties]
-    [lang:PROPCHANGES]
-  [websvn-endtest]
+    [websvn-test:newpath]
+    <table class="diff">
+      <thead>
+      <tr><th><a href="[websvn:fileurl]">[websvn:newpath]</a></th></tr>
+      </thead>
+      <tbody>
+    [websvn-endtest]
+    [websvn-test:info]
+      <tr><th class="info">[websvn:info]</th></tr>
+    [websvn-endtest]
+    [websvn-test:difflines]
+      <tr><th>[websvn:rev1line],[websvn:rev1len] &rarr; [websvn:rev2line],[websvn:rev2len]</th></tr>
+    [websvn-endtest]
+    [websvn-test:diffclass]
+      <tr><td class="[websvn:diffclass]">[websvn:line]</td></tr>
+    [websvn-endtest]
+    [websvn-test:properties]
+      <tr><th>[lang:PROPCHANGES]</th></tr>
+    [websvn-endtest]
+    [websvn-test:endpath]
+      </tbody>
+    </table>
+    [websvn-endtest]
   [websvn-endlisting]
   </div>
 [websvn-endtest]

@@ -62,7 +62,7 @@
   
   [websvn-test:logsearch_resultsfound]
      [websvn:compare_form]
-        <table width="100%">
+        <table>
            <thead>
            <tr>
               <th class="HdrClmn">[lang:REV]</th>
@@ -77,11 +77,11 @@
            </thead>
            [websvn-startlisting]
            <tr class="row[websvn:rowparity]">
-              <td>[websvn:compare_box][websvn:revlink]</td>
+              <td class="rev">[websvn:compare_box][websvn:revlink]</td>
               [websvn-test:showageinsteadofdate]
-                <td title="[websvn:revdate]">[websvn:revage]</td>
+              <td title="[websvn:revdate]">[websvn:revage]</td>
               [websvn-else]
-                <td title="[websvn:revage]">[websvn:revdate]</td>
+              <td title="[websvn:revage]">[websvn:revdate]</td>
               [websvn-endtest]
               <td>[websvn:revauthor]</td>
               <td>[websvn:revpathlink]</td>

@@ -31,7 +31,10 @@ require_once 'include/bugtraq.php';
 $page = (int)@$_REQUEST['page'];
 $all = @$_REQUEST['all'] == 1;
 $isDir = @$_REQUEST['isdir'] == 1 || $path == '' || $path == '/';
-$showchanges = @$_REQUEST['showchanges'] == 1;
+if (isset($_REQUEST['showchanges']))
+	$showchanges = @$_REQUEST['showchanges'] == 1;
+else
+	$showchanges = $rep->logsShowChanges();
 $dosearch = @$_REQUEST['logsearch'] == 1;
 $search = trim(@$_REQUEST['search']);
 $words = preg_split('#\s+#', $search);
@@ -142,12 +145,18 @@ if ($rep) {
 	$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
 	$extraParams = array();
-	if ($passRevString) $extraParams[] = $passRevString;
-	if (!$showchanges) $extraParams[] = 'showchanges=1';
-	if (@$_REQUEST['sr']) $extraParams[] = 'sr='.$startrev;
-	if (@$_REQUEST['er']) $extraParams[] = 'er='.$endrev;
-	if (@$_REQUEST['max']) $extraParams[] = 'max='.$max;
-	if (@$_REQUEST['page']) $extraParams[] = 'page='.$page;
+	if ($passRevString)
+		$extraParams[] = $passRevString;
+	if ($showchanges == $rep->logsShowChanges())
+		$extraParams[] = 'showchanges='.(int)!$showchanges;
+	if (@$_REQUEST['sr'])
+		$extraParams[] = 'sr='.$startrev;
+	if (@$_REQUEST['er'])
+		$extraParams[] = 'er='.$endrev;
+	if (@$_REQUEST['max'])
+		$extraParams[] = 'max='.$max;
+	if (@$_REQUEST['page'])
+		$extraParams[] = 'page='.$page;
 	$vars['changesurl'] = $config->getURL($rep, $path, 'log').$isDirString.implode('&amp;', $extraParams);
 	$vars['changeslink'] = '<a href="'.$vars['changesurl'].'">'.$lang[($showchanges ? 'HIDECHANGED' : 'SHOWCHANGED')].'</a>';
 	$vars['showchanges'] = $showchanges;
@@ -399,7 +408,6 @@ if ($rep) {
 }
 
 $vars['template'] = 'log';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'log.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('log.tmpl');
+parseTemplate('footer.tmpl');

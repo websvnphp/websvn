@@ -40,7 +40,7 @@ if ($rep) {
 	$useMime = false;
 
 	// If there's no revision info, go to the lastest revision for this path
-	$history = $svnrep->getLog($path, '', '', false, 2, $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, $peg);
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev: false;
 
 	if (empty($rev)) {
@@ -54,7 +54,7 @@ if ($rep) {
 	// Check to see if the user has requested that this type be zipped and sent
 	// to the browser as an attachment
 
-	if (in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
+	if (isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
 		$base = basename($path);
 		header('Content-Type: application/x-gzip');
 		header('Content-Disposition: attachment; filename='.urlencode($base).'.gz');
@@ -128,6 +128,28 @@ if ($rep) {
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
+	$revurl = $config->getURL($rep, $path, 'file');
+	if ($rev < $youngest) {
+		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg ? $peg : 'HEAD');
+		if (isset($history2->entries[1])) {
+			$nextRev = $history2->entries[1]->rev;
+			if ($nextRev != $youngest) {
+				$vars['nextrev'] = $nextRev;
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg);
+			}
+		}
+		unset($vars['error']);
+	}
+
+	$history3 = $svnrep->getLog($path, $rev, 1, false, 2, $peg ? $peg : 'HEAD');
+	if (isset($history3->entries[1])) {
+		$prevRev = $history3->entries[1]->rev;
+		$prevPath = $history3->entries[1]->path;
+		$vars['prevrev'] = $prevRev;
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $peg);
+	}
+	unset($vars['error']);
+
 	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$passRevString;
 	$vars['revlink'] = '<a href="'.$vars['revurl'].'">'.$lang['LASTMOD'].'</a>';
 
@@ -170,7 +192,6 @@ if ($rep) {
 // $listing is populated with file data when file.tmpl calls [websvn-getlisting]
 
 $vars['template'] = 'file';
-$template = ($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
-parseTemplate($template.'header.tmpl', $vars, $listing);
-parseTemplate($template.'file.tmpl', $vars, $listing);
-parseTemplate($template.'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('file.tmpl');
+parseTemplate('footer.tmpl');

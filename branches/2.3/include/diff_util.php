@@ -55,32 +55,21 @@ class LineDiff extends LineDiffInterface {
 		if (strlen($str1) < 255 && strlen($str2) < 255) {
 			return levenshtein($str1, $str2);
 		}
-
-		$l1 = explode(' ', $str1);
-		$l2 = explode(' ', $str2);
-
 		$n = count($str1);
 		$m = count($str2);
-
 		$d = array_fill(0, $n + 1, array_fill(0, $m + 1, 0));
-		$ret = 0;
-
-
 		for ($i = 1; $i < $n + 1; $i++) {
 			$d[$i][0] = $i;
 		}
 		for ($j = 1; $j < $m + 1; $j++) {
 			$d[0][$j] = $j;
 		}
-
+		$l1 = explode(' ', $str1);
+		$l2 = explode(' ', $str2);
 		for ($i = 1; $i < $n + 1; $i++) {
 			for ($j = 1; $j < $m + 1; $j++) {
-				if ($l1[$i - 1] == $l2[$j - 1]) {
-					$c = 0;
-				} else {
-					$c = strlen($l1[$i - 1]) + strlen($l2[$i - 1]);
-				}
-				$d[$i][$j] = min($d[$i - 1][$j] + 1, $d[$i][$j - 1] + 1, $d[$i - 1][$j - 1] + $c);
+				$c = ($l1[$i-1] == $l2[$j-1]) ? 0 : strlen($l1[$i-1]) + strlen($l2[$i-1]);
+				$d[$i][$j] = min($d[$i-1][$j] + 1, $d[$i][$j-1] + 1, $d[$i-1][$j-1] + $c);
 			}
 		}
 		return $d[$i][$j];
@@ -90,9 +79,7 @@ class LineDiff extends LineDiffInterface {
 	// {{{ lineSimilarity
 	function lineSimilarity($text1, $text2) {
 		$distance = $this->levenshtein2($text1, $text2);
-		$similarity =  1.0 - $distance / (strlen($text1) + strlen($text2) + 4);
-		if ($similarity < 0) $similarity = 0;
-		return $similarity;
+		return max(0.0, 1.0 - $distance / (strlen($text1) + strlen($text2) + 4));
 	}
 	// }}}
 
@@ -100,32 +87,29 @@ class LineDiff extends LineDiffInterface {
 	// note that separators are returned as tokens of length 1
 	// and if $ignoreWhitespace is true, consecutive whitespaces are returned as one token
 	function tokenize($string, $ignoreWhitespace) {
-		$whitespaces = array("\t", "\n", "\r", ' ');
-		$separators = array('.', '-', '+', '*', '/', '<', '>', '?', '(', ')', '&', '/', '{', '}', '[', ']', ':', ';');
-
+		$whitespaces = array("\t","\n","\r",' ');
+		$separators = array('.','-','+','*','/','<','>','?','(',')','&','/','{','}','[',']',':',';');
 		$data = array();
-
 		$segment = '';
 		$segmentIsWhitespace = true;
 		foreach (str_split($string) as $c) {
-			// if it is separator or whitespace and we do not consider consecutive whitespaces
 			if (in_array($c, $separators) || (!$ignoreWhitespace && in_array($c, $whitespaces))) {
-				if ($segment != '') $data[] = $segment;
+				// if it is separator or whitespace and we do not consider consecutive whitespaces
+				if ($segment != '')
+					$data[] = $segment;
 				$data[] = $c;
 				$segment = '';
 				$segmentIsWhitespace = true;
-
-			// if it is whitespace and we consider consecutive whitespaces as one token
 			} else if (in_array($c, $whitespaces)) {
+				// if it is whitespace and we consider consecutive whitespaces as one token
 				if (!$segmentIsWhitespace) {
 					$data[] = $segment;
 					$segment = '';
 					$segmentIsWhitespace = true;
 				}
 				$segment .= $c;
-
-			// no separator or whitespace
 			} else {
+				// no separator or whitespace
 				if ($segmentIsWhitespace && $segment != '') {
 					$data[] = $segment;
 					$segment = '';
@@ -134,32 +118,36 @@ class LineDiff extends LineDiffInterface {
 				$segmentIsWhitespace = false;
 			}
 		}
-		if ($segment != '') $data[] = $segment;
-
+		if ($segment != '')
+			$data[] = $segment;
 		return $data;
 	}
 	// }}}	
 
 	// {{{ lineDiff
-	// we lose highlighting if we want to show diff. Therefore, we show original highlighted code in some cases.
 	function inlineDiff($text1, $highlighted1, $text2, $highlighted2) {
 		$whitespaces = array(' ', "\t", "\n", "\r");
 
 		$do_diff = true;
-		if ($text1 == '' || $text2 == '') $do_diff = false;
+		if ($text1 == '' || $text2 == '')
+			$do_diff = false;
 
-		if ($this->ignoreWhitespace && (str_replace($whitespaces, array(), $text1) == str_replace($whitespaces, array(), $text2))) {
+		if ($this->ignoreWhitespace && (str_replace($whitespaces, array(), $text1)
+		                             == str_replace($whitespaces, array(), $text2)))
+		{
 			$do_diff = false;
 		}
 
-		// failback if loading of Text_Diff failed
-		if (!class_exists('Text_Diff') || !class_exists('Text_MappedDiff')) $do_diff = false;
+		// Exit gracefully if loading of Text_Diff failed
+		if (!class_exists('Text_Diff') || !class_exists('Text_MappedDiff'))
+			$do_diff = false;
 
-		// we do not need inline diff, return highlighted texts
-		if (!$do_diff) return array($highlighted1, $highlighted2);
+		// Return highlighted lines without doing inline diff
+		if (!$do_diff)
+			return array($highlighted1, $highlighted2);
 
-		$tokens1 = $this->tokenize($text1, $this->ignoreWhitespace);
-		$tokens2 = $this->tokenize($text2, $this->ignoreWhitespace);
+		$tokens1 = $this->tokenize($highlighted1, $this->ignoreWhitespace);
+		$tokens2 = $this->tokenize($highlighted2, $this->ignoreWhitespace);
 
 		if (!$this->ignoreWhitespace) {
 			$diff = @new Text_Diff('native', array($tokens1, $tokens2));
@@ -169,12 +157,10 @@ class LineDiff extends LineDiffInterface {
 			foreach ($tokens1 as $token) {
 				$mapped1[] = str_replace($whitespaces, array(), $token);
 			}
-
 			$mapped2 = array();
 			foreach ($tokens2 as $token) {
 				$mapped2[] = str_replace($whitespaces, array(), $token);
 			}
-
 			$diff = new Text_MappedDiff($tokens1, $tokens2, $mapped1, $mapped2);
 		}
 
@@ -184,28 +170,26 @@ class LineDiff extends LineDiffInterface {
 		$line1 = '';
 		$line2 = '';
 		foreach ($edits as $edit) {
-			if (is_a($edit, 'Text_Diff_Op_add')) {
-				$line1 .= '<ins class="marker">@</ins>';
-				$line2 .= '<ins class="add">'.replaceEntities(implode('', $edit->final)).'</ins>';
+			if (is_a($edit, 'Text_Diff_Op_copy')) {
+				$line1 .= implode('', $edit->orig);
+				$line2 .= implode('', $edit->final);
 			} else if (is_a($edit, 'Text_Diff_Op_delete')) {
-				$line1 .= '<del class="del">'.replaceEntities(implode('', $edit->orig)).'</del>';
-				$line2 .= '<del class="marker">@</del>';
-			} else if (is_a($edit, 'Text_Diff_Op_copy')) {
-				$line1 .= replaceEntities(implode('', $edit->orig));
-				$line2 .= replaceEntities(implode('', $edit->final));
+				$line1 .= '<del>'.implode('', $edit->orig).'</del>';
+			} else if (is_a($edit, 'Text_Diff_Op_add')) {
+				$line2 .= '<ins>'.implode('', $edit->final).'</ins>';
 			} else if (is_a($edit, 'Text_Diff_Op_change')) {
-				$line1 .= '<del class="del">'.replaceEntities(implode('', $edit->orig)).'</del>';
-				$line2 .= '<ins class="add">'.replaceEntities(implode('', $edit->final)).'</ins>';
+				$line1 .= '<del>'.implode('', $edit->orig).'</del>';
+				$line2 .= '<ins>'.implode('', $edit->final).'</ins>';
 			} else {
 				assert(false);
 			}
 		}
-		return array('<code>'.$line1.'</code>', '<code>'.$line2.'<code>');
+		return array($line1, $line2);
 	}
 	// }}}
 }
 
-// Class computing sensibly added/deleted block of lines.
+// Class for computing sensibly added/deleted block of lines.
 class SensibleLineChanges {
 	var $_added = array();
 	var $_deleted = array();
@@ -223,7 +207,6 @@ class SensibleLineChanges {
 		$this->_added[] = array($text, $highlighted_text, $lineno);
 	}
 
-
 	// this function computes simple match - first min(deleted,added) lines are marked as changed
 	// it is intended to be run instead of _computeBestMatching if the diff is too big
 	function _computeFastMatching() {
@@ -233,12 +216,10 @@ class SensibleLineChanges {
 			$result[] = array($this->_deleted[$q], $this->_added[$q]);
 			$q++;
 		}
-
 		while ($q < $n) {
 			$result[] = array($this->_deleted[$q], null);
 			$q++;
 		}
-
 		while ($q < $m) {
 			$result[] = array(null, $this->_added[$q]);
 			$q++;
@@ -273,35 +254,29 @@ class SensibleLineChanges {
 			$back[$i][0] = 0;
 			$dyn[$i][0] = $value_del * $i;
 		}
-
 		for ($j = 1; $j <= $m; $j++) {
 			$back[0][$j] = 1;
 			$dyn[0][$j] = $value_add * $j;
 		}
-
 
 		// main dynamic programming
 		for ($i = 1; $i <= $n; $i++) {
 			for ($j = 1; $j <= $m; $j++) {
 				$best = -1.0;
 				$b = -1;
-
-				if ($dyn[$i - 1][$j] + $value_del >= $best) {
+				if ($dyn[$i-1][$j] + $value_del >= $best) {
 					$b = 0;
-					$best = $dyn[$i - 1][$j] + $value_del;
+					$best = $dyn[$i-1][$j] + $value_del;
 				}
-
-				if ($dyn[$i][$j - 1] + $value_add >= $best) {
+				if ($dyn[$i][$j-1] + $value_add >= $best) {
 					$b = 1;
-					$best = $dyn[$i][$j - 1] + $value_add;
+					$best = $dyn[$i][$j-1] + $value_add;
 				}
-
-				$sim = $this->_lineDiff->lineSimilarity($this->_deleted[$i - 1][0], $this->_added[$j - 1][0]);
-				if ($dyn[$i - 1][$j - 1] + $sim >= $best) {
+				$sim = $this->_lineDiff->lineSimilarity($this->_deleted[$i-1][0], $this->_added[$j-1][0]);
+				if ($dyn[$i-1][$j-1] + $sim >= $best) {
 					$b = 2;
-					$best = $dyn[$i - 1][$j - 1] + $sim;
+					$best = $dyn[$i-1][$j-1] + $sim;
 				}
-
 				$back[$i][$j] = $b;
 				$dyn[$i][$j] = $best;
 			}
@@ -314,13 +289,13 @@ class SensibleLineChanges {
 
 		while ($i + $j >= 1) {
 			switch($back[$i][$j]) {
-				case 2: array_push($result, array($this->_deleted[$i - 1], $this->_added[$j - 1]));
+				case 2: array_push($result, array($this->_deleted[$i-1], $this->_added[$j-1]));
 					$i--; $j--;
 					break;
-				case 1: array_push($result, array(null, $this->_added[$j - 1]));
+				case 1: array_push($result, array(null, $this->_added[$j-1]));
 					$j--;
 					break;
-				case 0: array_push($result, array($this->_deleted[$i - 1], null));
+				case 0: array_push($result, array($this->_deleted[$i-1], null));
 					$i--;
 					break;            
 				default:
@@ -335,16 +310,15 @@ class SensibleLineChanges {
 	// add computed changes to the listing
 	function addChangesToListing(&$listingHelper) {
 		$matching = $this->_computeBestMatching();
-
 		foreach ($matching as $change) {
-			if ($change[1] == null) { // deleted
-				// preserve original highlighted text
+			if ($change[1] == null) {
+				// deleted -- preserve original highlighted text
 				$listingHelper->addDeletedLine($change[0][1], $change[0][2]);
-			} else if ($change[0] == null) { // added
-				// preserve original highlighted text
+			} else if ($change[0] == null) {
+				// added   -- preserve original highlighted text
 				$listingHelper->addAddedLine($change[1][1], $change[1][2]);
-
-			} else { // this is fully changed line, make inline diff
+			} else {
+				// this is fully changed line, make inline diff
 				$diff = $this->_lineDiff->inlineDiff($change[0][0], $change[0][1], $change[1][0], $change[1][1]);
 				$listingHelper->addChangedLine($diff[0], $change[0][2], $diff[1], $change[1][2]);
 			}
@@ -353,7 +327,7 @@ class SensibleLineChanges {
 	}
 	// }}}
 
-	function clear(){
+	function clear() {
 		$this->_added = array();
 		$this->_deleted = array();
 	}

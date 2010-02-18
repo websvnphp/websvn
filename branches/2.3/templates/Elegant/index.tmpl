@@ -5,67 +5,70 @@
   the information passed from index.php uses drastically different organization.
   -->
   <div id="content">
-    <!--
-    <div class="information" style="margin: 0 auto 10px;">
-      <span>You can uncomment and customize this short message in the <b>index.tmpl</b> file of this template to tell your visitors what they can find in your repositories.</span>
+    <div class="information">
+      <span>You can customize this message in 'templates/Elegant/index.tmpl' to tell your visitors what they'll find in your repositories.</span>
     </div>
-    -->
-  [websvn-test:error]
+[websvn-test:error]
     <div class="error"><span>[websvn:error]</span></div>
-  [websvn-else]
-    <div id="repositories">
-      <h4>[lang:PROJECTS]</h4>
-    [websvn-test:flatview]
-      [websvn-startlisting]
-      [websvn-test:groupid]
-      [websvn-else]
-      [websvn-test:rowparity]
-      <div class="project shaded">[websvn:projectlink]</div>
-      [websvn-else]
-      <div class="project">[websvn:projectlink]</div>
-      [websvn-endtest]
-      [websvn-endtest]
-      [websvn-endlisting]
+[websvn-else]
+    <table>
+      <thead><tr><th>[lang:PROJECTS]</th></tr></thead>
+  [websvn-test:flatview]
+    [websvn-startlisting]
+    [websvn-test:groupid]
     [websvn-else]
-      [websvn-startlisting]
-      [websvn-test:groupid]
-        [websvn-test:notfirstgroup]
-        </div> <!-- grouplist -->
-        [websvn-endtest]
-        
-        [websvn-test:opentree]
-        <div class="groupname" onclick="toggleVisibility(this, '[websvn:groupid]');">[websvn:groupname]</div>
-        <div class="grouplist" id="[websvn:groupid]">
-        [websvn-else]
-        <div class="groupname closed" onclick="toggleVisibility(this, '[websvn:groupid]');">[websvn:groupname]</div>
-        <div class="grouplist" style="display: none" id="[websvn:groupid]">
-        [websvn-endtest]
+      [websvn-test:rowparity]
+      <tr class="shaded">
       [websvn-else]
-        [websvn-test:groupparity]
-        <div class="project shaded">[websvn:projectlink]</div>
-        [websvn-else]
-        <div class="project">[websvn:projectlink]</div>
-        [websvn-endtest]
+      <tr>
       [websvn-endtest]
-      [websvn-endlisting]
-      [websvn-test:groupcount]
-        </div> <!-- grouplist -->
-      [websvn-endtest] 
-      </div>
-      <script type="text/javascript">
-      //<![CDATA[
-      function toggleVisibility(currentObject, elementID) {
-        var element = document.getElementById(elementID);
-        if (element.style.display == 'none') {
-          element.style.display = 'block';
-          currentObject.className = 'groupname';
-        } else {
-          element.style.display = 'none';
-          currentObject.className = 'groupname closed';
+        <td>[websvn:projectlink]</td>
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-else]
+    [websvn-startlisting]
+    [websvn-test:groupid]
+      <tr><th onclick="toggleGroup('[websvn:groupname]');">[websvn:groupname]</th></tr>
+    [websvn-else]
+      [websvn-test:groupparity]
+      <tr title="[websvn:groupname]" class="shaded">
+      [websvn-else]
+      <tr title="[websvn:groupname]">
+      [websvn-endtest]
+      [websvn-test:groupname]
+        <td class="group">[websvn:projectlink]</td>
+      [websvn-else]
+        <td>[websvn:projectlink]</td>
+      [websvn-endtest]
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-endtest]
+    </table>
+  [websvn-test:treeview]
+    <script type="text/javascript">
+    //<![CDATA[
+    var tableRows = document.getElementsByTagName('tr');
+    [websvn-test:opentree]
+    [websvn-else]
+    for (var i = 0; i < tableRows.length; i++) {
+      if (tableRows[i].title != '')
+        tableRows[i].style.display = 'none';
+    }
+    [websvn-endtest]
+    function toggleGroup(groupName) {
+      for (var i = 0; i < tableRows.length; i++) {
+        if (tableRows[i].title == groupName) {
+          if (tableRows[i].style.display == 'none') {
+            tableRows[i].style.display = 'table-row';
+          } else {
+            tableRows[i].style.display = 'none';
+          }
         }
       }
-      //]]>
-      </script>
-    [websvn-endtest]
-    </div>
-  [websvn-endtest] 
+    }
+    //]]>
+    </script>
+  [websvn-endtest]
+[websvn-endtest] 

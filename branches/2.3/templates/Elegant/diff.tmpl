@@ -11,6 +11,12 @@
       <div class="clearer"></div>
     </div>
     <ul id="links">
+      [websvn-test:prevrevurl]
+      <li class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      <li class="next"><a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a></li>
+      [websvn-endtest]
       [websvn-test:goyoungestlink]
       <li class="youngest">[websvn:goyoungestlink]</li>
       [websvn-endtest]
@@ -52,22 +58,22 @@
     <table>
       <thead>
       <tr>
-        <th colspan="2">[lang:REV] [websvn:rev2]</th>
-        <th colspan="2">[lang:REV] [websvn:rev1]</th>
+        <th colspan="2"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:rev2]</a></th>
+        <th colspan="2"><a href="[websvn:revurl]">[lang:REV] [websvn:rev1]</a></th>
       </tr>
       </thead>
       <tbody>
       [websvn-startlisting]
       [websvn-test:startblock]
-      <tr class="diffcode shaded">
-        <td colspan="2">[lang:LINE] [websvn:rev1lineno]...</td>
-        <td colspan="2">[lang:LINE] [websvn:rev2lineno]...</td>
+      <tr>
+        <th colspan="2">[lang:LINE] [websvn:rev1lineno]...</th>
+        <th colspan="2">[lang:LINE] [websvn:rev2lineno]...</th>
       </tr>
       [websvn-endtest]
-      <tr class="diffcode">
-        <td class="lineno">[websvn:rev1lineno]</td>
+      <tr>
+        <td class="line">[websvn:rev1lineno]</td>
         <td class="[websvn:rev1diffclass]">[websvn:rev1line]</td>
-        <td class="lineno">[websvn:rev2lineno]</td>
+        <td class="line">[websvn:rev2lineno]</td>
         <td class="[websvn:rev2diffclass]">[websvn:rev2line]</td>
       </tr>
       [websvn-endlisting]

@@ -36,7 +36,7 @@ $config->sortByGroup();
 $projects = $config->getRepositories();
 
 if (count($projects) == 1 && $projects[0]->hasReadAccess('/', true)) {
-	header('Location: '.$config->getURL(-1, '', 'dir'));
+	header('Location: '.str_replace('&amp;', '', $config->getURL($projects[0], '', 'dir')));
 	exit;
 }
 
@@ -73,6 +73,7 @@ foreach ($projects as $project) {
 	$parity++;
 	$listing[$i]['groupparity'] = $groupparity % 2;
 	$groupparity++;
+	$listing[$i]['groupname'] = ($curgroup != null) ? $curgroup : '';
 	$i++;
 }
 if (empty($listing) && !empty($projects))
@@ -84,6 +85,6 @@ $vars['opentree'] = $config->openTree;
 $vars['groupcount'] = $groupcount; // Indicates whether any groups were present.
 
 $vars['template'] = 'index';
-parseTemplate($config->getTemplatePath().'header.tmpl', $vars, $listing);
-parseTemplate($config->getTemplatePath().'index.tmpl', $vars, $listing);
-parseTemplate($config->getTemplatePath().'footer.tmpl', $vars, $listing);
+parseTemplate('header.tmpl');
+parseTemplate('index.tmpl');
+parseTemplate('footer.tmpl');

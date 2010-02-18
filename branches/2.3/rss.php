@@ -96,6 +96,7 @@ if ($history && is_array($history->entries)) {
 	foreach ($history->entries as $r) {
 		$wordLimit = 10; // Display only up to the first 10 words of the log message
 		$title = trim($r->msg);
+		$title = str_replace(array("\r\n", "\r", "\n", "\t"), ' ', $title);
 		$words = explode(' ', $title, $wordLimit + 1);
 		if (count($words) > $wordLimit) {
 			$title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
@@ -110,19 +111,26 @@ if ($history && is_array($history->entries)) {
 					case 'M': $description .= '~ '; break;
 					case 'D': $description .= 'x '; break;
 				}
-				$description .= $modifiedResource->path.'<br />';
+				$description .= $modifiedResource->path;
+				if ($modifiedResource->copyfrom != '') {
+					$description .= ' <i>(copied from '.$modifiedResource->copyfrom.'@'.$modifiedResource->copyrev.')</i>';
+				}
+				$description .= '<br />';
 			}
 		}
 		$itemLink = getFullURL($baseurl.$config->getURL($rep, '', 'revision').'rev='.$r->rev);
 
-		$rss .= '<item>';
-		$rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
-		$rss .= '<dc:creator>'.htmlspecialchars($r->author).'</dc:creator>';
-		$rss .= '<title>'.htmlspecialchars($title).'</title>';
-		$rss .= '<description>'.htmlspecialchars($description).'</description>';
-		$rss .= '<link>'.$itemLink.'</link>';
-		$rss .= '<guid>'.$itemLink.'</guid>';
-		$rss .= '</item>'."\n";
+		// skip items with no access
+		if ($r->committime) {
+			$rss .= '<item>';
+			$rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
+			$rss .= '<dc:creator>'.htmlspecialchars($r->author).'</dc:creator>';
+			$rss .= '<title>'.htmlspecialchars($title).'</title>';
+			$rss .= '<description>'.htmlspecialchars($description).'</description>';
+			$rss .= '<link>'.$itemLink.'</link>';
+			$rss .= '<guid>'.$itemLink.'</guid>';
+			$rss .= '</item>'."\n";
+		}
 	}
 }
 $rss .= '</channel></rss>';

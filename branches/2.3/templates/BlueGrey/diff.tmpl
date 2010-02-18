@@ -10,6 +10,12 @@
     <div id="revjump">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
     <div id="pathlinks">[websvn:pathlinks]</div>
     <div id="nav">
+      [websvn-test:prevrevurl]
+      <a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a> -
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      <a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a> -
+      [websvn-endtest]
       [websvn-test:goyoungestlink]
       [websvn:goyoungestlink] -
       [websvn-endtest]
@@ -50,9 +56,9 @@
     <table class="diff" width="100%" cellspacing="0">
       <thead>
       <tr>
-        <th width="50%" colspan="2"><b>[lang:REV] [websvn:rev2]</b></th>
+        <th width="50%" colspan="2"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:rev2]</a></th>
         <td width="5"></td>
-        <th width="50%" colspan="2"><b>[lang:REV] [websvn:rev1]</b></th>
+        <th width="50%" colspan="2"><a href="[websvn:revurl]">[lang:REV] [websvn:rev1]</a></th>
       </tr>
       </thead>
       [websvn-startlisting]

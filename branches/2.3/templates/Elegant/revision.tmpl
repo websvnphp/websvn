@@ -60,19 +60,15 @@
       <tbody>
       [websvn-startlisting]
       [websvn-test:rowparity]
-      <tr class="shaded">
+      <tr class="[websvn:action] shaded">
       [websvn-else]
-      <tr>
+      <tr class="[websvn:action]">
       [websvn-endtest]
-        [websvn-test:added]
-        <td class="path"><a href="[websvn:detailurl]" class="added">[websvn:path]</a></td>
-        [websvn-endtest]
-        [websvn-test:modified]
-        <td class="path"><a href="[websvn:detailurl]" class="modified">[websvn:path]</a></td>
-        [websvn-endtest]
-        [websvn-test:deleted]
-        <td class="path"><a href="[websvn:detailurl]" class="deleted">[websvn:path]</a></td>
-        [websvn-endtest]
+        <td class="path"><a href="[websvn:detailurl]">[websvn:path]</a>
+          [websvn-test:oldpath]
+          <br/><del>[websvn:oldpath] ([lang:PREV])</del>
+          [websvn-endtest]
+        </td>
         [websvn-test:blameurl]
         <td class="blame"><a href="[websvn:blameurl]" title="[lang:BLAME]">[lang:BLAME]</a></td>
         [websvn-else]

@@ -4,6 +4,12 @@
   <h2 id="pathlinks">[websvn:pathlinks] - [lang:REV] [websvn:rev2] &rarr; [websvn:rev1]</h2>
   <div id="revjump">[websvn:revision_form][lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span>[websvn:revision_endform]</div>
   <p>
+    [websvn-test:prevrevurl]
+    <span class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></span> &#124;
+    [websvn-endtest]
+    [websvn-test:nextrevurl]
+    <span class="next"><a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a></span> &#124;
+    [websvn-endtest]
     [websvn-test:goyoungestlink]
     <span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
     [websvn-endtest]
@@ -41,19 +47,19 @@
        <table>
         <thead>
           <tr>
-             <th colspan="2">[lang:REV] [websvn:rev2]</th>
-             <th colspan="2">[lang:REV] [websvn:rev1]</th>
+             <th colspan="2"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:rev2]</a></th>
+             <th colspan="2"><a href="[websvn:revurl]">[lang:REV] [websvn:rev1]</a></th>
           </tr>
         </thead>
         <tbody>
         [websvn-startlisting]
           [websvn-test:startblock]
-          <tr class="diffcode">
-            <td class="row1" colspan="2"><strong>[lang:LINE] [websvn:rev1lineno]...</strong></td>
-            <td class="row1" colspan="2"><strong>[lang:LINE] [websvn:rev2lineno]...</strong></td>
+          <tr>
+            <th colspan="2">[lang:LINE] [websvn:rev1lineno]...</th>
+            <th colspan="2">[lang:LINE] [websvn:rev2lineno]...</th>
           </tr>
           [websvn-endtest]
-          <tr class="diffcode">
+          <tr>
             <td class="lineno">[websvn:rev1lineno]</td>
             <td class="[websvn:rev1diffclass]"><pre>[websvn:rev1line]</pre></td>
             <td class="lineno">[websvn:rev2lineno]</td>
