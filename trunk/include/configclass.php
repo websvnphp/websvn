@@ -1114,7 +1114,7 @@ class WebSvnConfig {
 					break;
 			}
 
-			if ($rep !== -1 && $op != 'index') {
+			if (is_object($rep) && $op != 'index') {
 				$params['repname'] = $rep->getDisplayName();
 			}
 			if (!empty($path)) {
