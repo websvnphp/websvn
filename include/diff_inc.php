@@ -98,10 +98,9 @@ function getWrappedLineFromFile($file, $is_highlighted) {
 	$line = fgets($file);
 	if ($line === false) return false;
 	$line = rtrim($line);
-	if ($is_highlighted) {
-		$line = toOutputEncoding($line);
-	} else {
-		$line = replaceEntities($line);
+	$line = toOutputEncoding($line);
+	if (!$is_highlighted) {
+		$line = escape($line);
 	}
 	if (strip_tags($line) === '') $line = '&nbsp;';
 	return wrapInCodeTagIfNecessary($line);
