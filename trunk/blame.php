@@ -161,7 +161,7 @@ if ($rep) {
 
 						$line = rtrim(fgets($file));
 						if (!$highlighted)
-							$line = replaceEntities($line);
+							$line = escape(toOutputEncoding($line));
 						$listing[$index]['line'] = ($empty) ? '&nbsp;' : wrapInCodeTagIfNecessary($line);
 						$index++;
 					}

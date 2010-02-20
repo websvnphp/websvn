@@ -39,31 +39,6 @@ function detectCharacterEncoding($str) {
 	return null;
 }
 
-// {{{ replaceEntities
-//
-// Replace character codes with HTML entities for display purposes.
-// This routine assumes that the character encoding of the string is
-// that of the local system (i.e., it's a string returned from a command
-// line command).
-
-function replaceEntities($str) {
-	global $config;
-
-	// Ideally, we'd do this:
-	//
-	// $str = htmlentities($str, ENT_COMPAT, detectCharacterEncoding($str));
-	//
-	// However, htmlentities is very limited in it's ability to process
-	// character encodings.	We have to rely on something more powerful.
-
-	$str = toOutputEncoding($str);
-	$str = htmlentities($str, ENT_COMPAT, 'UTF-8');
-
-	return $str;
-}
-
-// }}}
-
 // {{{ toOutputEncoding
 
 function toOutputEncoding($str) {
@@ -94,6 +69,22 @@ function toOutputEncoding($str) {
 	}
 
 	return $str;
+}
+
+// }}}
+
+// {{{ escape
+//
+// Escape a string to output
+
+function escape($str) {
+	$entities = array();
+	$entities['&'] = '&amp;';
+	$entities['<'] = '&lt;';
+	$entities['>'] = '&gt;';
+	$entities['"'] = '&quot;';
+	$entities['\''] = '&apos;';
+	return str_replace(array_keys($entities), array_values($entities), $str);
 }
 
 // }}}
