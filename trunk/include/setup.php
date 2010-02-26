@@ -359,7 +359,7 @@ $vars['language_code'] = $language;
 if ($language != 'en')
 	require 'languages/'.$languages[$language][0].'.php';
 // Generate the HTML form for selecting a different language
-$vars['language_form'] = '<form action="?'.buildQuery($queryParams).'" method="post" id="langform">';
+$vars['language_form'] = '<form action="?'.buildQuery($queryParams).'" method="get" id="langform">';
 $vars['language_select'] = '<select name="language" onchange="javascript:this.form.submit();">';
 foreach ($languages as $code => $names) {
 	$sel = ($code == $language) ? '" selected="selected' : '';
@@ -427,7 +427,7 @@ if ($rep == null || $rep->templatePath === false) {
 
 // Generate the HTML form for selecting a different template
 if (count($templates) > 1) {
-	$vars['template_form'] = '<form action="?'.buildQuery($queryParams).'" method="post" id="templateform">';
+	$vars['template_form'] = '<form action="?'.buildQuery($queryParams).'" method="get" id="templateform">';
 	$vars['template_select'] = '<select name="template" onchange="javascript:this.form.submit();">';
 	natcasesort($templates);
 	foreach ($templates as $path => $name) {
@@ -497,7 +497,7 @@ function createProjectSelectionForm() {
 	$url = $config->getURL(-1, '', 'form');
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="form" />' : '';
 	$hidden .= '<input type="hidden" name="selectproj" value="1" />';
-	$vars['projects_form'] = '<form action="'.$url.'" method="post" id="projectform">'.$hidden;
+	$vars['projects_form'] = '<form action="'.$url.'" method="get" id="projectform">'.$hidden;
 	$vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">'.$options.'</select>';
 	$vars['projects_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
 	$vars['projects_endform'] = '</form>';

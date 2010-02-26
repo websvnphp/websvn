@@ -100,7 +100,7 @@ if ($rep) {
 
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
 	$hidden .= '<input type="hidden" name="manualorder" value="1" />';
-	$vars['compare_form'] = '<form action="'.$url.'" method="post">'.$hidden;
+	$vars['compare_form'] = '<form action="'.$url.'" method="get">'.$hidden;
 	$vars['compare_path1input'] = '<input type="text" size="40" name="compare[0]" value="'.htmlentities($path1, ENT_QUOTES, 'UTF-8').'" />';
 	$vars['compare_path2input'] = '<input type="text" size="40" name="compare[1]" value="'.htmlentities($path2, ENT_QUOTES, 'UTF-8').'" />';
 	$vars['compare_rev1input'] = '<input type="text" size="5" name="compare_rev[0]" value="'.$rev1.'" />';
