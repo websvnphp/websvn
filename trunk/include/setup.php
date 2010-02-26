@@ -445,7 +445,7 @@ if (count($templates) > 1) {
 }
 
 $vars['indexurl'] = $config->getURL('', '', 'index');
-$vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($queryParams + array('template' => $template), '%26');
+$vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($queryParams + array('template' => $template, 'language' => $language), '%26');
 
 // To avoid a possible XSS exploit, need to clean up the passed-in path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
