@@ -390,7 +390,7 @@ if ($config->multiViews) {
 	} else {
 		$vars['repurl'] = $config->getURL($rep, '', 'dir');
 		$vars['clientrooturl'] = $rep->clientRootURL;
-		$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+		$vars['repname'] = escape($rep->getDisplayName());
 		$vars['allowdownload'] = $rep->getAllowDownload();
 	}
 	// With MultiViews, wsvn creates the form once the current project is found.
@@ -451,7 +451,7 @@ $vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($que
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 if ($path === null || $path === '')
 	$path = '/';
-$vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
+$vars['safepath'] = escape($path);
 // Set operative and peg revisions (if specified) and save passed-in revision
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
@@ -487,8 +487,8 @@ function createProjectSelectionForm() {
 	foreach ($config->getRepositories() as $repository) {
 		if ($repository->hasReadAccess('/', true)) {
 			$repoName = $repository->getDisplayName();
-			$sel = ($repoName == $currentRepoName) ? '" selected="selected' : '';
-			$options .= '<option value="'.$repoName.$sel.'">'.$repoName.'</option>';
+			$sel = ($repoName == $currentRepoName) ? ' selected="selected"' : '';
+			$options .= '<option value="'.escape($repoName).'"'.$sel.'>'.escape($repoName).'</option>';
 		}
 	}
 	if (strlen($options) === 0)
@@ -516,7 +516,7 @@ function createRevisionSelectionForm() {
 	$hidden = '';
 	foreach ($params as $key => $value) {
 		if ($value)
-			$hidden .= '<input type="hidden" name="'.$key.'" value="'.htmlspecialchars($value).'" />';
+			$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
 	}
 	// The blank "action" attribute makes form link back to the containing page.
 	$vars['revision_form'] = '<form action="" method="get" id="revisionform">'.$hidden;

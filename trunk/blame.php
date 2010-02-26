@@ -56,7 +56,7 @@ if ($rep) {
 
 	$vars['rev'] = $rev;
 	$vars['peg'] = $peg;
-	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+	$vars['path'] = escape($ppath);
 
 	if ($history) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
