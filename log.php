@@ -123,9 +123,9 @@ if ($rep) {
 	$vars['action'] = $lang['LOG'];
 	$vars['rev'] = $rev;
 	$vars['peg'] = $peg;
-	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+	$vars['path'] = escape($ppath);
 
-	if ($history->curEntry) {
+	if ($history && $history->curEntry) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
 		$vars['author'] = $history->entries[0]->author;
@@ -382,7 +382,7 @@ if ($rep) {
 	$vars['logsearch_startbox'] = '<input name="sr" size="5" value="'.$startrev.'" />';
 	$vars['logsearch_endbox'] = '<input name="er" size="5" value="'.$endrev.'" />';
 	$vars['logsearch_maxbox'] = '<input name="max" size="5" value="'.($max == 0 ? '' : $max).'" />';
-	$vars['logsearch_inputbox'] = '<input name="search" value="'.htmlentities($search, ENT_QUOTES, 'UTF-8').'" />';
+	$vars['logsearch_inputbox'] = '<input name="search" value="'.escape($search).'" />';
 	$vars['logsearch_showall'] = '<input type="checkbox" name="all" value="1"'.($all ? ' checked="checked"' : '').' />';
 	$vars['logsearch_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['logsearch_endform'] = '</form>';

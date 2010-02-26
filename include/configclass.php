@@ -744,7 +744,7 @@ class WebSvnConfig {
 		}
 
 		// Hack to return a string by reference; value retrieved at setup.php:414
-		$str = 'Unable to find repository "'.htmlentities($name, ENT_QUOTES, 'UTF-8').'".';
+		$str = 'Unable to find repository "'.escape($name).'".';
 		$error =& $str;
 		return $error;
 	}
