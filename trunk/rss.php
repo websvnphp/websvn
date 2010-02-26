@@ -71,7 +71,7 @@ $history = $svnrep->getLog($path, $rev, '', false, $max, $peg);
 
 if ($rep->isRssCachingEnabled()) {
 	// Filename for storing a cached RSS feed for this particular path/revision
-	$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ':/\\?', '____').($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'m'.$max.($quiet ? 'q' : '').'.rss.xml';
+	$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, '\\/:*?"<>|.', '__________').($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'m'.$max.($quiet ? 'q' : '').'.rss.xml';
 	// If a recent-enough cached version exists, use it and avoid the work below
 	if (file_exists($cache) && filemtime($cache) >= $history->curEntry->committime) {
 		readfile($cache);
