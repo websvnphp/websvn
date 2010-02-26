@@ -68,7 +68,7 @@ foreach ($projects as $project) {
 	// Create project (repository) listing
 	$url = str_replace('&amp;', '', $config->getURL($project, '', 'dir'));
 	$name = ($config->flatIndex) ? $project->getDisplayName() : $project->name;
-	$listing[$i]['projectlink'] = '<a href="'.$url.'">'.$name.'</a>';
+	$listing[$i]['projectlink'] = '<a href="'.$url.'">'.escape($name).'</a>';
 	$listing[$i]['rowparity'] = $parity % 2;
 	$parity++;
 	$listing[$i]['groupparity'] = $groupparity % 2;

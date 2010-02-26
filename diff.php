@@ -56,7 +56,7 @@ if ($rep) {
 
 	$prevrev = @$history->entries[1]->rev;
 
-	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+	$vars['path'] = escape($ppath);
 	$vars['rev1'] = $rev;
 	$vars['rev2'] = $prevrev;
 	$vars['prevrev'] = $prevrev;

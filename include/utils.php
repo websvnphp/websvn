@@ -29,7 +29,7 @@
 function createPathLinks($rep, $path, $rev, $peg = '') {
 	global $vars, $config;
 
-	$pathComponents = explode('/', htmlentities($path, ENT_QUOTES, 'UTF-8'));
+	$pathComponents = explode('/', escape($path));
 	$count = count($pathComponents);
 
 	// The number of links depends on the last item.	It's empty if we're looking
@@ -55,7 +55,7 @@ function createPathLinks($rep, $path, $rev, $peg = '') {
 	}
 
 	if (!empty($pathComponents[$n])) {
-		$pegrev = ($peg) ? ' <a class="peg" href="'.'?'.htmlspecialchars(str_replace('&peg='.$peg, '', $_SERVER['QUERY_STRING']), ENT_NOQUOTES).'">@ '.$peg.'</a>' : '';
+		$pegrev = ($peg) ? ' <a class="peg" href="'.'?'.escape(str_replace('&peg='.$peg, '', $_SERVER['QUERY_STRING'])).'">@ '.$peg.'</a>' : '';
 		if ($dir) {
 			$vars['pathlinks'] .= '<span class="dir">'.$pathComponents[$n].'/'.$pegrev.'</span>';
 		} else {
