@@ -4,7 +4,7 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.5
+ * Release Version: 1.0.8.6
  * Date Started: 2004/06/20
  *
  * PHP language file for GeSHi.
@@ -90,14 +90,14 @@ $language_data = array(
             'as','break','case','continue','default','do','else','elseif',
             'endfor','endforeach','endif','endswitch','endwhile','for',
             'foreach','if','include','include_once','require','require_once',
-            'return','switch','while',
+            'return','switch','throw','while',
 
             'echo','print'
             ),
         2 => array(
             '&amp;new','&lt;/script&gt;','&lt;?php','&lt;script language',
             'class','const','declare','extends','function','global','interface',
-            'namespace','new','private','public','self','use','var'
+            'namespace','new','private','protected','public','self','use','var'
             ),
         3 => array(
             'abs','acos','acosh','addcslashes','addslashes','aggregate',
