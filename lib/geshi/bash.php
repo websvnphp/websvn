@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.5
+ * Release Version: 1.0.8.6
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
@@ -300,7 +300,7 @@ $language_data = array (
         //Variable assignment
         2 => "(?<![\.a-zA-Z_\-])([a-zA-Z_][a-zA-Z0-9_]*?)(?==)",
         //Shorthand shell variables
-        4 => "\\$[*#\$\\-\\?!]",
+        4 => "\\$[*#\$\\-\\?!\d]",
         //Parameters of commands
         5 => "(?<=\s)--?[0-9a-zA-Z\-]+(?=[\s=]|$)"
         ),
@@ -316,7 +316,7 @@ $language_data = array (
         ),
         'KEYWORDS' => array(
             'DISALLOWED_BEFORE' => "(?<![\.\-a-zA-Z0-9_\$\#])",
-            'DISALLOWED_AFTER' =>  "(?![\.\-a-zA-Z0-9_%\\/])"
+            'DISALLOWED_AFTER' =>  "(?![\.\-a-zA-Z0-9_%=\\/])"
         )
     )
 );
