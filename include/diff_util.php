@@ -161,7 +161,7 @@ class LineDiff extends LineDiffInterface {
 			foreach ($tokens2 as $token) {
 				$mapped2[] = str_replace($whitespaces, array(), $token);
 			}
-			$diff = new Text_MappedDiff($tokens1, $tokens2, $mapped1, $mapped2);
+			$diff = @new Text_MappedDiff($tokens1, $tokens2, $mapped1, $mapped2);
 		}
 
 		// now, get the diff and annotate text
