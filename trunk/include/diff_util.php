@@ -170,14 +170,14 @@ class LineDiff extends LineDiffInterface {
 		$line1 = '';
 		$line2 = '';
 		foreach ($edits as $edit) {
-			if (is_a($edit, 'Text_Diff_Op_copy')) {
+			if (@is_a($edit, 'Text_Diff_Op_copy')) {
 				$line1 .= implode('', $edit->orig);
 				$line2 .= implode('', $edit->final);
-			} else if (is_a($edit, 'Text_Diff_Op_delete')) {
+			} else if (@is_a($edit, 'Text_Diff_Op_delete')) {
 				$line1 .= '<del>'.implode('', $edit->orig).'</del>';
-			} else if (is_a($edit, 'Text_Diff_Op_add')) {
+			} else if (@is_a($edit, 'Text_Diff_Op_add')) {
 				$line2 .= '<ins>'.implode('', $edit->final).'</ins>';
-			} else if (is_a($edit, 'Text_Diff_Op_change')) {
+			} else if (@is_a($edit, 'Text_Diff_Op_change')) {
 				$line1 .= '<del>'.implode('', $edit->orig).'</del>';
 				$line2 .= '<ins>'.implode('', $edit->final).'</ins>';
 			} else {
