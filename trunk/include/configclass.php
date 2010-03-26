@@ -1208,7 +1208,7 @@ class WebSvnConfig {
 	// Define the location of the enscript command
 
 	function setEnscriptPath($path) {
-		$this->_setPath($this->enscript, $path, 'enscript -q');
+		$this->_setPath($this->enscript, $path, 'enscript', '-q');
 	}
 
 	function getEnscriptCommand() {
