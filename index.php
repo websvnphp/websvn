@@ -76,8 +76,10 @@ foreach ($projects as $project) {
 	$listing[$i]['groupname'] = ($curgroup != null) ? $curgroup : '';
 	$i++;
 }
-if (empty($listing) && !empty($projects))
+if (empty($listing) && !empty($projects)) {
 	$vars['error'] = $lang['NOACCESS'];
+	checkSendingAuthHeader();
+}
 
 $vars['flatview'] = $config->flatIndex;
 $vars['treeview'] = !$config->flatIndex;

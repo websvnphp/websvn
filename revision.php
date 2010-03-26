@@ -158,6 +158,7 @@ if ($rep) {
 
 	if (!$rep->hasReadAccess($path, true)) {
 		$vars['error'] = $lang['NOACCESS'];
+		checkSendingAuthHeader($rep);
 	}
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
 }
