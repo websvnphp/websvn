@@ -366,7 +366,7 @@ if ($rep) {
 	}
 
 	// Create form elements for filtering and searching log messages
-	$url = $config->getURL(-1, '', 'log');
+	$url = $config->getURL($config->multiViews ? $rep : null, '', $config->multiViews ? 'dir' : 'log');
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="log" />' : '';
 	$hidden .= '<input type="hidden" name="repname" value="'.$repname.'" />';
 	$hidden .= '<input type="hidden" name="path" value="'.$path.'" />';
