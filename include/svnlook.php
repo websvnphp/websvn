@@ -764,6 +764,20 @@ class SVNRepository {
 
 	// }}}
 
+	function getProperties($path, $rev = 0, $peg = '') {
+		$cmd = $this->svnCommandString('proplist', $path, $rev, $peg);
+		$ret = runCommand($cmd, true);
+		$properties = array();
+		if (is_array($ret)) {
+			foreach ($ret as $line) {
+				if (substr($line, 0, 1) == ' ') {
+					$properties[] = ltrim($line);
+				}
+			}
+		}
+		return $properties;
+	}
+
 	// {{{ getProperty
 
 	function getProperty($path, $property, $rev = 0, $peg = '') {
