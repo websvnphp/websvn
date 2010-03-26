@@ -325,6 +325,12 @@ if (file_exists('include/config.php')) {
 // Make sure that the input locale is set up correctly
 setlocale(LC_ALL, '');
 
+// assure that a default timezone is set
+if (function_exists('date_default_timezone_get')) {
+	$timezone = @date_default_timezone_get();
+	date_default_timezone_set($timezone); 
+}
+
 // Initialize the version of SVN that is being used by WebSVN internally.
 require_once 'include/svnlook.php';
 $vars['svnversion'] = $config->getSubversionVersion();
