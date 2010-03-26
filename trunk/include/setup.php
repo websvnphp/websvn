@@ -524,3 +524,18 @@ function createRevisionSelectionForm() {
 	$vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['revision_endform'] = '</form>';
 }
+
+function checkSendingAuthHeader($rep = false) {
+	global $config;
+	$auth = null;
+	if ($rep) {
+		$auth =& $rep->getAuth();
+	} else {
+		$auth =& $config->getAuth();
+	}
+	$loggedin = $auth->hasUsername();
+	if (!$loggedin) {
+		header('WWW-Authenticate: Basic realm="'.str_replace('"', '\"', $auth->getBasicRealm()).'"');
+		header('HTTP/1.x 401 Unauthorized', true, 401);
+	}
+}

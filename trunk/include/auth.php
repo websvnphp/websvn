@@ -30,19 +30,31 @@ define('DENY', 2);
 
 class Authentication {
 	var $rights;
-	var $user;
+	var $user = null;
 	var $usersGroups = array();
+	var $basicRealm = 'WebSVN';
 
 	// {{{ __construct
 
-	function Authentication($accessfile) {
+	function Authentication($accessfile, $basicRealm = false) {
 		$this->rights = new IniFile();
 		$this->rights->readIniFile($accessfile);
 		$this->setUsername();
 		$this->identifyGroups();
+		if ($basicRealm !== false) {
+			$this->basicRealm = $basicRealm;
+		}
 	}
 
 	// }}}
+
+	function hasUsername() {
+		return $this->user !== null;
+	}
+
+	function getBasicRealm() {
+		return $this->basicRealm;
+	}
 
 	// {{{ setUsername()
 	//

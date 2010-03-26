@@ -210,6 +210,12 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // $config->useAuthenticationFile('/path/to/accessfile', 'myrep'); // Access file for myrep
 
+// When allowing anonymous access for some repositories and require authentification for others
+// WebSVN can request authentication on-demand. Therefore the optional second/third parameter can be used.
+
+// $config->useAuthenticationFile('/path/to/accessfile', 'My WebSVN Realm'); // Global access file
+// $config->useAuthenticationFile('/path/to/accessfile', 'myrep', 'My WebSVN Realm'); // Access file for myrep
+
 // }}}
 
 // {{{ FILE CONTENT ---
