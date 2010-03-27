@@ -99,7 +99,7 @@ if ($config->multiViews) {
 	$vars['repurl'] = $config->getURL($rep, '', 'dir');
 	$vars['clientrooturl'] = $rep->clientRootURL;
 	$vars['allowdownload'] = $rep->getAllowDownload();
-	$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+	$vars['repname'] = escape($rep->getDisplayName());
 
 	// find the operation type
 	$op = @$_REQUEST['op'];

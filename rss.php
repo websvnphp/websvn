@@ -71,7 +71,7 @@ $history = $svnrep->getLog($path, $rev, '', false, $max, $peg);
 
 if ($rep->isRssCachingEnabled()) {
 	// Filename for storing a cached RSS feed for this particular path/revision
-	$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, ':/\\?', '____').($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'m'.$max.($quiet ? 'q' : '').'.rss.xml';
+	$cache = $locwebsvnreal.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.strtr($rep->getDisplayName().$path, '\\/:*?"<>|.', '__________').($peg ? '@'.$peg : '').($rev ? '_r'.$rev : '').'m'.$max.($quiet ? 'q' : '').'.rss.xml';
 	// If a recent-enough cached version exists, use it and avoid the work below
 	if (file_exists($cache) && filemtime($cache) >= $history->curEntry->committime) {
 		readfile($cache);
@@ -84,14 +84,14 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 // Generate RSS 2.0 feed
 $rss = '<?xml version="1.0" encoding="utf-8"?>';
 $rss .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel>';
-$rss .= '<title>'.htmlspecialchars($rep->getDisplayName().($path ? ' - '.$path : '')).'</title>';
-$rss .= '<description>'.htmlspecialchars($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
+$rss .= '<title>'.escape($rep->getDisplayName().($path ? ' - '.$path : '')).'</title>';
+$rss .= '<description>'.escape($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
 // URL for matching WebSVN log page
 $rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').(@$_REQUEST['isdir'] == 1 ? 'isdir=1&amp;' : '').'max='.$max.'&amp;'.createRevAndPegString($passrev, $peg)).'</link>';
 // URL where this original RSS feed can be found
-$rss .= '<atom:link href="'.htmlspecialchars(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
+$rss .= '<atom:link href="'.escape(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
 if ($history && is_array($history->entries)) {
 	foreach ($history->entries as $r) {
 		$wordLimit = 10; // Display only up to the first 10 words of the log message
@@ -118,15 +118,15 @@ if ($history && is_array($history->entries)) {
 				$description .= '<br />';
 			}
 		}
-		$itemLink = getFullURL($baseurl.$config->getURL($rep, '', 'revision').'rev='.$r->rev);
 
 		// skip items with no access
 		if ($r->committime) {
 			$rss .= '<item>';
 			$rss .= '<pubDate>'.date('r', $r->committime).'</pubDate>';
-			$rss .= '<dc:creator>'.htmlspecialchars($r->author).'</dc:creator>';
-			$rss .= '<title>'.htmlspecialchars($title).'</title>';
-			$rss .= '<description>'.htmlspecialchars($description).'</description>';
+			$rss .= '<dc:creator>'.escape($r->author).'</dc:creator>';
+			$rss .= '<title>'.escape($title).'</title>';
+			$rss .= '<description>'.escape($description).'</description>';
+			$itemLink = getFullURL($baseurl.$config->getURL($rep, '', 'revision').'rev='.$r->rev);
 			$rss .= '<link>'.$itemLink.'</link>';
 			$rss .= '<guid>'.$itemLink.'</guid>';
 			$rss .= '</item>'."\n";

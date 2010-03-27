@@ -239,6 +239,7 @@ class Repository {
 	var $ignoreWebSVNContentTypes;
 	var $bugtraq;
 	var $auth;
+	var $authBasicRealm;
 	var $templatePath = false;
 
 	// }}}
@@ -526,15 +527,15 @@ class Repository {
 
 	// {{{ Authentication
 
-	function useAuthenticationFile($file) {
+	function useAuthenticationFile($file, $basicRealm = false) {
 		if (is_readable($file)) {
-			$this->auth = new Authentication($file);
+			$this->auth = new Authentication($file, $basicRealm);
 		} else {
 			die('Unable to read authentication file "'.$file.'"');
 		}
 	}
 
-	function hasReadAccess($path, $checkSubFolders = false) {
+	function &getAuth() {
 		global $config;
 
 		$a = null;
@@ -543,6 +544,13 @@ class Repository {
 		} else {
 			$a =& $config->getAuth();
 		}
+		return $a;
+	}
+
+	function hasReadAccess($path, $checkSubFolders = false) {
+		global $config;
+
+		$a =& $this->getAuth();
 
 		if (!empty($a)) {
 			return $a->hasReadAccess($this->svnName, $path, $checkSubFolders);
@@ -555,12 +563,7 @@ class Repository {
 	function hasUnrestrictedReadAccess($path) {
 		global $config;
 
-		$a = null;
-		if (isset($this->auth)) {
-			$a =& $this->auth;
-		} else {
-			$a =& $config->getAuth();
-		}
+		$a =& $this->getAuth();
 
 		if (!empty($a)) {
 			return $a->hasUnrestrictedReadAccess($this->svnName, $path);
@@ -744,7 +747,7 @@ class WebSvnConfig {
 		}
 
 		// Hack to return a string by reference; value retrieved at setup.php:414
-		$str = 'Unable to find repository "'.htmlentities($name, ENT_QUOTES, 'UTF-8').'".';
+		$str = 'Unable to find repository "'.escape($name).'".';
 		$error =& $str;
 		return $error;
 	}
@@ -1114,7 +1117,7 @@ class WebSvnConfig {
 					break;
 			}
 
-			if ($rep !== -1 && $op != 'index') {
+			if (is_object($rep) && $op != 'index') {
 				$params['repname'] = $rep->getDisplayName();
 			}
 			if (!empty($path)) {
@@ -1205,7 +1208,7 @@ class WebSvnConfig {
 	// Define the location of the enscript command
 
 	function setEnscriptPath($path) {
-		$this->_setPath($this->enscript, $path, 'enscript -q');
+		$this->_setPath($this->enscript, $path, 'enscript', '-q');
 	}
 
 	function getEnscriptCommand() {
@@ -1404,10 +1407,10 @@ class WebSvnConfig {
 		return $this->ignoreWebSVNContentTypes;
 	}
 
-	function useAuthenticationFile($file, $myrep = 0) {
+	function useAuthenticationFile($file, $myrep = 0, $basicRealm = false) {
 		if (empty($myrep)) {
 			if (is_readable($file)) {
-				$this->auth = new Authentication($file);
+				$this->auth = new Authentication($file, $basicRealm);
 			} else {
 				echo 'Unable to read authentication file "'.$file.'"';
 				exit;

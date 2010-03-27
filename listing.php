@@ -32,9 +32,7 @@ function removeURLSeparator($url) {
 	return preg_replace('#(\?|&(amp;)?)$#', '', $url);
 }
 
-function fileLink($path, $file, $returnjoin = false) {
-	global $config, $rep, $passrev, $passRevString, $peg;
-
+function joinPath($path, $file) {
 	if ($path == '' || $path{0} != '/') {
 		$ppath = '/'.$path;
 	} else {
@@ -51,22 +49,26 @@ function fileLink($path, $file, $returnjoin = false) {
 		$pfile = $file;
 	}
 
-	if ($returnjoin) {
-		return $ppath.$pfile;
-	}
+	return $ppath.$pfile;
+}
 
-	$isDir = $pfile{strlen($pfile) - 1} == '/';
+function fileLinkUrl($path, $file, $passRevString) {
+	global $config, $rep;
+
+	$fullpath = joinPath($path, $file);
+	$isDir = $fullpath{strlen($fullpath) - 1} == '/';
 	if ($isDir) {
-		$url = $config->getURL($rep, $ppath.$pfile, 'dir').$passRevString;
 		if ($config->treeView) {
-			$id = anchorForPath($ppath.$pfile);
+			$url = $config->getURL($rep, $fullpath, 'dir').$passRevString;
+			$id = anchorForPath($fullpath);
 			$url .= '#'.$id.'" id="'.$id;
+		} else {
+			$url = $config->getURL($rep, $fullpath, 'dir').$passRevString;
 		}
 	} else {
-		$url = $config->getURL($rep, $ppath.$pfile, 'file').$passRevString;
+		$url = $config->getURL($rep, $fullpath, 'file').$passRevString;
 	}
-	// NOTE: If it's a directory in tree view, this also injects an "id" attribute
-	return '<a href="'.removeURLSeparator($url).'">'.$pfile.'</a>';
+	return removeURLSeparator($url);
 }
 
 function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $treeview = true) {
@@ -98,7 +100,9 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 			$listing[$index]['rowparity'] = $index % 2;
 			$listing[$index]['path'] = $parentPath;
 			$listing[$index]['filetype'] = 'dir';
-			$listing[$index]['filelink'] = '<a href="'.removeURLSeparator($config->getURL($rep, $parentPath, 'dir').$passRevString).'">..</a>';
+			$listing[$index]['filename'] = '..';
+			$listing[$index]['filelinkurl'] = fileLinkUrl($parentPath, '', $passRevString);
+			$listing[$index]['filelink'] = '<a href="'.$listing[$index]['filelinkurl'].'">'.$listing[$index]['filename'].'</a>';
 			$listing[$index]['level'] = 0;
 			$listing[$index]['node'] = 0; // t-node
 			$listing[$index]['revision'] = $rev;
@@ -141,11 +145,13 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 				$listing[$index]['level'] = ($treeview) ? $level : 0;
 				$listing[$index]['node'] = 0; // t-node
 				$listing[$index]['path'] = $path.$file;
-				$listing[$index]['filelink'] = fileLink($path, $file);
+				$listing[$index]['filename'] = $file;
+				$listing[$index]['filelinkurl'] = fileLinkUrl($path, $file, $passRevString);
+				$listing[$index]['filelink'] = '<a href="'.$listing[$index]['filelinkurl'].'">'.$listing[$index]['filename'].'</a>';
 				$listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.$passRevString;
 
 				if ($treeview) {
-					$listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.fileLink($path, $file, true).'@'.$passrev.'" onclick="checkCB(this)" />';
+					$listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.joinPath($path, $file).'@'.$passrev.'" onclick="checkCB(this)" />';
 				}
 				if ($config->showLastMod) {
 					$listing[$index]['committime'] = $entry->committime;
@@ -289,7 +295,7 @@ if ($rep) {
 	$vars['action'] = '';
 	$vars['rev'] = $rev;
 	$vars['peg'] = $peg;
-	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+	$vars['path'] = escape($ppath);
 	$vars['lastchangedrev'] = $lastChangedRev;
 	$vars['date'] = $logEntry ? $logEntry->date : '';
 	$vars['author'] = $logEntry ? $logEntry->author : '';
@@ -319,7 +325,7 @@ if ($rep) {
 	}
 
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
-	$vars['compare_form'] = '<form action="'.$config->getURL($rep, '', 'comp').'" method="post">'.$hidden;
+	$vars['compare_form'] = '<form action="'.$config->getURL($rep, '', 'comp').'" method="get">'.$hidden;
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREPATHS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
@@ -330,6 +336,7 @@ if ($rep) {
 
 	if (!$rep->hasReadAccess($path, true)) {
 		$vars['error'] = $lang['NOACCESS'];
+		checkSendingAuthHeader($rep);
 	}
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
 }

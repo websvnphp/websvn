@@ -325,6 +325,12 @@ if (file_exists('include/config.php')) {
 // Make sure that the input locale is set up correctly
 setlocale(LC_ALL, '');
 
+// assure that a default timezone is set
+if (function_exists('date_default_timezone_get')) {
+	$timezone = @date_default_timezone_get();
+	date_default_timezone_set($timezone); 
+}
+
 // Initialize the version of SVN that is being used by WebSVN internally.
 require_once 'include/svnlook.php';
 $vars['svnversion'] = $config->getSubversionVersion();
@@ -359,7 +365,7 @@ $vars['language_code'] = $language;
 if ($language != 'en')
 	require 'languages/'.$languages[$language][0].'.php';
 // Generate the HTML form for selecting a different language
-$vars['language_form'] = '<form action="?'.buildQuery($queryParams).'" method="post" id="langform">';
+$vars['language_form'] = '<form action="?'.buildQuery($queryParams).'" method="get" id="langform">';
 $vars['language_select'] = '<select name="language" onchange="javascript:this.form.submit();">';
 foreach ($languages as $code => $names) {
 	$sel = ($code == $language) ? '" selected="selected' : '';
@@ -390,7 +396,7 @@ if ($config->multiViews) {
 	} else {
 		$vars['repurl'] = $config->getURL($rep, '', 'dir');
 		$vars['clientrooturl'] = $rep->clientRootURL;
-		$vars['repname'] = htmlentities($rep->getDisplayName(), ENT_QUOTES, 'UTF-8');
+		$vars['repname'] = escape($rep->getDisplayName());
 		$vars['allowdownload'] = $rep->getAllowDownload();
 	}
 	// With MultiViews, wsvn creates the form once the current project is found.
@@ -427,7 +433,7 @@ if ($rep == null || $rep->templatePath === false) {
 
 // Generate the HTML form for selecting a different template
 if (count($templates) > 1) {
-	$vars['template_form'] = '<form action="?'.buildQuery($queryParams).'" method="post" id="templateform">';
+	$vars['template_form'] = '<form action="?'.buildQuery($queryParams).'" method="get" id="templateform">';
 	$vars['template_select'] = '<select name="template" onchange="javascript:this.form.submit();">';
 	natcasesort($templates);
 	foreach ($templates as $path => $name) {
@@ -445,13 +451,13 @@ if (count($templates) > 1) {
 }
 
 $vars['indexurl'] = $config->getURL('', '', 'index');
-$vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($queryParams + array('template' => $template), '%26');
+$vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($queryParams + array('template' => $template, 'language' => $language), '%26');
 
 // To avoid a possible XSS exploit, need to clean up the passed-in path first
 $path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 if ($path === null || $path === '')
 	$path = '/';
-$vars['safepath'] = htmlentities($path, ENT_QUOTES, 'UTF-8');
+$vars['safepath'] = escape($path);
 // Set operative and peg revisions (if specified) and save passed-in revision
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
@@ -487,8 +493,8 @@ function createProjectSelectionForm() {
 	foreach ($config->getRepositories() as $repository) {
 		if ($repository->hasReadAccess('/', true)) {
 			$repoName = $repository->getDisplayName();
-			$sel = ($repoName == $currentRepoName) ? '" selected="selected' : '';
-			$options .= '<option value="'.$repoName.$sel.'">'.$repoName.'</option>';
+			$sel = ($repoName == $currentRepoName) ? ' selected="selected"' : '';
+			$options .= '<option value="'.escape($repoName).'"'.$sel.'>'.escape($repoName).'</option>';
 		}
 	}
 	if (strlen($options) === 0)
@@ -497,7 +503,7 @@ function createProjectSelectionForm() {
 	$url = $config->getURL(-1, '', 'form');
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="form" />' : '';
 	$hidden .= '<input type="hidden" name="selectproj" value="1" />';
-	$vars['projects_form'] = '<form action="'.$url.'" method="post" id="projectform">'.$hidden;
+	$vars['projects_form'] = '<form action="'.$url.'" method="get" id="projectform">'.$hidden;
 	$vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">'.$options.'</select>';
 	$vars['projects_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
 	$vars['projects_endform'] = '</form>';
@@ -516,11 +522,28 @@ function createRevisionSelectionForm() {
 	$hidden = '';
 	foreach ($params as $key => $value) {
 		if ($value)
-			$hidden .= '<input type="hidden" name="'.$key.'" value="'.htmlspecialchars($value).'" />';
+			$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
 	}
 	// The blank "action" attribute makes form link back to the containing page.
 	$vars['revision_form'] = '<form action="" method="get" id="revisionform">'.$hidden;
 	$vars['revision_input'] = '<input type="text" size="5" name="rev" value="'.($rev ? $rev : 'HEAD').'" />';
 	$vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['revision_endform'] = '</form>';
+}
+
+function checkSendingAuthHeader($rep = false) {
+	global $config;
+	$auth = null;
+	if ($rep) {
+		$auth =& $rep->getAuth();
+	} else {
+		$auth =& $config->getAuth();
+	}
+	$loggedin = $auth->hasUsername();
+	if (!$loggedin) {
+		header('WWW-Authenticate: Basic realm="'.str_replace('"', '\"', $auth->getBasicRealm()).'"');
+		header('HTTP/1.x 401 Unauthorized', true, 401);
+	} else {
+		header('HTTP/1.x 403 Forbidden', true, 403);
+	}
 }
