@@ -55,10 +55,11 @@ class Bugtraq {
 
 			$enoughdata = false;
 			while (!$enoughdata && (strpos($parent, '/') !== false)) {
-				if (empty($this->msgstring)) $this->msgstring = $svnrep->getProperty($parent, 'bugtraq:message');
-				if (empty($this->logregex)) $this->logregex = $svnrep->getProperty($parent, 'bugtraq:logregex');
-				if (empty($this->urlstring)) $this->urlstring = $svnrep->getProperty($parent, 'bugtraq:url');
-				if ($svnrep->getProperty($parent, 'bugtraq:append') == 'false') $this->append = false;
+				$properties = $svnrep->getProperties($parent);
+				if (empty($this->msgstring) && in_array('bugtraq:message', $properties)) $this->msgstring = $svnrep->getProperty($parent, 'bugtraq:message');
+				if (empty($this->logregex) && in_array('bugtraq:logregex', $properties)) $this->logregex = $svnrep->getProperty($parent, 'bugtraq:logregex');
+				if (empty($this->urlstring) && in_array('bugtraq:url', $properties)) $this->urlstring = $svnrep->getProperty($parent, 'bugtraq:url');
+				if (in_array('bugtraq:append', $properties) && $svnrep->getProperty($parent, 'bugtraq:append') == 'false') $this->append = false;
 
 				$parent = substr($parent, 0, -1); // Remove the trailing slash
 				$pos = strrpos($parent, '/'); // Find the last trailing slash

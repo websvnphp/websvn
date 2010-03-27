@@ -88,7 +88,7 @@ if ($rep) {
 	$vars['action'] = '';
 	$vars['rev'] = $rev;
 	$vars['peg'] = $peg;
-	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+	$vars['path'] = escape($ppath);
 	$vars['date'] = $logEntry ? $logEntry->date: '';
 	$vars['author'] = $logEntry ? $logEntry->author: '';
 	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg)))): '';
@@ -158,6 +158,7 @@ if ($rep) {
 
 	if (!$rep->hasReadAccess($path, true)) {
 		$vars['error'] = $lang['NOACCESS'];
+		checkSendingAuthHeader($rep);
 	}
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
 }

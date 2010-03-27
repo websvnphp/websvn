@@ -582,12 +582,11 @@ class SVNRepository {
 			proc_close($resource);
 
 			if (!empty($error)) {
-				$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 				global $lang;
-				error_log($lang['BADCMD'].': '.$cmd);
+				error_log($lang['BADCMD'].': '.escape($cmd));
 				error_log($error);
 				global $vars;
-				$vars['warning'] = $error.'.';
+				$vars['warning'] = nl2br(escape(toOutputEncoding($error)));
 			}
 		}
 
@@ -664,12 +663,11 @@ class SVNRepository {
 		proc_close($resource);
 
 		if (!empty($error)) {
-			$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
+			error_log($lang['BADCMD'].': '.escape($cmd));
 			error_log($error);
 			global $vars;
-			$vars['warning'] = 'Unable to cat file: '.$error.'.';
+			$vars['warning'] = 'Unable to cat file: '.nl2br(escape(toOutputEncoding($error)));
 			return;
 		}
 
@@ -724,10 +722,10 @@ class SVNRepository {
 					echo '<pre>';
 				while (!feof($result)) {
 					$line = fgets($result, 1024);
-					if ($pre)
-						$line = replaceEntities($line, $this->repConfig);
-					else
-						$line = toOutputEncoding($line);
+					$line = toOutputEncoding($line);
+					if ($pre) {
+						$line = escape($line);
+					}
 					print hardspace($line);
 				}
 				if ($pre)
@@ -756,16 +754,29 @@ class SVNRepository {
 		proc_close($resource);
 
 		if (!empty($error)) {
-			$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
+			error_log($lang['BADCMD'].': '.escape($cmd));
 			error_log($error);
 			global $vars;
-			$vars['warning'] = 'No blame info: '.$error.'.';
+			$vars['warning'] = 'No blame info: '.nl2br(escape(toOutputEncoding($error)));
 		}
 	}
 
 	// }}}
+
+	function getProperties($path, $rev = 0, $peg = '') {
+		$cmd = $this->svnCommandString('proplist', $path, $rev, $peg);
+		$ret = runCommand($cmd, true);
+		$properties = array();
+		if (is_array($ret)) {
+			foreach ($ret as $line) {
+				if (substr($line, 0, 1) == ' ') {
+					$properties[] = ltrim($line);
+				}
+			}
+		}
+		return $properties;
+	}
 
 	// {{{ getProperty
 
@@ -791,7 +802,7 @@ class SVNRepository {
 		execCommand($cmd, $retcode);
 		if ($retcode != 0) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
+			error_log($lang['BADCMD'].': '.escape($cmd));
 		}
 		return $retcode;
 	}
@@ -835,7 +846,7 @@ class SVNRepository {
 
 		if (!is_resource($resource)) {
 			global $lang;
-			echo $lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code>';
+			echo $lang['BADCMD'].': <code>'.escape(stripCredentialsFromCommand($cmd)).'</code>';
 			exit;
 		}
 
@@ -877,15 +888,15 @@ class SVNRepository {
 		if (!empty($error)) {
 			$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
+			error_log($lang['BADCMD'].': '.escape($cmd));
 			error_log($error);
 			global $vars;
 			if (strstr($error, 'found format')) {
-				$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.substr($error, strrpos($error, 'Expected')).'.")';
+				$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.nl2br(escape(toOutputEncoding(substr($error, strrpos($error, 'Expected'))))).'.")';
 			} else if (strstr($error, 'No such revision')) {
-				$vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
+				$vars['warning'] = 'Revision '.escape($rev).' of this resource does not exist.';
 			} else {
-				$vars['error'] = $lang['BADCMD'].':<br/><br/><code>'.stripCredentialsFromCommand($cmd).'</code><br/><br/>'.$error;
+				$vars['error'] = $lang['BADCMD'].': <code>'.escape(stripCredentialsFromCommand($cmd)).'</code><br />'.nl2br(escape(toOutputEncoding($error)));
 			}
 			return null;
 		}
@@ -932,7 +943,7 @@ class SVNRepository {
 
 		if (!is_resource($resource)) {
 			global $lang;
-			echo $lang['BADCMD'].': <br/><br/><code>'.stripCredentialsFromCommand($cmd).'</code>';
+			echo $lang['BADCMD'].': <code>'.escape(stripCredentialsFromCommand($cmd)).'</code>';
 			exit;
 		}
 
@@ -971,17 +982,16 @@ class SVNRepository {
 		proc_close($resource);
 
 		if (!empty($error)) {
-			$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
+			error_log($lang['BADCMD'].': '.escape($cmd));
 			error_log($error);
 			global $vars;
 			if (strstr($error, 'found format')) {
-				$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.substr($error, strrpos($error, 'Expected')).'.")';
+				$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.nl2br(escape(toOutputEncoding(substr($error, strrpos($error, 'Expected'))))).'.")';
 			} else if (strstr($error, 'No such revision')) {
-				$vars['warning'] = 'Revision '.$brev.' of this resource does not exist.';
+				$vars['warning'] = 'Revision '.escape($brev).' of this resource does not exist.';
 			} else {
-				$vars['error'] = $lang['BADCMD'].':<br/><br/><code>'.stripCredentialsFromCommand($cmd).'</code><br/><br/>'.nl2br($error);
+				$vars['error'] = $lang['BADCMD'].': <code>'.escape(stripCredentialsFromCommand($cmd)).'</code><br />'.nl2br(escape(toOutputEncoding($error)));
 			}
 			return null;
 		}

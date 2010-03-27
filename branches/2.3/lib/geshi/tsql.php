@@ -4,7 +4,7 @@
  * --------
  * Author: Duncan Lock (dunc@dflock.co.uk)
  * Copyright: (c) 2006 Duncan Lock (http://dflock.co.uk/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.8.5
+ * Release Version: 1.0.8.6
  * Date Started: 2005/11/22
  *
  * T-SQL language file for GeSHi.
@@ -41,7 +41,7 @@ $language_data = array (
     'LANG_NAME' => 'T-SQL',
     'COMMENT_SINGLE' => array(1 => '--'),
     'COMMENT_MULTI' => array('/*' => '*/'),
-    'CASE_KEYWORDS' => GESHI_CAPS_UPPER,
+    'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(

@@ -123,9 +123,9 @@ if ($rep) {
 	$vars['action'] = $lang['LOG'];
 	$vars['rev'] = $rev;
 	$vars['peg'] = $peg;
-	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+	$vars['path'] = escape($ppath);
 
-	if ($history->curEntry) {
+	if ($history && $history->curEntry) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
 		$vars['author'] = $history->entries[0]->author;
@@ -143,23 +143,22 @@ if ($rep) {
 	createPathLinks($rep, $ppath, $passrev, $peg);
 	$passRevString = createRevAndPegString($passrev, $peg);
 	$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
-
-	$extraParams = array();
-	if ($passRevString)
-		$extraParams[] = $passRevString;
+	
+	unset($queryParams['repname']);
+	unset($queryParams['path']);
+	// Toggle 'showchanges' param for link to switch from the current behavior
 	if ($showchanges == $rep->logsShowChanges())
-		$extraParams[] = 'showchanges='.(int)!$showchanges;
-	if (@$_REQUEST['sr'])
-		$extraParams[] = 'sr='.$startrev;
-	if (@$_REQUEST['er'])
-		$extraParams[] = 'er='.$endrev;
-	if (@$_REQUEST['max'])
-		$extraParams[] = 'max='.$max;
-	if (@$_REQUEST['page'])
-		$extraParams[] = 'page='.$page;
-	$vars['changesurl'] = $config->getURL($rep, $path, 'log').$isDirString.implode('&amp;', $extraParams);
+		$queryParams['showchanges'] = (int)!$showchanges;
+	else
+		unset($queryParams['showchanges']);
+	$vars['changesurl'] = $config->getURL($rep, $path, 'log').buildQuery($queryParams);
 	$vars['changeslink'] = '<a href="'.$vars['changesurl'].'">'.$lang[($showchanges ? 'HIDECHANGED' : 'SHOWCHANGED')].'</a>';
 	$vars['showchanges'] = $showchanges;
+	// Revert 'showchanges' param to propagate the current behavior
+	if ($showchanges == $rep->logsShowChanges())
+		unset($queryParams['showchanges']);
+	else
+		$queryParams['showchanges'] = (int)$showchanges;
 
 	if ($isDir) {
 		$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString.'#'.anchorForPath($path);
@@ -339,28 +338,25 @@ if ($rep) {
 			$prev = $page - 1;
 			$next = $page + 1;
 
-			$logurl = $config->getURL($rep, $path, 'log').$isDirString.$passRevString;
-
-			$logurl .= '&amp;sr='.$startrev.'&amp;er='.$endrev.'&amp;max='.$max;
-			if ($showchanges)
-				$logurl .= '&amp;showchanges=1';
+			unset($queryParams['page']);
+			$logurl = $config->getURL($rep, $path, 'log').buildQuery($queryParams);
 
 			if ($page > 1) {
-				$vars['pagelinks'] .= '<a href="'.$logurl.($frev && $prev != 1 ? '&amp;peg='.$frev : '').'&amp;page='.$prev.'">&larr;'.$lang['PREV'].'</a>';
+				$vars['pagelinks'] .= '<a href="'.$logurl.(!$peg && $frev && $prev != 1 ? '&amp;peg='.$frev : '').'&amp;page='.$prev.'">&larr;'.$lang['PREV'].'</a>';
 			} else {
 				$vars['pagelinks'] .= '<span>&larr;'.$lang['PREV'].'</span>';
 			}
 
 			for ($p = 1; $p <= $pages; $p++) {
 				if ($p != $page) {
-					$vars['pagelinks'] .= '<a href="'.$logurl.($frev && $p != 1 ? '&amp;peg='.$frev : '').'&amp;page='.$p.'">'.$p.'</a>';
+					$vars['pagelinks'] .= '<a href="'.$logurl.(!$peg && $frev && $p != 1 ? '&amp;peg='.$frev : '').'&amp;page='.$p.'">'.$p.'</a>';
 				} else {
 					$vars['pagelinks'] .= '<span id="curpage">'.$p.'</span>';
 				}
 			}
 
 			if ($page < $pages) {
-				$vars['pagelinks'] .= '<a href="'.$logurl.($frev ? '&amp;peg='.$frev : '').'&amp;page='.$next.'">'.$lang['NEXT'].'&rarr;</a>';
+				$vars['pagelinks'] .= '<a href="'.$logurl.(!$peg && $frev ? '&amp;peg='.$frev : '').'&amp;page='.$next.'">'.$lang['NEXT'].'&rarr;</a>';
 			} else {
 				$vars['pagelinks'] .= '<span>'.$lang['NEXT'].'&rarr;</span>';
 			}
@@ -370,33 +366,37 @@ if ($rep) {
 	}
 
 	// Create form elements for filtering and searching log messages
-	$url = $config->getURL(-1, '', 'log');
+	$url = $config->getURL($config->multiViews ? $rep : null, '', $config->multiViews ? 'dir' : 'log');
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="log" />' : '';
 	$hidden .= '<input type="hidden" name="repname" value="'.$repname.'" />';
 	$hidden .= '<input type="hidden" name="path" value="'.$path.'" />';
-	if ($isDir) $hidden .= '<input type="hidden" name="isdir" value="'.$isDir.'" />';
-	$hidden .= '<input type="hidden" name="peg" value="'.$peg.'" />';
+	if ($isDir)
+		$hidden .= '<input type="hidden" name="isdir" value="'.$isDir.'" />';
+	if ($peg)
+		$hidden .= '<input type="hidden" name="peg" value="'.$peg.'" />';
+	if ($showchanges != $rep->logsShowChanges())
+		$hidden .= '<input type="hidden" name="showchanges" value="'.$showchanges.'" />';
 	$hidden .= '<input type="hidden" name="logsearch" value="1" />';
 
 	$vars['logsearch_form'] = '<form action="'.$url.'" method="get">'.$hidden;
 	$vars['logsearch_startbox'] = '<input name="sr" size="5" value="'.$startrev.'" />';
 	$vars['logsearch_endbox'] = '<input name="er" size="5" value="'.$endrev.'" />';
 	$vars['logsearch_maxbox'] = '<input name="max" size="5" value="'.($max == 0 ? '' : $max).'" />';
-	$vars['logsearch_inputbox'] = '<input name="search" value="'.htmlentities($search, ENT_QUOTES, 'UTF-8').'" />';
+	$vars['logsearch_inputbox'] = '<input name="search" value="'.escape($search).'" />';
 	$vars['logsearch_showall'] = '<input type="checkbox" name="all" value="1"'.($all ? ' checked="checked"' : '').' />';
 	$vars['logsearch_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['logsearch_endform'] = '</form>';
 
 	// If a filter is in place, produce a link to clear all filter parameters
 	if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 40) {
-		$url = $config->getURL($rep, $path, 'log').$isDirString.createRevAndPegString($rev, $peg);
+		$url = $config->getURL($rep, $path, 'log').$isDirString.$passRevString;
 		$vars['logsearch_clearloglink'] = '<a href="'.$url.'">'.$lang['CLEARLOG'].'</a>';
 	}
 
 	// Create form elements for comparing selected revisions
 	$url = $config->getURL($rep, '', 'comp');
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="log" />' : '';
-	$vars['compare_form'] = '<form action="'.$url.'" method="post">'.$hidden;
+	$vars['compare_form'] = '<form action="'.$url.'" method="get">'.$hidden;
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
@@ -404,6 +404,7 @@ if ($rep) {
 
 	if (!$rep->hasReadAccess($path, false)) {
 		$vars['error'] = $lang['NOACCESS'];
+		checkSendingAuthHeader($rep);
 	}
 }
 

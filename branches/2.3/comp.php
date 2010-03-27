@@ -95,24 +95,24 @@ if ($rep) {
 	if ($rev1 == 0) $rev1 = 'HEAD';
 	if ($rev2 == 0) $rev2 = 'HEAD';
 
-	$vars['repname'] = $rep->getDisplayName();
+	$vars['repname'] = escape($rep->getDisplayName());
 	$vars['action'] = $lang['PATHCOMPARISON'];
 
 	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
 	$hidden .= '<input type="hidden" name="manualorder" value="1" />';
-	$vars['compare_form'] = '<form action="'.$url.'" method="post">'.$hidden;
-	$vars['compare_path1input'] = '<input type="text" size="40" name="compare[0]" value="'.htmlentities($path1, ENT_QUOTES, 'UTF-8').'" />';
-	$vars['compare_path2input'] = '<input type="text" size="40" name="compare[1]" value="'.htmlentities($path2, ENT_QUOTES, 'UTF-8').'" />';
+	$vars['compare_form'] = '<form action="'.$url.'" method="get">'.$hidden;
+	$vars['compare_path1input'] = '<input type="text" size="40" name="compare[0]" value="'.escape($path1).'" />';
+	$vars['compare_path2input'] = '<input type="text" size="40" name="compare[1]" value="'.escape($path2).'" />';
 	$vars['compare_rev1input'] = '<input type="text" size="5" name="compare_rev[0]" value="'.$rev1.'" />';
 	$vars['compare_rev2input'] = '<input type="text" size="5" name="compare_rev[1]" value="'.$rev2.'" />';
 	$vars['compare_submit'] = '<input name="comparesubmit" type="submit" value="'.$lang['COMPAREPATHS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
 	// safe paths are a hack for fixing XSS exploit
-	$vars['path1'] = htmlentities($path1, ENT_QUOTES, 'UTF-8');
-	$vars['safepath1'] = htmlentities($path1, ENT_QUOTES, 'UTF-8');
-	$vars['path2'] = htmlentities($path2, ENT_QUOTES, 'UTF-8');
-	$vars['safepath2'] = htmlentities($path2, ENT_QUOTES, 'UTF-8');
+	$vars['path1'] = escape($path1);
+	$vars['safepath1'] = escape($path1);
+	$vars['path2'] = escape($path2);
+	$vars['safepath2'] = escape($path2);
 
 	$vars['rev1'] = $rev1;
 	$vars['rev2'] = $rev2;
@@ -198,7 +198,7 @@ if ($rep) {
 					// If we're in a diff proper, just set up the line
 					if ($indiffproper) {
 						if (strlen($line) > 0 && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-')) {
-							$subline = replaceEntities(substr($line, 1));
+							$subline = escape(toOutputEncoding(substr($line, 1)));
 							$subline = ($subline) ? expandTabs($subline) : '&nbsp;';
 							$listing[$index]['line'] = $subline;
 
@@ -400,6 +400,7 @@ if ($rep) {
 				}
 				if (count($restricted) && !count($listing)) {
 					$vars['error'] = $lang['NOACCESS'];
+					checkSendingAuthHeader($rep);
 				}
 			}
 

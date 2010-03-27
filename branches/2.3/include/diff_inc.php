@@ -98,10 +98,9 @@ function getWrappedLineFromFile($file, $is_highlighted) {
 	$line = fgets($file);
 	if ($line === false) return false;
 	$line = rtrim($line);
-	if ($is_highlighted) {
-		$line = toOutputEncoding($line);
-	} else {
-		$line = replaceEntities($line);
+	$line = toOutputEncoding($line);
+	if (!$is_highlighted) {
+		$line = escape($line);
 	}
 	if (strip_tags($line) === '') $line = '&nbsp;';
 	return wrapInCodeTagIfNecessary($line);
@@ -162,7 +161,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhit
 		while (!endOfFile($obj) && !$fin) {
 			$line = nextLine($obj);
 			if ($line === false || $line === '' || strncmp($line, '@@', 2) == 0) {
-				$sensibleLineChanges->addChangesToListing($listingHelper);
+				$sensibleLineChanges->addChangesToListing($listingHelper, $highlighted);
 				$fin = true;
 			} else {
 				$mod = $line{0};
@@ -182,7 +181,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhit
 						break;
 
 					default:
-						$sensibleLineChanges->addChangesToListing($listingHelper);
+						$sensibleLineChanges->addChangesToListing($listingHelper, $highlighted);
 
 						$text1 = getWrappedLineFromFile($ofile, $highlighted);
 						$text2 = getWrappedLineFromFile($nfile, $highlighted);
@@ -201,7 +200,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhit
 			}
 		}
 	}
-	$sensibleLineChanges->addChangesToListing($listingHelper);
+	$sensibleLineChanges->addChangesToListing($listingHelper, $highlighted);
 
 	// Output the rest of the files
 	if ($all) {

@@ -56,7 +56,7 @@ if ($rep) {
 
 	$vars['rev'] = $rev;
 	$vars['peg'] = $peg;
-	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+	$vars['path'] = escape($ppath);
 
 	if ($history) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
@@ -161,7 +161,7 @@ if ($rep) {
 
 						$line = rtrim(fgets($file));
 						if (!$highlighted)
-							$line = replaceEntities($line);
+							$line = escape(toOutputEncoding($line));
 						$listing[$index]['line'] = ($empty) ? '&nbsp;' : wrapInCodeTagIfNecessary($line);
 						$index++;
 					}
@@ -198,6 +198,7 @@ if ($rep) {
 
 	if (!$rep->hasReadAccess($path, false)) {
 		$vars['error'] = $lang['NOACCESS'];
+		checkSendingAuthHeader($rep);
 	}
 }
 

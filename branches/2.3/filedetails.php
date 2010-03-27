@@ -113,7 +113,7 @@ if ($rep) {
 	// Display the file inline using WebSVN.
 
 	$vars['action'] = '';
-	$vars['path'] = htmlentities($ppath, ENT_QUOTES, 'UTF-8');
+	$vars['path'] = escape($ppath);
 
 	if ($history) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
@@ -181,11 +181,12 @@ if ($rep) {
 		$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">'.$lang['VIEWAS'].' "'.$mimeType.'"</a>';
 	}
 
-	$vars['rev'] = htmlentities($rev, ENT_QUOTES, 'UTF-8');
+	$vars['rev'] = escape($rev);
 	$vars['peg'] = $peg;
 
 	if (!$rep->hasReadAccess($path, true)) {
 		$vars['error'] = $lang['NOACCESS'];
+		checkSendingAuthHeader($rep);
 	}
 }
 
