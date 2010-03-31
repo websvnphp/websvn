@@ -500,10 +500,9 @@ function createProjectSelectionForm() {
 	if (strlen($options) === 0)
 		return;
 
-	$url = $config->getURL(-1, '', 'form');
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="form" />' : '';
-	$hidden .= '<input type="hidden" name="selectproj" value="1" />';
-	$vars['projects_form'] = '<form action="'.$url.'" method="get" id="projectform">'.$hidden;
+	$vars['projects_form'] = '<form action="'.$config->getURL(null, '', 'form').'" method="get" id="project">';
+	if ($config->multiViews)
+		$vars['projects_form'] .= '<input type="hidden" name="op" value="rep" />';
 	$vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">'.$options.'</select>';
 	$vars['projects_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
 	$vars['projects_endform'] = '</form>';
