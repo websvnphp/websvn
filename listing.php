@@ -303,8 +303,9 @@ if ($rep) {
 		$vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$isDirString.$passRevString;
 	}
 
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
-	$vars['compare_form'] = '<form action="'.$config->getURL($rep, '', 'comp').'" method="get">'.$hidden;
+	$vars['compare_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'comp').'" id="compare">';
+	if ($config->multiViews)
+		$vars['compare_form'] .= '<input type="hidden" name="op" value="comp"/>';
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREPATHS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
