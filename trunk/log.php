@@ -367,10 +367,12 @@ if ($rep) {
 	}
 
 	// Create form elements for filtering and searching log messages
-	$url = $config->getURL($config->multiViews ? $rep : null, '', $config->multiViews ? 'dir' : 'log');
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="log" />' : '';
-	$hidden .= '<input type="hidden" name="repname" value="'.$repname.'" />';
-	$hidden .= '<input type="hidden" name="path" value="'.$path.'" />';
+	if ($config->multiViews) {
+		$hidden = '<input type="hidden" name="op" value="log" />';
+	} else {
+		$hidden = '<input type="hidden" name="repname" value="'.$repname.'" />';
+		$hidden .= '<input type="hidden" name="path" value="'.$path.'" />';
+	}
 	if ($isDir)
 		$hidden .= '<input type="hidden" name="isdir" value="'.$isDir.'" />';
 	if ($peg)
@@ -378,7 +380,7 @@ if ($rep) {
 	if ($showchanges != $rep->logsShowChanges())
 		$hidden .= '<input type="hidden" name="showchanges" value="'.$showchanges.'" />';
 
-	$vars['logsearch_form'] = '<form action="'.$url.'" method="get">'.$hidden;
+	$vars['logsearch_form'] = '<form method="get" action="'.$config->getURL($rep, $path, 'log').'" id="search">'.$hidden;
 	$vars['logsearch_startbox'] = '<input name="sr" size="5" value="'.$startrev.'" />';
 	$vars['logsearch_endbox'] = '<input name="er" size="5" value="'.$endrev.'" />';
 	$vars['logsearch_maxbox'] = '<input name="max" size="5" value="'.($max == 0 ? 40 : $max).'" />';
@@ -394,9 +396,9 @@ if ($rep) {
 	}
 
 	// Create form elements for comparing selected revisions
-	$url = $config->getURL($rep, '', 'comp');
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
-	$vars['compare_form'] = '<form action="'.$url.'" method="get">'.$hidden;
+	$vars['compare_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'comp').'" id="compare">';
+	if ($config->multiViews)
+		$vars['compare_form'] .= '<input type="hidden" name="op" value="comp" />';
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
