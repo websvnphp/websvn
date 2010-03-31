@@ -258,7 +258,7 @@ function command_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtnam
 	}
 
 	// Open a pipe to the diff command with $context lines of context
-    
+
 	$cmd = quoteCommand($config->diff.$whitespaceFlag.' -U '.$context.' "'.$oldtname.'" "'.$newtname.'"');
 
 	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));

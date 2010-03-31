@@ -328,7 +328,7 @@ setlocale(LC_ALL, '');
 // assure that a default timezone is set
 if (function_exists('date_default_timezone_get')) {
 	$timezone = @date_default_timezone_get();
-	date_default_timezone_set($timezone); 
+	date_default_timezone_set($timezone);
 }
 
 // Initialize the version of SVN that is being used by WebSVN internally.
