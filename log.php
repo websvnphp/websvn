@@ -407,6 +407,9 @@ if ($rep) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}
+
+} else {
+	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
 $vars['template'] = 'log';

@@ -161,6 +161,9 @@ if ($rep) {
 		checkSendingAuthHeader($rep);
 	}
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
+
+} else {
+	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
 $vars['template'] = 'revision';

@@ -272,4 +272,7 @@ if ($rep) {
 
 	chdir($oldcwd);
 	removeDirectory($tempDir);
+
+} else {
+	header('HTTP/1.x 404 Not Found', true, 404);
 }
