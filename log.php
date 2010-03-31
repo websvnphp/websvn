@@ -35,8 +35,9 @@ if (isset($_REQUEST['showchanges']))
 	$showchanges = @$_REQUEST['showchanges'] == 1;
 else
 	$showchanges = $rep->logsShowChanges();
-$dosearch = @$_REQUEST['logsearch'] == 1;
 $search = trim(@$_REQUEST['search']);
+$dosearch = strlen($search) > 0;
+
 $words = preg_split('#\s+#', $search);
 $fromRev = (int)@$_REQUEST['fr'];
 $startrev = strtoupper(trim(@$_REQUEST['sr']));
@@ -315,7 +316,7 @@ if ($rep) {
 			// If we've reached the search limit, stop here...
 			if (!$numSearchResults) {
 				$url = $config->getURL($rep, $path, 'log').$isDirString.$thisRevString;
-				$vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;logsearch=1&amp;search='.$search.'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
+				$vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;search='.$search.'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
 				break;
 			}
 		}
