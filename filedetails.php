@@ -188,6 +188,9 @@ if ($rep) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}
+
+} else {
+	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
 // $listing is populated with file data when file.tmpl calls [websvn-getlisting]
