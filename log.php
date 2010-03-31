@@ -377,12 +377,11 @@ if ($rep) {
 		$hidden .= '<input type="hidden" name="peg" value="'.$peg.'" />';
 	if ($showchanges != $rep->logsShowChanges())
 		$hidden .= '<input type="hidden" name="showchanges" value="'.$showchanges.'" />';
-	$hidden .= '<input type="hidden" name="logsearch" value="1" />';
 
 	$vars['logsearch_form'] = '<form action="'.$url.'" method="get">'.$hidden;
 	$vars['logsearch_startbox'] = '<input name="sr" size="5" value="'.$startrev.'" />';
 	$vars['logsearch_endbox'] = '<input name="er" size="5" value="'.$endrev.'" />';
-	$vars['logsearch_maxbox'] = '<input name="max" size="5" value="'.($max == 0 ? '' : $max).'" />';
+	$vars['logsearch_maxbox'] = '<input name="max" size="5" value="'.($max == 0 ? 40 : $max).'" />';
 	$vars['logsearch_inputbox'] = '<input name="search" value="'.escape($search).'" />';
 	$vars['logsearch_showall'] = '<input type="checkbox" name="all" value="1"'.($all ? ' checked="checked"' : '').' />';
 	$vars['logsearch_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
@@ -396,7 +395,7 @@ if ($rep) {
 
 	// Create form elements for comparing selected revisions
 	$url = $config->getURL($rep, '', 'comp');
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="log" />' : '';
+	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
 	$vars['compare_form'] = '<form action="'.$url.'" method="get">'.$hidden;
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
 	$vars['compare_endform'] = '</form>';
