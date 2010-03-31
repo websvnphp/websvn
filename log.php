@@ -143,7 +143,7 @@ if ($rep) {
 	createPathLinks($rep, $ppath, $passrev, $peg);
 	$passRevString = createRevAndPegString($passrev, $peg);
 	$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
-	
+
 	unset($queryParams['repname']);
 	unset($queryParams['path']);
 	// Toggle 'showchanges' param for link to switch from the current behavior

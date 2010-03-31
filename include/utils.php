@@ -310,7 +310,7 @@ function parseSvnTimestamp($dateString) {
 		$m = 0;
 		$s = 0;
 		sscanf($dateString, '%d-%d-%dT%d:%d:%d.', $y, $mo, $d, $h, $m, $s);
-		
+
 		$mo = substr('00'.$mo, -2);
 		$d = substr('00'.$d, -2);
 		$h = substr('00'.$h, -2);

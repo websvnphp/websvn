@@ -73,7 +73,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 	// If using flat view and not at the root, create a '..' entry at the top.
 	if (!$treeview && count($subs) > 2) {
 		$parentPath = $subs;
-		unset($parentPath[count($parentPath)-2]);
+		unset($parentPath[count($parentPath) - 2]);
 		$parentPath = implode('/', $parentPath);
 		if ($rep->hasReadAccess($parentPath, false)) {
 			$listing[$index]['rowparity'] = $index % 2;
