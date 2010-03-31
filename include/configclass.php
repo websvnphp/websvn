@@ -1065,7 +1065,7 @@ class WebSvnConfig {
 			} else if (is_object($rep)) {
 				$url .= '/'.$rep->getDisplayName().str_replace('%2F', '/', rawurlencode($path));
 
-				if ($op != 'dir' && $op != 'file') {
+				if ($op && $op != 'dir' && $op != 'file') {
 					$params['op'] = $op;
 				}
 			}
