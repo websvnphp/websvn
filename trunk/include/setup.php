@@ -341,7 +341,7 @@ unset($queryParams['language']);
 unset($queryParams['template']);
 $hidden = '';
 foreach ($queryParams as $key => $value) {
-	$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'"/>';
+	$hidden .= '<input type="hidden" name="'.escape($key).'" value="'.escape($value).'"/>';
 }
 
 // If the request specifies a language, store in a permanent/session cookie.
@@ -519,9 +519,11 @@ function createRevisionSelectionForm() {
 	if ($rep == null)
 		return;
 
-	$params = array('repname' => $rep->getDisplayName(),
-	                'path' => ($path == '/' ? '' : $path),
-	                'peg' => ($peg ? $peg : $rev));
+	$params = array(
+		'repname' => $rep->getDisplayName(),
+		'path' => ($path == '/' ? '' : $path),
+		'peg' => ($peg ? $peg : $rev),
+	);
 	$hidden = '';
 	foreach ($params as $key => $value) {
 		$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
