@@ -563,7 +563,7 @@ class SVNRepository {
 			// It's complicated because it's designed not to return those lines themselves.
 			$l = @$extEnscript[$ext];
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
-			$cmd = quoteCommand($cmd.' | '.enscriptCommandString($l).' | '.
+			$cmd = quoteCommand($cmd.' | '.$this->enscriptCommandString($l).' | '.
 				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
 		} else {
 			$highlighted = false;
@@ -711,7 +711,7 @@ class SVNRepository {
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
 			if ($config->useEnscript) {
 				$l = @$extEnscript[$ext];
-				$cmd .= ' | '.enscriptCommandString($l).' | '.
+				$cmd .= ' | '.$this->enscriptCommandString($l).' | '.
 					$config->sed.' -n '.$config->quote.'/^<PRE.$/,/^<\\/PRE.$/p'.$config->quote;
 			} else {
 				$pre = true;
