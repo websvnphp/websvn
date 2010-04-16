@@ -544,10 +544,10 @@ function checkSendingAuthHeader($rep = false) {
 		$auth =& $config->getAuth();
 	}
 	$loggedin = $auth->hasUsername();
-	if (!$loggedin) {
+	/*if (!$loggedin) {
 		header('WWW-Authenticate: Basic realm="'.str_replace('"', '\"', $auth->getBasicRealm()).'"');
 		header('HTTP/1.x 401 Unauthorized', true, 401);
-	} else {
+	} else {*/
 		header('HTTP/1.x 403 Forbidden', true, 403);
-	}
+	//}
 }
