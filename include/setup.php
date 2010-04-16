@@ -469,6 +469,9 @@ if ($peg === 0)
 	$peg = '';
 $passrev = $rev;
 
+// set flag if robots should be blocked
+$vars['blockrobots'] = $config->areRobotsBlocked();
+
 $listing = array();
 
 // Set up response headers

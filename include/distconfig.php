@@ -216,6 +216,10 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // $config->useAuthenticationFile('/path/to/accessfile', 'My WebSVN Realm'); // Global access file
 // $config->useAuthenticationFile('/path/to/accessfile', 'myrep', 'My WebSVN Realm'); // Access file for myrep
 
+// Uncomment this line if you want to prevent search bots to index the WebSVN pages.
+
+// $config->setBlockRobots();
+
 // }}}
 
 // {{{ FILE CONTENT ---
