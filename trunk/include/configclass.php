@@ -630,6 +630,7 @@ class WebSvnConfig {
 	var $spaces = 8;
 	var $bugtraq = false;
 	var $auth = '';
+	var $blockRobots = false;
 
 	var $templatePaths = array();
 	var $userTemplate = false;
@@ -1423,6 +1424,14 @@ class WebSvnConfig {
 
 	function &getAuth() {
 		return $this->auth;
+	}
+
+	function areRobotsBlocked() {
+		return $this->blockRobots;
+	}
+
+	function setBlockRobots($value = true) {
+		$this->blockRobots = $value;
 	}
 
 	function useTreeView() {
