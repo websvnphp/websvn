@@ -1,4 +1,18 @@
-/* NEXT RELEASE */
+2.3.1
+
+* Added in-line highlighting of diff
+* Added links to previous/next revision in various views
+* Added config option to block bots from indexing
+* Added returning correct http status 403/404 in some cases
+* Improved check for path-based authorization
+* Fixed usage of Enscript
+* Fixed diff of just moved/renamed files
+* Fixed strict messages when using PHP 5.3
+* Updated libraries: GeSHi 1.0.8.6, PEAR Archive_Tar 1.3.6, PEAR Text_Diff 1.1.1
+* Updated install documentation
+* Updated translations: Hindi, Marathi, Slovenian
+* Fixed issues: 98, 235, 250, 260, 262, 263, 264, 265, 266, 267, 268, 269,
+  270, 271, 273, 274, 275, 276, 278, 280, 283, 284, 285, 287, 288, 290
 
 
 2.3.0
