@@ -35,8 +35,9 @@ if (isset($_REQUEST['showchanges']))
 	$showchanges = @$_REQUEST['showchanges'] == 1;
 else
 	$showchanges = $rep->logsShowChanges();
-$dosearch = @$_REQUEST['logsearch'] == 1;
 $search = trim(@$_REQUEST['search']);
+$dosearch = strlen($search) > 0;
+
 $words = preg_split('#\s+#', $search);
 $fromRev = (int)@$_REQUEST['fr'];
 $startrev = strtoupper(trim(@$_REQUEST['sr']));
@@ -143,7 +144,7 @@ if ($rep) {
 	createPathLinks($rep, $ppath, $passrev, $peg);
 	$passRevString = createRevAndPegString($passrev, $peg);
 	$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
-	
+
 	unset($queryParams['repname']);
 	unset($queryParams['path']);
 	// Toggle 'showchanges' param for link to switch from the current behavior
@@ -315,7 +316,7 @@ if ($rep) {
 			// If we've reached the search limit, stop here...
 			if (!$numSearchResults) {
 				$url = $config->getURL($rep, $path, 'log').$isDirString.$thisRevString;
-				$vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;logsearch=1&amp;search='.$search.'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
+				$vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;search='.$search.'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
 				break;
 			}
 		}
@@ -366,22 +367,23 @@ if ($rep) {
 	}
 
 	// Create form elements for filtering and searching log messages
-	$url = $config->getURL($config->multiViews ? $rep : null, '', $config->multiViews ? 'dir' : 'log');
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="log" />' : '';
-	$hidden .= '<input type="hidden" name="repname" value="'.$repname.'" />';
-	$hidden .= '<input type="hidden" name="path" value="'.$path.'" />';
+	if ($config->multiViews) {
+		$hidden = '<input type="hidden" name="op" value="log" />';
+	} else {
+		$hidden = '<input type="hidden" name="repname" value="'.$repname.'" />';
+		$hidden .= '<input type="hidden" name="path" value="'.$path.'" />';
+	}
 	if ($isDir)
 		$hidden .= '<input type="hidden" name="isdir" value="'.$isDir.'" />';
 	if ($peg)
 		$hidden .= '<input type="hidden" name="peg" value="'.$peg.'" />';
 	if ($showchanges != $rep->logsShowChanges())
 		$hidden .= '<input type="hidden" name="showchanges" value="'.$showchanges.'" />';
-	$hidden .= '<input type="hidden" name="logsearch" value="1" />';
 
-	$vars['logsearch_form'] = '<form action="'.$url.'" method="get">'.$hidden;
+	$vars['logsearch_form'] = '<form method="get" action="'.$config->getURL($rep, $path, 'log').'" id="search">'.$hidden;
 	$vars['logsearch_startbox'] = '<input name="sr" size="5" value="'.$startrev.'" />';
 	$vars['logsearch_endbox'] = '<input name="er" size="5" value="'.$endrev.'" />';
-	$vars['logsearch_maxbox'] = '<input name="max" size="5" value="'.($max == 0 ? '' : $max).'" />';
+	$vars['logsearch_maxbox'] = '<input name="max" size="5" value="'.($max == 0 ? 40 : $max).'" />';
 	$vars['logsearch_inputbox'] = '<input name="search" value="'.escape($search).'" />';
 	$vars['logsearch_showall'] = '<input type="checkbox" name="all" value="1"'.($all ? ' checked="checked"' : '').' />';
 	$vars['logsearch_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
@@ -394,9 +396,9 @@ if ($rep) {
 	}
 
 	// Create form elements for comparing selected revisions
-	$url = $config->getURL($rep, '', 'comp');
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="log" />' : '';
-	$vars['compare_form'] = '<form action="'.$url.'" method="get">'.$hidden;
+	$vars['compare_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'comp').'" id="compare">';
+	if ($config->multiViews)
+		$vars['compare_form'] .= '<input type="hidden" name="op" value="comp" />';
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
@@ -406,6 +408,9 @@ if ($rep) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}
+
+} else {
+	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
 $vars['template'] = 'log';

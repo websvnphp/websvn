@@ -34,7 +34,7 @@ class LineDiffInterface {
 		assert(false);
 	}
 
-	// return array($left, $right) annotated with <ins> and <del> 
+	// return array($left, $right) annotated with <ins> and <del>
 	function inlineDiff($text1, $highlighted1, $text2, $highlighted2, $highlighted) {
 		assert(false);
 	}
@@ -68,8 +68,8 @@ class LineDiff extends LineDiffInterface {
 		$l2 = explode(' ', $str2);
 		for ($i = 1; $i < $n + 1; $i++) {
 			for ($j = 1; $j < $m + 1; $j++) {
-				$c = ($l1[$i-1] == $l2[$j-1]) ? 0 : strlen($l1[$i-1]) + strlen($l2[$i-1]);
-				$d[$i][$j] = min($d[$i-1][$j] + 1, $d[$i][$j-1] + 1, $d[$i-1][$j-1] + $c);
+				$c = ($l1[$i - 1] == $l2[$j - 1]) ? 0 : strlen($l1[$i - 1]) + strlen($l2[$i - 1]);
+				$d[$i][$j] = min($d[$i - 1][$j] + 1, $d[$i][$j - 1] + 1, $d[$i - 1][$j - 1] + $c);
 			}
 		}
 		return $d[$i][$j];
@@ -142,7 +142,7 @@ class LineDiff extends LineDiffInterface {
 		}
 		return $data;
 	}
-	// }}}	
+	// }}}
 
 	// {{{ lineDiff
 	function inlineDiff($text1, $highlighted1, $text2, $highlighted2, $highlighted) {
@@ -284,20 +284,20 @@ class SensibleLineChanges {
 		// main dynamic programming
 		for ($i = 1; $i <= $n; $i++) {
 			for ($j = 1; $j <= $m; $j++) {
-				$best = -1.0;
+				$best = - 1.0;
 				$b = -1;
-				if ($dyn[$i-1][$j] + $value_del >= $best) {
+				if ($dyn[$i - 1][$j] + $value_del >= $best) {
 					$b = 0;
-					$best = $dyn[$i-1][$j] + $value_del;
+					$best = $dyn[$i - 1][$j] + $value_del;
 				}
-				if ($dyn[$i][$j-1] + $value_add >= $best) {
+				if ($dyn[$i][$j - 1] + $value_add >= $best) {
 					$b = 1;
-					$best = $dyn[$i][$j-1] + $value_add;
+					$best = $dyn[$i][$j - 1] + $value_add;
 				}
-				$sim = $this->_lineDiff->lineSimilarity($this->_deleted[$i-1][0], $this->_added[$j-1][0]);
-				if ($dyn[$i-1][$j-1] + $sim >= $best) {
+				$sim = $this->_lineDiff->lineSimilarity($this->_deleted[$i - 1][0], $this->_added[$j - 1][0]);
+				if ($dyn[$i - 1][$j - 1] + $sim >= $best) {
 					$b = 2;
-					$best = $dyn[$i-1][$j-1] + $sim;
+					$best = $dyn[$i - 1][$j - 1] + $sim;
 				}
 				$back[$i][$j] = $b;
 				$dyn[$i][$j] = $best;
@@ -311,15 +311,16 @@ class SensibleLineChanges {
 
 		while ($i + $j >= 1) {
 			switch($back[$i][$j]) {
-				case 2: array_push($result, array($this->_deleted[$i-1], $this->_added[$j-1]));
-					$i--; $j--;
-					break;
-				case 1: array_push($result, array(null, $this->_added[$j-1]));
+				case 2: array_push($result, array($this->_deleted[$i - 1], $this->_added[$j - 1]));
+					$i--;
 					$j--;
 					break;
-				case 0: array_push($result, array($this->_deleted[$i-1], null));
+				case 1: array_push($result, array(null, $this->_added[$j - 1]));
+					$j--;
+					break;
+				case 0: array_push($result, array($this->_deleted[$i - 1], null));
 					$i--;
-					break;            
+					break;
 				default:
 					assert(false);
 			}

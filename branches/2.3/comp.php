@@ -98,9 +98,10 @@ if ($rep) {
 	$vars['repname'] = escape($rep->getDisplayName());
 	$vars['action'] = $lang['PATHCOMPARISON'];
 
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
-	$hidden .= '<input type="hidden" name="manualorder" value="1" />';
-	$vars['compare_form'] = '<form action="'.$url.'" method="get">'.$hidden;
+	$hidden = '<input type="hidden" name="manualorder" value="1" />';
+	if ($config->multiViews)
+		$hidden .= '<input type="hidden" name="op" value="comp" />';
+	$vars['compare_form'] = '<form method="get" action="'.$url.'" id="compare">'.$hidden;
 	$vars['compare_path1input'] = '<input type="text" size="40" name="compare[0]" value="'.escape($path1).'" />';
 	$vars['compare_path2input'] = '<input type="text" size="40" name="compare[1]" value="'.escape($path2).'" />';
 	$vars['compare_rev1input'] = '<input type="text" size="5" name="compare_rev[0]" value="'.$rev1.'" />';
@@ -407,6 +408,9 @@ if ($rep) {
 			pclose($diff);
 		}
 	}
+
+} else {
+	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
 $vars['template'] = 'compare';

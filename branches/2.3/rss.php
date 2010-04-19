@@ -53,13 +53,13 @@ if ($path == '' || $path{0} != '/') {
 
 if (!$rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
-	print 'Unable to access resource at path: '.$path;
+	print 'Unable to access resource at path: '.xml_entities($path);
 	exit;
 }
 // Make sure that the user has full access to the specified directory
 if (!$rep->hasReadAccess($path, false)) {
 	header('HTTP/1.x 403 Forbidden', true, 403);
-	print 'Unable to access resource at path: '.$path;
+	print 'Unable to access resource at path: '.xml_entities($path);
 	exit;
 }
 

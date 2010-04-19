@@ -630,6 +630,7 @@ class WebSvnConfig {
 	var $spaces = 8;
 	var $bugtraq = false;
 	var $auth = '';
+	var $blockRobots = false;
 
 	var $templatePaths = array();
 	var $userTemplate = false;
@@ -1065,7 +1066,7 @@ class WebSvnConfig {
 			} else if (is_object($rep)) {
 				$url .= '/'.$rep->getDisplayName().str_replace('%2F', '/', rawurlencode($path));
 
-				if ($op != 'dir' && $op != 'file') {
+				if ($op && $op != 'dir' && $op != 'file') {
 					$params['op'] = $op;
 				}
 			}
@@ -1425,6 +1426,14 @@ class WebSvnConfig {
 		return $this->auth;
 	}
 
+	function areRobotsBlocked() {
+		return $this->blockRobots;
+	}
+
+	function setBlockRobots($value = true) {
+		$this->blockRobots = $value;
+	}
+
 	function useTreeView() {
 		$this->treeView = true;
 	}
@@ -1529,4 +1538,3 @@ class WebSvnConfig {
 
 	// }}}
 }
-	
