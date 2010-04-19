@@ -1,0 +1,15 @@
+* Update and commit "trunk/changes.txt"
+* Merge all changes from "trunk" to "branches/x.y" and commit them
+* Edit version number in "branches/x.y/include/version.php"
+* Tag from working-copy to "tags/x.y.z"
+* Revert "branches/x.y/include/version.php"
+
+* Edit version number in the package scripts "package.cmd" and "package.sh"
+* Run "package.cmd" under Windows
+* Run "package.sh" under Linux
+
+* Deploy the archives at Tigris.org (moving the old archives to "obsolete versions")
+* Update website "Project home" at http://websvn.tigris.org
+* Update website "Download" at http://www.websvn.info
+* Add news at http://www.websvn.info
+* Send announcement email to announce@websvn.tigris.org
