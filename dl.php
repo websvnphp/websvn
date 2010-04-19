@@ -80,7 +80,7 @@ function removeDirectory($dir) {
 if (!$rep->isDownloadAllowed($path)) {
 	header('HTTP/1.x 403 Forbidden', true, 403);
 	error_log('Unable to download resource at path: '.$path);
-	print 'Unable to download resource at path: '.$path;
+	print 'Unable to download resource at path: '.xml_entities($path);
 	exit;
 }
 
@@ -132,7 +132,7 @@ if ($rep) {
 		if ($svnExportResult != 0) {
 			header('HTTP/1.x 500 Internal Server Error', true, 500);
 			error_log('svn export failed for: '.$archiveName);
-			print 'svn export failed for "'.$archiveName.'".';
+			print 'svn export failed for "'.xml_entities($archiveName).'".';
 			removeDirectory($tempDir);
 			exit(0);
 		}
@@ -266,10 +266,13 @@ if ($rep) {
 			readfile($downloadArchive);
 		} else {
 			header('HTTP/1.x 404 Not Found', true, 404);
-			print 'Unable to open file: '.$downloadArchive;
+			print 'Unable to open file: '.xml_entities($downloadArchive);
 		}
 	}
 
 	chdir($oldcwd);
 	removeDirectory($tempDir);
+
+} else {
+	header('HTTP/1.x 404 Not Found', true, 404);
 }

@@ -139,40 +139,34 @@ For this reason you may wish to avoid putting spaces in the name.</p>
 
 <h3><a name="multiviewsexample"></a>Multiviews example</h3>
 
-<p>First, you must get the Multiviews option working. In my set up, my Apache directory root is set to a location on my hard drive:</p>
+<p>First, Apache needs to know that you want to enable MultiViews for the root directory. You may need to enable the MultiViews option in the Apache configuration, as explained in <a href="http://httpd.apache.org/docs/2.2/content-negotiation.html#multiviews">these Apache docs</a>. For example, if my Apache directory root were set <code>/var/apache/htdocs</code>, the corresponding block in Apache might look something like this:</p>
 
 <pre>
-DocumentRoot "D:/svnpage"
+&lt;Directory "/var/apache/htdocs"&gt;
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+&lt;/Directory&gt;
 </pre>
 
-<p>In that directory, I have WebSVN installed in a directory called <code>websvn</code>. Normally WebSVN would be accessed at <code>http://example.com/websvn</code>.</p>
-
-<p>wsvn.php is then copied from the WebSVN installation to the document root directory and the variable at the beginning of the script configured as follows (based on your own directory location, obviously):</p>
-
-<pre>
-// Location of websvn directory via HTTP
-//
-// e.g. For http://example.com/websvn use /websvn
-//
-// Note that wsvn.php need not be in the /websvn directory (and normally isn't).
-$locwebsvnhttp = "/websvn";  
-</pre>
-
-<p>Next, turn on Multiviews in the WebSVN config.php file:</p>
-
-<pre>
-$config->useMultiViews();
-</pre>
-
-<p>Finally, Apache needs to know that you want to enable MultiViews for the root directory. This can be done by including this line in the directory's .htaccess file (assuming that the appropriate AllowOverrides directive is set up):</p>
+<p>Alternatively, you can include the following line in the directory's <code>.htaccess</code> file, assuming that the appropriate AllowOverrides directive is set up.</p>
 
 <pre>
 Options MultiViews
 </pre>
 
-<p>If all has gone well, repositories should now by accessible at <code>http://example.com/wsvn/repname</code></p>
+<p>Let's suppose that WebSVN is installed in a directory called <code>websvn</code> within the Apache document root directory. Normally, WebSVN would be accessed at <code>http://example.com/websvn/</code>. With MultiViews enabled, the base path for all WebSVN pages would be <code>http://example.com/websvn/wsvn/</code>. (If you would prefer <code>http://example.com/wsvn/</code> instead, move/copy wsvn.php from the WebSVN installation to the document root directory.) You may need to modify the <code>$locwebsvnhttp</code> variable at the beginning of wsvn.pnp to match your directory location.</p>
 
-<p>Note the index page can be accessed through <code>http://example.com/wsvn</code>. If you want to view the index page at <code>http://example.com/</code>, you need to add another directive to the .htaccess file:</p>
+<p>You must also enable Multiviews in the WebSVN <code>include/config.php</code> file by adding this line:</p>
+
+<pre>
+$config->useMultiViews();
+</pre>
+
+<p>If all has gone well, repositories should now by accessible at <code>http://example.com/wsvn/</code>.</p>
+
+<p>Note the index page can be accessed through <code>http://example.com/wsvn/</code>. If you want to view the index page at <code>http://example.com/</code>, you need to add another directive to the .htaccess file:</p>
 
 <pre>
 DirectoryIndex wsvn.php

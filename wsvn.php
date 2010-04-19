@@ -28,10 +28,9 @@
 //
 // e.g. For "http://www.example.com/websvn" use '/websvn'
 //
-// Note that wsvn.php need not be in the /websvn directory (and normally isn't).
+// Note that wsvn.php need not be in the /websvn directory (and often isn't).
 // If you want to use the root server directory, just use a blank string ('').
-//$locwebsvnhttp = '/websvn';
-$locwebsvnhttp = '';
+$locwebsvnhttp = '/websvn';
 
 // Physical location of websvn directory. Change this if your wsvn.php is not in
 // the same folder as the rest of the distribution
@@ -56,9 +55,15 @@ if (!isset($_REQUEST['sc'])) {
 }
 
 if ($config->multiViews) {
-	// If this is a form handling request, deal with it
-	if (@$_REQUEST['op'] == 'form') {
-		include $locwebsvnreal.'/form.php';
+	$op = @$_REQUEST['op'];
+	// This means the user wants to browse another project, so we switch to it and exit.
+	if ($op == 'rep') {
+		$rep =& $config->findRepository(@$_REQUEST['repname']);
+		if ($rep != null) {
+			header('Location: '.$config->getURL($rep, '', 'dir'));
+		} else {
+			include $locwebsvnreal.'/index.php';
+		}
 		exit;
 	}
 
@@ -102,7 +107,6 @@ if ($config->multiViews) {
 	$vars['repname'] = escape($rep->getDisplayName());
 
 	// find the operation type
-	$op = @$_REQUEST['op'];
 	switch ($op) {
 		case 'dir':
 			$file = 'listing.php';
@@ -145,6 +149,7 @@ if ($config->multiViews) {
 	include $locwebsvnreal.'/'.$file;
 
 } else {
-	print '<p>MultiViews must be configured in include/config.php in order to use this file.</p>';
+	$vars['error'] = 'MultiViews must be enabled in <code>include/config.php</code> in order to use <code>wsvn.php</code>. See <a href="'.$locwebsvnhttp.'/doc/install.html#multiviews">the install docs</a> for details, or use <a href="'.$locwebsvnhttp.'">this path</a> instead.';
+	include $locwebsvnreal.'/index.php';
 	exit;
 }

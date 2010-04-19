@@ -328,7 +328,7 @@ setlocale(LC_ALL, '');
 // assure that a default timezone is set
 if (function_exists('date_default_timezone_get')) {
 	$timezone = @date_default_timezone_get();
-	date_default_timezone_set($timezone); 
+	date_default_timezone_set($timezone);
 }
 
 // Initialize the version of SVN that is being used by WebSVN internally.
@@ -339,6 +339,10 @@ $vars['svnversion'] = $config->getSubversionVersion();
 $queryParams = $_GET + $_POST;
 unset($queryParams['language']);
 unset($queryParams['template']);
+$hidden = '';
+foreach ($queryParams as $key => $value) {
+	$hidden .= '<input type="hidden" name="'.escape($key).'" value="'.escape($value).'"/>';
+}
 
 // If the request specifies a language, store in a permanent/session cookie.
 // Otherwise, check for cookies specifying a particular language.
@@ -365,7 +369,7 @@ $vars['language_code'] = $language;
 if ($language != 'en')
 	require 'languages/'.$languages[$language][0].'.php';
 // Generate the HTML form for selecting a different language
-$vars['language_form'] = '<form action="?'.buildQuery($queryParams).'" method="get" id="langform">';
+$vars['language_form'] = '<form method="get" action="" id="language">'.$hidden;
 $vars['language_select'] = '<select name="language" onchange="javascript:this.form.submit();">';
 foreach ($languages as $code => $names) {
 	$sel = ($code == $language) ? '" selected="selected' : '';
@@ -433,7 +437,7 @@ if ($rep == null || $rep->templatePath === false) {
 
 // Generate the HTML form for selecting a different template
 if (count($templates) > 1) {
-	$vars['template_form'] = '<form action="?'.buildQuery($queryParams).'" method="get" id="templateform">';
+	$vars['template_form'] = '<form method="get" action="" id="template">'.$hidden;
 	$vars['template_select'] = '<select name="template" onchange="javascript:this.form.submit();">';
 	natcasesort($templates);
 	foreach ($templates as $path => $name) {
@@ -464,6 +468,9 @@ $peg = (int)@$_REQUEST['peg'];
 if ($peg === 0)
 	$peg = '';
 $passrev = $rev;
+
+// set flag if robots should be blocked
+$vars['blockrobots'] = $config->areRobotsBlocked();
 
 $listing = array();
 
@@ -500,10 +507,9 @@ function createProjectSelectionForm() {
 	if (strlen($options) === 0)
 		return;
 
-	$url = $config->getURL(-1, '', 'form');
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="form" />' : '';
-	$hidden .= '<input type="hidden" name="selectproj" value="1" />';
-	$vars['projects_form'] = '<form action="'.$url.'" method="get" id="projectform">'.$hidden;
+	$vars['projects_form'] = '<form method="get" action="" id="project">';
+	if ($config->multiViews)
+		$vars['projects_form'] .= '<input type="hidden" name="op" value="rep" />';
 	$vars['projects_select'] = '<select name="repname" onchange="javascript:this.form.submit();">'.$options.'</select>';
 	$vars['projects_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
 	$vars['projects_endform'] = '</form>';
@@ -516,16 +522,17 @@ function createRevisionSelectionForm() {
 	if ($rep == null)
 		return;
 
-	$params = array('repname' => $rep->getDisplayName(),
-	                'path' => ($path == '/' ? '' : $path),
-	                'peg' => ($peg ? $peg : $rev));
+	$params = array(
+		'repname' => $rep->getDisplayName(),
+		'path' => ($path == '/' ? '' : $path),
+		'peg' => ($peg ? $peg : $rev),
+	);
 	$hidden = '';
 	foreach ($params as $key => $value) {
-		if ($value)
-			$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
+		$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
 	}
 	// The blank "action" attribute makes form link back to the containing page.
-	$vars['revision_form'] = '<form action="" method="get" id="revisionform">'.$hidden;
+	$vars['revision_form'] = '<form method="get" action="" id="revision">'.$hidden;
 	$vars['revision_input'] = '<input type="text" size="5" name="rev" value="'.($rev ? $rev : 'HEAD').'" />';
 	$vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['revision_endform'] = '</form>';
@@ -540,10 +547,10 @@ function checkSendingAuthHeader($rep = false) {
 		$auth =& $config->getAuth();
 	}
 	$loggedin = $auth->hasUsername();
-	if (!$loggedin) {
+	/*if (!$loggedin) {
 		header('WWW-Authenticate: Basic realm="'.str_replace('"', '\"', $auth->getBasicRealm()).'"');
 		header('HTTP/1.x 401 Unauthorized', true, 401);
-	} else {
+	} else {*/
 		header('HTTP/1.x 403 Forbidden', true, 403);
-	}
+	//}
 }

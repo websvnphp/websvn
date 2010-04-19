@@ -32,30 +32,9 @@ function removeURLSeparator($url) {
 	return preg_replace('#(\?|&(amp;)?)$#', '', $url);
 }
 
-function joinPath($path, $file) {
-	if ($path == '' || $path{0} != '/') {
-		$ppath = '/'.$path;
-	} else {
-		$ppath = $path;
-	}
-
-	if ($ppath{strlen($ppath) - 1} != '/') {
-		$ppath .= '/';
-	}
-
-	if ($file{0} == '/') {
-		$pfile = substr($file, 1);
-	} else {
-		$pfile = $file;
-	}
-
-	return $ppath.$pfile;
-}
-
-function fileLinkUrl($path, $file, $passRevString) {
+function urlForPath($fullpath, $passRevString) {
 	global $config, $rep;
 
-	$fullpath = joinPath($path, $file);
 	$isDir = $fullpath{strlen($fullpath) - 1} == '/';
 	if ($isDir) {
 		if ($config->treeView) {
@@ -94,15 +73,15 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 	// If using flat view and not at the root, create a '..' entry at the top.
 	if (!$treeview && count($subs) > 2) {
 		$parentPath = $subs;
-		unset($parentPath[count($parentPath)-2]);
+		unset($parentPath[count($parentPath) - 2]);
 		$parentPath = implode('/', $parentPath);
 		if ($rep->hasReadAccess($parentPath, false)) {
 			$listing[$index]['rowparity'] = $index % 2;
 			$listing[$index]['path'] = $parentPath;
 			$listing[$index]['filetype'] = 'dir';
 			$listing[$index]['filename'] = '..';
-			$listing[$index]['filelinkurl'] = fileLinkUrl($parentPath, '', $passRevString);
-			$listing[$index]['filelink'] = '<a href="'.$listing[$index]['filelinkurl'].'">'.$listing[$index]['filename'].'</a>';
+			$listing[$index]['fileurl'] = urlForPath($parentPath, $passRevString);
+			$listing[$index]['filelink'] = '<a href="'.$listing[$index]['fileurl'].'">'.$listing[$index]['filename'].'</a>';
 			$listing[$index]['level'] = 0;
 			$listing[$index]['node'] = 0; // t-node
 			$listing[$index]['revision'] = $rev;
@@ -146,12 +125,12 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 				$listing[$index]['node'] = 0; // t-node
 				$listing[$index]['path'] = $path.$file;
 				$listing[$index]['filename'] = $file;
-				$listing[$index]['filelinkurl'] = fileLinkUrl($path, $file, $passRevString);
-				$listing[$index]['filelink'] = '<a href="'.$listing[$index]['filelinkurl'].'">'.$listing[$index]['filename'].'</a>';
+				$listing[$index]['fileurl'] = urlForPath($path.$file, $passRevString);
+				$listing[$index]['filelink'] = '<a href="'.$listing[$index]['fileurl'].'">'.$listing[$index]['filename'].'</a>';
 				$listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.$passRevString;
 
 				if ($treeview) {
-					$listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.joinPath($path, $file).'@'.$passrev.'" onclick="checkCB(this)" />';
+					$listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$path.$file.'@'.$passrev.'" onclick="checkCB(this)" />';
 				}
 				if ($config->showLastMod) {
 					$listing[$index]['committime'] = $entry->committime;
@@ -324,8 +303,9 @@ if ($rep) {
 		$vars['downloadurl'] = $config->getURL($rep, $path, 'dl').$isDirString.$passRevString;
 	}
 
-	$hidden = ($config->multiViews) ? '<input type="hidden" name="op" value="comp" />' : '';
-	$vars['compare_form'] = '<form action="'.$config->getURL($rep, '', 'comp').'" method="get">'.$hidden;
+	$vars['compare_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'comp').'" id="compare">';
+	if ($config->multiViews)
+		$vars['compare_form'] .= '<input type="hidden" name="op" value="comp"/>';
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREPATHS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
@@ -339,6 +319,9 @@ if ($rep) {
 		checkSendingAuthHeader($rep);
 	}
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
+
+} else {
+	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
 $vars['template'] = 'directory';
