@@ -1,0 +1,74 @@
+    </div>
+  </div>
+  <!--
+  NOTE: This template file is not compatible with WebSVN 2.2.x and earlier since
+  the information passed from index.php uses drastically different organization.
+  -->
+  <div id="content">
+    <div class="information">
+      <span>You can customize this message in 'templates/Elegant/index.tmpl' to tell your visitors what they'll find in your repositories.</span>
+    </div>
+[websvn-test:error]
+    <div class="error"><span>[websvn:error]</span></div>
+[websvn-else]
+    <table>
+      <thead><tr><th>[lang:PROJECTS]</th></tr></thead>
+  [websvn-test:flatview]
+    [websvn-startlisting]
+    [websvn-test:groupid]
+    [websvn-else]
+      [websvn-test:rowparity]
+      <tr class="shaded">
+      [websvn-else]
+      <tr>
+      [websvn-endtest]
+        <td>[websvn:projectlink]</td>
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-else]
+    [websvn-startlisting]
+    [websvn-test:groupid]
+      <tr><th onclick="toggleGroup('[websvn:groupname]');">[websvn:groupname]</th></tr>
+    [websvn-else]
+      [websvn-test:groupparity]
+      <tr title="[websvn:groupname]" class="shaded">
+      [websvn-else]
+      <tr title="[websvn:groupname]">
+      [websvn-endtest]
+      [websvn-test:groupname]
+        <td class="group">[websvn:projectlink]</td>
+      [websvn-else]
+        <td>[websvn:projectlink]</td>
+      [websvn-endtest]
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-endtest]
+    </table>
+  [websvn-test:treeview]
+    <script type="text/javascript">
+    //<![CDATA[
+    var tableRows = document.getElementsByTagName('tr');
+    [websvn-test:opentree]
+    [websvn-else]
+    for (var i = 0; i < tableRows.length; i++) {
+      if (tableRows[i].title != '')
+        tableRows[i].style.display = 'none';
+    }
+    [websvn-endtest]
+    function toggleGroup(groupName) {
+      for (var i = 0; i < tableRows.length; i++) {
+        if (tableRows[i].title == groupName) {
+          if (tableRows[i].style.display == 'none') {
+            tableRows[i].style.display = 'table-row';
+          } else {
+            tableRows[i].style.display = 'none';
+          }
+        }
+      }
+    }
+    //]]>
+    </script>
+  [websvn-endtest]
+[websvn-endtest] 

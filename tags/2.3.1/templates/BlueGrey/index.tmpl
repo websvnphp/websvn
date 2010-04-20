@@ -1,0 +1,31 @@
+[websvn-test:error]
+    <div id="error">[websvn:error]</div>
+[websvn-else]
+    <table id="repositories">
+      <thead>
+      <tr><th>[lang:PROJECTS]</th></tr>
+      </thead>
+    [websvn-test:flatview]
+      [websvn-startlisting]
+      [websvn-test:groupid]
+      [websvn-else]
+      <tr><td class="row[websvn:rowparity]"><img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/repo.png" alt="[REPO]"/> [websvn:projectlink]</td></tr>
+      [websvn-endtest]
+      [websvn-endlisting]
+    [websvn-else]
+      <tr><td>
+      [websvn-startlisting]
+        [websvn-test:groupid]
+        [websvn-test:notfirstgroup]
+        </div> <!-- switchcontent -->
+        [websvn-endtest]
+        <div class="groupname" onclick="expandcontent(this, '[websvn:groupid]');" style="cursor: pointer;"><div class="a"><span class="showstate"></span>[websvn:groupname]</div></div>
+        <div class="switchcontent" id="[websvn:groupid]">
+        [websvn-else]
+        <div class="row[websvn:rowparity]"><img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/repo.png" alt="[REPO]"/>[websvn:projectlink]</div>
+        [websvn-endtest]
+      [websvn-endlisting]
+      </td></tr>
+    [websvn-endtest]
+    </table>
+[websvn-endtest]

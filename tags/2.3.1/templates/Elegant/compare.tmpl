@@ -1,0 +1,63 @@
+    [websvn-test:error]
+    </div>
+    [websvn-else]
+      <h2><a href="[websvn:rev1url]">[websvn:path1] @ [websvn:rev1]</a> &nbsp; &rarr; &nbsp; <a href="[websvn:rev2url]">[websvn:path2] @ [websvn:rev2]</a></h2>
+      <div class="clearer"></div>
+    </div>
+    <ul id="links">
+      <li class="reverse">[websvn:reverselink]</li>
+      [websvn-test:ignorewhitespacelink]
+      <li class="ignore">[websvn:ignorewhitespacelink]</li>
+      [websvn-else]
+      <li class="regard">[websvn:regardwhitespacelink]</li>
+      [websvn-endtest]
+    </ul>
+    [websvn-endtest]
+  </div>
+  <div id="content">
+  [websvn-test:error]
+    <div class="error"><span>[websvn:error]</span></div>
+  [websvn-else]
+    <div id="compare_form">
+    [websvn:compare_form]
+    <table>
+      <tr>
+        <td class="path"><label>[lang:COMPPATH]</label> [websvn:compare_path1input]</td>
+        <td><label>[lang:REV]</label> [websvn:compare_rev1input]</td>
+        <td rowspan="2">[websvn:compare_submit]</td>
+      </tr>
+      <tr>
+        <td class="path"><label>[lang:WITHPATH]</label> [websvn:compare_path2input]</td>
+        <td><label>[lang:REV]</label> [websvn:compare_rev2input]</td>
+      </tr>
+    </table>
+    [websvn:compare_endform]
+    </div>
+    <div id="comparisons">
+    [websvn-startlisting]
+      [websvn-test:newpath]
+      <table>
+        <thead>
+        <tr><th><a href="[websvn:fileurl]">[websvn:newpath]</a></th></tr>
+        </thead>
+        <tbody>
+      [websvn-endtest]
+      [websvn-test:info]
+        <tr><th class="info">[websvn:info]</th></tr>
+      [websvn-endtest]
+      [websvn-test:difflines]
+        <tr><th>[websvn:rev1line],[websvn:rev1len] &rarr; [websvn:rev2line],[websvn:rev2len]</th></tr>
+      [websvn-endtest]    
+      [websvn-test:diffclass]
+        <tr><td class="[websvn:diffclass]">[websvn:line]</td></tr>
+      [websvn-endtest]    
+      [websvn-test:properties]
+        <tr><th>[lang:PROPCHANGES]</th></tr>
+      [websvn-endtest]
+      [websvn-test:endpath]
+        </tbody>
+      </table>
+      [websvn-endtest]
+    [websvn-endlisting]
+    </div>
+  [websvn-endtest]

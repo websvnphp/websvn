@@ -1,0 +1,61 @@
+    <h1>[websvn:repname]</h1>
+    <div id="projects">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+[websvn-test:error]
+    <div id="error">[websvn:error]</div>
+[websvn-else]
+    <center>
+      [websvn:compare_form]
+      <table id="params">
+        <tr>
+          <td>[lang:COMPPATH]</td>
+          <td>[websvn:compare_path1input] [lang:REV] [websvn:compare_rev1input]</td>
+          <td rowspan="2">[websvn:compare_submit]</td>
+        </tr>
+        <tr>
+          <td>[lang:WITHPATH]</td>
+          <td>[websvn:compare_path2input] [lang:REV] [websvn:compare_rev2input]</td>
+        </tr>
+      </table>
+      [websvn:compare_endform]
+    [websvn-test:warning]
+      <div id="warning">[websvn:warning]</div>
+    [websvn-else]
+    [websvn-test:success]
+      <div id="nav">
+        [websvn:reverselink] &#124;
+        [websvn-test:regardwhitespacelink]
+        [websvn:regardwhitespacelink]
+        [websvn-else]
+        [websvn:ignorewhitespacelink]
+        [websvn-endtest]
+      </div>
+      <div><a href="[websvn:rev1url]">[websvn:path1] @ [websvn:rev1]</a> &nbsp;&rarr;&nbsp; <a href="[websvn:rev2url]">[websvn:path2] @ [websvn:rev2]</a></div>
+    [websvn-endtest]
+    </center>
+    [websvn-startlisting]
+      [websvn-test:newpath]
+      <table class="comparison">
+        <thead>
+        <tr><th><a href="[websvn:fileurl]">[websvn:newpath]</a></th></tr>
+        </thead>
+      [websvn-endtest]
+      [websvn-test:info]
+        [websvn:info]<br />
+      [websvn-endtest]
+      [websvn-test:difflines]
+        <tr class="row1"><th>[websvn:difflines]</th></tr>
+      [websvn-endtest]
+      [websvn-test:diffclass]
+        <tr><td class="[websvn:diffclass]">[websvn:line]</td></tr>
+      [websvn-endtest]
+      [websvn-test:endpath]
+      </table>
+      [websvn-endtest]
+      [websvn-test:endpath]
+      [websvn-endtest]
+      [websvn-test:properties]
+        <p><i>[lang:PROPCHANGES]</i><p>
+      [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-endtest]
+[websvn-endtest]
