@@ -1050,7 +1050,7 @@ class SVNRepository {
 
 // Initialize SVN version information by parsing from command-line output.
 $ret = runCommand(str_replace('--non-interactive', '--version', $config->getSvnCommand()), false);
-if (preg_match('~([0-9]?)\.([0-9]?)\.([0-9]?)~', $ret[0], $matches)) {
+if (preg_match('~([0-9]+)\.([0-9]+)\.([0-9]+)~', $ret[0], $matches)) {
 	$config->setSubversionVersion($matches[0]);
 	$config->setSubversionMajorVersion($matches[1]);
 	$config->setSubversionMinorVersion($matches[2]);
