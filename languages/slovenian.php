@@ -50,7 +50,7 @@ $lang["REGARDWHITESPACE"] = "Upoštevaj 'whitespace'";
 
 $lang["LISTING"] = "Drevesna struktura";
 $lang["FILEDETAIL"] = "Podrobnosti";
-// $lang["VIEWAS"] = "View as";
+$lang["VIEWAS"] = "Poglej kot";
 $lang["DIFFPREV"] = "Primerjaj s prejšno";
 $lang["BLAME"] = "Krivda";
 $lang["BLAMEFOR"] = "Informacije o krivdi za različico";
@@ -65,7 +65,7 @@ $lang["HIDECHANGED"] = "Skrij spremenjene datoteke";
 $lang["NEWFILES"] = "Nove datoteke";
 $lang["CHANGEDFILES"] = "Spremenjene datoteke";
 $lang["DELETEDFILES"] = "Pobrisane datoteke";
-$lang["VIEWLOG"] = "Poglej Opombe";
+$lang["VIEWLOG"] = "Poglej dnevnik";
 $lang["PATH"] = "Pot";
 $lang["AUTHOR"] = "Avtor";
 $lang["AGE"] = "Starost";
@@ -81,7 +81,7 @@ $lang["BADCMD"] = "Napaka pri izvajanju tega ukaza";
 $lang["UNKNOWNREVISION"] = "Ne najdem različice";
 
 // $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion Projekti";
+$lang["PROJECTS"] = "Subversion projekti";
 $lang["SERVER"] = "Subversion strežnik";
 
 $lang["FILTER"] = "Možnosti filtriranja";
@@ -91,13 +91,13 @@ $lang["MAXLOG"] = "Max različic";
 $lang["SEARCHLOG"] = "Išči po opombah";
 $lang["CLEARLOG"] = "Pobriši trenutno iskanje";
 $lang["MORERESULTS"] = "Poišči še...";
-$lang["NORESULTS"] = "Med zapisi ni opomb z iskalno zahtevo";
-$lang["NOMORERESULTS"] = "Med zapisi ni več opomb z iskalno zahtevo";
+$lang["NORESULTS"] = "Med zapisi ni opomb z iskalnim nizem";
+$lang["NOMORERESULTS"] = "Med zapisi ni več opomb z iskalnim nizem";
 $lang["NOPREVREV"] = "Ni predhodne revizije";
 
-// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["RSSFEEDTITLE"] = "WebSVN RSS vir";
 $lang["FILESMODIFIED"] = "datotek spremenjenih";
-// $lang["RSSFEED"] = "RSS feed";
+$lang["RSSFEED"] = "RSS vir";
 
 $lang["DAYLETTER"] = "d";
 $lang["HOURLETTER"] = "h";
