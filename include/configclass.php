@@ -589,6 +589,7 @@ class WebSvnConfig {
 	var $_svnCommandPrefix = '';
 	var $_svnCommandPath = '';
 	var $_svnConfigDir = '/tmp';
+	var $_svnTrustServerCert = false;
 	var $svn = 'svn --non-interactive --config-dir /tmp';
 	var $diff = 'diff';
 	var $enscript = 'enscript -q';
@@ -1173,6 +1174,12 @@ class WebSvnConfig {
 		$this->_updateSVNCommand();
 	}
 
+	// Define flag to use --trust-server-cert parameter
+	function setTrustServerCert() {
+		$this->_svnTrustServerCert = true;
+		$this->_updateSVNCommand();
+	}
+
 	// Define the location of the svn command (e.g. '/usr/bin')
 	function setSvnCommandPath($path) {
 		$this->_svnCommandPath = $path;
@@ -1186,7 +1193,7 @@ class WebSvnConfig {
 	}
 
 	function _updateSVNCommand() {
-		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir);
+		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
 		$this->svn = $this->_svnCommandPrefix.' '.$this->svn;
 	}
 
