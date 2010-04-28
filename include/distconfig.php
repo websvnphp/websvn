@@ -48,6 +48,10 @@
 // download folder/file zipped ...
 // $config->setZipPath('Path/to/zip/command/');
 
+// Uncomment this line to trust server certificates
+// This may useful if you use self-signed certificates and have no chance to accept the certificate once via cli
+// $config->setTrustServerCert();
+
 // }}}
 
 // {{{ REPOSITORY SETUP ---
