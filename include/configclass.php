@@ -220,8 +220,8 @@ class Repository {
 	var $path;
 	var $subpath;
 	var $group;
-	var $username;
-	var $password;
+	var $username = null;
+	var $password = null;
 	var $clientRootURL;
 
 	// Local configuration options must start off unset
@@ -275,10 +275,12 @@ class Repository {
 
 	function svnParams() {
 		$params = '';
-		if (!empty($this->username))
+		if ($this->username !== null) {
 			$params .= '--username '.quote($this->username).' ';
-		if (!empty($this->password))
+		}
+		if ($this->password !== null) {
 			$params .= '--password '.quote($this->password).' ';
+		}
 		return $params;
 	}
 
