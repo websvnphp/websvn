@@ -304,8 +304,11 @@ if ($rep) {
 	}
 
 	$vars['compare_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'comp').'" id="compare">';
-	if ($config->multiViews)
+	if ($config->multiViews) {
 		$vars['compare_form'] .= '<input type="hidden" name="op" value="comp"/>';
+	} else {
+		$vars['compare_form'] .= '<input type="hidden" name="repname" value="'.$repname.'" />';
+	}
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREPATHS'].'" />';
 	$vars['compare_endform'] = '</form>';
 

@@ -99,8 +99,11 @@ if ($rep) {
 	$vars['action'] = $lang['PATHCOMPARISON'];
 
 	$hidden = '<input type="hidden" name="manualorder" value="1" />';
-	if ($config->multiViews)
-		$hidden .= '<input type="hidden" name="op" value="comp" />';
+	if ($config->multiViews) {
+		$hidden .= '<input type="hidden" name="op" value="comp"/>';
+	} else {
+		$hidden .= '<input type="hidden" name="repname" value="'.$repname.'" />';
+	}
 	$vars['compare_form'] = '<form method="get" action="'.$url.'" id="compare">'.$hidden;
 	$vars['compare_path1input'] = '<input type="text" size="40" name="compare[0]" value="'.escape($path1).'" />';
 	$vars['compare_path2input'] = '<input type="text" size="40" name="compare[1]" value="'.escape($path2).'" />';
