@@ -318,7 +318,7 @@ if ($rep) {
 					if (strncmp(trim($line), 'Cannot display:', 15) == 0) {
 						$index++;
 						clearVars();
-						$listing[$index++]['info'] = $line;
+						$listing[$index++]['info'] = escape(toOutputEncoding($line));
 						continue;
 					}
 
@@ -359,7 +359,7 @@ if ($rep) {
 					if ($debug) print 'Skipping: '.$line.'<br />';
 
 					while ($line = trim(fgets($diff))) {
-						$listing[$index++]['info'] = $line;
+						$listing[$index++]['info'] = escape(toOutputEncoding($line));
 						clearVars();
 					}
 
@@ -373,7 +373,7 @@ if ($rep) {
 					continue;
 				}
 
-				$listing[$index++]['info'] = $line;
+				$listing[$index++]['info'] = escape(toOutputEncoding($line));
 			}
 
 			if ($node) {
