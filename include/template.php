@@ -256,3 +256,31 @@ function parseTags($line, $vars) {
 	}
 	return $line;
 }
+
+
+// renderTemplate
+//
+// Renders the templates for the given view
+
+function renderTemplate($view) {
+	global $config, $rep, $vars, $listing, $lang;
+
+	// Set the view in the templates variables
+	$vars['template'] = $view;
+
+	// Check if we are using a PHP powered template or the standard one
+	$path = !empty($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
+	$path = $path . 'template.php';
+	if (is_readable($path)) {
+		$vars['templateentrypoint'] = $path;
+		executePlainPhpTemplate($vars);
+	} else {
+		parseTemplate('header.tmpl');
+		parseTemplate($view . '.tmpl');
+		parseTemplate('footer.tmpl');
+	}
+}
+
+function executePlainPhpTemplate($vars) {
+	require_once $vars['templateentrypoint'];
+}

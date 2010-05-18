@@ -195,7 +195,4 @@ if ($rep) {
 
 // $listing is populated with file data when file.tmpl calls [websvn-getlisting]
 
-$vars['template'] = 'file';
-parseTemplate('header.tmpl');
-parseTemplate('file.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('file');

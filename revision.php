@@ -166,7 +166,4 @@ if ($rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
-$vars['template'] = 'revision';
-parseTemplate('header.tmpl');
-parseTemplate('revision.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('revision');
