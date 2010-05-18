@@ -416,7 +416,4 @@ if ($rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
-$vars['template'] = 'log';
-parseTemplate('header.tmpl');
-parseTemplate('log.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('log');

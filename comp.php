@@ -416,7 +416,4 @@ if ($rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
-$vars['template'] = 'compare';
-parseTemplate('header.tmpl');
-parseTemplate('compare.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('compare');

@@ -327,7 +327,4 @@ if ($rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
-$vars['template'] = 'directory';
-parseTemplate('header.tmpl');
-parseTemplate('directory.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('directory');
