@@ -116,7 +116,7 @@ class ParentPath {
 		$this->group = $group;
 		$this->pattern = $pattern;
 		$this->skipAlreadyAdded = $skipAlreadyAdded;
-		$this->clientRootURL = trim($clientRootURL, '/');
+		$this->clientRootURL = rtrim($clientRootURL, '/');
 	}
 	// }}}
 
@@ -254,7 +254,7 @@ class Repository {
 		$this->group = $group;
 		$this->username = $username;
 		$this->password = $password;
-		$this->clientRootURL = trim($clientRootURL, '/');
+		$this->clientRootURL = rtrim($clientRootURL, '/');
 	}
 
 	// }}}
