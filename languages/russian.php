@@ -43,41 +43,41 @@ $lang["AND"] = "и";
 $lang["REV"] = "Редакция";
 $lang["LINE"] = "Строка";
 $lang["LINENO"] = "№ строки";
-$lang["SHOWENTIREFILE"] = "показать весь файл";
-$lang["SHOWCOMPACT"] = "показать только места с различиями";
-// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
-// $lang["REGARDWHITESPACE"] = "Regard whitespace";
+$lang["SHOWENTIREFILE"] = "Весь файл";
+$lang["SHOWCOMPACT"] = "Только различия";
+$lang["IGNOREWHITESPACE"] = "Не учитывать пробелы";
+$lang["REGARDWHITESPACE"] = "Учитывать пробелы";
 
-// $lang["LISTING"] = "Directory listing";
-$lang["FILEDETAIL"] = "Деталы";
-// $lang["VIEWAS"] = "View as";
-$lang["DIFFPREV"] = "сравнить с предыдущей";
-$lang["BLAME"] = "авторство";
+$lang["LISTING"] = "Список файлов";
+$lang["FILEDETAIL"] = "Содержимое файла";
+$lang["VIEWAS"] = "Просмотреть как";
+$lang["DIFFPREV"] = "Сравнить с предыдущей";
+$lang["BLAME"] = "Авторство";
 $lang["BLAMEFOR"] = "Сведения об авторстве для редакции ";
 
 $lang["REVINFO"] = "Сведения о редакции";
-$lang["GOYOUNGEST"] = "перейти к новейшей редакции";
+$lang["GOYOUNGEST"] = "К новейшей редакции";
 $lang["LASTMOD"] = "Последнее изменение";
 $lang["LOGMSG"] = "Запись в журнале";
 $lang["CHANGES"] = "Изменения";
-$lang["SHOWCHANGED"] = "показать измененные файлы";
-$lang["HIDECHANGED"] = "скрыть измененные файлы";
+$lang["SHOWCHANGED"] = "Показать измененные файлы";
+$lang["HIDECHANGED"] = "Скрыть измененные файлы";
 $lang["NEWFILES"] = "Новые файлы";
 $lang["CHANGEDFILES"] = "Измененные файлы";
 $lang["DELETEDFILES"] = "Удаленные файлы";
-$lang["VIEWLOG"] = "открыть журнал";
+$lang["VIEWLOG"] = "Открыть журнал";
 $lang["PATH"] = "Путь";
 $lang["AUTHOR"] = "Автор";
 $lang["AGE"] = "Давность";
 $lang["CURDIR"] = "Текущий каталог";
 $lang["TARBALL"] = "Архив";
-// $lang["DOWNLOAD"] = "Download";
+$lang["DOWNLOAD"] = "Скачать";
 
 $lang["PREV"] = "пред.";
 $lang["NEXT"] = "след.";
 $lang["SHOWALL"] = "показать все";
 
-$lang["BADCMD"] = "Ошибка при выполнении этой команды";
+$lang["BADCMD"] = "Ошибка при выполнении команды";
 $lang["UNKNOWNREVISION"] = "Редакция не найдена";
 
 $lang["POWERED"] = "Работает на <a href=\"http://www.websvn.info/\">WebSVN</a>";
@@ -93,11 +93,11 @@ $lang["CLEARLOG"] = "очистить текущий фильтр";
 $lang["MORERESULTS"] = "найти еще совпадения...";
 $lang["NORESULTS"] = "Нет записей, совпадающих с вашим запросом";
 $lang["NOMORERESULTS"] = "Больше нет записей, совпадающих с вашим запросом";
-//$lang["NOPREVREV"] = "No previous revision";
+$lang["NOPREVREV"] = "Нет более ранней редакции";
 
 $lang["RSSFEEDTITLE"] = "RSS-канал WebSVN";
 $lang["FILESMODIFIED"] = "файл(ов) изменено";
-$lang["RSSFEED"] = "канал RSS";
+$lang["RSSFEED"] = "RSS";
 
 $lang["DAYLETTER"] = "д";
 $lang["HOURLETTER"] = "ч";
@@ -107,12 +107,12 @@ $lang["SECONDLETTER"] = "с";
 $lang["GO"] = "Перейти";
 
 $lang["PATHCOMPARISON"] = "Сравнение путей";
-$lang["COMPAREPATHS"] = "cравнить пути";
+$lang["COMPAREPATHS"] = "Сравнить пути";
 $lang["COMPAREREVS"] = "Сравнить редакции";
 $lang["PROPCHANGES"] = "Изменения свойств:";
 $lang["CONVFROM"] = "Такое сравнение показывает изменения, нужные для для преобразования пути ";
 $lang["TO"] = "В";
-$lang["REVCOMP"] = "обратное сравнение";
+$lang["REVCOMP"] = "Обратное сравнение";
 $lang["COMPPATH"] = "Сравнить путь:";
 $lang["WITHPATH"] = "С путем:";
 $lang["FILEDELETED"] = "Файл удален";
