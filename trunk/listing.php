@@ -138,7 +138,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 					$listing[$index]['author'] = $entry->author;
 					$listing[$index]['age'] = $entry->age;
 					$listing[$index]['date'] = $entry->date;
-					$listing[$index]['revurl'] = $config->getURL($rep, $path.$file, 'revision').'rev='.$entry->rev.($isDir ? '&amp;isdir=1' : '');
+					$listing[$index]['revurl'] = $config->getURL($rep, $path.$file, 'revision').'rev='.$entry->rev.'&amp;peg='.$rev.($isDir ? '&amp;isdir=1' : '');
 				}
 				if ($rep->isDownloadAllowed($path.$file)) {
 					$downloadurl = $config->getURL($rep, $path.$file, 'dl').$downloadRevString;
