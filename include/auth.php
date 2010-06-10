@@ -36,11 +36,9 @@ class Authentication {
 
 	// {{{ __construct
 
-	function Authentication($accessfile, $basicRealm = false) {
+	function Authentication($basicRealm = false) {
 		$this->rights = new IniFile();
-		$this->rights->readIniFile($accessfile);
 		$this->setUsername();
-		$this->identifyGroups();
 		if ($basicRealm !== false) {
 			$this->basicRealm = $basicRealm;
 		}
@@ -54,6 +52,11 @@ class Authentication {
 
 	function getBasicRealm() {
 		return $this->basicRealm;
+	}
+
+	function addAccessFile($accessfile) {
+		$this->rights->readIniFile($accessfile);
+		$this->identifyGroups();
 	}
 
 	// {{{ setUsername()
@@ -77,6 +80,7 @@ class Authentication {
 	// Checks to see which groups and aliases the user belongs to
 
 	function identifyGroups() {
+		$this->usersGroups = array();
 		$this->usersGroups[] = '*';
 
 		$aliases = $this->rights->getValues('aliases');
