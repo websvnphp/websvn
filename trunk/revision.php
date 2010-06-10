@@ -67,7 +67,7 @@ if ($rep) {
 			$nextRev = $history2->entries[1]->rev;
 			if ($nextRev != $youngest) {
 				$vars['nextrev'] = $nextRev;
-				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $rev : '');
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $peg ? $peg : $rev : '');
 				//echo 'NEXT='.$vars['nextrevurl'].'<br/>';
 			}
 		}
@@ -77,7 +77,7 @@ if ($rep) {
 		$prevRev = $history->entries[1]->rev;
 		$prevPath = $history->entries[1]->path;
 		$vars['prevrev'] = $prevRev;
-		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $path != '/' ? $rev : '');
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $path != '/' ? $peg ? $peg : $rev : '');
 		//echo 'PREV='.$vars['prevrevurl'].'<br/>';
 	}
 	// Save the entry from which we pull information for the current revision.
