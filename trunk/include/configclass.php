@@ -238,7 +238,7 @@ class Repository {
 	var $ignoreSvnMimeTypes;
 	var $ignoreWebSVNContentTypes;
 	var $bugtraq;
-	var $auth;
+	var $auth = null;
 	var $authBasicRealm;
 	var $templatePath = false;
 
@@ -531,7 +531,10 @@ class Repository {
 
 	function useAuthenticationFile($file, $basicRealm = false) {
 		if (is_readable($file)) {
-			$this->auth = new Authentication($file, $basicRealm);
+			if ($this->auth === null) {
+				$this->auth = new Authentication($basicRealm);
+			}
+			$this->auth->addAccessFile($file);
 		} else {
 			die('Unable to read authentication file "'.$file.'"');
 		}
@@ -541,7 +544,7 @@ class Repository {
 		global $config;
 
 		$a = null;
-		if (isset($this->auth)) {
+		if ($this->auth !== null) {
 			$a =& $this->auth;
 		} else {
 			$a =& $config->getAuth();
@@ -632,7 +635,7 @@ class WebSvnConfig {
 	var $rssMaxEntries = 40;
 	var $spaces = 8;
 	var $bugtraq = false;
-	var $auth = '';
+	var $auth = null;
 	var $blockRobots = false;
 
 	var $templatePaths = array();
@@ -1420,7 +1423,10 @@ class WebSvnConfig {
 	function useAuthenticationFile($file, $myrep = 0, $basicRealm = false) {
 		if (empty($myrep)) {
 			if (is_readable($file)) {
-				$this->auth = new Authentication($file, $basicRealm);
+				if ($this->auth === null) {
+					$this->auth = new Authentication($basicRealm);
+				}
+				$this->auth->addAccessFile($file);
 			} else {
 				echo 'Unable to read authentication file "'.$file.'"';
 				exit;
