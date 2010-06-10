@@ -40,7 +40,6 @@ class IniFile {
 		$contents = file($name);
 		$cursection = '';
 		$curkey = '';
-		$first = true;
 
 		foreach ($contents as $line) {
 			$line = rtrim($line);
@@ -59,18 +58,18 @@ class IniFile {
 				$this->sections[$cursection][$curkey] .= strtolower($str);
 			} else if ($str{0} == '[' && $str{strlen($str) - 1} == ']') {
 				$cursection = strtolower(substr($str, 1, strlen($str) - 2));
-				$first = true;
 			} else if (!empty($cursection)) {
-				if ($first) {
-					if (($cursection != 'aliases' && $cursection != 'groups') || !isset($this->sections[$cursection])) {
-						$this->sections[$cursection] = array();
-					}
+				if (!isset($this->sections[$cursection])) {
+					$this->sections[$cursection] = array();
 				}
 				list($key, $val) = explode('=', $str, 2);
 				$key = strtolower(trim($key));
 				$curkey = $key;
-				$this->sections[$cursection][$key] = strtolower(trim($val));
-				$first = false;
+				if ($cursection == 'groups' && isset($this->sections[$cursection][$key])) {
+					$this->sections[$cursection][$key] .= ',' . strtolower(trim($val));
+				} else {
+					$this->sections[$cursection][$key] = strtolower(trim($val));
+				}
 			}
 		}
 	}
