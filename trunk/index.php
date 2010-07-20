@@ -31,6 +31,7 @@ $vars['repname'] = '';
 $vars['rev'] = 0;
 $vars['path'] = '';
 $vars['showlastmod'] = $config->showLastModInIndex();
+$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate();
 
 // Sort the repositories by group
 $config->sortByGroup();
@@ -71,16 +72,15 @@ foreach ($projects as $project) {
 		if ($curgroup != $project->group) {
 			$listing[$i]['revision'] = null;
 			$listing[$i]['date'] = null;
+			$listing[$i]['age'] = null;
 			$listing[$i]['author'] = null;
 		}
 		$svnrep = new SVNRepository($project);
 		$log = $svnrep->getLog('/', '', '', true, 1);
 		$head = $log->entries[0];
 		$listing[$i]['revision'] = $head->rev;
-		if ($config->showAgeInsteadOfDate())
-			$listing[$i]['date'] = datetimeFormatDuration(time() - strtotime($head->date));
-		else
-			$listing[$i]['date'] = $head->date;
+		$listing[$i]['date'] = $head->date;
+		$listing[$i]['age'] = datetimeFormatDuration(time() - strtotime($head->date));
 		$listing[$i]['author'] = $head->author;
 	}
 
