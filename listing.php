@@ -132,7 +132,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 				if ($treeview) {
 					$listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$path.$file.'@'.$passrev.'" onclick="checkCB(this)" />';
 				}
-				if ($config->showLastMod) {
+				if ($config->showLastModInListing()) {
 					$listing[$index]['committime'] = $entry->committime;
 					$listing[$index]['revision'] = $entry->rev;
 					$listing[$index]['author'] = $entry->author;
@@ -312,7 +312,7 @@ if ($rep) {
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREPATHS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
-	$vars['showlastmod'] = $config->showLastMod;
+	$vars['showlastmod'] = $config->showLastModInListing();
 	$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
 	$listing = showTreeDir($svnrep, $path, $rev, array());
