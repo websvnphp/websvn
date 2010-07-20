@@ -19,6 +19,15 @@
     [websvn-else]
       <tr>
         <td class="project">[websvn:projectlink]</td>
+        [websvn-test:showlastmod]
+        <td>[lang:REV] [websvn:revision]</td>
+        [websvn-test:showageinsteadofdate]
+        <td title="[websvn:date]">[websvn:age]</td>
+        [websvn-else]
+        <td title="[websvn:age]">[websvn:date]</td>
+        [websvn-endtest]
+        <td>[websvn:author]</td>
+        [websvn-endtest]
       </tr>
     [websvn-endtest]
     [websvn-endlisting]
@@ -31,6 +40,9 @@
       [websvn-else]
               class="closed"
       [websvn-endtest]
+      [websvn-test:showlastmod]
+              colspan="4"
+      [websvn-endtest]
       >[websvn:groupname]</th></tr>
     [websvn-else]
       <tr title="[websvn:groupname]">
@@ -38,6 +50,15 @@
         <td class="project group">[websvn:projectlink]</td>
       [websvn-else]
         <td class="project">[websvn:projectlink]</td>
+      [websvn-endtest]
+      [websvn-test:showlastmod]
+        <td>[lang:REV] [websvn:revision]</td>
+        [websvn-test:showageinsteadofdate]
+        <td title="[websvn:date]">[websvn:age]</td>
+        [websvn-else]
+        <td title="[websvn:age]">[websvn:date]</td>
+        [websvn-endtest]
+        <td>[websvn:author]</td>
       [websvn-endtest]
       </tr>
     [websvn-endtest]
