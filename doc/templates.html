@@ -159,6 +159,7 @@ $config->useTreeIndex(true);
 <tr><th>flatview</th><td>true if the index should be displayed as a simple list of projects</td></tr>
 <tr><th>opentree</th><td>true if the tree viewed should be open by default</td></tr>
 <tr><th>groupcount</th><td>The number of project groups (0 or more)</td></tr>
+<tr><th>showlastmod</th><td>Whether "last modification" info should be displayed for each project</td></tr>
 </table>
 
 <h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
@@ -171,6 +172,9 @@ $config->useTreeIndex(true);
 <tr><th>groupid</th><td>Only set if the current entry is a group header</td></tr>
 <tr><th>groupname</th><td>Set for group headers and each member of a group</td></tr>
 <tr><th>notfirstgroup</th><td>true if the entry is a second or subsequent group</td></tr>
+<tr><th>revision</th><td>Number of the latest revision affecting the current project</td></tr>
+<tr><th>date</th><td>Date (or age) of the latest revision</td></tr>
+<tr><th>author</th><td>Author of the latest revision</td></tr>
 </table>
 
 <p>The last variable in each of these lists are useful for determining if an element surrounding a group needs to be closed. For example, you may wish to create a &lt;div&gt; or &lt;ul&gt; tag to open a group, and a closing tag at the end of the group, either between groups or after the last group.</p>
@@ -200,6 +204,7 @@ $config->useTreeIndex(true);
 <tr><th>compare_form</th><td>Comparison selection &lt;form&gt; element</td></tr>
 <tr><th>compare_submit</th><td>Comparison selection submit button</td></tr>
 <tr><th>compare_endform</th><td>Comparison selection &lt;/form&gt; element</td></tr>
+<tr><th>showlastmod</th><td>Whether "last modification" info should be displayed for each path</td></tr>
 </table>
 
 <h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
@@ -221,7 +226,7 @@ $config->useTreeIndex(true);
 
 <table>
 <tr><th>revurl</th><td>URL for examining the latest revision in detail</td></tr>
-<tr><th>revision</th><td>Number of the latest revision affecting the current element</td></tr>
+<tr><th>revision</th><td>Number of the latest revision affecting the current path</td></tr>
 <tr><th>committime</th><td>Timestamp of latest revision</td></tr>
 <tr><th>date</th><td>Date of the latest revision (yyyy-mm-dd) </td></tr>
 <tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
