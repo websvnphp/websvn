@@ -30,6 +30,7 @@ $vars['action'] = $lang['PROJECTS'];
 $vars['repname'] = '';
 $vars['rev'] = 0;
 $vars['path'] = '';
+$vars['showlastmod'] = $config->showLastModInIndex();
 
 // Sort the repositories by group
 $config->sortByGroup();
@@ -64,6 +65,24 @@ foreach ($projects as $project) {
 		$listing[$i]['groupid'] = null; // Because template.php won't unset this
 	}
 	$listing[$i]['clientrooturl'] = $project->clientRootURL;
+
+	// Populate variables for latest modification to the current repository
+	if ($config->showLastModInIndex()) {
+		if ($curgroup != $project->group) {
+			$listing[$i]['revision'] = null;
+			$listing[$i]['date'] = null;
+			$listing[$i]['author'] = null;
+		}
+		$svnrep = new SVNRepository($project);
+		$log = $svnrep->getLog('/', '', '', true, 1);
+		$head = $log->entries[0];
+		$listing[$i]['revision'] = $head->rev;
+		if ($config->showAgeInsteadOfDate())
+			$listing[$i]['date'] = datetimeFormatDuration(time() - strtotime($head->date));
+		else
+			$listing[$i]['date'] = $head->date;
+		$listing[$i]['author'] = $head->author;
+	}
 
 	// Create project (repository) listing
 	$url = str_replace('&amp;', '', $config->getURL($project, '', 'dir'));
