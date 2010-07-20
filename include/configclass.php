@@ -615,6 +615,7 @@ class WebSvnConfig {
 	var $flatIndex = true;
 	var $openTree = false;
 	var $alphabetic = false;
+	var $showLastModInIndex = true;
 	var $showLastModInListing = true;
 	var $showAgeInsteadOfDate = true;
 	var $_showRepositorySelectionForm = true;
@@ -1480,6 +1481,14 @@ class WebSvnConfig {
 
 	function isAlphabeticOrder() {
 		return $this->alphabetic;
+	}
+
+	function showLastModInIndex() {
+		return $this->showLastModInIndex;
+	}
+
+	function setShowLastModInIndex($show) {
+		$this->showLastModInIndex = $show;
 	}
 
 	function showLastModInListing() {
