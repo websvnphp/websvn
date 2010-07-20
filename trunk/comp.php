@@ -81,8 +81,8 @@ if ($rep) {
 		$rev2 = $temprev;
 	}
 
-	$vars['rev1url'] = $config->getURL($rep, $path1, 'revision').createRevAndPegString($rev1, $rev1);
-	$vars['rev2url'] = $config->getURL($rep, $path2, 'revision').createRevAndPegString($rev2, $rev2);
+	$vars['rev1url'] = $config->getURL($rep, $path1, 'dir').createRevAndPegString($rev1, $rev1);
+	$vars['rev2url'] = $config->getURL($rep, $path2, 'dir').createRevAndPegString($rev2, $rev2);
 
 	$url = $config->getURL($rep, '', 'comp');
 	$vars['reverselink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
