@@ -69,19 +69,20 @@ foreach ($projects as $project) {
 
 	// Populate variables for latest modification to the current repository
 	if ($config->showLastModInIndex()) {
-		if ($curgroup != $project->group) {
-			$listing[$i]['revision'] = null;
+		$svnrep = new SVNRepository($project);
+		$log = $svnrep->getLog('/', '', '', true, 1);
+		if (isset($log->entries[0])) {
+			$head = $log->entries[0];
+			$listing[$i]['revision'] = $head->rev;
+			$listing[$i]['date'] = $head->date;
+			$listing[$i]['age'] = datetimeFormatDuration(time() - strtotime($head->date));
+			$listing[$i]['author'] = $head->author;
+		} else {
+			$listing[$i]['revision'] = 0;
 			$listing[$i]['date'] = null;
 			$listing[$i]['age'] = null;
 			$listing[$i]['author'] = null;
 		}
-		$svnrep = new SVNRepository($project);
-		$log = $svnrep->getLog('/', '', '', true, 1);
-		$head = $log->entries[0];
-		$listing[$i]['revision'] = $head->rev;
-		$listing[$i]['date'] = $head->date;
-		$listing[$i]['age'] = datetimeFormatDuration(time() - strtotime($head->date));
-		$listing[$i]['author'] = $head->author;
 	}
 
 	// Create project (repository) listing
