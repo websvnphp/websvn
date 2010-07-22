@@ -153,7 +153,77 @@ if ($rep) {
 	}
 
 	function clearVars() {
-		global $listing, $index;
+		global $ignoreWhitespace, $listing, $index;
+
+		if ($ignoreWhitespace && $index > 1) {
+			$endBlock = false;
+			$previous = $index - 1;
+			if ($listing[$previous]['endpath']) $endBlock = 'newpath';
+			else if ($listing[$previous]['enddifflines']) $endBlock = 'difflines';
+			if ($endBlock !== false) {
+				// check if block ending at previous contains real diff data
+				$i = $previous;
+				$containsOnlyEqualDiff = true;
+				$addedLines = array();
+				$removedLines = array();
+				while ($i >= 0 && !$listing[$i - 1][$endBlock]) {
+					$diffclass = $listing[$i - 1]['diffclass'];
+
+					if ($diffclass !== 'diffadded' && $diffclass !== 'diffdeleted') {
+						if ($addedLines !== $removedLines) {
+							$containsOnlyEqualDiff = false;
+							break;
+						}
+					}
+					if (count($addedLines) > 0 && $addedLines === $removedLines) {
+						$addedLines = array();
+						$removedLines = array();
+					}
+
+					if ($diffclass === 'diff') {
+						$i--;
+						continue;
+					}
+					if ($diffclass === null) {
+						$containsOnlyEqualDiff = false;
+						break;;
+					}
+
+					if ($diffclass === 'diffdeleted') {
+						if (count($addedLines) <= count($removedLines)) {
+							$containsOnlyEqualDiff = false;
+							break;;
+						}
+						array_unshift($removedLines, $listing[$i - 1]['line']);
+						$i--;
+						continue;
+					}
+
+					if ($diffclass === 'diffadded') {
+						if (count($removedLines) > 0) {
+							$containsOnlyEqualDiff = false;
+							break;;
+						}
+						array_unshift($addedLines, $listing[$i - 1]['line']);
+						$i--;
+						continue;
+					}
+
+					assert(false);
+				}
+				if ($containsOnlyEqualDiff) {
+					$containsOnlyEqualDiff = $addedLines === $removedLines;
+				}
+
+				// remove blocks which only contain diffclass=diff and equal removes and adds
+				if ($containsOnlyEqualDiff) {
+					for ($j = $i - 1; $j < $index; $j++) {
+						unset($listing[$j]);
+					}
+					$index = $i - 1;
+				}
+			}
+		}
 
 		$listing[$index]['newpath'] = null;
 		$listing[$index]['endpath'] = null;
@@ -169,6 +239,7 @@ if ($rep) {
 	if (!$noinput) {
 		// TODO: Report warning/error if comparison encounters any problems
 		if ($diff = popenCommand($cmd, 'r')) {
+			$listing = array();
 			$index = 0;
 			$indiff = false;
 			$indiffproper = false;
@@ -203,6 +274,7 @@ if ($rep) {
 					if ($indiffproper) {
 						if (strlen($line) > 0 && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-')) {
 							$subline = escape(toOutputEncoding(substr($line, 1)));
+							$subline = rtrim($subline, "\n\r");
 							$subline = ($subline) ? expandTabs($subline) : '&nbsp;';
 							$listing[$index]['line'] = $subline;
 
