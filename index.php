@@ -79,9 +79,9 @@ foreach ($projects as $project) {
 			$listing[$i]['author'] = $head->author;
 		} else {
 			$listing[$i]['revision'] = 0;
-			$listing[$i]['date'] = null;
-			$listing[$i]['age'] = null;
-			$listing[$i]['author'] = null;
+			$listing[$i]['date'] = '';
+			$listing[$i]['age'] = '';
+			$listing[$i]['author'] = '';
 		}
 	}
 
