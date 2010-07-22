@@ -156,7 +156,13 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // $config->setAlphabeticOrder(true);
 
 // By default, WebSVN displays the information of the last modification
-// (revision, age and author) for each entry in an extra column.
+// (revision, age and author) for each repository in an extra column.
+// To disable that uncomment this line.
+
+// $config->setShowLastModInIndex(false);
+
+// By default, WebSVN displays the information of the last modification
+// (revision, age and author) for each file and folder in an extra column.
 // To disable that uncomment this line.
 
 // $config->setShowLastModInListing(false);
