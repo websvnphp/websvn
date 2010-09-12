@@ -40,8 +40,12 @@ if ($rep) {
 	$useMime = false;
 
 	// If there's no revision info, go to the lastest revision for this path
-	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, $peg);
-	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev: false;
+	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
+	if (!$history) {
+		unset($vars['error']);
+		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+	}
+	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
 
 	if (empty($rev)) {
 		$rev = $youngest;
