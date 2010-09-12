@@ -42,7 +42,7 @@ if ($rep) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
 	}
-	$youngest = ($history) ? $history->entries[0]->rev : 0;
+	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 	$vars['youngestrev'] = $youngest;
 
 	// TODO The "youngest" rev is often incorrect when both path and rev are specified.
