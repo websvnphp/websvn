@@ -50,7 +50,7 @@ function urlForPath($fullpath, $passRevString) {
 	return removeURLSeparator($url);
 }
 
-function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $treeview = true) {
+function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $index, $treeview = true) {
 	global $config, $lang, $rep, $passrev, $peg, $passRevString;
 
 	$path = '';
@@ -96,7 +96,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 	$downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev.'&amp;' : '';
 
 	$openDir = false;
-	$logList = $svnrep->getList($path, $rev);
+	$logList = $svnrep->getList($path, $rev, $peg);
 	if ($logList) {
 		foreach ($logList->entries as $entry) {
 			$isDir = $entry->isdir;
@@ -166,7 +166,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 				if ($isDir && ($level != $limit)) {
 					// @todo remove the alternate check with htmlentities when assured that there are not side effects
 					if (isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp(htmlentities($subs[$level + 1], ENT_QUOTES).'/', htmlentities($file)))) {
-						$listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $listing, $index);
+						$listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $peg, $listing, $index);
 						$index = count($listing);
 					}
 				}
@@ -182,7 +182,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $listing, $index, $t
 	return $listing;
 }
 
-function showTreeDir($svnrep, $path, $rev, $listing) {
+function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
 	global $vars, $config;
 
 	$subs = explode('/', $path);
@@ -197,7 +197,7 @@ function showTreeDir($svnrep, $path, $rev, $listing) {
 	}
 
 	$vars['compare_box'] = ''; // Set blank once in case tree view is not enabled.
-	return showDirFiles($svnrep, $subs, 0, $limit, $rev, $listing, 0, $config->treeView);
+	return showDirFiles($svnrep, $subs, 0, $limit, $rev, $peg, $listing, 0, $config->treeView);
 }
 
 // Make sure that we have a repository
@@ -259,9 +259,6 @@ if ($rep) {
 		unset($vars['error']);
 	}
 
-	if ($rev < $youngest) {
-	}
-
 	if (isset($history->entries[1])) {
 		$prevRev = $history->entries[1]->rev;
 		$prevPath = $history->entries[1]->path;
@@ -315,7 +312,7 @@ if ($rep) {
 	$vars['showlastmod'] = $config->showLastModInListing();
 	$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
-	$listing = showTreeDir($svnrep, $path, $rev, array());
+	$listing = showTreeDir($svnrep, $path, $rev, $peg, array());
 
 	if (!$rep->hasReadAccess($path, true)) {
 		$vars['error'] = $lang['NOACCESS'];
