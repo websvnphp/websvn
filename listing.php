@@ -273,10 +273,12 @@ if ($rep) {
 	$vars['peg'] = $peg;
 	$vars['path'] = escape($ppath);
 	$vars['lastchangedrev'] = $lastChangedRev;
-	$vars['date'] = $logEntry ? $logEntry->date : '';
-	$vars['author'] = $logEntry ? $logEntry->author : '';
-	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg)))) : '';
-
+	if ($logEntry) {
+		$vars['date'] = $logEntry->date;
+		$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
+		$vars['author'] = $logEntry->author;
+		$vars['log'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg))));
+	}
 	$vars['revurl'] = $config->getURL($rep, ($path == '/' ? '' : $path), 'revision').$isDirString.$passRevString;
 	$vars['revlink'] = '<a href="'.$vars['revurl'].'">'.$lang['LASTMOD'].'</a>';
 

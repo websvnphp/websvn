@@ -89,9 +89,12 @@ if ($rep) {
 	$vars['rev'] = $rev;
 	$vars['peg'] = $peg;
 	$vars['path'] = escape($ppath);
-	$vars['date'] = $logEntry ? $logEntry->date: '';
-	$vars['author'] = $logEntry ? $logEntry->author: '';
-	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg)))): '';
+	if ($logEntry) {
+		$vars['date'] = $logEntry->date;
+		$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
+		$vars['author'] = $logEntry->author;
+		$vars['log'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg))));
+	}
 
 	$isDir = @$_REQUEST['isdir'] == 1 || $path == '' || $path == '/';
 	$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.($isDir ?  '&amp;isdir=1' : '');
