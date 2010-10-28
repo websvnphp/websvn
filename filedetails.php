@@ -191,6 +191,8 @@ if ($rep) {
 	if (!$rep->hasReadAccess($path, true)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
+	} else if (!$svnrep->isFile($path, $rev, $peg)) {
+		$vars['error'] = $lang['NOPATH'];
 	}
 
 } else {

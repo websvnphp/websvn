@@ -1049,7 +1049,6 @@ class SVNRepository {
 		if ($this->repConfig->subpath === null) {
 			return $this->repConfig->path.$path;
 		} else {
-			$path = preg_replace('|^/?'.$this->repConfig->subpath.'|', '', $path);
 			return $this->repConfig->path.'/'.$this->repConfig->subpath.$path;
 		}
 	}
