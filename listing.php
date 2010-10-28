@@ -310,7 +310,6 @@ if ($rep) {
 	$vars['compare_endform'] = '</form>';
 
 	$vars['showlastmod'] = $config->showLastModInListing();
-	$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
 	$listing = showTreeDir($svnrep, $path, $rev, $peg, array());
 
