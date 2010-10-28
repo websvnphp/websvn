@@ -119,9 +119,10 @@ if ($rep) {
 	$vars['action'] = '';
 	$vars['path'] = escape($ppath);
 
-	if ($history) {
+	if (isset($history->entries[0])) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
+		$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
 		$vars['author'] = $history->entries[0]->author;
 	}
 	createPathLinks($rep, $ppath, $passrev, $peg);

@@ -130,6 +130,7 @@ if ($rep) {
 		$vars['rev'] = $logEntry->rev;
 		$vars['peg'] = $peg;
 		$vars['date'] = $logEntry->date;
+		$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
 		$vars['author'] = $logEntry->author;
 		$vars['log'] = xml_entities($logEntry->msg);
 	} else {
