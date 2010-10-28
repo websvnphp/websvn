@@ -42,8 +42,14 @@
     <div class="warning"><span>[websvn:warning]</span></div>
     [websvn-else]
     <dl>
-      <dt>[lang:LASTMOD]</dt><dd>[lang:REV] [websvn:rev] <span style="margin: 0 25px;">[websvn:date]</span> [websvn:author]</dd>
-      <dt>[lang:LOGMSG]</dt><dd>[websvn:log]</dd>
+      <dt>[lang:LASTMOD]</dt><dd>[lang:REV] [websvn:rev] &mdash; [websvn:author] &mdash;
+      [websvn-test:showageinsteadofdate]
+      <span title="[websvn:date]">[websvn:age]</span></dd>
+      [websvn-else]
+      <span title="[websvn:age]">[websvn:date]</span></dd>
+      [websvn-endtest]
+      <dt>[lang:LOGMSG]</dt>
+      <dd>[websvn:log]</dd>
     </dl>
     <table id="changes">
       <thead>
