@@ -115,11 +115,6 @@ form {
 	padding-left: 22px;
 }
 
-#revision #header h2#revnum {
-	background: none;
-	padding-left: 0;
-}
-
 #header #menus {
 	position: absolute;
 	top: 0;
@@ -222,10 +217,6 @@ form {
 
 #rev-popup .msg, .blame-popup .msg {
 	margin-top: 6px;
-}
-
-#rev-popup span {
-	margin: 0 10px;
 }
 
 #revision #rev-popup {
