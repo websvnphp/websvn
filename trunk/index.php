@@ -31,7 +31,6 @@ $vars['repname'] = '';
 $vars['rev'] = 0;
 $vars['path'] = '';
 $vars['showlastmod'] = $config->showLastModInIndex();
-$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate();
 
 // Sort the repositories by group
 $config->sortByGroup();

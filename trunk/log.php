@@ -405,8 +405,6 @@ if ($rep) {
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
-	$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
-
 	if (!$rep->hasReadAccess($path, false)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
