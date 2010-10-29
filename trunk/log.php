@@ -162,6 +162,7 @@ if ($rep) {
 	else
 		$queryParams['showchanges'] = (int)$showchanges;
 
+	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$isDirString.$passRevString;
 	if ($isDir) {
 		$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString.'#'.anchorForPath($path);
 		$vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
