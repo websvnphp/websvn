@@ -155,7 +155,7 @@ if ($rep) {
 	}
 
 	if (isset($prevRev)) {
-		$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]=/@'.$prevRev. '&amp;compare[]=/@'.$rev;
+		$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.urlencode($path).'@'.$rev;	
 		$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 	}
 
