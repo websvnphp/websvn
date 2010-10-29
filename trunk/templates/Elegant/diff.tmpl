@@ -4,9 +4,9 @@
       <h2 id="pathlinks">[websvn:pathlinks]</h2>
       <div id="revjump">[websvn:revision_form][websvn:revision_input]<span class="submit">[websvn:revision_submit]</span>[websvn:revision_endform]</div>
       [websvn-test:noprev]
-      <h2 id="revnum">[lang:REV] [websvn:rev1]</h2>
+      <h2 id="revnum"><a href="[websvn:revurl]">[lang:REV] [websvn:rev1]</a></h2>
       [websvn-else]
-      <h2 id="revnum">[lang:REV] [websvn:rev2] &rarr; [websvn:rev1]</h2>
+      <h2 id="revnum"><a href="[websvn:revurl]">[lang:REV] [websvn:rev2] &rarr; [lang:REV] [websvn:rev1]</a></h2>
       [websvn-endtest]
       <div class="clearer"></div>
     </div>
@@ -58,8 +58,8 @@
     <table>
       <thead>
       <tr>
-        <th colspan="2"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:rev2]</a></th>
-        <th colspan="2"><a href="[websvn:revurl]">[lang:REV] [websvn:rev1]</a></th>
+        <th colspan="2">[lang:REV] [websvn:rev2]</th>
+        <th colspan="2">[lang:REV] [websvn:rev1]</th>
       </tr>
       </thead>
       <tbody>
