@@ -377,4 +377,8 @@ img.icon {
 	text-decoration: none;
 }
 
+#revision a.notinpath {
+	color: #8d0208;
+}
+
 /* @end */

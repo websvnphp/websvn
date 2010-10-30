@@ -861,6 +861,10 @@ td.changes .mod {
 	position: relative;
 }
 
+#revision td.path a.notinpath {
+	color: #b00;
+}
+
 #revision tr.M td.path a {
 	background-image:url(images/page_white_edit.png);
 }

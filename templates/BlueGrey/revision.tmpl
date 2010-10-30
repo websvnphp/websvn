@@ -70,7 +70,12 @@
       <tbody>
       [websvn-startlisting]
       <tr class="[websvn:action] row[websvn:rowparity]">
-         <td>[websvn:action] <a href="[websvn:detailurl]">[websvn:path]</a>
+         <td>[websvn:action]
+           [websvn-test:notinpath]
+           <a href="[websvn:detailurl]" class="notinpath">[websvn:path]</a>
+           [websvn-else]
+           <a href="[websvn:detailurl]">[websvn:path]</a>
+           [websvn-endtest]
            [websvn-test:oldpath]
            <br/>&nbsp; &nbsp;<del>[websvn:oldpath] ([lang:PREV])</del>
            [websvn-endtest]

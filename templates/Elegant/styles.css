@@ -953,6 +953,10 @@ table#logs {
 	overflow: visible;
 }
 
+#revision #changes td.path a.notinpath {
+	color: #b70000;
+}
+
 #revision #changes tr.A td.path a {
 	background-image: url(images/added.png);
 }
