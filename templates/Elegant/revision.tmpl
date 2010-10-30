@@ -70,7 +70,12 @@
       [websvn-else]
       <tr class="[websvn:action]">
       [websvn-endtest]
-        <td class="path"><a href="[websvn:detailurl]">[websvn:path]</a>
+        <td class="path">
+          [websvn-test:notinpath]
+          <a href="[websvn:detailurl]" class="notinpath">[websvn:path]</a>
+          [websvn-else]
+          <a href="[websvn:detailurl]">[websvn:path]</a>
+          [websvn-endtest]
           [websvn-test:oldpath]
           <br/><del>[websvn:oldpath] ([lang:PREV])</del>
           [websvn-endtest]
