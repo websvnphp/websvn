@@ -343,7 +343,13 @@ unset($queryParams['language']);
 unset($queryParams['template']);
 $hidden = '';
 foreach ($queryParams as $key => $value) {
-	$hidden .= '<input type="hidden" name="'.escape($key).'" value="'.escape($value).'"/>';
+	if (is_array($value)) {
+		for ($i = 0; $i < count($value); $i++) {
+			$hidden .= '<input type="hidden" name="'.escape($key).'[]" value="'.escape($value[$i]).'"/>';
+		}
+	} else {
+		$hidden .= '<input type="hidden" name="'.escape($key).'" value="'.escape($value).'"/>';
+	}
 }
 
 // If the request specifies a language, store in a permanent/session cookie.
