@@ -149,6 +149,7 @@ if ($rep) {
 			'diffurl' => $resourceExisted ? $config->getURL($rep, $change->path, 'diff').$linkRevString : '',
 			'blameurl' => $resourceExisted ? $config->getURL($rep, $change->path, 'blame').$linkRevString : '',
 			'rowparity' => $row,
+			'notinpath' => substr($change->path, 0, strlen($path)) != $path,
 		);
 
 		$row = 1 - $row;
