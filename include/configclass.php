@@ -680,7 +680,10 @@ class WebSvnConfig {
 
 	function addRepositorySubpath($name, $serverRootURL, $subpath, $group = null, $username = null, $password = null, $clientRootURL = null) {
 		if (DIRECTORY_SEPARATOR != '/') {
-			list($serverRootURL, $subpath) = str_replace(DIRECTORY_SEPARATOR, '/', array($serverRootURL, $subpath));
+			$serverRootURL = str_replace(DIRECTORY_SEPARATOR, '/', $serverRootURL);
+			if ($subpath !== null) {
+				$subpath = str_replace(DIRECTORY_SEPARATOR, '/', $subpath);
+			}
 		}
 		$serverRootURL = trim($serverRootURL, '/');
 		$svnName = substr($serverRootURL, strrpos($serverRootURL, '/') + 1);
