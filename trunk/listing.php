@@ -93,11 +93,10 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 		}
 	}
 
-	$downloadRevString = ($rev) ? 'rev='.$rev.'&amp;peg='.$rev.'&amp;' : '';
-
 	$openDir = false;
 	$logList = $svnrep->getList($path, $rev, $peg);
 	if ($logList) {
+		$downloadRevAndPeg = createRevAndPegString($rev, $peg ? $peg : $rev);
 		foreach ($logList->entries as $entry) {
 			$isDir = $entry->isdir;
 			if (!$isDir && $level != $limit) {
@@ -138,12 +137,12 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 					$listing[$index]['author'] = $entry->author;
 					$listing[$index]['age'] = $entry->age;
 					$listing[$index]['date'] = $entry->date;
-					$listing[$index]['revurl'] = $config->getURL($rep, $path.$file, 'revision').'rev='.$entry->rev.'&amp;peg='.$rev.($isDir ? '&amp;isdir=1' : '');
+					$listing[$index]['revurl'] = $config->getURL($rep, $path.$file, 'revision').$isDirString.createRevAndPegString($entry->rev, $peg ? $peg : $rev);
 				}
 				if ($rep->isDownloadAllowed($path.$file)) {
-					$downloadurl = $config->getURL($rep, $path.$file, 'dl').$downloadRevString;
+					$downloadurl = $config->getURL($rep, $path.$file, 'dl').$isDirString.$downloadRevAndPeg;
 					if ($isDir) {
-						$listing[$index]['downloadurl'] = $downloadurl.'isdir=1';
+						$listing[$index]['downloadurl'] = $downloadurl;
 						$listing[$index]['downloadplainurl'] = '';
 					} else {
 						$listing[$index]['downloadplainurl'] = $downloadurl;
@@ -154,9 +153,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 					$listing[$index]['downloadurl'] = '';
 				}
 				if ($rep->isRssEnabled()) {
-					$rssurl = $config->getURL($rep, $path.$file, 'rss');
 					// RSS should always point to the latest revision, so don't include rev
-					$listing[$index]['rssurl'] = $rssurl.$isDirString.($peg ? 'peg='.$peg : '');
+					$listing[$index]['rssurl'] = $config->getURL($rep, $path.$file, 'rss').$isDirString.createRevAndPegString('', $peg);
 				}
 
 				$loop++;
@@ -235,7 +233,7 @@ if ($rep) {
 	}
 
 	createPathLinks($rep, $ppath, $passrev, $peg);
-	$passRevString = createRevAndPegString($passrev, $peg);
+	$passRevString = createRevAndPegString($rev, $peg);
 	$isDirString = 'isdir=1&amp;';
 
 	$revurl = $config->getURL($rep, $path != '/' ? $path : '', 'dir');
@@ -291,7 +289,7 @@ if ($rep) {
 	$vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 
 	if ($rep->isRssEnabled()) {
-		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.($peg ? 'peg='.$peg : '');
+		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.createRevAndPegString('', $peg);
 		$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 	}
 

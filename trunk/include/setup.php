@@ -532,9 +532,11 @@ function createRevisionSelectionForm() {
 
 	$params = array(
 		'repname' => $rep->getDisplayName(),
-		'path' => ($path == '/' ? '' : $path),
-		'peg' => ($peg ? $peg : $rev),
 	);
+	if ($path && $path != '/')
+		$params['path'] = $path;
+	if ($peg || $rev)
+		$params['peg'] = ($peg ? $peg : $rev);
 	$hidden = '';
 	foreach ($params as $key => $value) {
 		$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
