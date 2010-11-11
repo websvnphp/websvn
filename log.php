@@ -143,7 +143,7 @@ if ($rep) {
 	// Will probably need to call `svn info`, parse XML output, and substring a path
 
 	createPathLinks($rep, $ppath, $passrev, $peg);
-	$passRevString = createRevAndPegString($passrev, $peg);
+	$passRevString = createRevAndPegString($rev, $peg);
 	$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
 	unset($queryParams['repname']);
@@ -178,7 +178,7 @@ if ($rep) {
 	}
 
 	if ($rep->isRssEnabled()) {
-		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.($peg ? 'peg='.$peg : '');
+		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.createRevAndPegString('', $peg);
 		$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 	}
 

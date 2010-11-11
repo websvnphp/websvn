@@ -126,10 +126,10 @@ if ($rep) {
 		$vars['author'] = $history->entries[0]->author;
 	}
 	createPathLinks($rep, $ppath, $passrev, $peg);
-	$passRevString = createRevAndPegString($passrev, $peg);
+	$passRevString = createRevAndPegString($rev, $peg);
 
 	if ($rev != $youngest) {
-		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'file').($peg ? 'peg='.$peg : '');
+		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'file').createRevAndPegString('', $peg);
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
@@ -175,7 +175,7 @@ if ($rep) {
 	}
 
 	if ($rep->isRssEnabled()) {
-		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
+		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').createRevAndPegString('', $peg);
 		$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 	}
 

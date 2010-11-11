@@ -77,7 +77,7 @@ if ($rep) {
 		$prevRev = $history->entries[1]->rev;
 		$prevPath = $history->entries[1]->path;
 		$vars['prevrev'] = $prevRev;
-		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $path != '/' ? $peg ? $peg : $rev : '');
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $path != '/' ? ($peg ? $peg : $rev) : '');
 		//echo 'PREV='.$vars['prevrevurl'].'<br/>';
 	}
 	// Save the entry from which we pull information for the current revision.
@@ -112,7 +112,7 @@ if ($rep) {
 	}
 
 	if ($rep->isRssEnabled()) {
-		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
+		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').createRevAndPegString('', $peg);
 		$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 	}
 
