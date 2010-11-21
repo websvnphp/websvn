@@ -38,13 +38,13 @@ $lang["NOREP"] = "Geen repository ingegeven";
 $lang["NOPATH"] = "Pad niet gevonden";
 // $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
 // $lang["RESTRICTED"] = "Restricted access";
-$lang["SUPPLYREP"] = "Gelieve een repository pad aan te maken in include/config.php met behulp van \$config->parentPath of \$config->addRepository<p>Zie de installatiegids voor meer details";
+$lang["SUPPLYREP"] = "Gelieve een repositorypad aan te maken in include/config.php met behulp van \$config->parentPath of \$config->addRepository<p>Zie de installatiegids voor meer details";
 
 $lang["DIFFREVS"] = "Verschil tussen de revisies";
 $lang["AND"] = "en";
 $lang["REV"] = "Rev";
-$lang["LINE"] = "Lijn";
-$lang["LINENO"] = "Lijn Nr.";
+$lang["LINE"] = "Regel";
+$lang["LINENO"] = "Regelnr.";
 $lang["SHOWENTIREFILE"] = "Toon volledig bestand";
 $lang["SHOWCOMPACT"] = "Toon enkel de delen met verschillen";
 $lang["IGNOREWHITESPACE"] = "Negeer witruimtes";
@@ -55,12 +55,12 @@ $lang["REGARDWHITESPACE"] = "Toon witruimtes";
 // $lang["VIEWAS"] = "View as";
 $lang["DIFFPREV"] = "Vergelijk met vorige";
 $lang["BLAME"] = "Blame";
-$lang["BLAMEFOR"] = "Blame informatie voor revisie";
+$lang["BLAMEFOR"] = "Blame-informatie voor revisie";
 
-$lang["REVINFO"] = "Revisie Informatie";
+$lang["REVINFO"] = "Revisie-informatie";
 $lang["GOYOUNGEST"] = "Ga naar de meest recente revisie";
 $lang["LASTMOD"] = "Laatste wijziging";
-$lang["LOGMSG"] = "Log bericht";
+$lang["LOGMSG"] = "Logbericht";
 $lang["CHANGES"] = "Wijzigingen";
 $lang["SHOWCHANGED"] = "Toon gewijzigde bestanden";
 $lang["HIDECHANGED"] = "Verberg gewijzigde bestanden";
@@ -70,7 +70,7 @@ $lang["DELETEDFILES"] = "Gewiste files";
 $lang["VIEWLOG"] = "Toon Log";
 $lang["PATH"] = "Pad";
 $lang["AUTHOR"] = "Auteur";
-$lang["AGE"] = "Ouderdom";
+$lang["AGE"] = "Leeftijd";
 $lang["CURDIR"] = "Huidige map";
 // $lang["TARBALL"] = "Tarball";
 // $lang["DOWNLOAD"] = "Download";
@@ -83,8 +83,8 @@ $lang["BADCMD"] = "Een fout is opgetreden tijdens het uitvoeren van dit commando
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
 $lang["POWERED"] = "Aangedreven door <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion Projecten";
-$lang["SERVER"] = "Subversion Server";
+$lang["PROJECTS"] = "Subversion-projecten";
+$lang["SERVER"] = "Subversion-server";
 
 // $lang["FILTER"] = "Filtering Options";
 // $lang["STARTLOG"] = "From rev";
@@ -108,10 +108,10 @@ $lang["SECONDLETTER"] = "s";
 
 $lang["GO"] = "Ga";
 
-$lang["PATHCOMPARISON"] = "Pad vergelijking";
+$lang["PATHCOMPARISON"] = "Padvergelijking";
 $lang["COMPAREPATHS"] = "Vergelijk paden";
 $lang["COMPAREREVS"] = "Vergelijk revisies";
-$lang["PROPCHANGES"] = "Eigenschap wijzigingen:";
+$lang["PROPCHANGES"] = "Eigenschapswijzigingen:";
 $lang["CONVFROM"] = "Deze vergelijking geeft de veranderingen weer die nodig zijn om het pad te converteren ";
 $lang["TO"] = "TO";
 $lang["REVCOMP"] = "Omgekeerde vergelijking";
