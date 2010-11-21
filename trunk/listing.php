@@ -233,7 +233,7 @@ if ($rep) {
 	}
 
 	createPathLinks($rep, $ppath, $passrev, $peg);
-	$passRevString = createRevAndPegString($rev, $peg);
+	$passRevString = createRevAndPegString($passrev, $peg);
 	$isDirString = 'isdir=1&amp;';
 
 	$revurl = $config->getURL($rep, $path != '/' ? $path : '', 'dir');
