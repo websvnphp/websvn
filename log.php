@@ -294,6 +294,8 @@ if ($rep) {
 				$listing[$index]['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($revision->msg))));
 				$listing[$index]['rowparity'] = $row;
 
+				$listing[$index]['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.$rpath.'@'.($thisrev - 1).'&amp;compare[]='.$rpath.'@'.$thisrev;
+
 				if ($showchanges) {
 					// Aggregate added/deleted/modified paths for display in table
 					$modpaths = array();
