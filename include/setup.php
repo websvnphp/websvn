@@ -533,6 +533,8 @@ function createRevisionSelectionForm() {
 	$params = array(
 		'repname' => $rep->getDisplayName(),
 	);
+	if ($path === null)
+		$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 	if ($path && $path != '/')
 		$params['path'] = $path;
 	if ($peg || $rev)
@@ -543,7 +545,9 @@ function createRevisionSelectionForm() {
 	}
 	// The blank "action" attribute makes form link back to the containing page.
 	$vars['revision_form'] = '<form method="get" action="" id="revision">'.$hidden;
-	$vars['revision_input'] = '<input type="text" size="5" name="rev" value="'.($rev ? $rev : 'HEAD').'" />';
+	if ($rev === null)
+		$rev = (int)@$_REQUEST['rev'];
+	$vars['revision_input'] = '<input type="text" size="5" name="rev" placeholder="'.($rev ? $rev : 'HEAD').'" />';
 	$vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['revision_endform'] = '</form>';
 }
