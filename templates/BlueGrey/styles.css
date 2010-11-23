@@ -284,6 +284,10 @@ div.difflines {
 	height: 22px;
 }
 
+#directory td.age, #directory td.date, #directory td.rev {
+	border-right-width: 0;
+}
+
 img.icon {
 	vertical-align: middle;
 }
