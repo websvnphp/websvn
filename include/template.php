@@ -225,6 +225,15 @@ function parseTemplate($file) {
 function parseTags($line, $vars) {
 	global $lang;
 
+	// Replace the language strings
+	while (preg_match('|\[lang:([a-zA-Z0-9_]+)\]|', $line, $matches)) {
+		// Make sure that the variable exists
+		if (!isset($lang[$matches[1]])) {
+			$lang[$matches[1]] = '?${matches[1]}?';
+		}
+		$line = str_replace($matches[0], $lang[$matches[1]], $line);
+	}
+
 	$l = '';
 	// Replace the websvn variables
 	while (preg_match('|\[websvn:([a-zA-Z0-9_]+)\]|', $line, $matches)) {
@@ -246,14 +255,6 @@ function parseTags($line, $vars) {
 	// Rebuild line, add remaining part of line
 	$line = $l.$line;
 
-	// Replace the language strings
-	while (preg_match('|\[lang:([a-zA-Z0-9_]+)\]|', $line, $matches)) {
-		// Make sure that the variable exists
-		if (!isset($lang[$matches[1]])) {
-			$lang[$matches[1]] = '?${matches[1]}?';
-		}
-		$line = str_replace($matches[0], $lang[$matches[1]], $line);
-	}
 	return $line;
 }
 
