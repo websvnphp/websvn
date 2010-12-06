@@ -411,9 +411,6 @@ if ($config->multiViews) {
 		$vars['repname'] = escape($rep->getDisplayName());
 		$vars['allowdownload'] = $rep->getAllowDownload();
 	}
-	// With MultiViews, wsvn creates the form once the current project is found.
-	createProjectSelectionForm();
-	createRevisionSelectionForm();
 }
 
 // If the request specifies a template, store in a permanent/session cookie.
@@ -476,6 +473,12 @@ $peg = (int)@$_REQUEST['peg'];
 if ($peg === 0)
 	$peg = '';
 $passrev = $rev;
+
+if (!$config->multiViews) {
+	// With MultiViews, wsvn creates the form once the current project is found.
+	createProjectSelectionForm();
+	createRevisionSelectionForm();
+}
 
 // set flag if robots should be blocked
 $vars['blockrobots'] = $config->areRobotsBlocked();
