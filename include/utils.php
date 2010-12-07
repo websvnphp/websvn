@@ -104,8 +104,8 @@ function create_anchors($text) {
 								$ret);
 
 	// Match email addresses
-	$ret = preg_replace('#\b([\w\-_.]+)@([\w\-.]+)\b#i',
-								'<a href="mailto:\\1@\\2">\\1@\\2</a>',
+	$ret = preg_replace('#\b([\w\-_.]+)@([\w\-.]+)\.(\w{2,})\b#i',
+								'<a href="mailto:\\1@\\2.\\3">\\1@\\2.\\3</a>',
 								$ret);
 
 	return $ret;
