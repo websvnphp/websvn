@@ -202,6 +202,14 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
+	if (!empty($rev)) {
+		$info = $svnrep->getInfo($path, $rev, $peg);
+		if ($info) {
+			$path = $info->path;
+			$peg = (int)$info->rev;
+		}
+	}
+
 	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
 		unset($vars['error']);
