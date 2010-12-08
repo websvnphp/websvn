@@ -124,9 +124,17 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				$listing[$index]['node'] = 0; // t-node
 				$listing[$index]['path'] = $path.$file;
 				$listing[$index]['filename'] = $file;
-				$listing[$index]['fileurl'] = urlForPath($path.$file, $passRevString);
+				if ($isDir) {
+					$listing[$index]['fileurl'] = urlForPath($path.$file, $passRevString);
+				} else {
+					$listing[$index]['fileurl'] = urlForPath($path.$file, createDifferentRevAndPegString($passrev, $peg));
+				}
 				$listing[$index]['filelink'] = '<a href="'.$listing[$index]['fileurl'].'">'.$listing[$index]['filename'].'</a>';
-				$listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.$passRevString;
+				if ($isDir) {
+					$listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.$passRevString;
+				} else {
+					$listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.createDifferentRevAndPegString($passrev, $peg);
+				}
 
 				if ($treeview) {
 					$listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$path.$file.'@'.$passrev.'" onclick="checkCB(this)" />';
