@@ -174,7 +174,7 @@ function infoCharacterData($parser, $data) {
 
 		case 'ROOT':
 			if ($debugxml) print 'Root: '.$data."\n";
-			$curInfo->path = substr($curInfo->path, strlen($data));
+			$curInfo->path = urldecode(substr($curInfo->path, strlen($data)));
 			break;
 	}
 }
