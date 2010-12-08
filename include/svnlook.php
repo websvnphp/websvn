@@ -983,6 +983,16 @@ class SVNRepository {
 			return null;
 		}
 
+		if ($this->repConfig->subpath !== null) {
+			if (substr($curInfo->path, 0, strlen($this->repConfig->subpath) + 1) === '/'. $this->repConfig->subpath) {
+				$curInfo->path = substr($curInfo->path, strlen($this->repConfig->subpath) + 1);
+			} else {
+				global $vars;
+				$vars['error'] = 'Info entry does not start with subpath for repository with subpath';
+				return null;
+			}
+		}
+
 		return $curInfo;
 	}
 
