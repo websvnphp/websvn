@@ -73,6 +73,13 @@ function createRevAndPegString($rev, $peg) {
 	return implode('&amp;', $params);
 }
 
+function createDifferentRevAndPegString($rev, $peg) {
+	$params = array();
+	if ($rev && (!$peg || $rev != $peg)) $params[] = 'rev='.$rev;
+	if ($peg) $params[] = 'peg='.$peg;
+	return implode('&amp;', $params);
+}
+
 function anchorForPath($path) {
 	global $config;
 
