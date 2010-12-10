@@ -1,3 +1,20 @@
+2.3.2
+
+* Added ability to use plain PHP for creating templates
+* Added config option to show last modification in repository list
+* Added config option to trust all server certificates
+* Added support for using multiple access files
+* Added translation: Macedonian, Russian
+* Improved navigation through items deleted in recent revision
+* Improved ignoring whitespaces (including different newlines) in compare-view
+* Updated translation: Dutch
+* Updated libraries: GeSHi 1.0.8.9
+* Fixed parsing SVN version
+* Fixed comparing two revisions
+* Fixed regression in revision form
+* Fixed issues: 292, 294, 296, 298, 302, 304, 306, 307
+
+
 2.3.1
 
 * Added in-line highlighting of diff
