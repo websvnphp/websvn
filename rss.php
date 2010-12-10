@@ -93,6 +93,9 @@ $rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').(@$_REQ
 // URL where this original RSS feed can be found
 $rss .= '<atom:link href="'.escape(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
 if ($history && is_array($history->entries)) {
+	$itemURL = $baseurl.$config->getURL($rep, $path, 'revision');
+	if (@$_REQUEST['isdir'] == 1 || $path == '' || $path == '/')
+		$itemURL .= 'isdir=1&amp;';
 	foreach ($history->entries as $r) {
 		$wordLimit = 10; // Display only up to the first 10 words of the log message
 		$title = trim($r->msg);
@@ -126,7 +129,7 @@ if ($history && is_array($history->entries)) {
 			$rss .= '<dc:creator>'.escape($r->author).'</dc:creator>';
 			$rss .= '<title>'.escape($title).'</title>';
 			$rss .= '<description>'.escape($description).'</description>';
-			$itemLink = getFullURL($baseurl.$config->getURL($rep, '', 'revision').'rev='.$r->rev);
+			$itemLink = getFullURL($itemURL.createRevAndPegString($r->rev,$peg));
 			$rss .= '<link>'.$itemLink.'</link>';
 			$rss .= '<guid>'.$itemLink.'</guid>';
 			$rss .= '</item>'."\n";

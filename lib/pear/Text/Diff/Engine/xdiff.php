@@ -21,8 +21,9 @@ class Text_Diff_Engine_xdiff {
      */
     function diff($from_lines, $to_lines)
     {
-        array_walk($from_lines, array('Text_Diff', 'trimNewlines'));
-        array_walk($to_lines, array('Text_Diff', 'trimNewlines'));
+        // @modified disabled trimming newlines
+        //array_walk($from_lines, array('Text_Diff', 'trimNewlines'));
+        //array_walk($to_lines, array('Text_Diff', 'trimNewlines'));
 
         /* Convert the two input arrays into strings for xdiff processing. */
         $from_string = implode("\n", $from_lines);

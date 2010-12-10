@@ -39,8 +39,12 @@ if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
 	// If there's no revision info, go to the lastest revision for this path
-	$history = $svnrep->getLog($path, 'HEAD', 1, true, 2, $peg);
-	$youngest = ($history) ? $history->entries[0]->rev : 0;
+	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
+	if (!$history) {
+		unset($vars['error']);
+		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+	}
+	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
 
 	if (empty($rev)) {
 		$rev = $youngest;
@@ -61,19 +65,20 @@ if ($rep) {
 	$vars['rev2'] = $prevrev;
 	$vars['prevrev'] = $prevrev;
 
-	if ($history) {
+	if (isset($history->entries[0])) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
+		$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
 		$vars['author'] = $history->entries[0]->author;
 		$vars['rev'] = $vars['rev1'] = $history->entries[0]->rev;
 		$vars['peg'] = $peg;
 	}
 
 	createPathLinks($rep, $ppath, $passrev, $peg);
-	$passRevString = createRevAndPegString($passrev, $peg);
+	$passRevString = createRevAndPegString($rev, $peg);
 
 	if ($rev != $youngest) {
-		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'diff').($peg ? 'peg='.$peg : '');
+		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'diff').createRevAndPegString('', $peg);
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
@@ -110,7 +115,7 @@ if ($rep) {
 	$vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
 
 	if ($rep->isRssEnabled()) {
-		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
+		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').createRevAndPegString('', $peg);
 		$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 	}
 
@@ -175,7 +180,4 @@ if ($rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
-$vars['template'] = 'diff';
-parseTemplate('header.tmpl');
-parseTemplate('diff.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('diff');

@@ -284,6 +284,10 @@ div.difflines {
 	height: 22px;
 }
 
+#directory td.age, #directory td.date, #directory td.rev {
+	border-right-width: 0;
+}
+
 img.icon {
 	vertical-align: middle;
 }
@@ -303,42 +307,42 @@ img.icon {
 
 /* @group index.tmpl */
 
-#index #repositories {
+#index #content table {
 	margin: 0 auto;
 }
 
-#index #repositories th {
+#index #content th {
 	padding: 4px;
 }
 
-#index #repositories td {
+#index #content td {
 	padding: 0px;
+	vertical-align: middle;
+	padding-right: 6px;
+	border-width: 0;
+	text-align: right;
 }
 
-#index #repositories div {
-	padding: 2px;
+#index #content td.project {
+	text-align: left;
 }
 
-.plusbox, .minusbox {
-	display: inline;
-	font-size: 13px;
-	font-weight: bold;
-	width: 16px;
-	text-indent: 0;
-	height: 16px;
-	color: black;
-	text-align: center;
-	padding: 0px 2px 0px 3px;
-	border: black solid 1px;
-	margin-right: 5px;
+#index #content td a {
+	background: url(images/repo.png) no-repeat 3px 3px;
+	width: 100%;
+	display: block;
+	padding-top: 6px;
+	padding-bottom: 6px;
 }
 
-.plusbox {
+#index #content td a, #index #content td.group, #index #content tbody th {
+	padding-left: 32px;
+	text-align: left;
+}
+
+#index #content tbody th {
 	background-color: #D0D0D0;
-}
-
-.minusbox {
-	background-color: #809cc8;
+	text-decoration: underline;
 }
 
 .groupname {
@@ -375,6 +379,10 @@ img.icon {
 #revision del {
 	color: #555;
 	text-decoration: none;
+}
+
+#revision a.notinpath {
+	color: #8d0208;
 }
 
 /* @end */

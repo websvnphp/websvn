@@ -126,9 +126,10 @@ if ($rep) {
 	$vars['peg'] = $peg;
 	$vars['path'] = escape($ppath);
 
-	if ($history && $history->curEntry) {
+	if (isset($history->entries[0])) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
+		$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
 		$vars['author'] = $history->entries[0]->author;
 	}
 
@@ -142,7 +143,7 @@ if ($rep) {
 	// Will probably need to call `svn info`, parse XML output, and substring a path
 
 	createPathLinks($rep, $ppath, $passrev, $peg);
-	$passRevString = createRevAndPegString($passrev, $peg);
+	$passRevString = createRevAndPegString($rev, $peg);
 	$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
 	unset($queryParams['repname']);
@@ -161,6 +162,7 @@ if ($rep) {
 	else
 		$queryParams['showchanges'] = (int)$showchanges;
 
+	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$isDirString.$passRevString;
 	if ($isDir) {
 		$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString.'#'.anchorForPath($path);
 		$vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
@@ -176,7 +178,7 @@ if ($rep) {
 	}
 
 	if ($rep->isRssEnabled()) {
-		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.($peg ? 'peg='.$peg : '');
+		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.createRevAndPegString('', $peg);
 		$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 	}
 
@@ -292,6 +294,8 @@ if ($rep) {
 				$listing[$index]['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($revision->msg))));
 				$listing[$index]['rowparity'] = $row;
 
+				$listing[$index]['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.$rpath.'@'.($thisrev - 1).'&amp;compare[]='.$rpath.'@'.$thisrev;
+
 				if ($showchanges) {
 					// Aggregate added/deleted/modified paths for display in table
 					$modpaths = array();
@@ -397,12 +401,13 @@ if ($rep) {
 
 	// Create form elements for comparing selected revisions
 	$vars['compare_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'comp').'" id="compare">';
-	if ($config->multiViews)
+	if ($config->multiViews) {
 		$vars['compare_form'] .= '<input type="hidden" name="op" value="comp" />';
+	} else {
+		$vars['compare_form'] .= '<input type="hidden" name="repname" value="'.$repname.'" />';
+	}
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
 	$vars['compare_endform'] = '</form>';
-
-	$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate;
 
 	if (!$rep->hasReadAccess($path, false)) {
 		$vars['error'] = $lang['NOACCESS'];
@@ -413,7 +418,4 @@ if ($rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
-$vars['template'] = 'log';
-parseTemplate('header.tmpl');
-parseTemplate('log.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('log');

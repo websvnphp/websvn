@@ -13,7 +13,12 @@
       </thead>
       [websvn-test:restricted]
       [websvn-else]
-      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:rev] - [websvn:author] - [websvn:date]
+      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:rev] - [websvn:author]
+        [websvn-test:showageinsteadofdate]
+          - <span title="[websvn:date]">[websvn:age]</span>
+        [websvn-else]
+          - <span title="[websvn:age]">[websvn:date]</span>
+        [websvn-endtest]
         [websvn-test:prevrevurl]
           - <a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a>
         [websvn-endtest]
@@ -65,7 +70,12 @@
       <tbody>
       [websvn-startlisting]
       <tr class="[websvn:action] row[websvn:rowparity]">
-         <td>[websvn:action] <a href="[websvn:detailurl]">[websvn:path]</a>
+         <td>[websvn:action]
+           [websvn-test:notinpath]
+           <a href="[websvn:detailurl]" class="notinpath">[websvn:path]</a>
+           [websvn-else]
+           <a href="[websvn:detailurl]">[websvn:path]</a>
+           [websvn-endtest]
            [websvn-test:oldpath]
            <br/>&nbsp; &nbsp;<del>[websvn:oldpath] ([lang:PREV])</del>
            [websvn-endtest]

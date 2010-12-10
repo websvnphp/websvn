@@ -36,7 +36,11 @@
 <div id="info">
 <h2>[lang:LASTMOD]</h2>
   <ul>
-    <li>[lang:REV] [websvn:rev], [websvn:date]</li>
+    [websvn-test:showageinsteadofdate]
+    <li>[lang:REV] [websvn:rev] &mdash; <span title="[websvn:date]">[websvn:age]</span></li>
+    [websvn-else]
+    <li>[lang:REV] [websvn:rev] &mdash; <span title="[websvn:age]">[websvn:date]</span></li>
+    [websvn-endtest]
     <li><strong>[lang:AUTHOR]:</strong> [websvn:author]</li>
     <li><dl><dt><strong>[lang:LOGMSG]:</strong></dt><dd>[websvn:log]</dd></dl></li>
   </ul>
@@ -59,10 +63,14 @@
       [websvn-startlisting]
       <tr class="[websvn:action] row[websvn:rowparity]">
         <td class="path">
+          [websvn-test:notinpath]
+          <a href="[websvn:detailurl]" class="notinpath">[websvn:path]</a>
+          [websvn-else]
           <a href="[websvn:detailurl]">[websvn:path]</a>
-            [websvn-test:oldpath]
-            <br/><del>[websvn:oldpath] ([lang:PREV])</del>
-            [websvn-endtest]
+          [websvn-endtest]
+          [websvn-test:oldpath]
+          <br/><del>[websvn:oldpath] ([lang:PREV])</del>
+          [websvn-endtest]
         </td>
         <td>
           [websvn-test:blameurl]
