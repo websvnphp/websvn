@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="[websvn:language_code]" lang="[websvn:language_code]">
+<head>
+  <title>
+  WebSVN
+  [websvn-test:repname]
+    - [websvn:repname]
+  [websvn-endtest]
+  [websvn-test:error]
+    - ERROR
+  [websvn-else]
+    [websvn-test:rev2]
+      [websvn-test:path2]
+        - [websvn:path1] [lang:REV] [websvn:rev1] [lang:AND] [websvn:path2] [lang:REV] [websvn:rev2]
+      [websvn-else]
+        - [lang:REV] [websvn:rev1] [lang:AND] [websvn:rev2]
+      [websvn-endtest]
+    [websvn-else]
+      [websvn-test:rev]
+        - [lang:REV] [websvn:rev]
+      [websvn-endtest]
+    [websvn-endtest]
+    [websvn-test:action]
+      - [websvn:action]
+    [websvn-endtest]
+    [websvn-test:path]
+      - [websvn:path]
+    [websvn-endtest]
+  [websvn-endtest]
+  </title>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="generator" content="WebSVN [websvn:version]" /> <!-- leave this for stats -->
+  [websvn-test:blockrobots]
+  <meta name="robots" content="noindex,nofollow" />
+  [websvn-endtest]
+  <link rel="stylesheet" type="text/css" href="[websvn:locwebsvnhttp]/templates/Elegant/styles.css" />
+  <link rel="shortcut icon" type="image/x-icon" href="[websvn:locwebsvnhttp]/templates/Elegant/images/favicon.ico" />
+  [websvn-test:rssurl]
+  <link rel="alternate" type="application/rss+xml" title="WebSVN RSS" href="[websvn:rssurl]" />
+  [websvn-endtest]
+</head>
+<body id="[websvn:template]">
+<div id="wrapper">
+  [websvn-test:repname]
+  <div id="rev-popup" style="display: none;">
+    [websvn-test:lastchangedrev]
+    <div class="info">[lang:REV] [websvn:lastchangedrev]
+    [websvn-else]
+    <div class="info">[lang:REV] [websvn:rev]
+    [websvn-endtest]
+    &mdash; [websvn:author]
+    [websvn-test:showageinsteadofdate]
+    &mdash; [websvn:age] ([websvn:date])
+    [websvn-else]
+    &mdash; [websvn:date] ([websvn:age])
+    [websvn-endtest]
+    </div>
+    <div class="msg">[websvn:log]</div>
+  </div>
+  [websvn-endtest]
+  <div id="header">
+    <div id="info">
+      <h1><a href="[websvn:indexurl]" title="[lang:PROJECTS]">[lang:PROJECTS]</a>
+        [websvn-test:repname]
+        &mdash; <a href="[websvn:repurl]">[websvn:repname]</a>
+        [websvn-endtest]
+      </h1>
+      <div id="menus">
+        [websvn-test:projects_form]
+        [websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]
+        [websvn-endtest]
+        [websvn:template_form][websvn:template_select][websvn:template_submit][websvn:template_endform]
+        [websvn:language_form][websvn:language_select][websvn:language_submit][websvn:language_endform]
+      </div>

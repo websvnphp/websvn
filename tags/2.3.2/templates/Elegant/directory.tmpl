@@ -1,0 +1,137 @@
+    [websvn-test:error]
+    </div>
+    [websvn-else]
+      <h2 id="pathlinks">[websvn:pathlinks]</h2>
+      <div id="revjump">[websvn:revision_form][websvn:revision_input]<span class="submit">[websvn:revision_submit]</span>[websvn:revision_endform]</div>
+      <h2 id="revnum"><a href="[websvn:revurl]">[lang:REV] [websvn:rev]</a></h2>
+      <div class="clearer"></div>
+    </div>
+    <ul id="links">
+      [websvn-test:prevrevurl]
+      <li class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      <li class="next"><a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:goyoungestlink]
+      <li class="youngest">[websvn:goyoungestlink]</li>
+      [websvn-endtest]
+      [websvn-test:comparelink]
+      <li class="diff">[websvn:comparelink]</li>
+      [websvn-endtest]
+      <li class="rev">[websvn:revlink]</li>
+      <li class="log">[websvn:loglink]</li>
+      [websvn-test:downloadurl]
+      <li class="download"><a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a></li>
+      [websvn-endtest]
+      [websvn-test:clientrooturl]
+      <li class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></li>
+      [websvn-endtest]
+      [websvn-test:rsslink]
+      <li class="rss">[websvn:rsslink]</li>
+      [websvn-endtest]
+    </ul>
+    [websvn-endtest]
+  </div>
+  <div id="content">
+  [websvn-test:error]
+    <div class="error"><span>[websvn:error]</span></div>
+  [websvn-else]
+    [websvn-test:warning]
+    <div class="warning"><span>[websvn:warning]</span></div>
+    [websvn-else]
+[websvn-defineicons]
+*=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file.png" alt="file" />
+.c=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-c.png" alt=".c file" />
+.cpp=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-cpp.png" alt=".cpp FILE" />
+.h=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-h.png" alt=".h file" />
+.m=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-m.png" alt=".m file" />
+.java=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-java.png" alt=".java file" />
+.py=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-py.png" alt=".py file" />
+
+.png=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-image.png" alt="PNG image" />
+.gif=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-image.png" alt="GIF image" />
+.bmp=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-image.png" alt="BMP image" />
+.jpg=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-image.png" alt="JPG image" />
+.jpeg=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-image.png" alt="JPG image" />
+
+.html=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-html.png" alt="HTML file" />
+.htm=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-html.png" alt="HTML file" />
+.xml=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-xml.png" alt="XML file" />
+.php=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-php.png" alt="PHP file" />
+.css=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-css.png" alt="CSS file" />
+
+dir=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/folder.png" alt="folder" />
+diropen=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/folder.png" alt="folder" />
+i-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt="node" />
+t-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt="node" />
+l-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt="node" />
+e-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt="node" />
+[websvn-enddefineicons]
+    [websvn:compare_form]
+      <table id="listing">
+        <thead>
+          <tr>
+            <th>[lang:PATH]</th>
+            [websvn-test:showlastmod]
+            <th colspan="3">[lang:LASTMOD]</th>
+            [websvn-endtest]
+            <th>[lang:LOG]</th>
+            [websvn-test:allowdownload]
+            <th>[lang:DOWNLOAD]</th>
+            [websvn-endtest]
+            [websvn-test:clientrooturl]
+            <th>SVN</th>
+            [websvn-endtest]
+            [websvn-test:rssurl]
+            <th>[lang:RSSFEED]</th>
+            [websvn-endtest]
+          </tr>
+        </thead>
+        <tbody>
+        [websvn-startlisting]
+          [websvn-test:rowparity]
+          <tr class="shaded">
+          [websvn-else]
+          <tr>
+          [websvn-endtest]
+            <td class="path">
+              [websvn:compare_box]
+              [websvn-treenode]
+              [websvn-icon]
+              [websvn:filelink]
+            </td>
+          [websvn-test:showlastmod]
+            <td class="rev"><a href="[websvn:revurl]" title="[lang:REV] [websvn:revision]">[websvn:revision]</a>&nbsp;</td>
+            [websvn-test:showageinsteadofdate]
+            <td class="date" title="[websvn:date]">[websvn:age]</td>
+            [websvn-else]
+            <td class="date" title="[websvn:age]">[websvn:date]</td>
+            [websvn-endtest]
+            <td class="author">[websvn:author]</td>
+          [websvn-endtest]
+          <td class="log"><a href="[websvn:logurl]" title="[lang:LOG]">[lang:LOG]</a></td>
+          [websvn-test:allowdownload]
+            <td class="download">
+            [websvn-test:downloadurl]
+              <a href="[websvn:downloadurl]" rel="nofollow" title="[lang:DOWNLOAD]">[lang:DOWNLOAD]</a>
+            [websvn-endtest]
+            [websvn-test:downloadplainurl]
+              <a href="[websvn:downloadplainurl]" rel="nofollow" title="[lang:DOWNLOAD]">[lang:DOWNLOAD]</a>
+            [websvn-endtest]
+            </td>
+          [websvn-endtest]
+          [websvn-test:clientrooturl]
+            <td class="svn"><a href="[websvn:clientrooturl][websvn:path]" title="SVN">SVN</a></td>
+          [websvn-endtest]
+          [websvn-test:rssurl]
+            <td class="rss"><a href="[websvn:rssurl]" title="[lang:RSSFEED]">[lang:RSSFEED]</a></td>
+          [websvn-endtest]
+          </tr>
+        [websvn-endlisting]
+        </tbody>
+      </table>
+      <div id="compare-submit">[websvn:compare_submit]</div>
+    [websvn:compare_endform]
+    [websvn-endtest]
+  [websvn-endtest]

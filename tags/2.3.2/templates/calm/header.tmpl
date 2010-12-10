@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="[websvn:language_code]" lang="[websvn:language_code]">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="generator" content="WebSVN [websvn:version]" /> <!-- leave this for stats -->
+  [websvn-test:blockrobots]
+  <meta name="robots" content="noindex,nofollow" />
+  [websvn-endtest]
+  <link rel="shortcut icon" type="image/x-icon" href="[websvn:locwebsvnhttp]/templates/calm/images/favicon.ico" />
+  <link type="text/css" href="[websvn:locwebsvnhttp]/templates/calm/styles.css" rel="stylesheet" media="screen" />
+  [websvn-test:rssurl]
+  <link rel='alternate' type='application/rss+xml' title='WebSVN RSS' href='[websvn:rssurl]' />
+  [websvn-endtest]
+  <!--[if gte IE 5.5000]>
+  <script type="text/javascript" src="[websvn:locwebsvnhttp]/templates/calm/png.js"></script>
+  <style type="text/css" media="screen">
+  tbody tr td { padding:1px 0 }
+  #wrap h2 { padding:10px 5px 0 5px; margin-bottom:-8px }
+  </style>
+  <![endif]-->
+  <title>
+       WebSVN
+       [websvn-test:repname]
+          - [websvn:repname]
+       [websvn-endtest]
+       [websvn-test:error]
+         - ERROR
+       [websvn-else]
+         [websvn-test:action]
+            - [websvn:action]
+         [websvn-endtest]
+         [websvn-test:rev2]
+            [websvn-test:path2]
+               - [websvn:path1] [lang:REV] [websvn:rev1] [lang:AND] [websvn:path2] [lang:REV] [websvn:rev2]
+            [websvn-else]
+               - [lang:REV] [websvn:rev2] [lang:AND] [websvn:rev1]
+            [websvn-endtest]
+         [websvn-else]
+            [websvn-test:rev]
+               - [lang:REV] [websvn:rev]
+            [websvn-endtest]
+         [websvn-endtest]
+         [websvn-test:path]
+            - [websvn:path]
+         [websvn-endtest]
+       [websvn-endtest]
+  </title>
+  <script type="text/javascript">
+  //<![CDATA[
+       function getPath()
+       {
+         return '[websvn:locwebsvnhttp]';
+       }
+       
+       function checkCB(chBox)
+       {
+          count = 0
+          first = null
+          f = chBox.form
+          for (i = 0 ; i < f.elements.length ; i++)
+          if (f.elements[i].type == 'checkbox' && f.elements[i].checked)
+          {
+             if (first == null && f.elements[i] != chBox)
+                first = f.elements[i]
+             count += 1
+          }
+          
+          if (count > 2) 
+          {
+             first.checked = false
+             count -= 1
+          }
+       }
+  //]]>
+  </script>
+</head>
+<body id="[websvn:template]">
+<div id="container">
+	<div id="select">
+		[websvn-test:projects_form]
+		[websvn:projects_form][websvn:projects_select][websvn:projects_submit][websvn:projects_endform]
+		[websvn-endtest]
+		[websvn:template_form][websvn:template_select][websvn:template_submit][websvn:template_endform]
+		[websvn:language_form][websvn:language_select][websvn:language_submit][websvn:language_endform]
+	</div>
+	<h1><a href="[websvn:indexurl]" title="[lang:PROJECTS]">[lang:PROJECTS]</a>
+		[websvn-test:repname]
+		<span><a href="[websvn:repurl]">[websvn:repname]</a></span>
+		[websvn-endtest]
+	</h1>

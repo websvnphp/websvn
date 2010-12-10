@@ -1,0 +1,102 @@
+    [websvn-test:error]
+    </div>
+    [websvn-else]
+      <h2 id="pathlinks">[websvn:pathlinks]</h2>
+      <div id="revjump">[websvn:revision_form][websvn:revision_input]<span class="submit">[websvn:revision_submit]</span>[websvn:revision_endform]</div>
+      <h2 id="revnum">[lang:REV] [websvn:rev]</h2>
+      <div class="clearer"></div>
+    </div>
+    <ul id="links">
+      [websvn-test:prevrevurl]
+      <li class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      <li class="next"><a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:goyoungestlink]
+      <li class="youngest">[websvn:goyoungestlink]</li>
+      [websvn-endtest]
+      [websvn-test:comparelink]
+      <li class="diff">[websvn:comparelink]</li>
+      [websvn-endtest]
+      <li class="dir">[websvn:directorylink]</li>
+      [websvn-test:filedetaillink]
+      <li class="file">[websvn:filedetaillink]</li>
+      <li class="blame">[websvn:blamelink]</li>
+      [websvn-endtest]
+      <li class="log">[websvn:loglink]</li>
+      [websvn-test:clientrooturl]
+      <li class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></li>
+      [websvn-endtest]
+      [websvn-test:rsslink]
+      <li class="rss">[websvn:rsslink]</li>
+      [websvn-endtest]
+    </ul>
+    [websvn-endtest]
+  </div>
+  <div id="content">
+  [websvn-test:error]
+    <div class="error"><span>[websvn:error]</span></div>
+  [websvn-else]
+    [websvn-test:warning]
+    <div class="warning"><span>[websvn:warning]</span></div>
+    [websvn-else]
+    <dl>
+      <dt>[lang:LASTMOD]</dt><dd>[lang:REV] [websvn:rev] &mdash; [websvn:author] &mdash;
+      [websvn-test:showageinsteadofdate]
+      <span title="[websvn:date]">[websvn:age]</span></dd>
+      [websvn-else]
+      <span title="[websvn:age]">[websvn:date]</span></dd>
+      [websvn-endtest]
+      <dt>[lang:LOGMSG]</dt>
+      <dd>[websvn:log]</dd>
+    </dl>
+    <table id="changes">
+      <thead>
+      <tr align="left" valign="middle">
+        <th>[lang:PATH]</th>
+        <th>[lang:BLAME]</th>
+        <th>[lang:DIFF]</th>
+        <th>[lang:LOG]</th>
+        [websvn-test:clientrooturl]
+        <th>SVN</th>
+        [websvn-endtest]
+      </tr>
+      </thead>
+      <tbody>
+      [websvn-startlisting]
+      [websvn-test:rowparity]
+      <tr class="[websvn:action] shaded">
+      [websvn-else]
+      <tr class="[websvn:action]">
+      [websvn-endtest]
+        <td class="path">
+          [websvn-test:notinpath]
+          <a href="[websvn:detailurl]" class="notinpath">[websvn:path]</a>
+          [websvn-else]
+          <a href="[websvn:detailurl]">[websvn:path]</a>
+          [websvn-endtest]
+          [websvn-test:oldpath]
+          <br/><del>[websvn:oldpath] ([lang:PREV])</del>
+          [websvn-endtest]
+        </td>
+        [websvn-test:blameurl]
+        <td class="blame"><a href="[websvn:blameurl]" title="[lang:BLAME]">[lang:BLAME]</a></td>
+        [websvn-else]
+        <td></td>
+        [websvn-endtest]
+        [websvn-test:diffurl]
+        <td class="diff"><a href="[websvn:diffurl]" title="[lang:DIFFPREV]">[lang:DIFF]</a></td>
+        [websvn-else]
+        <td></td>
+        [websvn-endtest]
+        <td class="log"><a href="[websvn:logurl]" title="[lang:LOG]">[lang:LOG]</a></td>
+        [websvn-test:clientrooturl]
+        <td class="svn"><a href="[websvn:clientrooturl][websvn:path]" title="SVN">SVN</a></td>
+        [websvn-endtest]
+      </tr>
+      [websvn-endlisting]
+      </tbody>
+    </table>
+    [websvn-endtest]
+  [websvn-endtest]

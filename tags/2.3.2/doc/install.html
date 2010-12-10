@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-script-type" content="text/javascript" />
+	<meta http-equiv="content-style-type" content="text/css" />
+	<title>WebSVN Installation Guide</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+
+<h1>WebSVN Installation Guide</h1>
+
+<div id="contents">
+<h2><a name="content"></a>Content</h2>
+<ul>
+	<li><a href="#why">Why WebSVN?</a></li>
+	<li><a href="#installation">Installation</a></li>
+	<li><a href="#addingrepos">Adding Repositories</a><ul>
+		<li><a href="#credentials">Credentials</a></li>
+		<li><a href="#groups">Groups</a></li>
+		<li><a href="#svnclienturls">SVN Client URLs</a></li>
+	</ul></li>
+	<li><a href="#colourisation">Colourisation</a></li>
+	<li><a href="#templates">Templates</a></li>
+	<li><a href="#multiviews">Mulitviews</a><ul>
+		<li><a href="#multiviewsexample">Mulitviews example</a></li>
+	</ul></li>
+	<li><a href="#authentication">Access rights and authentication</a></li>
+	<li><a href="#problems">Common problems</a></li>
+	<li><a href="#license">License</a></li>
+</ul>
+</div>
+
+<h2><a name="why"></a>Why WebSVN?</h2>
+
+<p>WebSVN offers a view of your subversion repositories that's been designed to reflect the Subversion methodology. You can view the log of any file or directory and see a list of all the files changed, added or deleted in any given revision. You can also view the differences between versions of a file to see exactly what was changed in a particular revision.</p>
+
+<p>WebSVN offers the following key features:</p>
+
+<ul>
+	<li>Easy-to-use interface</li>
+	<li>Highly customisable templating system</li>
+	<li>Colourisation of file listings; MIME type support</li>
+	<li>Blame (annotation) view of file authorship</li>
+	<li>Comparing revisions of files / directories</li>
+	<li>Revision and log message browsing / searching</li>
+	<li>Download of files and folders</li>
+	<li>Apache MultiViews support</li>
+	<li>RSS feed support for monitoring any resource</li>
+	<li>Support for <code>bugtraq:*</code> SVN properties</li>
+	<li>Supports multiple repositories, local or remote</li>
+	<li>Optional path-based restriction of privileges</li>
+	<li>Multiple languages and on-demand switching</li>
+</ul>
+
+<p>Since it's written using PHP, WebSVN is also very portable and easy to install.</p>
+
+<h2><a name="installation"></a>Installation</h2>
+
+<p>Grab the source and stick it somewhere that your server can get to. You need to have <strong>PHP 4.3.0</strong> or greater installed and working. Additionally you need <strong>SVN 1.2.0</strong> or greater. Also note that WebSVN won't currently work in safe mode, due to the need to call the <code>svn</code> and <code>svnlook</code> commands. No other external programs are required.</p>
+
+<p>If it isn't already, make sure the cache directory has permissions of at least 0700 and is owned by the process your webserver is running under. This is used to cache RSS files. It is not recommended to set the directory to full write, 0777.</p>
+
+<p>Make a copy of <code>include/distconfig.php</code> and name it <code>include/config.php</code>, then edit it as directed in the file itself. Even with only the default config file, pointing your browser at the index.php file should display a WebSVN page that instructs you to set up one or more repositories.</p>
+
+<!--
+<p>You'll also need diff (preferably the GNU version; for Windows users I'd
+recommend the Cygwin version) and svnlook available.</p>
+
+<p><b>Windows users:</b> Note that some of the features offered by WebSVN, when
+enabled, require the use of various external programs. They can be downloaded
+from these locations:</p>
+
+<p>Diff/Sed/Gzip/Tar: <a href="http://www.cygwin.com/">http://www.cygwin.com/</a></p>
+-->
+
+<h2><a name="addingrepos"></a>Adding Repositories</h2>
+
+<p>Repositories to be browsed must be specified in <code>include/config.php</code> so WebSVN knows how to access them. The two simplest ways to specify repositories are to use:</p>
+
+<ul>
+	<li><code>$config->addRepository(...)</code> to add repositories one-by-one, or</li>
+	<li><code>$config->parentPath(...)</code> to add a directory full of repositories at once.</li>
+</ul>
+
+<h3><a name="credentials"></a>Credentials</h3>
+
+<p>If WebSVN must supply a username and password to access a remote repository, you can supply these arguments in the <code>$config->addRepository(...)</code> call for that repository &mdash; consult <code>include/distconfig.php</code> for specifics. If the credentials are sensitive, be sure to set the read permissions for the config file appropriately.</p>
+
+<h3><a name="groups"></a>Groups</h3>
+
+<p>WebSVN allows you to group repositories logically if desired &mdash; <code>include/distconfig.php</code> documents how to associate repositories and parent paths with groups in detail. When groups exist, using <code>$config->useTreeIndex()</code> will create a hierarchical index page with collapsible/expandable group sections.</p>
+
+<h3><a name="svnclienturls"></a>SVN Client URLs</h3>
+
+<p>If you want to provide the URL that SVN clients should use to access a  repository (whether local or remote), you can provide it for a single repository or a parent path &mdash; consult <code>include/distconfig.php</code> for specifics. The SVN client link should be to the root path of a repository; path elements will be appended to it as needed. To see this in action, browse <a href="http://demo.websvn.info/listing.php?">demo.websvn.info</a> and look for the SVN links.</p>
+
+<h2><a name="templates"></a>Templates</h2>
+
+<p>WebSVN is able to customize its appearance through the use of a templating system, and includes several built-in templates. The template paths users can choose from may be specified in <code>include/config.php</code> using <code>$config->addTemplatePath(...)</code> etc.</p>
+
+<p>Those who wish to customise the look and feel a little should read <a href="templates.html">templates.html</a>, which explains the highly configurable template system.</p>
+
+<h2><a name="colourisation"></a>Colourisation</h2>
+
+<p><a href="http://qbnz.com/highlighter/">GeSHi</a> (Generic Syntax Highlighter)  is bundled with WebSVN. To use it, just make sure config.php has this line uncommented:</p>
+
+<pre>
+$config->useGeshi();
+</pre>
+
+<p>Alternatively, you can use <a href="http://www.gnu.org/software/enscript/">Enscript</a> 1.6 or higher to view files with syntax colouring. (You'll also need <a href="http://ftp.gnu.org/gnu/sed/">sed</a>.) To use Enscript, simply set the paths in the config file, comment out the GeSHi line above, and then uncomment this line:</p>
+
+<pre>
+$config->useEnscript();
+</pre>
+
+<h2><a name="multiviews"></a>Multiviews</h2>
+
+<p>You may choose to configure access to your repository via Apache's MultiView system. This will enable you to access a repository using a url such as:</p>
+
+<pre>http://example.com/wsvn/repname/path/in/repository</pre>
+
+<p>To do this you must:</p>
+
+<ul>
+	<li>Place wsvn.php where you want to. Normally you place it such that it's accessible straight after the servername, as shown above.</li>
+	<li>Configure the parent directory of wsvn.php to use MultiViews (see Apache docs)</li>
+	<li>Change config.php to include the line <code>$config->useMultiViews();</code></li>
+	<li>Change the path configured at the beginning of the wsvn.php script</li>
+</ul>
+
+<p>Now go to <code>http://example.com/wsvn/</code> and make sure that you get the index page.</p>
+
+<p>The repname part of the URL is the name given to it in the config.php file.
+For this reason you may wish to avoid putting spaces in the name.</p>
+
+<h3><a name="multiviewsexample"></a>Multiviews example</h3>
+
+<p>First, Apache needs to know that you want to enable MultiViews for the root directory. You may need to enable the MultiViews option in the Apache configuration, as explained in <a href="http://httpd.apache.org/docs/2.2/content-negotiation.html#multiviews">these Apache docs</a>. For example, if my Apache directory root were set <code>/var/apache/htdocs</code>, the corresponding block in Apache might look something like this:</p>
+
+<pre>
+&lt;Directory "/var/apache/htdocs"&gt;
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+&lt;/Directory&gt;
+</pre>
+
+<p>Alternatively, you can include the following line in the directory's <code>.htaccess</code> file, assuming that the appropriate AllowOverrides directive is set up.</p>
+
+<pre>
+Options MultiViews
+</pre>
+
+<p>Let's suppose that WebSVN is installed in a directory called <code>websvn</code> within the Apache document root directory. Normally, WebSVN would be accessed at <code>http://example.com/websvn/</code>. With MultiViews enabled, the base path for all WebSVN pages would be <code>http://example.com/websvn/wsvn/</code>. (If you would prefer <code>http://example.com/wsvn/</code> instead, move/copy wsvn.php from the WebSVN installation to the document root directory.) You may need to modify the <code>$locwebsvnhttp</code> variable at the beginning of wsvn.pnp to match your directory location.</p>
+
+<p>You must also enable Multiviews in the WebSVN <code>include/config.php</code> file by adding this line:</p>
+
+<pre>
+$config->useMultiViews();
+</pre>
+
+<p>If all has gone well, repositories should now by accessible at <code>http://example.com/wsvn/</code>.</p>
+
+<p>Note the index page can be accessed through <code>http://example.com/wsvn/</code>. If you want to view the index page at <code>http://example.com/</code>, you need to add another directive to the .htaccess file:</p>
+
+<pre>
+DirectoryIndex wsvn.php
+</pre>
+
+<h2><a name="authentication"></a>Access rights and authentication</h2>
+
+<p>You may wish to provide an authentication mechanism for WebSVN. One obvious solution is to protect the entire WebSVN directory with some form of Apache authentication mechanism, but that doesn't allow for per repository authentication.</p>
+
+<p>WebSVN provides and access rights mechanism that uses your SVN access file to control read access to the repository. This means that you only have to maintain one file to define both Subversion and WebSVN access rights.</p>
+
+<p>For this to work, you need to configure your authentication method to the <code>/websvn/</code> (or <code>/wsvn/</code>) directory. This should be the same authentication as you use for the svn repositories themselves. Here's an example using SSPI:</p>
+
+<pre>
+&lt;Location /websvn/&gt;
+  AuthType SSPI
+  SSPIAuth On
+  SSPIAuthoritative On
+  SSPIDomain IMAJEMAIL
+  SSPIOfferBasic On
+  Require valid-user
+&lt;/Location&gt;
+</pre>
+
+<p>Note the use of the trailing <code>/</code> in the Location directive. If you use <code>&lt;Location /websvn&gt;</code>, you won't be able to access the index.</p>
+
+<p>You should change <code>/websvn/</code> to <code>/wsvn/</code> if you're using multiviews.</p>
+
+<p>Also note that you should not use the <code>AuthzSVNAccessFile</code> command to define the access file.</p>
+
+<p>Now that you've defined your authentication, you'll be asked for your user name and password in order to access the WebSVN directory. All that's left is to configure WebSVN to use your Subversion access file to control access. Add this line to your config.php file:</p>
+
+<pre>
+$config->useAuthenticationFile('/path/to/accessfile');
+</pre>
+
+<p>Note that if your access file gives read access to, for example, path <code>/a/b/c/</code> but not to <code>/a/b/</code>, then the user will be given restricted access to <code>/a/b/</code> in order to reach <code>/a/b/c/</code>. The user will not be able to see any other files or directories in <code>/a</code> or <code>/a/b/</code>.</p>
+
+<p>You should read the <a href="http://svnbook.red-bean.com/">Subversion book</a> for information on the access file format.</p>
+
+<h2><a name="problems"></a>Common problems</h2>
+
+<dl>
+	<dt>Accented Characters</dt>
+	<dd>WebSVN is designed to worked with accented characters. To do this, it uses either the multibyte string funtions or the iconv function. This may not be installed on your system. If you aren't getting the characters that you expect, make sure that the multibyte string or iconv extension is being loaded in php.ini. Windows users will need to copy the appropriate DLLs of iconv to the system directory (from the PHP installation directory).</dd>
+	<dt>Executing a Windows shell</dt>
+	<dd>On a Windows machine, this error is reported: <code>Warning: shell_exec(): Unable to execute</code>. If you experience this problem, you need to give <code>IUSR_&lt;machinename&gt;</code> execute permissions on <code>&lt;systemroot&gt;\system32\cmd.exe</code>. Under most systems, the file will be <code>C:\WINDOWS\system32\cmd.exe</code>. Right-click on the file, choose properties, and on the security tab click the "Add" button. Add the <code>IUSR_&lt;machinename&gt;</code> user, and then select the "read" and "read &amp; execute" boxes.</dd>
+</dl>
+
+<h2><a name="license"></a>License</h2>
+
+<p><a href="http://www.fsf.org/licensing/licenses/gpl.html">GNU Public licence</a></p>
+
+</div>
+
+</body>
+</html>

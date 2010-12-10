@@ -1,0 +1,124 @@
+[websvn-test:error]
+   <div id="error">[websvn:error]</div>
+[websvn-else]
+  <h2 id="pathlinks">[websvn:pathlinks] - [lang:REV] [websvn:rev]</h2>
+  <div id="revjump">[websvn:revision_form]<div>[lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
+  <p>
+    [websvn-test:goyoungestlink]
+    <span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
+    [websvn-endtest]
+    <span class="changes">[websvn:changeslink]</span> &#124;
+    [websvn-test:filedetaillink]
+    <span class="detail">[websvn:filedetaillink]</span> &#124;
+    <span class="diff">[websvn:difflink]</span> &#124;
+    <span class="blame">[websvn:blamelink]</span>
+    [websvn-else]
+    <span class="listing">[websvn:directorylink]</span>
+    [websvn-endtest]
+    [websvn-test:clientrooturl]
+    &#124; <span class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></span>
+    [websvn-endtest]
+    [websvn-test:rsslink]
+    &#124; <span class="feed">[websvn:rsslink]</span>
+    [websvn-endtest]
+  </p>
+  
+  [websvn-test:warning]
+  <div id="warning">[websvn:warning]</div>
+  [websvn-else]
+  <div id="info">
+    <h2>[lang:FILTER]</h2>
+    [websvn:logsearch_form]
+    <table>
+      <tbody>
+        <tr>
+          <th scope="col"><label>[lang:STARTLOG]</label></th>
+          <th scope="col"><label>[lang:ENDLOG]</label></th>
+          <th scope="col"><label>[lang:MAXLOG]</label></th>
+        </tr>
+        <tr>
+          <td class="revcomp">[websvn:logsearch_startbox]</td>
+          <td class="revcomp">[websvn:logsearch_endbox]</td>
+          <td class="revcomp">[websvn:logsearch_maxbox]</td>
+        </tr>
+        <tr><th scope="col" colspan="3"><label>[lang:SEARCHLOG]</label></th></tr>
+        <tr><td colspan="3">[websvn:logsearch_inputbox]</td></tr>
+        <tr><th scope="col" colspan="3"><label>[lang:SHOWALL]</label></th></tr>
+        <tr><td colspan="3" class="all">[websvn:logsearch_showall]</td></tr>
+      </tbody>
+    </table>
+    <p class="submit">[websvn:logsearch_submit]
+    [websvn-test:logsearch_clearloglink]
+      [websvn:logsearch_clearloglink]
+    [websvn-endtest]
+    </p>
+    [websvn:logsearch_endform]
+  </div>
+  
+  <div id="wrap">
+  [websvn-test:logsearch_nomatches]
+     [lang:NORESULTS]
+  [websvn-endtest]
+  
+  [websvn-test:logsearch_resultsfound]
+     [websvn:compare_form]
+        <table>
+           <thead>
+           <tr>
+              <th class="HdrClmn">[lang:REV]</th>
+              <th class="HdrClmn">[lang:AGE]</th>
+              <th class="HdrClmn">[lang:AUTHOR]</th>
+              <th class="HdrClmn">[lang:PATH]</th>
+              <th class="HdrClmnEnd">[lang:LOGMSG]</th>
+              <th class="HdrClmn">[lang:DIFF]</th>
+              [websvn-test:showchanges]
+              <th class="HdrClmnEnd">[lang:CHANGES]</th>
+              [websvn-endtest]
+           </tr>
+           </thead>
+           [websvn-startlisting]
+           <tr class="row[websvn:rowparity]">
+              <td class="rev">[websvn:compare_box][websvn:revlink]</td>
+              [websvn-test:showageinsteadofdate]
+              <td title="[websvn:revdate]">[websvn:revage]</td>
+              [websvn-else]
+              <td title="[websvn:revage]">[websvn:revdate]</td>
+              [websvn-endtest]
+              <td>[websvn:revauthor]</td>
+              <td>[websvn:revpathlink]</td>
+              <td valign="middle" class="logmsg">[websvn:revlog]</td>
+              <td><span class="diff"><a href="[websvn:compareurl]" title="[lang:DIFFPREV]">&nbsp;</a></span></td>
+              [websvn-test:showchanges]
+              <td class="changes">
+              [websvn-test:revadded]
+                <div class="add">[websvn:revadded]</div>        
+              [websvn-endtest]
+              [websvn-test:revdeleted]
+                <div class="del">[websvn:revdeleted]</div>        
+              [websvn-endtest]
+              [websvn-test:revmodified]
+                <div class="mod">[websvn:revmodified]</div>        
+              [websvn-endtest]
+              </td>
+              [websvn-endtest]
+           </tr>
+           [websvn-endlisting]
+        </table>
+        <p class="submit">
+        [websvn:compare_submit]
+        </p>  
+     [websvn:compare_endform]
+  [websvn-endtest]
+  
+  [websvn-test:logsearch_nomorematches]
+    <p>[lang:NOMORERESULTS]</p>
+  [websvn-endtest]
+  [websvn-test:logsearch_moreresultslink]
+    <p>[websvn:logsearch_moreresultslink]</p>
+  [websvn-endtest]
+  <p class="pagelinks">[websvn:pagelinks]</p>
+  <p>[websvn:showalllink]</p>
+  
+  [websvn-endtest]
+  </div>
+[websvn-endtest]

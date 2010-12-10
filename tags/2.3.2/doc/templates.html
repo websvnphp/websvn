@@ -1,0 +1,550 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-script-type" content="text/javascript" />
+	<meta http-equiv="content-style-type" content="text/css" />
+	<title>WebSVN Templating System</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+
+<h1>WebSVN Templating System</h1>
+
+<div id="contents">
+<h2><a name="content"></a>Content</h2>
+<ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#variables">Variables</a></li>
+  <li><a href="#commands">Commands</a></li>
+  <li><a href="#templatefiles">Template Files</a>
+    <ul>
+      <li><a href="#header-footer">Header / Footer</a></li>
+      <li><a href="#index.tmpl">index.tmpl</a></li>
+      <li><a href="#directory.tmpl">directory.tmpl</a></li>
+      <li><a href="#log.tmpl">log.tmpl</a></li>
+      <li><a href="#revision.tmpl">revision.tmpl</a></li>
+      <li><a href="#file.tmpl">file.tmpl</a></li>
+      <li><a href="#blame.tmpl">blame.tmpl</a></li>
+      <li><a href="#diff.tmpl">diff.tmpl</a></li>
+      <li><a href="#compare.tmpl">compare.tmpl</a></li>
+    </ul>
+  </li>
+  <li><a href="#suggestions">Suggestions</a></li>
+</ul>
+</div>
+
+<h2><a name="introduction"></a>Introduction</h2>
+
+<p>WebSVN's templating system makes it possible to customize the look and feel of WebSVN. Templates can be applied for all repositories or per-repository by specifying the path to the template, like so:</p>
+
+<pre>
+$config->setTemplatePath($locwebsvnreal.'/templates/BlueGrey/');
+$config->setTemplatePath($locwebsvnreal.'/templates/calm/', 'My Repository');
+</pre>
+
+<p>WebSVN already includes a few templates, but you can also create your own. This document describes how.</p>
+
+<p>A WebSVN template consists of a set of <a href="#templatefiles">HTML template files</a> that WebSVN processes by filling in placeholders. There are two placeholder types: <a href="#variables">variables</a> and <a href="#commands">commands</a>. This document will cover variables first, then commands, then individual template files and the variables and commands which may be used in each template file.</p>
+
+<p style="color: #e25f53;">NOTE: This documentation is not fully up-to-date with recent major changes to the trunk. Consequently, templates that work with previous versions of WebSVN may not work completely (or even at all) with the current development version.</p>
+
+<h2><a name="variables"></a>Variables</h2>
+
+<p>Variables are written in the form <code>[websvn:<b>varname</b>]</code> where <code>varname</code> is the name of a variable whose value should replace the placeholder.</p>
+
+<p>You may also access the language translations using <code>[lang:<b>varname</b>]</code> to make your templates language-agnostic.</p>
+
+<p>Take special note of the <code>locwebsvnhttp</code> variable. It should be used to locate other files and graphics that your template files need. You may imagine that simply using <code>.</code> should work, but relative paths break when MultiViews are turned on, whereas this variable works in all cases. For example:</p>
+
+<pre>&lt;link rel="stylesheet" type="text/css" href="[websvn:locwebsvnhttp]/templates/tmptname/styles.css"/&gt;</pre>
+
+<p>The specific variables defined for individual template files (and those defined for all templates) are described under <a href="#templatefiles">Template Files</a>.</p>
+
+<p><b>NOTE:</b> When there are two similarly-named variables of the form <code>some<strong>url</strong></code> and <code>some<strong>link</strong></code>, the former is the bare URL while the latter is an HTML anchor tag with the URL in the href attribute and with a localized string as the link title. It is generally cleaner to use the latter, but the former is useful for creating a linked image, etc.</p>
+
+<h2><a name="commands"></a>Commands</h2>
+
+<p>WebSVN defines a handful of commands which allow templates to create rudimentary control flow and invoke special behaviors.</p>
+
+<p><b>NOTE: If a command placeholder appears on the same line with any non-whitespace text, WebSVN <i>will not</i> recognize it.</b></p>
+
+<p>Below are a few examples of commands and how they may be used.</p>
+
+<h3>If-Else Constructs</h3>
+
+<p>The placeholders <code>[websvn-test:<b>varname</b>]</code>, <code>[websvn-else]</code>, and <code>[websvn-endtest]</code> provide control flow based on whether a variable exists and is non-zero. The else block is optional, and either block may be empty.</p>
+
+<pre>
+[websvn-test:<b>varname</b>]
+...
+[websvn-endtest]
+</pre>
+<pre>
+[websvn-test:<b>varname</b>]
+...
+[websvn-else]
+...
+[websvn-endtest]
+</pre>
+
+<h3>Looping Construct</h3>
+
+<p>Used in pages that contain listings of files, logs, etc. Everything between the controls is repeated for each item in the list.</p>
+
+<pre>
+[websvn-startlisting]
+...
+[websvn-endlisting]
+</pre>
+
+<h3>Other Behaviors</h3>
+
+<p>A few template files &mdash; including <a href="#directory.tmpl">directory.tmpl</a> and <a href="#file.tmpl">file.tmpl</a> &mdash; use additional commands, which are described in those sections below.</p>
+
+<h2><a name="templatefiles"></a>Template Files</h2>
+
+<p>WebSVN expects a template to provide to provide a number of <code>.tmpl</code> files, each of which is explained in detail below. If any of these files are missing, errors will occur when trying to view the associated WebSVN page.</p>
+
+<h4><a name="allfiles"></a>Variables defined for all template files</h4>
+
+<table>
+<tr><th>version</th><td>The version of WebSVN</td></tr>
+<tr><th>currentyear</th><td>The current year</td></tr>
+<tr><th>template</th><td>The base name of the invoked template file (excluding ".tmpl")</td></tr>
+<tr><th>locwebsvnhttp</th><td>Root of the WebSVN directory</td></tr>
+<tr><th>indexurl</th><td>URL for the WebSVN index page</td></tr>
+<tr><th>repname</th><td>Name of the repository</td></tr>
+<tr><th>clientrooturl</th><td>The root URL for SVN clients to use (only if provided in <code>config.php</code>)</td></tr>
+<tr><th>peg</th><td>The peg revision passed to the page (can use with <code>clientrooturl</code>)</td></tr>
+<tr><th>charset</th><td>The charset requested by the user</td></tr>
+<tr><th>language_code</th><td>The <a href="http://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a> language code of the selected language</td></tr>
+<tr><th>language_form</th><td>Language selection menu &lt;form&gt; element</td></tr>
+<tr><th>language_select</th><td>Language selection menu &lt;select&gt;...&lt;/select&gt; element</td></tr>
+<tr><th>language_submit</th><td>Language selection menu submit button</td></tr>
+<tr><th>language_endform</th><td>Language selection menu &lt;/form&gt; element</td></tr>
+<tr><th>projects_form</th><td>Project selection menu &lt;form&gt; element, plus any hidden inputs</td></tr>
+<tr><th>projects_select</th><td>Project selection menu &lt;select&gt;...&lt;/select&gt; element</td></tr>
+<tr><th>projects_submit</th><td>Project selection menu submit button</td></tr>
+<tr><th>projects_endform</th><td>Project selection menu &lt;/form&gt; element</td></tr>
+<tr><th>showageinsteadofdate</th><td>Whether to display the relative age of a commit rather than the absolute date.</td></tr>
+<tr><th>error</th><td>A string representing an error condition, or empty if there is none.</td></tr>
+<tr><th>warning</th><td>A string representing a warning condition, or empty if there is none.</td></tr>
+</table>
+
+<p><b>Note:</b> It is good practice to distinguish between these last two variables, since <code>[websvn:error]</code> is intended to represent a unrecoverable condition (such as a non-existent repository or no access) while <code>[websvn:warning]</code> is intended to represent less serious problems, such as SVN-related failures, non-existent revisions, etc. Check the included templates for suggested approaches for handling errors and warnings.</p>
+
+<h3><a name="header-footer"></a>header.tmpl &amp; footer.tmpl</h3>
+
+<p>These files are included by WebSVN before and after the main template file, respectively. They obviously have access to all the variables defined above, but they can also test for the presence of variables defined for a specific template file, detailed below.</p>
+
+<p>In general, the header and footer templates should be generic and "just work" with any template. It is common to create the language and project selection drop-down menus in this context, as well as any ubiquitous content or branding. (For example, you may want the same masthead to appear on each page, and the same footer that contains the version of WebSVN and/or Subversion.) For ideas about what makes sense to include here, consult the included templates.</p>
+
+<h3><a name="index.tmpl"></a>index.tmpl</h3>
+
+<p>This template file is used by <code>index.php</code>. It is the main project page that lists available repositories. Repositories may be displayed in a flat view (which ignores any groups) or tree view (open or closed by default) as controlled by one of the following config lines:</p>
+
+<pre>
+$config->useFlatView();
+$config->useTreeView();
+$config->useTreeIndex(true);
+</pre>
+
+<p>For examples of how to create an index with either a flat or tree view, consult <code>index.tmpl</code> in any of the included templates. Unlike previous versions of WebSVN, index.php now passes the same variable structure to index.tmpl regardless of whether flat view or tree view is selected. This makes the variable names more uniform, but does require templates to actively skip over group names in flat view (by testing for <code>groupid</code>) if they don't want to display them.</p>
+
+<h4>Variables defined for the entire scope of the template</h4>
+
+<table>
+<tr><th>treeview</th><td>true if the index should be displayed as a tree of grouped projects</td></tr>
+<tr><th>flatview</th><td>true if the index should be displayed as a simple list of projects</td></tr>
+<tr><th>opentree</th><td>true if the tree viewed should be open by default</td></tr>
+<tr><th>groupcount</th><td>The number of project groups (0 or more)</td></tr>
+<tr><th>showlastmod</th><td>Whether "last modification" info should be displayed for each project</td></tr>
+</table>
+
+<h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
+
+<table>
+<tr><th>projectlink</th><td>HTML link to a project (not set for group headers)</td></tr>
+<tr><th>clientrooturl</th><td>The root URL for SVN clients to use for a repository (only if provided in <code>config.php</code>)</td></tr>
+<tr><th>rowparity</th><td>Parity of the row (0 or 1), used to generate striped tables. Group headers do no have a row parity, only projects</td></tr>
+<tr><th>groupparity</th><td>Similar to row parity, but the first entry in each group restarts at 0</td></tr>
+<tr><th>groupid</th><td>Only set if the current entry is a group header</td></tr>
+<tr><th>groupname</th><td>Set for group headers and each member of a group</td></tr>
+<tr><th>notfirstgroup</th><td>true if the entry is a second or subsequent group</td></tr>
+<tr><th>revision</th><td>Number of the latest revision affecting the current project</td></tr>
+<tr><th>date</th><td>Date of the latest revision (yyyy-mm-dd) </td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the latest revision</td></tr>
+</table>
+
+<p>The last variable in each of these lists are useful for determining if an element surrounding a group needs to be closed. For example, you may wish to create a &lt;div&gt; or &lt;ul&gt; tag to open a group, and a closing tag at the end of the group, either between groups or after the last group.</p>
+
+<h3><a name="directory.tmpl"></a>directory.tmpl</h3>
+
+<p>This template file is used by <code>listing.php</code>. It displays the contents of the current path, as well as any parent and top-level directories. Directory hierarchies are indented to provide a hierarchical view, and icons can be defined for directories and specific file extensions. Each displayed resource cab be displayed with the revision in which it was last modified, a link to view its history, and (optionally) RSS and download links. Additionally, each row has a checkbox that allows for quickly comparing files and directories.</p>
+
+<h4>Variables defined for the entire scope of the template</h4>
+
+<table>
+<tr><th>restricted</th><td>True if the users has restricted access to this directory (to allow access to a readable directory lower down only)</td></tr>
+<tr><th>path</th><td>Path of the directory being listed</td></tr>
+<tr><th>rev</th><td>Revision being viewed</td></tr>
+<tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the current revision</td></tr>
+<tr><th>log</th><td>Log message of the current revision</td></tr>
+<tr><th>youngestrev</th><td>The most recent revision affecting the current directory</td></tr>
+<tr><th>goyoungestlink</th><td>Link to most recent revision of the current directory (only if a newer revision exists)</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
+<tr><th>logurl</th><td>URL to the log view of current directory</td></tr>
+<tr><th>revurl</th><td>URL to the current revision for this directory</td></tr>
+<tr><th>revlink</th><td>Link to the current revision for this directory</td></tr>
+<tr><th>rssurl</th><td>URL to the RSS feed for the current directory</td></tr>
+<tr><th>downloadurl</th><td>URL to download an archive for the current directory</td></tr>
+<tr><th>compareurl</th><td>URL to comparison with previously changed revision</td></tr>
+<tr><th>allowdownload</th><td>True if downloading has been configured</td></tr>
+<tr><th>compare_form</th><td>Comparison selection &lt;form&gt; element</td></tr>
+<tr><th>compare_submit</th><td>Comparison selection submit button</td></tr>
+<tr><th>compare_endform</th><td>Comparison selection &lt;/form&gt; element</td></tr>
+<tr><th>showlastmod</th><td>Whether "last modification" info should be displayed for each path</td></tr>
+</table>
+
+<h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
+
+<table>
+<tr><th>compare_box</th><td>Comparison selection checkbox for the current resource</td></tr>
+<tr><th>rowparity</th><td>Parity of the row (0 or 1), used to generate striped tables</td></tr>
+<tr><th>filename</th><td>Name of the current file/directory</td></tr>
+<tr><th>fileurl</th><td>URL to the current file/directory</td></tr>
+<tr><th>filelink</th><td>Link to the current file/directory (includes filename)</td></tr>
+<tr><th>filetype</th><td>Type of the current entry (file, dir, opendir, etc.)</td></tr>
+<tr><th>isDir</th><td>true if the current file is a directory (use with [websvn-test:isDir] to display icons)</td></tr>
+<tr><th>openDir</th><td>true if the current file is a directory on the current path</td></tr>
+<tr><th>logurl</th><td>URL to the log page for the current file/directory</td></tr>
+<tr><th>rssurl</th><td>URL to the RSS feed for the current file/directory</td></tr>
+<tr><th>downloadurl</th><td>URL to download the current entry (only for files)</td></tr>
+<tr><th>downloadplainurl</th><td>URL to download the current entry (only for directories)</td></tr>
+<tr><th>revurl</th><td>URL for examining the latest revision in detail</td></tr>
+<tr><th>revision</th><td>Number of the latest revision affecting the current path</td></tr>
+<tr><th>committime</th><td>Timestamp of latest revision</td></tr>
+<tr><th>date</th><td>Date of the latest revision (yyyy-mm-dd) </td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the latest revision</td></tr>
+</table>
+
+<h4>Special Commands</h4>
+
+<p><b>Note:</b> <i>Remember to put these commands each on their own line!</i></p>
+ 
+<p>These commands are used to display certain icons next to certain file types in the directory view.</p>
+
+<pre>
+[websvn-defineicons]
+...
+[websvn-enddefineicons]
+</pre>
+<pre>
+[websvn-treenode]
+</pre>
+<pre>
+[websvn-icon]
+</pre>
+
+<p>Within the <code>[websvn-startlisting] ... [websvn-endlisting]</code> block, <code>[websvn-treeview]</code> will output the HTML code defined for the appropriate tree view icon. In the same context, <code>[websvn-icon]</code> will output the HTML code defined for the type of the current file.</p>
+
+<p>The <code>[websvn-defineicons]</code> block should contain a line for each file type, defining the HTML to be used for that file type.  To define the HTML for a particular extension use the syntax:</p>
+
+<pre>
+.&lt;extension>=&lt;HTML code>
+</pre>
+
+<p>There are also some special filetypes:</p>
+
+<table>
+<tr><th><code>dir=&lt;HTML code></code></th><td>Used for directory icons</td></tr>
+<tr><th><code>diropen=&lt;HTML code></code></th><td>Used for open directory icons</td></tr>
+<tr><th><code>*=&lt;HTML code></code></th><td>Used for all filetypes which have no other definition</td></tr>
+
+<tr><th><code>i-node</code></th><td>I-shaped node for the tree view</td></tr>
+<tr><th><code>t-node</code></th><td>T-shaped node for the tree view</td></tr>
+<tr><th><code>l-node</code></th><td>L-shaped node for the tree view</td></tr>
+<tr><th><code>e-node</code></th><td>Empty node for the tree view</td></tr>
+</table>
+
+<p>Example from the BlueGrey template:</p>
+
+<pre>
+[websvn-defineicons]
+dir=&lt;img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder.png" alt="[FOLDER]">
+diropen=&lt;img align="middle" valign="center" src="[websvn:locwebsvnhttp]/templates/BlueGrey/folder-open.png" alt="[FOLDER]">
+*=&lt;img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/file.png" alt="[FILE]">
+.c=&lt;img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/filec.png" alt="[C-FILE]">
+.h=&lt;img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/fileh.png" alt="[H-FILE]">
+.s=&lt;img align="middle" src="[websvn:locwebsvnhttp]/templates/BlueGrey/files.png" alt="[S-FILE]">
+
+i-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/i-node.png" alt="[NODE]">
+t-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/t-node.png" alt="[NODE]">
+l-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/l-node.png" alt="[NODE]">
+e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:locwebsvnhttp]/templates/BlueGrey/e-node.png" alt="[NODE]">
+[websvn-enddefineicons]
+</pre>
+
+<h3><a name="log.tmpl"></a>log.tmpl</h3>
+
+<p>This template file is used by <code>log.php</code>. It displays log (history) information for a directory or file. The output is obtained via the <code>svn log</code> command, and is augmented with links to each revision in which the resource was modified and to a detail view of the resource. WebSVN allows users to search and filter logs, and this template should use the appropriate variables to expose this functionality.</p>
+
+<h4>Variables defined for the entire scope of the template</h4>
+
+<table>
+<tr><th>action</th><td>Action being performed ("Log")</td></tr>
+<tr><th>path</th><td>Path of item being logged</td></tr>
+<tr><th>rev</th><td>The most recent revision of the current path</td></tr>
+<tr><th>date</th><td>Commit date of the most recent revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the most recent revision</td></tr>
+<tr><th>log</th><td>Log message of the most recent revision</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
+<tr><th>pagelinks</th><td>List of list to all the pages of the log</td></tr>
+<tr><th>showalllink</th><td>Link to show the entire log in one go</td></tr>
+<tr><th>directorylink</th><td>(For directories) Link to the directory listing for the current path</td></tr>
+<tr><th>filedetaillink</th><td>(For files) Link to the listing for this file</td></tr>
+<tr><th>blamelink</th><td>(For files) Link to the blame information for this file</td></tr>
+<tr><th>difflink</th><td>(For files) Link to comparison with the previous revision</td></tr>
+<tr><th>goyoungestlink</th><td>Link to log info for the most recent revision of the resource (only if a newer revision exists)</td></tr>
+<tr><th>showchanges</th><td>Whether changed resources should be shown for each revision</td></tr>
+<tr><th>changeslink</th><td>Link to show/hide changed resources for each revision</td></tr>
+<tr><th>revurl</th><td>URL to the newest matching revision for this file/directory</td></tr>
+<tr><th>logsearch_form</th><td>Log search box &lt;form&gt; element, plus any hidden inputs</td></tr>
+<tr><th>logsearch_inputbox</th><td>Log search box text field for search text</td></tr>
+<tr><th>logsearch_submit</th><td>Log search box submit button</td></tr>
+<tr><th>logsearch_endform</th><td>Log search box &lt;/form&gt; element</td></tr>
+<tr><th>logsearch_clearloglink</th><td>Link to unfiltered display (remove current search criteria)</td></tr>
+<tr><th>logsearch_resultsfound</th><td>Set when there are logs to display</td></tr>
+<tr><th>logsearch_nomatches</th><td>Set when there are no matches for the current request</td></tr>
+<tr><th>logsearch_nomorematches</th><td>Set when there are no further matches to the current request (but there have been previous pages)</td></tr>
+<tr><th>compare_form</th><td>Comparison selection &lt;form&gt; element</td></tr>
+<tr><th>compare_submit</th><td>Comparison selection submit button</td></tr>
+<tr><th>compare_endform</th><td>Comparison selection &lt;/form&gt; element</td></tr>
+</table>
+
+<h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
+
+<table>
+<tr><th>compare_box</th><td>Comparison selection checkbox for the current revision</td></tr>
+<tr><th>compareurl</th><td>URL to comparison with previously changed revision</td></tr>
+<tr><th>revpathlink</th><td>Link to revision</td></tr>
+<tr><th>revauthor</th><td>Author of this revision</td></tr>
+<tr><th>revage</th><td>Age of revision</td></tr>
+<tr><th>revdate</th><td>Date of revision</td></tr>
+<tr><th>revlog</th><td>Log message of revision</td></tr>
+<tr><th>revadded</th><td>Resources added in this revision (only if showchanges is true)</td></tr>
+<tr><th>revdeleted</th><td>Resources deleted in this revision (only if showchanges is true)</td></tr>
+<tr><th>revmodified</th><td>Resources modified in this revision (only if showchanges is true)</td></tr>
+</table>
+
+<h3><a name="revision.tmpl"></a>revision.tmpl</h3>
+
+<p>This template file is used by <code>revision.php</code>. It displays information about a selected revision, including the author, date, and the resources that were added, deleted, and modified in the revision.</p>
+
+<h4>Variables defined for the entire scope of the template</h4>
+
+<table>
+<tr><th>rev</th><td>Revision number of the current revision</td></tr>
+<tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the current revision</td></tr>
+<tr><th>log</th><td>Log message of the current revision</td></tr>
+<tr><th>path</th><td>Path of the resource passed to this page</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
+<tr><th>directorylink</th><td>Link to the directory listing for the current path at this revision</td></tr>
+<tr><th>filedetaillink</th><td>(For files) Link to the listing for this file</td></tr>
+<tr><th>blamelink</th><td>(For files) Link to the blame information for this file</td></tr>
+<tr><th>loglink</th><td>Link to the log page for the current path, from the current revision backward</td></tr>
+<tr><th>goyoungestlink</th><td>Link to most recent revision of the current path (only if a newer revision exists)</td></tr>
+<tr><th>prevrev / prevrevurl</th><td>Revision of / link to the previous modification of the current path (only if an older revision exists)</td></tr>
+<tr><th>nextrev / nextrevurl</th><td>Revision of / link to the next modification of the current path (only if a newer revision exists)</td></tr>
+</table>
+
+<h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
+
+<table>
+<tr><th>path</th><td>Path to the resource</td></tr>
+<tr><th>notinpath</th><td>Set if the resource does not reside within the specified path</td></tr>
+<tr><th>oldpath</th><td>Previous path of the resource (only for move or copy)</td></tr>
+<tr><th>action</th><td>A letter (either A, D, or M) representing how the resource was changed at this revision</td></tr>
+<tr><th>added</th><td>True if the resource was added in this revision</td></tr>
+<tr><th>deleted</th><td>True if the resource was deleted in this revision</td></tr>
+<tr><th>modified</th><td>True if the resource was modified in this revision</td></tr>
+<tr><th>detailurl</th><td>Link to the listing for the resource (previous revision if deleted)</td></tr>
+<tr><th>blameurl</th><td>Link to the blame information for the resource (only for modified/moved/copied files)</td></tr>
+<tr><th>diffurl</th><td>Link to the diff information for the resource (only for modified/moved/copied files)</td></tr>
+<tr><th>logurl</th><td>Link to the log page for the resource</td></tr>
+<tr><th>rowparity</th><td>Parity of the row (0 or 1), used to generate striped tables</td></tr>
+</table>
+
+<h3><a name="file.tmpl"></a>file.tmpl</h3>
+
+<p>This template file is used by <code>filedetails.php</code>. It displays the contents of a file resource. Binary files are displayed by the browser if possible. Text files are displayed inline as plain text unless they have a <code>svn:mime-type</code> property or WebSVN has been configured to display it with a specific MIME type. (See <code>include/distconfig.php</code> for details.) Text files displayed as inline may also be highlighted using GeSHi or Enscript. (See the <a href="install.html#colourisation">WebSVN installation guide</a> for details.) MIME type handling and highlighting are done for you automatically in <code>filedetails.php</code>.</p>
+
+<h4>Variables defined for the entire scope of the template</h4>
+
+<table>
+<tr><th>path</th><td>Path of item being viewed</td></tr>
+<tr><th>rev</th><td>Revision being viewed</td></tr>
+<tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the current revision</td></tr>
+<tr><th>log</th><td>Log message of the current revision</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
+<tr><th>goyoungestlink</th><td>Link to most recent revision of the file (only if a newer revision exists)</td></tr>
+<tr><th>blamelink</th><td>Link to the blame information for this file</td></tr>
+<tr><th>difflink</th><td>Link to comparison with previous revision</td></tr>
+<tr><th>revurl</th><td>URL to the current revision for this file</td></tr>
+<tr><th>revlink</th><td>Link to the current revision for this file</td></tr>
+<tr><th>loglink</th><td>Link to the log page for this file</td></tr>
+<tr><th>downloadlink</th><td>Link to download this file</td></tr>
+<tr><th>mimelink</th><td>Link to display a file with its associated MIME type. (Only if the file has a MIME type, but it was set to be ignored.)</td></tr>
+</table>
+
+<h4>Special Commands</h4>
+
+<p>The command <code>[websvn-getlisting]</code> is used to display the file listing. If syntax highlighting is enabled, the resulting text is styled appropriately.</p>
+
+<p><b>Note:</b> <i>Remember to put this command on its own line!</i></p>
+ 
+<h3><a name="blame.tmpl"></a>blame.tmpl</h3>
+
+<p>This template file is used by <code>blame.php</code>. It displays "blame" information like you would see from <code>svn blame</code>, augmented with line numbers and revision links. The variables define for this template make it easy to display groups of consecutive lines last modified in the same revision as a striped block. It also provides JavaScript definitions for displaying at-a-glance revision information popups when hovering over revision numbers. Check the included templates to see how this is done.</p>
+
+<p>Text files displayed as inline may also be highlighted using GeSHi or Enscript. See the <a href="install.html#colourisation">WebSVN installation guide</a> for details.</p>
+
+<h4>Variables defined for the entire scope of the template</h4>
+
+<table>
+<tr><th>path</th><td>Path of item being viewed</td></tr>
+<tr><th>rev</th><td>Revision being viewed</td></tr>
+<tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the current revision</td></tr>
+<tr><th>log</th><td>Log message of the current revision</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
+<tr><th>filedetaillink</th><td>Link to the listing for this file</td></tr>
+<tr><th>difflink</th><td>Link to comparison with previous revision</td></tr>
+<tr><th>revurl</th><td>URL to the current revision for this file</td></tr>
+<tr><th>revlink</th><td>Link to the current revision for this file</td></tr>
+<tr><th>loglink</th><td>Link to the log page for this file</td></tr>
+<tr><th>goyoungestlink</th><td>Link to blame info for the most recent revision of the file (only if a newer revision exists)</td></tr>
+</table>
+
+<h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
+
+<table>
+<tr><th>line</th><td>The current line of text to display</td></tr>
+<tr><th>lineno</th><td>Line number of the current line</td></tr>
+<tr><th>revision</th><td>Last revision in which the current line was changed</td></tr>
+<tr><th>author</th><td>Last author to modify the line</td></tr>
+</table>
+
+<h3><a name="diff.tmpl"></a>diff.tmpl</h3>
+
+<p>This template file is used by <code>diff.php</code>. It displays the differences between the selected revision of a file and the previous version of the file. Only text files can be diffed in this way &mdash; binary files will cause problems.</p>
+
+<h4>Variables defined for the entire scope of the template</h4>
+
+<table>
+<tr><th>action</th><td>Action being performed ("Diff")</td></tr>
+<tr><th>path</th><td>Path of item being viewed</td></tr>
+<tr><th>rev</th><td>Revision being viewed</td></tr>
+<tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the current revision</td></tr>
+<tr><th>log</th><td>Log message of the current revision</td></tr>
+<tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
+<tr><th>goyoungestlink</th><td>Link to diff for the most recent revision of a resource (only if a newer revision exists)</td></tr>
+<tr><th>filedetaillink</th><td>Link to the listing for this file</td></tr>
+<tr><th>blamelink</th><td>Link to the blame information for this file</td></tr>
+<tr><th>revurl</th><td>URL to the current revision for this file</td></tr>
+<tr><th>revlink</th><td>Link to the current revision for this file</td></tr>
+<tr><th>loglink</th><td>Link to the log page for this file</td></tr>
+<tr><th>rev1</th><td>Revision number of the older file</td></tr>
+<tr><th>rev2</th><td>Revision number of the newer file</td></tr>
+<tr><th>showcompactlink</th><td>Link to compact view</td></tr>
+<tr><th>showalllink</th><td>Link to full view</td></tr>
+</table>
+
+<h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
+
+<table>
+<tr><th>rev1lineno / rev2lineno</th><td>Line number of the next difference block (only defined at the start of a file comparison block)</td></tr>
+<tr><th>rev1diffclass / rev2diffclass</th><td>Class name of the diff block used for colouring differences. One of: {diff, diffadded, diffchanged, diffdeleted}.</td></tr>
+<tr><th>rev1line / rev2line</th><td>The line under comparison</td></tr>
+</table>
+
+<h3><a name="compare.tmpl"></a>compare.tmpl</h3>
+
+<p>This template file is used by <code>comp.php</code>. It displays a comparison of two path-revision pairs. The comparison is colorized to show the lines that would need to be added or deleted to transform the first path and revision into the second. This may be applied to files or directories at arbitrary revisions. (For example, it may be used to compare tags and branches with each other or with the trunk.) This template is passed variables used for constructing an HTML form that allows for selecting the paths and revisions to compare.</p>
+
+<h4>Variables defined for the entire scope of the template</h4>
+
+<table>
+<tr><th>action</th><td>Action being performed ("Path Comparison")</td></tr>
+<tr><th>path1</th><td>Path of 1st resource being compared</td></tr>
+<tr><th>path2</th><td>Path of 2nd resource being compared</td></tr>
+<tr><th>rev1</th><td>Revision of 1st resource being compared</td></tr>
+<tr><th>rev2</th><td>Revision of 2nd resource being compared</td></tr>
+<tr><th>rev1url</th><td>URL to 1st revision being compared</td></tr>
+<tr><th>rev2url</th><td>URL to 2nd revision being compared</td></tr>
+<tr><th>rev</th><td>The more recent of the revisions being compared</td></tr>
+<tr><th>date</th><td>Commit date of the more recent revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the more recent revision</td></tr>
+<tr><th>log</th><td>Log message of the more recent revision</td></tr>
+<tr><th>success</th><td>true if the comparison succeeded</td></tr>
+<tr><th>reverselink</th><td>Link to reverse the comparison</td></tr>
+<tr><th>compare_form</th><td>Comparison selection &lt;form&gt; element</td></tr>
+<tr><th>compare_path1input</th><td>Comparison selection text field for path of 1st resource</td></tr>
+<tr><th>compare_path2input</th><td>Comparison selection text field for path of 2nd resource</td></tr>
+<tr><th>compare_rev1input</th><td>Comparison selection text field for revision of 1st resource</td></tr>                                      
+<tr><th>compare_rev2input</th><td>Comparison selection text field for revision of 2nd resource</td></tr>                                      
+<tr><th>compare_submit</th><td>Comparison selection submit button</td></tr>
+<tr><th>compare_endform</th><td>Comparison selection &lt;/form&gt; element</td></tr>
+</table>
+
+<h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
+
+<table>
+<tr><th>newpath</th><td>Name of new file being compared (only defined at the start of a file comparison block)</td></tr>
+<tr><th>difflines</th><td>Lines changed information for this file.  Start of diff lines. (only defined after newpath)</td></tr>
+<tr><th>diffclass</th><td>Class name of the diff block used for colouring differences. One of: {diff, diffadded, diffdeleted}</td></tr>
+<tr><th>line</th><td>The current line</td></tr>
+<tr><th>enddifflines</th><td>End of diff lines</td></tr>
+<tr><th>properties</th><td>Property changes</td></tr>
+<tr><th>endpath</th><td>End of current path</td></tr>
+</table>
+
+<h2><a name="suggestions"></a>Suggestions</h2>
+
+<p>Although providing all the <code>.tmpl</code> files detailed above can prevent template-related WebSVN errors, there are several things that can make a bare-bones custom template more attractive, useful, and robust.</p>
+
+<h3>Styling</h3>
+
+<p><a href="http://www.w3schools.com/css/">CSS</a> rules should be placed in an external stylesheet wherever possible. The standard approach is to create a <code>styles.css</code> file in your template directory and link to it in <code>header.tmpl</code> <a href="#variables">as shown above</a>. This makes it easy to make broad changes across the entire template with very little effort. Grouping the CSS rules logically in the stylesheet makes it easier to tell which rules affect which pages.</p>
+
+<p>Poorly-designed templates can be inconvenient (even painful) to use. Use space wisely. Some WebSVN pages can present a lot of data, and endless scrolling can be a pain. On the other hand, packing things too tightly can make it difficult to find what you need. If you use icons, choose ones that match the functionality they represent. Sites like <a href="http://www.iconfinder.net/">iconfinder.net</a> and <a href="http://www.iconspedia.com/">iconspedia.com</a> can be good resources. If your colors clash, try using a color set from a site like <a href="http://kuler.adobe.com/">kuler.adobe.com</a> or <a href="http://www.colorschemer.com/online.html">colorschemer.com</a>.</p>
+
+<p>If your template doesn't look good when printed, consider creating a print-only stylesheet. For example, it might omit background images or colors that harm readability when printed in grayscale, change font sizes, etc. It could also be worthwhile to make sure your template works on mobile browsers.</p>
+
+<h3>Markup</h3>
+
+<p>Creating semantically-oriented markup (including judicious use of <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> tags, as well as <code>id</code> and <code>class</code> attributes) is also a good idea. Well-structured markup makes it much easier to apply CSS rules, and can improve the appearance of your template when viewed by users with older browsers or special accessibility needs.</p>
+
+<p>It should go without saying that valid (X)HTML markup is ideal. Check the output of your template files against <a href="http://validator.w3.org/">validator.w3.org</a> to ensure that browsers can render the pages quickly and correctly. There is no excuse for creating new content using invalid markup &mdash; it saves very little development time and can cost you down the road when your template doesn't always look the way it should. Be especially careful about properly closing <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code>tags, or the problem may be compounded by incorrectly-applied CSS rules.</p>
+
+<h3>Organization</h3>
+
+<p>Although WebSVN only cares how you organize the <code>.tmpl</code> files,  good organization scheme makes it easier to understand and maintain your template. For example, it's pretty standard to place images in an <code>images/</code> subdirectory. If you have a lot of JavaScript or other assets, consider grouping them in a subdirectory as well.</p>
+
+</body>
+</html>

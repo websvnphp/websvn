@@ -1,0 +1,65 @@
+    [websvn-test:error]
+    </div>
+    [websvn-else]
+      <h2 id="pathlinks">[websvn:pathlinks]</h2>
+      <div id="revjump">[websvn:revision_form][websvn:revision_input]<span class="submit">[websvn:revision_submit]</span>[websvn:revision_endform]</div>
+      <h2 id="revnum"><a href="[websvn:revurl]">[lang:REV] [websvn:rev]</a></h2>
+      <div class="clearer"></div>
+    </div>
+    <ul id="links">
+      [websvn-test:prevrevurl]
+      <li class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      <li class="next"><a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:goyoungestlink]
+      <li class="youngest">[websvn:goyoungestlink]</li>
+      [websvn-endtest]
+      <li class="file">[websvn:filedetaillink]</li>
+      [websvn-test:difflink]
+      <li class="diff">[websvn:difflink]</li>
+      [websvn-endtest]
+      <li class="rev">[websvn:revlink]</li>
+      <li class="log">[websvn:loglink]</li>
+      [websvn-test:clientrooturl]
+      <li class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></li>
+      [websvn-endtest]
+      [websvn-test:rsslink]
+      <li class="rss">[websvn:rsslink]</li>
+      [websvn-endtest]
+    </ul>
+    [websvn-endtest]
+  </div>
+  <div id="content">
+  [websvn-test:error]
+    <div class="error"><span>[websvn:error]</span></div>
+  [websvn-else]
+    [websvn-test:warning]
+    <div class="warning"><span>[websvn:warning]</span></div>
+    [websvn-else]
+    <table>
+      <thead>
+      <tr>
+        <th>[lang:REV]</th>
+        <th>[lang:AUTHOR]</th>
+        <th>[lang:LINENO]</th>
+        <th>[lang:LINE]</th>
+      </tr>
+      </thead>
+      <tbody>
+      [websvn-startlisting]
+      <tr class="[websvn:row_class]">
+        <td class="rev">[websvn:revision]</td>
+        <td class="author">[websvn:author]</td>
+        <td class="line"><a name="l[websvn:lineno]"></a>[websvn:lineno]</td>
+        <td class="code">[websvn:line]</td>
+      </tr>
+      [websvn-endlisting]
+      </tbody>
+    </table>
+    [websvn-endtest]
+  [websvn-endtest]
+  [websvn-test:javascript]
+    [websvn:javascript]
+  [websvn-endtest]

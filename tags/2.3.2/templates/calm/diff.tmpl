@@ -1,0 +1,75 @@
+[websvn-test:error]
+  <div id="error">[websvn:error]</div>
+[websvn-else]
+  <h2 id="pathlinks">[websvn:pathlinks] - [lang:REV] [websvn:rev2] &rarr; [websvn:rev1]</h2>
+  <div id="revjump">[websvn:revision_form][lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span>[websvn:revision_endform]</div>
+  <p>
+    [websvn-test:prevrevurl]
+    <span class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></span> &#124;
+    [websvn-endtest]
+    [websvn-test:nextrevurl]
+    <span class="next"><a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a></span> &#124;
+    [websvn-endtest]
+    [websvn-test:goyoungestlink]
+    <span class="goyoungest">[websvn:goyoungestlink]</span> &#124;
+    [websvn-endtest]
+    [websvn-test:showalllink]
+    <span class="full">[websvn:showalllink]</span> &#124;
+    [websvn-endtest]
+    [websvn-test:showcompactlink]
+    <span class="compact">[websvn:showcompactlink]</span> &#124;
+    [websvn-endtest]
+    [websvn-test:ignorewhitespacelink]
+    <span class="ignorews">[websvn:ignorewhitespacelink]</span> &#124;
+    [websvn-endtest]
+    [websvn-test:regardwhitespacelink]
+    <span class="regardws">[websvn:regardwhitespacelink]</span> &#124;
+    [websvn-endtest]
+    <span class="detail">[websvn:filedetaillink]</span> &#124;
+    <span class="blame">[websvn:blamelink]</span> &#124;
+    <span class="changes">[websvn:revlink]</span> &#124;
+    <span class="log">[websvn:loglink]</span>
+    [websvn-test:clientrooturl]
+    &#124; <span class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></span>
+    [websvn-endtest]
+    [websvn-test:rsslink]
+    &#124; <span class="feed">[websvn:rsslink]</span>
+    [websvn-endtest]
+  </p>
+  
+  [websvn-test:warning]
+  <div id="warning">[websvn:warning]</div>
+  [websvn-else]
+  <div style="margin:0 2%">
+    [websvn-test:noprev]
+    <p>[lang:NOPREVREV]</p>
+    [websvn-else]
+       <table>
+        <thead>
+          <tr>
+             <th colspan="2"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:rev2]</a></th>
+             <th colspan="2"><a href="[websvn:revurl]">[lang:REV] [websvn:rev1]</a></th>
+          </tr>
+        </thead>
+        <tbody>
+        [websvn-startlisting]
+          [websvn-test:startblock]
+          <tr>
+            <th colspan="2">[lang:LINE] [websvn:rev1lineno]...</th>
+            <th colspan="2">[lang:LINE] [websvn:rev2lineno]...</th>
+          </tr>
+          [websvn-endtest]
+          <tr>
+            <td class="lineno">[websvn:rev1lineno]</td>
+            <td class="[websvn:rev1diffclass]"><pre>[websvn:rev1line]</pre></td>
+            <td class="lineno">[websvn:rev2lineno]</td>
+            <td class="[websvn:rev2diffclass]"><pre>[websvn:rev2line]</pre></td>
+          </tr>
+        [websvn-endlisting]
+        </tbody>
+       </table>
+      [websvn-endtest]
+    [websvn-endtest]
+  </div>
+  [websvn-endtest]
+[websvn-endtest]
