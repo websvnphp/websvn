@@ -219,6 +219,10 @@ form {
 	margin-top: 6px;
 }
 
+#header #info #rev-popup a {
+	color: black;
+}
+
 #revision #rev-popup {
 	display: none;
 }
