@@ -42,7 +42,7 @@ if ($rep) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
 	}
-	$youngest = ($history) ? $history->entries[0]->rev : 0;
+	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 	$vars['youngestrev'] = $youngest;
 
 	// TODO The "youngest" rev is often incorrect when both path and rev are specified.
@@ -67,7 +67,7 @@ if ($rep) {
 			$nextRev = $history2->entries[1]->rev;
 			if ($nextRev != $youngest) {
 				$vars['nextrev'] = $nextRev;
-				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $rev : '');
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $peg ? $peg : $rev : '');
 				//echo 'NEXT='.$vars['nextrevurl'].'<br/>';
 			}
 		}
@@ -77,7 +77,7 @@ if ($rep) {
 		$prevRev = $history->entries[1]->rev;
 		$prevPath = $history->entries[1]->path;
 		$vars['prevrev'] = $prevRev;
-		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $path != '/' ? $rev : '');
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $path != '/' ? ($peg ? $peg : $rev) : '');
 		//echo 'PREV='.$vars['prevrevurl'].'<br/>';
 	}
 	// Save the entry from which we pull information for the current revision.
@@ -89,9 +89,12 @@ if ($rep) {
 	$vars['rev'] = $rev;
 	$vars['peg'] = $peg;
 	$vars['path'] = escape($ppath);
-	$vars['date'] = $logEntry ? $logEntry->date: '';
-	$vars['author'] = $logEntry ? $logEntry->author: '';
-	$vars['log'] = $logEntry ? nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg)))): '';
+	if ($logEntry) {
+		$vars['date'] = $logEntry->date;
+		$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
+		$vars['author'] = $logEntry->author;
+		$vars['log'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg))));
+	}
 
 	$isDir = @$_REQUEST['isdir'] == 1 || $path == '' || $path == '/';
 	$vars['logurl'] = $config->getURL($rep, $path, 'log').$passRevString.($isDir ?  '&amp;isdir=1' : '');
@@ -109,7 +112,7 @@ if ($rep) {
 	}
 
 	if ($rep->isRssEnabled()) {
-		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').($peg ? 'peg='.$peg : '');
+		$vars['rssurl'] = $config->getURL($rep, $path, 'rss').createRevAndPegString('', $peg);
 		$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 	}
 
@@ -146,13 +149,14 @@ if ($rep) {
 			'diffurl' => $resourceExisted ? $config->getURL($rep, $change->path, 'diff').$linkRevString : '',
 			'blameurl' => $resourceExisted ? $config->getURL($rep, $change->path, 'blame').$linkRevString : '',
 			'rowparity' => $row,
+			'notinpath' => substr($change->path, 0, strlen($path)) != $path,
 		);
 
 		$row = 1 - $row;
 	}
 
 	if (isset($prevRev)) {
-		$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]=/@'.$prevRev. '&amp;compare[]=/@'.$rev;
+		$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.urlencode($path).'@'.$rev;	
 		$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 	}
 
@@ -166,7 +170,4 @@ if ($rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
-$vars['template'] = 'revision';
-parseTemplate('header.tmpl');
-parseTemplate('revision.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('revision');

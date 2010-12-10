@@ -97,7 +97,6 @@ function endOfFile(&$obj) {
 function getWrappedLineFromFile($file, $is_highlighted) {
 	$line = fgets($file);
 	if ($line === false) return false;
-	$line = rtrim($line);
 	$line = toOutputEncoding($line);
 	if (!$is_highlighted) {
 		$line = escape($line);
@@ -153,7 +152,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhit
 			}
 		}
 
-		if (!$all) {
+		if (!$all && $line !== false) {
 			$listingHelper->startNewBlock();
 		}
 
@@ -340,18 +339,20 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 	error_reporting($modLevel);
 
 	// Create the diff class
-	$fromLines = explode("\n", file_get_contents($oldtname));
-	$toLines = explode("\n", file_get_contents($newtname));
+	$fromLines = file($oldtname);
+	$toLines = file($newtname);
 	if (!$ignoreWhitespace) {
 		$diff = @new Text_Diff('auto', array($fromLines, $toLines));
 	} else {
 		$whitespaces = array(' ', "\t", "\n", "\r");
 		$mappedFromLines = array();
-		foreach ($fromLines as $line) {
+		foreach ($fromLines as &$line) {
+			$line = rtrim($line, "\n\r");
 			$mappedFromLines[] = str_replace($whitespaces, array(), $line);
 		}
 		$mappedToLines = array();
-		foreach ($toLines as $line) {
+		foreach ($toLines as &$line) {
+			$line = rtrim($line, "\n\r");
 			$mappedToLines[] = str_replace($whitespaces, array(), $line);
 		}
 		$diff = @new Text_MappedDiff($fromLines, $toLines, $mappedFromLines, $mappedToLines);

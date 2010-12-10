@@ -44,10 +44,17 @@
   [websvn-test:repname]
   <div id="rev-popup" style="display: none;">
     [websvn-test:lastchangedrev]
-    <div class="info">[lang:REV] [websvn:lastchangedrev]<span>&mdash;</span>[websvn:date]<span>&mdash;</span>[websvn:author]</div>
+    <div class="info">[lang:REV] [websvn:lastchangedrev]
     [websvn-else]
-    <div class="info">[lang:REV] [websvn:rev]<span>&mdash;</span>[websvn:date]<span>&mdash;</span>[websvn:author]</div>
+    <div class="info">[lang:REV] [websvn:rev]
     [websvn-endtest]
+    &mdash; [websvn:author]
+    [websvn-test:showageinsteadofdate]
+    &mdash; [websvn:age] ([websvn:date])
+    [websvn-else]
+    &mdash; [websvn:date] ([websvn:age])
+    [websvn-endtest]
+    </div>
     <div class="msg">[websvn:log]</div>
   </div>
   [websvn-endtest]

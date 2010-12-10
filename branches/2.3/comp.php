@@ -81,8 +81,8 @@ if ($rep) {
 		$rev2 = $temprev;
 	}
 
-	$vars['rev1url'] = $config->getURL($rep, $path1, 'revision').createRevAndPegString($rev1, $rev1);
-	$vars['rev2url'] = $config->getURL($rep, $path2, 'revision').createRevAndPegString($rev2, $rev2);
+	$vars['rev1url'] = $config->getURL($rep, $path1, 'dir').createRevAndPegString($rev1, $rev1);
+	$vars['rev2url'] = $config->getURL($rep, $path2, 'dir').createRevAndPegString($rev2, $rev2);
 
 	$url = $config->getURL($rep, '', 'comp');
 	$vars['reverselink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
@@ -99,8 +99,11 @@ if ($rep) {
 	$vars['action'] = $lang['PATHCOMPARISON'];
 
 	$hidden = '<input type="hidden" name="manualorder" value="1" />';
-	if ($config->multiViews)
-		$hidden .= '<input type="hidden" name="op" value="comp" />';
+	if ($config->multiViews) {
+		$hidden .= '<input type="hidden" name="op" value="comp"/>';
+	} else {
+		$hidden .= '<input type="hidden" name="repname" value="'.$repname.'" />';
+	}
 	$vars['compare_form'] = '<form method="get" action="'.$url.'" id="compare">'.$hidden;
 	$vars['compare_path1input'] = '<input type="text" size="40" name="compare[0]" value="'.escape($path1).'" />';
 	$vars['compare_path2input'] = '<input type="text" size="40" name="compare[1]" value="'.escape($path2).'" />';
@@ -127,6 +130,7 @@ if ($rep) {
 		$vars['rev'] = $logEntry->rev;
 		$vars['peg'] = $peg;
 		$vars['date'] = $logEntry->date;
+		$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
 		$vars['author'] = $logEntry->author;
 		$vars['log'] = xml_entities($logEntry->msg);
 	} else {
@@ -146,11 +150,81 @@ if ($rep) {
 	$debug = false;
 
 	if (!$noinput) {
-		$cmd = $config->getSvnCommand().' diff '.($ignoreWhitespace ? '-x -w ' : '').$rep->svnParams().quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
+		$cmd = $config->getSvnCommand().' diff '.($ignoreWhitespace ? '-x "-w --ignore-eol-style" ' : '').$rep->svnParams().quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
 	}
 
 	function clearVars() {
-		global $listing, $index;
+		global $ignoreWhitespace, $listing, $index;
+
+		if ($ignoreWhitespace && $index > 1) {
+			$endBlock = false;
+			$previous = $index - 1;
+			if ($listing[$previous]['endpath']) $endBlock = 'newpath';
+			else if ($listing[$previous]['enddifflines']) $endBlock = 'difflines';
+			if ($endBlock !== false) {
+				// check if block ending at previous contains real diff data
+				$i = $previous;
+				$containsOnlyEqualDiff = true;
+				$addedLines = array();
+				$removedLines = array();
+				while ($i >= 0 && !$listing[$i - 1][$endBlock]) {
+					$diffclass = $listing[$i - 1]['diffclass'];
+
+					if ($diffclass !== 'diffadded' && $diffclass !== 'diffdeleted') {
+						if ($addedLines !== $removedLines) {
+							$containsOnlyEqualDiff = false;
+							break;
+						}
+					}
+					if (count($addedLines) > 0 && $addedLines === $removedLines) {
+						$addedLines = array();
+						$removedLines = array();
+					}
+
+					if ($diffclass === 'diff') {
+						$i--;
+						continue;
+					}
+					if ($diffclass === null) {
+						$containsOnlyEqualDiff = false;
+						break;;
+					}
+
+					if ($diffclass === 'diffdeleted') {
+						if (count($addedLines) <= count($removedLines)) {
+							$containsOnlyEqualDiff = false;
+							break;;
+						}
+						array_unshift($removedLines, $listing[$i - 1]['line']);
+						$i--;
+						continue;
+					}
+
+					if ($diffclass === 'diffadded') {
+						if (count($removedLines) > 0) {
+							$containsOnlyEqualDiff = false;
+							break;;
+						}
+						array_unshift($addedLines, $listing[$i - 1]['line']);
+						$i--;
+						continue;
+					}
+
+					assert(false);
+				}
+				if ($containsOnlyEqualDiff) {
+					$containsOnlyEqualDiff = $addedLines === $removedLines;
+				}
+
+				// remove blocks which only contain diffclass=diff and equal removes and adds
+				if ($containsOnlyEqualDiff) {
+					for ($j = $i - 1; $j < $index; $j++) {
+						unset($listing[$j]);
+					}
+					$index = $i - 1;
+				}
+			}
+		}
 
 		$listing[$index]['newpath'] = null;
 		$listing[$index]['endpath'] = null;
@@ -166,6 +240,7 @@ if ($rep) {
 	if (!$noinput) {
 		// TODO: Report warning/error if comparison encounters any problems
 		if ($diff = popenCommand($cmd, 'r')) {
+			$listing = array();
 			$index = 0;
 			$indiff = false;
 			$indiffproper = false;
@@ -200,6 +275,7 @@ if ($rep) {
 					if ($indiffproper) {
 						if (strlen($line) > 0 && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-')) {
 							$subline = escape(toOutputEncoding(substr($line, 1)));
+							$subline = rtrim($subline, "\n\r");
 							$subline = ($subline) ? expandTabs($subline) : '&nbsp;';
 							$listing[$index]['line'] = $subline;
 
@@ -315,7 +391,7 @@ if ($rep) {
 					if (strncmp(trim($line), 'Cannot display:', 15) == 0) {
 						$index++;
 						clearVars();
-						$listing[$index++]['info'] = $line;
+						$listing[$index++]['info'] = escape(toOutputEncoding($line));
 						continue;
 					}
 
@@ -356,7 +432,7 @@ if ($rep) {
 					if ($debug) print 'Skipping: '.$line.'<br />';
 
 					while ($line = trim(fgets($diff))) {
-						$listing[$index++]['info'] = $line;
+						$listing[$index++]['info'] = escape(toOutputEncoding($line));
 						clearVars();
 					}
 
@@ -370,7 +446,7 @@ if ($rep) {
 					continue;
 				}
 
-				$listing[$index++]['info'] = $line;
+				$listing[$index++]['info'] = escape(toOutputEncoding($line));
 			}
 
 			if ($node) {
@@ -413,7 +489,4 @@ if ($rep) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 }
 
-$vars['template'] = 'compare';
-parseTemplate('header.tmpl');
-parseTemplate('compare.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('compare');

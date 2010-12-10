@@ -60,6 +60,49 @@ a img {
   width:65%;
   padding:5px 0;
 }
+#index #wrap tr {
+  border-top:1px dotted lightgrey;
+}
+#index #wrap tr:first-child {
+  border-width:0;
+}
+#index #wrap td, #index #wrap th {
+  border-width:0;
+  padding:4px;
+  text-align:right;
+  white-space:pre;
+}
+#index #wrap td.project {
+  text-align:left;
+  width:100%;
+}
+#index #wrap td.project a {
+  background-image:url(images/cube_green.png);
+  background-repeat:no-repeat;
+  background-position:2px 50%;
+}
+#index #wrap td.project a, #index #wrap td.group {
+  padding-left:22px;
+}
+#index #wrap th {
+  background-color:white;
+  background-repeat:no-repeat;
+  background-position:6px 50%;
+  padding-left:26px;
+  text-align:left;
+}
+#index #wrap th.closed {
+  background-image:url(images/toggleup.png);
+}
+#index #wrap th.open {
+  background-image:url(images/toggledown.png);
+}
+#index #info dl {
+  margin:2px 0;
+}
+#index #info dl dd:first-child {
+  border-width: 0;
+}
 #info {
   float:left;
   width:28%;
@@ -241,30 +284,6 @@ option:active {
 */
 
 /* index elements */
-dl.projectlist dd a {
-  background-image:url(images/cube_green.png);
-  background-repeat:no-repeat;
-  background-position:2px 50%;
-  padding-left:22px;
-}
-.projectlisthead {
-  padding: 13px 0 5px;
-}
-.projectlist .groupname {
-  padding:3px 0 5px;
-  border-top:1px dotted gray;
-}
-.showstate {
-  padding: 0 4px 0 2px;
-}
-.projectlist .project {
-  background-image:url(images/cube_green.png);
-  background-repeat:no-repeat;
-  background-position:12px 50%;
-  padding:3px 0 5px 32px;
-  border-top:1px dotted #D3D3D3;
-}
-
 #info dl {
   margin-left:0;
 }
@@ -840,6 +859,10 @@ td.changes .mod {
 	padding-left: 26px;
 	top: 2px;
 	position: relative;
+}
+
+#revision td.path a.notinpath {
+	color: #b00;
 }
 
 #revision tr.M td.path a {

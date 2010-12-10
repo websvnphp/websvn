@@ -30,6 +30,7 @@ $vars['action'] = $lang['PROJECTS'];
 $vars['repname'] = '';
 $vars['rev'] = 0;
 $vars['path'] = '';
+$vars['showlastmod'] = $config->showLastModInIndex();
 
 // Sort the repositories by group
 $config->sortByGroup();
@@ -65,6 +66,24 @@ foreach ($projects as $project) {
 	}
 	$listing[$i]['clientrooturl'] = $project->clientRootURL;
 
+	// Populate variables for latest modification to the current repository
+	if ($config->showLastModInIndex()) {
+		$svnrep = new SVNRepository($project);
+		$log = $svnrep->getLog('/', '', '', true, 1);
+		if (isset($log->entries[0])) {
+			$head = $log->entries[0];
+			$listing[$i]['revision'] = $head->rev;
+			$listing[$i]['date'] = $head->date;
+			$listing[$i]['age'] = datetimeFormatDuration(time() - strtotime($head->date));
+			$listing[$i]['author'] = $head->author;
+		} else {
+			$listing[$i]['revision'] = 0;
+			$listing[$i]['date'] = '';
+			$listing[$i]['age'] = '';
+			$listing[$i]['author'] = '';
+		}
+	}
+
 	// Create project (repository) listing
 	$url = str_replace('&amp;', '', $config->getURL($project, '', 'dir'));
 	$name = ($config->flatIndex) ? $project->getDisplayName() : $project->name;
@@ -86,7 +105,4 @@ $vars['treeview'] = !$config->flatIndex;
 $vars['opentree'] = $config->openTree;
 $vars['groupcount'] = $groupcount; // Indicates whether any groups were present.
 
-$vars['template'] = 'index';
-parseTemplate('header.tmpl');
-parseTemplate('index.tmpl');
-parseTemplate('footer.tmpl');
+renderTemplate('index');

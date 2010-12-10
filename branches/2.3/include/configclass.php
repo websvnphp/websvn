@@ -116,7 +116,7 @@ class ParentPath {
 		$this->group = $group;
 		$this->pattern = $pattern;
 		$this->skipAlreadyAdded = $skipAlreadyAdded;
-		$this->clientRootURL = trim($clientRootURL, '/');
+		$this->clientRootURL = rtrim($clientRootURL, '/');
 	}
 	// }}}
 
@@ -220,8 +220,8 @@ class Repository {
 	var $path;
 	var $subpath;
 	var $group;
-	var $username;
-	var $password;
+	var $username = null;
+	var $password = null;
 	var $clientRootURL;
 
 	// Local configuration options must start off unset
@@ -238,7 +238,7 @@ class Repository {
 	var $ignoreSvnMimeTypes;
 	var $ignoreWebSVNContentTypes;
 	var $bugtraq;
-	var $auth;
+	var $auth = null;
 	var $authBasicRealm;
 	var $templatePath = false;
 
@@ -254,7 +254,7 @@ class Repository {
 		$this->group = $group;
 		$this->username = $username;
 		$this->password = $password;
-		$this->clientRootURL = trim($clientRootURL, '/');
+		$this->clientRootURL = rtrim($clientRootURL, '/');
 	}
 
 	// }}}
@@ -275,10 +275,12 @@ class Repository {
 
 	function svnParams() {
 		$params = '';
-		if (!empty($this->username))
+		if ($this->username !== null) {
 			$params .= '--username '.quote($this->username).' ';
-		if (!empty($this->password))
+		}
+		if ($this->password !== null) {
 			$params .= '--password '.quote($this->password).' ';
+		}
 		return $params;
 	}
 
@@ -529,7 +531,10 @@ class Repository {
 
 	function useAuthenticationFile($file, $basicRealm = false) {
 		if (is_readable($file)) {
-			$this->auth = new Authentication($file, $basicRealm);
+			if ($this->auth === null) {
+				$this->auth = new Authentication($basicRealm);
+			}
+			$this->auth->addAccessFile($file);
 		} else {
 			die('Unable to read authentication file "'.$file.'"');
 		}
@@ -539,7 +544,7 @@ class Repository {
 		global $config;
 
 		$a = null;
-		if (isset($this->auth)) {
+		if ($this->auth !== null) {
 			$a =& $this->auth;
 		} else {
 			$a =& $config->getAuth();
@@ -587,6 +592,7 @@ class WebSvnConfig {
 	var $_svnCommandPrefix = '';
 	var $_svnCommandPath = '';
 	var $_svnConfigDir = '/tmp';
+	var $_svnTrustServerCert = false;
 	var $svn = 'svn --non-interactive --config-dir /tmp';
 	var $diff = 'diff';
 	var $enscript = 'enscript -q';
@@ -609,7 +615,8 @@ class WebSvnConfig {
 	var $flatIndex = true;
 	var $openTree = false;
 	var $alphabetic = false;
-	var $showLastMod = true;
+	var $showLastModInIndex = true;
+	var $showLastModInListing = true;
 	var $showAgeInsteadOfDate = true;
 	var $_showRepositorySelectionForm = true;
 	var $serverIsWindows = false;
@@ -629,7 +636,7 @@ class WebSvnConfig {
 	var $rssMaxEntries = 40;
 	var $spaces = 8;
 	var $bugtraq = false;
-	var $auth = '';
+	var $auth = null;
 	var $blockRobots = false;
 
 	var $templatePaths = array();
@@ -673,7 +680,10 @@ class WebSvnConfig {
 
 	function addRepositorySubpath($name, $serverRootURL, $subpath, $group = null, $username = null, $password = null, $clientRootURL = null) {
 		if (DIRECTORY_SEPARATOR != '/') {
-			list($serverRootURL, $subpath) = str_replace(DIRECTORY_SEPARATOR, '/', array($serverRootURL, $subpath));
+			$serverRootURL = str_replace(DIRECTORY_SEPARATOR, '/', $serverRootURL);
+			if ($subpath !== null) {
+				$subpath = str_replace(DIRECTORY_SEPARATOR, '/', $subpath);
+			}
 		}
 		$serverRootURL = trim($serverRootURL, '/');
 		$svnName = substr($serverRootURL, strrpos($serverRootURL, '/') + 1);
@@ -1171,6 +1181,12 @@ class WebSvnConfig {
 		$this->_updateSVNCommand();
 	}
 
+	// Define flag to use --trust-server-cert parameter
+	function setTrustServerCert() {
+		$this->_svnTrustServerCert = true;
+		$this->_updateSVNCommand();
+	}
+
 	// Define the location of the svn command (e.g. '/usr/bin')
 	function setSvnCommandPath($path) {
 		$this->_svnCommandPath = $path;
@@ -1184,7 +1200,7 @@ class WebSvnConfig {
 	}
 
 	function _updateSVNCommand() {
-		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir);
+		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
 		$this->svn = $this->_svnCommandPrefix.' '.$this->svn;
 	}
 
@@ -1411,7 +1427,10 @@ class WebSvnConfig {
 	function useAuthenticationFile($file, $myrep = 0, $basicRealm = false) {
 		if (empty($myrep)) {
 			if (is_readable($file)) {
-				$this->auth = new Authentication($file, $basicRealm);
+				if ($this->auth === null) {
+					$this->auth = new Authentication($basicRealm);
+				}
+				$this->auth->addAccessFile($file);
 			} else {
 				echo 'Unable to read authentication file "'.$file.'"';
 				exit;
@@ -1467,12 +1486,20 @@ class WebSvnConfig {
 		return $this->alphabetic;
 	}
 
+	function showLastModInIndex() {
+		return $this->showLastModInIndex;
+	}
+
+	function setShowLastModInIndex($show) {
+		$this->showLastModInIndex = $show;
+	}
+
 	function showLastModInListing() {
-		return $this->showLastMod;
+		return $this->showLastModInListing;
 	}
 
 	function setShowLastModInListing($show) {
-		$this->showLastMod = $show;
+		$this->showLastModInListing = $show;
 	}
 
 	function showAgeInsteadOfDate() {

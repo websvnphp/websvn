@@ -128,6 +128,7 @@ $config->setTemplatePath($locwebsvnreal.'/templates/calm/', 'My Repository');
 <tr><th>projects_select</th><td>Project selection menu &lt;select&gt;...&lt;/select&gt; element</td></tr>
 <tr><th>projects_submit</th><td>Project selection menu submit button</td></tr>
 <tr><th>projects_endform</th><td>Project selection menu &lt;/form&gt; element</td></tr>
+<tr><th>showageinsteadofdate</th><td>Whether to display the relative age of a commit rather than the absolute date.</td></tr>
 <tr><th>error</th><td>A string representing an error condition, or empty if there is none.</td></tr>
 <tr><th>warning</th><td>A string representing a warning condition, or empty if there is none.</td></tr>
 </table>
@@ -159,6 +160,7 @@ $config->useTreeIndex(true);
 <tr><th>flatview</th><td>true if the index should be displayed as a simple list of projects</td></tr>
 <tr><th>opentree</th><td>true if the tree viewed should be open by default</td></tr>
 <tr><th>groupcount</th><td>The number of project groups (0 or more)</td></tr>
+<tr><th>showlastmod</th><td>Whether "last modification" info should be displayed for each project</td></tr>
 </table>
 
 <h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
@@ -171,6 +173,10 @@ $config->useTreeIndex(true);
 <tr><th>groupid</th><td>Only set if the current entry is a group header</td></tr>
 <tr><th>groupname</th><td>Set for group headers and each member of a group</td></tr>
 <tr><th>notfirstgroup</th><td>true if the entry is a second or subsequent group</td></tr>
+<tr><th>revision</th><td>Number of the latest revision affecting the current project</td></tr>
+<tr><th>date</th><td>Date of the latest revision (yyyy-mm-dd) </td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
+<tr><th>author</th><td>Author of the latest revision</td></tr>
 </table>
 
 <p>The last variable in each of these lists are useful for determining if an element surrounding a group needs to be closed. For example, you may wish to create a &lt;div&gt; or &lt;ul&gt; tag to open a group, and a closing tag at the end of the group, either between groups or after the last group.</p>
@@ -186,13 +192,15 @@ $config->useTreeIndex(true);
 <tr><th>path</th><td>Path of the directory being listed</td></tr>
 <tr><th>rev</th><td>Revision being viewed</td></tr>
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
 <tr><th>youngestrev</th><td>The most recent revision affecting the current directory</td></tr>
 <tr><th>goyoungestlink</th><td>Link to most recent revision of the current directory (only if a newer revision exists)</td></tr>
 <tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>logurl</th><td>URL to the log view of current directory</td></tr>
-<tr><th>revurl</th><td>URL to details of the current revision being viewed</td></tr>
+<tr><th>revurl</th><td>URL to the current revision for this directory</td></tr>
+<tr><th>revlink</th><td>Link to the current revision for this directory</td></tr>
 <tr><th>rssurl</th><td>URL to the RSS feed for the current directory</td></tr>
 <tr><th>downloadurl</th><td>URL to download an archive for the current directory</td></tr>
 <tr><th>compareurl</th><td>URL to comparison with previously changed revision</td></tr>
@@ -200,6 +208,7 @@ $config->useTreeIndex(true);
 <tr><th>compare_form</th><td>Comparison selection &lt;form&gt; element</td></tr>
 <tr><th>compare_submit</th><td>Comparison selection submit button</td></tr>
 <tr><th>compare_endform</th><td>Comparison selection &lt;/form&gt; element</td></tr>
+<tr><th>showlastmod</th><td>Whether "last modification" info should be displayed for each path</td></tr>
 </table>
 
 <h4>Variables defined within [websvn-startlisting] ... [websvn-endlisting]</h4>
@@ -217,11 +226,8 @@ $config->useTreeIndex(true);
 <tr><th>rssurl</th><td>URL to the RSS feed for the current file/directory</td></tr>
 <tr><th>downloadurl</th><td>URL to download the current entry (only for files)</td></tr>
 <tr><th>downloadplainurl</th><td>URL to download the current entry (only for directories)</td></tr>
-</table>
-
-<table>
 <tr><th>revurl</th><td>URL for examining the latest revision in detail</td></tr>
-<tr><th>revision</th><td>Number of the latest revision affecting the current element</td></tr>
+<tr><th>revision</th><td>Number of the latest revision affecting the current path</td></tr>
 <tr><th>committime</th><td>Timestamp of latest revision</td></tr>
 <tr><th>date</th><td>Date of the latest revision (yyyy-mm-dd) </td></tr>
 <tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
@@ -296,6 +302,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>path</th><td>Path of item being logged</td></tr>
 <tr><th>rev</th><td>The most recent revision of the current path</td></tr>
 <tr><th>date</th><td>Commit date of the most recent revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
 <tr><th>author</th><td>Author of the most recent revision</td></tr>
 <tr><th>log</th><td>Log message of the most recent revision</td></tr>
 <tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
@@ -308,6 +315,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>goyoungestlink</th><td>Link to log info for the most recent revision of the resource (only if a newer revision exists)</td></tr>
 <tr><th>showchanges</th><td>Whether changed resources should be shown for each revision</td></tr>
 <tr><th>changeslink</th><td>Link to show/hide changed resources for each revision</td></tr>
+<tr><th>revurl</th><td>URL to the newest matching revision for this file/directory</td></tr>
 <tr><th>logsearch_form</th><td>Log search box &lt;form&gt; element, plus any hidden inputs</td></tr>
 <tr><th>logsearch_inputbox</th><td>Log search box text field for search text</td></tr>
 <tr><th>logsearch_submit</th><td>Log search box submit button</td></tr>
@@ -325,6 +333,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 
 <table>
 <tr><th>compare_box</th><td>Comparison selection checkbox for the current revision</td></tr>
+<tr><th>compareurl</th><td>URL to comparison with previously changed revision</td></tr>
 <tr><th>revpathlink</th><td>Link to revision</td></tr>
 <tr><th>revauthor</th><td>Author of this revision</td></tr>
 <tr><th>revage</th><td>Age of revision</td></tr>
@@ -344,6 +353,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <table>
 <tr><th>rev</th><td>Revision number of the current revision</td></tr>
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
 <tr><th>path</th><td>Path of the resource passed to this page</td></tr>
@@ -351,7 +361,6 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>directorylink</th><td>Link to the directory listing for the current path at this revision</td></tr>
 <tr><th>filedetaillink</th><td>(For files) Link to the listing for this file</td></tr>
 <tr><th>blamelink</th><td>(For files) Link to the blame information for this file</td></tr>
-<tr><th>revlink</th><td>Link to details of the current revision for this file</td></tr>
 <tr><th>loglink</th><td>Link to the log page for the current path, from the current revision backward</td></tr>
 <tr><th>goyoungestlink</th><td>Link to most recent revision of the current path (only if a newer revision exists)</td></tr>
 <tr><th>prevrev / prevrevurl</th><td>Revision of / link to the previous modification of the current path (only if an older revision exists)</td></tr>
@@ -362,6 +371,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 
 <table>
 <tr><th>path</th><td>Path to the resource</td></tr>
+<tr><th>notinpath</th><td>Set if the resource does not reside within the specified path</td></tr>
 <tr><th>oldpath</th><td>Previous path of the resource (only for move or copy)</td></tr>
 <tr><th>action</th><td>A letter (either A, D, or M) representing how the resource was changed at this revision</td></tr>
 <tr><th>added</th><td>True if the resource was added in this revision</td></tr>
@@ -384,13 +394,15 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>path</th><td>Path of item being viewed</td></tr>
 <tr><th>rev</th><td>Revision being viewed</td></tr>
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
 <tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>goyoungestlink</th><td>Link to most recent revision of the file (only if a newer revision exists)</td></tr>
 <tr><th>blamelink</th><td>Link to the blame information for this file</td></tr>
 <tr><th>difflink</th><td>Link to comparison with previous revision</td></tr>
-<tr><th>revlink</th><td>Link to details of the current revision for this file</td></tr>
+<tr><th>revurl</th><td>URL to the current revision for this file</td></tr>
+<tr><th>revlink</th><td>Link to the current revision for this file</td></tr>
 <tr><th>loglink</th><td>Link to the log page for this file</td></tr>
 <tr><th>downloadlink</th><td>Link to download this file</td></tr>
 <tr><th>mimelink</th><td>Link to display a file with its associated MIME type. (Only if the file has a MIME type, but it was set to be ignored.)</td></tr>
@@ -414,12 +426,14 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>path</th><td>Path of item being viewed</td></tr>
 <tr><th>rev</th><td>Revision being viewed</td></tr>
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
 <tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>filedetaillink</th><td>Link to the listing for this file</td></tr>
 <tr><th>difflink</th><td>Link to comparison with previous revision</td></tr>
-<tr><th>revlink</th><td>Link to details of the current revision for this file</td></tr>
+<tr><th>revurl</th><td>URL to the current revision for this file</td></tr>
+<tr><th>revlink</th><td>Link to the current revision for this file</td></tr>
 <tr><th>loglink</th><td>Link to the log page for this file</td></tr>
 <tr><th>goyoungestlink</th><td>Link to blame info for the most recent revision of the file (only if a newer revision exists)</td></tr>
 </table>
@@ -444,13 +458,15 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>path</th><td>Path of item being viewed</td></tr>
 <tr><th>rev</th><td>Revision being viewed</td></tr>
 <tr><th>date</th><td>Commit date of the current revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
 <tr><th>author</th><td>Author of the current revision</td></tr>
 <tr><th>log</th><td>Log message of the current revision</td></tr>
 <tr><th>pathlinks</th><td>List of links to each directory in the current path</td></tr>
 <tr><th>goyoungestlink</th><td>Link to diff for the most recent revision of a resource (only if a newer revision exists)</td></tr>
 <tr><th>filedetaillink</th><td>Link to the listing for this file</td></tr>
 <tr><th>blamelink</th><td>Link to the blame information for this file</td></tr>
-<tr><th>revlink</th><td>Link to details of the current revision for this file</td></tr>
+<tr><th>revurl</th><td>URL to the current revision for this file</td></tr>
+<tr><th>revlink</th><td>Link to the current revision for this file</td></tr>
 <tr><th>loglink</th><td>Link to the log page for this file</td></tr>
 <tr><th>rev1</th><td>Revision number of the older file</td></tr>
 <tr><th>rev2</th><td>Revision number of the newer file</td></tr>
@@ -482,6 +498,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>rev2url</th><td>URL to 2nd revision being compared</td></tr>
 <tr><th>rev</th><td>The more recent of the revisions being compared</td></tr>
 <tr><th>date</th><td>Commit date of the more recent revision</td></tr>
+<tr><th>age</th><td>Age of the latest revision in days, hours, etc.</td></tr>
 <tr><th>author</th><td>Author of the more recent revision</td></tr>
 <tr><th>log</th><td>Log message of the more recent revision</td></tr>
 <tr><th>success</th><td>true if the comparison succeeded</td></tr>

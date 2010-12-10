@@ -1,54 +1,80 @@
      <div id="info">
      <h2>About</h2>
      <dl>
-       <dt>Summary:</dt>
        <dd>You can customize this short message in the index.tmpl of this template in order to tell your visitors what they find in your repositories.</dd>
        <dd>Visit <a href="http://www.websvn.info">www.websvn.info</a> for more information about WebSVN.</dd>
        <dd>Learn more about Subversion at <a href="http://subversion.tigris.org">subversion.tigris.org</a>.</dd>
      </dl>
      </div>
      
-   [websvn-test:error]
-     <div id="error">[websvn:error]</div>
-   [websvn-else]
-     <div id="wrap">
-       <h2 class="regular">[lang:PROJECTS]</h2>
-     [websvn-test:flatview]
-       <dl class="projectlist">
-         <dt>[lang:PROJECTS]:</dt>
-         [websvn-startlisting]
-         [websvn-test:groupid]
-         [websvn-else]
-         <dd>[websvn:projectlink]</dd>
-         [websvn-endtest]
-         [websvn-endlisting]
-       </dl>
-     [websvn-else]
-       <div class="projectlisthead">[lang:PROJECTS]:</div>
-       <div class="projectlist">
-        [websvn-startlisting]
-       [websvn-test:groupid]
-         [websvn-test:notfirstgroup]
-         </div> <!-- switchcontent -->
-         [websvn-endtest]
-         
-         <div class="groupname" onclick="expandcontent(this, '[websvn:groupid]');" style="cursor: pointer;"><div class="a"><span class="showstate"></span>[websvn:groupname]</div></div>
-         <div class="switchcontent" id="[websvn:groupid]">
-       [websvn-else]
-         <div class="project">[websvn:projectlink]</div>
-       [websvn-endtest]
-       [websvn-endlisting]
-       [websvn-test:groupcount]
-         </div> <!-- switchcontent -->
-       [websvn-endtest]
-       </div>
-       [websvn-test:opentree]
-       <script type="text/javascript">
-       //<![CDATA[
-       expandonload = true;
-       //]]>      
-       </script>
-       [websvn-endtest]
-     [websvn-endtest]
-     </div>
-   [websvn-endtest]
+[websvn-test:error]
+  <div id="error">[websvn:error]</div>
+[websvn-else]
+  <div id="wrap">
+    <h2 class="regular">[lang:PROJECTS]</h2>
+    <table>
+  [websvn-test:flatview]
+    [websvn-startlisting]
+    [websvn-test:groupid]
+    [websvn-else]
+      <tr>
+        <td class="project">[websvn:projectlink]</td>
+        [websvn-test:showlastmod]
+        <td>[lang:REV] [websvn:revision]</td>
+        [websvn-test:showageinsteadofdate]
+        <td title="[websvn:date]">[websvn:age]</td>
+        [websvn-else]
+        <td title="[websvn:age]">[websvn:date]</td>
+        [websvn-endtest]
+        <td>[websvn:author]</td>
+        [websvn-endtest]
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-else]
+    [websvn-startlisting]
+    [websvn-test:groupid]
+      <tr><th onclick="toggleGroup('[websvn:groupname]'); this.className = (this.className == 'open') ? 'closed' : 'open';"
+      [websvn-test:opentree]
+              class="open"
+      [websvn-else]
+              class="closed"
+      [websvn-endtest]
+      [websvn-test:showlastmod]
+              colspan="4"
+      [websvn-endtest]
+      >[websvn:groupname]</th></tr>
+    [websvn-else]
+      <tr title="[websvn:groupname]">
+      [websvn-test:groupname]
+        <td class="project group">[websvn:projectlink]</td>
+      [websvn-else]
+        <td class="project">[websvn:projectlink]</td>
+      [websvn-endtest]
+      [websvn-test:showlastmod]
+        <td>[lang:REV] [websvn:revision]</td>
+        [websvn-test:showageinsteadofdate]
+        <td title="[websvn:date]">[websvn:age]</td>
+        [websvn-else]
+        <td title="[websvn:age]">[websvn:date]</td>
+        [websvn-endtest]
+        <td>[websvn:author]</td>
+      [websvn-endtest]
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-endtest]
+    </table>
+  </div>
+  [websvn-test:treeview]
+    <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/group-collapse.js"></script>
+    [websvn-test:opentree]
+    [websvn-else]
+    <script type="text/javascript">
+    //<![CDATA[
+    collapseAllGroups();
+    //]]>
+    </script>
+    [websvn-endtest]
+  [websvn-endtest]
+[websvn-endtest]

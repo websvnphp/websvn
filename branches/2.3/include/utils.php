@@ -55,7 +55,7 @@ function createPathLinks($rep, $path, $rev, $peg = '') {
 	}
 
 	if (!empty($pathComponents[$n])) {
-		$pegrev = ($peg) ? ' <a class="peg" href="'.'?'.escape(str_replace('&peg='.$peg, '', $_SERVER['QUERY_STRING'])).'">@ '.$peg.'</a>' : '';
+		$pegrev = ($peg && $peg != $rev) ? ' <a class="peg" href="'.'?'.escape(str_replace('&peg='.$peg, '', $_SERVER['QUERY_STRING'])).'">@ '.$peg.'</a>' : '';
 		if ($dir) {
 			$vars['pathlinks'] .= '<span class="dir">'.$pathComponents[$n].'/'.$pegrev.'</span>';
 		} else {
@@ -69,6 +69,13 @@ function createPathLinks($rep, $path, $rev, $peg = '') {
 function createRevAndPegString($rev, $peg) {
 	$params = array();
 	if ($rev) $params[] = 'rev='.$rev;
+	if ($peg) $params[] = 'peg='.$peg;
+	return implode('&amp;', $params);
+}
+
+function createDifferentRevAndPegString($rev, $peg) {
+	$params = array();
+	if ($rev && (!$peg || $rev != $peg)) $params[] = 'rev='.$rev;
 	if ($peg) $params[] = 'peg='.$peg;
 	return implode('&amp;', $params);
 }
@@ -104,8 +111,8 @@ function create_anchors($text) {
 								$ret);
 
 	// Match email addresses
-	$ret = preg_replace('#\b([\w\-_.]+)@([\w\-.]+)\b#i',
-								'<a href="mailto:\\1@\\2">\\1@\\2</a>',
+	$ret = preg_replace('#\b([\w\-_.]+)@([\w\-.]+)\.(\w{2,})\b#i',
+								'<a href="mailto:\\1@\\2.\\3">\\1@\\2.\\3</a>',
 								$ret);
 
 	return $ret;

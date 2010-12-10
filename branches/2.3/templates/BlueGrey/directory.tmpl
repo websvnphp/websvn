@@ -71,6 +71,9 @@ e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsv
         <thead>
         <tr>
           <th width="100%">[lang:PATH]</th>
+        [websvn-test:showlastmod]
+          <th scope="col" colspan="3">[lang:LASTMOD]</th>
+        [websvn-endtest]
           <th nowrap="nowrap">[lang:VIEWLOG]</th>
         [websvn-test:allowdownload]
           <th>[lang:DOWNLOAD]</th>
@@ -85,12 +88,21 @@ e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsv
         </thead>
       [websvn-startlisting]
         <tr class="row[websvn:rowparity]">
-          <td valign="middle" class="row[websvn:rowparity]">
+          <td valign="middle">
             [websvn:compare_box]
             [websvn-treenode]
             [websvn-icon]
             [websvn:filelink]
           </td>
+          [websvn-test:showlastmod]
+          <td class="rev"><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
+          [websvn-test:showageinsteadofdate]
+          <td class="age" title="[websvn:date]">[websvn:age]</td>
+          [websvn-else]
+          <td class="date" title="[websvn:age]">[websvn:date]</td>
+          [websvn-endtest]
+          <td class="author">[websvn:author]</td>
+          [websvn-endtest]
           <td><a href="[websvn:logurl]">[lang:LOG]</a></td>
           [websvn-test:allowdownload]
           [websvn-test:downloadurl]

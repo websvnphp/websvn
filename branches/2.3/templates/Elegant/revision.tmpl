@@ -42,8 +42,14 @@
     <div class="warning"><span>[websvn:warning]</span></div>
     [websvn-else]
     <dl>
-      <dt>[lang:LASTMOD]</dt><dd>[lang:REV] [websvn:rev] <span style="margin: 0 25px;">[websvn:date]</span> [websvn:author]</dd>
-      <dt>[lang:LOGMSG]</dt><dd>[websvn:log]</dd>
+      <dt>[lang:LASTMOD]</dt><dd>[lang:REV] [websvn:rev] &mdash; [websvn:author] &mdash;
+      [websvn-test:showageinsteadofdate]
+      <span title="[websvn:date]">[websvn:age]</span></dd>
+      [websvn-else]
+      <span title="[websvn:age]">[websvn:date]</span></dd>
+      [websvn-endtest]
+      <dt>[lang:LOGMSG]</dt>
+      <dd>[websvn:log]</dd>
     </dl>
     <table id="changes">
       <thead>
@@ -64,7 +70,12 @@
       [websvn-else]
       <tr class="[websvn:action]">
       [websvn-endtest]
-        <td class="path"><a href="[websvn:detailurl]">[websvn:path]</a>
+        <td class="path">
+          [websvn-test:notinpath]
+          <a href="[websvn:detailurl]" class="notinpath">[websvn:path]</a>
+          [websvn-else]
+          <a href="[websvn:detailurl]">[websvn:path]</a>
+          [websvn-endtest]
           [websvn-test:oldpath]
           <br/><del>[websvn:oldpath] ([lang:PREV])</del>
           [websvn-endtest]
@@ -75,7 +86,7 @@
         <td></td>
         [websvn-endtest]
         [websvn-test:diffurl]
-        <td class="diff"><a href="[websvn:diffurl]" title="[lang:DIFF]">[lang:DIFF]</a></td>
+        <td class="diff"><a href="[websvn:diffurl]" title="[lang:DIFFPREV]">[lang:DIFF]</a></td>
         [websvn-else]
         <td></td>
         [websvn-endtest]

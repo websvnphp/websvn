@@ -225,6 +225,15 @@ function parseTemplate($file) {
 function parseTags($line, $vars) {
 	global $lang;
 
+	// Replace the language strings
+	while (preg_match('|\[lang:([a-zA-Z0-9_]+)\]|', $line, $matches)) {
+		// Make sure that the variable exists
+		if (!isset($lang[$matches[1]])) {
+			$lang[$matches[1]] = '?${matches[1]}?';
+		}
+		$line = str_replace($matches[0], $lang[$matches[1]], $line);
+	}
+
 	$l = '';
 	// Replace the websvn variables
 	while (preg_match('|\[websvn:([a-zA-Z0-9_]+)\]|', $line, $matches)) {
@@ -246,13 +255,33 @@ function parseTags($line, $vars) {
 	// Rebuild line, add remaining part of line
 	$line = $l.$line;
 
-	// Replace the language strings
-	while (preg_match('|\[lang:([a-zA-Z0-9_]+)\]|', $line, $matches)) {
-		// Make sure that the variable exists
-		if (!isset($lang[$matches[1]])) {
-			$lang[$matches[1]] = '?${matches[1]}?';
-		}
-		$line = str_replace($matches[0], $lang[$matches[1]], $line);
-	}
 	return $line;
+}
+
+
+// renderTemplate
+//
+// Renders the templates for the given view
+
+function renderTemplate($view) {
+	global $config, $rep, $vars, $listing, $lang;
+
+	// Set the view in the templates variables
+	$vars['template'] = $view;
+
+	// Check if we are using a PHP powered template or the standard one
+	$path = !empty($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
+	$path = $path . 'template.php';
+	if (is_readable($path)) {
+		$vars['templateentrypoint'] = $path;
+		executePlainPhpTemplate($vars);
+	} else {
+		parseTemplate('header.tmpl');
+		parseTemplate($view . '.tmpl');
+		parseTemplate('footer.tmpl');
+	}
+}
+
+function executePlainPhpTemplate($vars) {
+	require_once $vars['templateentrypoint'];
 }

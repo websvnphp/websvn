@@ -42,6 +42,7 @@ $languages = array(
   'it'    => array('italian', 'Italian', 'Italiano'),
   'ja'    => array('japanese', 'Japanese', '&#26085;&#26412;&#35486;'),
   'ko'    => array('korean', 'Korean', '&#54620;&#44397;&#50612;'),
+  'mk'    => array('macedonian', 'Macedonian', '&#1052;&#1072;&#1082;&#1077;&#1076;&#1086;&#1085;&#1089;&#1082;&#1080;'),
   'mr'    => array('marathi', 'Marathi', '&#2350;&#2352;&#2366;&#2336;&#2368;'),
   'no'    => array('norwegian', 'Norwegian', 'Norsk'),
   'pl'    => array('polish', 'Polish', 'Polski'),

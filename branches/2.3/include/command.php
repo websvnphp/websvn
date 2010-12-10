@@ -23,13 +23,13 @@
 // External command handling
 
 function detectCharacterEncoding($str) {
+	$list = array(/*'ASCII',*/ 'UTF-8', 'ISO-8859-1');
 	if (function_exists('mb_detect_encoding')) {
 		// @see http://de3.php.net/manual/en/function.mb-detect-encoding.php#81936
 		// why appending an 'a' and specifying an encoding list is necessary
-		return mb_detect_encoding($str.'a', 'UTF-8,ISO-8859-1');
+		return mb_detect_encoding($str.'a', $list);
 
 	} else if (function_exists('iconv')) {
-		$list = array('UTF-8', 'ISO-8859-1');
 		foreach ($list as $item) {
 			$encstr = iconv($item, $item.'//TRANSLIT//IGNORE', $str);
 			if (md5($encstr) == md5($str)) return $item;
@@ -42,8 +42,6 @@ function detectCharacterEncoding($str) {
 // {{{ toOutputEncoding
 
 function toOutputEncoding($str) {
-	global $config;
-
 	$enc = detectCharacterEncoding($str);
 
 	if ($enc !== null && function_exists('mb_convert_encoding')) {

@@ -210,6 +210,7 @@ $extEnscript = array(
 	'.idl'		 => 'idl',
 	'.java'		=> 'java',
 	'.js'			=> 'javascript',
+	'.json'			=> 'javascript',
 	'.lgs'		 => 'haskell',
 	'.lhs'		 => 'haskell',
 	'.m'			 => 'objc',
@@ -282,7 +283,7 @@ $extGeshi = array(
 	'idl' => array('idl'),
 	'ini' => array('desktop', 'ini'),
 	'java5' => array('java'),
-	'javascript' => array('js'),
+	'javascript' => array('js', 'json'),
 	'latex' => array('tex'),
 	'lisp' => array('lisp'),
 	'lua' => array('lua'),
@@ -330,6 +331,7 @@ if (function_exists('date_default_timezone_get')) {
 	$timezone = @date_default_timezone_get();
 	date_default_timezone_set($timezone);
 }
+$vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate();
 
 // Initialize the version of SVN that is being used by WebSVN internally.
 require_once 'include/svnlook.php';
@@ -341,7 +343,13 @@ unset($queryParams['language']);
 unset($queryParams['template']);
 $hidden = '';
 foreach ($queryParams as $key => $value) {
-	$hidden .= '<input type="hidden" name="'.escape($key).'" value="'.escape($value).'"/>';
+	if (is_array($value)) {
+		for ($i = 0; $i < count($value); $i++) {
+			$hidden .= '<input type="hidden" name="'.escape($key).'[]" value="'.escape($value[$i]).'"/>';
+		}
+	} else {
+		$hidden .= '<input type="hidden" name="'.escape($key).'" value="'.escape($value).'"/>';
+	}
 }
 
 // If the request specifies a language, store in a permanent/session cookie.
@@ -403,9 +411,6 @@ if ($config->multiViews) {
 		$vars['repname'] = escape($rep->getDisplayName());
 		$vars['allowdownload'] = $rep->getAllowDownload();
 	}
-	// With MultiViews, wsvn creates the form once the current project is found.
-	createProjectSelectionForm();
-	createRevisionSelectionForm();
 }
 
 // If the request specifies a template, store in a permanent/session cookie.
@@ -469,6 +474,12 @@ if ($peg === 0)
 	$peg = '';
 $passrev = $rev;
 
+if (!$config->multiViews) {
+	// With MultiViews, wsvn creates the form once the current project is found.
+	createProjectSelectionForm();
+	createRevisionSelectionForm();
+}
+
 // set flag if robots should be blocked
 $vars['blockrobots'] = $config->areRobotsBlocked();
 
@@ -524,16 +535,22 @@ function createRevisionSelectionForm() {
 
 	$params = array(
 		'repname' => $rep->getDisplayName(),
-		'path' => ($path == '/' ? '' : $path),
-		'peg' => ($peg ? $peg : $rev),
 	);
+	if ($path === null)
+		$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
+	if ($path && $path != '/')
+		$params['path'] = $path;
+	if ($peg || $rev)
+		$params['peg'] = ($peg ? $peg : $rev);
 	$hidden = '';
 	foreach ($params as $key => $value) {
 		$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
 	}
 	// The blank "action" attribute makes form link back to the containing page.
 	$vars['revision_form'] = '<form method="get" action="" id="revision">'.$hidden;
-	$vars['revision_input'] = '<input type="text" size="5" name="rev" value="'.($rev ? $rev : 'HEAD').'" />';
+	if ($rev === null)
+		$rev = (int)@$_REQUEST['rev'];
+	$vars['revision_input'] = '<input type="text" size="5" name="rev" placeholder="'.($rev ? $rev : 'HEAD').'" />';
 	$vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['revision_endform'] = '</form>';
 }

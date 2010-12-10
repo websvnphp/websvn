@@ -115,11 +115,6 @@ form {
 	padding-left: 22px;
 }
 
-#revision #header h2#revnum {
-	background: none;
-	padding-left: 0;
-}
-
 #header #menus {
 	position: absolute;
 	top: 0;
@@ -222,10 +217,6 @@ form {
 
 #rev-popup .msg, .blame-popup .msg {
 	margin-top: 6px;
-}
-
-#rev-popup span {
-	margin: 0 10px;
 }
 
 #revision #rev-popup {
@@ -490,7 +481,7 @@ tbody tr:hover {
 /* @group Image-Only table links */
 /* directory / revision */
 
-td.blame a, td.download a, #revision td.diff a, td.log a, td.rss a, td.svn a {
+td.blame a, td.download a, td.diff a, td.log a, td.rss a, td.svn a {
 	text-indent: -5000px;
 	overflow: hidden;
 	display: block;
@@ -511,7 +502,7 @@ td.blame a {
 	background-image: url(images/blame.png);	
 }
 
-#revision td.diff a {
+td.diff a {
 	background-image: url(images/diff.png);	
 }
 
@@ -790,7 +781,6 @@ td.diffdeleted, del {
 }
 
 #index table {
-	font-size: 125%;
 	margin: 10px auto;
 }
 
@@ -802,14 +792,14 @@ td.diffdeleted, del {
 	background-color: #d6dde5;
 }
 
-#index th, #index td a {
-	padding: 3px 6px;
+#index td a {
+	padding: 5px 6px 6px;
 }
 
 #index tbody th {
-	padding: 2px;
 	border-bottom-color: #bbb;
 	background-image: url(images/bg-gray-light.png);
+	text-align: left;
 }
 
 #index tbody th:hover {
@@ -817,13 +807,24 @@ td.diffdeleted, del {
 	text-decoration: underline;
 }
 
-#index td a {
-	background: url(images/cube-blue.png) no-repeat 3px 3px;
-	width: 100%;
-	display: block;
+#index td {
+	border-width: 0;
+	color: #777;
+	text-align: right;
 }
 
-#index td a, #index td.group {
+#index td.project {
+	text-align: left;
+}
+
+#index td a {
+	background: url(images/cube-blue.png) no-repeat 0 4px;
+	display: block;
+	padding-left: 20px;
+	width: 100%;
+}
+
+#index tbody th, #index td.group {
 	padding-left: 25px;
 }
 
@@ -950,6 +951,10 @@ table#logs {
 	padding: 1px 0;
 	padding-left: 18px;
 	overflow: visible;
+}
+
+#revision #changes td.path a.notinpath {
+	color: #b70000;
 }
 
 #revision #changes tr.A td.path a {
