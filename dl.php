@@ -196,7 +196,7 @@ if ($rep) {
 			$retcode = 0;
 			if (class_exists('Archive_Tar')) {
 				$tar = new Archive_Tar($tarArchive);
-				$created = $tar->create($archiveName);
+				$created = $tar->create(array($archiveName));
 				if (!$created) {
 					$retcode = 1;
 					header('HTTP/1.x 500 Internal Server Error', true, 500);
