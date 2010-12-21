@@ -271,15 +271,15 @@ class Repository {
 
 	// }}}
 
-	// {{{ svnParams
+	// {{{ svnCredentials
 
-	function svnParams() {
+	function svnCredentials() {
 		$params = '';
 		if ($this->username !== null && $this->username !== '') {
-			$params .= '--username '.quote($this->username).' ';
+			$params .= ' --username '.quote($this->username);
 		}
 		if ($this->password !== null && $this->password !== '') {
-			$params .= '--password '.quote($this->password).' ';
+			$params .= ' --password '.quote($this->password);
 		}
 		return $params;
 	}
