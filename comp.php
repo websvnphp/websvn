@@ -150,7 +150,7 @@ if ($rep) {
 	$debug = false;
 
 	if (!$noinput) {
-		$cmd = $config->getSvnCommand().' diff '.($ignoreWhitespace ? '-x "-w --ignore-eol-style" ' : '').$rep->svnParams().quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
+		$cmd = $config->getSvnCommand().$rep->svnCredentials().' diff '.($ignoreWhitespace ? '-x "-w --ignore-eol-style" ' : '').quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
 	}
 
 	function clearVars() {
