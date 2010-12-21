@@ -667,7 +667,7 @@ class SVNRepository {
 
 			if (!empty($error)) {
 				global $lang;
-				error_log($lang['BADCMD'].': '.escape($cmd));
+				error_log($lang['BADCMD'].': '.$cmd);
 				error_log($error);
 				global $vars;
 				$vars['warning'] = nl2br(escape(toOutputEncoding($error)));
@@ -748,7 +748,7 @@ class SVNRepository {
 
 		if (!empty($error)) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.escape($cmd));
+			error_log($lang['BADCMD'].': '.$cmd);
 			error_log($error);
 			global $vars;
 			$vars['warning'] = 'Unable to cat file: '.nl2br(escape(toOutputEncoding($error)));
@@ -839,7 +839,7 @@ class SVNRepository {
 
 		if (!empty($error)) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.escape($cmd));
+			error_log($lang['BADCMD'].': '.$cmd);
 			error_log($error);
 			global $vars;
 			$vars['warning'] = 'No blame info: '.nl2br(escape(toOutputEncoding($error)));
@@ -886,7 +886,7 @@ class SVNRepository {
 		execCommand($cmd, $retcode);
 		if ($retcode != 0) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.escape($cmd));
+			error_log($lang['BADCMD'].': '.$cmd);
 		}
 		return $retcode;
 	}
@@ -970,7 +970,7 @@ class SVNRepository {
 		if (!empty($error)) {
 			$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 			global $lang;
-			error_log($lang['BADCMD'].': '.escape($cmd));
+			error_log($lang['BADCMD'].': '.$cmd);
 			error_log($error);
 			global $vars;
 			if (strstr($error, 'found format')) {
@@ -1077,7 +1077,7 @@ class SVNRepository {
 		if (!empty($error)) {
 			$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 			global $lang;
-			error_log($lang['BADCMD'].': '.escape($cmd));
+			error_log($lang['BADCMD'].': '.$cmd);
 			error_log($error);
 			global $vars;
 			if (strstr($error, 'found format')) {
@@ -1172,7 +1172,7 @@ class SVNRepository {
 
 		if (!empty($error)) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.escape($cmd));
+			error_log($lang['BADCMD'].': '.$cmd);
 			error_log($error);
 			global $vars;
 			if (strstr($error, 'found format')) {
