@@ -275,10 +275,10 @@ class Repository {
 
 	function svnParams() {
 		$params = '';
-		if ($this->username !== null) {
+		if ($this->username !== null && $this->username !== '') {
 			$params .= '--username '.quote($this->username).' ';
 		}
-		if ($this->password !== null) {
+		if ($this->password !== null && $this->password !== '') {
 			$params .= '--password '.quote($this->password).' ';
 		}
 		return $params;
