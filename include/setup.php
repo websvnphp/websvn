@@ -303,6 +303,7 @@ $extGeshi = array(
 	'sql' => array('sql'),
 	'tcl' => array('tcl'),
 	'vb' => array('bas'),
+	'vbnet' => array('vb'),
 	'vh' => array('v', 'verilog'),
 	'vhdl' => array('vhd', 'vhdl'),
 	'vim' => array('vim'),
