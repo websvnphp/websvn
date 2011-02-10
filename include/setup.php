@@ -534,13 +534,14 @@ function createRevisionSelectionForm() {
 	if ($rep == null)
 		return;
 
-	$params = array(
-		'repname' => $rep->getDisplayName(),
-	);
-	if ($path === null)
-		$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
-	if ($path && $path != '/')
-		$params['path'] = $path;
+	$params = array();
+	if (!$config->multiViews) {
+		$params['repname'] = $rep->getDisplayName();
+		if ($path === null)
+			$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
+		if ($path && $path != '/')
+			$params['path'] = $path;
+	}
 	if ($peg || $rev)
 		$params['peg'] = ($peg ? $peg : $rev);
 	$hidden = '';
