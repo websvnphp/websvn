@@ -49,22 +49,30 @@ class Bugtraq {
 		global $config;
 
 		if ($rep->isBugtraqEnabled()) {
-			$pos = strrpos($path, '/');
-			$parent = substr($path, 0, $pos + 1);
-			$this->append = true;
-
 			$enoughdata = false;
-			while (!$enoughdata && (strpos($parent, '/') !== false)) {
-				$properties = $svnrep->getProperties($parent);
-				if (empty($this->msgstring) && in_array('bugtraq:message', $properties)) $this->msgstring = $svnrep->getProperty($parent, 'bugtraq:message');
-				if (empty($this->logregex) && in_array('bugtraq:logregex', $properties)) $this->logregex = $svnrep->getProperty($parent, 'bugtraq:logregex');
-				if (empty($this->urlstring) && in_array('bugtraq:url', $properties)) $this->urlstring = $svnrep->getProperty($parent, 'bugtraq:url');
-				if (in_array('bugtraq:append', $properties) && $svnrep->getProperty($parent, 'bugtraq:append') == 'false') $this->append = false;
+			if (($properties = $rep->getBugtraqProperties()) !== null) {
+				$this->msgstring = $properties['bugtraq:message'];
+				$this->logregex = $properties['bugtraq:logregex'];
+				$this->urlstring = $properties['bugtraq:url'];
+				$this->append = $properties['bugtraq:append'];
+				$enoughdata = true;
+			} else {
+				$pos = strrpos($path, '/');
+				$parent = substr($path, 0, $pos + 1);
+				$this->append = true;
 
-				$parent = substr($parent, 0, -1); // Remove the trailing slash
-				$pos = strrpos($parent, '/'); // Find the last trailing slash
-				$parent = substr($parent, 0, $pos + 1); // Find the previous parent directory
-				$enoughdata = ((!empty($this->msgstring) || !empty($this->logregex)) && !empty($this->urlstring));
+				while (!$enoughdata && (strpos($parent, '/') !== false)) {
+					$properties = $svnrep->getProperties($parent);
+					if (empty($this->msgstring) && in_array('bugtraq:message', $properties)) $this->msgstring = $svnrep->getProperty($parent, 'bugtraq:message');
+					if (empty($this->logregex) && in_array('bugtraq:logregex', $properties)) $this->logregex = $svnrep->getProperty($parent, 'bugtraq:logregex');
+					if (empty($this->urlstring) && in_array('bugtraq:url', $properties)) $this->urlstring = $svnrep->getProperty($parent, 'bugtraq:url');
+					if (in_array('bugtraq:append', $properties) && $svnrep->getProperty($parent, 'bugtraq:append') == 'false') $this->append = false;
+
+					$parent = substr($parent, 0, -1); // Remove the trailing slash
+					$pos = strrpos($parent, '/'); // Find the last trailing slash
+					$parent = substr($parent, 0, $pos + 1); // Find the previous parent directory
+					$enoughdata = ((!empty($this->msgstring) || !empty($this->logregex)) && !empty($this->urlstring));
+				}
 			}
 
 			$this->msgstring = trim(@$this->msgstring);
