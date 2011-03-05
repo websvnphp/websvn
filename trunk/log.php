@@ -268,11 +268,17 @@ if ($rep) {
 			if ($match) {
 				// Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
 				$rpath = $revision->path;
-
 				if (empty($rpath)) {
 					$rpath = '/';
 				} else if ($isDir && $rpath{strlen($rpath) - 1} != '/') {
 					$rpath .= '/';
+				}
+
+				$precisePath = $revision->precisePath;
+				if (empty($precisePath)) {
+					$precisePath = '/';
+				} else if ($isDir && $precisePath{strlen($precisePath) - 1} != '/') {
+					$precisePath .= '/';
 				}
 
 				// Find the parent path (or the whole path if it's already a directory)
@@ -285,9 +291,9 @@ if ($rep) {
 				$url = $config->getURL($rep, $rpath, 'revision').$thisRevString;
 				$listing[$index]['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
 
-				$url = $config->getURL($rep, $rpath, ($isDir ? 'dir' : 'file')).$thisRevString;
-				$listing[$index]['revpathlink'] = '<a href="'.$url.'">'.$rpath.'</a>';
-				$listing[$index]['revpath'] = $rpath;
+				$url = $config->getURL($rep, $precisePath, ($isDir ? 'dir' : 'file')).$thisRevString;
+				$listing[$index]['revpathlink'] = '<a href="'.$url.'">'.$precisePath.'</a>';
+				$listing[$index]['revpath'] = $precisePath;
 				$listing[$index]['revauthor'] = $revision->author;
 				$listing[$index]['revdate'] = $revision->date;
 				$listing[$index]['revage'] = $revision->age;
