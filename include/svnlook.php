@@ -42,6 +42,7 @@ class SVNMod {
 	var $copyfrom = '';
 	var $copyrev = '';
 	var $path = '';
+	var $isdir = false;
 }
 
 class SVNListEntry {
@@ -69,6 +70,7 @@ class SVNLogEntry {
 	var $age = '';
 	var $msg = '';
 	var $path = '';
+	var $precisePath = '';
 
 	var $mods;
 	var $curMod;
@@ -346,6 +348,11 @@ function logStartElement($parser, $name, $attrs) {
 						case 'COPYFROM-REV':
 							$curLog->curEntry->curMod->copyrev = $v;
 							break;
+
+						case 'KIND':
+							if ($debugxml) print 'Kind '.$v."\n";
+							$curLog->curEntry->curMod->isdir = ($v == 'dir');
+							break;
 					}
 				}
 			}
@@ -537,6 +544,22 @@ function encodePath($uri) {
 }
 
 // }}}
+
+function _equalPart($str1, $str2) {
+	$len1 = strlen($str1);
+	$len2 = strlen($str2);
+	$i = 0;
+	while ($i < $len1 && $i < $len2) {
+		if (strcmp($str1{$i}, $str2{$i}) != 0) {
+			break;
+		}
+		$i++;
+	}
+	if ($i == 0) {
+		return '';
+	}
+	return substr($str1, 0, $i);
+}
 
 // The SVNRepository class
 
@@ -1190,10 +1213,33 @@ class SVNRepository {
 		foreach ($curLog->entries as $entryKey => $entry) {
 			$fullModAccess = true;
 			$anyModAccess = (count($entry->mods) == 0);
+			$precisePath = null;
 			foreach ($entry->mods as $modKey => $mod) {
 				$access = $this->repConfig->hasReadAccess($mod->path);
 				if ($access) {
 					$anyModAccess = true;
+
+					// find path which is parent of all modification but more precise than $curLogEntry->path
+					$modpath = $mod->path;
+					if (!$mod->isdir || $mod->action == 'D') {
+						$pos = strrpos($modpath, '/');
+						$modpath = substr($modpath, 0, $pos + 1);
+					}
+					if (strlen($modpath) == 0 || substr($modpath, -1) !== '/') {
+						$modpath .= '/';
+					}
+					//compare with current precise path
+					if ($precisePath === null) {
+						$precisePath = $modpath;
+					} else {
+						$equalPart = _equalPart($precisePath, $modpath);
+						if (substr($equalPart, -1) !== '/') {
+							$pos = strrpos($equalPart, '/');
+							$equalPart = substr($equalPart, 0, $pos + 1);
+						}
+						$precisePath = $equalPart;
+					}
+
 				} else {
 					// hide modified entry when access is prohibited
 					unset($curLog->entries[$entryKey]->mods[$modKey]);
@@ -1220,6 +1266,12 @@ class SVNRepository {
 				$curLog->entries[$entryKey]->date = '';
 				$curLog->entries[$entryKey]->committime = '';
 				$curLog->entries[$entryKey]->age = '';
+			}
+
+			if ($precisePath !== null) {
+				$curLog->entries[$entryKey]->precisePath = $precisePath;
+			} else {
+				$curLog->entries[$entryKey]->precisePath = $curLog->entries[$entryKey]->path;
 			}
 		}
 		return $curLog;
