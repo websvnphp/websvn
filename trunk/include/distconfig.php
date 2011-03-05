@@ -457,6 +457,15 @@ $config->useGeshi();
 // $config->setBugtraqEnabled(true,  'myrep');
 // $config->setBugtraqEnabled(false, 'myrep');
 
+// Usually the information to extract the bugtraq information and generate links are
+// stored in SVN properties starting with 'bugtraq:':
+// namely 'bugtraq:message', 'bugtraq:logregex', 'bugtraq:url' and 'bugtraq:append'.
+// To override the SVN properties globally or for individual repositories, uncomment
+// the appropriate line below (replacing 'myrep' with the name of the repository).
+
+// $config->setBugtraqProperties('bug #%BUGID%', 'issues? (\d+)([, ] *(\d+))*'."\n".'(\d+)', 'http://www.example.com/issues/show_bug.cgi?id=%BUGID%', false);
+// $config->setBugtraqProperties('bug #%BUGID%', 'issues? (\d+)([, ] *(\d+))*'."\n".'(\d+)', 'http://www.example.com/issues/show_bug.cgi?id=%BUGID%', false, 'myrep');
+
 // }}}
 
 // {{{ MISCELLANEOUS ---
