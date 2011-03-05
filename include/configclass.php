@@ -238,6 +238,7 @@ class Repository {
 	var $ignoreSvnMimeTypes;
 	var $ignoreWebSVNContentTypes;
 	var $bugtraq;
+	var $bugtraqProperties;
 	var $auth = null;
 	var $authBasicRealm;
 	var $templatePath = false;
@@ -525,6 +526,19 @@ class Repository {
 			return $config->isBugtraqEnabled();
 	}
 
+	function setBugtraqProperties($properties) {
+		$this->bugtraqProperties = $properties;
+	}
+
+	function getBugtraqProperties() {
+		global $config;
+
+		if (isset($this->bugtraqProperties))
+			return $this->bugtraqProperties;
+		else
+			return $config->getBugtraqProperties();
+	}
+
 	// }}}
 
 	// {{{ Authentication
@@ -636,6 +650,7 @@ class WebSvnConfig {
 	var $rssMaxEntries = 40;
 	var $spaces = 8;
 	var $bugtraq = false;
+	var $bugtraqProperties = null;
 	var $auth = null;
 	var $blockRobots = false;
 
@@ -1402,6 +1417,24 @@ class WebSvnConfig {
 
 	function isBugtraqEnabled() {
 		return $this->bugtraq;
+	}
+
+	function setBugtraqProperties($message, $logregex, $url, $append = true, $myrep = null) {
+		$properties = array();
+		$properties['bugtraq:message'] = $message;
+		$properties['bugtraq:logregex'] = $logregex;
+		$properties['bugtraq:url'] = $url;
+		$properties['bugtraq:append'] = (bool)$append;
+		if ($myrep === null) {
+			$this->bugtraqProperties = $properties;
+		} else {
+			$repo =& $this->findRepository($myrep);
+			$repo->setBugtraqProperties($properties);
+		}
+	}
+
+	function getBugtraqProperties() {
+		return $this->bugtraqProperties;
 	}
 
 	// }}}
