@@ -125,7 +125,7 @@ if ($rep) {
 		$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
 		$vars['author'] = $history->entries[0]->author;
 	}
-	createPathLinks($rep, $ppath, $passrev, $peg);
+	createPathLinks($rep, $ppath, !$passrev && $peg ? $rev : $passrev, $peg);
 	$passRevString = createRevAndPegString($rev, $peg);
 
 	if ($rev != $youngest) {
