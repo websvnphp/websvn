@@ -89,6 +89,10 @@ if ($rep) {
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 1, ($path == '/') ? '' : $peg);
+		if (!$history) {
+			unset($vars['error']);
+			$vars['error'] = 'Revision '.$peg.' of this resource does not exist.';
+		}
 	}
 
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
@@ -107,8 +111,6 @@ if ($rep) {
 
 	if (empty($rev)) {
 		$rev = $youngest;
-	} else if ($rev > $youngest) {
-		$vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
 	}
 
 	if (empty($startrev)) {
@@ -126,7 +128,7 @@ if ($rep) {
 	$vars['peg'] = $peg;
 	$vars['path'] = escape($ppath);
 
-	if (isset($history->entries[0])) {
+	if ($history && isset($history->entries[0])) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
 		$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
@@ -198,10 +200,14 @@ if ($rep) {
 	$vars['pagelinks'] = '';
 	$vars['showalllink'] = '';
 
-	$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
-	if (empty($history)) {
-		$vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
-	} else {
+	if ($history) {
+		$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
+		if (empty($history)) {
+			unset($vars['error']);
+			$vars['warning'] = 'Revision '.$startrev.' of this resource does not exist.';
+		}
+	}
+	if (!empty($history)) {
 		// Get the number of separate revisions
 		$revisions = count($history->entries);
 
