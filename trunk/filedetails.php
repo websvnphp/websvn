@@ -44,13 +44,15 @@ if ($rep) {
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+		if (!$history) {
+			unset($vars['error']);
+			$vars['error'] = 'Revision '.$peg.' of this resource does not exist.';
+		}
 	}
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
 
 	if (empty($rev)) {
 		$rev = $youngest;
-	} else if ($rev > $youngest) {
-		$vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
 	}
 
 	$extn = strtolower(strrchr($path, '.'));
