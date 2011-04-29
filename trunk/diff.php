@@ -146,12 +146,12 @@ if ($rep) {
 		}
 
 		// Get the contents of the two files
-		$newerFile = tempnam($config->getTempDir(), '');
+		$newerFile = tempnamWithCheck($config->getTempDir(), '');
 		$newerFileHl = $newerFile.'highlight';
 		$normalNew = $svnrep->getFileContents($history->entries[0]->path, $newerFile, $history->entries[0]->rev, $peg, '', 'no');
 		$highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newerFileHl, $history->entries[0]->rev, $peg, '', 'line');
 
-		$olderFile = tempnam($config->getTempDir(), '');
+		$olderFile = tempnamWithCheck($config->getTempDir(), '');
 		$olderFileHl = $olderFile.'highlight';
 		$normalOld = $svnrep->getFileContents($history->entries[0]->path, $olderFile, $history->entries[1]->rev, $peg, '', 'no');
 		$highlightedOld = $svnrep->getFileContents($history->entries[0]->path, $olderFileHl, $history->entries[1]->rev, $peg, '', 'line');
