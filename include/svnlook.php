@@ -659,7 +659,7 @@ class SVNRepository {
 
 		$tempname = $filename;
 		if ($highlight == 'line') {
-			$tempname = tempnam($config->getTempDir(), '');
+			$tempname = tempnamWithCheck($config->getTempDir(), '');
 		}
 		$highlighted = true;
 		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
@@ -810,9 +810,11 @@ class SVNRepository {
 		$ext = strrchr($path, '.');
 
 		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
-			$tempname = tempnam($config->getTempDir(), 'wsvn');
-			print toOutputEncoding($this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, true));
-			@unlink($tempname);
+			$tempname = tempnamWithCheck($config->getTempDir(), 'wsvn');
+			if ($tempname !== false) {
+				print toOutputEncoding($this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, true));
+				@unlink($tempname);
+			}
 		} else {
 			$pre = false;
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
