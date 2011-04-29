@@ -631,9 +631,25 @@ class SVNRepository {
 	}
 
 	// Private function to simplify creation of enscript command string text.
-	function enscriptCommandString($l) {
-		global $config;
-		return $config->enscript.' --language=html '.($l ? '--color --'.(!$config->getUseEnscriptBefore_1_6_3() ? 'highlight' : 'pretty-print').'='.$l : '').' -o -';
+	function enscriptCommandString($path) {
+		global $config, $extEnscript;
+
+		$filename = basename($path);
+		$ext = strrchr($path, '.');
+		
+		$lang = false;
+		if (array_key_exists($filename, $extEnscript)) {
+			$lang = $extEnscript[$filename];
+		} else if (array_key_exists($ext, $extEnscript)) {
+			$lang = $extEnscript[$ext];
+		}
+
+		$cmd = $config->enscript.' --language=html';
+		if ($lang !== false) {
+			$cmd .= ' --color --'.(!$config->getUseEnscriptBefore_1_6_3() ? 'highlight' : 'pretty-print').'='.$lang;
+		}
+		$cmd .= ' -o -';
+		return $cmd;
 	}
 
 	// {{{ getFileContents
@@ -641,7 +657,7 @@ class SVNRepository {
 	// Dump the content of a file to the given filename
 
 	function getFileContents($path, $filename, $rev = 0, $peg = '', $pipe = '', $highlight = 'file') {
-		global $config, $extEnscript;
+		global $config;
 		assert ($highlight == 'file' || $highlight == 'no' || $highlight == 'line');
 
 		$highlighted = false;
@@ -655,22 +671,19 @@ class SVNRepository {
 
 		// Get the file contents info
 
-		$ext = strrchr($path, '.');
-
 		$tempname = $filename;
 		if ($highlight == 'line') {
 			$tempname = tempnamWithCheck($config->getTempDir(), '');
 		}
 		$highlighted = true;
-		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
+		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($path)) {
 			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg);
 		} else if ($highlight != 'no' && $config->useEnscript) {
 			// Get the files, feed it through enscript, then remove the enscript headers using sed
 			// Note that the sed command returns only the part of the file between <PRE> and </PRE>.
 			// It's complicated because it's designed not to return those lines themselves.
-			$l = @$extEnscript[$ext];
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
-			$cmd = quoteCommand($cmd.' | '.$this->enscriptCommandString($l).' | '.
+			$cmd = quoteCommand($cmd.' | '.$this->enscriptCommandString($path).' | '.
 				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
 		} else {
 			$highlighted = false;
@@ -729,12 +742,15 @@ class SVNRepository {
 	//
 	// check if geshi can highlight the given extension and return the language
 
-	function highlightLanguageUsingGeshi($ext) {
+	function highlightLanguageUsingGeshi($path) {
 		global $extGeshi;
+
+		$filename = basename($path);
+		$ext = strrchr($path, '.');
 		if (substr($ext, 0, 1) == '.') $ext = substr($ext, 1);
 
 		foreach ($extGeshi as $language => $extensions) {
-			if (in_array($ext, $extensions)) {
+			if (in_array($filename, $extensions) || in_array($ext, $extensions)) {
 				if ($this->geshi === null) {
 					require_once 'lib/geshi.php';
 					$this->geshi = new GeSHi();
@@ -805,11 +821,9 @@ class SVNRepository {
 	// Print the contents of a file without filling up Apache's memory
 
 	function listFileContents($path, $rev = 0, $peg = '') {
-		global $config, $extEnscript;
+		global $config;
 
-		$ext = strrchr($path, '.');
-
-		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($ext)) {
+		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($path)) {
 			$tempname = tempnamWithCheck($config->getTempDir(), 'wsvn');
 			if ($tempname !== false) {
 				print toOutputEncoding($this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, true));
@@ -819,8 +833,7 @@ class SVNRepository {
 			$pre = false;
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
 			if ($config->useEnscript) {
-				$l = @$extEnscript[$ext];
-				$cmd .= ' | '.$this->enscriptCommandString($l).' | '.
+				$cmd .= ' | '.$this->enscriptCommandString($path).' | '.
 					$config->sed.' -n '.$config->quote.'/^<PRE.$/,/^<\\/PRE.$/p'.$config->quote;
 			} else {
 				$pre = true;
