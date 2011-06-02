@@ -52,7 +52,7 @@ if ($rep) {
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
 
 	if (empty($rev)) {
-		$rev = $youngest;
+		$rev = !$peg ? $youngest : min($peg, $youngest);
 	}
 
 	$extn = strtolower(strrchr($path, '.'));
@@ -131,7 +131,7 @@ if ($rep) {
 	$passRevString = createRevAndPegString($rev, $peg);
 
 	if ($rev != $youngest) {
-		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'file').createRevAndPegString('', $peg);
+		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'file').createRevAndPegString($youngest, $peg);
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
