@@ -97,6 +97,13 @@ if ($rep) {
 	}
 	$logEntry = ($history) ? $history->entries[0] : null;
 
+	if (!$logEntry) {
+		header('HTTP/1.x 404 Not Found', true, 404);
+		error_log('Unable to download resource at path: '.$path);
+		print 'Unable to download resource at path: '.xml_entities($path);
+		exit(0);
+	}
+
 	if (empty($rev)) {
 		$rev = $logEntry->rev;
 	}
