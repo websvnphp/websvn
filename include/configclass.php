@@ -279,7 +279,7 @@ class Repository {
 		if ($this->username !== null && $this->username !== '') {
 			$params .= ' --username '.quote($this->username);
 		}
-		if ($this->password !== null && $this->password !== '') {
+		if ($this->password !== null) {
 			$params .= ' --password '.quote($this->password);
 		}
 		return $params;
