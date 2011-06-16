@@ -44,12 +44,12 @@ $lang["LINE"] = "Rad";
 $lang["LINENO"] = "Radnr.";
 $lang["SHOWENTIREFILE"] = "Visa hela filen";
 $lang["SHOWCOMPACT"] = "Visa bara områden med skillnader";
-// $lang["IGNOREWHITESPACE"] = "Ignore whitespace";
-// $lang["REGARDWHITESPACE"] = "Regard whitespace";
+$lang["IGNOREWHITESPACE"] = "Ignorera vityta";
+$lang["REGARDWHITESPACE"] = "Ge akt på vityta";
 
-// $lang["LISTING"] = "Directory listing";
-// $lang["FILEDETAIL"] = "Details";
-// $lang["VIEWAS"] = "View as";
+$lang["LISTING"] = "Folderlistning";
+$lang["FILEDETAIL"] = "Detaljer";
+$lang["VIEWAS"] = "Visa som";
 $lang["DIFFPREV"] = "Skillnad mot föregående";
 $lang["BLAME"] = "Ansvarig";
 $lang["BLAMEFOR"] = "Ansvariginformation för rev";
@@ -68,20 +68,20 @@ $lang["VIEWLOG"] = "Visa Logg";
 $lang["PATH"] = "Sökväg";
 $lang["AUTHOR"] = "Författare";
 $lang["AGE"] = "Ålder";
-$lang["CURDIR"] = "Nuvarande folder";
+$lang["CURDIR"] = "Aktuell folder";
 $lang["TARBALL"] = "Tarball";
-// $lang["DOWNLOAD"] = "Download";
+$lang["DOWNLOAD"] = "Ladda ned";
 
 $lang["PREV"] = "Föreg.";
 $lang["NEXT"] = "Nästa";
 $lang["SHOWALL"] = "Visa alla";
 
 $lang["BADCMD"] = "Fel vid körning av kommando";
-// $lang["UNKNOWNREVISION"] = "Revision not found";
+$lang["UNKNOWNREVISION"] = "Revision hittades inte";
 
-// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
-$lang["PROJECTS"] = "Subversion Projekt";
-// $lang["SERVER"] = "Subversion Server";
+$lang["POWERED"] = "Körs på <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["PROJECTS"] = "Subversion-projekt";
+$lang["SERVER"] = "Subversion-server";
 
 $lang["FILTER"] = "Filteralternativ";
 $lang["STARTLOG"] = "Från rev";
@@ -94,7 +94,7 @@ $lang["NORESULTS"] = "Det finns ingen logg som motsvarar din sökning";
 $lang["NOMORERESULTS"] = "Det finns inga fler loggar i din sökning";
 $lang["NOPREVREV"] = "Ingen föregående revision";
 
-// $lang["RSSFEEDTITLE"] = "WebSVN RSS feed";
+$lang["RSSFEEDTITLE"] = "WebSVN:s RSS-feed";
 $lang["FILESMODIFIED"] = "fil(er) ändrade";
 $lang["RSSFEED"] = "RSS";
 
