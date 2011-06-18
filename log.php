@@ -90,8 +90,8 @@ if ($rep) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 1, ($path == '/') ? '' : $peg);
 		if (!$history) {
-			unset($vars['error']);
-			$vars['error'] = 'Revision '.$peg.' of this resource does not exist.';
+			header('HTTP/1.x 404 Not Found', true, 404);
+			$vars['error'] = $lang['NOPATH'];
 		}
 	}
 

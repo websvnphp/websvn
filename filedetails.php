@@ -45,8 +45,8 @@ if ($rep) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
 		if (!$history) {
-			unset($vars['error']);
-			$vars['error'] = 'Revision '.$peg.' of this resource does not exist.';
+			header('HTTP/1.x 404 Not Found', true, 404);
+			$vars['error'] = $lang['NOPATH'];
 		}
 	}
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
@@ -60,7 +60,7 @@ if ($rep) {
 	// Check to see if the user has requested that this type be zipped and sent
 	// to the browser as an attachment
 
-	if (isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
+	if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
 		$base = basename($path);
 		header('Content-Type: application/x-gzip');
 		header('Content-Disposition: attachment; filename='.urlencode($base).'.gz');
@@ -95,7 +95,7 @@ if ($rep) {
 	}
 
 	$useMime = ($mimeType) ? @$_REQUEST['usemime'] : false;
-	if (!empty($mimeType) && !$useMime) {
+	if ($history && !empty($mimeType) && !$useMime) {
 		$useMime = $mimeType; // Save MIME type for later before possibly clobbering
 		// If a MIME type exists but is set to be ignored, set it to an empty string.
 		foreach ($config->inlineMimeTypes as $inlineType) {
@@ -107,7 +107,7 @@ if ($rep) {
 	}
 
 	// If a MIME type is associated with the file, deliver with Content-Type header.
-	if (!empty($mimeType) && $rep->hasReadAccess($path, false)) {
+	if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false)) {
 		$base = basename($path);
 		header('Content-Type: '.$mimeType);
 		//header('Content-Length: '.$size);
@@ -195,6 +195,7 @@ if ($rep) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	} else if (!$svnrep->isFile($path, $rev, $peg)) {
+		header('HTTP/1.x 404 Not Found', true, 404);
 		$vars['error'] = $lang['NOPATH'];
 	}
 
