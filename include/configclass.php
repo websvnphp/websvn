@@ -633,6 +633,7 @@ class WebSvnConfig {
 	var $showLastModInListing = true;
 	var $showAgeInsteadOfDate = true;
 	var $_showRepositorySelectionForm = true;
+	var $_ignoreWhitespacesInDiff = false;
 	var $serverIsWindows = false;
 	var $multiViews = false;
 	var $useEnscript = false;
@@ -1549,6 +1550,14 @@ class WebSvnConfig {
 
 	function setShowRepositorySelectionForm($show) {
 		$this->_showRepositorySelectionForm = $show;
+	}
+
+	function getIgnoreWhitespacesInDiff() {
+		return $this->_ignoreWhitespacesInDiff;
+	}
+
+	function setIgnoreWhitespacesInDiff($ignore) {
+		$this->_ignoreWhitespacesInDiff = $ignore;
 	}
 
 	// Methods for storing version information for the command-line svn tool
