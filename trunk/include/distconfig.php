@@ -179,6 +179,11 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // $config->setShowRepositorySelectionForm(false);
 
+// By default, WebSVN does not ignore whitespaces when showing diffs.
+// To enable ignoring whitespaces in diffs per default uncomment this line.
+
+// $config->setIgnoreWhitespacesInDiff(true);
+
 // }}}
 
 // {{{ LANGUAGE SETUP ---
