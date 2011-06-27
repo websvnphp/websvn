@@ -191,6 +191,8 @@ $extEnscript = array(
 	'.c'			 => 'c',
 	'.c++'		 => 'cpp',
 	'.cc'			=> 'cpp',
+	'.cmake'   => 'cmake',
+	'CMakeLists.txt' => 'cmake',
 	'.cpp'		 => 'cpp',
 	'.csh'		 => 'csh',
 	'.cxx'		 => 'cpp',
@@ -262,6 +264,7 @@ $extGeshi = array(
 	'bibtex' => array('bib'),
 	'c' => array('c'),
 	'cfm' => array('cfm', 'cfml'),
+	'cmake' => array('cmake', 'CMakeLists.txt'),
 	'cobol' => array('cbl'),
 	'cpp' => array('cc', 'cpp', 'cxx', 'c++', 'h', 'hpp'),
 	'csharp' => array('cs'),
@@ -303,6 +306,7 @@ $extGeshi = array(
 	'sql' => array('sql'),
 	'tcl' => array('tcl'),
 	'vb' => array('bas'),
+	'vbnet' => array('vb'),
 	'vh' => array('v', 'verilog'),
 	'vhdl' => array('vhd', 'vhdl'),
 	'vim' => array('vim'),
@@ -533,13 +537,14 @@ function createRevisionSelectionForm() {
 	if ($rep == null)
 		return;
 
-	$params = array(
-		'repname' => $rep->getDisplayName(),
-	);
-	if ($path === null)
-		$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
-	if ($path && $path != '/')
-		$params['path'] = $path;
+	$params = array();
+	if (!$config->multiViews) {
+		$params['repname'] = $rep->getDisplayName();
+		if ($path === null)
+			$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
+		if ($path && $path != '/')
+			$params['path'] = $path;
+	}
 	if ($peg || $rev)
 		$params['peg'] = ($peg ? $peg : $rev);
 	$hidden = '';

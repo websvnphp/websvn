@@ -222,6 +222,10 @@ if ($rep) {
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+		if (!$history) {
+			header('HTTP/1.x 404 Not Found', true, 404);
+			$vars['error'] = $lang['NOPATH'];
+		}
 	}
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
@@ -258,7 +262,7 @@ if ($rep) {
 		if ($path == '/') {
 			$vars['goyoungesturl'] = $config->getURL($rep, '', 'dir');
 		} else {
-			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').'peg='.($peg ? $peg: $rev).$revurlSuffix;
+			$vars['goyoungesturl'] = $config->getURL($rep, $path, 'dir').createRevAndPegString($youngest, $peg ? $peg: $rev).$revurlSuffix;
 		}
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 

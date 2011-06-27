@@ -63,11 +63,16 @@ if (!$rep->hasReadAccess($path, false)) {
 	exit;
 }
 
-header('Content-Type: application/xml; charset=utf-8');
-
 // If there's no revision info, go to the lastest revision for this path
 $svnrep = new SVNRepository($rep);
 $history = $svnrep->getLog($path, $rev, '', false, $max, $peg);
+if (!$history) {
+	header('HTTP/1.x 404 Not Found', true, 404);
+	echo $lang['NOPATH'];
+	exit;
+}
+
+header('Content-Type: application/xml; charset=utf-8');
 
 if ($rep->isRssCachingEnabled()) {
 	// Filename for storing a cached RSS feed for this particular path/revision
@@ -92,7 +97,7 @@ $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
 $rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').(@$_REQUEST['isdir'] == 1 ? 'isdir=1&amp;' : '').'max='.$max.'&amp;'.createRevAndPegString($passrev, $peg)).'</link>';
 // URL where this original RSS feed can be found
 $rss .= '<atom:link href="'.escape(getFullURL($_SERVER['REQUEST_URI'])).'" rel="self" type="application/rss+xml" />'."\n";
-if ($history && is_array($history->entries)) {
+if (is_array($history->entries)) {
 	$itemURL = $baseurl.$config->getURL($rep, $path, 'revision');
 	if (@$_REQUEST['isdir'] == 1 || $path == '' || $path == '/')
 		$itemURL .= 'isdir=1&amp;';

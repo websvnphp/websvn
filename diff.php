@@ -32,7 +32,10 @@ require_once 'include/diff_inc.php';
 
 $vars['action'] = $lang['DIFF'];
 $all = (@$_REQUEST['all'] == 1);
-$ignoreWhitespace = (@$_REQUEST['ignorews'] == 1);
+$ignoreWhitespace = $config->getIgnoreWhitespacesInDiff();
+if (array_key_exists('ignorews', $_REQUEST)) {
+  $ignoreWhitespace = (bool)$_REQUEST['ignorews'];
+}
 
 // Make sure that we have a repository
 if ($rep) {
@@ -77,8 +80,13 @@ if ($rep) {
 	createPathLinks($rep, $ppath, $passrev, $peg);
 	$passRevString = createRevAndPegString($rev, $peg);
 
+	$passIgnoreWhitespace = '';
+	if ($ignoreWhitespace != $config->getIgnoreWhitespacesInDiff()) {
+		$passIgnoreWhitespace = '&amp;ignorews='.($ignoreWhitespace ? '1' : '0');
+	}
+
 	if ($rev != $youngest) {
-		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'diff').createRevAndPegString('', $peg);
+		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'diff').createRevAndPegString('', $peg).$passIgnoreWhitespace;
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 	}
 
@@ -89,7 +97,7 @@ if ($rep) {
 			$nextRev = $history2->entries[1]->rev;
 			if ($nextRev != $youngest) {
 				$vars['nextrev'] = $nextRev;
-				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg);
+				$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg).$passIgnoreWhitespace;
 			}
 		}
 		unset($vars['error']);
@@ -99,7 +107,7 @@ if ($rep) {
 		$prevRev = $history->entries[1]->rev;
 		$prevPath = $history->entries[1]->path;
 		$vars['prevrev'] = $prevRev;
-		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $peg);
+		$vars['prevrevurl'] = $revurl.createRevAndPegString($prevRev, $peg).$passIgnoreWhitespace;
 	}
 
 	$vars['revurl'] = $config->getURL($rep, $path, 'revision').$passRevString;
@@ -132,26 +140,29 @@ if ($rep) {
 	} else {
 		$diff = $config->getURL($rep, $path, 'diff').$passRevString;
 
-		$passIgnoreWhitespace = ($ignoreWhitespace ? '&amp;ignorews=1' : '');
 		if ($all) {
 			$vars['showcompactlink'] = '<a href="'.$diff.$passIgnoreWhitespace.'">'.$lang['SHOWCOMPACT'].'</a>';
 		} else {
 			$vars['showalllink'] = '<a href="'.$diff.$passIgnoreWhitespace.'&amp;all=1'.'">'.$lang['SHOWENTIREFILE'].'</a>';
 		}
 		$passShowAll = ($all ? '&amp;all=1' : '');
+		$toggleIgnoreWhitespace = '';
+		if ($ignoreWhitespace == $config->getIgnoreWhitespacesInDiff()) {
+			$toggleIgnoreWhitespace = '&amp;ignorews='.($ignoreWhitespace ? '0' : '1');
+		}
 		if ($ignoreWhitespace) {
-			$vars['regardwhitespacelink'] = '<a href="'.$diff.$passShowAll.'">'.$lang['REGARDWHITESPACE'].'</a>';
+			$vars['regardwhitespacelink'] = '<a href="'.$diff.$passShowAll.$toggleIgnoreWhitespace.'">'.$lang['REGARDWHITESPACE'].'</a>';
 		} else {
-			$vars['ignorewhitespacelink'] = '<a href="'.$diff.$passShowAll.'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
+			$vars['ignorewhitespacelink'] = '<a href="'.$diff.$passShowAll.$toggleIgnoreWhitespace.'">'.$lang['IGNOREWHITESPACE'].'</a>';
 		}
 
 		// Get the contents of the two files
-		$newerFile = tempnam($config->getTempDir(), '');
+		$newerFile = tempnamWithCheck($config->getTempDir(), '');
 		$newerFileHl = $newerFile.'highlight';
 		$normalNew = $svnrep->getFileContents($history->entries[0]->path, $newerFile, $history->entries[0]->rev, $peg, '', 'no');
 		$highlightedNew = $svnrep->getFileContents($history->entries[0]->path, $newerFileHl, $history->entries[0]->rev, $peg, '', 'line');
 
-		$olderFile = tempnam($config->getTempDir(), '');
+		$olderFile = tempnamWithCheck($config->getTempDir(), '');
 		$olderFileHl = $olderFile.'highlight';
 		$normalOld = $svnrep->getFileContents($history->entries[0]->path, $olderFile, $history->entries[1]->rev, $peg, '', 'no');
 		$highlightedOld = $svnrep->getFileContents($history->entries[0]->path, $olderFileHl, $history->entries[1]->rev, $peg, '', 'line');

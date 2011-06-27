@@ -346,13 +346,15 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 	} else {
 		$whitespaces = array(' ', "\t", "\n", "\r");
 		$mappedFromLines = array();
-		foreach ($fromLines as &$line) {
+		foreach ($fromLines as $k => $line) {
 			$line = rtrim($line, "\n\r");
+			$fromLines[$k] = $line;
 			$mappedFromLines[] = str_replace($whitespaces, array(), $line);
 		}
 		$mappedToLines = array();
-		foreach ($toLines as &$line) {
+		foreach ($toLines as $k => $line) {
 			$line = rtrim($line, "\n\r");
+			$toLines[$k] = $line;
 			$mappedToLines[] = str_replace($whitespaces, array(), $line);
 		}
 		$diff = @new Text_MappedDiff($fromLines, $toLines, $mappedFromLines, $mappedToLines);

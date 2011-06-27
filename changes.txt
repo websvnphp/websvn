@@ -1,3 +1,19 @@
+2.3.3
+
+* Fixed security issue (only affecting Windows with enabled downloads)
+* Added option to override bugtraq properties in config file (#315)
+* Added support for using complete filenames (instead of extensions only) for enscript and GeSHi highlighting (e.g. CMakeLists.txt)
+* Added option to ignore whitespaces in diff as default
+* Added proper notification if temporary folder is not writable
+* Improved path-column in log-view to show most precise path containing all modifications of revision (#313)
+* Improved handling of non-existing resources, returning HTTP status code 404 with an error message not containing SVN commands (#321)
+* Fixed URLs when using revision form and listing view (partially #314)
+* Fixed downloading folders containing whitespaces (#308)
+* Fixed inline diff when ignoring whitespaces with PHP 4 (#309)
+* Fixed keeping flag to regard/ignore whitespaces in diff when moving to previous/next/youngest revision
+* Updated translation: Swedish (#320)
+
+
 2.3.2
 
 * Added ability to use plain PHP for creating templates

@@ -238,6 +238,7 @@ class Repository {
 	var $ignoreSvnMimeTypes;
 	var $ignoreWebSVNContentTypes;
 	var $bugtraq;
+	var $bugtraqProperties;
 	var $auth = null;
 	var $authBasicRealm;
 	var $templatePath = false;
@@ -271,15 +272,15 @@ class Repository {
 
 	// }}}
 
-	// {{{ svnParams
+	// {{{ svnCredentials
 
-	function svnParams() {
+	function svnCredentials() {
 		$params = '';
-		if ($this->username !== null) {
-			$params .= '--username '.quote($this->username).' ';
+		if ($this->username !== null && $this->username !== '') {
+			$params .= ' --username '.quote($this->username);
 		}
 		if ($this->password !== null) {
-			$params .= '--password '.quote($this->password).' ';
+			$params .= ' --password '.quote($this->password);
 		}
 		return $params;
 	}
@@ -525,6 +526,19 @@ class Repository {
 			return $config->isBugtraqEnabled();
 	}
 
+	function setBugtraqProperties($properties) {
+		$this->bugtraqProperties = $properties;
+	}
+
+	function getBugtraqProperties() {
+		global $config;
+
+		if (isset($this->bugtraqProperties))
+			return $this->bugtraqProperties;
+		else
+			return $config->getBugtraqProperties();
+	}
+
 	// }}}
 
 	// {{{ Authentication
@@ -619,6 +633,7 @@ class WebSvnConfig {
 	var $showLastModInListing = true;
 	var $showAgeInsteadOfDate = true;
 	var $_showRepositorySelectionForm = true;
+	var $_ignoreWhitespacesInDiff = false;
 	var $serverIsWindows = false;
 	var $multiViews = false;
 	var $useEnscript = false;
@@ -636,6 +651,7 @@ class WebSvnConfig {
 	var $rssMaxEntries = 40;
 	var $spaces = 8;
 	var $bugtraq = false;
+	var $bugtraqProperties = null;
 	var $auth = null;
 	var $blockRobots = false;
 
@@ -1404,6 +1420,24 @@ class WebSvnConfig {
 		return $this->bugtraq;
 	}
 
+	function setBugtraqProperties($message, $logregex, $url, $append = true, $myrep = null) {
+		$properties = array();
+		$properties['bugtraq:message'] = $message;
+		$properties['bugtraq:logregex'] = $logregex;
+		$properties['bugtraq:url'] = $url;
+		$properties['bugtraq:append'] = (bool)$append;
+		if ($myrep === null) {
+			$this->bugtraqProperties = $properties;
+		} else {
+			$repo =& $this->findRepository($myrep);
+			$repo->setBugtraqProperties($properties);
+		}
+	}
+
+	function getBugtraqProperties() {
+		return $this->bugtraqProperties;
+	}
+
 	// }}}
 
 	// {{{ Misc settings
@@ -1516,6 +1550,14 @@ class WebSvnConfig {
 
 	function setShowRepositorySelectionForm($show) {
 		$this->_showRepositorySelectionForm = $show;
+	}
+
+	function getIgnoreWhitespacesInDiff() {
+		return $this->_ignoreWhitespacesInDiff;
+	}
+
+	function setIgnoreWhitespacesInDiff($ignore) {
+		$this->_ignoreWhitespacesInDiff = $ignore;
 	}
 
 	// Methods for storing version information for the command-line svn tool
