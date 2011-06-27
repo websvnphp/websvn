@@ -1,0 +1,96 @@
+    <h1>[websvn:repname]</h1>
+    <div id="projects">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+[websvn-test:error]
+    <div id="error">[websvn:error]</div>
+[websvn-else]
+    <div id="revjump">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    <div id="pathlinks">[websvn:pathlinks]</div>
+    <div id="nav">
+      [websvn-test:goyoungestlink]
+      [websvn:goyoungestlink] -
+      [websvn-endtest]
+      [websvn:changeslink] -
+      [websvn-test:filedetaillink]
+      [websvn:filedetaillink] -
+      [websvn:blamelink] -
+      [websvn:difflink]
+      [websvn-else]
+      [websvn:directorylink]
+      [websvn-endtest]
+      [websvn-test:clientrooturl]
+      - <a href="[websvn:clientrooturl][websvn:path]">SVN</a>
+      [websvn-endtest]
+      [websvn-test:rsslink]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
+  [websvn-test:warning]
+    <div id="warning">[websvn:warning]</div>
+  [websvn-else]
+    <center>
+    [websvn:logsearch_form]
+    [lang:STARTLOG]:[websvn:logsearch_startbox] [lang:ENDLOG]:[websvn:logsearch_endbox] [lang:MAXLOG]:[websvn:logsearch_maxbox] [lang:SEARCHLOG]:[websvn:logsearch_inputbox] [lang:SHOWALL]:[websvn:logsearch_showall]
+    [websvn:logsearch_submit]
+    [websvn-test:logsearch_clearloglink]
+    <br/>[websvn:logsearch_clearloglink]
+    [websvn-endtest]
+    [websvn:logsearch_endform]
+    [websvn-test:logsearch_nomatches]
+      <p>[lang:NORESULTS]</p>
+    [websvn-endtest]
+    [websvn-test:logsearch_nomorematches]
+    <p>[lang:NOMORERESULTS]</p>
+    [websvn-endtest]
+    [websvn:logsearch_moreresultslink]
+    <span id="logpagelinks">[websvn:pagelinks]</span> &nbsp; &nbsp; [websvn:showalllink]
+    </center>
+
+    [websvn-test:logsearch_resultsfound]
+    [websvn:compare_form]
+      <table cellpadding="2" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th>[lang:REV]</th>
+          <th>[lang:AGE]</th>
+          <th>[lang:AUTHOR]</th>
+          <th>[lang:PATH]</th>
+          <th>[lang:LOGMSG]</th>
+          <th>[lang:DIFF]</th>
+          [websvn-test:showchanges]
+          <th>[lang:CHANGES]</th>
+          [websvn-endtest]
+        </tr>
+        </thead>
+        [websvn-startlisting]
+        <tr class="row[websvn:rowparity]">
+          <td style="white-space: nowrap;">[websvn:compare_box][websvn:revlink]</td>
+          [websvn-test:showageinsteadofdate]
+          <td title="[websvn:revdate]">[websvn:revage]</td>
+          [websvn-else]
+          <td title="[websvn:revage]">[websvn:revdate]</td>
+          [websvn-endtest]
+          <td>[websvn:revauthor]</td>
+          <td>[websvn:revpathlink]</td>
+          <td valign="top">[websvn:revlog]</td>
+          <td><a href="[websvn:compareurl]" title="[lang:DIFFPREV]">[lang:DIFF]</a></td>
+          [websvn-test:showchanges]
+          <td class="changes"><table>
+          [websvn-test:revadded]
+            <tr><td>A</td><td>[websvn:revadded]</td></tr>
+          [websvn-endtest]
+          [websvn-test:revdeleted]
+            <tr><td>D</td><td>[websvn:revdeleted]</td></tr>
+          [websvn-endtest]
+          [websvn-test:revmodified]
+            <tr><td>M</td><td>[websvn:revmodified]</td></tr>
+          [websvn-endtest]
+          </table></td>
+          [websvn-endtest]
+        </tr>
+        [websvn-endlisting]
+      </table>
+      <center>[websvn:compare_submit]</center>
+    [websvn:compare_endform]
+    [websvn-endtest]
+  [websvn-endtest]
+[websvn-endtest]  

@@ -1,0 +1,80 @@
+     <div id="info">
+     <h2>About</h2>
+     <dl>
+       <dd>You can customize this short message in the index.tmpl of this template in order to tell your visitors what they find in your repositories.</dd>
+       <dd>Visit <a href="http://www.websvn.info">www.websvn.info</a> for more information about WebSVN.</dd>
+       <dd>Learn more about Subversion at <a href="http://subversion.tigris.org">subversion.tigris.org</a>.</dd>
+     </dl>
+     </div>
+     
+[websvn-test:error]
+  <div id="error">[websvn:error]</div>
+[websvn-else]
+  <div id="wrap">
+    <h2 class="regular">[lang:PROJECTS]</h2>
+    <table>
+  [websvn-test:flatview]
+    [websvn-startlisting]
+    [websvn-test:groupid]
+    [websvn-else]
+      <tr>
+        <td class="project">[websvn:projectlink]</td>
+        [websvn-test:showlastmod]
+        <td>[lang:REV] [websvn:revision]</td>
+        [websvn-test:showageinsteadofdate]
+        <td title="[websvn:date]">[websvn:age]</td>
+        [websvn-else]
+        <td title="[websvn:age]">[websvn:date]</td>
+        [websvn-endtest]
+        <td>[websvn:author]</td>
+        [websvn-endtest]
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-else]
+    [websvn-startlisting]
+    [websvn-test:groupid]
+      <tr><th onclick="toggleGroup('[websvn:groupname]'); this.className = (this.className == 'open') ? 'closed' : 'open';"
+      [websvn-test:opentree]
+              class="open"
+      [websvn-else]
+              class="closed"
+      [websvn-endtest]
+      [websvn-test:showlastmod]
+              colspan="4"
+      [websvn-endtest]
+      >[websvn:groupname]</th></tr>
+    [websvn-else]
+      <tr title="[websvn:groupname]">
+      [websvn-test:groupname]
+        <td class="project group">[websvn:projectlink]</td>
+      [websvn-else]
+        <td class="project">[websvn:projectlink]</td>
+      [websvn-endtest]
+      [websvn-test:showlastmod]
+        <td>[lang:REV] [websvn:revision]</td>
+        [websvn-test:showageinsteadofdate]
+        <td title="[websvn:date]">[websvn:age]</td>
+        [websvn-else]
+        <td title="[websvn:age]">[websvn:date]</td>
+        [websvn-endtest]
+        <td>[websvn:author]</td>
+      [websvn-endtest]
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-endtest]
+    </table>
+  </div>
+  [websvn-test:treeview]
+    <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/group-collapse.js"></script>
+    [websvn-test:opentree]
+    [websvn-else]
+    <script type="text/javascript">
+    //<![CDATA[
+    collapseAllGroups();
+    //]]>
+    </script>
+    [websvn-endtest]
+  [websvn-endtest]
+[websvn-endtest]

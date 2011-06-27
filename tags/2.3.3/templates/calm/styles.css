@@ -1,0 +1,883 @@
+html,body {
+  background:#FFF;
+  color:gray;
+  font-family: 'Trebuchet MS', Verdana, sans-serif;
+  font-size:13px;
+  line-height:1.3em;
+  margin:0; padding:0;
+  text-align:center;
+  height: 95%;
+}
+
+#container {
+position: relative;
+min-height: 100%;
+padding-bottom:40px;
+}
+* html #container
+{
+height: 95%;
+}
+#footer
+{
+height:40px;
+position: relative;
+margin:0;padding:0;
+margin-top: -40px;
+}
+
+a {
+  color:#000;
+  text-decoration:none;
+  outline: none !important;
+}
+a:hover {
+  background-color:#F0E68C;
+}
+a img {
+  border:0;
+}
+
+#select {
+  margin:1em 2% 0 2%;
+  text-align:right;
+  padding:10px 10px 0 10px;
+  height:2em;
+}
+#select form, #select div {
+  display: inline;
+}
+#revjump {
+  margin:-3.7em 2% 0;
+  text-align:right;
+  height:2em;
+  padding: 10px 10px 0;
+}
+#wrap {
+  margin:0 2% 0 32%;
+  text-align:left;
+  background:#FFF;
+  width:65%;
+  padding:5px 0;
+}
+#index #wrap tr {
+  border-top:1px dotted lightgrey;
+}
+#index #wrap tr:first-child {
+  border-width:0;
+}
+#index #wrap td, #index #wrap th {
+  border-width:0;
+  padding:4px;
+  text-align:right;
+  white-space:pre;
+}
+#index #wrap td.project {
+  text-align:left;
+  width:100%;
+}
+#index #wrap td.project a {
+  background-image:url(images/cube_green.png);
+  background-repeat:no-repeat;
+  background-position:2px 50%;
+}
+#index #wrap td.project a, #index #wrap td.group {
+  padding-left:22px;
+}
+#index #wrap th {
+  background-color:white;
+  background-repeat:no-repeat;
+  background-position:6px 50%;
+  padding-left:26px;
+  text-align:left;
+}
+#index #wrap th.closed {
+  background-image:url(images/toggleup.png);
+}
+#index #wrap th.open {
+  background-image:url(images/toggledown.png);
+}
+#index #info dl {
+  margin:2px 0;
+}
+#index #info dl dd:first-child {
+  border-width: 0;
+}
+#info {
+  float:left;
+  width:28%;
+  margin-left:2%;
+  text-align:left;
+  padding:5px 0;
+}
+h1, h2 {
+  color:gray;
+  text-align:left;
+  text-transform:uppercase;
+  line-height:1em;
+  font-weight:normal;
+}
+h1 {
+  line-height:1.7em;
+  font-size:1.7em;
+  border-bottom:1px solid gray;
+  padding:10px 5px 10px 5px;
+  margin:-1.7em 2% 1em 2%;
+  text-align:left;
+  font-weight:normal;
+  letter-spacing: -0.018em;
+}
+h1 span {
+  padding-left:22px;
+  background:url(images/cube_green.png) no-repeat 0 50%;
+}
+h1 span a, h1 span a:link {
+  color:gray;
+}
+h2 a {
+  background:#FFF;
+  margin:0;
+}
+h2 a:link,
+h2 a:visited {
+  font-weight:normal;
+  letter-spacing: -0.018em;
+  color: #b00
+}
+h2 a:hover {
+  background:#f2f2f2;
+}
+h2 {
+  font-weight:normal;
+  letter-spacing: -0.018em;
+  color:#666;
+  padding:0 .1em;
+}
+
+#info h2 {
+  border-bottom:1px solid gray;
+  padding:0 5px 10px;
+  margin:0;
+  text-align:left;
+  font-size:1.7em;
+  font-weight:normal;
+  letter-spacing: -0.018em;
+}
+
+#wrap h2 {
+  padding:0 0 10px 0;
+  margin:0;
+  text-align:left;
+  font-size:1.7em;
+  text-transform:none;
+  letter-spacing: -0.018em;
+}
+#wrap h2.regular {
+  padding:0 5px 10px 5px;
+  margin:0;
+  text-align:left;
+  font-size:1.7em;
+  text-transform:uppercase;
+  border-bottom:1px solid gray;
+}
+#wrap h2.regular .links {
+  float:right;
+  padding:0 5px 10px 5px;
+  margin:0;
+  text-align:right;
+  font-size:13px;
+  text-transform:none;
+}
+#wrap h2.regular .links a {
+  color: #000000;
+  font-weight: normal;
+  letter-spacing: 0;
+}
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Forms
+*/
+
+input, select {
+  padding:1px;
+  margin:1px;
+  font-family:'Trebuchet MS', 'Lucida Grande', Verdana, Arial, sans-serif;
+  border-right:1px solid #000;
+  border-bottom:1px solid #000;
+  border-left:1px solid #b2b2b2;
+  border-top:1px solid #b2b2b2;
+  background-color:#FFF8DC;
+}
+
+input {
+  padding:2px 5px;
+  font-size:1.1em;
+  background-color:#FFF;
+  background-image:url(images/textbg.png);
+  background-repeat:repeat-x;
+  background-position:0 100%;
+  border:1px solid #b2b2b2;
+}
+input:hover,
+input:active,
+input:focus {
+  border:1px solid #666;
+  background-color:#FFF;
+}
+#info ul li input {
+  background-color:#FFF;
+  background-image:url(images/textbg.png);
+  background-repeat:repeat-x;
+  background-position:0 100%;
+  border:1px solid #b2b2b2;
+}
+span.submit input,
+#info span.submit input,
+#info p.submit input,
+#wrap p.submit input {
+  background-image:url(images/submitbg.png);
+}
+#info table tr td input {
+  font-size:1em;
+  width:92%;
+  background:#FFF url(images/textbg.png) repeat-x 0 0;
+}
+#info table tr td.revcomp input {
+  width:50px;
+}
+#info table tr td.all input {
+  width:auto;
+}
+select {
+  padding:2px 2px 2px 21px;
+  border:1px solid #cccccc;
+  background-color:#FFF;
+  background-image:url(images/cube_green.png);
+  background-repeat:no-repeat;
+  background-position:2px 50%;
+}
+
+select:hover,
+select:active,
+select:focus {
+  border:1px solid #666;
+  background-color:#F5F5DC;
+  background-repeat:no-repeat;
+  background-position:2px 50%;
+  background-image:url(images/cube_green.png);
+}
+option,
+option:hover,
+option:focus,
+option:active {
+  padding-left:25px;
+  background-image:url(images/cube_green.png);
+  background-repeat:no-repeat;
+  background-position:2px 50%;
+}
+
+#index #projectform {
+	display: none;
+}
+
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Left Column
+*/
+
+/* index elements */
+#info dl {
+  margin-left:0;
+}
+#info dt, #wrap dt {
+  margin:0;
+  padding:0 0 5px 0;
+}
+#info dd, #wrap dd {
+  margin:0;
+  padding:3px 0 5px 10px;
+  border-top:1px dotted #D3D3D3;
+}
+#info ul {
+  list-style-type:none;
+  padding:0 0;
+  margin:0;
+}
+#info ul li {
+  padding:5px;
+  margin:3px 0;
+  border-bottom:1px dotted #D3D3D3;
+  overflow:hidden;
+}
+
+li.mod a, li.new a, #info li.del {
+  padding:5px 5px 5px 26px;
+  margin:2px 0 2px -2px;
+  background-position:5px 50%;
+  background-repeat:no-repeat;
+}
+li.mod a {
+  display:block;
+  color:#545400;
+  border:1px solid #f2f2c7;
+  background-color:#FFFFE0;
+  background-image:url(images/page_white_edit.png);
+}
+li.mod a:hover {
+  color:#000;
+  border:1px solid #BDB76B;
+  background-color:#F0E68C;
+}
+li.new a {
+  display:block;
+  color:#545400;
+  border:1px solid #d5f2c7;
+  background-color:#f2ffd9;
+  background-image:url(images/page_white_add.png);
+}
+li.new a:hover {
+  color:#000;
+  border:1px solid #669900;
+  background-color:#9ACD32;
+}
+
+#info ul li.del {
+  display:block;
+  color:#BC8F8F;
+  border:1px solid #BC8F8F;
+  padding:5px 5px 5px 26px;
+  margin:5px;
+  background-color:#FFEFD5;
+  background-image:url(images/page_white_delete.png);
+  background-position:5px 5px;
+  text-align:left;
+}
+#info ul li a {
+  overflow:hidden;
+}
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++ main content: Directories
+*/
+
+table {
+  border-collapse:collapse;
+  width:100%;
+}
+td {
+  padding:0;
+  text-align:left;
+}
+th {
+  text-align:center;
+}
+td, th {
+  border: 1px solid #eeeeee;
+}
+#info th, #info td {
+  border: none;
+  text-align: left;
+}
+#diff td, #blame td, table.diff td {
+  vertical-align:top;
+}
+thead th a {
+  color:white;
+}
+thead th a:hover {
+  text-decoration:underline;
+  color:white;
+  background:none;
+}
+thead tr {
+  background:#4d4d4d;
+}
+thead th {
+  background:#4d4d4d;
+  border-bottom:2px solid #000;
+  border-top:2px solid #808080;
+  border-right:1px solid #808080;
+  color:#FFF;
+  margin:3px 2px;
+  padding:3px 5px;
+}
+thead th.path {
+  text-align:left;
+  width:50%;
+}
+thead th.collno, thead th.colrev, thead th.colauth {
+  width:6%;
+}
+thead th.colcode {
+  width:73%;
+}
+tbody th {
+  background-color: #ddd;
+}
+tbody th.info {
+  background-color: #d0dfea;
+}
+tr td.code {
+  text-align:left;
+}
+td.code, td td.diff {
+  border: 1px solid #eee;
+}
+tr td.code pre {
+  padding: 1px 2px 0;
+  background-color:#f8f8f8;
+}
+tr:hover td.code pre {
+  background-color:#e8e8e8;
+}
+tr:hover td.code {
+  background-color:#FFF;
+}
+tr td.path, tr th.path {
+  text-align:left;
+  width: 100%;
+}
+tr td.path {
+  padding:0;
+}
+tr.row0 td {
+  background-color:#f0f0f0;
+}
+tr.row1 td {
+  background-color:#f8f8f8;
+}
+tr.row0:hover td, tr.row1:hover td {
+  background-color:#e8e8e8;
+}
+span.listing a, a.listing {
+  padding-left:22px;
+  background-image:url(images/sitemap_color.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.detail a {
+  padding-left:22px;
+  background-image:url(images/file.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.changes a {
+  padding-left:22px;
+  background-image:url(images/page_white_edit.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.compact a {
+  padding-left:22px;
+  background-image:url(images/arrow_in.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.full a {
+  padding-left:22px;
+  background-image:url(images/arrow_out.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.ignorews a {
+  padding-left:22px;
+  background-image:url(images/pilcrow_delete.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.regardws a {
+  padding-left:22px;
+  background-image:url(images/pilcrow.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.log a,
+td.log a {
+  padding-left:22px;
+  background-image:url(images/log.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.blame a,
+td.blame a {
+  padding-left:22px;
+  background-image:url(images/blame.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.mime a,
+td.mime a {
+  padding-left:22px;
+  background-image:url(images/eye.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.svn a,
+td.svn a {
+  padding-left:22px;
+  background-image:url(images/link.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+span.next a,
+td.next a {
+  padding-left:15px;
+  background-image:url(images/next.png);
+  background-repeat:no-repeat;
+  background-position:0px 50%;
+}
+span.prev a,
+td.prev a {
+  padding-left:15px;
+  background-image:url(images/previous.png);
+  background-repeat:no-repeat;
+  background-position:0px 50%;
+}
+
+li.compress a,
+span.compress a,
+tr td.compress a:link,
+tr td.compress a:visited,
+tr td.compress a:link {
+  padding-left:22px;
+  background-image:url(images/compress.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+li.feed a,
+span.feed a,
+tr td.feed a,
+tr td.feed a:link,
+tr td.feed a:visited,
+tr td.feed a:link {
+  padding-left:22px;
+  background-image:url(images/xml.gif);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+.goyoungest a {
+  color:#e25f53;
+  padding-left:22px;
+  background-image:url(images/exclamation.png);
+  background-repeat:no-repeat;
+  background-position:3px 50%;
+}
+.goyoungest a:hover {
+  background-color:#fad4c8;
+  color:#000;
+}
+.icon {
+  vertical-align: middle;
+}
+
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ File, Blame, Diff
+*/
+h2#pathlinks {
+  text-transform:none;
+  margin:0 2% 15px;
+}
+div.listing {
+  overflow:auto;
+  border:1px solid #D3D3D3;
+  text-align:left;
+  margin:0 2%;
+  padding:3px;
+  padding-right:20px;
+  padding-bottom:20px;
+  background:#f8f8f8;
+}
+pre a, td.code pre a {
+  color:blue;
+  font-style:italic;
+}
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+code, pre, table.diff td, #file div.listing {
+  font-family:Consolas, monospace;
+}
+.new a {color:green}
+.del a {color:red}
+.toggleup a:link,
+.toggleup a:visited,
+.toggleup a:focus {
+  padding-left:22px;
+  background:url(images/toggleup.png) no-repeat 2px 50%;
+}
+.toggleup a:hover {
+  background:#F0E68C url(images/toggleup.png) no-repeat 2px 50%;
+}
+.toggledown a:link,
+.toggledown a:visited,
+.toggledown a:focus {
+  padding-left:22px;
+  background:url(images/toggledown.png) no-repeat 2px 50%;
+}
+.toggledown a:hover {
+  background:#F0E68C url(images/toggledown.png) no-repeat 2px 50%;
+}
+span.diff a:link,
+span.diff a:visited,
+span.diff a:focus {
+  padding-left:22px;
+  background:url(images/diff.png) no-repeat 2px 50%;
+}
+span.diff a:hover {
+  background:#F0E68C url(images/diff.png) no-repeat 2px 50%;
+}
+.geshi a:link,
+.geshi a:visited,
+.geshi a:focus,
+.geshi a:hover {
+	padding-left:0;
+	background: none;
+}
+.geshi a:hover {
+	text-decoration: underline;
+}
+tr td.lineno {
+  text-align: right;
+  vertical-align: top;
+  padding: 0 2px;
+}
+tr td.row1 {
+  padding: 3px;
+  border: none;
+}
+tr td code, tr td pre {
+  display:block;
+  height:100%;
+}
+/* compare table */
+table.diff {
+  margin:10px 0 20px;
+  border-spacing:0;
+  border-collapse:separate;
+}
+table.diff td {
+  color:black;
+  padding:0;
+  margin:0;
+  border-color:#f0f0f0;
+}
+table.diff td, table td pre {
+  padding-left:16px;
+  background-position: 0 0;
+  background-repeat:no-repeat;
+  white-space:pre-wrap;
+}
+table td pre {
+  border:1px solid white;
+}
+table tr:hover {
+  background:white;
+}
+td.diffempty {
+  background-color:#f8f8f8;
+}
+table tr:hover td.diff, table tr:hover td.diffempty {
+  background-color:#e8e8e8;
+}
+table td.diff pre {
+  background-position:2px 50%;
+  background-repeat:no-repeat;
+}
+table.diff td.diffdeleted,
+table td.diffdeleted pre {
+  background-color:#f8e4cc;
+  background-image:url(images/bullet_delete.png);
+  border:1px solid #e8d4bc;
+}
+table.diff tr:hover td.diffdeleted,
+table tr:hover td.diffdeleted pre {
+  background-color:#ffccaa;
+  border-color:#bb9977;
+}
+table.diff td.diffadded,
+table td.diffadded pre {
+  border:1px solid #cdf0cd;
+  background-color:#ddffdd;
+  background-image:url(images/bullet_add.png);
+}
+table.diff tr:hover td.diffadded,
+table tr:hover td.diffadded pre {
+  background-color:#bbffbb;
+  border-color:#88bb88;
+}
+table td.diffchanged pre {
+  border:1px solid #f0f0bc;
+  background-color:#ffffcc;
+  background-image:url(images/bullet_yellow.png);
+}
+table tr:hover td.diffchanged pre {
+  background-color:#ffff99;
+  border-color:#bbbb55;
+}
+
+ins {
+  background-color: #bbffbb;
+  text-decoration: none;
+}
+tr:hover ins {
+  background-color: #99ff99;
+}
+del {
+  background-color: #ffccaa;
+  text-decoration: none;
+}
+tr:hover del {
+  background-color: #ffaa88;
+}
+
+code {
+  white-space: pre-wrap;
+}
+
+/* Whitespace hacks for IE 4-7  */
+
+* html code, *:first-child+html code {
+	white-space: pre;
+}
+
+* html table.diff td, *:first-child+html table.diff td {
+	white-space: pre;
+}
+
+/* Log View */
+
+table tr td.logmsg {
+  text-align:left;
+  padding: 3px 0 3px 3px;
+}
+
+/* sidebar form without css-bg-colors */
+#info table tr td,
+#info table tr th {
+  background:#FFF;
+  padding:0;
+  margin:0;
+  font-weight:normal;
+}
+#info table tr:hover td,
+#info table tr:hover th {
+  background:#FFF;
+  padding:0;
+  margin:0;
+}
+/* inputs see -> forms */
+
+div.blame-popup {
+  position: absolute;
+  text-align: left;
+  background-color: white;
+  padding: 5px;
+  border:1px solid #BDB76B;
+  background-color: #F0E68C;
+  max-width: 600px;
+}
+
+div.blame-popup .date {
+  font-weight: bold;
+}
+
+#wrap td.log, #wrap td.feed {
+	white-space: nowrap;
+}
+
+#wrap td.age, #wrap td.date {
+	padding-left: 3px;
+	padding-right: 8px;
+}
+
+#wrap td.age, #wrap td.date, #wrap td.rev {
+	text-align: right;
+	white-space: nowrap;
+}
+
+#wrap p.pagelinks > * {
+	padding: 0 3px;
+}
+
+div#error, div#warning {
+	font-weight: bold;
+	display: table;
+	padding: 5px;
+	margin: 0 auto;
+	border:  1px solid;
+}
+
+div#error {
+	border-color: #cb6565;
+	background-color: #ffe2e2;
+}
+
+div#warning {
+	border-color: #d5ce00;
+	background-color: #ffd;
+}
+
+table td {
+	vertical-align: top;
+	padding: 2px;
+}
+
+div#wrap table td.changes div {
+	background-repeat: no-repeat;
+	padding-left: 18px;
+}
+
+td.changes .add {
+	background-image: url(images/add.png);
+}
+
+td.changes .del {
+	background-image: url(images/delete.png);
+}
+
+td.changes .mod {
+	background-image: url(images/page_white_edit.png);
+}
+
+#blame table td {
+	text-align: right;
+	padding-right: 4px;
+	border-color: white;
+}
+
+#blame table td.code {
+	text-align: left;
+	padding: 0;
+	border-color: #eeeeee;
+}
+
+#blame table td.code pre {
+	border: none;
+}
+
+#revision td.path a {
+	background-position:5px 50%;
+	background-repeat:no-repeat;
+	padding-left: 26px;
+	top: 2px;
+	position: relative;
+}
+
+#revision td.path a.notinpath {
+	color: #b00;
+}
+
+#revision tr.M td.path a {
+	background-image:url(images/page_white_edit.png);
+}
+
+#revision tr.A td.path a {
+	background-image:url(images/page_white_add.png);
+}
+
+#revision tr.D td.path a {
+	background-image:url(images/page_white_delete.png);
+}
+
+#revision del {
+	padding-left: 26px;
+	background: none;
+}

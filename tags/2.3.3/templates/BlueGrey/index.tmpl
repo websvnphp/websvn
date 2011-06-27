@@ -1,0 +1,68 @@
+[websvn-test:error]
+    <div id="error">[websvn:error]</div>
+[websvn-else]
+    <table>
+    [websvn-test:showlastmod]
+      <thead><tr><th colspan="4">[lang:PROJECTS]</th></tr></thead>
+    [websvn-else]
+      <thead><tr><th>[lang:PROJECTS]</th></tr></thead>
+    [websvn-endtest]
+  [websvn-test:flatview]
+      [websvn-startlisting]
+      [websvn-test:groupid]
+      [websvn-else]
+      <tr class="row[websvn:rowparity]">
+        <td class="project">[websvn:projectlink]</td>
+        [websvn-test:showlastmod]
+        <td>[lang:REV] [websvn:revision]</td>
+        [websvn-test:showageinsteadofdate]
+        <td title="[websvn:date]">[websvn:age]</td>
+        [websvn-else]
+        <td title="[websvn:age]">[websvn:date]</td>
+        [websvn-endtest]
+        <td>[websvn:author]</td>
+        [websvn-endtest]
+      </tr>
+      [websvn-endtest]
+      [websvn-endlisting]
+  [websvn-else]
+    [websvn-startlisting]
+    [websvn-test:groupid]
+      [websvn-test:showlastmod]
+      <tr><th onclick="toggleGroup('[websvn:groupname]');" colspan="4">[websvn:groupname]</th></tr>
+      [websvn-else]
+      <tr><th onclick="toggleGroup('[websvn:groupname]');">[websvn:groupname]</th></tr>
+      [websvn-endtest]
+    [websvn-else]
+      <tr title="[websvn:groupname]" class="row[websvn:groupparity]">
+      [websvn-test:groupname]
+        <td class="project group">[websvn:projectlink]</td>
+      [websvn-else]
+        <td class="project">[websvn:projectlink]</td>
+      [websvn-endtest]
+      [websvn-test:showlastmod]
+        <td>[lang:REV] [websvn:revision]</td>
+        [websvn-test:showageinsteadofdate]
+        <td title="[websvn:date]">[websvn:age]</td>
+        [websvn-else]
+        <td title="[websvn:age]">[websvn:date]</td>
+        [websvn-endtest]
+        <td>[websvn:author]</td>
+      [websvn-endtest]
+      </tr>
+    [websvn-endtest]
+    [websvn-endlisting]
+  [websvn-endtest]
+    </table>
+  [websvn-test:treeview]
+    <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/group-collapse.js"></script>
+    [websvn-test:opentree]
+    [websvn-else]
+    <script type="text/javascript">
+    //<![CDATA[
+    collapseAllGroups();
+    //]]>
+    </script>
+    [websvn-endtest]
+  [websvn-endtest]
+[websvn-endtest]

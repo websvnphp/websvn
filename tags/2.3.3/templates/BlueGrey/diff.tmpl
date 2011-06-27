@@ -1,0 +1,85 @@
+    [websvn-test:rev2]
+    <h1>[websvn:repname] - [lang:DIFFREVS] [websvn:rev2] [lang:AND] [websvn:rev1]</h1>
+    [websvn-else]
+    <h1>[websvn:repname] - [lang:DIFF]</h1>
+    [websvn-endtest]
+    <div id="projects">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+[websvn-test:error]
+    <div id="error">[websvn:error]</div>
+[websvn-else]
+    <div id="revjump">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    <div id="pathlinks">[websvn:pathlinks]</div>
+    <div id="nav">
+      [websvn-test:prevrevurl]
+      <a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a> -
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      <a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a> -
+      [websvn-endtest]
+      [websvn-test:goyoungestlink]
+      [websvn:goyoungestlink] -
+      [websvn-endtest]
+      [websvn:filedetaillink] -
+      [websvn:blamelink] -
+      [websvn-test:downloadlink]
+      [websvn:downloadlink] -
+      [websvn-endtest]
+      [websvn:revlink] -
+      [websvn:loglink]
+      [websvn-test:clientrooturl]
+      - <a href="[websvn:clientrooturl][websvn:path]">SVN</a>
+      [websvn-endtest]
+      [websvn-test:rssurl]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
+  [websvn-test:warning]
+    <div id="warning">[websvn:warning]</div>
+  [websvn-else]
+    [websvn-test:noprev]
+    <div id="warning">[lang:NOPREVREV].</div>
+    [websvn-else]
+    <center>
+    [websvn-test:showcompactlink]
+      [websvn:showcompactlink] -
+    [websvn-endtest]
+    [websvn-test:showalllink]
+      [websvn:showalllink] -
+    [websvn-endtest]
+    [websvn-test:regardwhitespacelink]
+      [websvn:regardwhitespacelink]
+    [websvn-endtest]
+    [websvn-test:ignorewhitespacelink]
+      [websvn:ignorewhitespacelink]
+    [websvn-endtest]
+    </center>
+    <table class="diff" width="100%" cellspacing="0">
+      <thead>
+      <tr>
+        <th width="50%" colspan="2"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:rev2]</a></th>
+        <td width="5"></td>
+        <th width="50%" colspan="2"><a href="[websvn:revurl]">[lang:REV] [websvn:rev1]</a></th>
+      </tr>
+      </thead>
+      [websvn-startlisting]
+      [websvn-test:startblock]
+      <tr>
+        <th class="row1" colspan="2">[lang:LINE] [websvn:rev1lineno]...</th>
+        <td width="5" style="background: none;"></td>
+        <th class="row1" colspan="2">[lang:LINE] [websvn:rev2lineno]...</th>
+      </tr>
+      [websvn-endtest]
+      <tr>
+        <td class="lineno">[websvn:rev1lineno]</td>
+        <td class="[websvn:rev1diffclass]">[websvn:rev1line]</td>
+        <td width="5"></td>
+        <td class="lineno">[websvn:rev2lineno]</td>
+        <td class="[websvn:rev2diffclass]">[websvn:rev2line]</td>
+      </tr>
+      [websvn-endlisting]
+    </table>
+    [websvn-endtest]
+    [websvn-endtest]
+  [websvn-endtest]
+[websvn-endtest]
+

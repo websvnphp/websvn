@@ -1,0 +1,84 @@
+    [websvn-test:error]
+    </div>
+    [websvn-else]
+      <h2 id="pathlinks">[websvn:pathlinks]</h2>
+      <div id="revjump">[websvn:revision_form][websvn:revision_input]<span class="submit">[websvn:revision_submit]</span>[websvn:revision_endform]</div>
+      [websvn-test:noprev]
+      <h2 id="revnum"><a href="[websvn:revurl]">[lang:REV] [websvn:rev1]</a></h2>
+      [websvn-else]
+      <h2 id="revnum"><a href="[websvn:revurl]">[lang:REV] [websvn:rev2] &rarr; [lang:REV] [websvn:rev1]</a></h2>
+      [websvn-endtest]
+      <div class="clearer"></div>
+    </div>
+    <ul id="links">
+      [websvn-test:prevrevurl]
+      <li class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      <li class="next"><a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a></li>
+      [websvn-endtest]
+      [websvn-test:goyoungestlink]
+      <li class="youngest">[websvn:goyoungestlink]</li>
+      [websvn-endtest]
+      [websvn-test:showalllink]
+      <li class="entire">[websvn:showalllink]</li>
+      [websvn-endtest]
+      [websvn-test:showcompactlink]
+      <li class="compact">[websvn:showcompactlink]</li>
+      [websvn-endtest]
+      [websvn-test:ignorewhitespacelink]
+      <li class="ignore">[websvn:ignorewhitespacelink]</li>
+      [websvn-endtest]
+      [websvn-test:regardwhitespacelink]
+      <li class="regard">[websvn:regardwhitespacelink]</li>
+      [websvn-endtest]
+      <li class="file">[websvn:filedetaillink]</li>
+      <li class="blame">[websvn:blamelink]</li>
+      <li class="rev">[websvn:revlink]</li>
+      <li class="log">[websvn:loglink]</li>
+      [websvn-test:clientrooturl]
+      <li class="svn"><a href="[websvn:clientrooturl][websvn:path]">SVN</a></li>
+      [websvn-endtest]
+      [websvn-test:rsslink]
+      <li class="rss">[websvn:rsslink]</li>
+      [websvn-endtest]
+    </ul>
+    [websvn-endtest]
+  </div>
+  <div id="content">
+  [websvn-test:error]
+    <div class="error"><span>[websvn:error]</span></div>
+  [websvn-else]
+    [websvn-test:warning]
+    <div class="warning"><span>[websvn:warning]</span></div>
+    [websvn-else]
+    [websvn-test:noprev]
+    <div class="warning"><span>[lang:NOPREVREV]</span></div>
+    [websvn-else]
+    <table>
+      <thead>
+      <tr>
+        <th colspan="2">[lang:REV] [websvn:rev2]</th>
+        <th colspan="2">[lang:REV] [websvn:rev1]</th>
+      </tr>
+      </thead>
+      <tbody>
+      [websvn-startlisting]
+      [websvn-test:startblock]
+      <tr>
+        <th colspan="2">[lang:LINE] [websvn:rev1lineno]...</th>
+        <th colspan="2">[lang:LINE] [websvn:rev2lineno]...</th>
+      </tr>
+      [websvn-endtest]
+      <tr>
+        <td class="line">[websvn:rev1lineno]</td>
+        <td class="[websvn:rev1diffclass]">[websvn:rev1line]</td>
+        <td class="line">[websvn:rev2lineno]</td>
+        <td class="[websvn:rev2diffclass]">[websvn:rev2line]</td>
+      </tr>
+      [websvn-endlisting]
+      </tbody>
+    </table>
+    [websvn-endtest] <!-- noprev -->
+    [websvn-endtest] <!-- warning -->
+  [websvn-endtest] <!-- noaccess -->

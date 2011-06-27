@@ -1,0 +1,128 @@
+    <h1>[websvn:repname] - [lang:REV] [websvn:rev]</h1>
+    <div id="projects">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
+[websvn-test:error]
+    <div id="error">[websvn:error]</div>
+[websvn-else]
+    <div id="revjump">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    <div id="pathlinks">[websvn:pathlinks]</div>
+    [websvn-test:warning]
+    [websvn-else]
+    <table cellpadding="2" cellspacing="0" class="outline">
+      <thead>
+      <tr><th colspan="2">[lang:REVINFO]</th></tr>
+      </thead>
+      [websvn-test:restricted]
+      [websvn-else]
+      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:lastchangedrev] - [websvn:author] - [websvn:date]
+      [websvn-test:prevrevurl]
+      - <a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a>
+      [websvn-endtest]
+      [websvn-test:nextrevurl]
+      - <a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a>
+      [websvn-endtest]
+      [websvn-test:goyoungestlink]
+      - [websvn:goyoungestlink]
+      [websvn-endtest]
+      </td></tr>
+      <tr class="row1"><th>[lang:LOGMSG]:</th><td>[websvn:log]</td></tr>
+      [websvn-endtest]
+    </table>
+    [websvn-endtest]
+   
+    <div id="nav">
+      [websvn:revlink] - 
+      [websvn-test:comparelink]
+      [websvn:comparelink] -
+      [websvn-endtest]    
+      [websvn:loglink]
+      [websvn-test:downloadurl]
+      - <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a>
+      [websvn-endtest]
+      [websvn-test:clientrooturl]
+      - <a href="[websvn:clientrooturl][websvn:path]">SVN</a>
+      [websvn-endtest]
+      [websvn-test:rssurl]
+      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      [websvn-endtest]
+    </div>
+  [websvn-test:warning]
+    <div id="warning">[websvn:warning]</div>
+  [websvn-else]
+[websvn-defineicons]
+dir=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[FOLDER]"/>
+diropen=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/folder.png" alt="[OPEN-FOLDER]"/>
+*=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/file.png" alt="[FILE]"/>
+.c=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filec.png" alt="[C-FILE]"/>
+.cpp=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filecpp.png" alt="[CPP-FILE]"/>
+.h=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/fileh.png" alt="[H-FILE]"/>
+.html=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filehtml.png" alt="[HTML-FILE]"/>
+.java=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filejava.png" alt="[JAVA-FILE]"/>
+.m=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filem.png" alt="[M-FILE]"/>
+.py=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/filepy.png" alt="[PY-FILE]"/>
+.s=<img class="icon" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/files.png" alt="[S-FILE]"/>
+
+i-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/i-node.png" alt="[NODE]"/>
+t-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/t-node.png" alt="[NODE]"/>
+l-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/l-node.png" alt="[NODE]"/>
+e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/e-node.png" alt="[NODE]"/>
+[websvn-enddefineicons]
+    [websvn:compare_form]
+      <table cellpadding="2" cellspacing="0" width="100%" id="listing">
+        <thead>
+        <tr>
+          <th width="100%">[lang:PATH]</th>
+        [websvn-test:showlastmod]
+          <th scope="col" colspan="3">[lang:LASTMOD]</th>
+        [websvn-endtest]
+          <th nowrap="nowrap">[lang:VIEWLOG]</th>
+        [websvn-test:allowdownload]
+          <th>[lang:DOWNLOAD]</th>
+        [websvn-endtest]
+        [websvn-test:clientrooturl]
+          <th>SVN</th>
+        [websvn-endtest]
+        [websvn-test:rssurl]
+          <th>RSS</th>
+        [websvn-endtest]
+        </tr>
+        </thead>
+      [websvn-startlisting]
+        <tr class="row[websvn:rowparity]">
+          <td valign="middle">
+            [websvn:compare_box]
+            [websvn-treenode]
+            [websvn-icon]
+            [websvn:filelink]
+          </td>
+          [websvn-test:showlastmod]
+          <td class="rev"><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
+          [websvn-test:showageinsteadofdate]
+          <td class="age" title="[websvn:date]">[websvn:age]</td>
+          [websvn-else]
+          <td class="date" title="[websvn:age]">[websvn:date]</td>
+          [websvn-endtest]
+          <td class="author">[websvn:author]</td>
+          [websvn-endtest]
+          <td><a href="[websvn:logurl]">[lang:LOG]</a></td>
+          [websvn-test:allowdownload]
+          <td>
+          [websvn-test:downloadurl]
+          <a href="[websvn:downloadurl]" rel="nofollow">[lang:DOWNLOAD]</a>
+          [websvn-endtest]
+          [websvn-test:downloadplainurl]
+          <a href="[websvn:downloadplainurl]" rel="nofollow">[lang:DOWNLOAD]</a>
+          [websvn-endtest]
+          </td>
+          [websvn-endtest]
+          [websvn-test:clientrooturl]
+          <td><a href="[websvn:clientrooturl][websvn:path]">SVN</a></td>
+          [websvn-endtest]
+          [websvn-test:rssurl]
+          <td><a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a></td>
+          [websvn-endtest]
+        </tr>
+      [websvn-endlisting]
+      </table>
+    [websvn:compare_submit][websvn:compare_endform]
+  [websvn-endtest]
+[websvn-endtest]

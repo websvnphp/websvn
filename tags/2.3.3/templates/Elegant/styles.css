@@ -1,0 +1,982 @@
+/* @group Global Styles */
+
+/* @group Common Elements */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+	font-size: 8pt;
+	background-color: white;
+}
+
+@media print {
+	body {
+		font-size: 7pt;
+	}
+}
+
+h1 {
+	font-size: 2em;
+	margin-top: 0;
+	padding-top: 8px;
+}
+
+h2 {
+	font-size: 1.5em;
+	margin: 5px 0;
+}
+
+dt {
+	font-weight: bold;
+	margin-top: 6px;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a img {
+	border: none;
+}
+
+form {
+	margin: 0;
+}
+
+/* @end */
+
+/* @group Header */
+
+#header {
+	margin: 0;
+	padding: 0;
+}
+
+#header #info {
+	font-size: 85%;
+	margin: 0;
+	padding: 0 10px;
+	background: url(images/bg-page-header.png) repeat-x 0 top;
+	border-bottom: solid 1px #4b4b4b;
+}
+
+#header #info, #header #info * {
+	position: relative;
+}
+
+#header #info, h1, h2 {
+	font-weight: normal;
+}
+
+#header #info, #header #info a {
+	color: white;
+}
+
+#header #info a {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+#header h1 {
+	margin: 0;
+	padding: 8px 0;
+}
+
+* html #header h1 {
+	padding-bottom: 15px;
+}
+
+#header h1 a {
+	padding: 0 2px;
+}
+
+#header #info a:hover, #header #info h2#pathlinks a:hover {
+	background-color: rgba(63,63,63,0.35);
+}
+
+#header h2 {
+	float: left;
+	margin: 1px 1px 5px;
+}
+
+#header h2#revnum {
+	float: right;
+	background: url(images/information.png) no-repeat 0 1px;
+	padding-left: 22px;
+}
+
+#header #menus {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 9px;
+}
+
+#header #menus form {
+	display: inline;
+}
+
+#header #menus * {
+	margin: 0;
+	padding: 0;
+}
+
+@media print {
+	#header #menus {
+		display: none;
+	}
+}
+
+#header #revjump {
+	float: right;
+	clear: none;
+	margin: -3px -3px 0 15px;
+}
+
+#header #revjump span input  {
+	margin: 2px;
+	padding: 0 8px;
+}
+
+* html #header #revjump {
+	padding-right: 5px;
+}
+
+* html #header #revjump form {
+	margin: 0;
+}
+
+#header div {
+	clear: both;
+}
+
+#header h2#pathlinks > * {
+	padding: 1px;
+}
+
+#header h2#pathlinks a.root {
+	background: url(images/home.png) no-repeat 0 1px;
+	padding-left: 16px;
+}
+
+#header h2#pathlinks a.root span {
+	display: none;
+}
+
+#header h2#pathlinks a.peg {
+	background: url(images/remove.png) no-repeat right 1px;
+	padding-right: 20px;
+}
+
+/* @end */
+
+/* @group Revision Pop-ups */
+
+#revnum:hover {
+	cursor: default;
+}
+
+#header #rev-popup, .blame-popup {
+	font-size: 11px;
+	color: black;
+	background-color: rgba(255,255,255,0.9);
+	padding: 4px;
+	white-space: normal;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	position: absolute;
+	border: solid 1px #4b4b4b;
+	max-width: 600px;
+}
+
+#rev-popup {
+	top: 5.5em;
+	right: 10px;
+	margin-left: 10px;
+	z-index: 1;
+}
+
+.blame-popup {
+	text-align: left;
+	margin-top: 4px;
+}
+
+#rev-popup .info, .blame-popup .date {
+	font-weight: bold;
+}
+
+#rev-popup .msg, .blame-popup .msg {
+	margin-top: 6px;
+}
+
+#header #info #rev-popup a {
+	color: black;
+}
+
+#revision #rev-popup {
+	display: none;
+}
+
+/* @end */
+
+/* @group Navigation Links */
+
+#links {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	background: url(images/bg-gray-light.png) repeat-x 0 top;
+	border-bottom: solid 1px #a1a5a9;
+	white-space: nowrap;
+}
+
+#links li {
+	font-size: 110%;
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	white-space: nowrap;
+}
+
+* html #links li {
+	display: inline;
+}
+
+#links li:hover {
+	background: url(images/bg-gray-dark.png) repeat-x 0 top;
+}
+
+#links a:hover {
+	text-decoration: none;
+}
+
+#links li a {
+	padding: 4px 3px 4px 22px;
+	display: block;
+	background-position: 3px 4px;
+	background-repeat: no-repeat;
+}
+
+#links li.entire a {
+	background-image: url(images/arrow-out.png);
+}
+
+#links li.compact a {
+	background-image: url(images/arrow-in.png);	
+}
+
+#links li.regard a, #links li.ignore a {
+	background-image: url(images/pilcrow.png);	
+}
+
+#links li.blame a {
+	background-image: url(images/blame.png);	
+}
+
+#links li.file a {
+	background-image: url(images/detail.png);	
+}
+
+#links li.diff a {
+	background-image: url(images/diff.png);	
+}
+
+#links li.download a {
+	background-image: url(images/download.png);	
+}
+
+#links li.dir a {
+	background-image: url(images/parent.png);	
+}
+
+#links li.log a {
+	background-image: url(images/log.png);	
+}
+
+#links li.mime a {
+	background-image: url(images/eye.png);	
+}
+
+#links li.next a {
+	background-image: url(images/next.png);	
+}
+
+#links li.prev a {
+	background-image: url(images/previous.png);	
+}
+
+#links li.rev a {
+	background-image: url(images/revision.png);	
+}
+
+#links li.reverse a {
+	background-image: url(images/reverse.png);	
+}
+
+#links li.rss a {
+	background-image: url(images/rss.png);	
+}
+
+#links li.svn a {
+	background-image: url(images/subversion-s.png);	
+}
+
+#links li.youngest a {
+	background-image: url(images/youngest.png);	
+}
+
+@media print {
+	#dropdowns, #links {
+		display: none;
+	}
+}
+
+/* @end */
+
+#content {
+	padding: 10px;
+	border-top: 1px solid #cfcfcf;
+}
+
+#wrapper {
+	margin: 0;
+}
+
+/* @group Notification Bubbles */
+
+.error, .warning, .information {
+	display: table;
+	font-weight: bold;
+	margin: 0 auto;
+	padding: 5px 7px 3px 10px;
+	border: solid 1px;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: 6px 4px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+}
+
+.error span, .warning span, .information span {
+	display: block;
+	max-width: 400px;
+	margin-left: 33px;
+	padding: 10px 0;
+	position: relative;
+	top: -2px;
+}
+
+.error a, .warning a, .information a {
+	text-decoration: underline;
+}
+
+.error a:hover, .warning a:hover, .information a:hover {
+	text-decoration: none;
+}
+
+.error {
+	border-color: red;
+	background-color: #fcc;
+	background-image: url(images/stop.png);
+}
+
+.warning {
+	border-color: #d5ce00;
+	background-color: #ffc;
+	background-image: url(images/warning.png);
+}
+
+.information {
+	border-color: #4467aa;
+	background-color: #d5e0ee;
+	background-image: url(images/information.png);
+}
+
+/* @end */
+
+/* @group Table Elements */
+
+table {
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+table, th, td {
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 1px;
+}
+
+th, td {
+	vertical-align: middle;	
+	white-space: nowrap;
+	padding: 0 5px;
+}
+
+th {
+	height: 16px;
+	text-align: center;
+	border-width: 1px;
+}
+
+td {
+	border-top-width: 0;
+	border-bottom-width: 0;
+	overflow: hidden;
+}
+
+td a {
+	padding: 1px 0;
+}
+
+td.path a {
+	display: inline-block;
+	width: 100%;
+}
+
+td input {
+	position: relative;
+	top: -2px;
+}
+
+thead * {
+	color: white;
+}
+
+thead th {
+	background-image: url(images/bg-table-header.png);
+	border-color: #73a2be;
+}
+
+tbody th {
+	background-image: url(images/bg-table-divider.png);
+}
+
+tbody tr.shaded, tbody tr.dark {
+	background-color: #ecf3fe;
+}
+
+tbody tr:hover {
+	background-color: #d6dde5;
+}
+
+@media print {
+	tbody tr.shaded {
+		border-width: 1px;
+	}
+	
+	tbody tr:hover {
+		background-color: white;
+	}
+}
+
+/* @end */
+
+/* @group Image-Only table links */
+/* directory / revision */
+
+td.blame a, td.download a, #log td.diff a, #revision td.diff a, td.log a, td.rss a, td.svn a {
+	text-indent: -5000px;
+	overflow: hidden;
+	display: block;
+	width: 100%;
+	min-width: 16px;
+	min-height: 16px;
+	margin: 0 auto;
+	padding: 0;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+td.download a {
+	background-image: url(images/download.png);	
+}
+
+td.blame a {
+	background-image: url(images/blame.png);	
+}
+
+#log td.diff a, #revision td.diff a {
+	background-image: url(images/diff.png);	
+}
+
+td.log a {
+	background-image: url(images/log.png);	
+}
+
+td.rss a {
+	background-image: url(images/rss.png);
+}
+
+td.svn a {
+	background-image: url(images/subversion-s.png);
+}
+
+/* @end */
+
+#comparesubmit {
+	margin-top: 10px;
+	text-align: center;
+}
+
+#comparesubmit input {
+	margin: 0;
+}
+
+/* @group Footer */
+
+#footer {
+	text-align: center;	
+	clear: both;
+}
+
+#footer a {
+	font-weight: bold;
+}
+
+#footer #poweredby {
+	padding: 3px 3px 4px;
+	border-top: solid 1px #a1a5a9;
+	background: #f0f0f0 url(images/bg-gray-light.png) repeat-x 0 top;
+}
+
+#footer #valid {
+	padding: 4px 5px 4px 16px;
+	vertical-align: middle;
+	position: absolute;
+	border: 0;
+	right: 0;
+	background: url(images/valid.png) no-repeat 0 5px;
+}
+
+/* @group Sticky Footer */
+
+html, body, #wrapper {
+	height: 100%;
+}
+
+body > #wrapper {
+	height: auto;
+	min-height: 100%;
+}
+
+#content {
+	padding-bottom: 3em;
+}
+
+#footer {
+	clear: both;
+	height: 2em;
+	margin-top: -2em;
+}
+
+/* @end */
+
+/* @end */
+
+@media print {
+	#header {
+		border: solid 1px #4b4b4b;
+	}
+
+	#footer, #comparesubmit {
+		display: none;
+	}
+}
+
+/* @end */
+
+/* @group blame.tmpl */
+
+#blame td {
+	vertical-align: top;
+	text-align: right;
+}
+
+#blame td.author, #blame td.line {
+	color: #777;
+}
+
+#blame td.author {
+	text-align: center;
+}
+
+#blame td.code {
+	text-align: left;
+	white-space: normal;
+}
+
+#blame td.code, #blame td.line {
+	font-family: Consolas, Menlo, Monaco, monospace;	
+}
+
+/* @end */
+
+/* @group compare.tmpl */
+
+#compare #header h2 {
+	float: none;
+	text-align: center;
+}
+
+#compare #header h2 span {
+	white-space: pre;
+}
+
+#compare_form table {
+	border: none;
+}
+
+#compare_form table td {
+	border: none;
+	text-align: right;
+}
+
+#compare_form table tr:hover {
+	background: none;
+}
+
+#comparisons {
+	margin: 0 auto;
+	display: table;
+}
+
+#comparisons h3 {
+	text-align: center;
+	margin-bottom: 0;	
+}
+
+#comparisons table {
+	margin: 10px 0 15px;
+	width: 100%;
+}
+
+#comparisons td {
+	padding: 1px 3px;
+	white-space: pre-wrap;
+	font-family: Consolas, Menlo, Monaco, monospace;
+}
+
+#comparisons th.info, #comparisons tr:hover th.info {
+	background-image: none;
+	background-color: #cde;
+}
+
+/* @end */
+
+/* @group diff.tmpl */
+
+#diff td {
+	white-space: normal;
+	vertical-align: top;
+	font-family: Consolas, Menlo, Monaco, monospace;
+}
+
+#diff td.line {
+	text-align: right;
+	padding: 0 2px;
+	color: #777;
+}
+
+ins, del {
+	text-decoration: none;
+}
+td.diffadded, ins {
+	background-color: #bfb;
+}
+td.diffchanged {
+	background-color: #ffc;
+}
+td.diffdeleted, del {
+	background-color: #f88;
+}
+
+@media screen {
+	tr:hover td.diffadded, tr:hover ins {
+		background-color: #5f5;
+	}
+	tr:hover td.diffchanged {
+		background-color: #ff5;
+	}
+	tr:hover td.diffdeleted, tr:hover del {
+		background-color: #f55;
+	}
+}
+
+/* @end */
+
+/* @group directory.tmpl */
+
+#listing td {
+	text-align: center;
+	color: #777;
+}
+
+#listing td.rev, #listing td.date, #listing td.author {
+	text-align: right;
+	border-width: 0;
+}
+
+@media print {
+	#listing td.rev, #listing td.date, #listing td.author {
+		border-width: 1px 0;
+	}
+}
+
+#listing td.path {
+	text-align: left;
+	padding-bottom: 4px;
+}
+
+#listing td img {
+	position: relative;
+	top: 3px;
+}
+
+#listing td.rev a {
+	padding-right: 18px;
+	background: url(images/revision.png) no-repeat right;	
+}
+
+#listing td input {
+	position: relative;
+	top: -1px;
+	margin: 0;
+	margin-right: 3px;
+}
+
+#compare-submit {
+	text-align: center;
+	margin-top: 10px;
+}
+
+/* @end */
+
+/* @group file.tmpl */
+
+#file #listing {
+	font-family: Consolas, Menlo, Monaco, monospace;
+}
+
+#file #listing pre {
+	white-space: pre-wrap;
+}
+
+/* @end */
+
+/* @group index.tmpl */
+
+#index #menus #projectform {
+	display: none;
+}
+
+#index .information {
+	margin: 10px auto 20px;
+}
+
+#index table {
+	margin: 10px auto;
+}
+
+#index tr.shaded {
+	background-color: #ecf3fe;
+}
+
+#index tr.shaded:hover {
+	background-color: #d6dde5;
+}
+
+#index td a {
+	padding: 5px 6px 6px;
+}
+
+#index tbody th {
+	border-bottom-color: #bbb;
+	background-image: url(images/bg-gray-light.png);
+	text-align: left;
+}
+
+#index tbody th:hover {
+	background-image: url(images/bg-gray-dark.png);
+	text-decoration: underline;
+}
+
+#index td {
+	border-width: 0;
+	color: #777;
+	text-align: right;
+}
+
+#index td.project {
+	text-align: left;
+}
+
+#index td a {
+	background: url(images/cube-blue.png) no-repeat 0 4px;
+	display: block;
+	padding-left: 20px;
+	width: 100%;
+}
+
+#index tbody th, #index td.group {
+	padding-left: 25px;
+}
+
+/* @end */
+
+/* @group log.tmpl */
+
+#filter, #filternav {
+	text-align: center;
+	margin-bottom: 8px;
+}
+
+table#logs {
+	clear: both;
+}
+
+#logs td {
+	vertical-align: text-top;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+#logs td.rev a {
+	margin-left: 3px;
+	padding-left: 18px;
+	background: url(images/revision.png) no-repeat;	
+}
+
+#logs td.author, #logs td.age, #logs td.date {
+	text-align: center;
+	color: #777;
+}
+
+#logs td.logmsg {
+	white-space: normal;
+}
+
+#logs td.changes {
+	color: #777;
+	padding: 0;
+}
+
+#logs td.changes table {
+	border-width: 0;
+	width: 100%;
+	margin-bottom: 2px;
+}
+
+#logs td.changes td {
+	border-width: 0;
+	padding-left: 20px;
+	background: url(images/added.png) no-repeat 3px 3px;
+}
+
+#logs td.changes td.add {
+	background-image: url(images/added.png);
+}
+
+#logs td.changes td.del {
+	background-image: url(images/deleted.png);
+}
+
+#logs td.changes td.mod {
+	background-image: url(images/modified.png);
+}
+
+#filternav {
+	font-weight: bold;
+}
+
+#filternav > * {
+	margin: 0 10px;
+}
+
+#filternav #pagelinks > * {
+	padding: 0 2px;
+}
+
+#filternav #pagelinks span {
+	color: #999;
+}
+
+#filternav #pagelinks span#curpage {
+	background-color: #999;
+	color: white;
+	padding-bottom: 1px;
+	padding-left: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+
+@media print {
+	#filter, #filternav, #logs td.rev input {
+		display: none;
+	}
+}
+
+/* @end */
+
+/* @group revision.tmpl */
+
+#revision dl, #revision dl dt:first-child {
+	margin-top: 0;
+}
+
+#revision dl dt {
+	font-size: 120%;
+}
+
+#revision #changes td {
+	text-align: center;
+	padding-top: 3px;
+	padding-bottom: 4px;
+}
+
+#revision #changes td.path {
+	text-align: left;
+	white-space: normal;
+}
+
+#revision #changes td.path a {
+	background-repeat: no-repeat;
+	background-position: 0 1px;
+	padding: 1px 0;
+	padding-left: 18px;
+	overflow: visible;
+}
+
+#revision #changes td.path a.notinpath {
+	color: #b70000;
+}
+
+#revision #changes tr.A td.path a {
+	background-image: url(images/added.png);
+}
+
+#revision #changes tr.D td.path a {
+	background-image: url(images/deleted.png);
+}
+
+#revision #changes tr.M td.path a {
+	background-image: url(images/modified.png);
+}
+
+#revision del {
+	background: none;
+	color: gray;
+	padding-left: 18px;
+}
+
+/* @end */
