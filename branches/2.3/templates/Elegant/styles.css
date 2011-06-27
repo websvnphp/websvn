@@ -481,7 +481,7 @@ tbody tr:hover {
 /* @group Image-Only table links */
 /* directory / revision */
 
-td.blame a, td.download a, td.diff a, td.log a, td.rss a, td.svn a {
+td.blame a, td.download a, #log td.diff a, #revision td.diff a, td.log a, td.rss a, td.svn a {
 	text-indent: -5000px;
 	overflow: hidden;
 	display: block;
@@ -502,7 +502,7 @@ td.blame a {
 	background-image: url(images/blame.png);	
 }
 
-td.diff a {
+#log td.diff a, #revision td.diff a {
 	background-image: url(images/diff.png);	
 }
 

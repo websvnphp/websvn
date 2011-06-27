@@ -89,6 +89,10 @@ if ($rep) {
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 1, ($path == '/') ? '' : $peg);
+		if (!$history) {
+			header('HTTP/1.x 404 Not Found', true, 404);
+			$vars['error'] = $lang['NOPATH'];
+		}
 	}
 
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
@@ -107,8 +111,6 @@ if ($rep) {
 
 	if (empty($rev)) {
 		$rev = $youngest;
-	} else if ($rev > $youngest) {
-		$vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
 	}
 
 	if (empty($startrev)) {
@@ -126,7 +128,7 @@ if ($rep) {
 	$vars['peg'] = $peg;
 	$vars['path'] = escape($ppath);
 
-	if (isset($history->entries[0])) {
+	if ($history && isset($history->entries[0])) {
 		$vars['log'] = xml_entities($history->entries[0]->msg);
 		$vars['date'] = $history->entries[0]->date;
 		$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
@@ -198,10 +200,14 @@ if ($rep) {
 	$vars['pagelinks'] = '';
 	$vars['showalllink'] = '';
 
-	$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
-	if (empty($history)) {
-		$vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
-	} else {
+	if ($history) {
+		$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
+		if (empty($history)) {
+			unset($vars['error']);
+			$vars['warning'] = 'Revision '.$startrev.' of this resource does not exist.';
+		}
+	}
+	if (!empty($history)) {
 		// Get the number of separate revisions
 		$revisions = count($history->entries);
 
@@ -268,11 +274,17 @@ if ($rep) {
 			if ($match) {
 				// Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
 				$rpath = $revision->path;
-
 				if (empty($rpath)) {
 					$rpath = '/';
 				} else if ($isDir && $rpath{strlen($rpath) - 1} != '/') {
 					$rpath .= '/';
+				}
+
+				$precisePath = $revision->precisePath;
+				if (empty($precisePath)) {
+					$precisePath = '/';
+				} else if ($isDir && $precisePath{strlen($precisePath) - 1} != '/') {
+					$precisePath .= '/';
 				}
 
 				// Find the parent path (or the whole path if it's already a directory)
@@ -285,9 +297,9 @@ if ($rep) {
 				$url = $config->getURL($rep, $rpath, 'revision').$thisRevString;
 				$listing[$index]['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
 
-				$url = $config->getURL($rep, $rpath, ($isDir ? 'dir' : 'file')).$thisRevString;
-				$listing[$index]['revpathlink'] = '<a href="'.$url.'">'.$rpath.'</a>';
-				$listing[$index]['revpath'] = $rpath;
+				$url = $config->getURL($rep, $precisePath, ($isDir ? 'dir' : 'file')).$thisRevString;
+				$listing[$index]['revpathlink'] = '<a href="'.$url.'">'.$precisePath.'</a>';
+				$listing[$index]['revpath'] = $precisePath;
 				$listing[$index]['revauthor'] = $revision->author;
 				$listing[$index]['revdate'] = $revision->date;
 				$listing[$index]['revage'] = $revision->age;

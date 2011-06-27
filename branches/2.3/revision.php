@@ -41,6 +41,10 @@ if ($rep) {
 	if (!$history) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+		if (!$history) {
+			header('HTTP/1.x 404 Not Found', true, 404);
+			$vars['error'] = $lang['NOPATH'];
+		}
 	}
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 	$vars['youngestrev'] = $youngest;
@@ -52,6 +56,10 @@ if ($rep) {
 	$lastChangedRev = ($rev) ? $rev : $youngest;
 	if ($lastChangedRev != $youngest) {
 		$history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg);
+		if (!$history) {
+			header('HTTP/1.x 404 Not Found', true, 404);
+			$vars['error'] = $lang['NOPATH'];
+		}
 	}
 	if (empty($rev))
 		$rev = $lastChangedRev;

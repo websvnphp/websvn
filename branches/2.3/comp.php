@@ -121,10 +121,20 @@ if ($rep) {
 	$vars['rev1'] = $rev1;
 	$vars['rev2'] = $rev2;
 
-	// Set variables used for the more recent of the two revisions
-	$rev = max($rev1, $rev2);
-	$history = $svnrep->getLog($path, $rev, $rev, false, 1);
+	$history1 = $svnrep->getLog($path1, $rev1, $rev1, false, 1);
+	if (!$history1) {
+		header('HTTP/1.x 404 Not Found', true, 404);
+		$vars['error'] = $lang['NOPATH'];
+	} else {
+		$history2 = $svnrep->getLog($path2, $rev2, $rev2, false, 1);
+		if (!$history2) {
+			header('HTTP/1.x 404 Not Found', true, 404);
+			$vars['error'] = $lang['NOPATH'];
+		}
+	}
 
+	// Set variables used for the more recent of the two revisions
+	$history = ($rev1 >= $rev2 ? $history1 : $history2);
 	if ($history) {
 		$logEntry = $history->curEntry;
 		$vars['rev'] = $logEntry->rev;
@@ -150,7 +160,7 @@ if ($rep) {
 	$debug = false;
 
 	if (!$noinput) {
-		$cmd = $config->getSvnCommand().' diff '.($ignoreWhitespace ? '-x "-w --ignore-eol-style" ' : '').$rep->svnParams().quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
+		$cmd = $config->getSvnCommand().$rep->svnCredentials().' diff '.($ignoreWhitespace ? '-x "-w --ignore-eol-style" ' : '').quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
 	}
 
 	function clearVars() {

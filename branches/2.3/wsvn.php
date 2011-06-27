@@ -137,7 +137,7 @@ if ($config->multiViews) {
 			break;
 		default:
 			$svnrep = new SVNRepository($rep);
-			if ($svnrep->isFile($path, $rev)) {
+			if ($svnrep->isFile($path, $rev, $peg)) {
 				$file = 'filedetails.php';
 			} else {
 				$file = 'listing.php';
