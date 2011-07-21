@@ -13,3 +13,7 @@
 * Update website "Download" at http://www.websvn.info
 * Add news at http://www.websvn.info
 * Send announcement email to announce@websvn.tigris.org
+
+* Add released version to issue tracker
+* Add next milestone to issue tracker
+
