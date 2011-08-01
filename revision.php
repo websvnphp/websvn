@@ -134,10 +134,15 @@ if ($rep) {
 	$thisRevString = createRevAndPegString($rev, $rev);
 	foreach ($changes as $change) {
 		$linkRevString = ($change->action == 'D') ? $prevRevString : $thisRevString;
-		// NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
-		// `svn log --verbose --xml` should really provide this info, but doesn't yet.
-		$lastSeenRev = ($change->action == 'D') ? $rev - 1 : $rev;
-		$isFile = $svnrep->isFile($change->path, $lastSeenRev, $lastSeenRev);
+		$isDir = $change->isdir;
+		if ($isDir !== null) {
+			$isFile = !$isDir;
+		} else {
+			// NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
+			// `svn log --verbose --xml` should really provide this info, but does only in recent version?
+			$lastSeenRev = ($change->action == 'D') ? $rev - 1 : $rev;
+			$isFile = $svnrep->isFile($change->path, $lastSeenRev, $lastSeenRev);
+		}
 		if (!$isFile && $change->path != '/') {
 			$change->path .= '/';
 		}

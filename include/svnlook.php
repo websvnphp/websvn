@@ -34,7 +34,7 @@ $debugxml = false;
 class SVNInfoEntry {
 	var $rev = 1;
 	var $path = '';
-	var $isdir = false;
+	var $isdir = null;
 }
 
 class SVNMod {
@@ -42,7 +42,7 @@ class SVNMod {
 	var $copyfrom = '';
 	var $copyrev = '';
 	var $path = '';
-	var $isdir = false;
+	var $isdir = null;
 }
 
 class SVNListEntry {
@@ -52,7 +52,7 @@ class SVNListEntry {
 	var $committime;
 	var $age = '';
 	var $file = '';
-	var $isdir = false;
+	var $isdir = null;
 }
 
 class SVNList {
