@@ -37,10 +37,10 @@ if ($rep) {
 	$passRevString = createRevAndPegString($rev, $peg);
 
 	// Find the youngest revision containing changes for the given path
-	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, true, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
 		unset($vars['error']);
-		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+		$history = $svnrep->getLog($path, '', '', true, 2, ($path == '/') ? '' : $peg);
 		if (!$history) {
 			header('HTTP/1.x 404 Not Found', true, 404);
 			$vars['error'] = $lang['NOPATH'];
@@ -54,12 +54,10 @@ if ($rep) {
 
 	// Unless otherwise specified, we get the log details of the latest change
 	$lastChangedRev = ($rev) ? $rev : $youngest;
-	if ($lastChangedRev != $youngest) {
-		$history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg);
-		if (!$history) {
-			header('HTTP/1.x 404 Not Found', true, 404);
-			$vars['error'] = $lang['NOPATH'];
-		}
+	$history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg, true);
+	if (!$history) {
+		header('HTTP/1.x 404 Not Found', true, 404);
+		$vars['error'] = $lang['NOPATH'];
 	}
 	if (empty($rev))
 		$rev = $lastChangedRev;
@@ -70,7 +68,7 @@ if ($rep) {
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 
-		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
+		$history2 = $svnrep->getLog($path, $rev, $youngest, true, 2, $peg);
 		if (isset($history2->entries[1])) {
 			$nextRev = $history2->entries[1]->rev;
 			if ($nextRev != $youngest) {

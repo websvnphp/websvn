@@ -233,7 +233,7 @@ if ($rep) {
 
 		$entries = array();
 		if ($brev && $erev) {
-			$history = $svnrep->getLog($path, $brev, $erev, false, 0, $peg);
+			$history = $svnrep->getLog($path, $brev, $erev, false, 0, $peg, $showchanges);
 			if ($history)
 				$entries = $history->entries;
 		}
