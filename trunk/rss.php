@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004-2006 Tim Armes
 //
@@ -65,7 +65,7 @@ if (!$rep->hasReadAccess($path, false)) {
 
 // If there's no revision info, go to the lastest revision for this path
 $svnrep = new SVNRepository($rep);
-$history = $svnrep->getLog($path, $rev, '', false, $max, $peg);
+$history = $svnrep->getLog($path, $rev, '', false, $max, $peg, !$quiet);
 if (!$history) {
 	header('HTTP/1.x 404 Not Found', true, 404);
 	echo $lang['NOPATH'];
@@ -110,7 +110,11 @@ if (is_array($history->entries)) {
 			$title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
 		}
 		$title = $lang['REV'].' '.$r->rev.' -- '.$title;
-		$description = '<div><strong>'.$r->author.' -- '.count($r->mods).' '.$lang['FILESMODIFIED'].'</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors(str_replace('<', '&lt;', $r->msg)))).'</div>';
+		$description = '<div><strong>'.$r->author;
+		if (!$quiet) {
+			$description .= ' -- '.count($r->mods).' '.$lang['FILESMODIFIED'];
+		}
+		$description .= '</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors(str_replace('<', '&lt;', $r->msg)))).'</div>';
 		if (!$quiet) {
 			usort($r->mods, 'SVNLogEntry_compare');
 			foreach ($r->mods as $modifiedResource) {

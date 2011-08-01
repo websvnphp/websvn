@@ -42,10 +42,10 @@ if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
 	// If there's no revision info, go to the lastest revision for this path
-	$history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
+	$history = $svnrep->getLog($path, 'HEAD', 1, true, 2, ($path == '/') ? '' : $peg);
 	if (!$history) {
 		unset($vars['error']);
-		$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
+		$history = $svnrep->getLog($path, '', '', true, 2, ($path == '/') ? '' : $peg);
 	}
 	$youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
 
@@ -92,7 +92,7 @@ if ($rep) {
 
 	$revurl = $config->getURL($rep, $path, 'diff');
 	if ($rev < $youngest) {
-		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg ? $peg : 'HEAD');
+		$history2 = $svnrep->getLog($path, $rev, $youngest, true, 2, $peg ? $peg : 'HEAD');
 		if (isset($history2->entries[1])) {
 			$nextRev = $history2->entries[1]->rev;
 			if ($nextRev != $youngest) {

@@ -1137,7 +1137,7 @@ class SVNRepository {
 
 	// {{{ getLog
 
-	function getLog($path, $brev = '', $erev = 1, $quiet = false, $limit = 2, $peg = '') {
+	function getLog($path, $brev = '', $erev = 1, $quiet = false, $limit = 2, $peg = '', $verbose = false) {
 		global $config, $curLog;
 
 		$xml_parser = xml_parser_create('UTF-8');
@@ -1158,7 +1158,7 @@ class SVNRepository {
 		// Get the log info
 		$effectiveRev = ($brev && $erev ? $brev.':'.$erev : ($brev ? $brev.':1' : ''));
 		$effectivePeg = ($peg ? $peg : ($brev ? $brev : ''));
-		$cmd = quoteCommand($this->svnCommandString('log --xml '.($quiet ? '--quiet' : '--verbose'), $path, $effectiveRev, $effectivePeg));
+		$cmd = quoteCommand($this->svnCommandString('log --xml '.($verbose ? '--verbose' : ($quiet ? '--quiet' : '')), $path, $effectiveRev, $effectivePeg));
 
 		if (($config->subversionMajorVersion > 1 || $config->subversionMinorVersion >= 2) && $limit != 0) {
 			$cmd .= ' --limit '.$limit;
