@@ -137,7 +137,7 @@ if ($rep) {
 
 	$revurl = $config->getURL($rep, $path, 'file');
 	if ($rev < $youngest) {
-		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg ? $peg : 'HEAD');
+		$history2 = $svnrep->getLog($path, $rev, $youngest, true, 2, $peg ? $peg : 'HEAD');
 		if (isset($history2->entries[1])) {
 			$nextRev = $history2->entries[1]->rev;
 			if ($nextRev != $youngest) {
@@ -148,7 +148,7 @@ if ($rep) {
 		unset($vars['error']);
 	}
 
-	$history3 = $svnrep->getLog($path, $rev, 1, false, 2, $peg ? $peg : 'HEAD');
+	$history3 = $svnrep->getLog($path, $rev, 1, true, 2, $peg ? $peg : 'HEAD');
 	if (isset($history3->entries[1])) {
 		$prevRev = $history3->entries[1]->rev;
 		$prevPath = $history3->entries[1]->path;

@@ -268,7 +268,7 @@ if ($rep) {
 		}
 		$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 
-		$history2 = $svnrep->getLog($path, $rev, $youngest, false, 2, $peg);
+		$history2 = $svnrep->getLog($path, $rev, $youngest, true, 2, $peg);
 		if (isset($history2->entries[1])) {
 			$nextRev = $history2->entries[1]->rev;
 			if ($nextRev != $youngest) {
