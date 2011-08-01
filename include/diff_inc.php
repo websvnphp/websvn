@@ -40,15 +40,16 @@ class ListingHelper {
 		$listing = &$this->_listing;
 		$index = &$this->_index;
 
-		$listing[$index]['rev1diffclass'] = $class1;
-		$listing[$index]['rev2diffclass'] = $class2;
+		$listvar = &$listing[$index];
+		$listvar['rev1diffclass'] = $class1;
+		$listvar['rev2diffclass'] = $class2;
 
-		$listing[$index]['rev1line'] = $text1;
-		$listing[$index]['rev2line'] = $text2;
+		$listvar['rev1line'] = $text1;
+		$listvar['rev2line'] = $text2;
 
-		$listing[$index]['rev1lineno'] = $lineno1;
-		$listing[$index]['rev2lineno'] = $lineno2;
-		$listing[$index]['startblock'] = $this->_blockStart;
+		$listvar['rev1lineno'] = $lineno1;
+		$listvar['rev2lineno'] = $lineno2;
+		$listvar['startblock'] = $this->_blockStart;
 		$this->_blockStart = false;
 		$index++;
 	}

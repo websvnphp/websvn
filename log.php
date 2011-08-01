@@ -293,20 +293,21 @@ if ($rep) {
 
 				$compareValue = (($isDir) ? $parent : $rpath).'@'.$thisrev;
 
-				$listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$compareValue.'" onclick="checkCB(this)" />';
+				$listvar = &$listing[$index];
+				$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$compareValue.'" onclick="checkCB(this)" />';
 				$url = $config->getURL($rep, $rpath, 'revision').$thisRevString;
-				$listing[$index]['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
+				$listvar['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
 
 				$url = $config->getURL($rep, $precisePath, ($isDir ? 'dir' : 'file')).$thisRevString;
-				$listing[$index]['revpathlink'] = '<a href="'.$url.'">'.$precisePath.'</a>';
-				$listing[$index]['revpath'] = $precisePath;
-				$listing[$index]['revauthor'] = $revision->author;
-				$listing[$index]['revdate'] = $revision->date;
-				$listing[$index]['revage'] = $revision->age;
-				$listing[$index]['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($revision->msg))));
-				$listing[$index]['rowparity'] = $row;
+				$listvar['revpathlink'] = '<a href="'.$url.'">'.$precisePath.'</a>';
+				$listvar['revpath'] = $precisePath;
+				$listvar['revauthor'] = $revision->author;
+				$listvar['revdate'] = $revision->date;
+				$listvar['revage'] = $revision->age;
+				$listvar['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($revision->msg))));
+				$listvar['rowparity'] = $row;
 
-				$listing[$index]['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.$rpath.'@'.($thisrev - 1).'&amp;compare[]='.$rpath.'@'.$thisrev;
+				$listvar['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.$rpath.'@'.($thisrev - 1).'&amp;compare[]='.$rpath.'@'.$thisrev;
 
 				if ($showchanges) {
 					// Aggregate added/deleted/modified paths for display in table
@@ -320,9 +321,9 @@ if ($rep) {
 						$modpaths[$action] = $paths;
 					}
 
-					$listing[$index]['revadded'] = (isset($modpaths['A'])) ? implode('<br/>', $modpaths['A']) : '';
-					$listing[$index]['revdeleted'] = (isset($modpaths['D'])) ? implode('<br/>', $modpaths['D']) : '';
-					$listing[$index]['revmodified'] = (isset($modpaths['M'])) ? implode('<br/>', $modpaths['M']) : '';
+					$listvar['revadded'] = (isset($modpaths['A'])) ? implode('<br/>', $modpaths['A']) : '';
+					$listvar['revdeleted'] = (isset($modpaths['D'])) ? implode('<br/>', $modpaths['D']) : '';
+					$listvar['revmodified'] = (isset($modpaths['M'])) ? implode('<br/>', $modpaths['M']) : '';
 				}
 
 				$row = 1 - $row;

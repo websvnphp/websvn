@@ -156,26 +156,27 @@ if ($rep) {
 						list($revision, $author, $remainder) = sscanf($blameline, '%d %s %s');
 						$empty = !$remainder;
 
-						$listing[$index]['lineno'] = $index + 1;
+						$listvar = &$listing[$index];
+						$listvar['lineno'] = $index + 1;
 
 						if ($last_rev != $revision) {
 							$url = $config->getURL($rep, $path, 'blame');
-							$listing[$index]['revision'] = '<a id="l'.$index.'-rev" class="blame-revision" href="'.$url.'rev='.$revision.'&amp;peg='.$rev.'">'.$revision.'</a>';
+							$listvar['revision'] = '<a id="l'.$index.'-rev" class="blame-revision" href="'.$url.'rev='.$revision.'&amp;peg='.$rev.'">'.$revision.'</a>';
 							$seen_rev[$revision] = 1;
 							$row_class = ($row_class == 'light') ? 'dark' : 'light';
-							$listing[$index]['author'] = $author;
+							$listvar['author'] = $author;
 						} else {
-							$listing[$index]['revision'] = '';
-							$listing[$index]['author'] = '';
+							$listvar['revision'] = '';
+							$listvar['author'] = '';
 						}
 
-						$listing[$index]['row_class'] = $row_class;
+						$listvar['row_class'] = $row_class;
 						$last_rev = $revision;
 
 						$line = rtrim(fgets($file));
 						if (!$highlighted)
 							$line = escape(toOutputEncoding($line));
-						$listing[$index]['line'] = ($empty) ? '&nbsp;' : wrapInCodeTagIfNecessary($line);
+						$listvar['line'] = ($empty) ? '&nbsp;' : wrapInCodeTagIfNecessary($line);
 						$index++;
 					}
 				}

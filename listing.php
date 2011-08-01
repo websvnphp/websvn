@@ -76,19 +76,20 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 		unset($parentPath[count($parentPath) - 2]);
 		$parentPath = implode('/', $parentPath);
 		if ($rep->hasReadAccess($parentPath, false)) {
-			$listing[$index]['rowparity'] = $index % 2;
-			$listing[$index]['path'] = $parentPath;
-			$listing[$index]['filetype'] = 'dir';
-			$listing[$index]['filename'] = '..';
-			$listing[$index]['fileurl'] = urlForPath($parentPath, $passRevString);
-			$listing[$index]['filelink'] = '<a href="'.$listing[$index]['fileurl'].'">'.$listing[$index]['filename'].'</a>';
-			$listing[$index]['level'] = 0;
-			$listing[$index]['node'] = 0; // t-node
-			$listing[$index]['revision'] = $rev;
-			$listing[$index]['revurl'] = $config->getURL($rep, $parentPath, 'revision').'rev='.$rev.'&amp;isdir=1';
+			$listvar = &$listing[$index];
+			$listvar['rowparity'] = $index % 2;
+			$listvar['path'] = $parentPath;
+			$listvar['filetype'] = 'dir';
+			$listvar['filename'] = '..';
+			$listvar['fileurl'] = urlForPath($parentPath, $passRevString);
+			$listvar['filelink'] = '<a href="'.$listvar['fileurl'].'">'.$listvar['filename'].'</a>';
+			$listvar['level'] = 0;
+			$listvar['node'] = 0; // t-node
+			$listvar['revision'] = $rev;
+			$listvar['revurl'] = $config->getURL($rep, $parentPath, 'revision').'rev='.$rev.'&amp;isdir=1';
 			global $vars;
-			$listing[$index]['date'] = $vars['date'];
-			$listing[$index]['age'] = datetimeFormatDuration(time() - strtotime($vars['date']), true, true);
+			$listvar['date'] = $vars['date'];
+			$listvar['age'] = datetimeFormatDuration(time() - strtotime($vars['date']), true, true);
 			$index++;
 		}
 	}
@@ -108,61 +109,62 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 			// Only list files/directories that are not designated as off-limits
 			$access = ($isDir) ? $rep->hasReadAccess($path.$file, true)
 												 : $accessToThisDir;
+			$listvar = &$listing[$index];
 			if ($access) {
-				$listing[$index]['rowparity'] = $index % 2;
+				$listvar['rowparity'] = $index % 2;
 
 				if ($isDir) {
-					$listing[$index]['filetype'] = ($openDir) ? 'diropen' : 'dir';
+					$listvar['filetype'] = ($openDir) ? 'diropen' : 'dir';
 					$openDir = isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp($subs[$level + 1], $file));
 				} else {
-					$listing[$index]['filetype'] = strtolower(strrchr($file, '.'));
+					$listvar['filetype'] = strtolower(strrchr($file, '.'));
 					$openDir = false;
 				}
-				$listing[$index]['isDir'] = $isDir;
-				$listing[$index]['openDir'] = $openDir;
-				$listing[$index]['level'] = ($treeview) ? $level : 0;
-				$listing[$index]['node'] = 0; // t-node
-				$listing[$index]['path'] = $path.$file;
-				$listing[$index]['filename'] = $file;
+				$listvar['isDir'] = $isDir;
+				$listvar['openDir'] = $openDir;
+				$listvar['level'] = ($treeview) ? $level : 0;
+				$listvar['node'] = 0; // t-node
+				$listvar['path'] = $path.$file;
+				$listvar['filename'] = $file;
 				if ($isDir) {
-					$listing[$index]['fileurl'] = urlForPath($path.$file, $passRevString);
+					$listvar['fileurl'] = urlForPath($path.$file, $passRevString);
 				} else {
-					$listing[$index]['fileurl'] = urlForPath($path.$file, createDifferentRevAndPegString($passrev, $peg));
+					$listvar['fileurl'] = urlForPath($path.$file, createDifferentRevAndPegString($passrev, $peg));
 				}
-				$listing[$index]['filelink'] = '<a href="'.$listing[$index]['fileurl'].'">'.$listing[$index]['filename'].'</a>';
+				$listvar['filelink'] = '<a href="'.$listvar['fileurl'].'">'.$listvar['filename'].'</a>';
 				if ($isDir) {
-					$listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.$passRevString;
+					$listvar['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.$passRevString;
 				} else {
-					$listing[$index]['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.createDifferentRevAndPegString($passrev, $peg);
+					$listvar['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.createDifferentRevAndPegString($passrev, $peg);
 				}
 
 				if ($treeview) {
-					$listing[$index]['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$path.$file.'@'.$passrev.'" onclick="checkCB(this)" />';
+					$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$path.$file.'@'.$passrev.'" onclick="checkCB(this)" />';
 				}
 				if ($config->showLastModInListing()) {
-					$listing[$index]['committime'] = $entry->committime;
-					$listing[$index]['revision'] = $entry->rev;
-					$listing[$index]['author'] = $entry->author;
-					$listing[$index]['age'] = $entry->age;
-					$listing[$index]['date'] = $entry->date;
-					$listing[$index]['revurl'] = $config->getURL($rep, $path.$file, 'revision').$isDirString.createRevAndPegString($entry->rev, $peg ? $peg : $rev);
+					$listvar['committime'] = $entry->committime;
+					$listvar['revision'] = $entry->rev;
+					$listvar['author'] = $entry->author;
+					$listvar['age'] = $entry->age;
+					$listvar['date'] = $entry->date;
+					$listvar['revurl'] = $config->getURL($rep, $path.$file, 'revision').$isDirString.createRevAndPegString($entry->rev, $peg ? $peg : $rev);
 				}
 				if ($rep->isDownloadAllowed($path.$file)) {
 					$downloadurl = $config->getURL($rep, $path.$file, 'dl').$isDirString.$downloadRevAndPeg;
 					if ($isDir) {
-						$listing[$index]['downloadurl'] = $downloadurl;
-						$listing[$index]['downloadplainurl'] = '';
+						$listvar['downloadurl'] = $downloadurl;
+						$listvar['downloadplainurl'] = '';
 					} else {
-						$listing[$index]['downloadplainurl'] = $downloadurl;
-						$listing[$index]['downloadurl'] = '';
+						$listvar['downloadplainurl'] = $downloadurl;
+						$listvar['downloadurl'] = '';
 					}
 				} else {
-					$listing[$index]['downloadplainurl'] = '';
-					$listing[$index]['downloadurl'] = '';
+					$listvar['downloadplainurl'] = '';
+					$listvar['downloadurl'] = '';
 				}
 				if ($rep->isRssEnabled()) {
 					// RSS should always point to the latest revision, so don't include rev
-					$listing[$index]['rssurl'] = $config->getURL($rep, $path.$file, 'rss').$isDirString.createRevAndPegString('', $peg);
+					$listvar['rssurl'] = $config->getURL($rep, $path.$file, 'rss').$isDirString.createRevAndPegString('', $peg);
 				}
 
 				$loop++;

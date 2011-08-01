@@ -51,20 +51,22 @@ foreach ($projects as $project) {
 	if (!$project->hasReadAccess('/', true))
 		continue;
 
+	$listvar = &$listing[$i];
 	// If this is the first project in a group, add an entry for the group.
 	if ($curgroup != $project->group) {
 		$groupcount++;
 		$groupparity = 0;
-		$listing[$i]['notfirstgroup'] = !empty($curgroup);
+		$listvar['notfirstgroup'] = !empty($curgroup);
 		$curgroup = $project->group;
-		$listing[$i]['groupname'] = $curgroup; // Applies until next group is set.
-		$listing[$i]['groupid'] = strtr(base64_encode('grp'.$curgroup), array('+' => '-', '/' => '_', '=' => ''));
+		$listvar['groupname'] = $curgroup; // Applies until next group is set.
+		$listvar['groupid'] = strtr(base64_encode('grp'.$curgroup), array('+' => '-', '/' => '_', '=' => ''));
 
-		$listing[$i]['projectlink'] = null; // Because template.php won't unset this
+		$listvar['projectlink'] = null; // Because template.php won't unset this
 		$i++; // Causes the subsequent lines to store data in the next array slot.
-		$listing[$i]['groupid'] = null; // Because template.php won't unset this
+		$listvar = &$listing[$i];
+		$listvar['groupid'] = null; // Because template.php won't unset this
 	}
-	$listing[$i]['clientrooturl'] = $project->clientRootURL;
+	$listvar['clientrooturl'] = $project->clientRootURL;
 
 	// Populate variables for latest modification to the current repository
 	if ($config->showLastModInIndex()) {
@@ -72,27 +74,27 @@ foreach ($projects as $project) {
 		$log = $svnrep->getLog('/', '', '', true, 1);
 		if (isset($log->entries[0])) {
 			$head = $log->entries[0];
-			$listing[$i]['revision'] = $head->rev;
-			$listing[$i]['date'] = $head->date;
-			$listing[$i]['age'] = datetimeFormatDuration(time() - strtotime($head->date));
-			$listing[$i]['author'] = $head->author;
+			$listvar['revision'] = $head->rev;
+			$listvar['date'] = $head->date;
+			$listvar['age'] = datetimeFormatDuration(time() - strtotime($head->date));
+			$listvar['author'] = $head->author;
 		} else {
-			$listing[$i]['revision'] = 0;
-			$listing[$i]['date'] = '';
-			$listing[$i]['age'] = '';
-			$listing[$i]['author'] = '';
+			$listvar['revision'] = 0;
+			$listvar['date'] = '';
+			$listvar['age'] = '';
+			$listvar['author'] = '';
 		}
 	}
 
 	// Create project (repository) listing
 	$url = str_replace('&amp;', '', $config->getURL($project, '', 'dir'));
 	$name = ($config->flatIndex) ? $project->getDisplayName() : $project->name;
-	$listing[$i]['projectlink'] = '<a href="'.$url.'">'.escape($name).'</a>';
-	$listing[$i]['rowparity'] = $parity % 2;
+	$listvar['projectlink'] = '<a href="'.$url.'">'.escape($name).'</a>';
+	$listvar['rowparity'] = $parity % 2;
 	$parity++;
-	$listing[$i]['groupparity'] = $groupparity % 2;
+	$listvar['groupparity'] = $groupparity % 2;
 	$groupparity++;
-	$listing[$i]['groupname'] = ($curgroup != null) ? $curgroup : '';
+	$listvar['groupname'] = ($curgroup != null) ? $curgroup : '';
 	$i++;
 }
 if (empty($listing) && !empty($projects)) {
