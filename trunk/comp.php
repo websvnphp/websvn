@@ -236,13 +236,14 @@ if ($rep) {
 			}
 		}
 
-		$listing[$index]['newpath'] = null;
-		$listing[$index]['endpath'] = null;
-		$listing[$index]['info'] = null;
-		$listing[$index]['diffclass'] = null;
-		$listing[$index]['difflines'] = null;
-		$listing[$index]['enddifflines'] = null;
-		$listing[$index]['properties'] = null;
+		$listvar = &$listing[$index];
+		$listvar['newpath'] = null;
+		$listvar['endpath'] = null;
+		$listvar['info'] = null;
+		$listvar['diffclass'] = null;
+		$listvar['difflines'] = null;
+		$listvar['enddifflines'] = null;
+		$listvar['properties'] = null;
 	}
 
 	$vars['success'] = false;
@@ -287,21 +288,22 @@ if ($rep) {
 							$subline = escape(toOutputEncoding(substr($line, 1)));
 							$subline = rtrim($subline, "\n\r");
 							$subline = ($subline) ? expandTabs($subline) : '&nbsp;';
-							$listing[$index]['line'] = $subline;
+							$listvar = &$listing[$index];
+							$listvar['line'] = $subline;
 
 							switch ($line[0]) {
 								case ' ':
-									$listing[$index]['diffclass'] = 'diff';
+									$listvar['diffclass'] = 'diff';
 									if ($debug) print 'Including as diff: '.$subline.'<br />';
 									break;
 
 								case '+':
-									$listing[$index]['diffclass'] = 'diffadded';
+									$listvar['diffclass'] = 'diffadded';
 									if ($debug) print 'Including as added: '.$subline.'<br />';
 									break;
 
 								case '-':
-									$listing[$index]['diffclass'] = 'diffdeleted';
+									$listvar['diffclass'] = 'diffdeleted';
 									if ($debug) print 'Including as removed: '.$subline.'<br />';
 									break;
 							}
@@ -337,16 +339,17 @@ if ($rep) {
 							$listing[$index++]['info'] = $lang['FILEDELETED'];
 
 						} else {
-							$listing[$index]['difflines'] = $line;
+							$listvar = &$listing[$index];
+							$listvar['difflines'] = $line;
 							$sline = 0;
 							$slen = 0;
 							$eline = 0;
 							$elen = 0;
 							sscanf($line, '@@ -%d,%d +%d,%d @@', $sline, $slen, $eline, $elen);
-							$listing[$index]['rev1line'] = $sline;
-							$listing[$index]['rev1len'] = $slen;
-							$listing[$index]['rev2line'] = $eline;
-							$listing[$index]['rev2len'] = $elen;
+							$listvar['rev1line'] = $sline;
+							$listvar['rev1len'] = $slen;
+							$listvar['rev2line'] = $eline;
+							$listvar['rev2len'] = $elen;
 
 							$indiffproper = true;
 
@@ -381,9 +384,10 @@ if ($rep) {
 						$absnode .= $node;
 					}
 
-					$listing[$index]['newpath'] = $absnode;
+					$listvar = &$listing[$index];
+					$listvar['newpath'] = $absnode;
 
-					$listing[$index]['fileurl'] = $config->getURL($rep, $absnode, 'file').'rev='.$rev2;
+					$listvar['fileurl'] = $config->getURL($rep, $absnode, 'file').'rev='.$rev2;
 
 					if ($debug) echo 'Creating node '.$node.'<br />';
 
@@ -395,7 +399,7 @@ if ($rep) {
 					$line = fgets($diff);
 					if ($debug) print 'Examining: '.$line.'<br />';
 					if (strpos($line, '(revision 0)')) {
-						$listing[$index]['info'] = $lang['FILEADDED'];
+						$listvar['info'] = $lang['FILEADDED'];
 					}
 
 					if (strncmp(trim($line), 'Cannot display:', 15) == 0) {
