@@ -133,30 +133,27 @@ class ParentPath {
 				return $null;
 			}
 		}
-		if ($handle = @opendir($this->path)) {
-			// is there a directory named $name?
-			$fullpath = $this->path.DIRECTORY_SEPARATOR.$name;
-			if (is_dir($fullpath) && is_readable($fullpath)) {
-				// And that contains a db directory (in an attempt to not include non svn repositories.
-				$dbfullpath = $fullpath.DIRECTORY_SEPARATOR.'db';
-				if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
-					// And matches the pattern if specified
-					if ($this->pattern === false || preg_match($this->pattern, $name)) {
-						$url = 'file:///'.$fullpath;
-						$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-						if ($url{strlen($url) - 1} == '/') {
-							$url = substr($url, 0, -1);
-						}
+		// is there a directory named $name?
+		$fullpath = $this->path.DIRECTORY_SEPARATOR.$name;
+		if (is_dir($fullpath) && is_readable($fullpath)) {
+			// And that contains a db directory (in an attempt to not include non svn repositories.
+			$dbfullpath = $fullpath.DIRECTORY_SEPARATOR.'db';
+			if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
+				// And matches the pattern if specified
+				if ($this->pattern === false || preg_match($this->pattern, $name)) {
+					$url = 'file:///'.$fullpath;
+					$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
+					if ($url{strlen($url) - 1} == '/') {
+						$url = substr($url, 0, -1);
+					}
 
-						if (!in_array($url, $config->_excluded, true)) {
-							$clientRootURL = ($this->clientRootURL) ? $this->clientRootURL.'/'.$name : '';
-							$rep = new Repository($name, $name, $url, $this->group, null, null, null, $clientRootURL);
-							return $rep;
-						}
+					if (!in_array($url, $config->_excluded, true)) {
+						$clientRootURL = ($this->clientRootURL) ? $this->clientRootURL.'/'.$name : '';
+						$rep = new Repository($name, $name, $url, $this->group, null, null, null, $clientRootURL);
+						return $rep;
 					}
 				}
 			}
-			closedir($handle);
 		}
 		$null = null;
 		return $null;
