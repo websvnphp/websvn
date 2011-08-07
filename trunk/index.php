@@ -61,10 +61,13 @@ foreach ($projects as $project) {
 		$listvar['groupname'] = $curgroup; // Applies until next group is set.
 		$listvar['groupid'] = strtr(base64_encode('grp'.$curgroup), array('+' => '-', '/' => '_', '=' => ''));
 
-		$listvar['projectlink'] = null; // Because template.php won't unset this
+		// setting to null because template.php won't unset them
+		$listvar['projectlink'] = null;
+		$listvar['projectname'] = null;
+		$listvar['projecturl'] = null;
 		$i++; // Causes the subsequent lines to store data in the next array slot.
 		$listvar = &$listing[$i];
-		$listvar['groupid'] = null; // Because template.php won't unset this
+		$listvar['groupid'] = null;
 	}
 	$listvar['clientrooturl'] = $project->clientRootURL;
 
@@ -90,6 +93,8 @@ foreach ($projects as $project) {
 	$url = str_replace('&amp;', '', $config->getURL($project, '', 'dir'));
 	$name = ($config->flatIndex) ? $project->getDisplayName() : $project->name;
 	$listvar['projectlink'] = '<a href="'.$url.'">'.escape($name).'</a>';
+	$listvar['projectname'] = escape($name);
+	$listvar['projecturl'] = $url;
 	$listvar['rowparity'] = $parity % 2;
 	$parity++;
 	$listvar['groupparity'] = $groupparity % 2;
