@@ -12,7 +12,7 @@
       [websvn-test:groupid]
       [websvn-else]
       <tr class="row[websvn:rowparity]">
-        <td class="project">[websvn:projectlink]</td>
+        <td class="project"><a href="[websvn:projecturl]">[websvn:projectname]</a></td>
         [websvn-test:showlastmod]
         <td>[lang:REV] [websvn:revision]</td>
         [websvn-test:showageinsteadofdate]
@@ -36,9 +36,9 @@
     [websvn-else]
       <tr title="[websvn:groupname]" class="row[websvn:groupparity]">
       [websvn-test:groupname]
-        <td class="project group">[websvn:projectlink]</td>
+        <td class="project group"><a href="[websvn:projecturl]">[websvn:projectname]</a></td>
       [websvn-else]
-        <td class="project">[websvn:projectlink]</td>
+        <td class="project"><a href="[websvn:projecturl]">[websvn:projectname]</a></td>
       [websvn-endtest]
       [websvn-test:showlastmod]
         <td>[lang:REV] [websvn:revision]</td>
