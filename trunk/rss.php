@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // WebSVN - Subversion repository viewing via the web using PHP
 // Copyright (C) 2004-2006 Tim Armes
 //
@@ -93,6 +93,7 @@ $rss .= '<title>'.escape($rep->getDisplayName().($path ? ' - '.$path : '')).'</t
 $rss .= '<description>'.escape($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
+$rss .= '<language>'.$lang['LANGUAGETAG'].'</language>';
 // URL for matching WebSVN log page
 $rss .= '<link>'.getFullURL($baseurl.$config->getURL($rep, $path, 'log').(@$_REQUEST['isdir'] == 1 ? 'isdir=1&amp;' : '').'max='.$max.'&amp;'.createRevAndPegString($passrev, $peg)).'</link>';
 // URL where this original RSS feed can be found
