@@ -294,7 +294,7 @@ if ($rep) {
 				$compareValue = (($isDir) ? $parent : $rpath).'@'.$thisrev;
 
 				$listvar = &$listing[$index];
-				$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$compareValue.'" onclick="checkCB(this)" />';
+				$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$compareValue.'" onclick="enforceOnlyTwoChecked(this)" />';
 				$url = $config->getURL($rep, $rpath, 'revision').$thisRevString;
 				$listvar['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
 

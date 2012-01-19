@@ -40,25 +40,6 @@
   <!--[if lt IE 7]>
   <script type="text/javascript" src="[websvn:locwebsvnhttp]/templates/BlueGrey/png.js"></script>
   <![endif]-->
-  <script type="text/javascript">
-  //<![CDATA[
-    function checkCB(chBox) {
-      count = 0;
-      first = null;
-      f = chBox.form;
-      for (i = 0 ; i < f.elements.length ; i++)
-        if (f.elements[i].type == 'checkbox' && f.elements[i].checked) {
-          if (first == null && f.elements[i] != chBox)
-            first = f.elements[i];
-          count += 1;
-        }
-      if (count > 2) {
-        first.checked = false;
-        count -= 1;
-      }
-    }
-  //]]>
-  </script>
 </head>
 <body id="[websvn:template]">
   <div id="header">

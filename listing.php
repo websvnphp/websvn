@@ -139,7 +139,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				}
 
 				if ($treeview) {
-					$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$path.$file.'@'.$passrev.'" onclick="checkCB(this)" />';
+					$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$path.$file.'@'.$passrev.'" onclick="enforceOnlyTwoChecked(this)" />';
 				}
 				if ($config->showLastModInListing()) {
 					$listvar['committime'] = $entry->committime;
