@@ -277,6 +277,7 @@ function renderTemplate($view) {
 		executePlainPhpTemplate($vars);
 	} else {
 		parseTemplate('header.tmpl');
+		flush(); // http://developer.yahoo.com/performance/rules.html#flush
 		parseTemplate($view . '.tmpl');
 		parseTemplate('footer.tmpl');
 	}
