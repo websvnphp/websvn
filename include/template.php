@@ -264,7 +264,7 @@ function parseTags($line, $vars) {
 // Renders the templates for the given view
 
 function renderTemplate($view) {
-	global $config, $rep, $vars, $listing, $lang;
+	global $config, $rep, $vars, $listing, $lang, $locwebsvnhttp;
 
 	// Set the view in the templates variables
 	$vars['template'] = $view;
@@ -279,6 +279,9 @@ function renderTemplate($view) {
 		parseTemplate('header.tmpl');
 		flush(); // http://developer.yahoo.com/performance/rules.html#flush
 		parseTemplate($view . '.tmpl');
+		if ($view === 'directory' || $view === 'log') {
+			print '<script type="text/javascript" src="'.$locwebsvnhttp.'/javascript/compare-checkboxes.js"></script>';
+		}
 		parseTemplate('footer.tmpl');
 	}
 }
