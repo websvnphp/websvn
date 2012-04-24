@@ -160,8 +160,7 @@ if ($rep) {
 						$listvar['lineno'] = $index + 1;
 
 						if ($last_rev != $revision) {
-							$url = $config->getURL($rep, $path, 'blame');
-							$listvar['revision'] = '<a id="l'.$index.'-rev" class="blame-revision" href="'.$url.'rev='.$revision.'&amp;peg='.$rev.'">'.$revision.'</a>';
+							$listvar['revision'] = '<a id="l'.$index.'-rev" class="blame-revision" href="'.$config->getURL($rep, $path, 'blame').createRevAndPegString($revision, $peg ? $peg : $rev).'">'.$revision.'</a>';
 							$seen_rev[$revision] = 1;
 							$row_class = ($row_class == 'light') ? 'dark' : 'light';
 							$listvar['author'] = $author;
