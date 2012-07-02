@@ -32,21 +32,21 @@
 
 // Configure these lines if your commands aren't on your path.
 //
-// $config->setSVNCommandPath('Path/to/svn/command/'); //  e.g. c:\\program files\\subversion\\bin
-// $config->setDiffPath('Path/to/diff/command/');
+// $config->setSVNCommandPath('/path/to/svn/command/'); //  e.g. c:\\program files\\subversion\\bin
+// $config->setDiffPath('/path/to/diff/command/');
 
 // For syntax colouring, if option enabled...
-// $config->setEnscriptPath('Path/to/enscript/command/');
-// $config->setSedPath('Path/to/sed/command/');
+// $config->setEnscriptPath('/path/to/enscript/command/');
+// $config->setSedPath('/path/to/sed/command/');
 
 // For delivered tarballs, if option enabled...
-// $config->setTarPath('Path/to/tar/command/');
+// $config->setTarPath('/path/to/tar/command/');
 
 // For delivered GZIP'd files and tarballs, if option enabled...
-// $config->setGZipPath('Path/to/gzip/command/');
+// $config->setGZipPath('/path/to/gzip/command/');
 
 // download folder/file zipped ...
-// $config->setZipPath('Path/to/zip/command/');
+// $config->setZipPath('/path/to/zip/command/');
 
 // Uncomment this line to trust server certificates
 // This may useful if you use self-signed certificates and have no chance to accept the certificate once via cli
@@ -70,7 +70,7 @@
 // password; if these arguments are not needed, then pass null instead. Consult
 // the WebSvnConfig class in include/configclass.php for function details.
 //
-// Performance is much better on local repositories (e.g. accessed by file:///).
+// Performance is much better on local repositories (e.g. accessed by file://).
 // However, you can also provide an interface onto a remote repository. In this
 // case you should supply the username and password needed to access it.
 //
@@ -78,42 +78,48 @@
 // uncomment it and replace the name and URL of your repository.
 
 // Local repositories (without and with optional group):
+// Note that the local URL to the repository depends on your platform:
+//   Unix-like: file:///path/to/rep
+//   Windows: file:///c:/svn/proj
 //
-// $config->addRepository('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)');
-// $config->addRepository('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)', 'group');
+// $config->addRepository('NameToDisplay', 'local URL');
+// $config->addRepository('NameToDisplay', 'local URL', 'group');
 //
 // Remote repositories (without and with optional group):
+// A remote URL looks like http://domain.tld/path/to/rep
 //
-// $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', null, 'username', 'password');
-// $config->addRepository('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'group', 'username', 'password');
+// $config->addRepository('NameToDisplay', 'remote URL', null, 'username', 'password');
+// $config->addRepository('NameToDisplay', 'remote URL', 'group', 'username', 'password');
 //
 // Display Part of a repository as if it was a repository.
 //
 // Local repositories (without and with optional group):
 //
-// $config->addRepositorySubpath('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)', 'subpath');
-// $config->addRepositorySubpath('NameToDisplay', 'URL to repository (e.g. file:///c:/svn/proj)', 'subpath', 'group');
+// $config->addRepositorySubpath('NameToDisplay', 'local URL', 'subpath');
+// $config->addRepositorySubpath('NameToDisplay', 'local URL', 'subpath', 'group');
 //
 // Remote repositories (without and with optional group):
 //
-// $config->addRepositorySubpath('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'subpath', null, 'username', 'password');
-// $config->addRepositorySubpath('NameToDisplay', 'URL (e.g. http://path/to/rep)', 'subpath', 'group', 'username', 'password');
+// $config->addRepositorySubpath('NameToDisplay', 'remote URL', 'subpath', null, 'username', 'password');
+// $config->addRepositorySubpath('NameToDisplay', 'remote URL', 'subpath', 'group', 'username', 'password');
 //
 // To use the parent path method (without and with optional group), uncomment the next line
 // and replace the path with your one. You can call the function several times if you have several parent paths.
-// Note that in this case the path is a filesystem path.
+// Note that in this case the path is a filesystem path and depends on your platform:
+//   Unix-like: /path/to/parent
+//   Windows: c:\\svn
 //
-// $config->parentPath('Path/to/parent (e.g. c:\\svn)');
-// $config->parentPath('Path/to/parent (e.g. c:\\svn)', 'group');
+// $config->parentPath('filesystem path');
+// $config->parentPath('filesystem path', 'group');
 //
 // To exclude a repository from being added by the parentPath method uncomment the next line
 // and replace the path with your one. You can call the function several times if you have several paths to exclude.
 //
-// $config->addExcludedPath('Path/to/parent/excludedRep (e.g. c:\\svn\\excludedRep)');
+// $config->addExcludedPath('filesystem path of excluded rep');
 //
 // To add only a subset of repositories specified by the parent path you can call the function with a pattern.
 //
-// $config->parentPath('Path/to/parent (e.g. c:\\svn)', 'group', '/^beginwith/');
+// $config->parentPath('filesystem path', 'group', '/^beginwith/');
 
 // }}}
 

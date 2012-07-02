@@ -141,7 +141,7 @@ class ParentPath {
 			if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
 				// And matches the pattern if specified
 				if ($this->pattern === false || preg_match($this->pattern, $name)) {
-					$url = 'file:///'.$fullpath;
+					$url = $config->fileUrlPrefix.$fullpath;
 					$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
 					if ($url{strlen($url) - 1} == '/') {
 						$url = substr($url, 0, -1);
@@ -163,6 +163,7 @@ class ParentPath {
 	// {{{ getRepositories()
 	// return all repositories in the parent path matching pattern
 	function &getRepositories() {
+		global $config;
 		$repos = array();
 		$handle = @opendir($this->path);
 
@@ -177,7 +178,7 @@ class ParentPath {
 				if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
 					// And matches the pattern if specified
 					if ($this->pattern === false || preg_match($this->pattern, $name)) {
-						$url = 'file:///'.$fullpath;
+						$url = $config->fileUrlPrefix.$fullpath;
 						$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
 						if ($url{strlen($url) - 1} == '/') {
 							$url = substr($url, 0, -1);
@@ -667,6 +668,7 @@ class WebSvnConfig {
 
 	var $quote = "'";
 	var $pathSeparator = ':';
+	var $fileUrlPrefix = 'file://';
 
 	var $_repositories = array();
 
@@ -710,7 +712,7 @@ class WebSvnConfig {
 	}
 
 	function addExcludedPath($path) {
-		$url = 'file:///'.$path;
+		$url = $this->fileUrlPrefix.$path;
 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
 		if ($url{strlen($url) - 1} == '/') {
 			$url = substr($url, 0, -1);
@@ -790,6 +792,8 @@ class WebSvnConfig {
 
 		// On Windows, semicolon separates path entries in a list rather than colon.
 		$this->pathSeparator = ';';
+
+		$this->fileUrlPrefix = 'file:///';
 	}
 
 	// }}}
