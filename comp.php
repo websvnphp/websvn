@@ -446,9 +446,18 @@ if ($rep) {
 					if ($debug) print 'Skipping: '.$line.'<br />';
 
 					while ($line = trim(fgets($diff))) {
+						if (version_compare($config->getSubversionVersion(), '1.7.0') >= 0) {
+							if (!strncmp($line, 'Index: ', 7)) {
+								break;
+							}
+							if (!strncmp($line, '##', 2) || $line == '\ No newline at end of file') {
+								continue;
+							}
+						}
 						$listing[$index++]['info'] = escape(toOutputEncoding($line));
 						clearVars();
 					}
+					$getLine = false;
 
 					continue;
 				}
