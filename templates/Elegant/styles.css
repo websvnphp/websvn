@@ -613,7 +613,7 @@ body > #wrapper {
 
 #blame td.code {
 	text-align: left;
-	white-space: normal;
+	white-space: pre-wrap;
 }
 
 #blame td.code, #blame td.line {
