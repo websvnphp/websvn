@@ -109,8 +109,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 			// Only list files/directories that are not designated as off-limits
 			$access = ($isDir) ? $rep->hasReadAccess($path.$file, true)
 												 : $accessToThisDir;
-			$listvar = &$listing[$index];
 			if ($access) {
+				$listvar = &$listing[$index];
 				$listvar['rowparity'] = $index % 2;
 
 				if ($isDir) {
