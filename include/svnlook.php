@@ -121,7 +121,7 @@ function infoStartElement($parser, $name, $attrs) {
 			if ($debugxml) print 'Creating info entry'."\n";
 
 			if (count($attrs)) {
-				while (list($k, $v) = each($attrs)) {
+				foreach ($attrs as $k => $v) {
 					switch ($k) {
 						case 'KIND':
 							if ($debugxml) print 'Kind '.$v."\n";
@@ -195,7 +195,7 @@ function listStartElement($parser, $name, $attrs) {
 			if ($debugxml) print 'Starting list'."\n";
 
 			if (count($attrs)) {
-				while (list($k, $v) = each($attrs)) {
+				foreach ($attrs as $k => $v) {
 					switch ($k) {
 						case 'PATH':
 							if ($debugxml) print 'Path '.$v."\n";
@@ -211,7 +211,7 @@ function listStartElement($parser, $name, $attrs) {
 			$curList->curEntry = new SVNListEntry;
 
 			if (count($attrs)) {
-				while (list($k, $v) = each($attrs)) {
+				foreach ($attrs as $k => $v) {
 					switch ($k) {
 						case 'KIND':
 							if ($debugxml) print 'Kind '.$v."\n";
@@ -226,7 +226,7 @@ function listStartElement($parser, $name, $attrs) {
 			if ($debugxml) print 'Commit'."\n";
 
 			if (count($attrs)) {
-				while (list($k, $v) = each($attrs)) {
+				foreach ($attrs as $k => $v) {
 					switch ($k) {
 						case 'REVISION':
 							if ($debugxml) print 'Revision '.$v."\n";
@@ -317,7 +317,7 @@ function logStartElement($parser, $name, $attrs) {
 			$curLog->curEntry->path = $curLog->path;
 
 			if (count($attrs)) {
-				while (list($k, $v) = each($attrs)) {
+				foreach ($attrs as $k => $v) {
 					switch ($k) {
 						case 'REVISION':
 							if ($debugxml) print 'Revision '.$v."\n";
@@ -333,7 +333,7 @@ function logStartElement($parser, $name, $attrs) {
 			$curLog->curEntry->curMod = new SVNMod;
 
 			if (count($attrs)) {
-				while (list($k, $v) = each($attrs)) {
+				foreach ($attrs as $k => $v) {
 					switch ($k) {
 						case 'ACTION':
 							if ($debugxml) print 'Action '.$v."\n";
@@ -567,7 +567,7 @@ class SVNRepository {
 	var $repConfig;
 	var $geshi = null;
 
-	function SVNRepository($repConfig) {
+	function __construct($repConfig) {
 		$this->repConfig = $repConfig;
 	}
 
