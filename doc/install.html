@@ -59,7 +59,13 @@
 
 <h2><a name="installation"></a>Installation</h2>
 
-<p>Grab the source and stick it somewhere that your server can get to. You need to have <strong>PHP 4.3.0</strong> or greater installed and working. Additionally you need <strong>SVN 1.2.0</strong> or greater. Also note that WebSVN won't currently work in safe mode, due to the need to call the <code>svn</code> and <code>svnlook</code> commands. No other external programs are required.</p>
+<p>Grab the source and stick it somewhere that your server can get to. You need to have <strong>PHP 4.3.0</strong> or greater installed and working. Additionally you need <strong>SVN 1.2.0</strong> or greater. Also note that WebSVN won't currently work in safe mode, due to the need to call the <code>svn</code> and <code>svnlook</code> commands. While no other external programs are required, you need to provide additional PHP libraries if not already installed. It's recommended to use the package manager of your OS-distribution for each individual library or, if it doesn't provide those, that of PHP itself called <strong>PEAR</strong>. At least PEAR should most likely be available using the package manager of your OS-distribution. With e.g. a Debian based Linux simply issue the following commands to install the dependencies using PEAR:</p>
+
+<ol>
+	<li>apt-get install php-pear</li>
+	<li>pear install Archive_Tar</li>
+	<li>pear install Text_Diff</li>
+</ol>
 
 <p>If it isn't already, make sure the cache directory has permissions of at least 0700 and is owned by the process your webserver is running under. This is used to cache RSS files. It is not recommended to set the directory to full write, 0777.</p>
 
@@ -219,8 +225,6 @@ $config->useAuthenticationFile('/path/to/accessfile');
 <h2><a name="license"></a>License</h2>
 
 <p><a href="http://www.fsf.org/licensing/licenses/gpl.html">GNU Public licence</a></p>
-
-</div>
 
 </body>
 </html>
