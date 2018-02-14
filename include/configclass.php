@@ -111,7 +111,7 @@ class ParentPath {
 	// }}}
 
 	// {{{ __construct($path [, $group [, $pattern [, $skipAlreadyAdded [, $clientRootURL]]]])
-	function ParentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true, $clientRootURL = '') {
+	function __construct($path, $group = null, $pattern = false, $skipAlreadyAdded = true, $clientRootURL = '') {
 		$this->path = $path;
 		$this->group = $group;
 		$this->pattern = $pattern;
@@ -245,7 +245,7 @@ class Repository {
 
 	// {{{ __construct($name, $svnName, $serverRootURL [, $group [, $username [, $password [, $clientRootURL]]]])
 
-	function Repository($name, $svnName, $serverRootURL, $group = null, $username = null, $password = null, $subpath = null, $clientRootURL = null) {
+	function __construct($name, $svnName, $serverRootURL, $group = null, $username = null, $password = null, $subpath = null, $clientRootURL = null) {
 		$this->name = $name;
 		$this->svnName = $svnName;
 		$this->path = $serverRootURL;
@@ -682,7 +682,7 @@ class WebSvnConfig {
 
 	// {{{ __construct()
 
-	function WebSvnConfig() {
+	function __construct() {
 	}
 
 	// }}}

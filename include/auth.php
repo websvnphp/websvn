@@ -36,7 +36,7 @@ class Authentication {
 
 	// {{{ __construct
 
-	function Authentication($basicRealm = false) {
+	function __construct($basicRealm = false) {
 		$this->rights = new IniFile();
 		$this->setUsername();
 		if ($basicRealm !== false) {

@@ -4,7 +4,7 @@
  * ------------
  * Author: Roberto Rossi
  * Copyright: (c) 2005 Roberto Rossi (http://rsoftware.altervista.org)
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.9.0
  * Date Started: 2005/08/19
  *
  * sdlBasic (http://sdlbasic.sf.net) language file for GeSHi.
@@ -161,5 +161,3 @@ $language_data = array (
     'HIGHLIGHT_STRICT_BLOCK' => array(
         )
 );
-
-?>

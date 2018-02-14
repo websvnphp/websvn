@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Paul Grinberg (gri6507 TA unity-linux TOD org)
  * Copyright: (c) 2010 Paul Grinberg
- * Release Version: 1.0.8.10
+ * Release Version: 1.0.9.0
  * Date Started: 2010/04/27
  *
  * RPM Spec language file for GeSHi.
@@ -129,5 +129,3 @@ $language_data = array (
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(),
 );
-
-?>
