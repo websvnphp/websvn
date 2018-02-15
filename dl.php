@@ -137,6 +137,18 @@ if ($rep) {
 		exit(0);
 	}
 
+	// For security reasons, disallow direct downloads of filenames that
+	// are a symlink, since they may be a symlink to anywhere (/etc/passwd)
+	// Deciding whether the symlink is relative and legal within the
+	// repository would be nice but seems to error prone at this moment.
+	if ( is_link($tempDir.DIRECTORY_SEPARATOR.$archiveName) ) {
+		header('HTTP/1.x 500 Internal Server Error', true, 500);
+		error_log('to be downloaded file is symlink, aborting: '.$archiveName);
+		print 'Download of symlinks disallowed: "'.xml_entities($archiveName).'".';
+		removeDirectory($tempDir);
+		exit(0);
+	}
+
 	// Set timestamp of exported directory (and subdirectories) to timestamp of
 	// the revision so every archive of a given revision has the same timestamp.
 	$revDate = $logEntry->date;
@@ -180,7 +192,7 @@ if ($rep) {
 		$downloadMimeType = 'application/x-zip';
 		$downloadArchive .= '.zip';
 		// Create zip file
-		$cmd = $config->zip.' -r '.quote($downloadArchive).' '.quote($archiveName);
+		$cmd = $config->zip.' --symlinks -r '.quote($downloadArchive).' '.quote($archiveName);
 		execCommand($cmd, $retcode);
 		if ($retcode != 0) {
 			error_log('Unable to call zip command: '.$cmd);
