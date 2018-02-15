@@ -26,7 +26,6 @@ require_once 'include/setup.php';
 require_once 'include/svnlook.php';
 require_once 'include/utils.php';
 
-ini_set('include_path', $locwebsvnreal.'/lib/pear'.$config->pathSeparator.ini_get('include_path'));
 @include_once 'Archive/Tar.php';
 
 function setDirectoryTimestamp($dir, $timestamp) {
