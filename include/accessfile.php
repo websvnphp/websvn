@@ -27,7 +27,7 @@ class IniFile {
 
 	// {{{ __construct
 
-	function IniFile() {
+	function __construct() {
 		$this->sections = array();
 	}
 
