@@ -4,7 +4,7 @@
  * ----------------
  * Author: Roberto Armellin (r.armellin@tin.it)
  * Copyright: (c) 2004 Roberto Armellin, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.8.10
  * Date Started: 2004/09/17
  *
  * Visual FoxPro language file for GeSHi.
@@ -452,3 +452,5 @@ $language_data = array (
     'HIGHLIGHT_STRICT_BLOCK' => array(
         )
 );
+
+?>

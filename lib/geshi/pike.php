@@ -4,7 +4,7 @@
  * --------
  * Author: Rick E. (codeblock@eighthbit.net)
  * Copyright: (c) 2009 Rick E.
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.8.10
  * Date Started: 2009/12/10
  *
  * Pike language file for GeSHi.
@@ -99,3 +99,5 @@ $language_data = array(
     'SCRIPT_DELIMITERS' => array(),
     'HIGHLIGHT_STRICT_BLOCK' => array()
 );
+
+?>

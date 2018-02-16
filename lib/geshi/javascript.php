@@ -4,15 +4,13 @@
  * --------------
  * Author: Ben Keen (ben.keen@gmail.com)
  * Copyright: (c) 2004 Ben Keen (ben.keen@gmail.com), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.8.10
  * Date Started: 2004/06/20
  *
  * JavaScript language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2012/06/27 (1.0.8.11)
- *  -  Reordered Keyword Groups to reflect syntactical meaning of keywords
  * 2008/05/23 (1.0.7.22)
  *  -  Added description of extra language features (SF#1970248)
  * 2004/11/27 (1.0.1)
@@ -56,38 +54,23 @@ $language_data = array (
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
-            //reserved/keywords; also some non-reserved keywords
-            'break','case','catch','const','continue',
-            'default','delete','do',
-            'else',
-            'finally','for','function',
-            'get','goto',
-            'if','in','instanceof',
-            'new',
-            'prototype',
-            'return',
-            'set','static','switch',
-            'this','throw','try','typeof',
-            'var','void'
+            'as', 'break', 'case', 'catch', 'continue', 'decodeURI', 'delete', 'do',
+            'else', 'encodeURI', 'eval', 'finally', 'for', 'if', 'in', 'is', 'item',
+            'instanceof', 'return', 'switch', 'this', 'throw', 'try', 'typeof', 'void',
+            'while', 'write', 'with'
             ),
         2 => array(
-            //reserved/non-keywords; metaconstants
-            'false','null','true','undefined','NaN','Infinity'
+            'class', 'const', 'default', 'debugger', 'export', 'extends', 'false',
+            'function', 'import', 'namespace', 'new', 'null', 'package', 'private',
+            'protected', 'public', 'super', 'true', 'use', 'var'
             ),
         3 => array(
-            //magic properties/functions
-            '__proto__','__defineGetter__','__defineSetter__','hasOwnProperty','hasProperty'
-            ),
-        4 => array(
-            //type constructors
-            'Object', 'Function', 'Date', 'Math', 'String', 'Number', 'Boolean', 'Array'
-            ),
-        5 => array(
-            //reserved, but invalid in language
-            'abstract','boolean','byte','char','class','debugger','double','enum','export','extends',
-            'final','float','implements','import','int','interface','long','native',
-            'short','super','synchronized','throws','transient','volatile'
-            ),
+            // common functions for Window object
+            'alert', 'back', 'blur', 'close', 'confirm', 'focus', 'forward', 'home',
+            'name', 'navigate', 'onblur', 'onerror', 'onfocus', 'onload', 'onmove',
+            'onresize', 'onunload', 'open', 'print', 'prompt', 'scroll', 'status',
+            'stop',
+            )
         ),
     'SYMBOLS' => array(
         '(', ')', '[', ']', '{', '}',
@@ -98,18 +81,15 @@ $language_data = array (
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        1 => true,
-        2 => true,
-        3 => true,
-        4 => true,
-        5 => true
+        1 => false,
+        2 => false,
+        3 => false
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #000066; font-weight: bold;',
             2 => 'color: #003366; font-weight: bold;',
-            3 => 'color: #000066;',
-            5 => 'color: #FF0000;'
+            3 => 'color: #000066;'
             ),
         'COMMENTS' => array(
             1 => 'color: #006600; font-style: italic;',
@@ -146,10 +126,8 @@ $language_data = array (
     'URLS' => array(
         1 => '',
         2 => '',
-        3 => '',
-        4 => '',
-        5 => ''
-    ),
+        3 => ''
+        ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
         1 => '.'
@@ -170,3 +148,5 @@ $language_data = array (
         1 => true
         )
 );
+
+?>

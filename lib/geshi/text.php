@@ -4,7 +4,7 @@
  * --------
  * Author: Sean Hanna (smokingrope@gmail.com)
  * Copyright: (c) 2006 Sean Hanna
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.8.10
  * Date Started: 04/23/2006
  *
  * Standard Text File (No Syntax Highlighting).
@@ -77,6 +77,8 @@ $language_data = array (
     'PARSER_CONTROL' => array(
         'ENABLE_FLAGS' => array(
             'ALL' => GESHI_NEVER
-            )
-        )
+        ),
+    )
 );
+
+?>

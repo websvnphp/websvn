@@ -4,7 +4,7 @@
  * ------
  * Author: Doug Porter (powerbuilder.geshi@gmail.com)
  * Copyright: (c) 2009 Doug Porter
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.8.10
  * Date Started: 2009/07/13
  *
  * PowerBuilder (PowerScript) language file for GeSHi.
@@ -129,8 +129,7 @@ $language_data = array (
             'dragleave!', 'dragobject!', 'dragwithin!', 'drawobject!',
             'dropdownlistbox!', 'dropdownpicturelistbox!', 'drophighlighttreeitem!', 'dwobject!',
             'dynamicdescriptionarea!', 'dynamicstagingarea!', 'easteuropecharset!', 'editchanged!',
-            'editmask!', 'editmenu!', 'encodingansi!', 'encodingutf8!',
-            'encodingutf16le!', 'encodingutf16be!', 'end!', 'endlabeledit!',
+            'editmask!', 'editmenu!', 'end!', 'endlabeledit!',
             'enterprise!', 'enterpriseonlyfeature!', 'enumeratedtype!', 'enumerationdefinition!',
             'enumerationitemdefinition!', 'environment!', 'error!', 'errorlogging!',
             'eventnotexisterror!', 'eventwrongprototypeerror!', 'excel!', 'excel5!',
@@ -415,3 +414,5 @@ $language_data = array (
     'HIGHLIGHT_STRICT_BLOCK' => array(
         )
 );
+
+?>

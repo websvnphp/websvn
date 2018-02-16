@@ -4,7 +4,7 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.8.10
  * Date Started: 2004/06/20
  *
  * PHP language file for GeSHi.
@@ -90,15 +90,14 @@ $language_data = array(
             'as','break','case','continue','default','do','else','elseif',
             'endfor','endforeach','endif','endswitch','endwhile','for',
             'foreach','if','include','include_once','require','require_once',
-            'return','switch','throw','while', 'yield',
+            'return','switch','throw','while',
 
             'echo','print'
             ),
         2 => array(
             '&amp;new','&lt;/script&gt;','&lt;?php','&lt;script language',
-            'abstract','class','const','declare','extends','function','global',
-            'implements', 'interface','namespace','new','private','protected',
-            'public','self','trait','use','var'
+            'class','const','declare','extends','function','global','interface',
+            'namespace','new','private','protected','public','self','use','var'
             ),
         3 => array(
             'abs','acos','acosh','addcslashes','addslashes','aggregate',
@@ -1062,7 +1061,7 @@ $language_data = array(
         ),
     'REGEXPS' => array(
         //Variables
-        0 => "[\\$]+[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*"
+        0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
         ),
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(
@@ -1084,24 +1083,22 @@ $language_data = array(
             "(?>'(?>[^'\\\\]|\\\\'|\\\\\\\|\\\\)*')|".
             "(?>\"(?>[^\"\\\\]|\\\\\"|\\\\\\\\|\\\\)*\")|".
             "(?>\\/\\*(?>[^\\*]|(?!\\*\\/)\\*)*\\*\\/)|".
-            "\\/\\/(?>.*?(?:\\?>|$))|".
-            "#(?>.*?(?:\\?>|$))|".
+            "\\/\\/(?>.*?$)|".
             "\\/(?=[^*\\/])|".
             "<(?!<<)|".
             "<<<(?P<phpdoc>\w+)\s.*?\s\k<phpdoc>".
-            ")*?(?P<end>\\?>|\Z)/sm",
+            ")*(?P<end>\\?>|\Z)/sm",
         5 => "/(?P<start><%)(?:".
             "(?>[^\"'%\\/<]+)|".
             "%(?!>)|".
             "(?>'(?>[^'\\\\]|\\\\'|\\\\\\\|\\\\)*')|".
             "(?>\"(?>[^\\\"\\\\]|\\\\\"|\\\\\\\\|\\\\)*\")|".
             "(?>\\/\\*(?>[^\\*]|(?!\\*\\/)\\*)*\\*\\/)|".
-            "\\/\\/(?>.*?(?:%>|$))|".
-            "#(?>.*?(?:%>|$))|".
+            "\\/\\/(?>.*?$)|".
             "\\/(?=[^*\\/])|".
             "<(?!<<)|".
             "<<<(?P<phpdoc>\w+)\s.*?\s\k<phpdoc>".
-            ")*?(?P<end>%>|\Z)/sm",
+            ")*(?P<end>%>)/sm",
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,
@@ -1113,3 +1110,5 @@ $language_data = array(
         ),
     'TAB_WIDTH' => 4
 );
+
+?>

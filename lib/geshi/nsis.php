@@ -2,18 +2,15 @@
 /*************************************************************************************
  * nsis.php
  * --------
- * Author: deguix (cevo_deguix@yahoo.com.br), Tux (http://tux.a4.cz/), Jan T. Sott (http://github.com/idleberg)
+ * Author: deguix (cevo_deguix@yahoo.com.br), Tux (http://tux.a4.cz/)
  * Copyright: (c) 2005 deguix, 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.8.10
  * Date Started: 2005/12/03
  *
  * Nullsoft Scriptable Install System language file for GeSHi.
  *
  * CHANGES
  * -------
- * 2014/04/23 (2.0.3)
- *   - Updated to NSIS 3.0a2
- *   - Removed deprecated commands
  * 2005/12/03 (2.0.2)
  *   - Updated to NSIS 2.11.
  * 2005/06/17 (2.0.1)
@@ -50,7 +47,7 @@
  *
  ************************************************************************************/
 
-$language_data = array(
+$language_data = array (
     'LANG_NAME' => 'NSIS',
     'COMMENT_SINGLE' => array(1 => ';', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
@@ -59,26 +56,27 @@ $language_data = array(
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
         1 => array(
-            '!addincludedir', '!addplugindir', '!appendfile', '!cd', '!define', '!delfile', '!echo', '!error',
-            '!execute', '!finalize', '!getdllversion', '!include', '!insertmacro', '!macro', '!macroend', '!makensis', '!packhdr',
-            '!searchparse', '!searchreplace', '!system', '!tempfile', '!undef', '!verbose', '!warning'
+            '!appendfile', '!addIncludeDir', '!addplugindir', '!cd', '!define', '!delfile', '!echo', '!else',
+            '!endif', '!error', '!execute', '!ifdef', '!ifmacrodef', '!ifmacrondef', '!ifndef', '!include',
+            '!insertmacro', '!macro', '!macroend', '!packhdr', '!tempfile', '!system', '!undef', '!verbose',
+            '!warning'
             ),
         2 => array(
             'AddBrandingImage', 'AllowRootDirInstall', 'AutoCloseWindow', 'BGFont',
             'BGGradient', 'BrandingText', 'Caption', 'ChangeUI', 'CheckBitmap', 'CompletedText', 'ComponentText',
-            'CRCCheck', 'DetailsButtonText', 'DirText', 'DirVar', 'DirVerify', 'FileErrorText',
+            'CRCCheck', 'DetailsButtonText', 'DirShow', 'DirText', 'DirVar', 'DirVerify', 'FileErrorText',
             'Function', 'FunctionEnd', 'Icon', 'InstallButtonText', 'InstallColors', 'InstallDir',
-            'InstallDirRegKey', 'InstProgressFlags', 'InstType', 'LangString', 'LicenseBkColor',
-            'LicenseData', 'LicenseForceSelection', 'LicenseLangString', 'LicenseText', 'LoadLanguageFile', 'ManifestDPIAware', 'ManifestSupportedOS',
-            'MiscButtonText', 'Name', 'OutFile', 'Page', 'PageEx', 'PageExEnd', 'RequestExecutionLevel', 'Section',
+            'InstallDirRegKey', 'InstProgressFlags', 'InstType', 'LangString', 'LangStringUP', 'LicenseBkColor',
+            'LicenseData', 'LicenseForceSelection', 'LicenseLangString', 'LicenseText', 'LoadLanguageFile',
+            'MiscButtonText', 'Name', 'OutFile', 'Page', 'PageEx', 'PageExEnd', 'Section',
             'SectionEnd', 'SectionGroup', 'SectionGroupEnd', 'SetCompressor', 'SetFont', 'ShowInstDetails',
             'ShowUninstDetails', 'SilentInstall', 'SilentUnInstall', 'SpaceTexts', 'SubCaption', 'SubSection',
-            'SubSectionEnd', 'Unicode', 'UninstallButtonText', 'UninstallCaption', 'UninstallIcon', 'UninstallSubCaption',
-            'UninstallText', 'UninstPage', 'Var', 'VIAddVersionKey', 'VIFileVersion', 'VIProductVersion', 'WindowIcon', 'XPStyle'
+            'SubSectionEnd', 'UninstallButtonText', 'UninstallCaption', 'UninstallIcon', 'UninstallSubCaption',
+            'UninstallText', 'UninstPage', 'Var', 'VIAddVersionKey', 'VIProductVersion', 'WindowIcon', 'XPStyle'
             ),
         3 => array(
             'AddSize', 'AllowSkipFiles', 'FileBufSize', 'GetInstDirError', 'PageCallbacks',
-            'SectionIn', 'SetCompress', 'SetCompressorDictSize',
+            'SectionIn', 'SetCompress', 'SetCompressionLevel', 'SetCompressorDictSize',
             'SetDatablockOptimize', 'SetDateSave', 'SetOverwrite', 'SetPluginUnload'
             ),
         4 => array(
@@ -86,18 +84,18 @@ $language_data = array(
             'CreateFont', 'CreateShortCut', 'Delete', 'DeleteINISec', 'DeleteINIStr', 'DeleteRegKey',
             'DeleteRegValue', 'DetailPrint', 'EnableWindow', 'EnumRegKey', 'EnumRegValue', 'Exch', 'Exec',
             'ExecShell', 'ExecWait', 'ExpandEnvStrings', 'File', 'FileClose', 'FileOpen', 'FileRead',
-            'FileReadByte', 'FileReadUTF16LE', 'FileReadWord', 'FileSeek', 'FileWrite', 'FileWriteByte', 'FileWriteUTF16LE', 'FileWriteWord', 'FindClose', 'FindFirst', 'FindNext',
+            'FileReadByte', 'FileSeek', 'FileWrite', 'FileWriteByte', 'FindClose', 'FindFirst', 'FindNext',
             'FindWindow', 'FlushINI', 'GetCurInstType', 'GetCurrentAddress', 'GetDlgItem', 'GetDLLVersion',
             'GetDLLVersionLocal', 'GetErrorLevel', 'GetFileTime', 'GetFileTimeLocal', 'GetFullPathName',
-            'GetFunctionAddress', 'GetLabelAddress', 'GetTempFileName', 'Goto', 'HideWindow',
+            'GetFunctionAddress', 'GetLabelAddress', 'GetTempFileName', 'GetWindowText', 'Goto', 'HideWindow',
             'IfAbort', 'IfErrors', 'IfFileExists', 'IfRebootFlag', 'IfSilent', 'InitPluginsDir', 'InstTypeGetText',
             'InstTypeSetText', 'IntCmp', 'IntCmpU', 'IntFmt', 'IntOp', 'IsWindow', 'LockWindow', 'LogSet', 'LogText',
-            'MessageBox', 'Nop', 'Pop', 'Push', 'Quit', 'ReadEnvStr', 'ReadINIStr', 'ReadRegDWORD', 'ReadRegStr',
+            'MessageBox', 'Nop', 'Pop', 'Push', 'Quit', 'ReadEnvStr', 'ReadIniStr', 'ReadRegDWORD', 'ReadRegStr',
             'Reboot', 'RegDLL', 'Rename', 'ReserveFile', 'Return', 'RMDir', 'SearchPath', 'SectionGetFlags',
             'SectionGetInstTypes', 'SectionGetSize', 'SectionGetText', 'SectionSetFlags', 'SectionSetInstTypes',
             'SectionSetSize', 'SectionSetText', 'SendMessage', 'SetAutoClose', 'SetBrandingImage', 'SetCtlColors',
             'SetCurInstType', 'SetDetailsPrint', 'SetDetailsView', 'SetErrorLevel', 'SetErrors', 'SetFileAttributes',
-            'SetOutPath', 'SetRebootFlag', 'SetRegView', 'SetShellVarContext', 'SetSilent', 'ShowWindow', 'Sleep', 'StrCmp', 'StrCmpS',
+            'SetOutPath', 'SetRebootFlag', 'SetShellVarContext', 'SetSilent', 'ShowWindow', 'Sleep', 'StrCmp',
             'StrCpy', 'StrLen', 'UnRegDLL', 'WriteINIStr', 'WriteRegBin', 'WriteRegDWORD', 'WriteRegExpandStr',
             'WriteRegStr', 'WriteUninstaller'
             ),
@@ -349,3 +347,5 @@ $language_data = array(
     'HIGHLIGHT_STRICT_BLOCK' => array(
         )
 );
+
+?>
