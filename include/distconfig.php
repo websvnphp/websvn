@@ -28,7 +28,7 @@
 
 // Configure the path for Subversion to use for --config-dir
 // (e.g. if accepting certificates is required when using repositories via https)
-// $config->setSvnConfigDir('/tmp');
+// $config->setSvnConfigDir('/tmp/websvn');
 
 // Configure these lines if your commands aren't on your path.
 //
