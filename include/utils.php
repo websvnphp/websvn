@@ -293,8 +293,7 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false) {
 		// are 0 and we still want to print seconds)
 		if ($any || $qty[$i] > 0 || $i == $count - 1) {
 			if ($any) $text .= $nbsp ? '&nbsp;' : ' ';
-			if ($any && $qty[$i] < 10) $text .= '0';
-			$text .= $qty[$i].$names[$i];
+			$text .= $qty[$i].' '.$names[$i];
 			$any = true;
 			$parts++;
 			if ($parts >= 2) break;
