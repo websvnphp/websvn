@@ -603,9 +603,9 @@ class WebSvnConfig {
 
 	var $_svnCommandPrefix = '';
 	var $_svnCommandPath = '';
-	var $_svnConfigDir = '/tmp';
+	var $_svnConfigDir = '/tmp/websvn';
 	var $_svnTrustServerCert = false;
-	var $svn = 'svn --non-interactive --config-dir /tmp';
+	var $svn = 'svn --non-interactive --config-dir /tmp/websvn';
 	var $diff = 'diff';
 	var $enscript = 'enscript -q';
 	var $sed = 'sed';
