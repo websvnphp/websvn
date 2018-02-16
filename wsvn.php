@@ -45,8 +45,6 @@ if (!defined('WSVN_MULTIVIEWS')) {
 	define('WSVN_MULTIVIEWS', 1);
 }
 
-ini_set('include_path', $locwebsvnreal);
-
 require_once 'include/setup.php';
 require_once 'include/svnlook.php';
 

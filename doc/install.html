@@ -184,18 +184,7 @@ DirectoryIndex wsvn.php
 
 <p>WebSVN provides and access rights mechanism that uses your SVN access file to control read access to the repository. This means that you only have to maintain one file to define both Subversion and WebSVN access rights.</p>
 
-<p>For this to work, you need to configure your authentication method to the <code>/websvn/</code> (or <code>/wsvn/</code>) directory. This should be the same authentication as you use for the svn repositories themselves. Here's an example using SSPI:</p>
-
-<pre>
-&lt;Location /websvn/&gt;
-  AuthType SSPI
-  SSPIAuth On
-  SSPIAuthoritative On
-  SSPIDomain IMAJEMAIL
-  SSPIOfferBasic On
-  Require valid-user
-&lt;/Location&gt;
-</pre>
+<p>For this to work, you need to configure your authentication method to the <code>/websvn/</code> (or <code>/wsvn/</code>) directory. This should be the same authentication as you use for the svn repositories themselves.</p>
 
 <p>Note the use of the trailing <code>/</code> in the Location directive. If you use <code>&lt;Location /websvn&gt;</code>, you won't be able to access the index.</p>
 

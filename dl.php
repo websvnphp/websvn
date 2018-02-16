@@ -26,29 +26,26 @@ require_once 'include/setup.php';
 require_once 'include/svnlook.php';
 require_once 'include/utils.php';
 
-ini_set('include_path', $locwebsvnreal.'/lib/pear'.$config->pathSeparator.ini_get('include_path'));
 @include_once 'Archive/Tar.php';
 
 function setDirectoryTimestamp($dir, $timestamp) {
 	global $config;
 	// Changing the timestamp of a directory in Windows is only supported in PHP 5.3.0+
-	if (!$config->serverIsWindows || version_compare(PHP_VERSION, '5.3.0alpha') !== -1) {
-		touch($dir, $timestamp);
-		if (is_dir($dir)) {
-			// Set timestamp for all contents, recursing into subdirectories
-			$handle = opendir($dir);
-			if ($handle) {
-				while (($file = readdir($handle)) !== false) {
-					if ($file == '.' || $file == '..') {
-						continue;
-					}
-					$f = $dir.DIRECTORY_SEPARATOR.$file;
-					if (is_dir($f)) {
-						setDirectoryTimestamp($f, $timestamp);
-					}
+	touch($dir, $timestamp);
+	if (is_dir($dir)) {
+		// Set timestamp for all contents, recursing into subdirectories
+		$handle = opendir($dir);
+		if ($handle) {
+			while (($file = readdir($handle)) !== false) {
+				if ($file == '.' || $file == '..') {
+					continue;
 				}
-				closedir($handle);
+				$f = $dir.DIRECTORY_SEPARATOR.$file;
+				if (is_dir($f)) {
+					setDirectoryTimestamp($f, $timestamp);
+				}
 			}
+			closedir($handle);
 		}
 	}
 }

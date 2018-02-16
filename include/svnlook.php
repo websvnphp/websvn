@@ -170,7 +170,7 @@ function infoCharacterData($parser, $data) {
 
 	switch ($curTag) {
 		case 'URL':
-			if ($debugxml) print 'Url: '.$data."\n";
+			if ($debugxml) print 'URL: '.$data."\n";
 			$curInfo->path = $data;
 			break;
 
@@ -1316,7 +1316,7 @@ class SVNRepository {
 // Initialize SVN version information by parsing from command-line output.
 $cmd = $config->getSvnCommand();
 $cmd = str_replace(array('--non-interactive', '--trust-server-cert'), array('', ''), $cmd);
-$cmd .= ' --version';
+$cmd .= ' --version -q';
 $ret = runCommand($cmd, false);
 if (preg_match('~([0-9]+)\.([0-9]+)\.([0-9]+)~', $ret[0], $matches)) {
 	$config->setSubversionVersion($matches[0]);

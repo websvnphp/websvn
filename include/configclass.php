@@ -238,7 +238,6 @@ class Repository {
 	var $bugtraq;
 	var $bugtraqProperties;
 	var $auth = null;
-	var $authBasicRealm;
 	var $templatePath = false;
 
 	// }}}
@@ -541,10 +540,10 @@ class Repository {
 
 	// {{{ Authentication
 
-	function useAuthenticationFile($file, $basicRealm = false) {
+	function useAuthenticationFile($file) {
 		if (is_readable($file)) {
 			if ($this->auth === null) {
-				$this->auth = new Authentication($basicRealm);
+				$this->auth = new Authentication();
 			}
 			$this->auth->addAccessFile($file);
 		} else {
@@ -603,9 +602,9 @@ class WebSvnConfig {
 
 	var $_svnCommandPrefix = '';
 	var $_svnCommandPath = '';
-	var $_svnConfigDir = '/tmp';
+	var $_svnConfigDir = '/tmp/websvn';
 	var $_svnTrustServerCert = false;
-	var $svn = 'svn --non-interactive --config-dir /tmp';
+	var $svn = 'svn --non-interactive --config-dir /tmp/websvn';
 	var $diff = 'diff';
 	var $enscript = 'enscript -q';
 	var $sed = 'sed';
@@ -1459,11 +1458,11 @@ class WebSvnConfig {
 		return $this->ignoreWebSVNContentTypes;
 	}
 
-	function useAuthenticationFile($file, $myrep = 0, $basicRealm = false) {
+	function useAuthenticationFile($file, $myrep = 0) {
 		if (empty($myrep)) {
 			if (is_readable($file)) {
 				if ($this->auth === null) {
-					$this->auth = new Authentication($basicRealm);
+					$this->auth = new Authentication();
 				}
 				$this->auth->addAccessFile($file);
 			} else {
