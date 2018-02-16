@@ -170,7 +170,7 @@ function infoCharacterData($parser, $data) {
 
 	switch ($curTag) {
 		case 'URL':
-			if ($debugxml) print 'Url: '.$data."\n";
+			if ($debugxml) print 'URL: '.$data."\n";
 			$curInfo->path = $data;
 			break;
 
