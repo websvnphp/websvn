@@ -238,7 +238,6 @@ class Repository {
 	var $bugtraq;
 	var $bugtraqProperties;
 	var $auth = null;
-	var $authBasicRealm;
 	var $templatePath = false;
 
 	// }}}
@@ -541,10 +540,10 @@ class Repository {
 
 	// {{{ Authentication
 
-	function useAuthenticationFile($file, $basicRealm = false) {
+	function useAuthenticationFile($file) {
 		if (is_readable($file)) {
 			if ($this->auth === null) {
-				$this->auth = new Authentication($basicRealm);
+				$this->auth = new Authentication();
 			}
 			$this->auth->addAccessFile($file);
 		} else {
@@ -1459,11 +1458,11 @@ class WebSvnConfig {
 		return $this->ignoreWebSVNContentTypes;
 	}
 
-	function useAuthenticationFile($file, $myrep = 0, $basicRealm = false) {
+	function useAuthenticationFile($file, $myrep = 0) {
 		if (empty($myrep)) {
 			if (is_readable($file)) {
 				if ($this->auth === null) {
-					$this->auth = new Authentication($basicRealm);
+					$this->auth = new Authentication();
 				}
 				$this->auth->addAccessFile($file);
 			} else {

@@ -32,26 +32,18 @@ class Authentication {
 	var $rights;
 	var $user = null;
 	var $usersGroups = array();
-	var $basicRealm = 'WebSVN';
 
 	// {{{ __construct
 
-	function Authentication($basicRealm = false) {
+	function Authentication() {
 		$this->rights = new IniFile();
 		$this->setUsername();
-		if ($basicRealm !== false) {
-			$this->basicRealm = $basicRealm;
-		}
 	}
 
 	// }}}
 
 	function hasUsername() {
 		return $this->user !== null;
-	}
-
-	function getBasicRealm() {
-		return $this->basicRealm;
 	}
 
 	function addAccessFile($accessfile) {
