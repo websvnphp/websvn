@@ -35,7 +35,7 @@ class Authentication {
 
 	// {{{ __construct
 
-	function Authentication() {
+	function __construct() {
 		$this->rights = new IniFile();
 		$this->setUsername();
 	}

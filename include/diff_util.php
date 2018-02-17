@@ -43,7 +43,7 @@ class LineDiffInterface {
 // Default line diffing function
 class LineDiff extends LineDiffInterface {
 
-	function LineDiff($ignoreWhitespace) {
+	function __construct($ignoreWhitespace) {
 		$this->ignoreWhitespace = $ignoreWhitespace;
 	}
 
@@ -217,7 +217,7 @@ class SensibleLineChanges {
 	var $_deleted = array();
 	var $_lineDiff = null;
 
-	function SensibleLineChanges($lineDiff) {
+	function __construct($lineDiff) {
 		$this->_lineDiff = $lineDiff;
 	}
 
