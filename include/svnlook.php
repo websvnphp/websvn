@@ -754,8 +754,6 @@ class SVNRepository {
 				if ($this->geshi === null) {
 					require_once 'lib/geshi.php';
 					$this->geshi = new GeSHi();
-				} else {
-					$this->geshi->error = false;
 				}
 				$this->geshi->set_language($language);
 				if ($this->geshi->error() === false) {
