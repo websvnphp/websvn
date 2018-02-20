@@ -386,7 +386,7 @@ $config->setMinDownloadLevel(2);
 
 // Uncomment this line if you want to use GeSHi to colourise your file listings
 //
-$config->useGeshi();
+// $config->useGeshi();
 
 // GeSHi need to be told what the contents of a file are so that it can be colourised
 // correctly. WebSVN includes a predefined list of mappings from file extension to GeSHi

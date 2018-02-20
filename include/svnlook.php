@@ -752,7 +752,7 @@ class SVNRepository {
 		foreach ($extGeshi as $language => $extensions) {
 			if (in_array($filename, $extensions) || in_array($ext, $extensions)) {
 				if ($this->geshi === null) {
-					require_once 'lib/geshi.php';
+					require_once 'geshi.php';
 					$this->geshi = new GeSHi();
 				}
 				$this->geshi->set_language($language);
@@ -794,7 +794,7 @@ class SVNRepository {
 
 		$source = file_get_contents($filename);
 		if ($this->geshi === null) {
-			require_once 'lib/geshi.php';
+			require_once 'geshi.php';
 			$this->geshi = new GeSHi();
 		}
 		$this->geshi->set_source($source);
