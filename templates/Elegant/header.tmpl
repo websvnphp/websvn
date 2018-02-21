@@ -4,27 +4,27 @@
   <title>
   WebSVN
   [websvn-test:repname]
-    - [websvn:repname]
+    &ndash; [websvn:repname]
   [websvn-endtest]
   [websvn-test:error]
-    - ERROR
+    &ndash; ERROR
   [websvn-else]
     [websvn-test:rev2]
       [websvn-test:path2]
-        - [websvn:path1] [lang:REV] [websvn:rev1] [lang:AND] [websvn:path2] [lang:REV] [websvn:rev2]
+        &ndash; [websvn:path1] [lang:REV] [websvn:rev1] [lang:AND] [websvn:path2] [lang:REV] [websvn:rev2]
       [websvn-else]
-        - [lang:REV] [websvn:rev1] [lang:AND] [websvn:rev2]
+        &ndash; [lang:REV] [websvn:rev1] [lang:AND] [websvn:rev2]
       [websvn-endtest]
     [websvn-else]
       [websvn-test:rev]
-        - [lang:REV] [websvn:rev]
+        &ndash; [lang:REV] [websvn:rev]
       [websvn-endtest]
     [websvn-endtest]
     [websvn-test:action]
-      - [websvn:action]
+      &ndash; [websvn:action]
     [websvn-endtest]
     [websvn-test:path]
-      - [websvn:path]
+      &ndash; [websvn:path]
     [websvn-endtest]
   [websvn-endtest]
   </title>
@@ -51,11 +51,11 @@
     [websvn-else]
     <div class="info">[lang:REV] [websvn:rev]
     [websvn-endtest]
-    &mdash; [websvn:author]
+    &ndash; [websvn:author]
     [websvn-test:showageinsteadofdate]
-    &mdash; [websvn:age] ([websvn:date])
+    &ndash; [websvn:age] ([websvn:date])
     [websvn-else]
-    &mdash; [websvn:date] ([websvn:age])
+    &ndash; [websvn:date] ([websvn:age])
     [websvn-endtest]
     </div>
     <div class="msg">[websvn:log]</div>
@@ -65,7 +65,7 @@
     <div id="info">
       <h1><a href="[websvn:indexurl]" title="[lang:PROJECTS]">[lang:PROJECTS]</a>
         [websvn-test:repname]
-        &mdash; <a href="[websvn:repurl]">[websvn:repname]</a>
+        &ndash; <a href="[websvn:repurl]">[websvn:repname]</a>
         [websvn-endtest]
       </h1>
       <div id="menus">
