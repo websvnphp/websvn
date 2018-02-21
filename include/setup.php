@@ -385,7 +385,7 @@ $vars['language_form'] = '<form method="get" action="" id="language">'.$hidden;
 $vars['language_select'] = '<select name="language" onchange="javascript:this.form.submit();">';
 foreach ($languages as $code => $names) {
 	$sel = ($code == $language) ? '" selected="selected' : '';
-	$vars['language_select'] .= '<option value="'.$code.$sel.'">'.$names[2].' - '.$names[1].'</option>';
+	$vars['language_select'] .= '<option value="'.$code.$sel.'">'.$names[2].' &ndash; '.$names[1].'</option>';
 }
 $vars['language_select'] .= '</select>';
 $vars['language_submit'] = '<noscript><input type="submit" value="'.$lang['GO'].'" /></noscript>';
