@@ -87,35 +87,11 @@ function escape($str) {
 
 // }}}
 
-// {{{ quoteCommand
-
-function quoteCommand($cmd) {
-	global $config;
-
-	// On Windows machines, the whole line needs quotes round it so that it's
-	// passed to cmd.exe correctly
-
-	if ($config->serverIsWindows) {
-		$cmd = '"'.$cmd.'"';
-	}
-
-	return $cmd;
-}
-
-// }}}
-
 // {{{ execCommand
 
 function execCommand($cmd, &$retcode) {
 	global $config;
 
-	// On Windows machines, the whole line needs quotes round it so that it's
-	// passed to cmd.exe correctly
-	// Since php 5.3.0 the quoting seems to be done internally
-
-	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-		$cmd = '"'.$cmd.'"';
-	}
 
 	return @exec($cmd, $tmp, $retcode);
 }
@@ -127,13 +103,6 @@ function execCommand($cmd, &$retcode) {
 function popenCommand($cmd, $mode) {
 	global $config;
 
-	// On Windows machines, the whole line needs quotes round it so that it's
-	// passed to cmd.exe correctly
-	// Since php 5.3.0 the quoting seems to be done internally
-
-	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-		$cmd = '"'.$cmd.'"';
-	}
 
 	return popen($cmd, $mode);
 }
@@ -145,13 +114,6 @@ function popenCommand($cmd, $mode) {
 function passthruCommand($cmd) {
 	global $config;
 
-	// On Windows machines, the whole line needs quotes round it so that it's
-	// passed to cmd.exe correctly
-	// Since php 5.3.0 the quoting seems to be done internally
-
-	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-		$cmd = '"'.$cmd.'"';
-	}
 
 	return passthru($cmd);
 }
@@ -166,11 +128,10 @@ function runCommand($cmd, $mayReturnNothing = false) {
 	$output = array();
 	$err = false;
 
-	$c = quoteCommand($cmd);
 
 	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
-	$resource = proc_open($c, $descriptorspec, $pipes);
+	$resource = proc_open($cmd, $descriptorspec, $pipes);
 	$error = '';
 
 	if (!is_resource($resource)) {

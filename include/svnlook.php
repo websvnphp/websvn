@@ -683,12 +683,12 @@ class SVNRepository {
 			// Note that the sed command returns only the part of the file between <PRE> and </PRE>.
 			// It's complicated because it's designed not to return those lines themselves.
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
-			$cmd = quoteCommand($cmd.' | '.$this->enscriptCommandString($path).' | '.
-				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname);
+			$cmd = $cmd.' | '.$this->enscriptCommandString($path).' | '.
+				$config->sed.' -n '.$config->quote.'1,/^<PRE.$/!{/^<\\/PRE.$/,/^<PRE.$/!p;}'.$config->quote.' > '.$tempname;
 		} else {
 			$highlighted = false;
 			$cmd = $this->svnCommandString('cat', $path, $rev, $peg);
-			$cmd = quoteCommand($cmd.' > '.quote($filename));
+			$cmd = $cmd.' > '.quote($filename);
 		}
 		if (isset($cmd)) {
 			$descriptorspec = array(2 => array('pipe', 'w')); // stderr
@@ -772,7 +772,7 @@ class SVNRepository {
 
 	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false) {
 		// Output the file to the filename
-		$cmd = quoteCommand($this->svnCommandString('cat', $path, $rev, $peg).' > '.quote($filename));
+		$cmd = $this->svnCommandString('cat', $path, $rev, $peg).' > '.quote($filename);
 		$descriptorspec = array(2 => array('pipe', 'w')); // stderr
 		$resource = proc_open($cmd, $descriptorspec, $pipes);
 		$error = '';
@@ -862,7 +862,7 @@ class SVNRepository {
 	// Dump the blame content of a file to the given filename
 
 	function getBlameDetails($path, $filename, $rev = 0, $peg = '') {
-		$cmd = quoteCommand($this->svnCommandString('blame', $path, $rev, $peg).' > '.quote($filename));
+		$cmd = $this->svnCommandString('blame', $path, $rev, $peg).' > '.quote($filename);
 		$descriptorspec = array(2 => array('pipe', 'w')); // stderr
 		$resource = proc_open($cmd, $descriptorspec, $pipes);
 		$error = '';
@@ -956,7 +956,7 @@ class SVNRepository {
 				$rev = $headlog->entries[0]->rev;
 		}
 
-		$cmd = quoteCommand($this->svnCommandString('info --xml', $path, $rev, $peg));
+		$cmd = $this->svnCommandString('info --xml', $path, $rev, $peg);
 
 		$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
@@ -1063,7 +1063,7 @@ class SVNRepository {
 				$rev = $headlog->entries[0]->rev;
 		}
 
-		$cmd = quoteCommand($this->svnCommandString('list --xml', $path, $rev, $peg));
+		$cmd = $this->svnCommandString('list --xml', $path, $rev, $peg);
 
 		$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
@@ -1156,11 +1156,7 @@ class SVNRepository {
 		// Get the log info
 		$effectiveRev = ($brev && $erev ? $brev.':'.$erev : ($brev ? $brev.':1' : ''));
 		$effectivePeg = ($peg ? $peg : ($brev ? $brev : ''));
-		$cmd = quoteCommand($this->svnCommandString('log --xml '.($verbose ? '--verbose' : ($quiet ? '--quiet' : '')), $path, $effectiveRev, $effectivePeg));
-
-		if (($config->subversionMajorVersion > 1 || $config->subversionMinorVersion >= 2) && $limit != 0) {
-			$cmd .= ' --limit '.$limit;
-		}
+		$cmd = $this->svnCommandString('log --xml '.($verbose ? '--verbose' : ($quiet ? '--quiet' : '')).($limit != 0 ? ' --limit '.$limit : ''), $path, $effectiveRev, $effectivePeg);
 
 		$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
