@@ -104,7 +104,7 @@ if (is_array($history->entries)) {
 		$itemURL .= 'isdir=1&amp;';
 	foreach ($history->entries as $r) {
 		$wordLimit = 10; // Display only up to the first 10 words of the log message
-		$title = trim($r->msg);
+		$title = trim(explode('\n', $r->msg)[0]);
 		$title = str_replace(array("\r\n", "\r", "\n", "\t"), ' ', $title);
 		$words = explode(' ', $title, $wordLimit + 1);
 		if (count($words) > $wordLimit) {
