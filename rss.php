@@ -89,8 +89,8 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 // Generate RSS 2.0 feed
 $rss = '<?xml version="1.0" encoding="utf-8"?>';
 $rss .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel>';
-$rss .= '<title>'.escape($rep->getDisplayName().($path ? ' - '.$path : '')).'</title>';
-$rss .= '<description>'.escape($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
+$rss .= '<title>'.escape($rep->getDisplayName()).($path ? ' &#x2013; '.$path : '').'</title>';
+$rss .= '<description>'.escape($lang['RSSFEEDTITLE']).' &#x2013; '.escape($repname).'</description>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
 $rss .= '<language>'.$lang['LANGUAGETAG'].'</language>';
@@ -110,10 +110,10 @@ if (is_array($history->entries)) {
 		if (count($words) > $wordLimit) {
 			$title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
 		}
-		$title = $lang['REV'].' '.$r->rev.' -- '.$title;
+		$title = $lang['REV'].' '.$r->rev.' '.mb_convert_encoding('&#x2013;', 'UTF-8', 'HTML-ENTITIES').' '.$title;
 		$description = '<div><strong>'.$r->author;
 		if (!$quiet) {
-			$description .= ' -- '.count($r->mods).' '.$lang['FILESMODIFIED'];
+			$description .= ' '.mb_convert_encoding('&#x2013;', 'UTF-8', 'HTML-ENTITIES').' '.count($r->mods).' '.$lang['FILESMODIFIED'];
 		}
 		$description .= '</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors(str_replace('<', '&lt;', $r->msg)))).'</div>';
 		if (!$quiet) {
