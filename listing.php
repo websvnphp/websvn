@@ -125,7 +125,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				$listvar['level'] = ($treeview) ? $level : 0;
 				$listvar['node'] = 0; // t-node
 				$listvar['path'] = $path.$file;
-				$listvar['filename'] = $file;
+				$listvar['filename'] = escape($file);
 				if ($isDir) {
 					$listvar['fileurl'] = urlForPath($path.$file, $passRevString);
 				} else {
@@ -139,7 +139,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				}
 
 				if ($treeview) {
-					$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$path.$file.'@'.$passrev.'" onclick="enforceOnlyTwoChecked(this)" />';
+					$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.escape($path.$file).'@'.$passrev.'" onclick="enforceOnlyTwoChecked(this)" />';
 				}
 				if ($config->showLastModInListing()) {
 					$listvar['committime'] = $entry->committime;
