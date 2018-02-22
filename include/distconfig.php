@@ -224,18 +224,12 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // to the WebSVN (or wsvn) directory as you have for Subversion itself. More information can be
 // found in install.txt
 
-// $config->useAuthenticationFile('/path/to/accessfile'); // Global access file
+// $config->useAccessFile('/path/to/accessfile'); // Global access file
 
 // You may also specify a per repository access file by uncommenting and copying the following
 // line as necessary. Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->useAuthenticationFile('/path/to/accessfile', 'myrep'); // Access file for myrep
-
-// When allowing anonymous access for some repositories and require authentification for others
-// WebSVN can request authentication on-demand. Therefore the optional second/third parameter can be used.
-
-// $config->useAuthenticationFile('/path/to/accessfile', 'My WebSVN Realm'); // Global access file
-// $config->useAuthenticationFile('/path/to/accessfile', 'myrep', 'My WebSVN Realm'); // Access file for myrep
+// $config->useAccessFile('/path/to/accessfile', 'myrep'); // Access file for myrep
 
 // Uncomment this line if you want to prevent search bots to index the WebSVN pages.
 

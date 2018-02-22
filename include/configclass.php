@@ -23,7 +23,7 @@
 // General class for handling configuration options
 
 require_once 'include/command.php';
-require_once 'include/auth.php';
+require_once 'include/authz.php';
 require_once 'include/version.php';
 
 // Auxillary functions used to sort repositories by name/group
@@ -237,7 +237,7 @@ class Repository {
 	var $ignoreWebSVNContentTypes;
 	var $bugtraq;
 	var $bugtraqProperties;
-	var $auth = null;
+	var $authz = null;
 	var $templatePath = false;
 
 	// }}}
@@ -538,54 +538,54 @@ class Repository {
 
 	// }}}
 
-	// {{{ Authentication
+	// {{{ Authorization
 
-	function useAuthenticationFile($file) {
+	function useAccessFile($file) {
 		if (is_readable($file)) {
-			if ($this->auth === null) {
-				$this->auth = new Authentication();
+			if ($this->authz === null) {
+				$this->authz = new Authorization();
 			}
-			$this->auth->addAccessFile($file);
+			$this->authz->addAccessFile($file);
 		} else {
-			die('Unable to read authentication file "'.$file.'"');
+			die('Unable to read access file "'.$file.'"');
 		}
 	}
 
-	function &getAuth() {
+	function &getAuthz() {
 		global $config;
 
 		$a = null;
-		if ($this->auth !== null) {
-			$a =& $this->auth;
+		if ($this->authz !== null) {
+			$a =& $this->authz;
 		} else {
-			$a =& $config->getAuth();
+			$a =& $config->getAuthz();
 		}
 		return $a;
 	}
 
-	function hasReadAccess($path, $checkSubFolders = false) {
+	function hasReadAccess($path, $checkSubDirs = false) {
 		global $config;
 
-		$a =& $this->getAuth();
+		$a =& $this->getAuthz();
 
 		if (!empty($a)) {
-			return $a->hasReadAccess($this->svnName, $path, $checkSubFolders);
+			return $a->hasReadAccess($this->svnName, $path, $checkSubDirs);
 		}
 
-		// No auth file - free access...
+		// No access file - free access...
 		return true;
 	}
 
 	function hasUnrestrictedReadAccess($path) {
 		global $config;
 
-		$a =& $this->getAuth();
+		$a =& $this->getAuthz();
 
 		if (!empty($a)) {
 			return $a->hasUnrestrictedReadAccess($this->svnName, $path);
 		}
 
-		// No auth file - free access...
+		// No access file - free access...
 		return true;
 	}
 
@@ -605,6 +605,7 @@ class WebSvnConfig {
 	var $_svnConfigDir = '/tmp/websvn';
 	var $_svnTrustServerCert = false;
 	var $svn = 'svn --non-interactive --config-dir /tmp/websvn';
+	var $svnAuthz = 'svnauthz accessof';
 	var $diff = 'diff';
 	var $enscript = 'enscript -q';
 	var $sed = 'sed';
@@ -649,7 +650,7 @@ class WebSvnConfig {
 	var $spaces = 8;
 	var $bugtraq = false;
 	var $bugtraqProperties = null;
-	var $auth = null;
+	var $authz = null;
 	var $blockRobots = false;
 
 	var $templatePaths = array();
@@ -1217,11 +1218,17 @@ class WebSvnConfig {
 
 	function _updateSVNCommand() {
 		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
+		$this->_setPath($this->svnAuthz, $this->_svnCommandPath, 'svnauthz', 'accessof');
 		$this->svn = $this->_svnCommandPrefix.' '.$this->svn;
+		$this->svnAuthz = $this->_svnCommandPrefix.' '.$this->svnAuthz;
 	}
 
 	function getSvnCommand() {
 		return $this->svn;
+	}
+
+	function getSvnAuthzCommand() {
+		return $this->svnAuthz;
 	}
 
 	// setDiffPath
@@ -1458,25 +1465,25 @@ class WebSvnConfig {
 		return $this->ignoreWebSVNContentTypes;
 	}
 
-	function useAuthenticationFile($file, $myrep = 0) {
+	function useAccessFile($file, $myrep = 0) {
 		if (empty($myrep)) {
 			if (is_readable($file)) {
-				if ($this->auth === null) {
-					$this->auth = new Authentication();
+				if ($this->authz === null) {
+					$this->authz = new Authorization();
 				}
-				$this->auth->addAccessFile($file);
+				$this->authz->addAccessFile($file);
 			} else {
-				echo 'Unable to read authentication file "'.$file.'"';
+				echo 'Unable to read access file "'.$file.'"';
 				exit;
 			}
 		} else {
 			$repo =& $this->findRepository($myrep);
-			$repo->useAuthenticationFile($file);
+			$repo->useAccessFile($file);
 		}
 	}
 
-	function &getAuth() {
-		return $this->auth;
+	function &getAuthz() {
+		return $this->authz;
 	}
 
 	function areRobotsBlocked() {

@@ -171,7 +171,7 @@ if ($rep) {
 		$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 	}
 
-	if (!$rep->hasReadAccess($path, true)) {
+	if (!$rep->hasReadAccess($path)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}

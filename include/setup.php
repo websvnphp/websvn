@@ -513,7 +513,7 @@ function createProjectSelectionForm() {
 		$options = '<option value="" selected="selected"></option>';
 	}
 	foreach ($config->getRepositories() as $repository) {
-		if ($repository->hasReadAccess('/', true)) {
+		if ($repository->hasReadAccess('/')) {
 			$repoName = $repository->getDisplayName();
 			$sel = ($repoName == $currentRepoName) ? ' selected="selected"' : '';
 			$options .= '<option value="'.escape($repoName).'"'.$sel.'>'.escape($repoName).'</option>';
@@ -562,12 +562,12 @@ function createRevisionSelectionForm() {
 
 function checkSendingAuthHeader($rep = false) {
 	global $config;
-	$auth = null;
+	$authz = null;
 	if ($rep) {
-		$auth =& $rep->getAuth();
+		$authz =& $rep->getAuthz();
 	} else {
-		$auth =& $config->getAuth();
+		$authz =& $config->getAuthz();
 	}
-	$loggedin = $auth->hasUsername();
+	$loggedin = $authz->hasUsername();
 	header('HTTP/1.x 403 Forbidden', true, 403);
 }
