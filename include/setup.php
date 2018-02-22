@@ -328,7 +328,7 @@ if (file_exists('include/config.php')) {
 }
 
 // Make sure that the input locale is set up correctly
-setlocale(LC_ALL, '');
+putenv("LANG=".setlocale(LC_ALL, $config->getLocale()));
 
 // assure that a default timezone is set
 if (function_exists('date_default_timezone_get')) {

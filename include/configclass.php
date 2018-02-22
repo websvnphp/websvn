@@ -611,6 +611,7 @@ class WebSvnConfig {
 	var $gzip = 'gzip';
 	var $tar = 'tar';
 	var $zip = 'zip';
+	var $locale = '';
 
 	// different modes for file and folder download
 
@@ -1293,6 +1294,18 @@ class WebSvnConfig {
 
 	function getZipPath() {
 		return $this->zip;
+	}
+
+	// setLocale
+	//
+	// Set the locale for PHP and all spawned processes
+
+	function setLocale($locale) {
+		$this->locale = $locale;
+	}
+
+	function getLocale() {
+		return $this->locale;
 	}
 
 	// setDefaultFileDlMode
