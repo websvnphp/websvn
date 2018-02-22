@@ -36,7 +36,7 @@ $vars['showlastmod'] = $config->showLastModInIndex();
 $config->sortByGroup();
 $projects = $config->getRepositories();
 
-if (count($projects) == 1 && $projects[0]->hasReadAccess('/', true)) {
+if (count($projects) == 1 && $projects[0]->hasReadAccess('/')) {
 	header('Location: '.str_replace('&amp;', '', $config->getURL($projects[0], '', 'dir')));
 	exit;
 }
@@ -48,7 +48,7 @@ $curgroup = null;
 $groupcount = 0;
 // Create listing of all configured projects (includes groups if they are used).
 foreach ($projects as $project) {
-	if (!$project->hasReadAccess('/', true))
+	if (!$project->hasReadAccess('/'))
 		continue;
 
 	$listvar = &$listing[$i];

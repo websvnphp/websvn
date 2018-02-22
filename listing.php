@@ -335,7 +335,7 @@ if ($rep) {
 
 	$listing = showTreeDir($svnrep, $path, $rev, $peg, array());
 
-	if (!$rep->hasReadAccess($path, true)) {
+	if (!$rep->hasReadAccess($path)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}

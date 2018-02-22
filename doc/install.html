@@ -197,7 +197,7 @@ DirectoryIndex wsvn.php
 <p>Now that you've defined your authentication, you'll be asked for your user name and password in order to access the WebSVN directory. All that's left is to configure WebSVN to use your Subversion access file to control access. Add this line to your config.php file:</p>
 
 <pre>
-$config->useAuthenticationFile('/path/to/accessfile');
+$config->useAccessFile('/path/to/accessfile');
 </pre>
 
 <p>Note that if your access file gives read access to, for example, path <code>/a/b/c/</code> but not to <code>/a/b/</code>, then the user will be given restricted access to <code>/a/b/</code> in order to reach <code>/a/b/c/</code>. The user will not be able to see any other files or directories in <code>/a</code> or <code>/a/b/</code>.</p>
