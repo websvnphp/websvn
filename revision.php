@@ -148,7 +148,7 @@ if ($rep) {
 		}
 		$resourceExisted = $change->action == 'M' || $change->copyfrom;
 		$listing[] = array(
-			'path' => $change->path,
+			'path' => escape($change->path),
 			'oldpath' => $change->copyfrom ? $change->copyfrom.' @ '.$change->copyrev : '',
 			'action' => $change->action,
 			'added' => $change->action == 'A',
