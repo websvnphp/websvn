@@ -183,10 +183,10 @@ if ($rep) {
 
 	$downloadArchive = $archiveName;
 	if ($downloadMode == 'plain') {
-		$downloadMimeType = 'application/octetstream';
+		$downloadMimeType = 'application/octet-stream';
 
 	} else if ($downloadMode == 'zip') {
-		$downloadMimeType = 'application/x-zip';
+		$downloadMimeType = 'application/zip';
 		$downloadArchive .= '.zip';
 		// Create zip file
 		$cmd = $config->zip.' --symlinks -r '.quote($downloadArchive).' '.quote($archiveName);
@@ -197,7 +197,7 @@ if ($rep) {
 		}
 
 	} else {
-		$downloadMimeType = 'application/x-gzip';
+		$downloadMimeType = 'application/gzip';
 		$downloadArchive .= '.tar.gz';
 		$tarArchive = $archiveName.'.tar';
 

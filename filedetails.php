@@ -62,7 +62,7 @@ if ($rep) {
 
 	if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
 		$base = basename($path);
-		header('Content-Type: application/x-gzip');
+		header('Content-Type: application/gzip');
 		header('Content-Disposition: attachment; filename='.urlencode($base).'.gz');
 
 		// Get the file contents and pipe into gzip. All this without creating
