@@ -1,4 +1,4 @@
-    <h1>[websvn:repname] - [lang:REV] [websvn:rev]</h1>
+    <h1>[websvn:repname] &ndash; [lang:REV] [websvn:rev]</h1>
     <div id="projects">[websvn:projects_form]<b>[lang:PROJECTS]:</b> [websvn:projects_select][websvn:projects_submit][websvn:projects_endform]</div>
 [websvn-test:error]
     <div id="error">[websvn:error]</div>
@@ -13,20 +13,20 @@
       </thead>
       [websvn-test:restricted]
       [websvn-else]
-      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:rev] - [websvn:author]
+      <tr class="row0"><th>[lang:LASTMOD]:</th><td>[lang:REV] [websvn:rev] &ndash; [websvn:author]
         [websvn-test:showageinsteadofdate]
-          - <span title="[websvn:date]">[websvn:age]</span>
+          &ndash; <span title="[websvn:date]">[websvn:age]</span>
         [websvn-else]
-          - <span title="[websvn:age]">[websvn:date]</span>
+          &ndash; <span title="[websvn:age]">[websvn:date]</span>
         [websvn-endtest]
         [websvn-test:prevrevurl]
-          - <a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a>
+          &ndash; <a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a>
         [websvn-endtest]
         [websvn-test:nextrevurl]
-          - <a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a>
+          &ndash; <a href="[websvn:nextrevurl]">[lang:REV] [websvn:nextrev]</a>
         [websvn-endtest]
         [websvn-test:goyoungestlink]
-          - [websvn:goyoungestlink]
+          &ndash; [websvn:goyoungestlink]
         [websvn-endtest]
       </td></tr>
       <tr class="row1"><th>[lang:LOGMSG]:</th><td>[websvn:log]</td></tr>
@@ -35,21 +35,21 @@
     [websvn-endtest]
     <div id="nav">
       [websvn-test:comparelink]
-        [websvn:comparelink] -
+        [websvn:comparelink] &ndash;
       [websvn-endtest]    
-        [websvn:directorylink] -
+        [websvn:directorylink] &ndash;
         [websvn:loglink]
       [websvn-test:filedetaillink]
-      - [websvn:filedetaillink]
+      &ndash; [websvn:filedetaillink]
       [websvn-endtest]    
       [websvn-test:blamelink]
-      - [websvn:blamelink]
+      &ndash; [websvn:blamelink]
       [websvn-endtest]    
       [websvn-test:clientrooturl]
-      - <a href="[websvn:clientrooturl][websvn:path]">SVN</a>
+      &ndash; <a href="[websvn:clientrooturl][websvn:path]">SVN</a>
       [websvn-endtest]
       [websvn-test:rssurl]
-      - <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
+      &ndash; <a href="[websvn:rssurl]"><img src="[websvn:locwebsvnhttp]/templates/BlueGrey/images/rss.gif" width="27" height="15" alt="[lang:RSSFEED]"/></a>
       [websvn-endtest]
     </div>
   [websvn-test:warning]
