@@ -18,7 +18,7 @@
 //
 // --
 //
-// wsvn.php
+// browse.php
 //
 // Glue for MultiViews
 
@@ -28,11 +28,11 @@
 //
 // e.g. For "http://www.example.com/websvn" use '/websvn'
 //
-// Note that wsvn.php need not be in the /websvn directory (and often isn't).
+// Note that browse.php need not be in the /websvn directory (and often isn't).
 // If you want to use the root server directory, just use a blank string ('').
 $locwebsvnhttp = '/websvn';
 
-// Physical location of websvn directory. Change this if your wsvn.php is not in
+// Physical location of websvn directory. Change this if your browse.php is not in
 // the same folder as the rest of the distribution
 $locwebsvnreal = dirname(__FILE__);
 
@@ -147,7 +147,7 @@ if ($config->multiViews) {
 	include $locwebsvnreal.'/'.$file;
 
 } else {
-	$vars['error'] = 'MultiViews must be enabled in <code>include/config.php</code> in order to use <code>wsvn.php</code>. See <a href="'.$locwebsvnhttp.'/doc/install.html#multiviews">the install docs</a> for details, or use <a href="'.$locwebsvnhttp.'">this path</a> instead.';
+	$vars['error'] = 'MultiViews must be enabled in <code>include/config.php</code> in order to use <code>browse.php</code>. See <a href="'.$locwebsvnhttp.'/doc/install.html#multiviews">the install docs</a> for details, or use <a href="'.$locwebsvnhttp.'">this path</a> instead.';
 	include $locwebsvnreal.'/index.php';
 	exit;
 }

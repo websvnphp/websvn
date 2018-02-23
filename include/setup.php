@@ -476,7 +476,7 @@ if ($peg === 0)
 $passrev = $rev;
 
 if (!$config->multiViews) {
-	// With MultiViews, wsvn creates the form once the current project is found.
+	// With MultiViews, browse creates the form once the current project is found.
 	createProjectSelectionForm();
 	createRevisionSelectionForm();
 }

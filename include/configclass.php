@@ -1086,7 +1086,7 @@ class WebSvnConfig {
 			}
 
 			if (substr($url, -5) == 'index') {
-				$url = substr($url, 0, -5).'wsvn';
+				$url = substr($url, 0, -5).'browse';
 			}
 
 			if ($op == 'index') {

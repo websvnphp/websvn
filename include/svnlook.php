@@ -822,7 +822,7 @@ class SVNRepository {
 		global $config;
 
 		if ($config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($path)) {
-			$tempname = tempnamWithCheck($config->getTempDir(), 'wsvn');
+			$tempname = tempnamWithCheck($config->getTempDir(), 'websvn');
 			if ($tempname !== false) {
 				print toOutputEncoding($this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, true));
 				@unlink($tempname);
