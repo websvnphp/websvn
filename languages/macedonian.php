@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "Покажи ги сите";
 $lang["BADCMD"] = "Грешка при извршување на команданта";
 $lang["UNKNOWNREVISION"] = "Ревизијата не е најдена";
 
-$lang["POWERED"] = "Работи на <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Работи на <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Репозитар";
 $lang["SERVER"] = "Subversion Сервер";
 

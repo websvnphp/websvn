@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "Näytä Kaikki";
 $lang["BADCMD"] = "Virhe komennon suorittamisessa";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Moottorina <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Moottorina <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projektit";
 $lang["SERVER"] = "Subversion-palvelin";
 

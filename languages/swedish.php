@@ -79,7 +79,7 @@ $lang["SHOWALL"] = "Visa alla";
 $lang["BADCMD"] = "Fel vid körning av kommando";
 $lang["UNKNOWNREVISION"] = "Revision hittades inte";
 
-$lang["POWERED"] = "Körs på <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Körs på <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion-projekt";
 $lang["SERVER"] = "Subversion-server";
 

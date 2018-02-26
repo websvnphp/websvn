@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "全て表示";
 $lang["BADCMD"] = "コマンド実行中のエラー";
 $lang["UNKNOWNREVISION"] = "指定のリビジョンがありません";
 
-// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion リポジトリ一覧";
 $lang["SERVER"] = "Subversion サーバ";
 
