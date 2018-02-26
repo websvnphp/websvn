@@ -72,6 +72,16 @@ $config->setTemplatePath($locwebsvnreal.'/templates/calm/', 'My Repository');
 
 <p>Below are a few examples of commands and how they may be used.</p>
 
+<h3>Includes</h3>
+
+<p>
+The placeholder <code>[websvn-include:<b>user_greeting.tmpl</b>]</code> can be used to include
+external templates into the current one at the position the command is placed. A path relative to
+the template directory needs to be given and the file needs to exist, but doesn't necessary needs to
+contain any content. The template is processed recursivly with all commands, variables etc. in it
+processed as well.
+</p>
+
 <h3>If-Else Constructs</h3>
 
 <p>The placeholders <code>[websvn-test:<b>varname</b>]</code>, <code>[websvn-else]</code>, and <code>[websvn-endtest]</code> provide control flow based on whether a variable exists and is non-zero. The else block is optional, and either block may be empty.</p>
@@ -239,7 +249,7 @@ $config->useTreeIndex(true);
 <h4>Special Commands</h4>
 
 <p><b>Note:</b> <i>Remember to put these commands each on their own line!</i></p>
- 
+
 <p>These commands are used to display certain icons next to certain file types in the directory view.</p>
 
 <pre>
@@ -415,7 +425,7 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <p>The command <code>[websvn-getlisting]</code> is used to display the file listing. If syntax highlighting is enabled, the resulting text is styled appropriately.</p>
 
 <p><b>Note:</b> <i>Remember to put this command on its own line!</i></p>
- 
+
 <h3><a name="blame.tmpl"></a>blame.tmpl</h3>
 
 <p>This template file is used by <code>blame.php</code>. It displays "blame" information like you would see from <code>svn blame</code>, augmented with line numbers and revision links. The variables define for this template make it easy to display groups of consecutive lines last modified in the same revision as a striped block. It also provides JavaScript definitions for displaying at-a-glance revision information popups when hovering over revision numbers. Check the included templates to see how this is done.</p>
@@ -508,8 +518,8 @@ e-node=&lt;img align="middle" border="0" width="24" height="26" src="[websvn:loc
 <tr><th>compare_form</th><td>Comparison selection &lt;form&gt; element</td></tr>
 <tr><th>compare_path1input</th><td>Comparison selection text field for path of 1st resource</td></tr>
 <tr><th>compare_path2input</th><td>Comparison selection text field for path of 2nd resource</td></tr>
-<tr><th>compare_rev1input</th><td>Comparison selection text field for revision of 1st resource</td></tr>                                      
-<tr><th>compare_rev2input</th><td>Comparison selection text field for revision of 2nd resource</td></tr>                                      
+<tr><th>compare_rev1input</th><td>Comparison selection text field for revision of 1st resource</td></tr>
+<tr><th>compare_rev2input</th><td>Comparison selection text field for revision of 2nd resource</td></tr>
 <tr><th>compare_submit</th><td>Comparison selection submit button</td></tr>
 <tr><th>compare_endform</th><td>Comparison selection &lt;/form&gt; element</td></tr>
 </table>
