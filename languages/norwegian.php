@@ -85,7 +85,7 @@ $lang["SHOWALL"] = "Vis alle";
 $lang["BADCMD"] = "En feil oppstod under utførelse av denne kommandoen";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Kjører på <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Kjører på <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversionprosjekter";
 $lang["SERVER"] = "Subversiontjener";
 

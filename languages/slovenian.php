@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "Prikaži vse";
 $lang["BADCMD"] = "Napaka pri izvajanju tega ukaza";
 $lang["UNKNOWNREVISION"] = "Ne najdem različice";
 
-// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion projekti";
 $lang["SERVER"] = "Subversion strežnik";
 

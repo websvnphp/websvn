@@ -82,7 +82,7 @@ $lang["SHOWALL"] = "Pokaż wszyskie";
 $lang["BADCMD"] = "Błąd podczas wykonywania polecenia";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Obsługiwane przez <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Obsługiwane przez <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Projekty Subversion";
 $lang["SERVER"] = "Serwer Subversion";
 

@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "Tümünü Göster";
 $lang["BADCMD"] = "Bu komut çalıştırılırken hata oluştu";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "<a href=\"http://www.websvn.info/\">WebSVN</a> tarafından çalıştırılmaktadır";
+$lang["POWERED"] = "<a href=\"https://websvnphp.github.io/\">WebSVN</a> tarafından çalıştırılmaktadır";
 $lang["PROJECTS"] = "Subversion Projeleri";
 $lang["SERVER"] = "Subversion Sunucusu";
 

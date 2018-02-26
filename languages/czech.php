@@ -79,7 +79,7 @@ $lang["SHOWALL"] = "Ukaž všechny";
 $lang["BADCMD"] = "Nepodařilo se spustit tento příkaz";
 $lang["UNKNOWNREVISION"] = "Revize nebyla nalezena";
 
-$lang["POWERED"] = "Poháněno <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Poháněno <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Repozitáře";
 $lang["SERVER"] = "Subversion Servery";
 

@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "Tampilkan Semua";
 $lang["BADCMD"] = "Kesalahan menjalankan instruksi ini";
 $lang["UNKNOWNREVISION"] = "Revisi tidak ditemukan";
 
-$lang["POWERED"] = "Didukung oleh <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Didukung oleh <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Repositori Subversion";
 $lang["SERVER"] = "Server Subversion";
 

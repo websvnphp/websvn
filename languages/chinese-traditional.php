@@ -81,7 +81,7 @@ $lang["SHOWALL"] = "顯示全部";
 $lang["BADCMD"] = "執行錯誤";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "採用 <a href=\"http://www.websvn.info/\">WebSVN</a>架設";
+$lang["POWERED"] = "採用 <a href=\"https://websvnphp.github.io/\">WebSVN</a>架設";
 $lang["PROJECTS"] = "Subversion 專案";
 $lang["SERVER"] = "Subversion Server";
 
