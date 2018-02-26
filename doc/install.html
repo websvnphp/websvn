@@ -129,18 +129,18 @@ $config->useEnscript();
 
 <p>You may choose to configure access to your repository via Apache's MultiView system. This will enable you to access a repository using a url such as:</p>
 
-<pre>http://example.com/wsvn/repname/path/in/repository</pre>
+<pre>http://example.com/browse/repname/path/in/repository</pre>
 
 <p>To do this you must:</p>
 
 <ul>
-	<li>Place wsvn.php where you want to. Normally you place it such that it's accessible straight after the servername, as shown above.</li>
-	<li>Configure the parent directory of wsvn.php to use MultiViews (see Apache docs)</li>
+	<li>Place browse.php where you want to. Normally you place it such that it's accessible straight after the servername, as shown above.</li>
+	<li>Configure the parent directory of browse.php to use MultiViews (see Apache docs)</li>
 	<li>Change config.php to include the line <code>$config->useMultiViews();</code></li>
-	<li>Change the path configured at the beginning of the wsvn.php script</li>
+	<li>Change the path configured at the beginning of the browse.php script</li>
 </ul>
 
-<p>Now go to <code>http://example.com/wsvn/</code> and make sure that you get the index page.</p>
+<p>Now go to <code>http://example.com/browse/</code> and make sure that you get the index page.</p>
 
 <p>The repname part of the URL is the name given to it in the config.php file.
 For this reason you may wish to avoid putting spaces in the name.</p>
@@ -164,7 +164,7 @@ For this reason you may wish to avoid putting spaces in the name.</p>
 Options MultiViews
 </pre>
 
-<p>Let's suppose that WebSVN is installed in a directory called <code>websvn</code> within the Apache document root directory. Normally, WebSVN would be accessed at <code>http://example.com/websvn/</code>. With MultiViews enabled, the base path for all WebSVN pages would be <code>http://example.com/websvn/wsvn/</code>. (If you would prefer <code>http://example.com/wsvn/</code> instead, move/copy wsvn.php from the WebSVN installation to the document root directory.) You may need to modify the <code>$locwebsvnhttp</code> variable at the beginning of wsvn.pnp to match your directory location.</p>
+<p>Let's suppose that WebSVN is installed in a directory called <code>websvn</code> within the Apache document root directory. Normally, WebSVN would be accessed at <code>http://example.com/websvn/</code>. With MultiViews enabled, the base path for all WebSVN pages would be <code>http://example.com/websvn/browse/</code>. (If you would prefer <code>http://example.com/browse/</code> instead, move/copy browse.php from the WebSVN installation to the document root directory.) You may need to modify the <code>$locwebsvnhttp</code> variable at the beginning of browse.pnp to match your directory location.</p>
 
 <p>You must also enable Multiviews in the WebSVN <code>include/config.php</code> file by adding this line:</p>
 
@@ -172,12 +172,12 @@ Options MultiViews
 $config->useMultiViews();
 </pre>
 
-<p>If all has gone well, repositories should now by accessible at <code>http://example.com/wsvn/</code>.</p>
+<p>If all has gone well, repositories should now by accessible at <code>http://example.com/browse/</code>.</p>
 
-<p>Note the index page can be accessed through <code>http://example.com/wsvn/</code>. If you want to view the index page at <code>http://example.com/</code>, you need to add another directive to the .htaccess file:</p>
+<p>Note the index page can be accessed through <code>http://example.com/browse/</code>. If you want to view the index page at <code>http://example.com/</code>, you need to add another directive to the .htaccess file:</p>
 
 <pre>
-DirectoryIndex wsvn.php
+DirectoryIndex browse.php
 </pre>
 
 <h2><a name="authentication"></a>Access rights and authentication</h2>
@@ -190,7 +190,7 @@ DirectoryIndex wsvn.php
 
 <p>Note the use of the trailing <code>/</code> in the Location directive. If you use <code>&lt;Location /websvn&gt;</code>, you won't be able to access the index.</p>
 
-<p>You should change <code>/websvn/</code> to <code>/wsvn/</code> if you're using multiviews.</p>
+<p>You should change <code>/websvn/</code> to <code>/browse/</code> if you're using multiviews.</p>
 
 <p>Also note that you should not use the <code>AuthzSVNAccessFile</code> command to define the access file.</p>
 

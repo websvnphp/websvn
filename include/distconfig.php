@@ -209,9 +209,9 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // Uncomment this line if you want to use MultiView to access the repository by, for example:
 //
-// http://servername/wsvn/repname/path/in/repository
+// http://servername/browse/repname/path/in/repository
 //
-// Note: The websvn directory will need to have Multiviews turned on in Apache, and you'll need to configure wsvn.php
+// Note: The websvn directory will need to have Multiviews turned on in Apache, and you'll need to configure browse.php
 
 // $config->useMultiViews();
 
@@ -221,7 +221,7 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // Uncomment this line if you want to use your Subversion access file to control access
 // rights via WebSVN. For this to work, you'll need to set up the same Apache based authentication
-// to the WebSVN (or wsvn) directory as you have for Subversion itself. More information can be
+// to the WebSVN (or browse) directory as you have for Subversion itself. More information can be
 // found in install.txt
 
 // $config->useAccessFile('/path/to/accessfile'); // Global access file
