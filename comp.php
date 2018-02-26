@@ -385,7 +385,7 @@ if ($rep) {
 					}
 
 					$listvar = &$listing[$index];
-					$listvar['newpath'] = $absnode;
+					$listvar['newpath'] = escape($absnode);
 
 					$listvar['fileurl'] = $config->getURL($rep, $absnode, 'file').'rev='.$rev2;
 
