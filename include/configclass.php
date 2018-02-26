@@ -635,6 +635,7 @@ class WebSvnConfig {
 	var $_ignoreWhitespacesInDiff = false;
 	var $serverIsWindows = false;
 	var $multiViews = false;
+	var $multiViewsIndex = 'browse';
 	var $useEnscript = false;
 	var $useEnscriptBefore_1_6_3 = false;
 	var $useGeshi = false;
@@ -805,12 +806,17 @@ class WebSvnConfig {
 	//
 	// Use MultiViews to access the repository
 
-	function useMultiViews() {
+	function useMultiViews($multiViewsIndex = 'browse') {
 		$this->multiViews = true;
+		$this->multiViewsIndex = $multiViewsIndex;
 	}
 
 	function getUseMultiViews() {
 		return $this->multiViews;
+	}
+
+	function getMultiViewsIndex() {
+		return $this->multiViewsIndex;
 	}
 
 	// }}}
@@ -1086,7 +1092,7 @@ class WebSvnConfig {
 			}
 
 			if (substr($url, -5) == 'index') {
-				$url = substr($url, 0, -5).'browse';
+				$url = substr($url, 0, -5).$this->multiViewsIndex;
 			}
 
 			if ($op == 'index') {
