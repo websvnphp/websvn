@@ -90,9 +90,6 @@ function escape($str) {
 // {{{ execCommand
 
 function execCommand($cmd, &$retcode) {
-	global $config;
-
-
 	return @exec($cmd, $tmp, $retcode);
 }
 
@@ -101,9 +98,6 @@ function execCommand($cmd, &$retcode) {
 // {{{ popenCommand
 
 function popenCommand($cmd, $mode) {
-	global $config;
-
-
 	return popen($cmd, $mode);
 }
 
@@ -112,9 +106,6 @@ function popenCommand($cmd, $mode) {
 // {{{ passthruCommand
 
 function passthruCommand($cmd) {
-	global $config;
-
-
 	return passthru($cmd);
 }
 
@@ -127,7 +118,6 @@ function runCommand($cmd, $mayReturnNothing = false) {
 
 	$output = array();
 	$err = false;
-
 
 	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
