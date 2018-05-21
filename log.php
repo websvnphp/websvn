@@ -321,12 +321,9 @@ if ($rep) {
 						$modpaths[$action] = $paths;
 					}
 
-					$listvar['revadded'] = (isset($modpaths['A'])) ? implode('<br/>', $modpaths['A']) : '';
-					$listvar['revdeleted'] = (isset($modpaths['D'])) ? implode('<br/>', $modpaths['D']) : '';
-					$listvar['revmodified'] = (isset($modpaths['M'])) ? implode('<br/>', $modpaths['M']) : '';
-					$listvar['revadded'] = escape($listvar['revadded']);
-					$listvar['revdeleted'] = escape($listvar['revdeleted']);
-					$listvar['revmodified'] = escape($listvar['revmodified']);
+					$listvar['revadded'] = (isset($modpaths['A'])) ? implode('<br/>', escape($modpaths['A'])) : '';
+					$listvar['revdeleted'] = (isset($modpaths['D'])) ? implode('<br/>', escape($modpaths['D'])) : '';
+					$listvar['revmodified'] = (isset($modpaths['M'])) ? implode('<br/>', escape($modpaths['M'])) : '';
 				}
 
 				$row = 1 - $row;
