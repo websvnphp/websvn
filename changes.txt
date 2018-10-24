@@ -1,3 +1,10 @@
+2.4.0+
+
+This file is discontinued in favor of using milestones per release on GitHub.
+
+https://github.com/websvnphp/websvn/releases
+https://github.com/websvnphp/websvn/issues/29
+
 2.3.3
 
 * Fixed security issue (only affecting Windows with enabled downloads)
@@ -12,7 +19,6 @@
 * Fixed inline diff when ignoring whitespaces with PHP 4 (#309)
 * Fixed keeping flag to regard/ignore whitespaces in diff when moving to previous/next/youngest revision
 * Updated translation: Swedish (#320)
-
 
 2.3.2
 
@@ -30,7 +36,6 @@
 * Fixed regression in revision form
 * Fixed issues: 292, 294, 296, 298, 302, 304, 306, 307
 
-
 2.3.1
 
 * Added in-line highlighting of diff
@@ -46,7 +51,6 @@
 * Updated translations: Hindi, Marathi, Slovenian
 * Fixed issues: 98, 235, 250, 260, 262, 263, 264, 265, 266, 267, 268, 269,
   270, 271, 273, 274, 275, 276, 278, 280, 283, 284, 285, 287, 288, 290
-
 
 2.3.0
 
@@ -65,7 +69,6 @@
 * Fixed issues: 64, 84, 151, 155, 236, 240, 242, 243, 244, 245, 246, 247, 248,
   251, 253, 254, 255, 256, 257, 259
 
-
 2.2.1
 
 * Fixed downloading tar-gz-archives when using .gz extension.
@@ -74,7 +77,6 @@
 * Fixed multiple links and minor issues.
 * Fixed issues: 212, 213, 214, 215, 216, 217, 219, 222, 223, 224, 225, 227, 228,
   229, 230, 231, 232, 234, 237, 238
-
 
 2.2.0
 
@@ -110,7 +112,6 @@
   * French
   * Italian
 
-
 2.1.0
 
 * Fixed: Several security fixes.
@@ -125,7 +126,6 @@ FIX: Hide modified files in revision view based on authentication.
 FIX: Numerous other security problems.
 NEW: Added translations: hungarian, indonesian, slovak, uzbek.
 CHANGED: Some code cleanup.
-
 
 2.0
 
@@ -153,7 +153,7 @@ CHANGE: Tidied URLs generated from the listing view (remove default parameters).
 CHANGE: wsvn now selects either the listing or file view automatically when the
         "op" parameter isn't present. This allows for simpler, shorter URLS.
         (eg. /http://example.com/wsvn/repo1/myfile.txt)
-        
+
 FIX: Fix warnings when using an access file that didn't define a groups section.
 FIX: Fix tarballing of directories with spaces.
 FIX: Path history information in the log view of a file was incorrect.
@@ -291,7 +291,7 @@ CHANGE: The listing view will now always show the requested revision (HEAD by
 
 FIX: A bug prevented downloading of tarballs from working.
 
-1.60 
+1.60
 
 NEW: Directory displays are now shown in tree view (so that it's harder to get
      lost). Many thanks to Brent Lu for this excellent patch.
@@ -306,7 +306,7 @@ NEW: Support for using 'bugtraq' properties when display log entries.
      See http://svn.collab.net/repos/tortoisesvn/trunk/doc/issuetrackers.txt
 NEW: Traditional Chinese translation
 NEW: Spanish translation
-     
+
 CHANGE: Style information removed from RSS feed
 CHANGE: Changed files are now hidden by default (since the directory
         comparison link is far more useful)
@@ -335,7 +335,7 @@ FIX: Under Multiviews, change to the WebSVN directory before executing commands
 1.50
 
 Notes: Before installing this version you should delete existing cache files.
-       
+
        wsvn.php has changed. You should redo any appropriate configuration
        changes inside this file.
 
@@ -353,7 +353,7 @@ CHANGE: The extraction of the directory listings is now accomplished using the
         advantage of being non-recursive, and thereby eliminates the need for
         caching the entire directory listing, and is much quicker on complex
         directory structures. (Also, no more 50MB directory caches!)
-        
+
 FIX: Deleted directories are now viewable.
 FIX: SHOWALL was being redefined in the language files.
 FIX: The directory listing view sometimes showed [lang:DELETEDFILES].
@@ -371,7 +371,7 @@ NEW: RSS feed support. (Thanks to Lübbe Onken for his work on this.)
 NEW: Translatations for French and Portuguese.
 NEW: .exe files now default to content-type "application/x-msdownload".
 NEW: Recognised links are now 'linkified' in the log messages.
-NEW: Option to change number of spaces to use for tabs in file/diff listings. 
+NEW: Option to change number of spaces to use for tabs in file/diff listings.
 NEW: URLs now access the repository by name rather than number. This means that
      bookmarks will stay the same when new projects are added. The old behaviour
      can be configured in config.php.
@@ -392,7 +392,7 @@ FIX: A blank author field is set to an &nbsp; cell.
 FIX: A year is 365 days, not 356.
 FIX: Base ages correctly upon GMT.
 FIX: The diff output did not escape html entities when Enscript was enabled and
-     the file extension was not recognised for Enscript. 
+     the file extension was not recognised for Enscript.
 FIX: distconfig.php had a few minor errors in the examples.
 FIX: It wasn't possible to call ParentPath multiple times.
 
@@ -478,7 +478,7 @@ There are a few changes to the config file in this release. Copy distconfig.php
 to config.php and redo any configuration changes that you had made.
 
 NEW: MultiViews support allows access to repositories using a URL such as:
-     
+
       http://server/wsvn/repname/path/to/rep
 
 NEW: Colourisation support using Enscript.
