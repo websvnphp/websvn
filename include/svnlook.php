@@ -561,6 +561,11 @@ function _equalPart($str1, $str2) {
 	return substr($str1, 0, $i);
 }
 
+function _logError($string) {
+	$string = preg_replace("/--password '.*'/", "--password '[...]'", $string);
+	error_log($string);
+}
+
 // The SVNRepository class
 
 class SVNRepository {
@@ -703,8 +708,8 @@ class SVNRepository {
 
 			if (!empty($error)) {
 				global $lang;
-				error_log($lang['BADCMD'].': '.$cmd);
-				error_log($error);
+				_logError($lang['BADCMD'].': '.$cmd);
+				_logError($error);
 				global $vars;
 				$vars['warning'] = nl2br(escape(toOutputEncoding($error)));
 			}
@@ -785,8 +790,8 @@ class SVNRepository {
 
 		if (!empty($error)) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
-			error_log($error);
+			_logError($lang['BADCMD'].': '.$cmd);
+			_logError($error);
 			global $vars;
 			$vars['warning'] = 'Unable to cat file: '.nl2br(escape(toOutputEncoding($error)));
 			return;
@@ -875,8 +880,8 @@ class SVNRepository {
 
 		if (!empty($error)) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
-			error_log($error);
+			_logError($lang['BADCMD'].': '.$cmd);
+			_logError($error);
 			global $vars;
 			$vars['warning'] = 'No blame info: '.nl2br(escape(toOutputEncoding($error)));
 		}
@@ -922,7 +927,7 @@ class SVNRepository {
 		execCommand($cmd, $retcode);
 		if ($retcode != 0) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
+			_logError($lang['BADCMD'].': '.$cmd);
 		}
 		return $retcode;
 	}
@@ -982,7 +987,7 @@ class SVNRepository {
 									$cmd);
 				if (xml_get_error_code($xml_parser) != 5) {
 					// errors can contain sensitive info! don't echo this ~J
-					error_log($errorMsg);
+					_logError($errorMsg);
 					exit;
 				} else {
 					break;
@@ -1006,8 +1011,8 @@ class SVNRepository {
 		if (!empty($error)) {
 			$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
-			error_log($error);
+			_logError($lang['BADCMD'].': '.$cmd);
+			_logError($error);
 			global $vars;
 			if (strstr($error, 'found format')) {
 				$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.nl2br(escape(toOutputEncoding(substr($error, strrpos($error, 'Expected'))))).'.")';
@@ -1089,7 +1094,7 @@ class SVNRepository {
 									$cmd);
 				if (xml_get_error_code($xml_parser) != 5) {
 					// errors can contain sensitive info! don't echo this ~J
-					error_log($errorMsg);
+					_logError($errorMsg);
 					exit;
 				} else {
 					break;
@@ -1113,8 +1118,8 @@ class SVNRepository {
 		if (!empty($error)) {
 			$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
-			error_log($error);
+			_logError($lang['BADCMD'].': '.$cmd);
+			_logError($error);
 			global $vars;
 			if (strstr($error, 'found format')) {
 				$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.nl2br(escape(toOutputEncoding(substr($error, strrpos($error, 'Expected'))))).'.")';
@@ -1182,7 +1187,7 @@ class SVNRepository {
 									$cmd);
 				if (xml_get_error_code($xml_parser) != 5) {
 					// errors can contain sensitive info! don't echo this ~J
-					error_log($errorMsg);
+					_logError($errorMsg);
 					exit;
 				} else {
 					break;
@@ -1204,8 +1209,8 @@ class SVNRepository {
 
 		if (!empty($error)) {
 			global $lang;
-			error_log($lang['BADCMD'].': '.$cmd);
-			error_log($error);
+			_logError($lang['BADCMD'].': '.$cmd);
+			_logError($error);
 			global $vars;
 			if (strstr($error, 'found format')) {
 				$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.nl2br(escape(toOutputEncoding(substr($error, strrpos($error, 'Expected'))))).'.")';
