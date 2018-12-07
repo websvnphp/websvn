@@ -673,6 +673,7 @@ class WebSvnConfig {
 	var $fileUrlPrefix = 'file://';
 
 	var $_repositories = array();
+	var $_ignoreFilesOutsideOfSubpathInLogs = false;
 
 	var $_parentPaths = array();	// parent paths to load
 
@@ -705,6 +706,14 @@ class WebSvnConfig {
 		$serverRootURL = trim($serverRootURL, '/');
 		$svnName = substr($serverRootURL, strrpos($serverRootURL, '/') + 1);
 		$this->_repositories[] = new Repository($name, $svnName, $serverRootURL, $group, $username, $password, $subpath, $clientRootURL);
+	}
+
+	function getIgnoreFilesOutsideOfSubpathInLogs() {
+		return $this->_ignoreFilesOutsideOfSubpathInLogs;
+	}
+
+	function setIgnoreFilesOutsideOfSubpathInLogs($ignore) {
+		$this->_ignoreFilesOutsideOfSubpathInLogs = $ignore;
 	}
 
 	// Automatically set up the repositories based on a parent path

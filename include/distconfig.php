@@ -102,6 +102,11 @@
 //
 // $config->addRepositorySubpath('NameToDisplay', 'remote URL', 'subpath', null, 'username', 'password');
 // $config->addRepositorySubpath('NameToDisplay', 'remote URL', 'subpath', 'group', 'username', 'password');
+
+// By default, WebSVN does not allow files outside of subpath when getting logs.
+// To ignoring files outside of subpath in logs uncomment this line.
+
+// $config->setIgnoreFilesOutsideOfSubpathInLogs(true);
 //
 // To use the parent path method (without and with optional group), uncomment the next line
 // and replace the path with your one. You can call the function several times if you have several parent paths.
