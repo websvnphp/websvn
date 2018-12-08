@@ -748,6 +748,7 @@ class SVNRepository {
 	// check if geshi can highlight the given extension and return the language
 
 	function highlightLanguageUsingGeshi($path) {
+		global $config;
 		global $extGeshi;
 
 		$filename = basename($path);
@@ -757,7 +758,7 @@ class SVNRepository {
 		foreach ($extGeshi as $language => $extensions) {
 			if (in_array($filename, $extensions) || in_array($ext, $extensions)) {
 				if ($this->geshi === null) {
-					require_once 'geshi.php';
+					require_once $config->getGeshiPath();
 					$this->geshi = new GeSHi();
 				}
 				$this->geshi->set_language($language);

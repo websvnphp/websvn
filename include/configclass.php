@@ -607,6 +607,7 @@ class WebSvnConfig {
 	var $svn = 'svn --non-interactive --config-dir /tmp/websvn';
 	var $svnAuthz = 'svnauthz accessof';
 	var $diff = 'diff';
+	var $geshi = 'geshi.php';
 	var $enscript = 'enscript -q';
 	var $sed = 'sed';
 	var $gzip = 'gzip';
@@ -1248,6 +1249,18 @@ class WebSvnConfig {
 
 	function getDiffCommand() {
 		return $this->diff;
+	}
+
+	// setGeshiPath
+	//
+	// Define the location of the geshi file
+
+	function setGeshiPath($path) {
+		$this->geshi = $path;
+	}
+
+	function getGeshiPath() {
+		return $this->geshi;
 	}
 
 	// setEnscriptPath

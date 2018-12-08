@@ -36,6 +36,7 @@
 // $config->setDiffPath('/path/to/diff/command/');
 
 // For syntax colouring, if option enabled...
+// $config->setGeshiPath('/path/to/geshi.php');
 // $config->setEnscriptPath('/path/to/enscript/command/');
 // $config->setSedPath('/path/to/sed/command/');
 
