@@ -1254,20 +1254,19 @@ class SVNRepository {
 						$precisePath = $equalPart;
 					}
 
+					// fix paths if command was for a subpath repository
+					if ($this->repConfig->subpath !== null) {
+						if (substr($mod->path, 0, strlen($this->repConfig->subpath) + 1) === '/'. $this->repConfig->subpath) {
+							$curLog->entries[$entryKey]->mods[$modKey]->path = substr($mod->path, strlen($this->repConfig->subpath) + 1);
+						} else {
+							$vars['error'] = 'Log entries do not start with subpath for repository with subpath';
+							return null;
+						}
+					}
 				} else {
 					// hide modified entry when access is prohibited
 					unset($curLog->entries[$entryKey]->mods[$modKey]);
 					$fullModAccess = false;
-				}
-
-				// fix paths if command was for a subpath repository
-				if ($this->repConfig->subpath !== null) {
-					if (substr($mod->path, 0, strlen($this->repConfig->subpath) + 1) === '/'. $this->repConfig->subpath) {
-						$curLog->entries[$entryKey]->mods[$modKey]->path = substr($mod->path, strlen($this->repConfig->subpath) + 1);
-					} else {
-						$vars['error'] = 'Log entries do not start with subpath for repository with subpath';
-						return null;
-					}
 				}
 			}
 			if (!$fullModAccess) {
