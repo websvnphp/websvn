@@ -182,7 +182,7 @@ if ($rep) {
 		@unlink($olderFileHl);
 	}
 
-	if (!$rep->hasReadAccess($path, false)) {
+	if (!$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}

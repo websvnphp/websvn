@@ -484,7 +484,7 @@ if ($rep) {
 				foreach ($listing as $i => $item) {
 					if ($item['newpath'] !== null) {
 						$newpath = $item['newpath'];
-						$inrestricted = !$rep->hasReadAccess($newpath, false);
+						$inrestricted = !$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$newpath, false);
 					}
 					if ($inrestricted) {
 						$restricted[] = $i;

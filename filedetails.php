@@ -60,7 +60,7 @@ if ($rep) {
 	// Check to see if the user has requested that this type be zipped and sent
 	// to the browser as an attachment
 
-	if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) {
+	if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false)) {
 		$base = basename($path);
 		header('Content-Type: application/gzip');
 		header('Content-Disposition: attachment; filename='.urlencode($base).'.gz');
@@ -107,7 +107,7 @@ if ($rep) {
 	}
 
 	// If a MIME type is associated with the file, deliver with Content-Type header.
-	if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false)) {
+	if ($history && !empty($mimeType) && $rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false)) {
 		$base = basename($path);
 		header('Content-Type: '.$mimeType);
 		//header('Content-Length: '.$size);
@@ -191,7 +191,7 @@ if ($rep) {
 	$vars['rev'] = escape($rev);
 	$vars['peg'] = $peg;
 
-	if (!$rep->hasReadAccess($path)) {
+	if (!$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	} else if (!$svnrep->isFile($path, $rev, $peg)) {

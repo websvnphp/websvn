@@ -171,11 +171,11 @@ if ($rep) {
 		$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 	}
 
-	if (!$rep->hasReadAccess($path)) {
+	if (!$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}
-	$vars['restricted'] = !$rep->hasReadAccess($path, false);
+	$vars['restricted'] = !$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false);
 
 } else {
 	header('HTTP/1.x 404 Not Found', true, 404);
