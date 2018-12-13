@@ -56,17 +56,15 @@ if (!$rep) {
 	print 'Unable to access resource at path: '.xml_entities($path);
 	exit;
 }
-
-$svnrep = new SVNRepository($rep);
-
 // Make sure that the user has full access to the specified directory
-if (!$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false)) {
+if (!$rep->hasReadAccess($path, false)) {
 	header('HTTP/1.x 403 Forbidden', true, 403);
 	print 'Unable to access resource at path: '.xml_entities($path);
 	exit;
 }
 
 // If there's no revision info, go to the lastest revision for this path
+$svnrep = new SVNRepository($rep);
 $history = $svnrep->getLog($path, $rev, '', false, $max, $peg, !$quiet);
 if (!$history) {
 	header('HTTP/1.x 404 Not Found', true, 404);

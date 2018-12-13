@@ -68,14 +68,14 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 	// List each file in the current directory
 	$loop = 0;
 	$last_index = 0;
-	$accessToThisDir = $rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false);
+	$accessToThisDir = $rep->hasReadAccess($path, false);
 
 	// If using flat view and not at the root, create a '..' entry at the top.
 	if (!$treeview && count($subs) > 2) {
 		$parentPath = $subs;
 		unset($parentPath[count($parentPath) - 2]);
 		$parentPath = implode('/', $parentPath);
-		if ($rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$parentPath, false)) {
+		if ($rep->hasReadAccess($parentPath, false)) {
 			$listvar = &$listing[$index];
 			$listvar['rowparity'] = $index % 2;
 			$listvar['path'] = $parentPath;
@@ -107,7 +107,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 			$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
 			// Only list files/directories that are not designated as off-limits
-			$access = ($isDir) ? $rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path.$file, true)
+			$access = ($isDir) ? $rep->hasReadAccess($path.$file, true)
 												 : $accessToThisDir;
 			if ($access) {
 				$listvar = &$listing[$index];
@@ -335,11 +335,11 @@ if ($rep) {
 
 	$listing = showTreeDir($svnrep, $path, $rev, $peg, array());
 
-	if (!$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path)) {
+	if (!$rep->hasReadAccess($path)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}
-	$vars['restricted'] = !$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false);
+	$vars['restricted'] = !$rep->hasReadAccess($path, false);
 
 } else {
 	header('HTTP/1.x 404 Not Found', true, 404);

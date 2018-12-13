@@ -422,7 +422,7 @@ if ($rep) {
 	$vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
 	$vars['compare_endform'] = '</form>';
 
-	if (!$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false)) {
+	if (!$rep->hasReadAccess($path, false)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}
