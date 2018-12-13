@@ -748,7 +748,6 @@ class SVNRepository {
 	// check if geshi can highlight the given extension and return the language
 
 	function highlightLanguageUsingGeshi($path) {
-		global $config;
 		global $extGeshi;
 
 		$filename = basename($path);
@@ -1266,14 +1265,8 @@ class SVNRepository {
 					if (substr($mod->path, 0, strlen($this->repConfig->subpath) + 1) === '/'. $this->repConfig->subpath) {
 						$curLog->entries[$entryKey]->mods[$modKey]->path = substr($mod->path, strlen($this->repConfig->subpath) + 1);
 					} else {
-						if ($config->getIgnoreFilesOutsideOfSubpathInLogs()) {
-							// hide modified entry when file is out of subpath
-							unset($curLog->entries[$entryKey]->mods[$modKey]);
-						} else {
-							global $vars;
-							$vars['error'] = 'Log entries do not start with subpath for repository with subpath';
-							return null;
-						}
+						// hide modified entry when file is outside of subpath
+						unset($curLog->entries[$entryKey]->mods[$modKey]);
 					}
 				}
 			}
