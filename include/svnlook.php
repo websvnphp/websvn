@@ -1229,7 +1229,7 @@ class SVNRepository {
 			$anyModAccess = (count($entry->mods) == 0);
 			$precisePath = null;
 			foreach ($entry->mods as $modKey => $mod) {
-				$access = $this->repConfig->hasReadAccess($mod->path);
+				$access = $this->repConfig->hasReadAccess($mod->path, false, false);
 				if ($access) {
 					$anyModAccess = true;
 

@@ -209,7 +209,7 @@ if ($rep) {
 		$vars['javascript'] = implode("\n", $javascript);
 	}
 
-	if (!$rep->hasReadAccess((($svnrep->repConfig->subpath)?'/'.$svnrep->repConfig->subpath:'').$path, false)) {
+	if (!$rep->hasReadAccess($path, false)) {
 		$vars['error'] = $lang['NOACCESS'];
 		checkSendingAuthHeader($rep);
 	}

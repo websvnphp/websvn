@@ -563,8 +563,12 @@ class Repository {
 		return $a;
 	}
 
-	function hasReadAccess($path, $checkSubDirs = false) {
+	function hasReadAccess($path, $checkSubDirs = false, $prependSubpath = true) {
 		global $config;
+
+		if ($prependSubpath && $this->subpath) {
+			$path = '/' . $this->subpath . $path;
+		}
 
 		$a =& $this->getAuthz();
 
