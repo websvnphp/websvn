@@ -580,8 +580,12 @@ class Repository {
 		return true;
 	}
 
-	function hasUnrestrictedReadAccess($path) {
+	function hasUnrestrictedReadAccess($path, $prependSubpath = true) {
 		global $config;
+
+		if ($prependSubpath && $this->subpath) {
+			$path = '/' . $this->subpath . $path;
+		}
 
 		$a =& $this->getAuthz();
 
