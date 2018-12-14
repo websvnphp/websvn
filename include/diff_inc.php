@@ -101,6 +101,7 @@ function getWrappedLineFromFile($file, $is_highlighted) {
 	if (!$is_highlighted) {
 		$line = escape($line);
 	}
+	$line = rtrim($line, "\n\r");
 	if (strip_tags($line) === '') $line = '&nbsp;';
 	return wrapInCodeTagIfNecessary($line);
 }

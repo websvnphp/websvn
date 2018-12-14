@@ -49,8 +49,10 @@ if ($rep) {
 	$rev1 = (int)@$_REQUEST['compare_rev'][0];
 	$rev2 = (int)@$_REQUEST['compare_rev'][1];
 	$manualorder = (@$_REQUEST['manualorder'] == 1);
-	$ignoreWhitespace = (@$_REQUEST['ignorews'] == 1);
-
+	$ignoreWhitespace = $config->getIgnoreWhitespacesInDiff();
+	if (array_key_exists('ignorews', $_REQUEST)) {
+		$ignoreWhitespace = (bool)$_REQUEST['ignorews'];
+	}
 	// Some page links put the revision with the path...
 	if (strpos($path1, '@')) {
 		list($path1, $rev1) = explode('@', $path1);
@@ -86,10 +88,14 @@ if ($rep) {
 
 	$url = $config->getURL($rep, '', 'comp');
 	$vars['reverselink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
+	$toggleIgnoreWhitespace = '';
+	if ($ignoreWhitespace == $config->getIgnoreWhitespacesInDiff()) {
+		$toggleIgnoreWhitespace = '&amp;ignorews='.($ignoreWhitespace ? '0' : '1');
+	}
 	if (!$ignoreWhitespace) {
-		$vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').'&amp;ignorews=1">'.$lang['IGNOREWHITESPACE'].'</a>';
+		$vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').$toggleIgnoreWhitespace.'">'.$lang['IGNOREWHITESPACE'].'</a>';
 	} else {
-		$vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').'">'.$lang['REGARDWHITESPACE'].'</a>';
+		$vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').$toggleIgnoreWhitespace.'">'.$lang['REGARDWHITESPACE'].'</a>';
 	}
 
 	if ($rev1 == 0) $rev1 = 'HEAD';
