@@ -572,8 +572,6 @@ class Repository {
 	}
 
 	function hasReadAccess($pathWoSub, $checkSubDirs = false) {
-		global $config;
-
 		$path	=  $this->_getPathWithSubIf($pathWoSub);
 		$a		=& $this->getAuthz();
 
@@ -597,8 +595,6 @@ class Repository {
 	}
 
 	function hasUnrestrictedReadAccess($pathWoSub) {
-		global $config;
-
 		$path	=  $this->_getPathWithSubIf($pathWoSub);
 		$a		=& $this->getAuthz();
 
