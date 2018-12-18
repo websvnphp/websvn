@@ -563,10 +563,17 @@ class Repository {
 		return $a;
 	}
 
-	function hasReadAccess($path, $checkSubDirs = false) {
-		global $config;
+	function _getPathWithSubIf($pathWoSub) {
+		if (!$this->subpath) {
+			return $pathWoSub;
+		}
 
-		$a =& $this->getAuthz();
+		return '/' . $this->subpath . $pathWoSub;
+	}
+
+	function hasReadAccess($pathWoSub, $checkSubDirs = false) {
+		$path	=  $this->_getPathWithSubIf($pathWoSub);
+		$a		=& $this->getAuthz();
 
 		if (!empty($a)) {
 			return $a->hasReadAccess($this->svnName, $path, $checkSubDirs);
@@ -576,10 +583,20 @@ class Repository {
 		return true;
 	}
 
-	function hasUnrestrictedReadAccess($path) {
-		global $config;
+	function hasLogReadAccess($pathWithSub) {
+                $a =& $this->getAuthz();
 
-		$a =& $this->getAuthz();
+		if (!empty($a)) {
+			return $a->hasReadAccess($this->svnName, $path, false);
+		}
+
+		// No access file - free access...
+		return true;
+	}
+
+	function hasUnrestrictedReadAccess($pathWoSub) {
+		$path	=  $this->_getPathWithSubIf($pathWoSub);
+		$a		=& $this->getAuthz();
 
 		if (!empty($a)) {
 			return $a->hasUnrestrictedReadAccess($this->svnName, $path);
