@@ -404,7 +404,7 @@ function tempnamWithCheck($dir, $prefix) {
 
 	if ($tmp == false) {
 		if (!headers_sent()) {
-			header('HTTP/1.x 500 Internal Server Error', true, 500);
+			http_response_code(500);
 			error_log('Unable to create a temporary file. Either make the currently used folder ("' . $dir . '") writable for WebSVN or change the folder in the configuration.');
 			print 'Unable to create a temporary file. Either make the currently used folder writable for WebSVN or change the folder in the configuration.';
 			exit(0);

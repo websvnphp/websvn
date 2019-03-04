@@ -42,7 +42,7 @@ if ($rep) {
 		unset($vars['error']);
 		$history = $svnrep->getLog($path, '', '', true, 2, ($path == '/') ? '' : $peg);
 		if (!$history) {
-			header('HTTP/1.x 404 Not Found', true, 404);
+			http_response_code(404);
 			$vars['error'] = $lang['NOPATH'];
 		}
 	}
@@ -56,7 +56,7 @@ if ($rep) {
 	$lastChangedRev = ($rev) ? $rev : $youngest;
 	$history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg, true);
 	if (!$history) {
-		header('HTTP/1.x 404 Not Found', true, 404);
+		http_response_code(404);
 		$vars['error'] = $lang['NOPATH'];
 	}
 	if (empty($rev))
@@ -178,7 +178,7 @@ if ($rep) {
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
 
 } else {
-	header('HTTP/1.x 404 Not Found', true, 404);
+	http_response_code(404);
 }
 
 renderTemplate('revision');

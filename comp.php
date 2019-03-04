@@ -129,12 +129,12 @@ if ($rep) {
 
 	$history1 = $svnrep->getLog($path1, $rev1, $rev1, false, 1);
 	if (!$history1) {
-		header('HTTP/1.x 404 Not Found', true, 404);
+		http_response_code(404);
 		$vars['error'] = $lang['NOPATH'];
 	} else {
 		$history2 = $svnrep->getLog($path2, $rev2, $rev2, false, 1);
 		if (!$history2) {
-			header('HTTP/1.x 404 Not Found', true, 404);
+			http_response_code(404);
 			$vars['error'] = $lang['NOPATH'];
 		}
 	}
@@ -513,7 +513,7 @@ if ($rep) {
 	}
 
 } else {
-	header('HTTP/1.x 404 Not Found', true, 404);
+	http_response_code(404);
 }
 
 renderTemplate('compare');
