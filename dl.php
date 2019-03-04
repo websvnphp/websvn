@@ -75,7 +75,7 @@ function removeDirectory($dir) {
 // Make sure that downloading the specified file/directory is permitted
 
 if (!$rep->isDownloadAllowed($path)) {
-	header('HTTP/1.x 403 Forbidden', true, 403);
+	http_response_code(403);
 	error_log('Unable to download resource at path: '.$path);
 	print 'Unable to download resource at path: '.xml_entities($path);
 	exit;
@@ -95,7 +95,7 @@ if ($rep) {
 	$logEntry = ($history) ? $history->entries[0] : null;
 
 	if (!$logEntry) {
-		header('HTTP/1.x 404 Not Found', true, 404);
+		http_response_code(404);
 		error_log('Unable to download resource at path: '.$path);
 		print 'Unable to download resource at path: '.xml_entities($path);
 		exit(0);
@@ -127,7 +127,7 @@ if ($rep) {
 	// Export the requested path from SVN repository to the temp directory
 	$svnExportResult = $svnrep->exportRepositoryPath($path, $tempDir.DIRECTORY_SEPARATOR.$archiveName, $rev, $peg);
 	if ($svnExportResult != 0) {
-		header('HTTP/1.x 500 Internal Server Error', true, 500);
+		http_response_code(500);
 		error_log('svn export failed for: '.$archiveName);
 		print 'svn export failed for "'.xml_entities($archiveName).'".';
 		removeDirectory($tempDir);
@@ -139,7 +139,7 @@ if ($rep) {
 	// Deciding whether the symlink is relative and legal within the
 	// repository would be nice but seems to error prone at this moment.
 	if ( is_link($tempDir.DIRECTORY_SEPARATOR.$archiveName) ) {
-		header('HTTP/1.x 500 Internal Server Error', true, 500);
+		http_response_code(500);
 		error_log('to be downloaded file is symlink, aborting: '.$archiveName);
 		print 'Download of symlinks disallowed: "'.xml_entities($archiveName).'".';
 		removeDirectory($tempDir);
@@ -208,7 +208,7 @@ if ($rep) {
 			$created = $tar->create(array($archiveName));
 			if (!$created) {
 				$retcode = 1;
-				header('HTTP/1.x 500 Internal Server Error', true, 500);
+				http_response_code(500);
 				print 'Unable to create tar archive.';
 			}
 
@@ -216,7 +216,7 @@ if ($rep) {
 			$cmd = $config->tar.' -cf '.quote($tarArchive).' '.quote($archiveName);
 			execCommand($cmd, $retcode);
 			if ($retcode != 0) {
-				header('HTTP/1.x 500 Internal Server Error', true, 500);
+				http_response_code(500);
 				error_log('Unable to call tar command: '.$cmd);
 				print 'Unable to call tar command. See webserver error log for details.';
 			}
@@ -235,7 +235,7 @@ if ($rep) {
 			$srcHandle = fopen($tarArchive, 'rb');
 			$dstHandle = gzopen($downloadArchive, 'wb');
 			if (!$srcHandle || !$dstHandle) {
-				header('HTTP/1.x 500 Internal Server Error', true, 500);
+				http_response_code(500);
 				print 'Unable to open file for gz-compression.';
 				chdir($oldcwd);
 				removeDirectory($tempDir);
@@ -252,7 +252,7 @@ if ($rep) {
 			$retcode = 0;
 			execCommand($cmd, $retcode);
 			if ($retcode != 0) {
-				header('HTTP/1.x 500 Internal Server Error', true, 500);
+				http_response_code(500);
 				error_log('Unable to call gzip command: '.$cmd);
 				print 'Unable to call gzip command. See webserver error log for details.';
 				chdir($oldcwd);
@@ -274,7 +274,7 @@ if ($rep) {
 		header('Content-Disposition: attachment; filename="'. $downloadFilename .'"');
 		readfile($downloadArchive);
 	} else {
-		header('HTTP/1.x 404 Not Found', true, 404);
+		http_response_code(404);
 		print 'Unable to open file: '.xml_entities($downloadArchive);
 	}
 
@@ -282,5 +282,5 @@ if ($rep) {
 	removeDirectory($tempDir);
 
 } else {
-	header('HTTP/1.x 404 Not Found', true, 404);
+	http_response_code(404);
 }

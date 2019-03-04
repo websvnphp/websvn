@@ -566,5 +566,5 @@ function checkSendingAuthHeader($rep = false) {
 		$authz =& $config->getAuthz();
 	}
 	$loggedin = $authz->hasUsername();
-	header('HTTP/1.x 403 Forbidden', true, 403);
+	http_response_code(403);
 }
