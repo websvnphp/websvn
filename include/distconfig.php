@@ -45,7 +45,7 @@
 // For delivered GZIP'd files and tarballs, if option enabled...
 // $config->setGZipPath('/path/to/gzip/command/');
 
-// download folder/file zipped ...
+// download directory/file zipped ...
 // $config->setZipPath('/path/to/zip/command/');
 
 // Uncomment this line to trust server certificates
@@ -155,9 +155,9 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // $config->useFlatView();
 
-// By default, WebSVN displays subfolders first and than the files of a directory,
+// By default, WebSVN displays subdirectories first and than the files of a directory,
 // both alphabetically sorted.
-// To use alphabetic order independent iof folders and files uncomment this line.
+// To use alphabetic order independent of directories and files uncomment this line.
 
 // $config->setAlphabeticOrder(true);
 
@@ -168,7 +168,7 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // $config->setShowLastModInIndex(false);
 
 // By default, WebSVN displays the information of the last modification
-// (revision, age and author) for each file and folder in an extra column.
+// (revision, age and author) for each file and directory in an extra column.
 // To disable that uncomment this line.
 
 // $config->setShowLastModInListing(false);
@@ -305,7 +305,7 @@ $config->addInlineMimeType('text/plain');
 //
 // Set download modes
 // $config->setDefaultFileDlMode('plain');
-// $config->setDefaultFolderDlMode('gzip');
+// $config->setDefaultDirectoryDlMode('gzip');
 //
 // To change the global option for individual repositories, uncomment and replicate
 // the appropriate line below (replacing 'myrep' with the name of the repository).

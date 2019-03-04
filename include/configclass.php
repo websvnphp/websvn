@@ -631,13 +631,13 @@ class WebSvnConfig {
 	var $zip = 'zip';
 	var $locale = '';
 
-	// different modes for file and folder download
+	// different modes for file and directory download
 
 	var $defaultFileDlMode = 'plain';
-	var $defaultFolderDlMode = 'gzip';
+	var $defaultDirectoryDlMode = 'gzip';
 
 	var $validFileDlModes = array( 'gzip', 'zip', 'plain' );
-	var $validFolderDlModes = array( 'gzip', 'zip' );
+	var $validDirectoryDlModes = array( 'gzip', 'zip' );
 
 	// Other configuration items
 
@@ -1354,20 +1354,28 @@ class WebSvnConfig {
 		return $this->defaultFileDlMode;
 	}
 
-	// setDefaultFolderDlMode
+	// setDefaultDirectoryDlMode
 	//
-	// Define the default folder download mode - one of [gzip, zip]
-	function setDefaultFolderDlMode($dlmode) {
-		if (in_array($dlmode, $this->validFolderDlModes)) {
-			$this->defaultFolderDlMode = $dlmode;
+	// Define the default directory download mode - one of [gzip, zip]
+	function setDefaultDirectoryDlMode($dlmode) {
+		if (in_array($dlmode, $this->validDirectoryDlModes)) {
+			$this->defaultDirectoryDlMode = $dlmode;
 		} else {
-			echo 'Setting default file download mode to an invalid value "'.$dlmode.'"';
+			echo 'Setting default directory download mode to an invalid value "'.$dlmode.'"';
 			exit;
 		}
 	}
 
+	function setDefaultFolderDlMode($dlmode) {
+		$this->setDefaultDirectoryDlMode($dlmode);
+	}
+
+	function getDefaultDirectoryDlMode() {
+		return $this->defaultDirectoryDlMode;
+	}
+
 	function getDefaultFolderDlMode() {
-		return $this->defaultFolderDlMode;
+		return $this->getDefaultDirectoryDlMode();
 	}
 
 	// Templates

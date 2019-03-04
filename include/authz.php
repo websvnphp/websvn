@@ -88,7 +88,7 @@ class Authorization {
 	// {{{ hasUnrestrictedReadAccess
 	//
 	// Returns true if the user has read access to the given path and too
-	// all subfolders
+	// all subdirectories
 
 	function hasUnrestrictedReadAccess($repos, $path) {
 		return $this->hasReadAccess($repos, $path, true);
