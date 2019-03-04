@@ -47,7 +47,7 @@ $lang["SHOWCOMPACT"] = "Visa bara områden med skillnader";
 $lang["IGNOREWHITESPACE"] = "Ignorera vityta";
 $lang["REGARDWHITESPACE"] = "Ge akt på vityta";
 
-$lang["LISTING"] = "Folderlistning";
+$lang["LISTING"] = "Kataloglistning";
 $lang["FILEDETAIL"] = "Detaljer";
 $lang["VIEWAS"] = "Visa som";
 $lang["DIFFPREV"] = "Skillnad mot föregående";
@@ -68,7 +68,7 @@ $lang["VIEWLOG"] = "Visa Logg";
 $lang["PATH"] = "Sökväg";
 $lang["AUTHOR"] = "Författare";
 $lang["AGE"] = "Ålder";
-$lang["CURDIR"] = "Aktuell folder";
+$lang["CURDIR"] = "Aktuell katalog";
 $lang["TARBALL"] = "Tarball";
 $lang["DOWNLOAD"] = "Ladda ned";
 

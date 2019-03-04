@@ -33,7 +33,7 @@
 $locwebsvnhttp = isset($_SERVER['CONTEXT_PREFIX']) ? $_SERVER['CONTEXT_PREFIX'] : '/websvn';
 
 // Physical location of websvn directory. Change this if your browse.php is not in
-// the same folder as the rest of the distribution
+// the same directory as the rest of the distribution
 $locwebsvnreal = dirname(__FILE__);
 
 require $locwebsvnreal.'/multiviews.php';

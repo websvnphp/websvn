@@ -162,7 +162,7 @@ if ($rep) {
 	chdir($tempDir);
 
 	if ($isDir) {
-		$downloadMode = $config->getDefaultFolderDlMode();
+		$downloadMode = $config->getDefaultDirectoryDlMode();
 	} else {
 		$downloadMode = $config->getDefaultFileDlMode();
 	}
@@ -171,8 +171,8 @@ if ($rep) {
 	if (!empty($_REQUEST['dlmode'])) {
 		$downloadMode = $_REQUEST['dlmode'];
 		if (substr($logEntry->path, -1) == '/') {
-			if (!in_array($downloadMode, $config->validFolderDlModes)) {
-				$downloadMode = $config->getDefaultFolderDlMode();
+			if (!in_array($downloadMode, $config->validDirectoryDlModes)) {
+				$downloadMode = $config->getDefaultDirectoryDlMode();
 			}
 		} else {
 			if (!in_array($downloadMode, $config->validFileDlModes)) {

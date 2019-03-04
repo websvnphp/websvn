@@ -405,12 +405,12 @@ function tempnamWithCheck($dir, $prefix) {
 	if ($tmp == false) {
 		if (!headers_sent()) {
 			header('HTTP/1.x 500 Internal Server Error', true, 500);
-			error_log('Unable to create a temporary file. Either make the currently used folder ("' . $dir . '") writable for WebSVN or change the folder in the configuration.');
-			print 'Unable to create a temporary file. Either make the currently used folder writable for WebSVN or change the folder in the configuration.';
+			error_log('Unable to create a temporary file. Either make the currently used directory ("' . $dir . '") writable for WebSVN or change the directory in the configuration.');
+			print 'Unable to create a temporary file. Either make the currently used directory writable for WebSVN or change the directory in the configuration.';
 			exit(0);
 		} else {
 			global $vars;
-			$vars['warning'] = 'Unable to create a temporary file. Either make the currently used folder writable for WebSVN or change the folder in the configuration.';
+			$vars['warning'] = 'Unable to create a temporary file. Either make the currently used directory writable for WebSVN or change the directory in the configuration.';
 		}
 	}
 
