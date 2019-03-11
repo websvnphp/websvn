@@ -26,6 +26,11 @@
 
 // {{{ PLATFORM CONFIGURATION ---
 
+// Configure a UTF-8 aware locale to properly convert bytes to characters.
+// Otherwise files and directories with non-ASCII encoding are deemed to fail
+// with native commands.
+// $config->setLocale('C.UTF-8');
+
 // Configure the path for Subversion to use for --config-dir
 // (e.g. if accepting certificates is required when using repositories via https)
 // $config->setSvnConfigDir('/tmp/websvn');
