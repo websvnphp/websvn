@@ -432,7 +432,6 @@ tr:hover td.code {
 }
 tr td.path, tr th.path {
   text-align:left;
-  width: 100%;
 }
 tr td.path {
   padding:0;

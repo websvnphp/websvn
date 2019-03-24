@@ -33,8 +33,9 @@ a img {
 }
 
 table {
-	border-width: 0px;
-	border-collapse: collapse;
+	border-width:		0px;
+	border-collapse:	collapse;
+	width:				100%;
 }
 
 pre {
@@ -87,6 +88,18 @@ code {
 	background-color: #809cc8;
 	padding: 1px 4px 2px 1px;
 }
+#content thead th.path {
+  text-align:	left;
+  width:		60%;
+}
+#content thead th.last_mod {
+  width: 25%;
+}
+#content thead th.view_log,
+#content thead th.download,
+#content thead th.rss {
+  width: 5%;
+}
 
 .row0, .row1 {
 	border-width: 0px;
@@ -110,7 +123,7 @@ tr.row0 th, tr.row1 th, #content td {
 	border-right: 1px solid #555;
 }
 tr.row0 th {
-	background-color: #e0e0ff	
+	background-color: #e0e0ff
 }
 tr.row1 th {
 	background-color: #d0d0ee;
@@ -197,7 +210,7 @@ div.blame-popup .date {
 }
 
 #compare #params td {
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 #compare .comparison {
