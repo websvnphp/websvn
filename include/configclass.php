@@ -584,7 +584,8 @@ class Repository {
 	}
 
 	function hasLogReadAccess($pathWithSub) {
-                $a =& $this->getAuthz();
+		$path	=  $pathWithSub;
+		$a		=& $this->getAuthz();
 
 		if (!empty($a)) {
 			return $a->hasReadAccess($this->svnName, $path, false);
