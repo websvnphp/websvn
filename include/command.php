@@ -156,7 +156,8 @@ function runCommand($cmd, $mayReturnNothing = false, &$errorIf = 'NOT_USED') {
 
 	proc_close($resource);
 
-	if (!$error) {
+	# Some commands are expected to return no output, but warnings on STDERR.
+	if ((count($output) > 0) || $mayReturnNothing) {
 		return $output;
 	}
 
