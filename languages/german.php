@@ -33,7 +33,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";
-$lang["NOACCESS"] = "Sie haben keine ausreichende Berechtigungen um diese Inhalte zu lesen";
+$lang["NOACCESS"] = "Sie haben keine ausreichenden Berechtigungen zum Lesen dieser Inhalte.";
 $lang["RESTRICTED"] = "Beschränkter Zugriff";
 $lang["SUPPLYREP"] = "Bitte den Repository-Pfad in include/config.php mit \$config->parentPath oder \$config->addRepository angeben.<p>Genauere Informationen finden sich in der Installationsanleitung";
 
