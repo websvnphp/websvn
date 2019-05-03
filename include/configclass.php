@@ -1244,8 +1244,9 @@ class WebSvnConfig {
 	function _updateSVNCommand() {
 		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
 		$this->_setPath($this->svnAuthz, $this->_svnCommandPath, 'svnauthz', 'accessof');
-		$this->svn = $this->_svnCommandPrefix.' '.$this->svn;
-		$this->svnAuthz = $this->_svnCommandPrefix.' '.$this->svnAuthz;
+
+		$this->svn		= trim($this->_svnCommandPrefix.' '.$this->svn);
+		$this->svnAuthz	= trim($this->_svnCommandPrefix.' '.$this->svnAuthz);
 	}
 
 	function getSvnCommand() {

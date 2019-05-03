@@ -257,63 +257,21 @@ function command_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtnam
 		$whitespaceFlag = '';
 	}
 
-	// Open a pipe to the diff command with $context lines of context
+	// Open a pipe to the diff command with $context lines of context:
+	$cmd	= $config->diff.$whitespaceFlag.' -U '.$context.' "'.$oldtname.'" "'.$newtname.'"';
+	$diff	= runCommand($cmd);
 
-	$cmd = $config->diff.$whitespaceFlag.' -U '.$context.' "'.$oldtname.'" "'.$newtname.'"';
+	// Ignore the 3 header lines:
+	$line = array_shift($diff);
+	$line = array_shift($diff);
 
-	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+	$arrayBased	= true;
+	$fileBased	= false;
 
-	$resource = proc_open($cmd, $descriptorspec, $pipes);
-	$error = '';
-
-	if (is_resource($resource)) {
-		// We don't need to write
-		fclose($pipes[0]);
-
-		$diff = $pipes[1];
-
-		// Ignore the 3 header lines
-		$line = fgets($diff);
-		$line = fgets($diff);
-
-		$arrayBased = false;
-		$fileBased = true;
-
-		if ($highlighted) {
-			$listing = diff_result($all, $highlighted, $newhlname, $oldhlname, $diff, $ignoreWhitespace);
-		} else {
-			$listing = diff_result($all, $highlighted, $newtname, $oldtname, $diff, $ignoreWhitespace);
-		}
-
-		fclose($pipes[1]);
-
-		while (!feof($pipes[2])) {
-			$error .= fgets($pipes[2]);
-		}
-
-		$error = toOutputEncoding(trim($error));
-
-		if (!empty($error)) $error = '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
-
-		fclose($pipes[2]);
-
-		proc_close($resource);
-
+	if ($highlighted) {
+		$listing = diff_result($all, $highlighted, $newhlname, $oldhlname, $diff, $ignoreWhitespace);
 	} else {
-		$error = '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p>';
-	}
-
-	if (!empty($error)) {
-		echo $error;
-
-		if (is_resource($resource)) {
-			fclose($pipes[0]);
-			fclose($pipes[1]);
-			fclose($pipes[2]);
-
-			proc_close($resource);
-		}
-		exit;
+		$listing = diff_result($all, $highlighted, $newtname, $oldtname, $diff, $ignoreWhitespace);
 	}
 
 	return $listing;

@@ -113,38 +113,41 @@ function passthruCommand($cmd) {
 
 // {{{ runCommand
 
-function runCommand($cmd, $mayReturnNothing = false) {
-	global $lang;
+function runCommand($cmd, $mayReturnNothing = false, &$errorIf = 'NOT_USED') {
+	global $config, $lang;
 
-	$output = array();
-	$err = false;
+	$output	= array();
+	$error	= '';
 
-	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+	if ($config->serverIsWindows) {
+		$cmd = '"'.$cmd.'"';
+	}
 
-	$resource = proc_open($cmd, $descriptorspec, $pipes);
-	$error = '';
+	$descriptorspec	= array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+	$resource		= proc_open($cmd, $descriptorspec, $pipes);
 
 	if (!is_resource($resource)) {
 		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p>';
 		exit;
 	}
 
-	$handle = $pipes[1];
-	$firstline = true;
+	$handle		= $pipes[1];
+	$firstline	= true;
+
 	while (!feof($handle)) {
 		$line = fgets($handle);
 		if ($firstline && empty($line) && !$mayReturnNothing) {
-			$err = true;
+			$error = 'No output on STDOUT.';
+			break;
 		}
 
-		$firstline = false;
-		$output[] = toOutputEncoding(rtrim($line));
+		$firstline	= false;
+		$output[]	= toOutputEncoding(rtrim($line));
 	}
 
 	while (!feof($pipes[2])) {
 		$error .= fgets($pipes[2]);
 	}
-
 	$error = toOutputEncoding(trim($error));
 
 	fclose($pipes[0]);
@@ -153,11 +156,18 @@ function runCommand($cmd, $mayReturnNothing = false) {
 
 	proc_close($resource);
 
-	if (!$err) {
+	if (!$error) {
 		return $output;
-	} else {
-		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p><p>'.nl2br($error).'</p>';
 	}
+
+	if ($errorIf != 'NOT_USED') {
+		$errorIf = $error;
+		return $output;
+	}
+
+	echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p>';
+	echo '<p>'.nl2br($error).'</p>';
+	exit;
 }
 
 // }}}

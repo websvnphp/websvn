@@ -59,10 +59,17 @@ class Authorization {
 	// }}}
 
 	// Private function to simplify creation of common SVN authz command string text.
-	function svnAuthzCommandString($repos, $path, $checkSubDirs = false) {
+	function svnAuthzCommandString($repo, $path, $checkSubDirs = false) {
 		global $config;
-		return $config->getSvnAuthzCommand().' --repository '.$repos.' --path '.quote($path).
-			' '.($this->hasUsername() ? '--username '.quote($this->user).' ' : '').($checkSubDirs ? '-R ' : '').quote($this->accessfile);
+
+		$cmd			= $config->getSvnAuthzCommand();
+		$repoAndPath	= '--repository ' . quote($repo) . ' --path ' . quote($path);
+		$username		= !$this->hasUsername()	? '' : '--username ' . quote($this->user);
+		$subDirs		= !$checkSubDirs		? '' : '-R';
+		$authzFile		= quote($this->accessfile);
+		$retVal			= "${cmd} ${repoAndPath} ${username} ${subDirs} ${authzFile}";
+
+		return $retVal;
 	}
 
 	// {{{ hasReadAccess
