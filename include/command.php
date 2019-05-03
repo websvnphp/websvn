@@ -119,12 +119,9 @@ function runCommand($cmd, $mayReturnNothing = false, &$errorIf = 'NOT_USED') {
 	$output	= array();
 	$error	= '';
 
-	if ($config->serverIsWindows) {
-		$cmd = '"'.$cmd.'"';
-	}
-
 	$descriptorspec	= array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
-	$resource		= proc_open($cmd, $descriptorspec, $pipes);
+	$resource		= proc_open($cmd, $descriptorspec, $pipes,
+								null, null, array('bypass_shell' => TRUE));
 
 	if (!is_resource($resource)) {
 		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p>';
