@@ -53,7 +53,7 @@ $vars['locwebsvnhttp'] = $locwebsvnhttp;
 
 $contentType = array(
 	'.dwg'		 => 'application/acad', // AutoCAD Drawing files
-	'.arj'		 => 'application/arj', //  
+	'.arj'		 => 'application/arj', //
 	'.ccad'		=> 'application/clariscad', // ClarisCAD files
 	'.drw'		 => 'application/drafting', // MATRA Prelude drafting
 	'.dxf'		 => 'application/dxf', // DXF (AutoCAD)
@@ -68,7 +68,7 @@ $contentType = array(
 	'.wri'		 => 'application/mswrite', // Microsoft Write
 	'.bin'		 => 'application/octet-stream', // Uninterpreted binary
 	'.exe'		 => 'application/x-msdownload', // Windows EXE
-	'.oda'		 => 'application/oda', //  
+	'.oda'		 => 'application/oda', //
 	'.pdf'		 => 'application/pdf', // PDF (Adobe Acrobat)
 	'.ai'			=> 'application/postscript', // PostScript
 	'.ps'			=> 'application/postscript', // PostScript
@@ -475,8 +475,13 @@ if ($peg === 0)
 	$peg = '';
 $passrev = $rev;
 
-if (!$config->multiViews) {
-	// With MultiViews, browse creates the form once the current project is found.
+// With MultiViews, browse creates the forms once the current project is found. "index" is excluded
+// because currently no template shows a selection form on that page and generating it for no reason
+// introduces a lot of overhead in case access checks per repo need to be performed, because those
+// are actually performed twice.
+if (!$config->multiViews							&&
+	!strpos($_SERVER['SCRIPT_NAME'], 'index.php')	&&
+	!strpos($_SERVER['SCRIPT_NAME'], 'browse.php')) {
 	createProjectSelectionForm();
 	createRevisionSelectionForm();
 }
