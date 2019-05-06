@@ -46,6 +46,7 @@ $parity = 0; // Alternates between every entry, whether it is a group or project
 $groupparity = 0; // The first project (and first of any group) resets this to 0
 $curgroup = null;
 $groupcount = 0;
+
 // Create listing of all configured projects (includes groups if they are used).
 foreach ($projects as $project) {
 	if (!$project->hasReadAccess('/'))
@@ -75,6 +76,7 @@ foreach ($projects as $project) {
 	if ($config->showLastModInIndex()) {
 		$svnrep = new SVNRepository($project);
 		$log = $svnrep->getLog('/', '', '', true, 1);
+		
 		if (isset($log->entries[0])) {
 			$head = $log->entries[0];
 			$listvar['revision'] = $head->rev;
@@ -102,6 +104,7 @@ foreach ($projects as $project) {
 	$listvar['groupname'] = ($curgroup != null) ? $curgroup : '';
 	$i++;
 }
+
 if (empty($listing) && !empty($projects)) {
 	$vars['error'] = $lang['NOACCESS'];
 	checkSendingAuthHeader();
