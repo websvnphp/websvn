@@ -30,7 +30,7 @@
 //
 // Note that browse.php need not be in the /websvn directory (and often isn't).
 // If you want to use the root server directory, just use a blank string ('').
-$locwebsvnhttp = isset($_SERVER['CONTEXT_PREFIX']) ? $_SERVER['CONTEXT_PREFIX'] : '/websvn';
+$locwebsvnhttp = !empty($_SERVER['CONTEXT_PREFIX']) ? $_SERVER['CONTEXT_PREFIX'] : '/websvn';
 
 // Physical location of websvn directory. Change this if your browse.php is not in
 // the same directory as the rest of the distribution
