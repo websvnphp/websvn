@@ -100,6 +100,12 @@ class Authorization {
 		$cachedExpired	= (time() - 60) > $cachedWhen;
 
 		if ($cachedExpired) {
+			// Sorting by "when" should be established somehow to only remove the oldest element
+			// instead of an arbitrary first one, which might be the newest added last time.
+			if (count($cache) >= 1000) {
+				array_shift($cache);
+			}
+
 			$result			= (runCommand($cmd))[0];
 			$cache[$cmd]	= array('when'		=> time(),
 									'result'	=> $result);
