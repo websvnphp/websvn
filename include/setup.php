@@ -565,6 +565,7 @@ function checkSendingAuthHeader($rep = false) {
 	} else {
 		$authz =& $config->getAuthz();
 	}
-	$loggedin = $authz->hasUsername();
+        // authz can be null if the user has access to no repositories
+	$loggedin = ($authz && $authz->hasUsername());
 	http_response_code(403);
 }
