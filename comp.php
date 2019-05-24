@@ -504,7 +504,7 @@ if ($rep) {
 				}
 				if (count($restricted) && !count($listing)) {
 					$vars['error'] = $lang['NOACCESS'];
-					checkSendingAuthHeader($rep);
+					sendHeaderForbidden();
 				}
 			}
 

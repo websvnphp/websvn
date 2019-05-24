@@ -76,7 +76,7 @@ foreach ($projects as $project) {
 	if ($config->showLastModInIndex()) {
 		$svnrep = new SVNRepository($project);
 		$log = $svnrep->getLog('/', '', '', true, 1);
-		
+
 		if (isset($log->entries[0])) {
 			$head = $log->entries[0];
 			$listvar['revision'] = $head->rev;
@@ -107,7 +107,7 @@ foreach ($projects as $project) {
 
 if (empty($listing) && !empty($projects)) {
 	$vars['error'] = $lang['NOACCESS'];
-	checkSendingAuthHeader();
+	sendHeaderForbidden();
 }
 
 $vars['flatview'] = $config->flatIndex;

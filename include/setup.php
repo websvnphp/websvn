@@ -53,7 +53,7 @@ $vars['locwebsvnhttp'] = $locwebsvnhttp;
 
 $contentType = array(
 	'.dwg'		 => 'application/acad', // AutoCAD Drawing files
-	'.arj'		 => 'application/arj', //  
+	'.arj'		 => 'application/arj', //
 	'.ccad'		=> 'application/clariscad', // ClarisCAD files
 	'.drw'		 => 'application/drafting', // MATRA Prelude drafting
 	'.dxf'		 => 'application/dxf', // DXF (AutoCAD)
@@ -68,7 +68,7 @@ $contentType = array(
 	'.wri'		 => 'application/mswrite', // Microsoft Write
 	'.bin'		 => 'application/octet-stream', // Uninterpreted binary
 	'.exe'		 => 'application/x-msdownload', // Windows EXE
-	'.oda'		 => 'application/oda', //  
+	'.oda'		 => 'application/oda', //
 	'.pdf'		 => 'application/pdf', // PDF (Adobe Acrobat)
 	'.ai'			=> 'application/postscript', // PostScript
 	'.ps'			=> 'application/postscript', // PostScript
@@ -557,14 +557,6 @@ function createRevisionSelectionForm() {
 	$vars['revision_endform'] = '</form>';
 }
 
-function checkSendingAuthHeader($rep = false) {
-	global $config;
-	$authz = null;
-	if ($rep) {
-		$authz =& $rep->getAuthz();
-	} else {
-		$authz =& $config->getAuthz();
-	}
-	$loggedin = $authz->hasUsername();
+function sendHeaderForbidden() {
 	http_response_code(403);
 }

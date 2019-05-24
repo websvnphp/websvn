@@ -193,7 +193,7 @@ if ($rep) {
 
 	if (!$rep->hasReadAccess($path)) {
 		$vars['error'] = $lang['NOACCESS'];
-		checkSendingAuthHeader($rep);
+		sendHeaderForbidden();
 	} else if (!$svnrep->isFile($path, $rev, $peg)) {
 		http_response_code(404);
 		$vars['error'] = $lang['NOPATH'];
