@@ -60,7 +60,7 @@ class Authorization {
 	// }}}
 
 	// Private function to simplify creation of common SVN authz command string text.
-	function svnAuthzCommandString($repos, $path, $checkSubDirs = false) {
+	function svnAuthzCommandString($repo, $path, $checkSubDirs = false) {
 		global $config;
 
 		$cmd			= $config->getSvnAuthzCommand();
