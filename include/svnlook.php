@@ -858,7 +858,7 @@ class SVNRepository {
 	function getBlameDetails($path, $filename, $rev = 0, $peg = '') {
 		$error	= '';
 		$cmd	= $this->svnCommandString('blame', $path, $rev, $peg).' > '.quote($filename);
-		$output	= runCommand($cmd, false, $error);
+		$output	= runCommand($cmd, true, $error);
 
 		if (!empty($error)) {
 			global $lang;
