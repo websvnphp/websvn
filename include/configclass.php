@@ -618,7 +618,6 @@ class WebSvnConfig {
 
 	// Tool path locations
 
-	var $_svnCommandPrefix = '';
 	var $_svnCommandPath = '';
 	var $_svnConfigDir = '/tmp/websvn';
 	var $_svnTrustServerCert = false;
@@ -1235,17 +1234,9 @@ class WebSvnConfig {
 		$this->_updateSVNCommand();
 	}
 
-	// Define a prefix to include before every SVN command (e.g. 'arch -i386')
-	function setSvnCommandPrefix($prefix) {
-		$this->_svnCommandPrefix = $prefix;
-		$this->_updateSVNCommand();
-	}
-
 	function _updateSVNCommand() {
-		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
-		$this->_setPath($this->svnAuthz, $this->_svnCommandPath, 'svnauthz', 'accessof');
-		$this->svn = $this->_svnCommandPrefix.' '.$this->svn;
-		$this->svnAuthz = $this->_svnCommandPrefix.' '.$this->svnAuthz;
+		$this->_setPath($this->svn,			$this->_svnCommandPath, 'svn',		'--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
+		$this->_setPath($this->svnAuthz,	$this->_svnCommandPath, 'svnauthz',	'accessof');
 	}
 
 	function getSvnCommand() {

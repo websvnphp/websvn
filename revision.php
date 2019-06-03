@@ -167,13 +167,13 @@ if ($rep) {
 	}
 
 	if (isset($prevRev)) {
-		$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.urlencode($path).'@'.$rev;	
+		$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.urlencode($path).'@'.$rev;
 		$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 	}
 
 	if (!$rep->hasReadAccess($path)) {
 		$vars['error'] = $lang['NOACCESS'];
-		checkSendingAuthHeader($rep);
+		sendHeaderForbidden();
 	}
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
 
