@@ -113,38 +113,48 @@ function passthruCommand($cmd) {
 
 // {{{ runCommand
 
-function runCommand($cmd, $mayReturnNothing = false) {
-	global $lang;
+function runCommand($cmd, $mayReturnNothing = false, &$errorIf = 'NOT_USED') {
+	global $config, $lang;
 
-	$output = array();
-	$err = false;
+	$output	= array();
+	$error	= '';
+	$opts	= null;
 
-	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+	// https://github.com/websvnphp/websvn/issues/75
+	// https://github.com/websvnphp/websvn/issues/78
+	if ($config->serverIsWindows) {
+		if (!strpos($cmd, '>') && !strpos($cmd, '|')) {
+			$opts = array('bypass_shell' => true);
+		} else {
+			$cmd = '"'.$cmd.'"';
+		}
+	}
 
-	$resource = proc_open($cmd, $descriptorspec, $pipes);
-	$error = '';
+	$descriptorspec	= array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+	$resource		= proc_open($cmd, $descriptorspec, $pipes, null, null, $opts);
 
 	if (!is_resource($resource)) {
 		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p>';
 		exit;
 	}
 
-	$handle = $pipes[1];
-	$firstline = true;
+	$handle		= $pipes[1];
+	$firstline	= true;
+
 	while (!feof($handle)) {
 		$line = fgets($handle);
 		if ($firstline && empty($line) && !$mayReturnNothing) {
-			$err = true;
+			$error = 'No output on STDOUT.';
+			break;
 		}
 
-		$firstline = false;
-		$output[] = toOutputEncoding(rtrim($line));
+		$firstline	= false;
+		$output[]	= toOutputEncoding(rtrim($line));
 	}
 
 	while (!feof($pipes[2])) {
 		$error .= fgets($pipes[2]);
 	}
-
 	$error = toOutputEncoding(trim($error));
 
 	fclose($pipes[0]);
@@ -153,11 +163,19 @@ function runCommand($cmd, $mayReturnNothing = false) {
 
 	proc_close($resource);
 
-	if (!$err) {
+	# Some commands are expected to return no output, but warnings on STDERR.
+	if ((count($output) > 0) || $mayReturnNothing) {
 		return $output;
-	} else {
-		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p><p>'.nl2br($error).'</p>';
 	}
+
+	if ($errorIf != 'NOT_USED') {
+		$errorIf = $error;
+		return $output;
+	}
+
+	echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p>';
+	echo '<p>'.nl2br($error).'</p>';
+	exit;
 }
 
 // }}}
