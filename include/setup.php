@@ -320,9 +320,19 @@ $extGeshi = array(
 // Loads English localized strings by default (must go before config.php)
 require 'languages/english.php';
 
+// Try to support one WebSVN-installation hosting multiple different SVNParentPaths, distinguished
+// by their location. Per location the web server needs to set some environment variable providing
+// the path to the config to include.
+//
+// https://stackoverflow.com/questions/3050444/when-setting-environment-variables-in-apache-rewriterule-directives-what-causes
+$envConfPath = preg_grep('/^(?:REDIRECT_)*WEBSVN_PATH_CONF$/', array_keys($_SERVER));
+$envConfPath = $_SERVER[array_values($envConfPath)[0]];
+
 // Get the user's personalised config (requires the locwebsvnhttp stuff above)
 if (file_exists('include/config.php')) {
 	require_once 'include/config.php';
+} elseif (!empty($envConfPath)) {
+	require_once $envConfPath;
 } else {
 	die('File "include/config.php" does not exist, please create one. The example file "include/distconfig.php" may be copied and modified as needed.');
 }
