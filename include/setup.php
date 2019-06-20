@@ -317,16 +317,16 @@ $extGeshi = array(
 // Loads English localized strings by default (must go before config.php)
 require 'languages/english.php';
 
-// Support one WebSVN-installation hosting multiple different SVNParentPaths, distinguished  by their
+// Support one WebSVN installation hosting multiple different SVNParentPaths, distinguished by their
 // location. Per location, the web server needs to set some environment variable providing the path
 // to the config to either exclusively or additionally include, implementing a simple layered config
-// this way. That allows e.g. changing paths to repos per location only and share everything else.
+// this way. That allows e.g., changing paths to repos per location only and share everything else.
 //
 // The following implementation deals with multiple most likely problems in such an environment, like
-// HTTP-redirects influencing the name of the environment variable set and "preg_grep" indexing its
+// HTTP redirects influencing the name of the environment variable set and "preg_grep" indexing its
 // results depending on the input, so optionally changing between requests.
 //
-// https://stackoverflow.com/questions/3050444/when-setting-environment-variables-in-apache-rewriterule-directives-what-causes
+// https://stackoverflow.com/q/3050444/696632
 // https://bz.apache.org/bugzilla/show_bug.cgi?id=58739
 $confSuccess = 0;
 $envPathConf = preg_grep('/^(?:REDIRECT_)*WEBSVN_PATH_CONF$/', array_keys($_SERVER));
