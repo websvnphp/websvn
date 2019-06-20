@@ -345,7 +345,9 @@ if (!empty($envPathConf)) {
 	$confSuccess = 1;
 }
 if (!$confSuccess) {
-	die('No config applied, either create "include/config.php" or use environment variable "WEBSVN_PATH_CONF". The example file "include/distconfig.php" should be copied and modified as needed.');
+	die('No config applied, either create "include/config.php" or use environment variable '	.
+		'"WEBSVN_PATH_CONF". The example file "include/distconfig.php" should be copied and '	.
+		'modified as needed.');
 }
 
 // Make sure that the input locale is set up correctly
