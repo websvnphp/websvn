@@ -320,7 +320,7 @@ require 'languages/english.php';
 // Support one WebSVN installation hosting multiple different SVNParentPaths, distinguished by their
 // location. Per location, the web server needs to set some environment variable providing the path
 // to the config to either exclusively or additionally include, implementing a simple layered config
-// this way. That allows e.g., changing paths to repos per location only and share everything else.
+// this way. That allows, e.g., changing paths to repos per location only and share everything else.
 //
 // The following implementation deals with multiple most likely problems in such an environment, like
 // HTTP redirects influencing the name of the environment variable set and "preg_grep" indexing its
