@@ -317,11 +317,37 @@ $extGeshi = array(
 // Loads English localized strings by default (must go before config.php)
 require 'languages/english.php';
 
-// Get the user's personalised config (requires the locwebsvnhttp stuff above)
+// Support one WebSVN installation hosting multiple different SVNParentPaths, distinguished by their
+// location. Per location, the web server needs to set some environment variable providing the path
+// to the config to either exclusively or additionally include, implementing a simple layered config
+// this way. That allows, e.g., changing paths to repos per location only and share everything else.
+//
+// The following implementation deals with multiple most likely problems in such an environment, like
+// HTTP redirects influencing the name of the environment variable set and "preg_grep" indexing its
+// results depending on the input, so optionally changing between requests.
+//
+// https://stackoverflow.com/q/3050444/696632
+// https://bz.apache.org/bugzilla/show_bug.cgi?id=58739
+$confSuccess = 0;
+$envPathConf = preg_grep('/^(?:REDIRECT_)*WEBSVN_PATH_CONF$/', array_keys($_SERVER));
+$envPathConf = array_values($envPathConf);
+$envPathConf = array_key_exists(0, $envPathConf)
+				? $_SERVER[$envPathConf[0]]
+				: '';
+
+// Get the user's personalised config (requires the locwebsvnhttp stuff above).
 if (file_exists('include/config.php')) {
 	require_once 'include/config.php';
-} else {
-	die('File "include/config.php" does not exist, please create one. The example file "include/distconfig.php" may be copied and modified as needed.');
+	$confSuccess = 1;
+}
+if (!empty($envPathConf)) {
+	require_once $envPathConf;
+	$confSuccess = 1;
+}
+if (!$confSuccess) {
+	die('No config applied, either create "include/config.php" or use environment variable '	.
+		'"WEBSVN_PATH_CONF". The example file "include/distconfig.php" should be copied and '	.
+		'modified as needed.');
 }
 
 // Make sure that the input locale is set up correctly
