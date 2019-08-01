@@ -106,7 +106,7 @@ class Authorization {
 				array_shift($cache);
 			}
 
-			$result			= (runCommand($cmd))[0];
+			$result			= runCommand($cmd)[0];
 			$cache[$cmd]	= array('when'		=> time(),
 									'result'	=> $result);
 		} else {
