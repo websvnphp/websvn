@@ -3,9 +3,9 @@
 /* @group Common Elements */
 
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+	margin: 0;
+	padding: 0;
+	height: 100%;
 }
 
 body {
@@ -272,67 +272,67 @@ form {
 }
 
 #links li.compact a {
-	background-image: url(images/arrow-in.png);	
+	background-image: url(images/arrow-in.png);
 }
 
 #links li.regard a, #links li.ignore a {
-	background-image: url(images/pilcrow.png);	
+	background-image: url(images/pilcrow.png);
 }
 
 #links li.blame a {
-	background-image: url(images/blame.png);	
+	background-image: url(images/blame.png);
 }
 
 #links li.file a {
-	background-image: url(images/detail.png);	
+	background-image: url(images/detail.png);
 }
 
 #links li.diff a {
-	background-image: url(images/diff.png);	
+	background-image: url(images/diff.png);
 }
 
 #links li.download a {
-	background-image: url(images/download.png);	
+	background-image: url(images/download.png);
 }
 
 #links li.dir a {
-	background-image: url(images/parent.png);	
+	background-image: url(images/parent.png);
 }
 
 #links li.log a {
-	background-image: url(images/log.png);	
+	background-image: url(images/log.png);
 }
 
 #links li.mime a {
-	background-image: url(images/eye.png);	
+	background-image: url(images/eye.png);
 }
 
 #links li.next a {
-	background-image: url(images/next.png);	
+	background-image: url(images/next.png);
 }
 
 #links li.prev a {
-	background-image: url(images/previous.png);	
+	background-image: url(images/previous.png);
 }
 
 #links li.rev a {
-	background-image: url(images/revision.png);	
+	background-image: url(images/revision.png);
 }
 
 #links li.reverse a {
-	background-image: url(images/reverse.png);	
+	background-image: url(images/reverse.png);
 }
 
 #links li.rss a {
-	background-image: url(images/rss.png);	
+	background-image: url(images/rss.png);
 }
 
 #links li.svn a {
-	background-image: url(images/subversion-s.png);	
+	background-image: url(images/subversion-s.png);
 }
 
 #links li.youngest a {
-	background-image: url(images/youngest.png);	
+	background-image: url(images/youngest.png);
 }
 
 @media print {
@@ -418,7 +418,7 @@ table, th, td {
 }
 
 th, td {
-	vertical-align: middle;	
+	vertical-align: middle;
 	white-space: nowrap;
 	padding: 0 5px;
 }
@@ -474,7 +474,7 @@ tbody tr:hover {
 	tbody tr.shaded {
 		border-width: 1px;
 	}
-	
+
 	tbody tr:hover {
 		background-color: white;
 	}
@@ -499,19 +499,19 @@ td.blame a, td.download a, #log td.diff a, #revision td.diff a, td.log a, td.rss
 }
 
 td.download a {
-	background-image: url(images/download.png);	
+	background-image: url(images/download.png);
 }
 
 td.blame a {
-	background-image: url(images/blame.png);	
+	background-image: url(images/blame.png);
 }
 
 #log td.diff a, #revision td.diff a {
-	background-image: url(images/diff.png);	
+	background-image: url(images/diff.png);
 }
 
 td.log a {
-	background-image: url(images/log.png);	
+	background-image: url(images/log.png);
 }
 
 td.rss a {
@@ -536,7 +536,7 @@ td.svn a {
 /* @group Footer */
 
 #footer {
-	text-align: center;	
+	text-align: center;
 	clear: both;
 }
 
@@ -617,7 +617,7 @@ body > #wrapper {
 }
 
 #blame td.code, #blame td.line {
-	font-family: Consolas, Menlo, Monaco, monospace;	
+	font-family: Consolas, Menlo, Monaco, monospace;
 }
 
 /* @end */
@@ -653,7 +653,7 @@ body > #wrapper {
 
 #comparisons h3 {
 	text-align: center;
-	margin-bottom: 0;	
+	margin-bottom: 0;
 }
 
 #comparisons table {
@@ -745,7 +745,7 @@ td.diffdeleted, del {
 
 #listing td.rev a {
 	padding-right: 18px;
-	background: url(images/revision.png) no-repeat right;	
+	background: url(images/revision.png) no-repeat right;
 }
 
 #listing td input {
@@ -854,7 +854,7 @@ table#logs {
 #logs td.rev a {
 	margin-left: 3px;
 	padding-left: 18px;
-	background: url(images/revision.png) no-repeat;	
+	background: url(images/revision.png) no-repeat;
 }
 
 #logs td.author, #logs td.age, #logs td.date {
