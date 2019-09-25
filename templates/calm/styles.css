@@ -17,8 +17,7 @@ html,body {
 * html #container{
 	height: 95%;
 }
-#footer
-{
+#footer {
 	height:40px;
 	position: relative;
 	margin:0;padding:0;
@@ -269,7 +268,7 @@ option:active {
 }
 
 #index #projectform {
-  display: none;
+	display: none;
 }
 
 /*
@@ -621,11 +620,11 @@ span.diff a:hover {
 .geshi a:visited,
 .geshi a:focus,
 .geshi a:hover {
-  padding-left:0;
-  background: none;
+	padding-left:0;
+	background: none;
 }
 .geshi a:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 tr td.lineno {
 	text-align: right;
@@ -728,11 +727,11 @@ code {
 /* Whitespace hacks for IE 4-7 */
 
 * html code, *:first-child+html code {
-  white-space: pre;
+	white-space: pre;
 }
 
 * html table.diff td, *:first-child+html table.diff td {
-  white-space: pre;
+	white-space: pre;
 }
 
 /* Log View */
@@ -773,21 +772,21 @@ div.blame-popup .date {
 }
 
 #wrap td.log, #wrap td.feed {
-  white-space: nowrap;
+	white-space: nowrap;
 }
 
 #wrap td.age, #wrap td.date {
-  padding-left: 3px;
-  padding-right: 8px;
+	padding-left: 3px;
+	padding-right: 8px;
 }
 
 #wrap td.age, #wrap td.date, #wrap td.rev {
-  text-align: right;
-  white-space: nowrap;
+	text-align: right;
+	white-space: nowrap;
 }
 
 #wrap p.pagelinks > * {
-  padding: 0 3px;
+	padding: 0 3px;
 }
 
 div#error, div#warning {
@@ -799,87 +798,87 @@ div#error, div#warning {
 }
 
 div#error {
-  border-color: #cb6565;
-  background-color: #ffe2e2;
+	border-color: #cb6565;
+	background-color: #ffe2e2;
 }
 
 div#warning {
-  border-color: #d5ce00;
-  background-color: #ffd;
+	border-color: #d5ce00;
+	background-color: #ffd;
 }
 
 table td {
-  vertical-align: top;
-  padding: 2px;
+	vertical-align: top;
+	padding: 2px;
 }
 
 div#wrap table td.changes div {
-  background-repeat: no-repeat;
-  padding-left: 18px;
+	background-repeat: no-repeat;
+	padding-left: 18px;
 }
 
 td.changes .add {
-  background-image: url(images/add.png);
+	background-image: url(images/add.png);
 }
 
 td.changes .del {
-  background-image: url(images/delete.png);
+	background-image: url(images/delete.png);
 }
 
 td.changes .mod {
-  background-image: url(images/page_white_edit.png);
+	background-image: url(images/page_white_edit.png);
 }
 
 #blame table td {
-  text-align: right;
-  padding-right: 4px;
-  border-color: white;
+	text-align: right;
+	padding-right: 4px;
+	border-color: white;
 }
 
 #blame table td.code {
-  text-align: left;
-  padding: 0;
-  border-color: #eeeeee;
+	text-align: left;
+	padding: 0;
+	border-color: #eeeeee;
 }
 
 #blame table td.code pre {
-  border: none;
+	border: none;
 }
 
 #revision td.path a {
-  background-position:5px 50%;
-  background-repeat:no-repeat;
-  padding-left: 26px;
-  top: 2px;
-  position: relative;
+	background-position:5px 50%;
+	background-repeat:no-repeat;
+	padding-left: 26px;
+	top: 2px;
+	position: relative;
 }
 
 #revision td.path a.notinpath {
-  color: #b00;
+	color: #b00;
 }
 
 #revision tr.M td.path a {
-  background-image:url(images/page_white_edit.png);
+	background-image:url(images/page_white_edit.png);
 }
 
 #revision tr.A td.path a {
-  background-image:url(images/page_white_add.png);
+	background-image:url(images/page_white_add.png);
 }
 
 #revision tr.D td.path a {
-  background-image:url(images/page_white_delete.png);
+	background-image:url(images/page_white_delete.png);
 }
 
 #revision del {
-  padding-left: 26px;
-  background: none;
+	padding-left: 26px;
+	background: none;
 }
 
 .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+		display: block;
+		width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
 }
 
 /*
@@ -888,46 +887,46 @@ td.changes .mod {
 
 /* every screens excepts small ones */
 @media only screen and (min-width: 800px) {
-  #info {
-    float:left;
-    width:28%;
-  }
+	#info {
+		float:left;
+		width:28%;
+	}
 
-  #wrap {
-    margin:0 2% 0 32%;
-    width:65%;
-  }
-  h1 {
-    margin:-1.7em 2% 1em 2%;
-  }
-  #revjump {
-    margin:-3.7em 2% 0;
-  }
+	#wrap {
+		margin:0 2% 0 32%;
+		width:65%;
+	}
+	h1 {
+		margin:-1.7em 2% 1em 2%;
+	}
+	#revjump {
+		margin:-3.7em 2% 0;
+	}
 }
 
 /* small screens only */
 @media only screen and (max-width: 799px) {
-  tr td.path {
-    white-space: nowrap;
-  }
-  h2#pathlinks {
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  #wrap {
-    margin:1em 2% 0 2%;
-  }
-  h1 {
-    margin:0 2% 1em 2%;
-  }
-  /*** Always show scrollbar on webkit mobiles */
-  ::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: .5rem;
-    height: .5rem;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(0, 0, 0, .25);
-  }
+	tr td.path {
+		white-space: nowrap;
+	}
+	h2#pathlinks {
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+	#wrap {
+		margin:1em 2% 0 2%;
+	}
+	h1 {
+		margin:0 2% 1em 2%;
+	}
+	/*** Always show scrollbar on webkit mobiles */
+	::-webkit-scrollbar {
+		-webkit-appearance: none;
+		width: .5rem;
+		height: .5rem;
+	}
+	::-webkit-scrollbar-thumb {
+		border-radius: 4px;
+		background-color: rgba(0, 0, 0, .25);
+	}
 }
