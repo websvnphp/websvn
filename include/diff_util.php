@@ -72,7 +72,7 @@ class LineDiff extends LineDiffInterface {
 
 		for ($i = 1; $i < $n + 1; $i++) {
 			for ($j = 1; $j < $m + 1; $j++) {
-				$c = ($l1[$i - 1] == $l2[$j - 1]) ? 0 : strlen($l1[$i - 1]) + strlen($l2[$i - 1]);
+				$c = ($l1[$i - 1] == $l2[$j - 1]) ? 0 : strlen($l1[$i - 1]) + strlen($l2[$j - 1]);
 				$d[$i][$j] = min($d[$i - 1][$j] + 1, $d[$i][$j - 1] + 1, $d[$i - 1][$j - 1] + $c);
 			}
 		}
