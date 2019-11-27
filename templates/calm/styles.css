@@ -14,12 +14,10 @@ html,body {
 	min-height: 100%;
 	padding-bottom:40px;
 }
-* html #container
-{
+* html #container {
 	height: 95%;
 }
-#footer
-{
+#footer {
 	height:40px;
 	position: relative;
 	margin:0;padding:0;
@@ -42,22 +40,19 @@ a img {
 	margin:1em 2% 0 2%;
 	text-align:right;
 	padding:10px 10px 0 10px;
-	height:2em;
+	min-height:2em;
 }
 #select form, #select div {
 	display: inline;
 }
 #revjump {
-	margin:-3.7em 2% 0;
 	text-align:right;
 	height:2em;
 	padding: 10px 10px 0;
 }
 #wrap {
-	margin:0 2% 0 32%;
 	text-align:left;
 	background:#FFF;
-	width:65%;
 	padding:5px 0;
 }
 #index #wrap tr {
@@ -104,8 +99,6 @@ a img {
 	border-width: 0;
 }
 #info {
-	float:left;
-	width:28%;
 	margin-left:2%;
 	text-align:left;
 	padding:5px 0;
@@ -122,7 +115,6 @@ h1 {
 	font-size:1.7em;
 	border-bottom:1px solid gray;
 	padding:10px 5px 10px 5px;
-	margin:-1.7em 2% 1em 2%;
 	text-align:left;
 	font-weight:normal;
 	letter-spacing: -0.018em;
@@ -432,6 +424,7 @@ tr:hover td.code {
 }
 tr td.path, tr th.path {
 	text-align:left;
+	width: 100%;
 }
 tr td.path {
 	padding:0;
@@ -879,4 +872,61 @@ td.changes .mod {
 #revision del {
 	padding-left: 26px;
 	background: none;
+}
+
+.table-responsive {
+		display: block;
+		width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+}
+
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Media Queries (responsivity)
+*/
+
+/* every screens excepts small ones */
+@media only screen and (min-width: 800px) {
+	#info {
+		float:left;
+		width:28%;
+	}
+
+	#wrap {
+		margin:0 2% 0 32%;
+		width:65%;
+	}
+	h1 {
+		margin:-1.7em 2% 1em 2%;
+	}
+	#revjump {
+		margin:-3.7em 2% 0;
+	}
+}
+
+/* small screens only */
+@media only screen and (max-width: 799px) {
+	tr td.path {
+		white-space: nowrap;
+	}
+	h2#pathlinks {
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+	#wrap {
+		margin:1em 2% 0 2%;
+	}
+	h1 {
+		margin:0 2% 1em 2%;
+	}
+	/*** Always show scrollbar on webkit mobiles */
+	::-webkit-scrollbar {
+		-webkit-appearance: none;
+		width: .5rem;
+		height: .5rem;
+	}
+	::-webkit-scrollbar-thumb {
+		border-radius: 4px;
+		background-color: rgba(0, 0, 0, .25);
+	}
 }
