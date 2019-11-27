@@ -55,23 +55,28 @@ class LineDiff extends LineDiffInterface {
 		if (strlen($str1) < 255 && strlen($str2) < 255) {
 			return levenshtein($str1, $str2);
 		}
-		$n = count($str1);
-		$m = count($str2);
+
+		$l1 = explode(' ', $str1);
+		$l2 = explode(' ', $str2);
+
+		$n = count($l1);
+		$m = count($l2);
 		$d = array_fill(0, $n + 1, array_fill(0, $m + 1, 0));
+
 		for ($i = 1; $i < $n + 1; $i++) {
 			$d[$i][0] = $i;
 		}
 		for ($j = 1; $j < $m + 1; $j++) {
 			$d[0][$j] = $j;
 		}
-		$l1 = explode(' ', $str1);
-		$l2 = explode(' ', $str2);
+
 		for ($i = 1; $i < $n + 1; $i++) {
 			for ($j = 1; $j < $m + 1; $j++) {
-				$c = ($l1[$i - 1] == $l2[$j - 1]) ? 0 : strlen($l1[$i - 1]) + strlen($l2[$i - 1]);
+				$c = ($l1[$i - 1] == $l2[$j - 1]) ? 0 : strlen($l1[$i - 1]) + strlen($l2[$j - 1]);
 				$d[$i][$j] = min($d[$i - 1][$j] + 1, $d[$i][$j - 1] + 1, $d[$i - 1][$j - 1] + $c);
 			}
 		}
+
 		return $d[$n][$m];
 	}
 	// }}}
