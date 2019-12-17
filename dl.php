@@ -26,7 +26,9 @@ require_once 'include/setup.php';
 require_once 'include/svnlook.php';
 require_once 'include/utils.php';
 
-@include_once 'Archive/Tar.php';
+if (!defined('USE_AUTOLOADER')) {
+	@include_once 'Archive/Tar.php';
+}
 
 function setDirectoryTimestamp($dir, $timestamp) {
 	global $config;

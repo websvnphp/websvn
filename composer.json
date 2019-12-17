@@ -1,0 +1,11 @@
+{
+    "name": "websvnphp/websvn",
+    "description": "Online subversion repository browser",
+    "keywords": ["subversion", "svn", "websvn"],
+    "type": "project",
+    "require": {
+        "geshi/geshi": "^1.0.9",
+        "pear/archive_tar": "^1.4",
+        "pear/text_diff": "^1.2"
+    }
+}
