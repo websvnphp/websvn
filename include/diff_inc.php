@@ -22,9 +22,11 @@
 //
 // Diff to files
 
-@include_once 'Text/Diff.php';
-@include_once 'Text/Diff/Renderer.php';
-@include_once 'Text/Diff/Renderer/unified.php';
+if (!defined('USE_AUTOLOADER')) {
+	@include_once 'Text/Diff.php';
+	@include_once 'Text/Diff/Renderer.php';
+	@include_once 'Text/Diff/Renderer/unified.php';
+}
 include_once 'include/diff_util.php';
 
 $arrayBased = false;
