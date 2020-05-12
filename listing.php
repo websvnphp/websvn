@@ -35,7 +35,7 @@ function removeURLSeparator($url) {
 function urlForPath($fullpath, $passRevString) {
 	global $config, $rep;
 
-	$isDir = $fullpath{strlen($fullpath) - 1} == '/';
+	$isDir = $fullpath[ strlen($fullpath) - 1 ] == '/';
 	if ($isDir) {
 		if ($config->treeView) {
 			$url = $config->getURL($rep, $fullpath, 'dir').$passRevString;
@@ -249,7 +249,7 @@ if ($rep) {
 		$rev = $headrev;
 	}
 
-	if ($path == '' || $path{0} != '/') {
+	if ($path == '' || $path[ 0 ] != '/') {
 		$ppath = '/'.$path;
 	} else {
 		$ppath = $path;

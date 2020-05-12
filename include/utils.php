@@ -152,7 +152,7 @@ function getFullURL($loc) {
 	// make sure we have a directory to go to
 	if (empty($loc)) {
 		$loc = '/';
-	} else if ($loc{0} != '/') {
+	} else if ($loc[ 0 ] != '/') {
 		$loc = '/'.$loc;
 	}
 
@@ -221,8 +221,8 @@ function expandTabs($s, $tabwidth = - 1) {
 	$chunkscount = count($chunks);
 	for ($i = 0; $i < $chunkscount; $i++) {
 		// make sure we're not dealing with an empty string
-		if (empty($chunks[$i])) continue;
-		switch ($chunks[$i]{0}) {
+		if (empty($chunks[ $i ])) continue;
+		switch ($chunks[ $i ][ 0 ]) {
 			case '<': // HTML tag: ignore its width by doing nothing
 				break;
 
