@@ -56,7 +56,7 @@ if ($rep) {
 		}
 	}
 
-	if ($path[ 0 ] != '/') {
+	if ($path[0] != '/') {
 		$ppath = '/'.$path;
 	} else {
 		$ppath = $path;

@@ -31,7 +31,7 @@ require_once 'include/template.php';
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
-	if ($path[ 0 ] != '/') {
+	if ($path[0] != '/') {
 		$ppath = '/'.$path;
 	} else {
 		$ppath = $path;

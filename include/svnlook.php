@@ -475,7 +475,7 @@ function logCharacterData($parser, $data) {
 
 function _topLevel($entry) {
 	// To be at top level, there must be one space before the entry
-	return (strlen($entry) > 1 && $entry[ 0 ] == ' ' && $entry[ 1 ] != ' ');
+	return (strlen($entry) > 1 && $entry[0] == ' ' && $entry[ 1 ] != ' ');
 }
 
 // Function to sort two given directory entries.
@@ -486,8 +486,8 @@ function _listSort($e1, $e2) {
 
 	$file1 = $e1->file;
 	$file2 = $e2->file;
-	$isDir1 = ($file1[ strlen($file1) - 1 ] == '/');
-	$isDir2 = ($file2[ strlen($file2) - 1 ] == '/');
+	$isDir1 = ($file1[strlen($file1) - 1] == '/');
+	$isDir2 = ($file2[strlen($file2) - 1] == '/');
 
 	if (!$config->isAlphabeticOrder()) {
 		if ($isDir1 && !$isDir2) return -1;
@@ -550,7 +550,7 @@ function _equalPart($str1, $str2) {
 	$len2 = strlen($str2);
 	$i = 0;
 	while ($i < $len1 && $i < $len2) {
-		if (strcmp($str1[ $i ], $str2[ $i ]) != 0) {
+		if (strcmp($str1[$i], $str2[$i]) != 0) {
 			break;
 		}
 		$i++;
@@ -984,7 +984,7 @@ class SVNRepository {
 		// Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
 		// the trailing slash from the path for comparison purposes
 
-		if ($path[ strlen($path) - 1 ] == '/' && $path != '/') {
+		if ($path[strlen($path) - 1] == '/' && $path != '/') {
 			$path = substr($path, 0, -1);
 		}
 
@@ -1023,7 +1023,7 @@ class SVNRepository {
 		// Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
 		// the trailing slash from the path for comparison purposes
 
-		if ($path[ strlen($path) - 1 ] == '/' && $path != '/') {
+		if ($path[strlen($path) - 1] == '/' && $path != '/') {
 			$path = substr($path, 0, -1);
 		}
 
@@ -1056,7 +1056,7 @@ class SVNRepository {
 
 		// Since directories returned by svn log don't have trailing slashes (:-(),
 		// we must remove the trailing slash from the path for comparison purposes.
-		if (!empty($path) && $path != '/' && $path[ strlen($path) - 1 ] == '/') {
+		if (!empty($path) && $path != '/' && $path[strlen($path) - 1] == '/') {
 			$path = substr($path, 0, -1);
 		}
 
