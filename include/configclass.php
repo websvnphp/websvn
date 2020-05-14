@@ -143,7 +143,7 @@ class ParentPath {
 				if ($this->pattern === false || preg_match($this->pattern, $name)) {
 					$url = $config->fileUrlPrefix.$fullpath;
 					$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-					if ($url{strlen($url) - 1} == '/') {
+					if ($url[ strlen($url) - 1 ] == '/') {
 						$url = substr($url, 0, -1);
 					}
 
@@ -172,7 +172,7 @@ class ParentPath {
 		// For each file...
 		while (false !== ($name = readdir($handle))) {
 			$fullpath = $this->path.DIRECTORY_SEPARATOR.$name;
-			if ($name{0} != '.' && is_dir($fullpath) && is_readable($fullpath)) {
+			if ($name[0] != '.' && is_dir($fullpath) && is_readable($fullpath)) {
 				// And that contains a db directory (in an attempt to not include non svn repositories.
 				$dbfullpath = $fullpath.DIRECTORY_SEPARATOR.'db';
 				if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
@@ -180,7 +180,7 @@ class ParentPath {
 					if ($this->pattern === false || preg_match($this->pattern, $name)) {
 						$url = $config->fileUrlPrefix.$fullpath;
 						$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-						if ($url{strlen($url) - 1} == '/') {
+						if ($url[strlen($url) - 1] == '/') {
 							$url = substr($url, 0, -1);
 						}
 						$clientRootURL = ($this->clientRootURL) ? $this->clientRootURL.'/'.$name : '';
@@ -377,13 +377,13 @@ class Repository {
 	}
 
 	function addAllowedDownloadException($path) {
-		if ($path{strlen($path) - 1} != '/') $path .= '/';
+		if ($path[strlen($path) - 1] != '/') $path .= '/';
 
 		$this->allowedExceptions[] = $path;
 	}
 
 	function addDisallowedDownloadException($path) {
-		if ($path{strlen($path) - 1} != '/') $path .= '/';
+		if ($path[strlen($path) - 1] != '/') $path .= '/';
 
 		$this->disallowedExceptions[] = $path;
 	}
@@ -733,7 +733,7 @@ class WebSvnConfig {
 	function addExcludedPath($path) {
 		$url = $this->fileUrlPrefix.$path;
 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-		if ($url{strlen($url) - 1} == '/') {
+		if ($url[strlen($url) - 1] == '/') {
 			$url = substr($url, 0, -1);
 		}
 		$this->_excluded[] = $url;
@@ -1038,7 +1038,7 @@ class WebSvnConfig {
 	}
 
 	function addAllowedDownloadException($path, $myrep = 0) {
-		if ($path{strlen($path) - 1} != '/') {
+		if ($path[strlen($path) - 1] != '/') {
 			$path .= '/';
 		}
 
@@ -1051,7 +1051,7 @@ class WebSvnConfig {
 	}
 
 	function addDisallowedDownloadException($path, $myrep = 0) {
-		if ($path{strlen($path) - 1} != '/') {
+		if ($path[strlen($path) - 1] != '/') {
 			$path .= '/';
 		}
 
@@ -1104,7 +1104,7 @@ class WebSvnConfig {
 				$url = substr($url, 0, -4);
 			}
 
-			if ($path && $path{0} != '/') {
+			if ($path && $path[0] != '/') {
 				$path = '/'.$path;
 			}
 

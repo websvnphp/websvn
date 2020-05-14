@@ -81,7 +81,7 @@ class Authorization {
 		if ($this->accessFile == null)
 			return false;
 
-		if ($path == '' || $path{0} != '/') {
+		if ($path == '' || $path[0] != '/') {
 			$path = '/'.$path;
 		}
 

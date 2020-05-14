@@ -32,7 +32,7 @@ require_once 'include/bugtraq.php';
 if ($rep) {
 	$svnrep = new SVNRepository($rep);
 
-	$ppath = ($path == '' || $path{0} != '/') ? '/'.$path : $path;
+	$ppath = ($path == '' || $path[0] != '/') ? '/'.$path : $path;
 	createPathLinks($rep, $ppath, $rev, $peg);
 	$passRevString = createRevAndPegString($rev, $peg);
 

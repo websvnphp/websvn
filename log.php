@@ -119,7 +119,7 @@ if ($rep) {
 
 	// make sure path is prefixed by a /
 	$ppath = $path;
-	if ($path == '' || $path{0} != '/') {
+	if ($path == '' || $path[0] != '/') {
 		$ppath = '/'.$path;
 	}
 
@@ -276,14 +276,14 @@ if ($rep) {
 				$rpath = $revision->path;
 				if (empty($rpath)) {
 					$rpath = '/';
-				} else if ($isDir && $rpath{strlen($rpath) - 1} != '/') {
+				} else if ($isDir && $rpath[strlen($rpath) - 1] != '/') {
 					$rpath .= '/';
 				}
 
 				$precisePath = $revision->precisePath;
 				if (empty($precisePath)) {
 					$precisePath = '/';
-				} else if ($isDir && $precisePath{strlen($precisePath) - 1} != '/') {
+				} else if ($isDir && $precisePath[strlen($precisePath) - 1] != '/') {
 					$precisePath .= '/';
 				}
 

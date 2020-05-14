@@ -56,7 +56,7 @@ function parseCommand($line, $vars, $handle) {
 		if (!$ignore) {
 			$line = trim($line);
 			$var = substr($line, 13, -1);
-			$neg = ($var{0} == '!');
+			$neg = ($var[0] == '!');
 			if ($neg) $var = substr($var, 1);
 			if (empty($vars[$var]) ^ $neg) {
 				array_push($ignorestack, $ignore);

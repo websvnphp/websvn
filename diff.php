@@ -55,7 +55,7 @@ if ($rep) {
 
 	$history = $svnrep->getLog($path, $rev, 1, false, 2, $peg);
 
-	if ($path{0} != '/') {
+	if ($path[0] != '/') {
 		$ppath = '/'.$path;
 	} else {
 		$ppath = $path;

@@ -380,7 +380,7 @@ if ($rep) {
 
 					$node = trim($line);
 					$node = substr($node, 7);
-					if ($node == '' || $node{0} != '/') $node = '/'.$node;
+					if ($node == '' || $node[0] != '/') $node = '/'.$node;
 
 					if (substr($path2, -strlen($node)) === $node) {
 						$absnode = $path2;
@@ -428,7 +428,7 @@ if ($rep) {
 				if (strncmp(trim($line), 'Property changes on: ', 21) == 0) {
 					$propnode = trim($line);
 					$propnode = substr($propnode, 21);
-					if ($propnode == '' || $propnode{0} != '/') $propnode = '/'.$propnode;
+					if ($propnode == '' || $propnode[0] != '/') $propnode = '/'.$propnode;
 
 					if ($debug) print 'Properties on '.$propnode.' (cur node $ '.$node.')';
 					if ($propnode != $node) {
