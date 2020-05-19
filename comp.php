@@ -141,7 +141,7 @@ if ($rep) {
 
 	// Set variables used for the more recent of the two revisions
 	$history = ($rev1 >= $rev2 ? $history1 : $history2);
-	if ($history) {
+	if ($history && $history->curEntry) {
 		$logEntry = $history->curEntry;
 		$vars['rev'] = $logEntry->rev;
 		$vars['peg'] = $peg;
