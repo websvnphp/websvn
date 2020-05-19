@@ -962,7 +962,7 @@ class SVNRepository {
 		$error = toOutputEncoding(nl2br(str_replace('svn: ', '', $error)));
 		global $lang;
 		_logError($lang['BADCMD'].': '.$cmd);
-		_logError($errorIf);
+		_logError($error);
 
 		global $vars;
 		if (strstr($error, 'found format')) {
