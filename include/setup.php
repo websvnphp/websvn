@@ -493,6 +493,15 @@ $vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($que
 $path = !empty($_REQUEST['path']) ? escape($_REQUEST['path']) : null;
 if ($path === null || $path === '')
 	$path = '/';
+if(isset($_COOKIE['prevpath']))
+{
+	$prevpath = $_COOKIE['prevpath'];
+	setcookie('prevpath', $path);
+}
+else
+{
+	setcookie('prevpath', $path);
+}
 $vars['safepath'] = escape($path);
 // Set operative and peg revisions (if specified) and save passed-in revision
 $rev = (int)@$_REQUEST['rev'];

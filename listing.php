@@ -107,9 +107,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 			$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
 			// Only list files/directories that are not designated as off-limits
-			$access = ($isDir)	? $rep->hasReadAccess($path.$file, false)
-								: $accessToThisDir;
-
+			$access = ($isDir) ? $rep->hasReadAccess($path.$file, true)
+												 : $accessToThisDir;
 			if ($access) {
 				$listvar = &$listing[$index];
 				$listvar['rowparity'] = $index % 2;
@@ -191,7 +190,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 	return $listing;
 }
 
-function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
+function showTreeDir($svnrep, $path, $rev, $peg, $listing, $index) {
 	global $vars, $config;
 
 	$subs = explode('/', $path);
@@ -206,12 +205,14 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
 	}
 
 	$vars['compare_box'] = ''; // Set blank once in case tree view is not enabled.
-	return showDirFiles($svnrep, $subs, 0, $limit, $rev, $peg, $listing, 0, $config->treeView);
+	//return showDirFiles($svnrep, $subs, 0, $limit, $rev, $peg, $listing, 0, $config->treeView);
+	
+	return showDirFiles($svnrep, $subs, 0, $limit, $rev, $peg, $listing, $index, $config->treeView);
 }
 
-// Make sure that we have a repository
-if ($rep) {
-	$svnrep = new SVNRepository($rep);
+function procPath($svnrep, $path, $listing, $index)
+{
+	global $vars, $config, $lang, $rep, $repname, $rev, $passrev, $peg;
 
 	if (!empty($rev)) {
 		$info = $svnrep->getInfo($path, $rev, $peg);
@@ -333,14 +334,34 @@ if ($rep) {
 	$vars['compare_endform'] = '</form>';
 
 	$vars['showlastmod'] = $config->showLastModInListing();
-
-	$listing = showTreeDir($svnrep, $path, $rev, $peg, array());
-
+	//$listing = showTreeDir($svnrep, $path, $rev, $peg, array());
+	$listing = showTreeDir($svnrep, $path, $rev, $peg, $listing,$index);
 	if (!$rep->hasReadAccess($path)) {
 		$vars['error'] = $lang['NOACCESS'];
 		sendHeaderForbidden();
 	}
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
+
+	return $listing;
+}
+
+// Make sure that we have a repository
+if ($rep) {
+	$svnrep		= new SVNRepository($rep);
+	$listing	= array();
+	
+	echo($prevpath);
+	echo($path);
+	$result	= procPath($svnrep, $prevpath, array(), count($listing));
+	foreach ($result as $item)
+	{
+		array_push($listing, $item);
+	}
+	$result	= procPath($svnrep, $path, array(), count($listing));
+	foreach ($result as $item)
+	{
+		array_push($listing, $item);
+	}
 
 } else {
 	http_response_code(404);
