@@ -111,7 +111,7 @@ if ($rep) {
 		$base = basename($path);
 		header('Content-Type: '.$mimeType);
 		//header('Content-Length: '.$size);
-		header('Content-Disposition: inline; filename='.urlencode($base));
+		header("Content-Disposition: inline; filename*=UTF-8''" . rawurlencode($base));
 		$svnrep->getFileContents($path, '', $rev, $peg);
 		exit;
 	}

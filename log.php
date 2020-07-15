@@ -299,6 +299,7 @@ if ($rep) {
 				$listvar['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
 
 				$url = $config->getURL($rep, $precisePath, ($isDir ? 'dir' : 'file')).$thisRevString;
+
 				$listvar['revpathlink'] = '<a href="'.$url.'">'.$precisePath.'</a>';
 				$listvar['revpath'] = $precisePath;
 				$listvar['revauthor'] = $revision->author;
@@ -306,8 +307,7 @@ if ($rep) {
 				$listvar['revage'] = $revision->age;
 				$listvar['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($revision->msg))));
 				$listvar['rowparity'] = $row;
-
-				$listvar['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.$rpath.'@'.($thisrev - 1).'&amp;compare[]='.$rpath.'@'.$thisrev;
+				$listvar['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($rpath).'@'.($thisrev - 1).'&amp;compare[]='.urlencode($rpath).'@'.$thisrev;
 
 				if ($showchanges) {
 					// Aggregate added/deleted/modified paths for display in table
