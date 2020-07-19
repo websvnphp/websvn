@@ -378,7 +378,7 @@ if ($rep) {
 						clearVars();
 					}
 
-					$node = trim($line);
+					$node = trim(toOutputEncoding($line));
 					$node = substr($node, 7);
 					if ($node == '' || $node[0] != '/') $node = '/'.$node;
 
@@ -393,7 +393,7 @@ if ($rep) {
 					$listvar = &$listing[$index];
 					$listvar['newpath'] = escape($absnode);
 
-					$listvar['fileurl'] = $config->getURL($rep, $absnode, 'file').'rev='.$rev2;
+					$listvar['fileurl'] = $config->getURL($rep, escape($absnode), 'file').'rev='.$rev2;
 
 					if ($debug) echo 'Creating node '.$node.'<br />';
 
@@ -439,7 +439,7 @@ if ($rep) {
 
 						$node = $propnode;
 
-						$listing[$index++]['newpath'] = $node;
+						$listing[$index++]['newpath'] = escape(toOutputEncoding($node));
 						clearVars();
 					}
 
