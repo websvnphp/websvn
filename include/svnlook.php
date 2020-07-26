@@ -396,10 +396,10 @@ function logEndElement($parser, $name) {
 			$curMod = $curLog->curEntry->curMod;
 			if ($curMod->action == 'A') {
 				if ($debugxml) print 'Examining added path "'.$curMod->copyfrom.'" - Current path = "'.$curpath.'", leafname = "'.$leafname.'"'."\n";
-				if ($curLog->curEntry->curMod->path == $curLog->path) {
+				if ($curMod->path == $curLog->path) {
 					// For directories and renames
 					$curLog->path = $curMod->copyfrom;
-				} else if ($curLog->curEntry->curMod->path == $curpath || $curLog->curEntry->curMod->path == $curpath.'/') {
+				} else if ($curMod->path == $curpath || $curMod->path == $curpath.'/') {
 					// Logs of files that have moved due to branching
 					$curLog->path = $curMod->copyfrom.'/'.$leafname;
 				} else {
