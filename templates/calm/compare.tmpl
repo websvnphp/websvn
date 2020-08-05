@@ -46,7 +46,7 @@
     [websvn-test:newpath]
     <table class="diff">
       <thead>
-      <tr><th><a href="[websvn:fileurl]">[websvn:newpath]</a></th></tr>
+      <tr><th onclick="collapsefile($(this));"><a href="[websvn:fileurl]">[websvn:newpath]</a></th></tr>
       </thead>
       <tbody>
     [websvn-endtest]
@@ -69,9 +69,6 @@
   [websvn-endlisting]
   </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>
-$("thead").find("th").on("click", function() {
-    $(this).closest("table").find("tbody").toggle(); 
-});
-</script>
+<script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/collapsible.js"></script>
+
 [websvn-endtest]
