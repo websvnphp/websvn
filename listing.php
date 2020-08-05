@@ -350,13 +350,6 @@ if ($rep) {
 	$svnrep		= new SVNRepository($rep);
 	$listing	= array();
 	
-	echo($prevpath);
-	echo($path);
-	$result	= procPath($svnrep, $prevpath, array(), count($listing));
-	foreach ($result as $item)
-	{
-		array_push($listing, $item);
-	}
 	$result	= procPath($svnrep, $path, array(), count($listing));
 	foreach ($result as $item)
 	{
