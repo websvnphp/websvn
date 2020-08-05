@@ -23,7 +23,7 @@
 // External command handling
 
 function detectCharacterEncoding($str) {
-	$list = array(/*'ASCII',*/ 'UTF-8', 'ISO-8859-1');
+	$list = array('UTF-8', 'windows-1252', 'ISO-8859-1');
 	if (function_exists('mb_detect_encoding')) {
 		// @see http://de3.php.net/manual/en/function.mb-detect-encoding.php#81936
 		// why appending an 'a' and specifying an encoding list is necessary
