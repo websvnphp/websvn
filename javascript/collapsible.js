@@ -18,11 +18,7 @@ function collapseAllGroups() {
       tableRows[i].style.display = 'none';
   }
 }
-function collapsefile(CurrObj) {
-    CurrObj.closest("table").find("tbody").toggle(); 
-}
-/*
 $("thead").find("th").on("click", function() {
     $(this).closest("table").find("tbody").toggle(); 
-}
-*/
+});
+
