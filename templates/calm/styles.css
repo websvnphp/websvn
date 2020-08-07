@@ -390,6 +390,14 @@ thead th {
 	margin:3px 2px;
 	padding:3px 5px;
 }
+thead th.open {
+	background-image:url(images/toggledown.png);
+	background-repeat:no-repeat;
+}
+thead th.closed {
+	background-image:url(images/toggleup.png);
+	background-repeat:no-repeat;
+}
 thead th.path {
 	text-align:left;
 	width:50%;

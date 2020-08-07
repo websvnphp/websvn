@@ -18,7 +18,10 @@ function collapseAllGroups() {
       tableRows[i].style.display = 'none';
   }
 }
+
 $("thead").find("th").on("click", function() {
-    $(this).closest("table").find("tbody").toggle(); 
+    $(this).get(0).className = ($(this).get(0).className == 'open') ? 'closed' : 'open';
+    $(this).closest("table").find("tbody").toggle();
+    
 });
 
