@@ -55,6 +55,15 @@
   [websvn-endtest]
     </table>
   [websvn-test:treeview]
+    <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/jquery.min.1.9.1.js"></script>
     <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/collapsible.js"></script>
+    [websvn-test:opentree]
+    [websvn-else]
+    <script type="text/javascript">
+    //<![CDATA[
+    collapseAllGroups();
+    //]]>
+    </script>
+    [websvn-endtest]
   [websvn-endtest]
 [websvn-endtest]
