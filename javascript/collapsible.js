@@ -18,3 +18,10 @@ function collapseAllGroups() {
       tableRows[i].style.display = 'none';
   }
 }
+
+$("table.collapsible thead").find("th").on("click", function() {
+    $(this).get(0).className = ($(this).get(0).className == 'open') ? 'closed' : 'open';
+    $(this).closest("table").find("tbody").toggle();
+    
+});
+
