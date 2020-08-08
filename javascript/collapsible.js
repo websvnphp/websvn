@@ -19,7 +19,7 @@ function collapseAllGroups() {
   }
 }
 
-$("thead").find("th").on("click", function() {
+$("table.collapsible thead").find("th").on("click", function() {
     $(this).get(0).className = ($(this).get(0).className == 'open') ? 'closed' : 'open';
     $(this).closest("table").find("tbody").toggle();
     
