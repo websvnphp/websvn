@@ -127,12 +127,12 @@ if ($rep) {
 	$vars['rev1'] = $rev1;
 	$vars['rev2'] = $rev2;
 
-	$history1 = $svnrep->getLog($path1, $rev1, $rev1, false, 1);
+	$history1 = $svnrep->getLog($path1, $rev1, 0, false, 1);
 	if (!$history1) {
 		http_response_code(404);
 		$vars['error'] = $lang['NOPATH'];
 	} else {
-		$history2 = $svnrep->getLog($path2, $rev2, $rev2, false, 1);
+		$history2 = $svnrep->getLog($path2, $rev2, 0, false, 1);
 		if (!$history2) {
 			http_response_code(404);
 			$vars['error'] = $lang['NOPATH'];
