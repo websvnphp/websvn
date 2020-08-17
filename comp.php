@@ -474,6 +474,13 @@ if ($rep) {
 				}
 
 				$listing[$index++]['info'] = escape(toOutputEncoding($line));
+				
+				if (strlen($line) === 0) {
+					if (!$vars['warning']) {
+						$vars['warning'] = "No changes between revisions";
+					}
+				}
+				
 			}
 
 			if ($node) {
