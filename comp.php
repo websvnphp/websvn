@@ -32,11 +32,7 @@ function checkRevision($rev) {
 	if (is_numeric($rev) && ((int)$rev > 0)) {
 		return $rev;
 	}
-	$rev = strtoupper($rev);
-	if ($rev == 'HEAD' || $rev == 'PREV' || $rev == 'COMMITTED')
-		return $rev;
-	else
-		return 'HEAD';
+	return 'HEAD';
 }
 
 // Make sure that we have a repository
