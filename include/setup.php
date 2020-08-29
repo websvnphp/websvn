@@ -505,6 +505,7 @@ if (!$config->multiViews) {
 	// With MultiViews, browse creates the form once the current project is found.
 	createProjectSelectionForm();
 	createRevisionSelectionForm();
+	createSearchSelectionForm();
 }
 
 // set flag if robots should be blocked
@@ -583,6 +584,25 @@ function createRevisionSelectionForm() {
 	$vars['revision_endform'] = '</form>';
 }
 
+function createSearchSelectionForm() {
+	global $config, $lang, $vars, $rep, $path;
+	if ($rep == null)
+		return;
+	if (mb_substr($rep->path,0,4) === "file")
+	{
+		$vars['search'] = True;
+		$vars['search_form'] = '<form method="get" action="search.php" id="search">'.$hidden;
+		$vars['search_input'] = '<input type="text" size="20" name="search" placeholder="'.$lang['SEARCH_PLACEHOLDER'].'" />';
+		$vars['search_submit'] = '<input type="submit" value="'.$lang['SEARCH'].'" />';
+		$vars['search_endform'] = '</form>';
+		return;
+	}
+	else
+	{
+		$vars['search'] = False;
+		return;
+	}
+}
 function sendHeaderForbidden() {
 	http_response_code(403);
 }

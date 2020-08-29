@@ -116,3 +116,6 @@ $lang["COMPPATH"] = "Compare Path:";
 $lang["WITHPATH"] = "With Path:";
 $lang["FILEDELETED"] = "File deleted";
 $lang["FILEADDED"] = "New file";
+
+$lang['SEARCH'] = "Search";
+$lang['SEARCH_PLACEHOLDER'] = "Search for file name here";
