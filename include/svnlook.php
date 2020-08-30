@@ -1156,6 +1156,46 @@ class SVNRepository {
 
 	// }}}
 
+	// {{{ getTree
+
+	function getTree($path, $searchstring='', &$error, &$filelist, $rev = 0, $peg = '') {
+		global $config;
+		// Get revision as done in other commands
+		if ($rev == 0) {
+			$headlog = $this->getLog('/', '', '', true, 1);
+			if ($headlog && isset($headlog->entries[0]))
+				$rev = $headlog->entries[0]->rev;
+		}
+		// command setup
+		// Move the svnlook to configclass ??
+		$svnlook = 'svnlook tree ';
+		// Add revision
+		//var_dump($rev);
+		// strip away file:///
+		$cmdfullpath = $svnlook.'--full-paths '.' -r '.$rev.' '.substr($this->repConfig->path,8).$path;
+		$cmdfilelist = $svnlook.' -r '.$rev.' '.substr($this->repConfig->path,8).$path;
+		if ($searchstring != '')
+		{
+			if ($config->serverIsWindows)
+			{
+				$cmdfullpath = $cmdfullpath.' | find '.'"'.$searchstring.'"';
+				$cmdfilelist = $cmdfilelist.' | find '.'"'.$searchstring.'"';
+			}
+			else
+			{
+				$cmdfullpath = $cmdfullpath.' | grep '.'"'.$searchstring.'"';
+				$cmdfilelist = $cmdfilelist.' | grep '.'"'.$searchstring.'"';
+			}
+		}
+		var_dump($cmdfullpath);
+		var_dump($cmdfilelist);
+		$lines		= runCommand($cmdfullpath, true, $error);
+		$filelist	= runCommand($cmdfilelist, true, $error);
+		return $lines;
+	}
+
+	// }}}
+
 }
 
 // Initialize SVN version information by parsing from command-line output.
