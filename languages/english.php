@@ -119,3 +119,4 @@ $lang["FILEADDED"] = "New file";
 
 $lang['SEARCH'] = "Search";
 $lang['SEARCH_PLACEHOLDER'] = "Search for file name here";
+$lang['NOSEARCHTERM'] = "No Search Found";
