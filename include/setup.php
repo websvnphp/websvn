@@ -497,6 +497,7 @@ $vars['safepath'] = escape($path);
 // Set operative and peg revisions (if specified) and save passed-in revision
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
+$search = (string)@$_REQUEST['search'];
 if ($peg === 0)
 	$peg = '';
 $passrev = $rev;
@@ -585,22 +586,35 @@ function createRevisionSelectionForm() {
 }
 
 function createSearchSelectionForm() {
-	global $config, $lang, $vars, $rep, $path;
-	if ($rep == null)
+	global $config, $lang, $vars, $rep, $path, $rev, $peg, $search;
+	if ($rep === null)
 		return;
+	$params = array();
+	if (!$config->multiViews) {
+		$params['repname'] = $rep->getDisplayName();
+		if ($path === null)
+			$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
+		if ($path && $path != '/')
+			$params['path'] = $path;
+	}
+	if ($peg || $rev)
+		$params['rev'] = ($peg ? $peg : $rev);
+	$hidden = '';
+	foreach ($params as $key => $value) {
+		$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
+	}
 	if (mb_substr($rep->path,0,4) === "file")
 	{
-		$vars['search'] = True;
-		$vars['search_form'] = '<form method="get" action="search.php" id="search">'.$hidden;
-		$vars['search_input'] = '<input type="text" size="20" name="search" placeholder="'.$lang['SEARCH_PLACEHOLDER'].'" />';
+		$vars['search'] = true;
+		$vars['search_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'search').'" id="search">'.$hidden;
+		$search = $search? $search : $lang['SEARCH_PLACEHOLDER'];
+		$vars['search_input'] = '<input type="text" size="20" name="search" placeholder="'.$search.'" />';
 		$vars['search_submit'] = '<input type="submit" value="'.$lang['SEARCH'].'" />';
 		$vars['search_endform'] = '</form>';
-		return;
 	}
 	else
 	{
-		$vars['search'] = False;
-		return;
+		$vars['search'] = false;
 	}
 }
 function sendHeaderForbidden() {
