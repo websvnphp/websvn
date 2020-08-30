@@ -1167,6 +1167,10 @@ class WebSvnConfig {
 				case 'comp':
 					$url = 'comp.php';
 					break;
+
+				case 'search':
+					$url = 'search.php';
+					break;
 			}
 
 			if (is_object($rep) && $op != 'index') {
