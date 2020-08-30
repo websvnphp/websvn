@@ -122,6 +122,9 @@ switch ($op) {
 	case 'comp':
 		$file = 'comp.php';
 		break;
+	case 'search':
+		$file = 'search.php';
+		break;
 	default:
 		$svnrep = new SVNRepository($rep);
 		if ($svnrep->isFile($path, $rev, $peg)) {
