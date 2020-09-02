@@ -54,17 +54,18 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 	global $config, $lang, $rep, $passrev, $peg, $passRevString;
 
 	$path = '';
-
+	
 	if (!$treeview) {
 		$level = $limit;
 	}
-
+	
 	// TODO: Fix node links to use the path and number of peg revision (if exists)
 	// This applies to file detail, log, and RSS -- leave the download link as-is
+	
 	for ($n = 0; $n <= $level; $n++) {
 		$path .= $subs[$n].'/';
 	}
-
+	
 	// List each file in the current directory
 	$loop = 0;
 	$last_index = 0;
@@ -93,13 +94,13 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 			$index++;
 		}
 	}
-
 	$openDir = false;
 	$logList = $svnrep->getList($path, $rev, $peg);
 	if ($logList) {
 		$downloadRevAndPeg = createRevAndPegString($rev, $peg ? $peg : $rev);
 		foreach ($logList->entries as $entry) {
 			$isDir = $entry->isdir;
+			
 			if (!$isDir && $level != $limit) {
 				continue; // Skip any files outside the current directory
 			}
@@ -133,7 +134,6 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 					$listvar['node'] = $lastindexfile; // t-node
 					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
 					$listvar['filename'] = $tempelements[$lastindexfile];
-					//$listvar['filename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$lastindexfile).$tempelements[$lastindexfile];
 				}
 				else
 				{
@@ -141,7 +141,6 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 					$listvar['node'] = $lastindexfile; // t-node
 					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
 					$listvar['filename'] = $tempelements[$lastindexfile];
-					//$listvar['filename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$lastindexfile).$tempelements[$lastindexfile];
 				}
 				if ($isDir) {
 					$listvar['fileurl'] = urlForPath($path.$file, $passRevString);
@@ -187,43 +186,20 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				$loop++;
 				$index++;
 				$last_index = $index;
-				/*
-				if ($isDir && ($level != $limit)) {
-					// @todo remove the alternate check with htmlentities when assured that there are not side effects
-					if (isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp(htmlentities($subs[$level + 1], ENT_QUOTES).'/', htmlentities($file)))) {
-						$listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $peg, $listing, $index);
-						$index = count($listing);
-					}
-				}*/
 			}
 		}
 	}
-
-	// For an expanded tree, give the last entry an "L" node to close the grouping
-	/*
-	if ($treeview && $last_index != 0) {
-		$listing[$last_index - 1]['node'] = 1; // l-node
-	}
-	*/
 	return $listing;
 }
 
 function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
 	global $vars, $config;
-
 	$subs = explode('/', $path);
-
 	// For directory, the last element in the subs is empty.
 	// For file, the last element in the subs is the file name.
 	// Therefore, it is always count($subs) - 2
-	$limit = count($subs) - 2;
-
-	for ($n = 0; $n < $limit; $n++) {
-		$vars['last_i_node'][$n] = false;
-	}
-
 	$vars['compare_box'] = ''; // Set blank once in case tree view is not enabled.
-	return showDirFiles($svnrep, $subs, 0, $limit, $rev, $peg, $listing, 0, $config->treeView);
+	return showDirFiles($svnrep, $subs, 0, 0, $rev, $peg, $listing, 0, $config->treeView);
 }
 
 // Make sure that we have a repository
