@@ -1042,8 +1042,6 @@ class SVNRepository {
 		$cmd = $this->svnCommandString('list -R --xml', $path, $rev, $peg);
 		$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
 
-		// Sort the entries into alphabetical order
-		/*usort($curList->entries, '_listSort');*/
 		return $curList;
 	}
 
