@@ -603,19 +603,12 @@ function createSearchSelectionForm() {
 	foreach ($params as $key => $value) {
 		$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
 	}
-	if (mb_substr($rep->path,0,4) === "file")
-	{
-		$vars['search'] = true;
-		$vars['search_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'search').'" id="search">'.$hidden;
-		$search = $search? $search : $lang['SEARCH_PLACEHOLDER'];
-		$vars['search_input'] = '<input type="text" size="20" name="search" placeholder="'.$search.'" />';
-		$vars['search_submit'] = '<input type="submit" value="'.$lang['SEARCH'].'" />';
-		$vars['search_endform'] = '</form>';
-	}
-	else
-	{
-		$vars['search'] = false;
-	}
+	$vars['search'] = true;
+	$vars['search_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'search').'" id="search">'.$hidden;
+	$search = $search? $search : $lang['SEARCH_PLACEHOLDER'];
+	$vars['search_input'] = '<input type="text" size="20" name="search" placeholder="'.$search.'" />';
+	$vars['search_submit'] = '<input type="submit" value="'.$lang['SEARCH'].'" />';
+	$vars['search_endform'] = '</form>';
 }
 function sendHeaderForbidden() {
 	http_response_code(403);

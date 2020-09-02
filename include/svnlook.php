@@ -1049,6 +1049,39 @@ class SVNRepository {
 
 	// }}}
 
+	// {{{ getListSearch
+
+	function getListSearch($path,$searchstring='', $rev = 0, $peg = '') {
+		global $config, $curList;
+
+		// Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
+		// the trailing slash from the path for comparison purposes
+
+		if ($path[strlen($path) - 1] == '/' && $path != '/') {
+			$path = substr($path, 0, -1);
+		}
+
+		$curList = new SVNList;
+		$curList->entries = array();
+		$curList->path = $path;
+
+		// Get the list info
+
+		if ($rev == 0) {
+			$headlog = $this->getLog('/', '', '', true, 1);
+			if ($headlog && isset($headlog->entries[0]))
+				$rev = $headlog->entries[0]->rev;
+		}
+
+		$cmd = $this->svnCommandString('list -R --search '. '"'.$searchstring.'"'.' --xml', $path, $rev, $peg);
+		$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
+
+		return $curList;
+	}
+
+	// }}}
+
+
 	// {{{ getLog
 
 	function getLog($path, $brev = '', $erev = 1, $quiet = false, $limit = 2, $peg = '', $verbose = false) {
@@ -1152,46 +1185,6 @@ class SVNRepository {
 		} else {
 			return $this->repConfig->path.'/'.$this->repConfig->subpath.$path;
 		}
-	}
-
-	// }}}
-
-	// {{{ getTree
-
-	function getTree($path, $searchstring='', &$error, &$filelist, $rev = 0, $peg = '') {
-		global $config;
-		// Get revision as done in other commands
-		if ($rev == 0) {
-			$headlog = $this->getLog('/', '', '', true, 1);
-			if ($headlog && isset($headlog->entries[0]))
-				$rev = $headlog->entries[0]->rev;
-		}
-		// command setup
-		// Move the svnlook to configclass ??
-		$svnlook = 'svnlook tree ';
-		// Add revision
-		//var_dump($rev);
-		// strip away file:///
-		$cmdfullpath = $svnlook.'--full-paths '.' -r '.$rev.' '.substr($this->repConfig->path,8).$path;
-		$cmdfilelist = $svnlook.' -r '.$rev.' '.substr($this->repConfig->path,8).$path;
-		if ($searchstring != '')
-		{
-			if ($config->serverIsWindows)
-			{
-				$cmdfullpath = $cmdfullpath.' | find '.'"'.$searchstring.'"';
-				$cmdfilelist = $cmdfilelist.' | find '.'"'.$searchstring.'"';
-			}
-			else
-			{
-				$cmdfullpath = $cmdfullpath.' | grep '.'"'.$searchstring.'"';
-				$cmdfilelist = $cmdfilelist.' | grep '.'"'.$searchstring.'"';
-			}
-		}
-		var_dump($cmdfullpath);
-		var_dump($cmdfilelist);
-		$lines		= runCommand($cmdfullpath, true, $error);
-		$filelist	= runCommand($cmdfilelist, true, $error);
-		return $lines;
 	}
 
 	// }}}

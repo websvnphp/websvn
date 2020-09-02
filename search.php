@@ -50,59 +50,22 @@ function urlForPath($fullpath, $passRevString) {
 	return removeURLSeparator($url);
 }
 
-function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $index, $treeview = true) {
+function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing,  $index=0, $treeview = true) {
+
 	global $config, $lang, $rep, $passrev, $peg, $passRevString;
-
-	$path = '';
-
-	if (!$treeview) {
-		$level = $limit;
-	}
-
-	// TODO: Fix node links to use the path and number of peg revision (if exists)
-	// This applies to file detail, log, and RSS -- leave the download link as-is
-	for ($n = 0; $n <= $level; $n++) {
-		$path .= $subs[$n].'/';
-	}
 
 	// List each file in the current directory
 	$loop = 0;
 	$last_index = 0;
 	$accessToThisDir = $rep->hasReadAccess($path, false);
 
-	// If using flat view and not at the root, create a '..' entry at the top.
-	if (!$treeview && count($subs) > 2) {
-		$parentPath = $subs;
-		unset($parentPath[count($parentPath) - 2]);
-		$parentPath = implode('/', $parentPath);
-		if ($rep->hasReadAccess($parentPath, false)) {
-			$listvar = &$listing[$index];
-			$listvar['rowparity'] = $index % 2;
-			$listvar['path'] = $parentPath;
-			$listvar['filetype'] = 'dir';
-			$listvar['filename'] = '..';
-			$listvar['fileurl'] = urlForPath($parentPath, $passRevString);
-			$listvar['filelink'] = '<a href="'.$listvar['fileurl'].'">'.$listvar['filename'].'</a>';
-			$listvar['level'] = 0;
-			$listvar['node'] = 0; // t-node
-			$listvar['revision'] = $rev;
-			$listvar['revurl'] = $config->getURL($rep, $parentPath, 'revision').'rev='.$rev.'&amp;isdir=1';
-			global $vars;
-			$listvar['date'] = $vars['date'];
-			$listvar['age'] = datetimeFormatDuration(time() - strtotime($vars['date']), true, true);
-			$index++;
-		}
-	}
-
 	$openDir = false;
-	$logList = $svnrep->getList($path, $rev, $peg);
+	$logList = $svnrep->getListSearch($path, $searchstring, $rev, $peg);
 	if ($logList) {
 		$downloadRevAndPeg = createRevAndPegString($rev, $peg ? $peg : $rev);
 		foreach ($logList->entries as $entry) {
 			$isDir = $entry->isdir;
-			if (!$isDir && $level != $limit) {
-				continue; // Skip any files outside the current directory
-			}
+
 			$file = $entry->file;
 			$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
@@ -116,17 +79,29 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 
 				if ($isDir) {
 					$listvar['filetype'] = ($openDir) ? 'diropen' : 'dir';
-					$openDir = isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp($subs[$level + 1], $file));
+					$openDir = true;
 				} else {
 					$listvar['filetype'] = strtolower(strrchr($file, '.'));
 					$openDir = false;
 				}
 				$listvar['isDir'] = $isDir;
 				$listvar['openDir'] = $openDir;
-				$listvar['level'] = ($treeview) ? $level : 0;
-				$listvar['node'] = 0; // t-node
 				$listvar['path'] = $path.$file;
-				$listvar['filename'] = escape($file);
+				$tempelements = explode('/',$file);
+				if ($tempelements[count($tempelements)-1] === "")
+				{
+					$lastindexfile = count($tempelements)-1 - 1;
+					$listvar['node'] = $lastindexfile; // t-node
+					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
+					$listvar['filename'] = $tempelements[$lastindexfile];
+				}
+				else
+				{
+					$lastindexfile = count($tempelements)-1;
+					$listvar['node'] = $lastindexfile; // t-node
+					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
+					$listvar['filename'] = $tempelements[$lastindexfile];
+				}
 				if ($isDir) {
 					$listvar['fileurl'] = urlForPath($path.$file, $passRevString);
 				} else {
@@ -172,83 +147,10 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				$index++;
 				$last_index = $index;
 
-				if ($isDir && ($level != $limit)) {
-					// @todo remove the alternate check with htmlentities when assured that there are not side effects
-					if (isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp(htmlentities($subs[$level + 1], ENT_QUOTES).'/', htmlentities($file)))) {
-						$listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $peg, $listing, $index);
-						$index = count($listing);
-					}
-				}
 			}
 		}
 	}
 
-	// For an expanded tree, give the last entry an "L" node to close the grouping
-	if ($treeview && $last_index != 0) {
-		$listing[$last_index - 1]['node'] = 1; // l-node
-	}
-
-	return $listing;
-}
-
-function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing) {
-	global $vars, $rep, $config, $passrev, $peg, $passRevString;
-	$error = '';
-	$isDir = false;
-	$filelist = '';
-	//var_dump($svnrep);
-	$listtree = $svnrep->getTree($path, $searchstring, $error, $filelist);
-	$linesCnt = count($listtree);
-	if ($error == '')
-	{
-		if ($listtree)
-		{
-			for ($i = 0; $i < $linesCnt-1; ++$i)
-			{
-				$listvar = &$listing[$i];
-				$listvar['rowparity'] = $i%2;
-				//var_dump($filelist);
-				$file = $filelist[$i];
-				trim($file," ");
-				//var_dump($tmpstr);
-				if (substr($file,-1) == '/')
-				{
-					$isDir = true;
-				}
-				else
-				{
-					$isDir = false;
-				}
-				if ($isDir) 
-				{
-					//$listvar['filetype'] = ($openDir) ? 'diropen' : 'dir';
-					// Closed Directory all the time??
-					$listvar['filetype'] = 'dir';
-					//$openDir = isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp($subs[$level + 1], $file));
-				} 
-				else 
-				{
-					$listvar['filetype'] = strtolower(strrchr($file, '.'));
-					$openDir = false;
-				}
-				$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
-				$listvar['path'] = $listtree[$i];
-				$listvar['level'] = 0;
-				$listvar['node'] = 0; // t-node
-				$listvar['filename'] = escape($file);
-				$listvar['fileurl'] = urlForPath($listtree[$i], $passRevString);
-				$listvar['filelink'] = '<a href="'.$listvar['fileurl'].'">'.$listvar['filename'].'</a>';
-				$listvar['logurl'] = $config->getURL($rep, $listtree[$i], 'log');
-				if ($config->treeView) {
-					$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.escape($listtree[$i]).'@'.$passrev.'" onclick="enforceOnlyTwoChecked(this)" />';
-				}
-			}
-		}
-	}
-	else
-	{
-		$vars['warning'] = $error;
-	}
 	return $listing;
 }
 // Make sure that we have a repository
@@ -384,7 +286,9 @@ if ($rep) {
 	else
 	{
 		createSearchSelectionForm();
-		$listing = showSearchResults($svnrep, $path, $_GET["search"], $rev, $peg, array());
+		$vars['last_i_node'] = '';
+		$vars['compare_box'] = '';
+		$listing = showSearchResults($svnrep, $path, $_GET["search"], $rev, $peg, array(),0,$config->treeView);
 	}
 
 	if (!$rep->hasReadAccess($path)) {
@@ -397,4 +301,4 @@ if ($rep) {
 	http_response_code(404);
 }
 
-renderTemplate('search');
+renderTemplate('directory');
