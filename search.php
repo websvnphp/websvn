@@ -102,6 +102,10 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
 					$listvar['filename'] = $tempelements[$lastindexfile];
 				}
+				for ($j=1;$j<=$lastindexfile;$j++)
+				{
+					$listvar['last_i_node'][$j] = false;
+				}
 				if ($isDir) {
 					$listvar['fileurl'] = urlForPath($path.$file, $passRevString);
 				} else {
@@ -286,7 +290,6 @@ if ($rep) {
 	else
 	{
 		createSearchSelectionForm();
-		$vars['last_i_node'] = '';
 		$vars['compare_box'] = '';
 		$listing = showSearchResults($svnrep, $path, $_GET["search"], $rev, $peg, array(),0,$config->treeView);
 	}
