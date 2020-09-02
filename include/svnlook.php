@@ -1039,11 +1039,11 @@ class SVNRepository {
 				$rev = $headlog->entries[0]->rev;
 		}
 
-		$cmd = $this->svnCommandString('list --xml', $path, $rev, $peg);
+		$cmd = $this->svnCommandString('list -R --xml', $path, $rev, $peg);
 		$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
 
 		// Sort the entries into alphabetical order
-		usort($curList->entries, '_listSort');
+		/*usort($curList->entries, '_listSort');*/
 		return $curList;
 	}
 

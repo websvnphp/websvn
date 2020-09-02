@@ -124,9 +124,25 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				$listvar['isDir'] = $isDir;
 				$listvar['openDir'] = $openDir;
 				$listvar['level'] = ($treeview) ? $level : 0;
-				$listvar['node'] = 0; // t-node
+				
 				$listvar['path'] = $path.$file;
-				$listvar['filename'] = escape($file);
+				$tempelements = explode('/',$file);
+				if ($tempelements[count($tempelements)-1] === "")
+				{
+					$lastindexfile = count($tempelements)-1 - 1;
+					$listvar['node'] = $lastindexfile; // t-node
+					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
+					$listvar['filename'] = $tempelements[$lastindexfile];
+					//$listvar['filename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$lastindexfile).$tempelements[$lastindexfile];
+				}
+				else
+				{
+					$lastindexfile = count($tempelements)-1;
+					$listvar['node'] = $lastindexfile; // t-node
+					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
+					$listvar['filename'] = $tempelements[$lastindexfile];
+					//$listvar['filename'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$lastindexfile).$tempelements[$lastindexfile];
+				}
 				if ($isDir) {
 					$listvar['fileurl'] = urlForPath($path.$file, $passRevString);
 				} else {
@@ -171,23 +187,24 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				$loop++;
 				$index++;
 				$last_index = $index;
-
+				/*
 				if ($isDir && ($level != $limit)) {
 					// @todo remove the alternate check with htmlentities when assured that there are not side effects
 					if (isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp(htmlentities($subs[$level + 1], ENT_QUOTES).'/', htmlentities($file)))) {
 						$listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $peg, $listing, $index);
 						$index = count($listing);
 					}
-				}
+				}*/
 			}
 		}
 	}
 
 	// For an expanded tree, give the last entry an "L" node to close the grouping
+	/*
 	if ($treeview && $last_index != 0) {
 		$listing[$last_index - 1]['node'] = 1; // l-node
 	}
-
+	*/
 	return $listing;
 }
 
