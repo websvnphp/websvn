@@ -50,22 +50,9 @@ function urlForPath($fullpath, $passRevString) {
 	return removeURLSeparator($url);
 }
 
-function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $index, $treeview = true) {
+function showDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeview = true) {
 	global $config, $lang, $rep, $passrev, $peg, $passRevString;
 
-	$path = '';
-	
-	if (!$treeview) {
-		$level = $limit;
-	}
-	
-	// TODO: Fix node links to use the path and number of peg revision (if exists)
-	// This applies to file detail, log, and RSS -- leave the download link as-is
-	
-	for ($n = 0; $n <= $level; $n++) {
-		$path .= $subs[$n].'/';
-	}
-	
 	// List each file in the current directory
 	$loop = 0;
 	$last_index = 0;
@@ -101,9 +88,6 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 		foreach ($logList->entries as $entry) {
 			$isDir = $entry->isdir;
 			
-			if (!$isDir && $level != $limit) {
-				continue; // Skip any files outside the current directory
-			}
 			$file = $entry->file;
 			$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
@@ -116,16 +100,14 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 				$listvar['rowparity'] = $index % 2;
 
 				if ($isDir) {
-					$listvar['filetype'] = ($openDir) ? 'diropen' : 'dir';
-					$openDir = isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp($subs[$level + 1], $file));
+					$listvar['filetype'] = 'dir';
+					$openDir = true;
 				} else {
 					$listvar['filetype'] = strtolower(strrchr($file, '.'));
 					$openDir = false;
 				}
 				$listvar['isDir'] = $isDir;
 				$listvar['openDir'] = $openDir;
-				$listvar['level'] = ($treeview) ? $level : 0;
-				
 				$listvar['path'] = $path.$file;
 				$tempelements = explode('/',$file);
 				if ($tempelements[count($tempelements)-1] === "")
@@ -194,12 +176,11 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 
 function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
 	global $vars, $config;
-	$subs = explode('/', $path);
 	// For directory, the last element in the subs is empty.
 	// For file, the last element in the subs is the file name.
 	// Therefore, it is always count($subs) - 2
 	$vars['compare_box'] = ''; // Set blank once in case tree view is not enabled.
-	return showDirFiles($svnrep, $subs, 0, 0, $rev, $peg, $listing, 0, $config->treeView);
+	return showDirFiles($svnrep, $path, $rev, $peg, $listing, 0, $config->treeView);
 }
 
 // Make sure that we have a repository
