@@ -116,6 +116,11 @@ function showDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeview = 
 					$listvar['node'] = $lastindexfile; // t-node
 					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
 					$listvar['filename'] = $tempelements[$lastindexfile];
+					for($n=0; $n<$lastindexfile; $n++)
+					{
+						$listvar['last_i_node'][$n] = false;
+					}
+					$listvar['last_i_node'][$lastindexfile] = true;
 				}
 				else
 				{
@@ -123,6 +128,11 @@ function showDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeview = 
 					$listvar['node'] = $lastindexfile; // t-node
 					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
 					$listvar['filename'] = $tempelements[$lastindexfile];
+					for($n=0; $n<$lastindexfile; $n++)
+					{
+						$listvar['last_i_node'][$n] = false;
+					}
+					$listvar['last_i_node'][$lastindexfile] = true;
 				}
 				if ($isDir) {
 					$listvar['fileurl'] = urlForPath($path.$file, $passRevString);
