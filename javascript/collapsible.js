@@ -49,7 +49,7 @@ $("tr").find("td.path").on("click",function(event) {
 	console.log(res);
 	console.log(res[res.length - 1]);
 	// On Click Check
-	if ($target.closest("tr").next() != null) {
+	//if (!$target.closest("tr").next().attr("title")) {
 		var strclasscheck = $target.closest("tr").next().attr("title");
 		var rescheck = strclasscheck.split(" ");
 		var performaction = $target.closest("tr").attr("customaction") == 'close'? 'open' : 'close';
@@ -76,14 +76,16 @@ $("tr").find("td.path").on("click",function(event) {
 					//$target.closest("tr").next().slideUp();
 				}
 			}
-			if ($target.closest("tr").next() != null) {
-				$target = $target.closest("tr").next();
+			$target = $target.closest("tr").next();
+			// Figure out condition to stop the looping. Find the last TR element to stop the loop.
+			// Currently using the error in JS to break the loop.
+			//if (!$target.closest("tr").next().attr("title")) {
 				strclasscheck = $target.closest("tr").next().attr("title");
 				rescheck = strclasscheck.split(" ");
-			}
-			else {
-				break;
-			}
+			//}
+			//else {
+			//	break;
+			//}
 		}
-	}
+	//}
 });
