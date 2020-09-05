@@ -116,10 +116,13 @@ function showDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeview = 
 					$listvar['node'] = $lastindexfile; // t-node
 					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
 					$listvar['filename'] = $tempelements[$lastindexfile];
+					$listvar['classname'] = '';
 					for($n=0; $n<$lastindexfile; $n++)
 					{
 						$listvar['last_i_node'][$n] = false;
+						$listvar['classname'] = $listvar['classname'].$tempelements[$n].' ';
 					}
+					$listvar['classname'] = $listvar['classname'].$tempelements[$lastindexfile];
 					$listvar['last_i_node'][$lastindexfile] = true;
 				}
 				else
@@ -128,9 +131,11 @@ function showDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeview = 
 					$listvar['node'] = $lastindexfile; // t-node
 					$listvar['level'] = ($treeview) ? $lastindexfile : 0;
 					$listvar['filename'] = $tempelements[$lastindexfile];
+					$listvar['classname'] = '';
 					for($n=0; $n<$lastindexfile; $n++)
 					{
 						$listvar['last_i_node'][$n] = false;
+						$listvar['classname'] = $listvar['classname'].$tempelements[$n].' ';
 					}
 					$listvar['last_i_node'][$lastindexfile] = true;
 				}

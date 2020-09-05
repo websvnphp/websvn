@@ -92,7 +92,7 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
       </thead>
       <tbody>
       [websvn-startlisting]
-      <tr class="row[websvn:rowparity]" valign="middle">
+      <tr class="row[websvn:rowparity]" customaction="closed" title="[websvn:classname]" valign="middle">
          <td class="path" valign="middle">
             [websvn:compare_box]
             [websvn-treenode]
@@ -138,4 +138,11 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
   [websvn:compare_endform]
 </div>
 [websvn-endtest]
+<script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/jquery.min.1.9.1.js"></script>
+<script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/collapsible.js"></script>
+    <script type="text/javascript">
+    //<![CDATA[
+    collapseAllDir();
+    //]]>
+    </script>
 [websvn-endtest]
