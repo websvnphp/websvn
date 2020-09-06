@@ -91,9 +91,9 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt=
         <tbody>
         [websvn-startlisting]
           [websvn-test:rowparity]
-          <tr class="shaded">
+          <tr class="shaded" [websvn-test:loadalldir]customaction="closed" title="[websvn:classname]"[websvn-endtest]>
           [websvn-else]
-          <tr>
+          <tr [websvn-test:loadalldir]customaction="closed" title="[websvn:classname]"[websvn-endtest]>
           [websvn-endtest]
             <td class="path">
               [websvn:compare_box]
@@ -133,5 +133,14 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt=
       </table>
       <div id="compare-submit">[websvn:compare_submit]</div>
     [websvn:compare_endform]
+    [websvn-endtest]
+    [websvn-test:loadalldir]
+    <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/jquery.min.1.9.1.js"></script>
+    <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/collapsible.js"></script>
+        <script type="text/javascript">
+        //<![CDATA[
+        collapseAllDir();
+        //]]>
+        </script>
     [websvn-endtest]
   [websvn-endtest]
