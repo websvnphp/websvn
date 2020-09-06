@@ -92,7 +92,11 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
       </thead>
       <tbody>
       [websvn-startlisting]
-      <tr class="row[websvn:rowparity]" [websvn-test:loadalldir]customaction="closed" title="[websvn:classname]"[websvn-endtest] valign="middle">
+      <tr class="row[websvn:rowparity]" valign="middle"
+            [websvn-test:loadalldir]
+                customaction="close" title="[websvn:classname]"
+            [websvn-endtest] 
+        >
          <td class="path" valign="middle">
             [websvn:compare_box]
             [websvn-treenode]

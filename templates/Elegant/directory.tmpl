@@ -91,7 +91,11 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt=
         <tbody>
         [websvn-startlisting]
           [websvn-test:rowparity]
-          <tr class="shaded" [websvn-test:loadalldir]customaction="closed" title="[websvn:classname]"[websvn-endtest]>
+          <tr class="shaded" 
+          [websvn-test:loadalldir]
+              customaction="close" title="[websvn:classname]"
+          [websvn-endtest]
+          >
           [websvn-else]
           <tr [websvn-test:loadalldir]customaction="closed" title="[websvn:classname]"[websvn-endtest]>
           [websvn-endtest]

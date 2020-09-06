@@ -35,57 +35,52 @@ function collapseAllDir() {
         }
     }
 }
+
 $("table.collapsible thead").find("th").on("click", function() {
     $(this).get(0).className = ($(this).get(0).className == 'open') ? 'closed' : 'open';
     $(this).closest("table").find("tbody").toggle();
-    
 });
+
 $("tr").find("td.path").on("click",function(event) {
     event.stopPropagation();
     var $target = $(event.target);
-	console.log($target.closest("tr").attr("title"));
-	var strclass = $target.closest("tr").attr("title");
-	var res = strclass.split(" ");
-	console.log(res);
-	console.log(res[res.length - 1]);
-	// On Click Check
-	//if (!$target.closest("tr").next().attr("title")) {
-		var strclasscheck = $target.closest("tr").next().attr("title");
-		var rescheck = strclasscheck.split(" ");
-		var performaction = $target.closest("tr").attr("customaction") == 'close'? 'open' : 'close';
-		$target.closest("tr").attr("customaction",performaction);
-		while (rescheck.includes(res[res.length - 1])) {
-			if ($target.closest("tr").next().attr("customaction") != performaction) {
-				$target.closest("tr").next().attr("customaction",performaction);
-				if (performaction == 'open') {
-					$target.closest("tr").next().attr("style","visibility: visible");
-					//$target.closest("tr").next().slideDown();
-				}
-				else {
-					$target.closest("tr").next().attr("style","visibility: collapse");
-					//$target.closest("tr").next().slideUp();
-				}
-			}
-			else {
-				if (performaction == 'open') {
-					$target.closest("tr").next().attr("style","visibility: visible");
-					//$target.closest("tr").next().slideDown();
-				}
-				else {
-					$target.closest("tr").next().attr("style","visibility: collapse");
-					//$target.closest("tr").next().slideUp();
-				}
-			}
-			$target = $target.closest("tr").next();
-			// Figure out condition to stop the looping. Find the last TR element to stop the loop.
-			// Currently using the error in JS to break the loop.
-			//if (!$target.closest("tr").next().attr("title")) {
-				strclasscheck = $target.closest("tr").next().attr("title");
-				rescheck = strclasscheck.split(" ");
-			//}
-			//else {
-			//	break;
-			//}
-		}
-	//}
+    var strclass = $target.closest("tr").attr("title");
+    var res = strclass.split(" ");
+    // On Click Check
+    if ($target.closest("tr").next().attr("title") != undefined) {
+        var strclasscheck = $target.closest("tr").next().attr("title");
+        var rescheck = strclasscheck.split(" ");
+        var performaction = $target.closest("tr").attr("customaction") == 'close'? 'open' : 'close';
+        $target.closest("tr").attr("customaction",performaction);
+        while (rescheck.includes(res[res.length - 1])) {
+            if ($target.closest("tr").next().attr("customaction") != performaction) {
+                $target.closest("tr").next().attr("customaction",performaction);
+                if (performaction == 'open') {
+                    $target.closest("tr").next().attr("style","visibility: visible");
+                    $target.closest("tr").next().attr("customaction",performaction);
+                }
+                else {
+                    $target.closest("tr").next().attr("style","visibility: collapse");
+                    $target.closest("tr").next().attr("customaction",performaction);
+                }
+            }
+            else {
+                if (performaction == 'open') {
+                    $target.closest("tr").next().attr("style","visibility: visible");
+                }
+                else {
+                    $target.closest("tr").next().attr("style","visibility: collapse");
+                }
+            }
+            $target = $target.closest("tr").next();
+
+            if ($target.closest("tr").next().attr("title") == undefined) {
+                break;
+            }
+            else {
+                strclasscheck = $target.closest("tr").next().attr("title");
+                rescheck = strclasscheck.split(" ");
+            }
+        }
+    }
 });
