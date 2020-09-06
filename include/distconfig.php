@@ -166,6 +166,14 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // $config->setAlphabeticOrder(true);
 
+// By default, WebSVN loads parent path directories and then on user click other,
+// This options loads the entire directory in one go and allows to browse without delay.
+// By default all will be collapsed to root directory and can be expanded.
+// This superseeds the setAlphabeticOrder and everything will be shown in alphabetic 
+// order by default.
+
+// $config->setLoadAllRepository(true);
+
 // By default, WebSVN displays the information of the last modification
 // (revision, age and author) for each repository in an extra column.
 // To disable that uncomment this line.
