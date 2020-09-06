@@ -355,7 +355,6 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
 
 // Make sure that we have a repository
 if ($rep) {
-	$start = microtime(true);
 	$svnrep = new SVNRepository($rep);
 
 	if (!empty($rev)) {
@@ -487,8 +486,6 @@ if ($rep) {
 		sendHeaderForbidden();
 	}
 	$vars['restricted'] = !$rep->hasReadAccess($path, false);
-	$time_elapsed_secs = microtime(true) - $start;
-	$vars['loadtimes'] = $time_elapsed_secs;
 } else {
 	http_response_code(404);
 }
