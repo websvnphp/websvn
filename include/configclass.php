@@ -672,7 +672,7 @@ class WebSvnConfig {
 	var $authz = null;
 	var $blockRobots = false;
 
-	var $loadallrepo = false;
+	var $loadAllRepos = false;
 
 	var $templatePaths = array();
 	var $userTemplate = false;
@@ -1557,12 +1557,12 @@ class WebSvnConfig {
 		return $this->openTree;
 	}
 
-	function setLoadAllRepository($flag) {
-		$this->loadallrepo = $flag;
+	function setLoadAllRepos($flag) {
+		$this->loadAllRepos = $flag;
 	}
 
-	function showLoadAllRepository() {
-		return $this->loadallrepo;
+	function showLoadAllRepos() {
+		return $this->loadAllRepos;
 	}
 
 	function setAlphabeticOrder($flag) {

@@ -488,7 +488,7 @@ function _listSort($e1, $e2) {
 	$file2 = $e2->file;
 	$isDir1 = ($file1[strlen($file1) - 1] == '/');
 	$isDir2 = ($file2[strlen($file2) - 1] == '/');
-	if (!$config->showLoadAllRepository())
+	if (!$config->showLoadAllRepos())
 	{
 		if (!$config->isAlphabeticOrder()) {
 			if ($isDir1 && !$isDir2) return -1;
@@ -1040,7 +1040,7 @@ class SVNRepository {
 			if ($headlog && isset($headlog->entries[0]))
 				$rev = $headlog->entries[0]->rev;
 		}
-		if ($config->showLoadAllRepository()) {
+		if ($config->showLoadAllRepos()) {
 			$cmd = $this->svnCommandString('list -R --xml', $path, $rev, $peg);
 		}
 		else {
