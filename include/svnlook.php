@@ -488,12 +488,10 @@ function _listSort($e1, $e2) {
 	$file2 = $e2->file;
 	$isDir1 = ($file1[strlen($file1) - 1] == '/');
 	$isDir2 = ($file2[strlen($file2) - 1] == '/');
-	if (!$config->showLoadAllRepos())
-	{
-		if (!$config->isAlphabeticOrder()) {
-			if ($isDir1 && !$isDir2) return -1;
-			if ($isDir2 && !$isDir1) return 1;
-		}
+
+	if (!$config->isAlphabeticOrder()) {
+		if ($isDir1 && !$isDir2) return -1;
+		if ($isDir2 && !$isDir1) return 1;
 	}
 
 	if ($isDir1) $file1 = substr($file1, 0, -1);
@@ -1040,14 +1038,17 @@ class SVNRepository {
 			if ($headlog && isset($headlog->entries[0]))
 				$rev = $headlog->entries[0]->rev;
 		}
+
 		if ($config->showLoadAllRepos()) {
 			$cmd = $this->svnCommandString('list -R --xml', $path, $rev, $peg);
+			$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
 		}
 		else {
 			$cmd = $this->svnCommandString('list --xml', $path, $rev, $peg);
+			$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
+			usort($curList->entries, '_listSort');
 		}
-		$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
-		usort($curList->entries, '_listSort');
+
 		return $curList;
 	}
 
