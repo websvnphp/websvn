@@ -19,26 +19,32 @@ function collapseAllGroups() {
   }
 }
 
-function collapseAllDir() {
+var strclass = '';
+var res = '';
+$("tbody > tr").each(function() {
 
-    for (let i = 1; i < tableRows.length; i++) {
-        let strclass = tableRows[i].title;
-        let res = strclass.split(" ");
-
-        for (let j = i+1; j<tableRows.length; j++) {
-            let strclasscheck = tableRows[j].title;
-            let rescheck = strclasscheck.split(" ");
-
-            if (rescheck.includes(res[res.length - 1])) {
-                tableRows[j].style.visibility = 'collapse';
-            }
-            else {
-                i = j-1;
-                break;
-            }
-        }
+    if ($(this).attr("title") == undefined) {
+        return;
     }
-}
+
+    if (strclass == '') {
+        strclass = $(this).attr("title");
+        res = strclass.split(" ");
+        return;
+    }
+
+    let strclasscheck = $(this).attr("title");
+    let rescheck = strclasscheck.split(" ");
+
+    if (rescheck.includes(res[res.length - 1])) {
+        $(this).attr("style","visibility: collapse");
+    }
+    else {
+        strclass = $(this).attr("title");
+        res = strclass.split(" ");
+    }
+
+});
 
 $("table.collapsible thead").find("th").on("click", function() {
     $(this).get(0).className = ($(this).get(0).className == 'open') ? 'closed' : 'open';
