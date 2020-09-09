@@ -171,6 +171,8 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // By default all will be collapsed to root directory and can be expanded.
 // The performance will be impacted as it takes time to load up all the things in the 
 // repository. Once loaded directory exapansion is instantaneous.
+// The alphabetical order is applied to all directory and files. 
+// This means that grouping of all dirs together and all files together is NOT supported currently!
 // The files and directories are shown as is with a mixture of files and folders. 
 
 // $config->setLoadAllRepos(true);
