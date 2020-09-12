@@ -52,7 +52,8 @@ $("tbody > tr").each(function() {
     {
         $(this).attr("style","visibility: collapse");
     }
-    else {
+    else 
+    {
         strClass = $(this).attr("title");
         res = strClass.split(" ");
     }
