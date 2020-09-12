@@ -78,6 +78,11 @@ $("tr").find("td.path").on("click",function(event)
         return;
     }
 
+    if ($target.children('a').children('img').attr('alt') == '[FILE]')
+    {
+        return;
+    }
+
     let strClassCheck = $target.closest("tr").next().attr("title");
     let resCheck = strClassCheck.split(" ");
     let performAction = $target.closest("tr").attr("customaction") == 'close'? 'open' : 'close';
