@@ -29,34 +29,23 @@ function collapseAllGroups()
     }
 }
 
-var strClass = '';
-var res = '';
-
-$("tbody > tr").each(function() {
+$("table#listing > tbody > tr").each(function() {
     if ($(this).attr("title") == undefined) 
     {
         return;
     }
 
-    if (strClass == '') 
+    let strClass = '';
+    let res = '';
+    strClass = $(this).attr("title");
+    res = strClass.split(" ");
+
+    if (res.length <= 1)
     {
-        strClass = $(this).attr("title");
-        res = strClass.split(" ");
         return;
     }
 
-    let strClassCheck = $(this).attr("title");
-    let resCheck = strClassCheck.split(" ");
-
-    if (resCheck.includes(res[res.length - 1])) 
-    {
-        $(this).attr("style","visibility: collapse");
-    }
-    else 
-    {
-        strClass = $(this).attr("title");
-        res = strClass.split(" ");
-    }
+    $(this).attr("style","visibility: collapse");
 });
 
 $("table.collapsible thead").find("th").on("click", function() 
@@ -78,7 +67,7 @@ $("tr").find("td.path").on("click",function(event)
         return;
     }
 
-    if ($target.children('a').children('img').attr('alt') == '[FILE]')
+    if ($target.children('a').children('img').attr('alt') != '[DIRECTORY]')
     {
         return;
     }

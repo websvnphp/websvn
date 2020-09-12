@@ -61,8 +61,8 @@
 .php=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-php.png" alt="PHP file" />
 .css=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/file-css.png" alt="CSS file" />
 
-dir=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/directory.png" alt="directory" />
-diropen=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/directory.png" alt="directory" />
+dir=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/directory.png" alt="[DIRECTORY]" />
+diropen=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/directory.png" alt="[DIRECTORY]" />
 i-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt="node" />
 t-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt="node" />
 l-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt="node" />
@@ -99,11 +99,13 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/Elegant/images/blank.png" alt=
           [websvn-else]
           <tr [websvn-test:loadalldir]customaction="closed" title="[websvn:classname]"[websvn-endtest]>
           [websvn-endtest]
-            <td class="path">
+            <td class="path" valign="middle">
               [websvn:compare_box]
               [websvn-treenode]
-              [websvn-icon]
-              [websvn:filelink]
+              <a href="[websvn:fileurl]">
+                [websvn-icon]
+                [websvn:filename]
+            </a>
             </td>
           [websvn-test:showlastmod]
             <td class="rev"><a href="[websvn:revurl]" title="[lang:REV] [websvn:revision]">[websvn:revision]</a>&nbsp;</td>
