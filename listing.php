@@ -235,7 +235,7 @@ function showAllDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeView
 
 	foreach ($logList->entries as $entry) {
 		$isDir = $entry->isdir;
-		
+
 		$file = $entry->file;
 		$isDirString = ($isDir) ? 'isdir=1&amp;' : '';
 
@@ -360,21 +360,20 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
 		$vars['compare_box'] = ''; // Set blank once in case tree view is not enabled.
 		return showAllDirFiles($svnrep, $path, $rev, $peg, $listing, 0, $config->treeView);
 	}
-	else {
-		$subs = explode('/', $path);
 
-		// For directory, the last element in the subs is empty.
-		// For file, the last element in the subs is the file name.
-		// Therefore, it is always count($subs) - 2
-		$limit = count($subs) - 2;
-	
-		for ($n = 0; $n < $limit; $n++) {
-			$vars['last_i_node'][$n] = false;
-		}
+	$subs = explode('/', $path);
 
-		$vars['compare_box'] = ''; // Set blank once in case tree view is not enabled.
-		return showDirFiles($svnrep, $subs, 0, $limit, $rev, $peg, $listing, 0, $config->treeView);
+	// For directory, the last element in the subs is empty.
+	// For file, the last element in the subs is the file name.
+	// Therefore, it is always count($subs) - 2
+	$limit = count($subs) - 2;
+
+	for ($n = 0; $n < $limit; $n++) {
+		$vars['last_i_node'][$n] = false;
 	}
+
+	$vars['compare_box'] = ''; // Set blank once in case tree view is not enabled.
+	return showDirFiles($svnrep, $subs, 0, $limit, $rev, $peg, $listing, 0, $config->treeView);
 }
 
 // Make sure that we have a repository
