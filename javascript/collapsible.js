@@ -72,9 +72,12 @@ $('table#listing > tbody').each(function()
         {
             let rowChild    = $(this);
             let titleChild  = rowChild.attr('title') || '';
+
             // TODO \Q...\E doesn't work, pattern needs to be escaped properly somehow
             // https://makandracards.com/makandra/15879-javascript-how-to-generate-a-regular-expression-from-a-string
-            let pattern = titleParent + '/[^/]+$';
+            let ptChildDirs     = titleParent + '/$';
+            let ptChildFiles    = titleParent + '/[^/]+$';
+            let pattern         = ptChildDirs + '|' + ptChildFiles;
 
             if (titleChild.match(pattern))
             {
