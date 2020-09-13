@@ -38,86 +38,58 @@ $("table.collapsible thead").find("th").on("click", function()
     $(this).closest("table").find("tbody").toggle();
 });
 
-$("table#listing > tbody > tr").each(function()
+// TODO docs,
+// initially hide all non-root entries, especially in case of "setLoadAllRepos"
+// only roots DON'T contain any delimiter for directories and files currently
+$('table#listing > tbody > tr[title*="/"]').each(function()
 {
-    if ($(this).attr("title") == undefined)
-    {
-        return;
-    }
-
-    let strClass  = $(this).attr("title");
-    let res       = strClass.split(" ");
-
-    if (res.length <= 1)
-    {
-        return;
-    }
-
-    $(this).attr("style", "visibility: collapse");
+    // "visibility: collapse" leaves some space at the bottom of the whole list, resulting in not
+    // wanted scrollbars being shown by default.
+    $(this).toggle();
 });
 
-$("tr").find("td.path").on("click", function(event)
+// TODO docs, make parents toggle their DIRECT children only
+$('table#listing > tbody').each(function()
 {
-    event.stopPropagation();
+    let body = $(this);
 
-    let $target   = $(event.target);
-    let trItself  = $target.closest("tr");
-    let trNext    = trItself.next();
-    let strClass  = trItself.attr("title");
-    let res       = strClass.split(" ");
-
-    if (trNext.attr("title") == undefined)
+    // Each row needs to be checked for its direct children, so that only those can be toggled. The
+    // "tbody" is necessary so that one can find direct children per row as well, because all those
+    // are maintained on the same level and only distinguished by their textual path. So we either
+    // need to search the "tbody" per row for all children or implement some other approach mapping
+    // things by only iterating rows once. The current approach seems easier for now.
+    body.children('tr').each(function()
     {
-        return;
-    }
+        let rowParent       = $(this);
+        let titleParent     = rowParent.attr('title') || '';
+        let selector        = 'tr[title^="' + titleParent + '/"]';
+        let directChildren  = [];
 
-    if ($target.children('a').children('img').attr('alt') != '[DIRECTORY]')
-    {
-        return;
-    }
-
-    let strClassCheck = trNext.attr("title");
-    let resCheck      = strClassCheck.split(" ");
-    let oldAction     = trItself.attr("customaction");
-    let newAction     = oldAction == 'close'? 'open' : 'close';
-
-    trItself.attr("customaction", newAction);
-
-    while (resCheck.includes(res[res.length - 1]))
-    {
-        if (trNext.attr("customaction") != newAction)
+        // Selectors don't support regular expressions, but direct children not only start with the
+        // parent, but don't contain additional children in their title as well. One can't select
+        // that condition easily, so find ALL children and filter later to direct ones only.
+        body.children(selector).each(function()
         {
-            trNext.attr("customaction", newAction);
+            let rowChild    = $(this);
+            let titleChild  = rowChild.attr('title') || '';
+            // TODO \Q...\E doesn't work, pattern needs to be escaped properly somehow
+            // https://makandracards.com/makandra/15879-javascript-how-to-generate-a-regular-expression-from-a-string
+            let pattern = titleParent + '/[^/]+$';
 
-            if (newAction == 'open')
+            if (titleChild.match(pattern))
             {
-                trNext.attr("style",        "visibility: visible");
-                trNext.attr("customaction", newAction);
+                directChildren.push(rowChild);
             }
-            else
-            {
-                trNext.attr("style",        "visibility: collapse");
-                trNext.attr("customaction", newAction);
-            }
-        }
-        else
+        });
+
+        rowParent.on('click', function()
         {
-            if (newAction == 'open')
+            $.each(directChildren, function()
             {
-                trNext.attr("style", "visibility: visible");
-            }
-            else
-            {
-                trNext.attr("style", "visibility: collapse");
-            }
-        }
+                $(this).toggle();
+            });
 
-        if (trNext.attr("title") == undefined)
-        {
-            break;
-        }
-
-        strClassCheck = trNext.attr("title");
-        resCheck      = strClassCheck.split(" ");
-    }
+            return false;
+        });
+    });
 });
