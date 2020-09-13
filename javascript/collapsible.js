@@ -1,16 +1,16 @@
 var tableRows = document.getElementsByTagName('tr');
 
-function toggleGroup(groupName) 
+function toggleGroup(groupName)
 {
-    for (var i = 0; i < tableRows.length; i++) 
+    for (var i = 0; i < tableRows.length; i++)
     {
-        if (tableRows[i].title == groupName) 
+        if (tableRows[i].title == groupName)
         {
-            if (tableRows[i].style.display == 'none') 
+            if (tableRows[i].style.display == 'none')
             {
                 tableRows[i].style.display = 'table-row';
             }
-            else 
+            else
             {
                 tableRows[i].style.display = 'none';
             }
@@ -18,9 +18,9 @@ function toggleGroup(groupName)
     }
 }
 
-function collapseAllGroups() 
+function collapseAllGroups()
 {
-    for (var i = 0; i < tableRows.length; i++) 
+    for (var i = 0; i < tableRows.length; i++)
     {
         if (tableRows[i].title != '')
         {
@@ -29,40 +29,44 @@ function collapseAllGroups()
     }
 }
 
-$("table#listing > tbody > tr").each(function() {
-    if ($(this).attr("title") == undefined) 
+$("table#listing > tbody > tr").each(function()
+{
+    if ($(this).attr("title") == undefined)
     {
         return;
     }
 
-    let strClass = '';
-    let res = '';
-    strClass = $(this).attr("title");
-    res = strClass.split(" ");
+    let strClass  = $(this).attr("title");
+    let res       = strClass.split(" ");
 
     if (res.length <= 1)
     {
         return;
     }
 
-    $(this).attr("style","visibility: collapse");
+    $(this).attr("style", "visibility: collapse");
 });
 
-$("table.collapsible thead").find("th").on("click", function() 
+$("table.collapsible thead").find("th").on("click", function()
 {
-    $(this).get(0).className = ($(this).get(0).className == 'open') ? 'closed' : 'open';
+    let oldClass = $(this).get(0).className;
+    let newClass = (oldClass == 'open') ? 'closed' : 'open';
+
+    $(this).get(0).className = newClass;
     $(this).closest("table").find("tbody").toggle();
 });
 
-$("tr").find("td.path").on("click",function(event) 
+$("tr").find("td.path").on("click", function(event)
 {
     event.stopPropagation();
 
-    let $target = $(event.target);
-    let strClass = $target.closest("tr").attr("title");
-    let res = strClass.split(" ");
+    let $target   = $(event.target);
+    let trItself  = $target.closest("tr");
+    let trNext    = trItself.next();
+    let strClass  = trItself.attr("title");
+    let res       = strClass.split(" ");
 
-    if ($target.closest("tr").next().attr("title") == undefined) 
+    if (trNext.attr("title") == undefined)
     {
         return;
     }
@@ -72,51 +76,48 @@ $("tr").find("td.path").on("click",function(event)
         return;
     }
 
-    let strClassCheck = $target.closest("tr").next().attr("title");
-    let resCheck = strClassCheck.split(" ");
-    let performAction = $target.closest("tr").attr("customaction") == 'close'? 'open' : 'close';
+    let strClassCheck = trNext.attr("title");
+    let resCheck      = strClassCheck.split(" ");
+    let oldAction     = trItself.attr("customaction");
+    let newAction     = oldAction == 'close'? 'open' : 'close';
 
-    $target.closest("tr").attr("customaction",performAction);
+    trItself.attr("customaction", newAction);
 
-    while (resCheck.includes(res[res.length - 1])) 
+    while (resCheck.includes(res[res.length - 1]))
     {
-        if ($target.closest("tr").next().attr("customaction") != performAction) 
+        if (trNext.attr("customaction") != newAction)
         {
-            $target.closest("tr").next().attr("customaction",performAction);
+            trNext.attr("customaction", newAction);
 
-            if (performAction == 'open') 
+            if (newAction == 'open')
             {
-                $target.closest("tr").next().attr("style","visibility: visible");
-                $target.closest("tr").next().attr("customaction",performAction);
+                trNext.attr("style",        "visibility: visible");
+                trNext.attr("customaction", newAction);
             }
-            else 
+            else
             {
-                $target.closest("tr").next().attr("style","visibility: collapse");
-                $target.closest("tr").next().attr("customaction",performAction);
+                trNext.attr("style",        "visibility: collapse");
+                trNext.attr("customaction", newAction);
             }
         }
-        else 
+        else
         {
-            if (performAction == 'open') 
+            if (newAction == 'open')
             {
-                $target.closest("tr").next().attr("style","visibility: visible");
+                trNext.attr("style", "visibility: visible");
             }
-            else 
+            else
             {
-                $target.closest("tr").next().attr("style","visibility: collapse");
+                trNext.attr("style", "visibility: collapse");
             }
         }
 
-        $target = $target.closest("tr").next();
-
-        if ($target.closest("tr").next().attr("title") == undefined) 
+        if (trNext.attr("title") == undefined)
         {
             break;
         }
-        else 
-        {
-            strClassCheck = $target.closest("tr").next().attr("title");
-            resCheck = strClassCheck.split(" ");
-        }
+
+        strClassCheck = trNext.attr("title");
+        resCheck      = strClassCheck.split(" ");
     }
 });
