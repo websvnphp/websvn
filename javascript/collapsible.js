@@ -29,6 +29,15 @@ function collapseAllGroups()
     }
 }
 
+$("table.collapsible thead").find("th").on("click", function()
+{
+    let oldClass = $(this).get(0).className;
+    let newClass = (oldClass == 'open') ? 'closed' : 'open';
+
+    $(this).get(0).className = newClass;
+    $(this).closest("table").find("tbody").toggle();
+});
+
 $("table#listing > tbody > tr").each(function()
 {
     if ($(this).attr("title") == undefined)
@@ -45,15 +54,6 @@ $("table#listing > tbody > tr").each(function()
     }
 
     $(this).attr("style", "visibility: collapse");
-});
-
-$("table.collapsible thead").find("th").on("click", function()
-{
-    let oldClass = $(this).get(0).className;
-    let newClass = (oldClass == 'open') ? 'closed' : 'open';
-
-    $(this).get(0).className = newClass;
-    $(this).closest("table").find("tbody").toggle();
 });
 
 $("tr").find("td.path").on("click", function(event)
