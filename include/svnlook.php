@@ -930,7 +930,7 @@ class SVNRepository {
 		xml_set_character_data_handler($xml_parser, $charData);
 
 		for ($i = 0; $i < $linesCnt; ++$i) {
-			$line	= $lines[$i];
+			$line	= $lines[$i] . "\n";
 			$isLast	= $i == ($linesCnt - 1);
 
 			if (xml_parse($xml_parser, $line, $isLast)) {
