@@ -89,7 +89,27 @@ $('table#listing > tbody').each(function()
         {
             $.each(directChildren, function()
             {
-                $(this).toggle();
+                let self        = $(this);
+                let isVisible   = self.is(':visible');
+
+                if (!isVisible)
+                {
+                    self.show();
+                    return true;
+                }
+
+                self.trigger('hide_children');
+                self.hide();
+            });
+
+            return false;
+        });
+
+        rowParent.on('hide_children', function()
+        {
+            $.each(directChildren, function()
+            {
+                $(this).hide();
             });
 
             return false;
