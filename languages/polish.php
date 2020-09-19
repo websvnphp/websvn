@@ -121,3 +121,7 @@ $lang["COMPPATH"] = "Porównaj katalog:";
 $lang["WITHPATH"] = "Z katalogiem:";
 $lang["FILEDELETED"] = "Plik usunięty";
 $lang["FILEADDED"] = "Nowy plik";
+
+$lang['SEARCH'] = "Szukaj";
+$lang['SEARCH_PLACEHOLDER'] = "Wyszukaj elementy tutaj";
+$lang['NOITEMSFOUND'] = "Nie znaleziono żadnych pozycji";

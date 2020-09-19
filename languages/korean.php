@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "비교 경로:";
 $lang["WITHPATH"] = "경로:";
 // $lang["FILEDELETED"] = "File deleted";
 // $lang["FILEADDED"] = "New file";
+
+$lang['SEARCH'] = "검색";
+$lang['SEARCH_PLACEHOLDER'] = "여기에서 항목 검색";
+$lang['NOITEMSFOUND'] = "제품을 찾지 못했습니다";

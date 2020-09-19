@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "Jämför sökväg:";
 $lang["WITHPATH"] = "Med sökväg:";
 $lang["FILEDELETED"] = "Filen raderad";
 $lang["FILEADDED"] = "Ny fil";
+
+$lang['SEARCH'] = "Sök";
+$lang['SEARCH_PLACEHOLDER'] = "Sök efter objekt här";
+$lang['NOITEMSFOUND'] = "Inga föremål hittades";

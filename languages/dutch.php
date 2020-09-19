@@ -119,3 +119,7 @@ $lang["COMPPATH"] = "Vergelijk pad:";
 $lang["WITHPATH"] = "Met pad:";
 $lang["FILEDELETED"] = "Bestand gewist";
 $lang["FILEADDED"] = "Nieuw bestand";
+
+$lang['SEARCH'] = "Zoeken";
+$lang['SEARCH_PLACEHOLDER'] = "Zoek hier naar items";
+$lang['NOITEMSFOUND'] = "Geen items gevonden";

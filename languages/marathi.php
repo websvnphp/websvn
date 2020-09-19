@@ -119,3 +119,7 @@ $lang["COMPPATH"] = "मार्ग तुलना:";
 $lang["WITHPATH"] = "या मार्गाशी:";
 $lang["FILEDELETED"] = "खतावणी काढली";
 $lang["FILEADDED"] = "नवीन  खतावणी";
+
+$lang['SEARCH'] = "शोधा";
+$lang['SEARCH_PLACEHOLDER'] = "येथे आयटम शोधा";
+$lang['NOITEMSFOUND'] = "कोणतेही आयटम सापडले नाहीत";

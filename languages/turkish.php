@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Patikaları karşılaştır:";
 $lang["WITHPATH"] = "Patika ile:";
 $lang["FILEDELETED"] = "Dosya silinmiş";
 $lang["FILEADDED"] = "Yeni dosya";
+
+$lang['SEARCH'] = "Arama";
+$lang['SEARCH_PLACEHOLDER'] = "Burada ürün arayın";
+$lang['NOITEMSFOUND'] = "Hiç bir öğe bulunamadı";

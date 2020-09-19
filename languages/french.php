@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Comparer le dossier:";
 $lang["WITHPATH"] = "Au dossier:";
 $lang["FILEDELETED"] = "Fichier supprimé";
 $lang["FILEADDED"] = "Nouveau fichier";
+
+$lang['SEARCH'] = "Chercher";
+$lang['SEARCH_PLACEHOLDER'] = "Rechercher des articles ici";
+$lang['NOITEMSFOUND'] = "Aucun élément trouvé";

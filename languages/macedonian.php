@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Спореди пат:";
 $lang["WITHPATH"] = "Со пат:";
 $lang["FILEDELETED"] = "Датотеката е избришана";
 $lang["FILEADDED"] = "Нова датотека";
+
+$lang['SEARCH'] = "Пребарување";
+$lang['SEARCH_PLACEHOLDER'] = "Пребарувајте предмети овде";
+$lang['NOITEMSFOUND'] = "Не се пронајдени предмети";
