@@ -57,7 +57,7 @@ $('table#listing > tbody > tr[title*="/"]').each(function()
 {
     // "visibility: collapse" leaves some space at the bottom of the whole list, resulting in not
     // wanted scrollbars being shown by default.
-    $(this).toggle();
+    $(this).hide();
 });
 
 /**
@@ -158,7 +158,10 @@ function recursiveLoadRowParentOnHideChildren(directChildren)
 {
     $.each(directChildren, function()
     {
-        $(this).hide();
+        let self = $(this);
+
+        self.trigger('hide_children');
+        self.hide();
     });
 
     return false;
