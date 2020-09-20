@@ -177,8 +177,15 @@ function recursiveLoadRowProc(body, rowParent)
 {
     let directChildren = recursiveLoadDirectChildrenSelect(body, rowParent);
 
-    rowParent.on('click',           function() { return recursiveLoadRowParentOnClick(directChildren); });
-    rowParent.on('hide_children',   function() { return recursiveLoadRowParentOnHideChildren(directChildren);});
+    rowParent.find('td.path a[href^="listing.php?"]').on('click', function()
+    {
+        return recursiveLoadRowParentOnClick(directChildren);
+    });
+
+    rowParent.on('hide_children', function()
+    {
+        return recursiveLoadRowParentOnHideChildren(directChildren);
+    });
 }
 
 /**
