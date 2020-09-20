@@ -77,7 +77,11 @@ $('table#listing > tbody > tr[title*="/"]').each(function()
  */
 function recursiveLoadDirectChildrenSelect(body, rowParent)
 {
+    // The parent title is used in some reg exp, so properly escape/quote it. Sadly "\Q...\E" does
+    // not work and JS doesn't seem to provide anythign else on its own as well.
+    // https://stackoverflow.com/a/3561711/2055163
     let titleParent     = rowParent.attr('title') || '';
+        titleParent     = titleParent.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     let selector        = 'tr[title^="' + titleParent + '/"]';
     let directChildren  = [];
 
@@ -89,8 +93,6 @@ function recursiveLoadDirectChildrenSelect(body, rowParent)
         let rowChild    = $(this);
         let titleChild  = rowChild.attr('title') || '';
 
-        // TODO \Q...\E doesn't work, pattern needs to be escaped properly somehow
-        // https://makandracards.com/makandra/15879-javascript-how-to-generate-a-regular-expression-from-a-string
         let ptChildDirs     = titleParent + '/$';
         let ptChildFiles    = titleParent + '/[^/]+$';
         let pattern         = ptChildDirs + '|' + ptChildFiles;
