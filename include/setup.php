@@ -379,18 +379,19 @@ foreach ($queryParams as $key => $value) {
 	}
 }
 
-// If the request specifies a language, store in a permanent/session cookie.
-// Otherwise, check for cookies specifying a particular language.
+// If the request specifies a language, store in a cookie. Otherwise, check for cookies specifying a
+// particular language already.
 $language = ''; // RFC 4646 language tag for representing the selected language.
 if (!empty($_REQUEST['language'])) {
 	$language = $_REQUEST['language'];
-	setcookie('storedlang', $language, time() + (60 * 60 * 24 * 356 * 10), '/');
+	setcookie('storedlang', $language, time() + (60 * 60 * 24 * 356 * 10));
 	setcookie('storedsesslang', $language);
 } else if (isset($_COOKIE['storedlang'])) {
 	$language = $_COOKIE['storedlang'];
 } else if (isset($_COOKIE['storedsesslang'])) {
 	$language = $_COOKIE['storedsesslang'];
 }
+
 // Load available languages (populates $languages array)
 require 'languages/languages.php';
 // Get the default language as defined by config.php
@@ -440,12 +441,12 @@ if ($config->multiViews) {
 	}
 }
 
-// If the request specifies a template, store in a permanent/session cookie.
-// Otherwise, check for cookies specifying a particular template.
+// If the request specifies a template, store in a cookie. Otherwise, check for cookies specifying a
+// particular template already.
 $template = '';
 if (!empty($_REQUEST['template'])) {
 	$template = $_REQUEST['template'];
-	setcookie('storedtemplate', $template, time() + (60 * 60 * 24 * 365 * 10), '/');
+	setcookie('storedtemplate', $template, time() + (60 * 60 * 24 * 365 * 10));
 	setcookie('storedsesstemplate', $template);
 } else if (isset($_COOKIE['storedtemplate'])) {
 	$template = $_COOKIE['storedtemplate'];
