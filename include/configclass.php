@@ -672,6 +672,8 @@ class WebSvnConfig {
 	var $authz = null;
 	var $blockRobots = false;
 
+	var $loadAllRepos = false;
+
 	var $templatePaths = array();
 	var $userTemplate = false;
 
@@ -1553,6 +1555,14 @@ class WebSvnConfig {
 
 	function getOpenTree() {
 		return $this->openTree;
+	}
+
+	function setLoadAllRepos($flag) {
+		$this->loadAllRepos = $flag;
+	}
+
+	function showLoadAllRepos() {
+		return $this->loadAllRepos;
 	}
 
 	function setAlphabeticOrder($flag) {
