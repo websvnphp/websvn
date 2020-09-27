@@ -208,9 +208,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 // Make sure that we have a repository
 if (!$rep)
 {
-	http_response_code(404);
-	renderTemplate('directory');
-	exit(0);
+	renderTemplateNoRepo('directory');
 }
 
 $svnrep = new SVNRepository($rep);
