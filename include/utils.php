@@ -420,14 +420,3 @@ function tempnamWithCheck($dir, $prefix) {
 }
 
 // }}}
-
-// {{{ renderTemplateNoRepo
-
-function renderTemplateNoRepo($view)
-{
-	http_response_code(404);
-	renderTemplate($view);
-	exit(0);
-}
-
-// }}}
