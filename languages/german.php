@@ -118,5 +118,5 @@ $lang["FILEDELETED"] = "Datei gelöscht";
 $lang["FILEADDED"] = "Neue Datei";
 
 $lang['SEARCH'] = "suchen";
-$lang['SEARCH_PLACEHOLDER'] = "Suchen Sie hier nach Artikeln";
+$lang['SEARCH_PLACEHOLDER'] = "Suchen Sie hier nach Elementen";
 $lang['NOITEMSFOUND'] = "Keine Elemente gefunden";
