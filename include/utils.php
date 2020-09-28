@@ -399,6 +399,8 @@ function getUserLanguage($languages, $default, $userchoice) {
 
 // }}}
 
+// {{{ tempnameWithCheck
+
 function tempnamWithCheck($dir, $prefix) {
 	$tmp = tempnam($dir, $prefix);
 
@@ -416,3 +418,5 @@ function tempnamWithCheck($dir, $prefix) {
 
 	return $tmp;
 }
+
+// }}}

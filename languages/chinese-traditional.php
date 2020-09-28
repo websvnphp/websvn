@@ -118,3 +118,6 @@ $lang["REVCOMP"] = "顛倒比對";
 // $lang["FILEDELETED"] = "File deleted";
 // $lang["FILEADDED"] = "New file";
 
+$lang['SEARCH'] = "搜索";
+$lang['SEARCH_PLACEHOLDER'] = "在這裡搜索項目";
+$lang['NOITEMSFOUND'] = "未找到任何項目";

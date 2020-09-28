@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "Porovnaj cestu:";
 $lang["WITHPATH"] = "S cestou:";
 $lang["FILEDELETED"] = "Súbor odstránený";
 $lang["FILEADDED"] = "Nový súbor";
+
+$lang['SEARCH'] = "Vyhľadávanie";
+$lang['SEARCH_PLACEHOLDER'] = "Vyhľadajte položky tu";
+$lang['NOITEMSFOUND'] = "Nenašli sa žiadne položky";

@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Yoʻlni taqqoslash:";
 $lang["WITHPATH"] = "Yoʻl bilan:";
 $lang["FILEDELETED"] = "Fayl oʻchirilgan";
 $lang["FILEADDED"] = "Yangi fayl";
+
+$lang['SEARCH'] = "Qidirmoq";
+$lang['SEARCH_PLACEHOLDER'] = "Bu erda narsalarni qidiring";
+$lang['NOITEMSFOUND'] = "Hech narsa topilmadi";

@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Confronta percorso:";
 $lang["WITHPATH"] = "Con il percorso:";
 $lang["FILEDELETED"] = "File cancellato";
 $lang["FILEADDED"] = "Nuovo file";
+
+$lang['SEARCH'] = "Ricerca";
+$lang['SEARCH_PLACEHOLDER'] = "Cerca qui gli articoli";
+$lang['NOITEMSFOUND'] = "Nessun articolo trovato";

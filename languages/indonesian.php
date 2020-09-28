@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Bandingkan Path:";
 $lang["WITHPATH"] = "Dengan Path:";
 $lang["FILEDELETED"] = "File dihapus";
 $lang["FILEADDED"] = "File baru";
+
+$lang['SEARCH'] = "Cari";
+$lang['SEARCH_PLACEHOLDER'] = "Cari item di sini";
+$lang['NOITEMSFOUND'] = "Tidak Ada Item yang Ditemukan";
