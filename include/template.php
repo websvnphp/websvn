@@ -294,7 +294,9 @@ function executePlainPhpTemplate($vars) {
 
 function renderTemplateNoRepo($view)
 {
+	global $vars;
 	http_response_code(404);
+	$vars['error'] = "WebSVN 404 Error Not Found";
 	renderTemplate($view);
 	exit(0);
 }
