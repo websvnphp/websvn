@@ -31,10 +31,16 @@ require_once 'include/bugtraq.php';
 $page = (int)@$_REQUEST['page'];
 $all = @$_REQUEST['all'] == 1;
 $isDir = @$_REQUEST['isdir'] == 1 || $path == '' || $path == '/';
+
 if (isset($_REQUEST['showchanges']))
+{
 	$showchanges = @$_REQUEST['showchanges'] == 1;
+}
 else
+{
 	$showchanges = $rep->logsShowChanges();
+}
+
 $search = trim(@$_REQUEST['search']);
 $dosearch = strlen($search) > 0;
 
@@ -47,7 +53,8 @@ $max = isset($_REQUEST['max']) ? (int)$_REQUEST['max'] : false;
 // Max number of results to find at a time
 $numSearchResults = 20;
 
-if ($search == '') {
+if ($search == '') 
+{
 	$dosearch = false;
 }
 
@@ -57,14 +64,16 @@ if ($search == '') {
 // ideal, but expecting everyone to install 'unac' seems a little
 // excessive as well...
 
-function removeAccents($string) {
+function removeAccents($string) 
+{
 	$string = htmlentities($string, ENT_QUOTES, 'ISO-8859-1');
 	$string = preg_replace('/&([A-Za-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron);/', '$1', $string);
 	return $string;
 }
 
 // Normalise the search words
-foreach ($words as $index => $word) {
+foreach ($words as $index => $word) 
+{
 	$words[$index] = strtolower(removeAccents($word));
 
 	// Remove empty string introduced by multiple spaces
@@ -73,11 +82,15 @@ foreach ($words as $index => $word) {
 }
 
 if (empty($page))
+{
 	$page = 1;
+}
 
 // If searching, display all the results
 if ($dosearch)
+{
 	$all = true;
+}
 
 $maxperpage = 20;
 

@@ -33,8 +33,10 @@ require_once 'include/diff_inc.php';
 $vars['action'] = $lang['DIFF'];
 $all = (@$_REQUEST['all'] == 1);
 $ignoreWhitespace = $config->getIgnoreWhitespacesInDiff();
-if (array_key_exists('ignorews', $_REQUEST)) {
-  $ignoreWhitespace = (bool)$_REQUEST['ignorews'];
+
+if (array_key_exists('ignorews', $_REQUEST)) 
+{
+	$ignoreWhitespace = (bool)$_REQUEST['ignorews'];
 }
 
 // Make sure that we have a repository
