@@ -40,7 +40,7 @@ function checkRevision($rev)
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplateNoRepo('compare');
+	renderTemplate404('compare',$lang['NOREP']);
 }
 
 $svnrep = new SVNRepository($rep);

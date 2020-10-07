@@ -31,7 +31,7 @@ require_once 'include/bugtraq.php';
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplateNoRepo('revision');
+	renderTemplate404('revision',$lang['NOREP']);
 }
 
 $svnrep = new SVNRepository($rep);

@@ -379,7 +379,7 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing) {
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplateNoRepo('directory');
+	renderTemplate404('directory',$lang['NOREP']);
 }
 
 $svnrep = new SVNRepository($rep);

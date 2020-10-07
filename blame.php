@@ -33,7 +33,7 @@ $vars['action'] = $lang['BLAME'];
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplateNoRepo('blame');
+	renderTemplate404('blame',$lang['NOREP']);
 }
 
 $svnrep = new SVNRepository($rep);
