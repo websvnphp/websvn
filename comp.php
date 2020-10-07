@@ -154,8 +154,7 @@ $vars['rev2'] = $rev2;
 $history1 = $svnrep->getLog($path1, $rev1, 0, false, 1);
 if (!$history1) 
 {
-	http_response_code(404);
-	$vars['error'] = $lang['NOPATH'];
+	renderTemplate404('compare',$lang['NOPATH']);
 }
 else
 {
@@ -163,8 +162,7 @@ else
 
 	if (!$history2) 
 	{
-		http_response_code(404);
-		$vars['error'] = $lang['NOPATH'];
+		renderTemplate404('compare',$lang['NOPATH']);
 	}
 }
 

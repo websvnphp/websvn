@@ -50,8 +50,7 @@ if (!$history)
 
 	if (!$history) 
 	{
-		http_response_code(404);
-		$vars['error'] = $lang['NOPATH'];
+		renderTemplate404('revision',$lang['NOPATH']);
 	}
 }
 
@@ -67,8 +66,7 @@ $history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg, true);
 
 if (!$history) 
 {
-	http_response_code(404);
-	$vars['error'] = $lang['NOPATH'];
+	renderTemplate404('revision',$lang['NOPATH']);
 }
 
 if (empty($rev))

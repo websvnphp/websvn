@@ -48,8 +48,7 @@ if (!$history)
 
 	if (!$history)
 	{
-		http_response_code(404);
-		$vars['error'] = $lang['NOPATH'];
+		renderTemplate404('blame',$lang['NOPATH']);
 	}
 }
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
@@ -61,11 +60,9 @@ if (empty($rev))
 else 
 {
 	$history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
-
 	if (!$history) 
 	{
-		http_response_code(404);
-		$vars['error'] = $lang['NOPATH'];
+		renderTemplate404('blame',$lang['NOPATH']);
 	}
 }
 

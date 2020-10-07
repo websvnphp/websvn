@@ -232,8 +232,7 @@ if (!$history)
 	$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
 	if (!$history)
 	{
-		http_response_code(404);
-		$vars['error'] = $lang['NOPATH'];
+		renderTemplate404('directory',$lang['NOPATH']);
 	}
 }
 

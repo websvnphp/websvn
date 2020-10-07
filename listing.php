@@ -404,8 +404,7 @@ if (!$history)
 
 	if (!$history) 
 	{
-		http_response_code(404);
-		$vars['error'] = $lang['NOPATH'];
+		renderTemplate404('directory',$lang['NOPATH']);
 	}
 }
 
