@@ -290,11 +290,13 @@ function executePlainPhpTemplate($vars) {
 	require_once $vars['templateentrypoint'];
 }
 
-// {{{ renderTemplateNoRepo
+// {{{ renderTemplate404
 
-function renderTemplateNoRepo($view)
+function renderTemplate404($view, $errorDetail="")
 {
+	global $vars, $lang;
 	http_response_code(404);
+	$vars['error'] = "WebSVN 404 ".$lang[$errorDetail];
 	renderTemplate($view);
 	exit(0);
 }

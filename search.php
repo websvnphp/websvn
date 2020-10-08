@@ -208,7 +208,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplateNoRepo('directory');
+	renderTemplate404('directory','NOREP');
 }
 
 $svnrep = new SVNRepository($rep);
@@ -232,8 +232,7 @@ if (!$history)
 	$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
 	if (!$history)
 	{
-		http_response_code(404);
-		$vars['error'] = $lang['NOPATH'];
+		renderTemplate404('directory','NOPATH');
 	}
 }
 
