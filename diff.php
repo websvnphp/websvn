@@ -42,7 +42,7 @@ if (array_key_exists('ignorews', $_REQUEST))
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplate404('diff',$lang['NOREP']);
+	renderTemplate404('diff','NOREP');
 }
 
 $svnrep = new SVNRepository($rep);

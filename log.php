@@ -97,7 +97,7 @@ $maxperpage = 20;
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplate404('log',$lang['NOREP']);
+	renderTemplate404('log','NOREP');
 }
 
 $svnrep = new SVNRepository($rep);
@@ -111,7 +111,7 @@ if (!$history)
 
 	if (!$history) 
 	{
-		renderTemplate404('log',$lang['NOPATH']);
+		renderTemplate404('log','NOPATH');
 	}
 }
 

@@ -296,7 +296,7 @@ function renderTemplate404($view, $errorDetail="")
 {
 	global $vars, $lang;
 	http_response_code(404);
-	$vars['error'] = "WebSVN 404 ".$errorDetail;
+	$vars['error'] = "WebSVN 404 ".$lang[$errorDetail];
 	renderTemplate($view);
 	exit(0);
 }

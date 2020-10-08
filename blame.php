@@ -33,7 +33,7 @@ $vars['action'] = $lang['BLAME'];
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplate404('blame',$lang['NOREP']);
+	renderTemplate404('blame','NOREP');
 }
 
 $svnrep = new SVNRepository($rep);
@@ -48,7 +48,7 @@ if (!$history)
 
 	if (!$history)
 	{
-		renderTemplate404('blame',$lang['NOPATH']);
+		renderTemplate404('blame','NOPATH');
 	}
 }
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
@@ -62,7 +62,7 @@ else
 	$history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
 	if (!$history) 
 	{
-		renderTemplate404('blame',$lang['NOPATH']);
+		renderTemplate404('blame','NOPATH');
 	}
 }
 

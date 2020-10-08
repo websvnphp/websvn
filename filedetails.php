@@ -30,7 +30,7 @@ require_once 'include/template.php';
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplate404('file',$lang['NOREP']);
+	renderTemplate404('file','NOREP');
 }
 
 $svnrep = new SVNRepository($rep);
@@ -55,7 +55,7 @@ if (!$history)
 	$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
 	if (!$history) 
 	{
-		renderTemplate404('file',$lang['NOPATH']);
+		renderTemplate404('file','NOPATH');
 	}
 }
 
@@ -240,7 +240,7 @@ if (!$rep->hasReadAccess($path))
 }
 else if (!$svnrep->isFile($path, $rev, $peg)) 
 {
-	renderTemplate404('file',$lang['NOPATH']);
+	renderTemplate404('file','NOPATH');
 }
 
 // $listing is populated with file data when file.tmpl calls [websvn-getlisting]

@@ -40,7 +40,7 @@ function checkRevision($rev)
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplate404('compare',$lang['NOREP']);
+	renderTemplate404('compare','NOREP');
 }
 
 $svnrep = new SVNRepository($rep);
@@ -154,7 +154,7 @@ $vars['rev2'] = $rev2;
 $history1 = $svnrep->getLog($path1, $rev1, 0, false, 1);
 if (!$history1) 
 {
-	renderTemplate404('compare',$lang['NOPATH']);
+	renderTemplate404('compare','NOPATH');
 }
 else
 {
@@ -162,7 +162,7 @@ else
 
 	if (!$history2) 
 	{
-		renderTemplate404('compare',$lang['NOPATH']);
+		renderTemplate404('compare','NOPATH');
 	}
 }
 

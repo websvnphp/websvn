@@ -31,7 +31,7 @@ require_once 'include/bugtraq.php';
 // Make sure that we have a repository
 if (!$rep)
 {
-	renderTemplate404('revision',$lang['NOREP']);
+	renderTemplate404('revision','NOREP');
 }
 
 $svnrep = new SVNRepository($rep);
@@ -50,7 +50,7 @@ if (!$history)
 
 	if (!$history) 
 	{
-		renderTemplate404('revision',$lang['NOPATH']);
+		renderTemplate404('revision','NOPATH');
 	}
 }
 
@@ -66,7 +66,7 @@ $history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg, true);
 
 if (!$history) 
 {
-	renderTemplate404('revision',$lang['NOPATH']);
+	renderTemplate404('revision','NOPATH');
 }
 
 if (empty($rev))
