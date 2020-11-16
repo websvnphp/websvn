@@ -570,7 +570,7 @@ if (!$noinput)
 			
 			if (strlen($line) === 0) 
 			{
-				if (!$vars['warning']) 
+				if (!isset($vars['warning'])) 
 				{
 					$vars['warning'] = "No changes between revisions";
 				}
