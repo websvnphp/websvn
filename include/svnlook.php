@@ -681,8 +681,13 @@ class SVNRepository {
 			$tempname = tempnamWithCheck($config->getTempDir(), '');
 		}
 		$highlighted = true;
+		$shouldTrimOutput = false;
+		$explodeStr = "\n";
 		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($path)) {
 			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg);
+			// Geshi outputs in HTML format, enscript does not
+			$shouldTrimOutput = true;
+			$explodeStr = "<br />";
 		} else if ($highlight != 'no' && $config->useEnscript) {
 			// Get the files, feed it through enscript, then remove the enscript headers using sed
 			// Note that the sed command returns only the part of the file between <PRE> and </PRE>.
@@ -718,14 +723,17 @@ class SVNRepository {
 			$dst = fopen($filename, 'w');
 			if ($dst) {
 				$content = file_get_contents($tempname);
-				$content = explode('<br />', $content);
+				$content = explode($explodeStr, $content);
 
 				// $attributes is used to remember what highlighting attributes
 				// are in effect from one line to the next
 				$attributes = array(); // start with no attributes in effect
 
 				foreach ($content as $line) {
-					fputs($dst, $this->highlightLine(trim($line), $attributes)."\n");
+					if ($shouldTrimOutput) {
+						$line = trim($line);
+					}
+					fputs($dst, $this->highlightLine($line, $attributes)."\n");
 				}
 				fclose($dst);
 			}
