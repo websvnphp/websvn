@@ -854,6 +854,47 @@ class SVNRepository {
 	}
 
 	// }}}
+	
+	// {{{ listReadmeContents
+	//
+	// Parse the readme.md file
+	function listReadmeContents($path, $rev = 0, $peg = '') {
+		global $config;
+
+		// Make this Configurable ??
+		$file = "README.md";
+
+		if($this->isFile($path.$file) != True)
+		{
+			return;
+		}
+
+		// Check for the flag for markdown Move this elsewhere?? or better to not added in composer
+		if (!defined('USE_AUTOLOADER')) {
+			require_once 'Parsedown.php';
+		}
+		else {
+			require_once 'include/parsedown.php';
+		}
+		// Capital P and small p to differentiate one used from PEAR or Composer (P) and (p) is from local include
+		$Parsedown = new Parsedown();
+
+		$cmd = $this->svnCommandString('cat', $path.$file, $rev, $peg);
+
+		if ($result = popenCommand($cmd, 'r')) 
+		{
+			echo('<div id="wrap">');
+			while (!feof($result)) 
+			{
+				$line = fgets($result, 1024);
+				echo $Parsedown->text($line);
+			}
+			echo('</div>');
+			pclose($result);
+		}
+	}
+
+	// }}}
 
 	// {{{ getBlameDetails
 	//
