@@ -286,7 +286,7 @@ function renderTemplate($view,$readmePath=null)
 		flush(); // http://developer.yahoo.com/performance/rules.html#flush
 		parseTemplate($view . '.tmpl');
 
-		if ($view === 'directory' || $view === 'log') 
+		if (($view === 'directory') || ($view === 'log')) 
 		{
 			print '<script type="text/javascript" src="'.$locwebsvnhttp.'/javascript/compare-checkboxes.js"></script>';
 		}
