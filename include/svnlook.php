@@ -880,7 +880,7 @@ class SVNRepository {
 		if (!defined('USE_AUTOLOADER')) {
 			require_once 'Parsedown.php';
 		}
-		$parsedown = new Parsedown();
+		$mdParser = new Parsedown();
 		$cmd = $this->svnCommandString('cat', $path.$file, $rev, $peg);
 
 		if (!($result = popenCommand($cmd, 'r')))
@@ -892,7 +892,7 @@ class SVNRepository {
 		while (!feof($result)) 
 		{
 			$line = fgets($result, 1024);
-			echo $parsedown->text($line);
+			echo $mdParser->text($line);
 		}
 		echo('</div>');
 		pclose($result);
