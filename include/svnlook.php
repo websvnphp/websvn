@@ -869,37 +869,34 @@ class SVNRepository {
 	function listReadmeContents($path, $rev = 0, $peg = '') {
 		global $config;
 
-		// Make this Configurable ??
 		$file = "README.md";
 
-		if($this->isFile($path.$file) != True)
+		if ($this->isFile($path.$file) != True)
 		{
 			return;
 		}
 
-		// Check for the flag for markdown Move this elsewhere?? or better to not added in composer
+		// Autoloader Handles most of the time
 		if (!defined('USE_AUTOLOADER')) {
 			require_once 'Parsedown.php';
 		}
-		else {
-			require_once 'include/parsedown.php';
-		}
-		// Capital P and small p to differentiate one used from PEAR or Composer (P) and (p) is from local include
-		$Parsedown = new Parsedown();
-
+		$parsedown = new Parsedown();
 		$cmd = $this->svnCommandString('cat', $path.$file, $rev, $peg);
 
-		if ($result = popenCommand($cmd, 'r')) 
+		if (!($result = popenCommand($cmd, 'r')))
 		{
-			echo('<div id="wrap">');
-			while (!feof($result)) 
-			{
-				$line = fgets($result, 1024);
-				echo $Parsedown->text($line);
-			}
-			echo('</div>');
-			pclose($result);
+			return;
 		}
+
+		echo('<div id="wrap">');
+		while (!feof($result)) 
+		{
+			$line = fgets($result, 1024);
+			echo $parsedown->text($line);
+		}
+		echo('</div>');
+		pclose($result);
+
 	}
 
 	// }}}

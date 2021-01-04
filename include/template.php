@@ -263,7 +263,7 @@ function parseTags($line, $vars) {
 //
 // Renders the templates for the given view
 
-function renderTemplate($view,$readmepath=null) 
+function renderTemplate($view,$readmePath=null) 
 {
 
 	global $config, $rep, $vars, $listing, $lang, $locwebsvnhttp;
@@ -285,19 +285,20 @@ function renderTemplate($view,$readmepath=null)
 		parseTemplate('header.tmpl');
 		flush(); // http://developer.yahoo.com/performance/rules.html#flush
 		parseTemplate($view . '.tmpl');
+
 		if ($view === 'directory' || $view === 'log') 
 		{
 			print '<script type="text/javascript" src="'.$locwebsvnhttp.'/javascript/compare-checkboxes.js"></script>';
 		}
 
-		if($readmepath==null)
+		if ($readmePath==null)
 		{
 			parseTemplate('footer.tmpl');
 			return;
 		}
 
 		$svnrep = new SVNRepository($rep);
-		$svnrep->listReadmeContents($readmepath);
+		$svnrep->listReadmeContents($readmePath);
 		parseTemplate('footer.tmpl');
 	}
 }
