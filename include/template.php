@@ -263,7 +263,7 @@ function parseTags($line, $vars) {
 //
 // Renders the templates for the given view
 
-function renderTemplate($view,$readmePath=null) 
+function renderTemplate($view, $readmePath = null) 
 {
 
 	global $config, $rep, $vars, $listing, $lang, $locwebsvnhttp;
@@ -291,7 +291,7 @@ function renderTemplate($view,$readmePath=null)
 			print '<script type="text/javascript" src="'.$locwebsvnhttp.'/javascript/compare-checkboxes.js"></script>';
 		}
 
-		if ($readmePath==null)
+		if ($readmePath == null)
 		{
 			parseTemplate('footer.tmpl');
 			return;

@@ -631,4 +631,4 @@ if (!$rep->hasReadAccess($path))
 }
 
 $vars['restricted'] = !$rep->hasReadAccess($path, false);
-renderTemplate('directory',$path);
+renderTemplate('directory', $path);
