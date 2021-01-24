@@ -656,6 +656,7 @@ class WebSvnConfig {
 	var $useEnscript = false;
 	var $useEnscriptBefore_1_6_3 = false;
 	var $useGeshi = false;
+	var $useParsedown = false;
 	var $inlineMimeTypes = array();
 	var $allowDownload = false;
 	var $tempDir = '';
@@ -872,6 +873,21 @@ class WebSvnConfig {
 
 	function getUseGeshi() {
 		return $this->useGeshi;
+	}
+
+	// }}}
+
+	// {{{ Parsedown
+
+	// useParsedown
+	//
+	// Use Parsedown to render README.md
+	function useParsedown() {
+		$this->useParsedown = true;
+	}
+
+	function getUseParsedown() {
+		return $this->useParsedown;
 	}
 
 	// }}}

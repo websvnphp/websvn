@@ -876,25 +876,16 @@ class SVNRepository {
 			return;
 		}
 
+		if (!$config->getUseParsedown())
+		{
+			return;
+		}
+
 		// Autoloader Handles most of the time
 		if (!defined('USE_AUTOLOADER')) {
-			try
-			{
-				if (!file_exists('Parsedown.php'))
-				{
-					throw new Exception ("Parsedown.php does not exist");
-				}
-				else
-				{
-					require_once 'Parsedown.php';
-				}
-			}
-			catch (Exception $error)
-			{
-				echo ("Cannot Render README.md as dependent Parsedown library not found. " . $error->getMessage());
-				return;
-			}
+			require_once 'Parsedown.php';
 		}
+
 		$mdParser = new Parsedown();
 		$cmd = $this->svnCommandString('cat', $path.$file, $rev, $peg);
 

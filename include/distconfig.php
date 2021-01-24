@@ -410,6 +410,18 @@ $config->setMinDownloadLevel(2);
 
 // }}}
 
+// {{{ Mardown Render
+
+// Uncomment this line if you want to enable Mardown Rendering of README.md file in the path. 
+// You will need the Parsedown.php library for this to work. You can either manually add this 
+// library to include path or use the composer to install the same.
+// This will look for REAMDME.md file on the path and render it.
+// The README.md is not configurable for now. 
+
+// $config->useParsedown();
+
+// }}}
+
 // {{{ RSSFEED ---
 
 // Uncomment this line to hide the RSS feed links across all repositories
