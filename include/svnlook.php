@@ -862,6 +862,50 @@ class SVNRepository {
 	}
 
 	// }}}
+	
+	// {{{ listReadmeContents
+	//
+	// Parse the README.md file
+	function listReadmeContents($path, $rev = 0, $peg = '') {
+		global $config;
+
+		$file = "README.md";
+
+		if ($this->isFile($path.$file) != True)
+		{
+			return;
+		}
+
+		if (!$config->getUseParsedown())
+		{
+			return;
+		}
+
+		// Autoloader handles most of the time
+		if (!defined('USE_AUTOLOADER')) {
+			require_once 'Parsedown.php';
+		}
+
+		$mdParser = new Parsedown();
+		$cmd = $this->svnCommandString('cat', $path.$file, $rev, $peg);
+
+		if (!($result = popenCommand($cmd, 'r')))
+		{
+			return;
+		}
+
+		echo('<div id="wrap">');
+		while (!feof($result)) 
+		{
+			$line = fgets($result, 1024);
+			echo $mdParser->text($line);
+		}
+		echo('</div>');
+		pclose($result);
+
+	}
+
+	// }}}
 
 	// {{{ getBlameDetails
 	//
