@@ -412,7 +412,7 @@ $config->setMinDownloadLevel(2);
 
 // {{{ Markdown Render
 
-// Uncomment this line if you want to enable Mardown Rendering of README.md file in the path. 
+// Uncomment this line if you want to enable Markdown Rendering of README.md file in the path. 
 // You will need the Parsedown.php (https://github.com/erusev/parsedown) library for this to work.
 // This will look for README.md file on the path and render it.
 // The name of "README.md" isn't configurable for now to simply follow GitHub's conventions. 

@@ -881,7 +881,7 @@ class SVNRepository {
 			return;
 		}
 
-		// Autoloader Handles most of the time
+		// Autoloader handles most of the time
 		if (!defined('USE_AUTOLOADER')) {
 			require_once 'Parsedown.php';
 		}
