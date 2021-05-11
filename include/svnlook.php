@@ -1112,19 +1112,18 @@ class SVNRepository {
 
 	// {{{ getListSearch
 
-	function getListSearch($path,$searchstring='', $rev = 0, $peg = '') {
+	function getListSearch($path, $term = '', $rev = 0, $peg = '') {
 		global $config, $curList;
 
-		// Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
-		// the trailing slash from the path for comparison purposes
-
-		if ($path[strlen($path) - 1] == '/' && $path != '/') {
+		// Since directories returned by "svn log" don't have trailing slashes (:-(), we need to
+		// remove the trailing slash from the path for comparison purposes.
+		if (($path[strlen($path) - 1] == '/') && ($path != '/')) {
 			$path = substr($path, 0, -1);
 		}
 
-		$curList = new SVNList;
-		$curList->entries = array();
-		$curList->path = $path;
+		$curList			= new SVNList;
+		$curList->entries	= array();
+		$curList->path		= $path;
 
 		// Get the list info
 
@@ -1134,9 +1133,9 @@ class SVNRepository {
 				$rev = $headlog->entries[0]->rev;
 		}
 
-		$searchstring = escapeshellarg($searchstring);
-		$cmd = 'list -R --search ' . $searchstring . ' --xml';
-		$cmd = $this->svnCommandString($cmd, $path, $rev, $peg);
+		$term	= escapeshellarg($term);
+		$cmd	= 'list -R --search ' . $term . ' --xml';
+		$cmd	= $this->svnCommandString($cmd, $path, $rev, $peg);
 		$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
 
 		return $curList;
