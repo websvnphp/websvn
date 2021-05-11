@@ -85,7 +85,7 @@ $lang["SHOWALL"] = "Vis alle";
 $lang["BADCMD"] = "En feil oppstod under utførelse av denne kommandoen";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Kjører på <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Kjører på <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversionprosjekter";
 $lang["SERVER"] = "Subversiontjener";
 
@@ -122,3 +122,7 @@ $lang["COMPPATH"] = "Sammenlign sti:";
 $lang["WITHPATH"] = "Med sti:";
 $lang["FILEDELETED"] = "Fil slettet";
 $lang["FILEADDED"] = "Ny fil";
+
+$lang['SEARCH'] = "Søk";
+$lang['SEARCH_PLACEHOLDER'] = "Søk etter varer her";
+$lang['NOITEMSFOUND'] = "Ingen objekter funnet";

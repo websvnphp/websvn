@@ -79,7 +79,7 @@ $lang["SHOWALL"] = "Mostrar todo";
 $lang["BADCMD"] = "Error ejecutando ese comando";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Proyectos de Subversion";
 $lang["SERVER"] = "Servidor de Subversion";
 
@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "Comparar Ruta:";
 $lang["WITHPATH"] = "Con Ruta:";
 $lang["FILEDELETED"] = "Archivo Eliminado";
 $lang["FILEADDED"] = "Archivo Nuevo";
+
+$lang['SEARCH'] = "Buscar";
+$lang['SEARCH_PLACEHOLDER'] = "Buscar artículos aquí";
+$lang['NOITEMSFOUND'] = "No se encontraron artículos";

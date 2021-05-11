@@ -152,7 +152,7 @@ function getFullURL($loc) {
 	// make sure we have a directory to go to
 	if (empty($loc)) {
 		$loc = '/';
-	} else if ($loc{0} != '/') {
+	} else if ($loc[0] != '/') {
 		$loc = '/'.$loc;
 	}
 
@@ -222,7 +222,7 @@ function expandTabs($s, $tabwidth = - 1) {
 	for ($i = 0; $i < $chunkscount; $i++) {
 		// make sure we're not dealing with an empty string
 		if (empty($chunks[$i])) continue;
-		switch ($chunks[$i]{0}) {
+		switch ($chunks[$i][0]) {
 			case '<': // HTML tag: ignore its width by doing nothing
 				break;
 
@@ -293,8 +293,7 @@ function datetimeFormatDuration($seconds, $nbsp = false, $skipSeconds = false) {
 		// are 0 and we still want to print seconds)
 		if ($any || $qty[$i] > 0 || $i == $count - 1) {
 			if ($any) $text .= $nbsp ? '&nbsp;' : ' ';
-			if ($any && $qty[$i] < 10) $text .= '0';
-			$text .= $qty[$i].$names[$i];
+			$text .= $qty[$i].' '.$names[$i];
 			$any = true;
 			$parts++;
 			if ($parts >= 2) break;
@@ -400,20 +399,24 @@ function getUserLanguage($languages, $default, $userchoice) {
 
 // }}}
 
+// {{{ tempnameWithCheck
+
 function tempnamWithCheck($dir, $prefix) {
 	$tmp = tempnam($dir, $prefix);
 
 	if ($tmp == false) {
 		if (!headers_sent()) {
-			header('HTTP/1.x 500 Internal Server Error', true, 500);
-			error_log('Unable to create a temporary file. Either make the currently used folder ("' . $dir . '") writable for WebSVN or change the folder in the configuration.');
-			print 'Unable to create a temporary file. Either make the currently used folder writable for WebSVN or change the folder in the configuration.';
+			http_response_code(500);
+			error_log('Unable to create a temporary file. Either make the currently used directory ("' . $dir . '") writable for WebSVN or change the directory in the configuration.');
+			print 'Unable to create a temporary file. Either make the currently used directory writable for WebSVN or change the directory in the configuration.';
 			exit(0);
 		} else {
 			global $vars;
-			$vars['warning'] = 'Unable to create a temporary file. Either make the currently used folder writable for WebSVN or change the folder in the configuration.';
+			$vars['warning'] = 'Unable to create a temporary file. Either make the currently used directory writable for WebSVN or change the directory in the configuration.';
 		}
 	}
 
 	return $tmp;
 }
+
+// }}}

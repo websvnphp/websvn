@@ -28,7 +28,7 @@
 |  INSTALLATION                                                                |
 |______________________________________________________________________________|
  
-  1)  Place the complete folder "calm" in your "templates" directory/
+  1)  Place the complete directory "calm" in your "templates" directory/
   
   2)  Open include/config.php and look for a line similar to the following:
   

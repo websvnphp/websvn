@@ -36,7 +36,7 @@ $vars['showlastmod'] = $config->showLastModInIndex();
 $config->sortByGroup();
 $projects = $config->getRepositories();
 
-if (count($projects) == 1 && $projects[0]->hasReadAccess('/', true)) {
+if (count($projects) == 1 && $projects[0]->hasReadAccess('/')) {
 	header('Location: '.str_replace('&amp;', '', $config->getURL($projects[0], '', 'dir')));
 	exit;
 }
@@ -46,9 +46,10 @@ $parity = 0; // Alternates between every entry, whether it is a group or project
 $groupparity = 0; // The first project (and first of any group) resets this to 0
 $curgroup = null;
 $groupcount = 0;
+
 // Create listing of all configured projects (includes groups if they are used).
 foreach ($projects as $project) {
-	if (!$project->hasReadAccess('/', true))
+	if (!$project->hasReadAccess('/'))
 		continue;
 
 	$listvar = &$listing[$i];
@@ -75,6 +76,7 @@ foreach ($projects as $project) {
 	if ($config->showLastModInIndex()) {
 		$svnrep = new SVNRepository($project);
 		$log = $svnrep->getLog('/', '', '', true, 1);
+
 		if (isset($log->entries[0])) {
 			$head = $log->entries[0];
 			$listvar['revision'] = $head->rev;
@@ -102,9 +104,10 @@ foreach ($projects as $project) {
 	$listvar['groupname'] = ($curgroup != null) ? $curgroup : '';
 	$i++;
 }
+
 if (empty($listing) && !empty($projects)) {
 	$vars['error'] = $lang['NOACCESS'];
-	checkSendingAuthHeader();
+	sendHeaderForbidden();
 }
 
 $vars['flatview'] = $config->flatIndex;

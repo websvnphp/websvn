@@ -23,7 +23,7 @@
 // General class for handling configuration options
 
 require_once 'include/command.php';
-require_once 'include/auth.php';
+require_once 'include/authz.php';
 require_once 'include/version.php';
 
 // Auxillary functions used to sort repositories by name/group
@@ -111,7 +111,7 @@ class ParentPath {
 	// }}}
 
 	// {{{ __construct($path [, $group [, $pattern [, $skipAlreadyAdded [, $clientRootURL]]]])
-	function ParentPath($path, $group = null, $pattern = false, $skipAlreadyAdded = true, $clientRootURL = '') {
+	function __construct($path, $group = null, $pattern = false, $skipAlreadyAdded = true, $clientRootURL = '') {
 		$this->path = $path;
 		$this->group = $group;
 		$this->pattern = $pattern;
@@ -143,7 +143,7 @@ class ParentPath {
 				if ($this->pattern === false || preg_match($this->pattern, $name)) {
 					$url = $config->fileUrlPrefix.$fullpath;
 					$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-					if ($url{strlen($url) - 1} == '/') {
+					if ($url[ strlen($url) - 1 ] == '/') {
 						$url = substr($url, 0, -1);
 					}
 
@@ -172,7 +172,7 @@ class ParentPath {
 		// For each file...
 		while (false !== ($name = readdir($handle))) {
 			$fullpath = $this->path.DIRECTORY_SEPARATOR.$name;
-			if ($name{0} != '.' && is_dir($fullpath) && is_readable($fullpath)) {
+			if ($name[0] != '.' && is_dir($fullpath) && is_readable($fullpath)) {
 				// And that contains a db directory (in an attempt to not include non svn repositories.
 				$dbfullpath = $fullpath.DIRECTORY_SEPARATOR.'db';
 				if (is_dir($dbfullpath) && is_readable($dbfullpath)) {
@@ -180,7 +180,7 @@ class ParentPath {
 					if ($this->pattern === false || preg_match($this->pattern, $name)) {
 						$url = $config->fileUrlPrefix.$fullpath;
 						$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-						if ($url{strlen($url) - 1} == '/') {
+						if ($url[strlen($url) - 1] == '/') {
 							$url = substr($url, 0, -1);
 						}
 						$clientRootURL = ($this->clientRootURL) ? $this->clientRootURL.'/'.$name : '';
@@ -237,15 +237,14 @@ class Repository {
 	var $ignoreWebSVNContentTypes;
 	var $bugtraq;
 	var $bugtraqProperties;
-	var $auth = null;
-	var $authBasicRealm;
+	var $authz = null;
 	var $templatePath = false;
 
 	// }}}
 
 	// {{{ __construct($name, $svnName, $serverRootURL [, $group [, $username [, $password [, $clientRootURL]]]])
 
-	function Repository($name, $svnName, $serverRootURL, $group = null, $username = null, $password = null, $subpath = null, $clientRootURL = null) {
+	function __construct($name, $svnName, $serverRootURL, $group = null, $username = null, $password = null, $subpath = null, $clientRootURL = null) {
 		$this->name = $name;
 		$this->svnName = $svnName;
 		$this->path = $serverRootURL;
@@ -378,13 +377,13 @@ class Repository {
 	}
 
 	function addAllowedDownloadException($path) {
-		if ($path{strlen($path) - 1} != '/') $path .= '/';
+		if ($path[strlen($path) - 1] != '/') $path .= '/';
 
 		$this->allowedExceptions[] = $path;
 	}
 
 	function addDisallowedDownloadException($path) {
-		if ($path{strlen($path) - 1} != '/') $path .= '/';
+		if ($path[strlen($path) - 1] != '/') $path .= '/';
 
 		$this->disallowedExceptions[] = $path;
 	}
@@ -539,54 +538,72 @@ class Repository {
 
 	// }}}
 
-	// {{{ Authentication
+	// {{{ Authorization
 
-	function useAuthenticationFile($file, $basicRealm = false) {
+	function useAccessFile($file) {
 		if (is_readable($file)) {
-			if ($this->auth === null) {
-				$this->auth = new Authentication($basicRealm);
+			if ($this->authz === null) {
+				$this->authz = new Authorization();
 			}
-			$this->auth->addAccessFile($file);
+			$this->authz->addAccessFile($file);
 		} else {
-			die('Unable to read authentication file "'.$file.'"');
+			die('Unable to read access file "'.$file.'"');
 		}
 	}
 
-	function &getAuth() {
+	function &getAuthz() {
 		global $config;
 
 		$a = null;
-		if ($this->auth !== null) {
-			$a =& $this->auth;
+		if ($this->authz !== null) {
+			$a =& $this->authz;
 		} else {
-			$a =& $config->getAuth();
+			$a =& $config->getAuthz();
 		}
 		return $a;
 	}
 
-	function hasReadAccess($path, $checkSubFolders = false) {
-		global $config;
-
-		$a =& $this->getAuth();
-
-		if (!empty($a)) {
-			return $a->hasReadAccess($this->svnName, $path, $checkSubFolders);
+	function _getPathWithSubIf($pathWoSub) {
+		if (!$this->subpath) {
+			return $pathWoSub;
 		}
 
-		// No auth file - free access...
+		return '/' . $this->subpath . $pathWoSub;
+	}
+
+	function hasReadAccess($pathWoSub, $checkSubDirs = false) {
+		$path	=  $this->_getPathWithSubIf($pathWoSub);
+		$a		=& $this->getAuthz();
+
+		if (!empty($a)) {
+			return $a->hasReadAccess($this->svnName, $path, $checkSubDirs);
+		}
+
+		// No access file - free access...
 		return true;
 	}
 
-	function hasUnrestrictedReadAccess($path) {
-		global $config;
+	function hasLogReadAccess($pathWithSub) {
+		$path	=  $pathWithSub;
+		$a		=& $this->getAuthz();
 
-		$a =& $this->getAuth();
+		if (!empty($a)) {
+			return $a->hasReadAccess($this->svnName, $path, false);
+		}
+
+		// No access file - free access...
+		return true;
+	}
+
+	function hasUnrestrictedReadAccess($pathWoSub) {
+		$path	=  $this->_getPathWithSubIf($pathWoSub);
+		$a		=& $this->getAuthz();
 
 		if (!empty($a)) {
 			return $a->hasUnrestrictedReadAccess($this->svnName, $path);
 		}
 
-		// No auth file - free access...
+		// No access file - free access...
 		return true;
 	}
 
@@ -601,25 +618,26 @@ class WebSvnConfig {
 
 	// Tool path locations
 
-	var $_svnCommandPrefix = '';
 	var $_svnCommandPath = '';
-	var $_svnConfigDir = '/tmp';
+	var $_svnConfigDir = '/tmp/websvn';
 	var $_svnTrustServerCert = false;
-	var $svn = 'svn --non-interactive --config-dir /tmp';
+	var $svn = 'svn --non-interactive --config-dir /tmp/websvn';
+	var $svnAuthz = 'svnauthz accessof';
 	var $diff = 'diff';
 	var $enscript = 'enscript -q';
 	var $sed = 'sed';
 	var $gzip = 'gzip';
 	var $tar = 'tar';
 	var $zip = 'zip';
+	var $locale = '';
 
-	// different modes for file and folder download
+	// different modes for file and directory download
 
 	var $defaultFileDlMode = 'plain';
-	var $defaultFolderDlMode = 'gzip';
+	var $defaultDirectoryDlMode = 'gzip';
 
 	var $validFileDlModes = array( 'gzip', 'zip', 'plain' );
-	var $validFolderDlModes = array( 'gzip', 'zip' );
+	var $validDirectoryDlModes = array( 'gzip', 'zip' );
 
 	// Other configuration items
 
@@ -634,9 +652,11 @@ class WebSvnConfig {
 	var $_ignoreWhitespacesInDiff = false;
 	var $serverIsWindows = false;
 	var $multiViews = false;
+	var $multiViewsIndex = 'browse';
 	var $useEnscript = false;
 	var $useEnscriptBefore_1_6_3 = false;
 	var $useGeshi = false;
+	var $useParsedown = false;
 	var $inlineMimeTypes = array();
 	var $allowDownload = false;
 	var $tempDir = '';
@@ -650,8 +670,10 @@ class WebSvnConfig {
 	var $spaces = 8;
 	var $bugtraq = false;
 	var $bugtraqProperties = null;
-	var $auth = null;
+	var $authz = null;
 	var $blockRobots = false;
+
+	var $loadAllRepos = false;
 
 	var $templatePaths = array();
 	var $userTemplate = false;
@@ -682,7 +704,7 @@ class WebSvnConfig {
 
 	// {{{ __construct()
 
-	function WebSvnConfig() {
+	function __construct() {
 	}
 
 	// }}}
@@ -714,7 +736,7 @@ class WebSvnConfig {
 	function addExcludedPath($path) {
 		$url = $this->fileUrlPrefix.$path;
 		$url = str_replace(DIRECTORY_SEPARATOR, '/', $url);
-		if ($url{strlen($url) - 1} == '/') {
+		if ($url[strlen($url) - 1] == '/') {
 			$url = substr($url, 0, -1);
 		}
 		$this->_excluded[] = $url;
@@ -804,12 +826,17 @@ class WebSvnConfig {
 	//
 	// Use MultiViews to access the repository
 
-	function useMultiViews() {
+	function useMultiViews($multiViewsIndex = 'browse') {
 		$this->multiViews = true;
+		$this->multiViewsIndex = $multiViewsIndex;
 	}
 
 	function getUseMultiViews() {
 		return $this->multiViews;
+	}
+
+	function getMultiViewsIndex() {
+		return $this->multiViewsIndex;
 	}
 
 	// }}}
@@ -846,6 +873,21 @@ class WebSvnConfig {
 
 	function getUseGeshi() {
 		return $this->useGeshi;
+	}
+
+	// }}}
+
+	// {{{ Parsedown
+
+	// useParsedown
+	//
+	// Use Parsedown to render README.md
+	function useParsedown() {
+		$this->useParsedown = true;
+	}
+
+	function getUseParsedown() {
+		return $this->useParsedown;
 	}
 
 	// }}}
@@ -1014,7 +1056,7 @@ class WebSvnConfig {
 	}
 
 	function addAllowedDownloadException($path, $myrep = 0) {
-		if ($path{strlen($path) - 1} != '/') {
+		if ($path[strlen($path) - 1] != '/') {
 			$path .= '/';
 		}
 
@@ -1027,7 +1069,7 @@ class WebSvnConfig {
 	}
 
 	function addDisallowedDownloadException($path, $myrep = 0) {
-		if ($path{strlen($path) - 1} != '/') {
+		if ($path[strlen($path) - 1] != '/') {
 			$path .= '/';
 		}
 
@@ -1080,12 +1122,12 @@ class WebSvnConfig {
 				$url = substr($url, 0, -4);
 			}
 
-			if ($path && $path{0} != '/') {
+			if ($path && $path[0] != '/') {
 				$path = '/'.$path;
 			}
 
 			if (substr($url, -5) == 'index') {
-				$url = substr($url, 0, -5).'wsvn';
+				$url = substr($url, 0, -5).$this->multiViewsIndex;
 			}
 
 			if ($op == 'index') {
@@ -1142,6 +1184,10 @@ class WebSvnConfig {
 
 				case 'comp':
 					$url = 'comp.php';
+					break;
+
+				case 'search':
+					$url = 'search.php';
 					break;
 			}
 
@@ -1210,19 +1256,17 @@ class WebSvnConfig {
 		$this->_updateSVNCommand();
 	}
 
-	// Define a prefix to include before every SVN command (e.g. 'arch -i386')
-	function setSvnCommandPrefix($prefix) {
-		$this->_svnCommandPrefix = $prefix;
-		$this->_updateSVNCommand();
-	}
-
 	function _updateSVNCommand() {
-		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
-		$this->svn = $this->_svnCommandPrefix.' '.$this->svn;
+		$this->_setPath($this->svn,			$this->_svnCommandPath, 'svn',		'--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
+		$this->_setPath($this->svnAuthz,	$this->_svnCommandPath, 'svnauthz',	'accessof');
 	}
 
 	function getSvnCommand() {
 		return $this->svn;
+	}
+
+	function getSvnAuthzCommand() {
+		return $this->svnAuthz;
 	}
 
 	// setDiffPath
@@ -1296,6 +1340,18 @@ class WebSvnConfig {
 		return $this->zip;
 	}
 
+	// setLocale
+	//
+	// Set the locale for PHP and all spawned processes
+
+	function setLocale($locale) {
+		$this->locale = $locale;
+	}
+
+	function getLocale() {
+		return $this->locale;
+	}
+
 	// setDefaultFileDlMode
 	//
 	// Define the default file download mode - one of [gzip, zip, plain]
@@ -1312,20 +1368,28 @@ class WebSvnConfig {
 		return $this->defaultFileDlMode;
 	}
 
-	// setDefaultFolderDlMode
+	// setDefaultDirectoryDlMode
 	//
-	// Define the default folder download mode - one of [gzip, zip]
-	function setDefaultFolderDlMode($dlmode) {
-		if (in_array($dlmode, $this->validFolderDlModes)) {
-			$this->defaultFolderDlMode = $dlmode;
+	// Define the default directory download mode - one of [gzip, zip]
+	function setDefaultDirectoryDlMode($dlmode) {
+		if (in_array($dlmode, $this->validDirectoryDlModes)) {
+			$this->defaultDirectoryDlMode = $dlmode;
 		} else {
-			echo 'Setting default file download mode to an invalid value "'.$dlmode.'"';
+			echo 'Setting default directory download mode to an invalid value "'.$dlmode.'"';
 			exit;
 		}
 	}
 
+	function setDefaultFolderDlMode($dlmode) {
+		$this->setDefaultDirectoryDlMode($dlmode);
+	}
+
+	function getDefaultDirectoryDlMode() {
+		return $this->defaultDirectoryDlMode;
+	}
+
 	function getDefaultFolderDlMode() {
-		return $this->defaultFolderDlMode;
+		return $this->getDefaultDirectoryDlMode();
 	}
 
 	// Templates
@@ -1459,25 +1523,25 @@ class WebSvnConfig {
 		return $this->ignoreWebSVNContentTypes;
 	}
 
-	function useAuthenticationFile($file, $myrep = 0, $basicRealm = false) {
+	function useAccessFile($file, $myrep = 0) {
 		if (empty($myrep)) {
 			if (is_readable($file)) {
-				if ($this->auth === null) {
-					$this->auth = new Authentication($basicRealm);
+				if ($this->authz === null) {
+					$this->authz = new Authorization();
 				}
-				$this->auth->addAccessFile($file);
+				$this->authz->addAccessFile($file);
 			} else {
-				echo 'Unable to read authentication file "'.$file.'"';
+				echo 'Unable to read access file "'.$file.'"';
 				exit;
 			}
 		} else {
 			$repo =& $this->findRepository($myrep);
-			$repo->useAuthenticationFile($file);
+			$repo->useAccessFile($file);
 		}
 	}
 
-	function &getAuth() {
-		return $this->auth;
+	function &getAuthz() {
+		return $this->authz;
 	}
 
 	function areRobotsBlocked() {
@@ -1511,6 +1575,14 @@ class WebSvnConfig {
 
 	function getOpenTree() {
 		return $this->openTree;
+	}
+
+	function setLoadAllRepos($flag) {
+		$this->loadAllRepos = $flag;
+	}
+
+	function showLoadAllRepos() {
+		return $this->loadAllRepos;
 	}
 
 	function setAlphabeticOrder($flag) {

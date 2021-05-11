@@ -79,7 +79,7 @@ $lang["SHOWALL"] = "הראה הכל";
 $lang["BADCMD"] = "שגיאה בהרצת הפקודה";
 $lang["UNKNOWNREVISION"] = "גרסה לא נמצאה";
 
-$lang["POWERED"] = "פועל על ידי <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "פועל על ידי <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion גנזכי";
 $lang["SERVER"] = "Subversion שרת";
 
@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "השוואת נתיב:";
 $lang["WITHPATH"] = "עם נתיב:";
 $lang["FILEDELETED"] = "קובץ נמחק";
 $lang["FILEADDED"] = "קובץ חדש";
+
+$lang['SEARCH'] = "לחפש";
+$lang['SEARCH_PLACEHOLDER'] = "חפש פריטים כאן";
+$lang['NOITEMSFOUND'] = "לא נמצאו פריטים";

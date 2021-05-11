@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "Показати все";
 $lang["BADCMD"] = "Помилка при виконанні команди";
 $lang["UNKNOWNREVISION"] = "Цієї версії не знайдено";
 
-$lang["POWERED"] = "Працює на <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Працює на <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Репозитарії&nbsp;Subversion";
 $lang["SERVER"] = "Сервер&nbsp;Subversion";
 
@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Порівняти шлях:";
 $lang["WITHPATH"] = "Зі шляхом:";
 $lang["FILEDELETED"] = "Файл вилучено";
 $lang["FILEADDED"] = "Новий файл";
+
+$lang['SEARCH'] = "Пошук";
+$lang['SEARCH_PLACEHOLDER'] = "Шукайте тут предмети";
+$lang['NOITEMSFOUND'] = "Елементів не знайдено";

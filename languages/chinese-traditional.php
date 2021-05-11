@@ -81,7 +81,7 @@ $lang["SHOWALL"] = "顯示全部";
 $lang["BADCMD"] = "執行錯誤";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "採用 <a href=\"http://www.websvn.info/\">WebSVN</a>架設";
+$lang["POWERED"] = "採用 <a href=\"https://websvnphp.github.io/\">WebSVN</a>架設";
 $lang["PROJECTS"] = "Subversion 專案";
 $lang["SERVER"] = "Subversion Server";
 
@@ -118,3 +118,6 @@ $lang["REVCOMP"] = "顛倒比對";
 // $lang["FILEDELETED"] = "File deleted";
 // $lang["FILEADDED"] = "New file";
 
+$lang['SEARCH'] = "搜索";
+$lang['SEARCH_PLACEHOLDER'] = "在這裡搜索項目";
+$lang['NOITEMSFOUND'] = "未找到任何項目";

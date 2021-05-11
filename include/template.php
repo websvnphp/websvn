@@ -56,7 +56,7 @@ function parseCommand($line, $vars, $handle) {
 		if (!$ignore) {
 			$line = trim($line);
 			$var = substr($line, 13, -1);
-			$neg = ($var{0} == '!');
+			$neg = ($var[0] == '!');
 			if ($neg) $var = substr($var, 1);
 			if (empty($vars[$var]) ^ $neg) {
 				array_push($ignorestack, $ignore);
@@ -263,7 +263,9 @@ function parseTags($line, $vars) {
 //
 // Renders the templates for the given view
 
-function renderTemplate($view) {
+function renderTemplate($view, $readmePath = null) 
+{
+
 	global $config, $rep, $vars, $listing, $lang, $locwebsvnhttp;
 
 	// Set the view in the templates variables
@@ -272,16 +274,31 @@ function renderTemplate($view) {
 	// Check if we are using a PHP powered template or the standard one
 	$path = !empty($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
 	$path = $path . 'template.php';
-	if (is_readable($path)) {
+
+	if (is_readable($path)) 
+	{
 		$vars['templateentrypoint'] = $path;
 		executePlainPhpTemplate($vars);
-	} else {
+	}
+	else 
+	{
 		parseTemplate('header.tmpl');
 		flush(); // http://developer.yahoo.com/performance/rules.html#flush
 		parseTemplate($view . '.tmpl');
-		if ($view === 'directory' || $view === 'log') {
+
+		if (($view === 'directory') || ($view === 'log')) 
+		{
 			print '<script type="text/javascript" src="'.$locwebsvnhttp.'/javascript/compare-checkboxes.js"></script>';
 		}
+
+		if ($readmePath == null)
+		{
+			parseTemplate('footer.tmpl');
+			return;
+		}
+
+		$svnrep = new SVNRepository($rep);
+		$svnrep->listReadmeContents($readmePath);
 		parseTemplate('footer.tmpl');
 	}
 }
@@ -289,3 +306,16 @@ function renderTemplate($view) {
 function executePlainPhpTemplate($vars) {
 	require_once $vars['templateentrypoint'];
 }
+
+// {{{ renderTemplate404
+
+function renderTemplate404($view, $errorDetail="")
+{
+	global $vars, $lang;
+	http_response_code(404);
+	$vars['error'] = "WebSVN 404 ".$lang[$errorDetail];
+	renderTemplate($view);
+	exit(0);
+}
+
+// }}}

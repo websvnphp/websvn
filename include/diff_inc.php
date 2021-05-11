@@ -22,10 +22,11 @@
 //
 // Diff to files
 
-ini_set('include_path', $locwebsvnreal.'/lib/pear'.$config->pathSeparator.ini_get('include_path'));
-@include_once 'Text/Diff.php';
-@include_once 'Text/Diff/Renderer.php';
-@include_once 'Text/Diff/Renderer/unified.php';
+if (!defined('USE_AUTOLOADER')) {
+	@include_once 'Text/Diff.php';
+	@include_once 'Text/Diff/Renderer.php';
+	@include_once 'Text/Diff/Renderer/unified.php';
+}
 include_once 'include/diff_util.php';
 
 $arrayBased = false;
@@ -102,6 +103,7 @@ function getWrappedLineFromFile($file, $is_highlighted) {
 	if (!$is_highlighted) {
 		$line = escape($line);
 	}
+	$line = rtrim($line, "\n\r");
 	if (strip_tags($line) === '') $line = '&nbsp;';
 	return wrapInCodeTagIfNecessary($line);
 }
@@ -164,7 +166,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhit
 				$sensibleLineChanges->addChangesToListing($listingHelper, $highlighted);
 				$fin = true;
 			} else {
-				$mod = $line{0};
+				$mod = $line[0];
 				$line = rtrim(substr($line, 1));
 
 				switch ($mod) {
@@ -257,63 +259,21 @@ function command_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtnam
 		$whitespaceFlag = '';
 	}
 
-	// Open a pipe to the diff command with $context lines of context
+	// Open a pipe to the diff command with $context lines of context:
+	$cmd	= $config->diff.$whitespaceFlag.' -U '.$context.' "'.$oldtname.'" "'.$newtname.'"';
+	$diff	= runCommand($cmd);
 
-	$cmd = quoteCommand($config->diff.$whitespaceFlag.' -U '.$context.' "'.$oldtname.'" "'.$newtname.'"');
+	// Ignore the 3 header lines:
+	$line = array_shift($diff);
+	$line = array_shift($diff);
 
-	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+	$arrayBased	= true;
+	$fileBased	= false;
 
-	$resource = proc_open($cmd, $descriptorspec, $pipes);
-	$error = '';
-
-	if (is_resource($resource)) {
-		// We don't need to write
-		fclose($pipes[0]);
-
-		$diff = $pipes[1];
-
-		// Ignore the 3 header lines
-		$line = fgets($diff);
-		$line = fgets($diff);
-
-		$arrayBased = false;
-		$fileBased = true;
-
-		if ($highlighted) {
-			$listing = diff_result($all, $highlighted, $newhlname, $oldhlname, $diff, $ignoreWhitespace);
-		} else {
-			$listing = diff_result($all, $highlighted, $newtname, $oldtname, $diff, $ignoreWhitespace);
-		}
-
-		fclose($pipes[1]);
-
-		while (!feof($pipes[2])) {
-			$error .= fgets($pipes[2]);
-		}
-
-		$error = toOutputEncoding(trim($error));
-
-		if (!empty($error)) $error = '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p><p>'.nl2br($error).'</p>';
-
-		fclose($pipes[2]);
-
-		proc_close($resource);
-
+	if ($highlighted) {
+		$listing = diff_result($all, $highlighted, $newhlname, $oldhlname, $diff, $ignoreWhitespace);
 	} else {
-		$error = '<p>'.$lang['BADCMD'].': <code>'.$cmd.'</code></p>';
-	}
-
-	if (!empty($error)) {
-		echo $error;
-
-		if (is_resource($resource)) {
-			fclose($pipes[0]);
-			fclose($pipes[1]);
-			fclose($pipes[2]);
-
-			proc_close($resource);
-		}
-		exit;
+		$listing = diff_result($all, $highlighted, $newtname, $oldtname, $diff, $ignoreWhitespace);
 	}
 
 	return $listing;
@@ -330,12 +290,7 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 
 	// modify error reporting level to suppress deprecated/strict warning "Assigning the return value of new by reference"
 	$bckLevel = error_reporting();
-	$removeLevel = 0;
-	if (version_compare(PHP_VERSION, '5.3.0alpha') !== -1) {
-		$removeLevel = E_DEPRECATED;
-	} else if (version_compare(PHP_VERSION, '5.0.0') !== -1) {
-		$removeLevel = E_STRICT;
-	}
+	$removeLevel = E_DEPRECATED;
 	$modLevel = $bckLevel & (~$removeLevel);
 	error_reporting($modLevel);
 

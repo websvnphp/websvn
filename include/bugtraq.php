@@ -45,7 +45,7 @@ class Bugtraq {
 
 	// {{{ __construct($rep, $svnrep, $path)
 
-	function Bugtraq($rep, $svnrep, $path) {
+	function __construct($rep, $svnrep, $path) {
 		global $config;
 
 		if ($rep->isBugtraqEnabled()) {
@@ -224,7 +224,7 @@ class Bugtraq {
 class BugtraqTestable extends Bugtraq {
 	// {{{ __construct()
 
-	function BugtraqTestable() {
+	function __construct() {
 		// This constructor serves to assure that the parent constructor is not
 		// called.
 	}

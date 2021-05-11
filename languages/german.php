@@ -33,7 +33,7 @@ $lang["DIFF"] = "Diff";
 
 $lang["NOREP"] = "Kein Repository angegeben.";
 $lang["NOPATH"] = "Pfad nicht gefunden";
-$lang["NOACCESS"] = "Sie haben keine ausreichende Berechtigungen um diese Inhalte zu lesen";
+$lang["NOACCESS"] = "Sie haben keine ausreichenden Berechtigungen zum Lesen dieser Inhalte.";
 $lang["RESTRICTED"] = "Beschränkter Zugriff";
 $lang["SUPPLYREP"] = "Bitte den Repository-Pfad in include/config.php mit \$config->parentPath oder \$config->addRepository angeben.<p>Genauere Informationen finden sich in der Installationsanleitung";
 
@@ -79,7 +79,7 @@ $lang["SHOWALL"] = "Alles anzeigen";
 $lang["BADCMD"] = "Fehler beim Ausführen des Befehls";
 $lang["UNKNOWNREVISION"] = "Revision nicht gefunden";
 
-// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"https://websvnphp.github.io\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion-Projekte";
 $lang["SERVER"] = "Subversion-Server";
 
@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "Vergleiche Pfad:";
 $lang["WITHPATH"] = "Mit Pfad:";
 $lang["FILEDELETED"] = "Datei gelöscht";
 $lang["FILEADDED"] = "Neue Datei";
+
+$lang['SEARCH'] = "suchen";
+$lang['SEARCH_PLACEHOLDER'] = "Suchen Sie hier nach Elementen";
+$lang['NOITEMSFOUND'] = "Keine Elemente gefunden";

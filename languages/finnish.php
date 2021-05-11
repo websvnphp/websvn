@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "Näytä Kaikki";
 $lang["BADCMD"] = "Virhe komennon suorittamisessa";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Moottorina <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Moottorina <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Projektit";
 $lang["SERVER"] = "Subversion-palvelin";
 
@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Vertaile Polkua:";
 $lang["WITHPATH"] = "Vertailtava Polku:";
 $lang["FILEDELETED"] = "Tiedosto poistettu";
 $lang["FILEADDED"] = "Uusi tiedosto";
+
+$lang['SEARCH'] = "Hae";
+$lang['SEARCH_PLACEHOLDER'] = "Hae kohteita täältä";
+$lang['NOITEMSFOUND'] = "Kohteita ei löytynyt";

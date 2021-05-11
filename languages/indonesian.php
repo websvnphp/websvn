@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "Tampilkan Semua";
 $lang["BADCMD"] = "Kesalahan menjalankan instruksi ini";
 $lang["UNKNOWNREVISION"] = "Revisi tidak ditemukan";
 
-$lang["POWERED"] = "Didukung oleh <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Didukung oleh <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Repositori Subversion";
 $lang["SERVER"] = "Server Subversion";
 
@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Bandingkan Path:";
 $lang["WITHPATH"] = "Dengan Path:";
 $lang["FILEDELETED"] = "File dihapus";
 $lang["FILEADDED"] = "File baru";
+
+$lang['SEARCH'] = "Cari";
+$lang['SEARCH_PLACEHOLDER'] = "Cari item di sini";
+$lang['NOITEMSFOUND'] = "Tidak Ada Item yang Ditemukan";

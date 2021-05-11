@@ -82,7 +82,7 @@ $lang["SHOWALL"] = "全部显示";
 $lang["BADCMD"] = "命令执行错误";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 // $lang["PROJECTS"] = "Subversion Projects";
 // $lang["SERVER"] = "Subversion Server";
 
@@ -118,3 +118,7 @@ $lang["COMPPATH"] = "路径比较:";
 // $lang["WITHPATH"] = "With Path:";
 $lang["FILEDELETED"] = "已删除文件";
 $lang["FILEADDED"] = "新文件";
+
+$lang['SEARCH'] = "搜索";
+$lang['SEARCH_PLACEHOLDER'] = "在这里搜索项目";
+$lang['NOITEMSFOUND'] = "未找到任何项目";

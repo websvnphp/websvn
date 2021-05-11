@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "모두 보기";
 $lang["BADCMD"] = "명령 실행 에러";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion 프로젝트";
 $lang["SERVER"] = "Subversion 서버";
 
@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "비교 경로:";
 $lang["WITHPATH"] = "경로:";
 // $lang["FILEDELETED"] = "File deleted";
 // $lang["FILEADDED"] = "New file";
+
+$lang['SEARCH'] = "검색";
+$lang['SEARCH_PLACEHOLDER'] = "여기에서 항목 검색";
+$lang['NOITEMSFOUND'] = "제품을 찾지 못했습니다";

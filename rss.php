@@ -45,20 +45,20 @@ if ($config->multiViews) {
 	}
 }
 
-if ($path == '' || $path{0} != '/') {
+if ($path == '' || $path[0] != '/') {
 	$ppath = '/'.$path;
 } else {
 	$ppath = $path;
 }
 
 if (!$rep) {
-	header('HTTP/1.x 404 Not Found', true, 404);
+	http_response_code(404);
 	print 'Unable to access resource at path: '.xml_entities($path);
 	exit;
 }
 // Make sure that the user has full access to the specified directory
 if (!$rep->hasReadAccess($path, false)) {
-	header('HTTP/1.x 403 Forbidden', true, 403);
+	http_response_code(403);
 	print 'Unable to access resource at path: '.xml_entities($path);
 	exit;
 }
@@ -67,7 +67,7 @@ if (!$rep->hasReadAccess($path, false)) {
 $svnrep = new SVNRepository($rep);
 $history = $svnrep->getLog($path, $rev, '', false, $max, $peg, !$quiet);
 if (!$history) {
-	header('HTTP/1.x 404 Not Found', true, 404);
+	http_response_code(404);
 	echo $lang['NOPATH'];
 	exit;
 }
@@ -89,8 +89,8 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 // Generate RSS 2.0 feed
 $rss = '<?xml version="1.0" encoding="utf-8"?>';
 $rss .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel>';
-$rss .= '<title>'.escape($rep->getDisplayName().($path ? ' - '.$path : '')).'</title>';
-$rss .= '<description>'.escape($lang['RSSFEEDTITLE'].' - '.$repname).'</description>';
+$rss .= '<title>'.escape($rep->getDisplayName()).($path ? ' &#x2013; '.$path : '').'</title>';
+$rss .= '<description>'.escape($lang['RSSFEEDTITLE']).' &#x2013; '.escape($repname).'</description>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
 $rss .= '<language>'.$lang['LANGUAGETAG'].'</language>';
@@ -104,16 +104,16 @@ if (is_array($history->entries)) {
 		$itemURL .= 'isdir=1&amp;';
 	foreach ($history->entries as $r) {
 		$wordLimit = 10; // Display only up to the first 10 words of the log message
-		$title = trim($r->msg);
+		$title = trim(explode('\n', $r->msg)[0]);
 		$title = str_replace(array("\r\n", "\r", "\n", "\t"), ' ', $title);
 		$words = explode(' ', $title, $wordLimit + 1);
 		if (count($words) > $wordLimit) {
 			$title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
 		}
-		$title = $lang['REV'].' '.$r->rev.' -- '.$title;
+		$title = $lang['REV'].' '.$r->rev.' '.mb_convert_encoding('&#x2013;', 'UTF-8', 'HTML-ENTITIES').' '.$title;
 		$description = '<div><strong>'.$r->author;
 		if (!$quiet) {
-			$description .= ' -- '.count($r->mods).' '.$lang['FILESMODIFIED'];
+			$description .= ' '.mb_convert_encoding('&#x2013;', 'UTF-8', 'HTML-ENTITIES').' '.count($r->mods).' '.$lang['FILESMODIFIED'];
 		}
 		$description .= '</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors(str_replace('<', '&lt;', $r->msg)))).'</div>';
 		if (!$quiet) {

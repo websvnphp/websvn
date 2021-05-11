@@ -26,9 +26,14 @@
 
 // {{{ PLATFORM CONFIGURATION ---
 
+// Configure a UTF-8 aware locale to properly convert bytes to characters.
+// Otherwise files and directories with non-ASCII encoding are deemed to fail
+// with native commands.
+// $config->setLocale('C.UTF-8');
+
 // Configure the path for Subversion to use for --config-dir
 // (e.g. if accepting certificates is required when using repositories via https)
-// $config->setSvnConfigDir('/tmp');
+// $config->setSvnConfigDir('/tmp/websvn');
 
 // Configure these lines if your commands aren't on your path.
 //
@@ -45,7 +50,7 @@
 // For delivered GZIP'd files and tarballs, if option enabled...
 // $config->setGZipPath('/path/to/gzip/command/');
 
-// download folder/file zipped ...
+// download directory/file zipped ...
 // $config->setZipPath('/path/to/zip/command/');
 
 // Uncomment this line to trust server certificates
@@ -155,11 +160,22 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // $config->useFlatView();
 
-// By default, WebSVN displays subfolders first and than the files of a directory,
+// By default, WebSVN displays subdirectories first and than the files of a directory,
 // both alphabetically sorted.
-// To use alphabetic order independent iof folders and files uncomment this line.
+// To use alphabetic order independent of directories and files uncomment this line.
 
 // $config->setAlphabeticOrder(true);
+
+// By default, WebSVN loads parent path directories and then on user click other,
+// This options loads the entire directory in one go and allows to browse without delay.
+// By default all will be collapsed to root directory and can be expanded.
+// The performance will be impacted as it takes time to load up all the things in the 
+// repository. Once loaded directory exapansion is instantaneous.
+// The alphabetical order is applied to all directory and files. 
+// This means that grouping of all dirs together and all files together is NOT supported currently!
+// The files and directories are shown as is with a mixture of files and folders. 
+
+// $config->setLoadAllRepos(true);
 
 // By default, WebSVN displays the information of the last modification
 // (revision, age and author) for each repository in an extra column.
@@ -168,7 +184,7 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // $config->setShowLastModInIndex(false);
 
 // By default, WebSVN displays the information of the last modification
-// (revision, age and author) for each file and folder in an extra column.
+// (revision, age and author) for each file and directory in an extra column.
 // To disable that uncomment this line.
 
 // $config->setShowLastModInListing(false);
@@ -209,9 +225,9 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // Uncomment this line if you want to use MultiView to access the repository by, for example:
 //
-// http://servername/wsvn/repname/path/in/repository
+// http://servername/browse/repname/path/in/repository
 //
-// Note: The websvn directory will need to have Multiviews turned on in Apache, and you'll need to configure wsvn.php
+// Note: The websvn directory will need to have Multiviews turned on in Apache, and you'll need to configure browse.php
 
 // $config->useMultiViews();
 
@@ -221,21 +237,15 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // Uncomment this line if you want to use your Subversion access file to control access
 // rights via WebSVN. For this to work, you'll need to set up the same Apache based authentication
-// to the WebSVN (or wsvn) directory as you have for Subversion itself. More information can be
+// to the WebSVN (or browse) directory as you have for Subversion itself. More information can be
 // found in install.txt
 
-// $config->useAuthenticationFile('/path/to/accessfile'); // Global access file
+// $config->useAccessFile('/path/to/accessfile'); // Global access file
 
 // You may also specify a per repository access file by uncommenting and copying the following
 // line as necessary. Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->useAuthenticationFile('/path/to/accessfile', 'myrep'); // Access file for myrep
-
-// When allowing anonymous access for some repositories and require authentification for others
-// WebSVN can request authentication on-demand. Therefore the optional second/third parameter can be used.
-
-// $config->useAuthenticationFile('/path/to/accessfile', 'My WebSVN Realm'); // Global access file
-// $config->useAuthenticationFile('/path/to/accessfile', 'myrep', 'My WebSVN Realm'); // Access file for myrep
+// $config->useAccessFile('/path/to/accessfile', 'myrep'); // Access file for myrep
 
 // Uncomment this line if you want to prevent search bots to index the WebSVN pages.
 
@@ -311,7 +321,7 @@ $config->addInlineMimeType('text/plain');
 //
 // Set download modes
 // $config->setDefaultFileDlMode('plain');
-// $config->setDefaultFolderDlMode('gzip');
+// $config->setDefaultDirectoryDlMode('gzip');
 //
 // To change the global option for individual repositories, uncomment and replicate
 // the appropriate line below (replacing 'myrep' with the name of the repository).
@@ -386,7 +396,7 @@ $config->setMinDownloadLevel(2);
 
 // Uncomment this line if you want to use GeSHi to colourise your file listings
 //
-$config->useGeshi();
+// $config->useGeshi();
 
 // GeSHi need to be told what the contents of a file are so that it can be colourised
 // correctly. WebSVN includes a predefined list of mappings from file extension to GeSHi
@@ -397,6 +407,17 @@ $config->useGeshi();
 // $extGeshi['pascal'] = array('p', 'pas');
 //
 // Note that extensions are case sensitive.
+
+// }}}
+
+// {{{ Markdown Render
+
+// Uncomment this line if you want to enable Markdown Rendering of README.md file in the path. 
+// You will need the Parsedown.php (https://github.com/erusev/parsedown) library for this to work.
+// This will look for README.md file on the path and render it.
+// The name of "README.md" isn't configurable for now to simply follow GitHub's conventions. 
+
+// $config->useParsedown();
 
 // }}}
 

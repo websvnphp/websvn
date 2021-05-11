@@ -79,7 +79,7 @@ $lang["SHOWALL"] = "Ukaž všechny";
 $lang["BADCMD"] = "Nepodařilo se spustit tento příkaz";
 $lang["UNKNOWNREVISION"] = "Revize nebyla nalezena";
 
-$lang["POWERED"] = "Poháněno <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Poháněno <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion Repozitáře";
 $lang["SERVER"] = "Subversion Servery";
 
@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "Porovnej cestu:";
 $lang["WITHPATH"] = "S umístěním:";
 $lang["FILEDELETED"] = "Soubor smazán";
 $lang["FILEADDED"] = "Nový soubor";
+
+$lang['SEARCH'] = "Vyhledávání";
+$lang['SEARCH_PLACEHOLDER'] = "Vyhledejte položky zde";
+$lang['NOITEMSFOUND'] = "Žádné předměty nenalezeny";

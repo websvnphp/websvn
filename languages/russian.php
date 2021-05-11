@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "показать все";
 $lang["BADCMD"] = "Ошибка при выполнении команды";
 $lang["UNKNOWNREVISION"] = "Редакция не найдена";
 
-$lang["POWERED"] = "Работает на <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Работает на <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Хранилища Subversion";
 $lang["SERVER"] = "Сервер Subversion";
 
@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Сравнить путь:";
 $lang["WITHPATH"] = "С путем:";
 $lang["FILEDELETED"] = "Файл удален";
 $lang["FILEADDED"] = "Новый файл";
+
+$lang['SEARCH'] = "Поиск";
+$lang['SEARCH_PLACEHOLDER'] = "Искать предметы здесь";
+$lang['NOITEMSFOUND'] = "Ничего не найдено";

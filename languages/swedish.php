@@ -47,7 +47,7 @@ $lang["SHOWCOMPACT"] = "Visa bara områden med skillnader";
 $lang["IGNOREWHITESPACE"] = "Ignorera vityta";
 $lang["REGARDWHITESPACE"] = "Ge akt på vityta";
 
-$lang["LISTING"] = "Folderlistning";
+$lang["LISTING"] = "Kataloglistning";
 $lang["FILEDETAIL"] = "Detaljer";
 $lang["VIEWAS"] = "Visa som";
 $lang["DIFFPREV"] = "Skillnad mot föregående";
@@ -68,7 +68,7 @@ $lang["VIEWLOG"] = "Visa Logg";
 $lang["PATH"] = "Sökväg";
 $lang["AUTHOR"] = "Författare";
 $lang["AGE"] = "Ålder";
-$lang["CURDIR"] = "Aktuell folder";
+$lang["CURDIR"] = "Aktuell katalog";
 $lang["TARBALL"] = "Tarball";
 $lang["DOWNLOAD"] = "Ladda ned";
 
@@ -79,7 +79,7 @@ $lang["SHOWALL"] = "Visa alla";
 $lang["BADCMD"] = "Fel vid körning av kommando";
 $lang["UNKNOWNREVISION"] = "Revision hittades inte";
 
-$lang["POWERED"] = "Körs på <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Körs på <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion-projekt";
 $lang["SERVER"] = "Subversion-server";
 
@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "Jämför sökväg:";
 $lang["WITHPATH"] = "Med sökväg:";
 $lang["FILEDELETED"] = "Filen raderad";
 $lang["FILEADDED"] = "Ny fil";
+
+$lang['SEARCH'] = "Sök";
+$lang['SEARCH_PLACEHOLDER'] = "Sök efter objekt här";
+$lang['NOITEMSFOUND'] = "Inga föremål hittades";

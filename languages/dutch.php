@@ -82,7 +82,7 @@ $lang["SHOWALL"] = "Toon alles";
 $lang["BADCMD"] = "Een fout is opgetreden tijdens het uitvoeren van dit commando";
 // $lang["UNKNOWNREVISION"] = "Revision not found";
 
-$lang["POWERED"] = "Aangedreven door <a href=\"http://www.websvn.info/\">WebSVN</a>";
+$lang["POWERED"] = "Aangedreven door <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion-projecten";
 $lang["SERVER"] = "Subversion-server";
 
@@ -119,3 +119,7 @@ $lang["COMPPATH"] = "Vergelijk pad:";
 $lang["WITHPATH"] = "Met pad:";
 $lang["FILEDELETED"] = "Bestand gewist";
 $lang["FILEADDED"] = "Nieuw bestand";
+
+$lang['SEARCH'] = "Zoeken";
+$lang['SEARCH_PLACEHOLDER'] = "Zoek hier naar items";
+$lang['NOITEMSFOUND'] = "Geen items gevonden";

@@ -80,7 +80,7 @@ $lang["SHOWALL"] = "全て表示";
 $lang["BADCMD"] = "コマンド実行中のエラー";
 $lang["UNKNOWNREVISION"] = "指定のリビジョンがありません";
 
-// $lang["POWERED"] = "Powered by <a href=\"http://www.websvn.info/\">WebSVN</a>";
+// $lang["POWERED"] = "Powered by <a href=\"https://websvnphp.github.io/\">WebSVN</a>";
 $lang["PROJECTS"] = "Subversion リポジトリ一覧";
 $lang["SERVER"] = "Subversion サーバ";
 
@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "比較元パス：";
 $lang["WITHPATH"] = "比較先パス：";
 $lang["FILEDELETED"] = "ファイル削除";
 $lang["FILEADDED"] = "新規ファイル";
+
+$lang['SEARCH'] = "探す";
+$lang['SEARCH_PLACEHOLDER'] = "こちらから商品を検索";
+$lang['NOITEMSFOUND'] = "項目は見つかりませんでした";

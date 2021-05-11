@@ -82,7 +82,7 @@ $lang["SHOWALL"] = "सर्व पहा";
 $lang["BADCMD"] = "हा आदेश चालू शकला नाही";
 $lang["UNKNOWNREVISION"] = "आवृत्ती सापडली नाही";
 
-$lang["POWERED"] = "<a href=\"http://www.websvn.info/\">WebSVN</a> ने संचालीत";
+$lang["POWERED"] = "<a href=\"https://websvnphp.github.io/\">WebSVN</a> ने संचालीत";
 $lang["PROJECTS"] = "Subversion आवृत्तीकोष";
 $lang["SERVER"] = "Subversion संगणक";
 
@@ -119,3 +119,7 @@ $lang["COMPPATH"] = "मार्ग तुलना:";
 $lang["WITHPATH"] = "या मार्गाशी:";
 $lang["FILEDELETED"] = "खतावणी काढली";
 $lang["FILEADDED"] = "नवीन  खतावणी";
+
+$lang['SEARCH'] = "शोधा";
+$lang['SEARCH_PLACEHOLDER'] = "येथे आयटम शोधा";
+$lang['NOITEMSFOUND'] = "कोणतेही आयटम सापडले नाहीत";

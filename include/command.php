@@ -23,7 +23,7 @@
 // External command handling
 
 function detectCharacterEncoding($str) {
-	$list = array(/*'ASCII',*/ 'UTF-8', 'ISO-8859-1');
+	$list = array('UTF-8', 'windows-1252', 'ISO-8859-1');
 	if (function_exists('mb_detect_encoding')) {
 		// @see http://de3.php.net/manual/en/function.mb-detect-encoding.php#81936
 		// why appending an 'a' and specifying an encoding list is necessary
@@ -87,36 +87,9 @@ function escape($str) {
 
 // }}}
 
-// {{{ quoteCommand
-
-function quoteCommand($cmd) {
-	global $config;
-
-	// On Windows machines, the whole line needs quotes round it so that it's
-	// passed to cmd.exe correctly
-
-	if ($config->serverIsWindows) {
-		$cmd = '"'.$cmd.'"';
-	}
-
-	return $cmd;
-}
-
-// }}}
-
 // {{{ execCommand
 
 function execCommand($cmd, &$retcode) {
-	global $config;
-
-	// On Windows machines, the whole line needs quotes round it so that it's
-	// passed to cmd.exe correctly
-	// Since php 5.3.0 the quoting seems to be done internally
-
-	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-		$cmd = '"'.$cmd.'"';
-	}
-
 	return @exec($cmd, $tmp, $retcode);
 }
 
@@ -125,16 +98,6 @@ function execCommand($cmd, &$retcode) {
 // {{{ popenCommand
 
 function popenCommand($cmd, $mode) {
-	global $config;
-
-	// On Windows machines, the whole line needs quotes round it so that it's
-	// passed to cmd.exe correctly
-	// Since php 5.3.0 the quoting seems to be done internally
-
-	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-		$cmd = '"'.$cmd.'"';
-	}
-
 	return popen($cmd, $mode);
 }
 
@@ -143,16 +106,6 @@ function popenCommand($cmd, $mode) {
 // {{{ passthruCommand
 
 function passthruCommand($cmd) {
-	global $config;
-
-	// On Windows machines, the whole line needs quotes round it so that it's
-	// passed to cmd.exe correctly
-	// Since php 5.3.0 the quoting seems to be done internally
-
-	if ($config->serverIsWindows && version_compare(PHP_VERSION, '5.3.0alpha') === -1) {
-		$cmd = '"'.$cmd.'"';
-	}
-
 	return passthru($cmd);
 }
 
@@ -160,40 +113,48 @@ function passthruCommand($cmd) {
 
 // {{{ runCommand
 
-function runCommand($cmd, $mayReturnNothing = false) {
-	global $lang;
+function runCommand($cmd, $mayReturnNothing = false, &$errorIf = 'NOT_USED') {
+	global $config, $lang;
 
-	$output = array();
-	$err = false;
+	$output	= array();
+	$error	= '';
+	$opts	= null;
 
-	$c = quoteCommand($cmd);
+	// https://github.com/websvnphp/websvn/issues/75
+	// https://github.com/websvnphp/websvn/issues/78
+	if ($config->serverIsWindows) {
+		if (!strpos($cmd, '>') && !strpos($cmd, '|')) {
+			$opts = array('bypass_shell' => true);
+		} else {
+			$cmd = '"'.$cmd.'"';
+		}
+	}
 
-	$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
-
-	$resource = proc_open($c, $descriptorspec, $pipes);
-	$error = '';
+	$descriptorspec	= array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+	$resource		= proc_open($cmd, $descriptorspec, $pipes, null, null, $opts);
 
 	if (!is_resource($resource)) {
 		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p>';
 		exit;
 	}
 
-	$handle = $pipes[1];
-	$firstline = true;
+	$handle		= $pipes[1];
+	$firstline	= true;
+
 	while (!feof($handle)) {
 		$line = fgets($handle);
 		if ($firstline && empty($line) && !$mayReturnNothing) {
-			$err = true;
+			$error = 'No output on STDOUT.';
+			break;
 		}
 
-		$firstline = false;
-		$output[] = toOutputEncoding(rtrim($line));
+		$firstline	= false;
+		$output[]	= toOutputEncoding(rtrim($line));
 	}
 
 	while (!feof($pipes[2])) {
 		$error .= fgets($pipes[2]);
 	}
-
 	$error = toOutputEncoding(trim($error));
 
 	fclose($pipes[0]);
@@ -202,11 +163,19 @@ function runCommand($cmd, $mayReturnNothing = false) {
 
 	proc_close($resource);
 
-	if (!$err) {
+	# Some commands are expected to return no output, but warnings on STDERR.
+	if ((count($output) > 0) || $mayReturnNothing) {
 		return $output;
-	} else {
-		echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p><p>'.nl2br($error).'</p>';
 	}
+
+	if ($errorIf != 'NOT_USED') {
+		$errorIf = $error;
+		return $output;
+	}
+
+	echo '<p>'.$lang['BADCMD'].': <code>'.stripCredentialsFromCommand($cmd).'</code></p>';
+	echo '<p>'.nl2br($error).'</p>';
+	exit;
 }
 
 // }}}
