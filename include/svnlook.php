@@ -862,7 +862,7 @@ class SVNRepository {
 	}
 
 	// }}}
-	
+
 	// {{{ listReadmeContents
 	//
 	// Parse the README.md file
@@ -895,7 +895,7 @@ class SVNRepository {
 		}
 
 		echo('<div id="wrap">');
-		while (!feof($result)) 
+		while (!feof($result))
 		{
 			$line = fgets($result, 1024);
 			echo $mdParser->text($line);
@@ -1134,7 +1134,9 @@ class SVNRepository {
 				$rev = $headlog->entries[0]->rev;
 		}
 
-		$cmd = $this->svnCommandString('list -R --search '. '"'.$searchstring.'"'.' --xml', $path, $rev, $peg);
+		$searchstring = escapeshellarg($searchstring);
+		$cmd = 'list -R --search ' . $searchstring . ' --xml';
+		$cmd = $this->svnCommandString($cmd, $path, $rev, $peg);
 		$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
 
 		return $curList;
