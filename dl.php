@@ -52,28 +52,6 @@ function setDirectoryTimestamp($dir, $timestamp) {
 	}
 }
 
-function removeDirectory($dir) {
-	if (is_dir($dir)) {
-		$dir = rtrim($dir, '/');
-		$handle = dir($dir);
-		while (($file = $handle->read()) !== false) {
-			if ($file == '.' || $file == '..') {
-				continue;
-			}
-			$f = $dir.DIRECTORY_SEPARATOR.$file;
-			if (!is_link($f) && is_dir($f)) {
-				removeDirectory($f);
-			} else {
-				@unlink($f);
-			}
-		}
-		$handle->close();
-		@rmdir($dir);
-		return true;
-	}
-	return false;
-}
-
 // Make sure that downloading the specified file/directory is permitted
 
 if (!$rep->isDownloadAllowed($path)) {
@@ -92,22 +70,22 @@ if (!$rep)
 $svnrep = new SVNRepository($rep);
 
 // Fetch information about a revision (if unspecified, the latest) for this path
-if (empty($rev)) 
+if (empty($rev))
 {
 	$history = $svnrep->getLog($path, 'HEAD', '', true, 1, $peg);
 }
-else if ($rev == $peg) 
+else if ($rev == $peg)
 {
 	$history = $svnrep->getLog($path, '', 1, true, 1, $peg);
 }
-else 
+else
 {
 	$history = $svnrep->getLog($path, $rev, $rev - 1, true, 1, $peg);
 }
 
 $logEntry = ($history) ? $history->entries[0] : null;
 
-if (!$logEntry) 
+if (!$logEntry)
 {
 	http_response_code(404);
 	error_log('Unable to download resource at path: '.$path);
@@ -115,7 +93,7 @@ if (!$logEntry)
 	exit(0);
 }
 
-if (empty($rev)) 
+if (empty($rev))
 {
 	$rev = $logEntry->rev;
 }
@@ -130,14 +108,14 @@ mkdir($tempDir);
 $archiveName = $path;
 $isDir = (substr($archiveName, -1) == '/');
 
-if ($isDir) 
+if ($isDir)
 {
 	$archiveName = substr($archiveName, 0, -1);
 }
 
 $archiveName = basename($archiveName);
 
-if ($archiveName == '') 
+if ($archiveName == '')
 {
 	$archiveName = $rep->name;
 }
@@ -148,7 +126,7 @@ $archiveName .= '.r'.$rev;
 // Export the requested path from SVN repository to the temp directory
 $svnExportResult = $svnrep->exportRepositoryPath($path, $tempDir.DIRECTORY_SEPARATOR.$archiveName, $rev, $peg);
 
-if ($svnExportResult != 0) 
+if ($svnExportResult != 0)
 {
 	http_response_code(500);
 	error_log('svn export failed for: '.$archiveName);
@@ -161,7 +139,7 @@ if ($svnExportResult != 0)
 // are a symlink, since they may be a symlink to anywhere (/etc/passwd)
 // Deciding whether the symlink is relative and legal within the
 // repository would be nice but seems to error prone at this moment.
-if ( is_link($tempDir.DIRECTORY_SEPARATOR.$archiveName) ) 
+if ( is_link($tempDir.DIRECTORY_SEPARATOR.$archiveName) )
 {
 	http_response_code(500);
 	error_log('to be downloaded file is symlink, aborting: '.$archiveName);
@@ -185,30 +163,30 @@ setDirectoryTimestamp($tempDir, $timestamp);
 $oldcwd = getcwd();
 chdir($tempDir);
 
-if ($isDir) 
+if ($isDir)
 {
 	$downloadMode = $config->getDefaultDirectoryDlMode();
-} 
-else 
+}
+else
 {
 	$downloadMode = $config->getDefaultFileDlMode();
 }
 
 // $_REQUEST parameter can override dlmode
-if (!empty($_REQUEST['dlmode'])) 
+if (!empty($_REQUEST['dlmode']))
 {
 	$downloadMode = $_REQUEST['dlmode'];
 
-	if (substr($logEntry->path, -1) == '/') 
+	if (substr($logEntry->path, -1) == '/')
 	{
-		if (!in_array($downloadMode, $config->validDirectoryDlModes)) 
+		if (!in_array($downloadMode, $config->validDirectoryDlModes))
 		{
 			$downloadMode = $config->getDefaultDirectoryDlMode();
 		}
 	}
-	else 
+	else
 	{
-		if (!in_array($downloadMode, $config->validFileDlModes)) 
+		if (!in_array($downloadMode, $config->validFileDlModes))
 		{
 			$downloadMode = $config->getDefaultFileDlMode();
 		}
@@ -217,12 +195,12 @@ if (!empty($_REQUEST['dlmode']))
 
 $downloadArchive = $archiveName;
 
-if ($downloadMode == 'plain') 
+if ($downloadMode == 'plain')
 {
 	$downloadMimeType = 'application/octet-stream';
 
 }
-else if ($downloadMode == 'zip') 
+else if ($downloadMode == 'zip')
 {
 	$downloadMimeType = 'application/zip';
 	$downloadArchive .= '.zip';
@@ -230,13 +208,13 @@ else if ($downloadMode == 'zip')
 	$cmd = $config->zip.' --symlinks -r '.quote($downloadArchive).' '.quote($archiveName);
 	execCommand($cmd, $retcode);
 
-	if ($retcode != 0) 
+	if ($retcode != 0)
 	{
 		error_log('Unable to call zip command: '.$cmd);
 		print 'Unable to call zip command. See webserver error log for details.';
 	}
-} 
-else 
+}
+else
 {
 	$downloadMimeType = 'application/gzip';
 	$downloadArchive .= '.tar.gz';
@@ -245,24 +223,24 @@ else
 	// Create the tar file
 	$retcode = 0;
 
-	if (class_exists('Archive_Tar')) 
+	if (class_exists('Archive_Tar'))
 	{
 		$tar = new Archive_Tar($tarArchive);
 		$created = $tar->create(array($archiveName));
 
-		if (!$created) 
+		if (!$created)
 		{
 			$retcode = 1;
 			http_response_code(500);
 			print 'Unable to create tar archive.';
 		}
-	} 
-	else 
+	}
+	else
 	{
 		$cmd = $config->tar.' -cf '.quote($tarArchive).' '.quote($archiveName);
 		execCommand($cmd, $retcode);
 
-		if ($retcode != 0) 
+		if ($retcode != 0)
 		{
 			http_response_code(500);
 			error_log('Unable to call tar command: '.$cmd);
@@ -270,7 +248,7 @@ else
 		}
 	}
 
-	if ($retcode != 0) 
+	if ($retcode != 0)
 	{
 		chdir($oldcwd);
 		removeDirectory($tempDir);
@@ -281,12 +259,12 @@ else
 	touch($tarArchive, $timestamp);
 
 	// GZIP it up
-	if (function_exists('gzopen')) 
+	if (function_exists('gzopen'))
 	{
 		$srcHandle = fopen($tarArchive, 'rb');
 		$dstHandle = gzopen($downloadArchive, 'wb');
 
-		if (!$srcHandle || !$dstHandle) 
+		if (!$srcHandle || !$dstHandle)
 		{
 			http_response_code(500);
 			print 'Unable to open file for gz-compression.';
@@ -295,21 +273,21 @@ else
 			exit(0);
 		}
 
-		while (!feof($srcHandle)) 
+		while (!feof($srcHandle))
 		{
 			gzwrite($dstHandle, fread($srcHandle, 1024 * 512));
 		}
 
 		fclose($srcHandle);
 		gzclose($dstHandle);
-	} 
-	else 
+	}
+	else
 	{
 		$cmd = $config->gzip.' '.quote($tarArchive);
 		$retcode = 0;
 		execCommand($cmd, $retcode);
 
-		if ($retcode != 0) 
+		if ($retcode != 0)
 		{
 			http_response_code(500);
 			error_log('Unable to call gzip command: '.$cmd);
@@ -322,13 +300,13 @@ else
 }
 
 // Give the file to the browser
-if (is_readable($downloadArchive)) 
+if (is_readable($downloadArchive))
 {
-	if ($downloadMode == 'plain') 
+	if ($downloadMode == 'plain')
 	{
 		$downloadFilename = $plainfilename;
 	}
-	else 
+	else
 	{
 		$downloadFilename = $rep->name.'-'.$downloadArchive;
 	}
@@ -338,7 +316,7 @@ if (is_readable($downloadArchive))
 	header('Content-Disposition: attachment; filename="'. $downloadFilename .'"');
 	readfile($downloadArchive);
 }
-else 
+else
 {
 	http_response_code(404);
 	print 'Unable to open file: '.xml_entities($downloadArchive);
