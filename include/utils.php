@@ -399,22 +399,69 @@ function getUserLanguage($languages, $default, $userchoice) {
 
 // }}}
 
-// {{{ tempnameWithCheck
+// {{{ removeDirectory
 
-function tempnamWithCheck($dir, $prefix) {
-	$tmp = tempnam($dir, $prefix);
+function removeDirectory($dir)
+{
+	if (!is_dir($dir))
+	{
+		return false;
+	}
 
-	if ($tmp == false) {
-		if (!headers_sent()) {
-			http_response_code(500);
-			error_log('Unable to create a temporary file. Either make the currently used directory ("' . $dir . '") writable for WebSVN or change the directory in the configuration.');
-			print 'Unable to create a temporary file. Either make the currently used directory writable for WebSVN or change the directory in the configuration.';
-			exit(0);
-		} else {
-			global $vars;
-			$vars['warning'] = 'Unable to create a temporary file. Either make the currently used directory writable for WebSVN or change the directory in the configuration.';
+	$dir	= rtrim($dir, '/');
+	$handle	= dir($dir);
+
+	while (($file = $handle->read()) !== false)
+	{
+		if (($file == '.') || ($file == '..'))
+		{
+			continue;
+		}
+
+		$f = $dir.DIRECTORY_SEPARATOR.$file;
+		if (!is_link($f) && is_dir($f))
+		{
+			removeDirectory($f);
+		}
+		else
+		{
+			@unlink($f);
 		}
 	}
+
+	$handle->close();
+	@rmdir($dir);
+
+	return true;
+}
+
+// }}}
+
+// {{{ tempnameWithCheck
+
+function tempnamWithCheck($dir, $prefix, $rmOnShutdown = true) {
+	$tmp = tempnam($dir, $prefix);
+
+	if ($tmp && !$rmOnShutdown)
+	{
+		return $tmp;
+	}
+	if ($tmp && $rmOnShutdown)
+	{
+		register_shutdown_function(removeDirectory, $tmp);
+		return $tmp;
+	}
+
+	if (!$tmp && !headers_sent())
+	{
+		http_response_code(500);
+		error_log('Unable to create a temporary file. Either make the currently used directory ("' . $dir . '") writable for WebSVN or change the directory in the configuration.');
+		print 'Unable to create a temporary file. Either make the currently used directory writable for WebSVN or change the directory in the configuration.';
+		exit(0);
+	}
+
+	global $vars;
+	$vars['warning'] = 'Unable to create a temporary file. Either make the currently used directory writable for WebSVN or change the directory in the configuration.';
 
 	return $tmp;
 }
