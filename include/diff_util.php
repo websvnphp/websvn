@@ -24,7 +24,9 @@
 // These lines are automatically paired and also inline diff is performed to show
 // insertions/deletions on one line
 
-@include_once 'Text/Diff.php';
+if (!defined('USE_AUTOLOADER')) {
+	@include_once 'Text/Diff.php';
+}
 
 // Interface for diffing function
 class LineDiffInterface {

@@ -22,9 +22,11 @@
 //
 // Diff to files
 
-@include_once 'Text/Diff.php';
-@include_once 'Text/Diff/Renderer.php';
-@include_once 'Text/Diff/Renderer/unified.php';
+if (!defined('USE_AUTOLOADER')) {
+	@include_once 'Text/Diff.php';
+	@include_once 'Text/Diff/Renderer.php';
+	@include_once 'Text/Diff/Renderer/unified.php';
+}
 include_once 'include/diff_util.php';
 
 $arrayBased = false;
@@ -164,7 +166,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhit
 				$sensibleLineChanges->addChangesToListing($listingHelper, $highlighted);
 				$fin = true;
 			} else {
-				$mod = $line{0};
+				$mod = $line[0];
 				$line = rtrim(substr($line, 1));
 
 				switch ($mod) {

@@ -29,6 +29,12 @@
 // Include the configuration class
 require_once 'include/configclass.php';
 
+// Register Composer autoloader if available
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+	require_once __DIR__ . '/../vendor/autoload.php';
+	define('USE_AUTOLOADER', true);
+}
+
 // Create the config
 $config = new WebSvnConfig();
 
@@ -379,18 +385,19 @@ foreach ($queryParams as $key => $value) {
 	}
 }
 
-// If the request specifies a language, store in a permanent/session cookie.
-// Otherwise, check for cookies specifying a particular language.
+// If the request specifies a language, store in a cookie. Otherwise, check for cookies specifying a
+// particular language already.
 $language = ''; // RFC 4646 language tag for representing the selected language.
 if (!empty($_REQUEST['language'])) {
 	$language = $_REQUEST['language'];
-	setcookie('storedlang', $language, time() + (60 * 60 * 24 * 356 * 10), '/');
+	setcookie('storedlang', $language, time() + (60 * 60 * 24 * 356 * 10));
 	setcookie('storedsesslang', $language);
 } else if (isset($_COOKIE['storedlang'])) {
 	$language = $_COOKIE['storedlang'];
 } else if (isset($_COOKIE['storedsesslang'])) {
 	$language = $_COOKIE['storedsesslang'];
 }
+
 // Load available languages (populates $languages array)
 require 'languages/languages.php';
 // Get the default language as defined by config.php
@@ -440,12 +447,12 @@ if ($config->multiViews) {
 	}
 }
 
-// If the request specifies a template, store in a permanent/session cookie.
-// Otherwise, check for cookies specifying a particular template.
+// If the request specifies a template, store in a cookie. Otherwise, check for cookies specifying a
+// particular template already.
 $template = '';
 if (!empty($_REQUEST['template'])) {
 	$template = $_REQUEST['template'];
-	setcookie('storedtemplate', $template, time() + (60 * 60 * 24 * 365 * 10), '/');
+	setcookie('storedtemplate', $template, time() + (60 * 60 * 24 * 365 * 10));
 	setcookie('storedsesstemplate', $template);
 } else if (isset($_COOKIE['storedtemplate'])) {
 	$template = $_COOKIE['storedtemplate'];
@@ -497,6 +504,7 @@ $vars['safepath'] = escape($path);
 // Set operative and peg revisions (if specified) and save passed-in revision
 $rev = (int)@$_REQUEST['rev'];
 $peg = (int)@$_REQUEST['peg'];
+$search = (string)@$_REQUEST['search'];
 if ($peg === 0)
 	$peg = '';
 $passrev = $rev;
@@ -505,6 +513,7 @@ if (!$config->multiViews) {
 	// With MultiViews, browse creates the form once the current project is found.
 	createProjectSelectionForm();
 	createRevisionSelectionForm();
+	createSearchSelectionForm();
 }
 
 // set flag if robots should be blocked
@@ -583,6 +592,31 @@ function createRevisionSelectionForm() {
 	$vars['revision_endform'] = '</form>';
 }
 
+function createSearchSelectionForm() {
+	global $config, $lang, $vars, $rep, $path, $rev, $peg, $search;
+	if ($rep === null)
+		return;
+	$params = array();
+	if (!$config->multiViews) {
+		$params['repname'] = $rep->getDisplayName();
+		if ($path === null)
+			$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
+		if ($path && $path != '/')
+			$params['path'] = $path;
+	}
+	if ($peg || $rev)
+		$params['rev'] = ($peg ? $peg : $rev);
+	$hidden = '';
+	foreach ($params as $key => $value) {
+		$hidden .= '<input type="hidden" name="'.$key.'" value="'.escape($value).'" />';
+	}
+	$vars['search'] = true;
+	$vars['search_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'search').'" id="search">'.$hidden;
+	$search = $search? $search : $lang['SEARCH_PLACEHOLDER'];
+	$vars['search_input'] = '<input type="text" size="20" name="search" placeholder="'.$search.'" />';
+	$vars['search_submit'] = '<input type="submit" value="'.$lang['SEARCH'].'" />';
+	$vars['search_endform'] = '</form>';
+}
 function sendHeaderForbidden() {
 	http_response_code(403);
 }

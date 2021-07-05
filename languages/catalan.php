@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "Camí de comparació:";
 $lang["WITHPATH"] = "Amb el camí:";
 $lang["FILEDELETED"] = "Fitxer suprimit";
 $lang["FILEADDED"] = "Nou fitxer";
+
+$lang['SEARCH'] = "Cerca";
+$lang['SEARCH_PLACEHOLDER'] = "Cerqueu articles aquí";
+$lang['NOITEMSFOUND'] = "No s'ha trobat cap element";

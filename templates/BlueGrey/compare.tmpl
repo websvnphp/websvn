@@ -19,7 +19,7 @@
       [websvn:compare_endform]
     [websvn-test:warning]
       <div id="warning">[websvn:warning]</div>
-    [websvn-else]
+    [websvn-endtest]
     [websvn-test:success]
       <div id="nav">
         [websvn:reverselink] &#124;
@@ -34,7 +34,7 @@
     </center>
     [websvn-startlisting]
       [websvn-test:newpath]
-      <table class="comparison">
+      <table class="comparison collapsible">
         <thead>
         <tr><th><a href="[websvn:fileurl]">[websvn:newpath]</a></th></tr>
         </thead>
@@ -58,4 +58,6 @@
       [websvn-endtest]
     [websvn-endlisting]
   [websvn-endtest]
+  <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/jquery.min.1.9.1.js"></script>
+  <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/collapsible.js"></script>
 [websvn-endtest]

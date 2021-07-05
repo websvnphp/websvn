@@ -87,10 +87,10 @@ a img {
 	text-align:left;
 }
 #index #wrap th.closed {
-	background-image:url(images/toggleup.png);
+	background-image:url(images/toggle-up.png);
 }
 #index #wrap th.open {
-	background-image:url(images/toggledown.png);
+	background-image:url(images/toggle-down.png);
 }
 #index #info dl {
 	margin:2px 0;
@@ -390,6 +390,14 @@ thead th {
 	margin:3px 2px;
 	padding:3px 5px;
 }
+thead th.open {
+	background-image:url(images/toggle-down.png);
+	background-repeat:no-repeat;
+}
+thead th.closed {
+	background-image:url(images/toggle-up.png);
+	background-repeat:no-repeat;
+}
 thead th.path {
 	text-align:left;
 	width:50%;
@@ -593,19 +601,19 @@ code, pre, table.diff td, #file div.listing {
 .toggleup a:visited,
 .toggleup a:focus {
 	padding-left:22px;
-	background:url(images/toggleup.png) no-repeat 2px 50%;
+	background:url(images/toggle-up.png) no-repeat 2px 50%;
 }
 .toggleup a:hover {
-	background:#F0E68C url(images/toggleup.png) no-repeat 2px 50%;
+	background:#F0E68C url(images/toggle-up.png) no-repeat 2px 50%;
 }
 .toggledown a:link,
 .toggledown a:visited,
 .toggledown a:focus {
 	padding-left:22px;
-	background:url(images/toggledown.png) no-repeat 2px 50%;
+	background:url(images/toggle-down.png) no-repeat 2px 50%;
 }
 .toggledown a:hover {
-	background:#F0E68C url(images/toggledown.png) no-repeat 2px 50%;
+	background:#F0E68C url(images/toggle-down.png) no-repeat 2px 50%;
 }
 span.diff a:link,
 span.diff a:visited,

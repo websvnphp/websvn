@@ -118,3 +118,7 @@ $lang["COMPPATH"] = "路径比较:";
 // $lang["WITHPATH"] = "With Path:";
 $lang["FILEDELETED"] = "已删除文件";
 $lang["FILEADDED"] = "新文件";
+
+$lang['SEARCH'] = "搜索";
+$lang['SEARCH_PLACEHOLDER'] = "在这里搜索项目";
+$lang['NOITEMSFOUND'] = "未找到任何项目";

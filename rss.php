@@ -45,7 +45,7 @@ if ($config->multiViews) {
 	}
 }
 
-if ($path == '' || $path{0} != '/') {
+if ($path == '' || $path[0] != '/') {
 	$ppath = '/'.$path;
 } else {
 	$ppath = $path;

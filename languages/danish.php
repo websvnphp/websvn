@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Sammenlign sti:";
 $lang["WITHPATH"] = "med sti:";
 $lang["FILEDELETED"] = "Fil slettet";
 $lang["FILEADDED"] = "Ny fil";
+
+$lang['SEARCH'] = "Søg";
+$lang['SEARCH_PLACEHOLDER'] = "Søg efter emner her";
+$lang['NOITEMSFOUND'] = "Ingen varer fundet";

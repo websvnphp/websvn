@@ -166,6 +166,17 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // $config->setAlphabeticOrder(true);
 
+// By default, WebSVN loads parent path directories and then on user click other,
+// This options loads the entire directory in one go and allows to browse without delay.
+// By default all will be collapsed to root directory and can be expanded.
+// The performance will be impacted as it takes time to load up all the things in the 
+// repository. Once loaded directory exapansion is instantaneous.
+// The alphabetical order is applied to all directory and files. 
+// This means that grouping of all dirs together and all files together is NOT supported currently!
+// The files and directories are shown as is with a mixture of files and folders. 
+
+// $config->setLoadAllRepos(true);
+
 // By default, WebSVN displays the information of the last modification
 // (revision, age and author) for each repository in an extra column.
 // To disable that uncomment this line.
@@ -396,6 +407,17 @@ $config->setMinDownloadLevel(2);
 // $extGeshi['pascal'] = array('p', 'pas');
 //
 // Note that extensions are case sensitive.
+
+// }}}
+
+// {{{ Markdown Render
+
+// Uncomment this line if you want to enable Markdown Rendering of README.md file in the path. 
+// You will need the Parsedown.php (https://github.com/erusev/parsedown) library for this to work.
+// This will look for README.md file on the path and render it.
+// The name of "README.md" isn't configurable for now to simply follow GitHub's conventions. 
+
+// $config->useParsedown();
 
 // }}}
 

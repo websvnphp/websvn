@@ -4,6 +4,9 @@
     <div id="error">[websvn:error]</div>
 [websvn-else]
     <div id="revjump">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
+    [websvn-test:search]
+    <div id="searchcss">[websvn:search_form]<div>[lang:SEARCH] [websvn:search_input]<span class="submit">[websvn:search_submit]</span></div>[websvn:search_endform]</div>
+    [websvn-endtest]
     <div id="pathlinks">[websvn:pathlinks]</div>
     [websvn-test:warning]
     [websvn-else]
@@ -85,13 +88,20 @@ e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsv
         [websvn-endtest]
         </tr>
         </thead>
+        <tbody>
       [websvn-startlisting]
-        <tr class="row[websvn:rowparity]">
-          <td valign="middle">
+        <tr class="row[websvn:rowparity]" 
+          [websvn-test:loadalldir]
+            title="[websvn:classname]"
+          [websvn-endtest]
+        >
+          <td class="path" valign="middle">
             [websvn:compare_box]
             [websvn-treenode]
-            [websvn-icon]
-            [websvn:filelink]
+            <a href="[websvn:fileurl]">
+                [websvn-icon]
+                [websvn:filename]
+            </a>
           </td>
           [websvn-test:showlastmod]
           <td class="rev"><a href="[websvn:revurl]">[websvn:revision]</a>&nbsp;</td>
@@ -121,7 +131,12 @@ e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsv
           [websvn-endtest]
         </tr>
       [websvn-endlisting]
+      </tbody>
       </table>
     [websvn:compare_submit][websvn:compare_endform]
+  [websvn-endtest]
+  [websvn-test:loadalldir]
+  <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/jquery.min.1.9.1.js"></script>
+  <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/collapsible.js"></script>
   [websvn-endtest]
 [websvn-endtest]

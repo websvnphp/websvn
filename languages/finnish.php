@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Vertaile Polkua:";
 $lang["WITHPATH"] = "Vertailtava Polku:";
 $lang["FILEDELETED"] = "Tiedosto poistettu";
 $lang["FILEADDED"] = "Uusi tiedosto";
+
+$lang['SEARCH'] = "Hae";
+$lang['SEARCH_PLACEHOLDER'] = "Hae kohteita täältä";
+$lang['NOITEMSFOUND'] = "Kohteita ei löytynyt";

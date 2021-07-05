@@ -117,3 +117,7 @@ $lang["COMPPATH"] = "Порівняти шлях:";
 $lang["WITHPATH"] = "Зі шляхом:";
 $lang["FILEDELETED"] = "Файл вилучено";
 $lang["FILEADDED"] = "Новий файл";
+
+$lang['SEARCH'] = "Пошук";
+$lang['SEARCH_PLACEHOLDER'] = "Шукайте тут предмети";
+$lang['NOITEMSFOUND'] = "Елементів не знайдено";

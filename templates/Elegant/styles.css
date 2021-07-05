@@ -156,6 +156,25 @@ form {
 	margin: 0;
 }
 
+#header #searchcss {
+	float: center;
+	clear: none;
+	margin: -3px -3px 0 15px;
+}
+
+#header #searchcss span input  {
+	margin: 2px;
+	padding: 0 8px;
+}
+
+* html #header #searchcss {
+	padding-right: 5px;
+}
+
+* html #header #searchcss form {
+	margin: 0;
+}
+
 #header div {
 	clear: both;
 }

@@ -116,3 +116,7 @@ $lang["COMPPATH"] = "Útvonal hasonlítása:";
 $lang["WITHPATH"] = "ezzel az útvonallal:";
 $lang["FILEDELETED"] = "A file törölve";
 $lang["FILEADDED"] = "Új file";
+
+$lang['SEARCH'] = "Keresés";
+$lang['SEARCH_PLACEHOLDER'] = "Tételek keresése itt";
+$lang['NOITEMSFOUND'] = "Nincs találat";

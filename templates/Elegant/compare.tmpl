@@ -33,10 +33,13 @@
     </table>
     [websvn:compare_endform]
     </div>
+    [websvn-test:warning]
+      <div id="warning">[websvn:warning]</div>
+    [websvn-endtest]
     <div id="comparisons">
     [websvn-startlisting]
       [websvn-test:newpath]
-      <table>
+      <table class="collapsible">
         <thead>
         <tr><th><a href="[websvn:fileurl]">[websvn:newpath]</a></th></tr>
         </thead>
@@ -60,4 +63,6 @@
       [websvn-endtest]
     [websvn-endlisting]
     </div>
-  [websvn-endtest]
+   <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/jquery.min.1.9.1.js"></script>
+   <script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/collapsible.js"></script>
+[websvn-endtest]

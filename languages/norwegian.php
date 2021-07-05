@@ -122,3 +122,7 @@ $lang["COMPPATH"] = "Sammenlign sti:";
 $lang["WITHPATH"] = "Med sti:";
 $lang["FILEDELETED"] = "Fil slettet";
 $lang["FILEADDED"] = "Ny fil";
+
+$lang['SEARCH'] = "Søk";
+$lang['SEARCH_PLACEHOLDER'] = "Søk etter varer her";
+$lang['NOITEMSFOUND'] = "Ingen objekter funnet";
