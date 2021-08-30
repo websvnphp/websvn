@@ -142,13 +142,13 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 
 		if ($isDir) 
 		{
-			$listvar['filetype'] = ($openDir) ? 'diropen' : 'dir';
 			$openDir = isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp($subs[$level + 1], $file));
+			$listvar['filetype'] = ($openDir) ? 'diropen' : 'dir';			
 		} 
 		else 
 		{
-			$listvar['filetype'] = strtolower(strrchr($file, '.'));
 			$openDir = false;
+			$listvar['filetype'] = strtolower(strrchr($file, '.'));			
 		}
 
 		$listvar['isDir'] = $isDir;
