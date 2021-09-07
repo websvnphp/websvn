@@ -445,6 +445,8 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing)
 	// For file, the last element in the subs is the file name.
 	// Therefore, it is always count($subs) - 2
 	$limit = count($subs) - 2;
+	$level = $limit - 1;
+	$level = $level <= 0 ? 0 : $level;
 
 	for ($n = 0; $n < $limit; $n++)
 	{
@@ -452,7 +454,7 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing)
 	}
 
 	$vars['compare_box'] = ''; // Set blank once in case tree view is not enabled.
-	return showDirFiles($svnrep, $subs, 0, $limit, $rev, $peg, $listing, 0, $config->treeView);
+	return showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, 0, $config->treeView);
 }
 
 // Make sure that we have a repository
