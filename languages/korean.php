@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Korean";
 $lang["LANGUAGENAMENATIVE"] = "한국어";
 $lang["LANGUAGENAMEHTML"] = "&#54620;&#44397;&#50612;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "로그";
 $lang["DIFF"] = "비교";
 

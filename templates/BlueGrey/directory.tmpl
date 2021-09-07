@@ -7,7 +7,7 @@
     [websvn-test:search]
     <div id="searchcss">[websvn:search_form]<div>[lang:SEARCH] [websvn:search_input]<span class="submit">[websvn:search_submit]</span></div>[websvn:search_endform]</div>
     [websvn-endtest]
-    <div id="pathlinks">[websvn:pathlinks]</div>
+    <div id="path_links">[websvn:path_links_root_config]/[websvn:path_links]</div>
     [websvn-test:warning]
     [websvn-else]
     <table cellpadding="2" cellspacing="0" class="outline">
@@ -90,7 +90,7 @@ e-node=<img class="icon" border="0" width="24" height="22" src="[websvn:locwebsv
         </thead>
         <tbody>
       [websvn-startlisting]
-        <tr class="row[websvn:rowparity]" 
+        <tr class="row[websvn:rowparity]"
           [websvn-test:loadalldir]
             title="[websvn:classname]"
           [websvn-endtest]

@@ -28,6 +28,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Catalan";
 $lang["LANGUAGENAMENATIVE"] = "Català-Valencià";
 $lang["LANGUAGENAMEHTML"] = "Catal&agrave;-Valenci&agrave;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Registre";
 $lang["DIFF"] = "Diferència";
 
