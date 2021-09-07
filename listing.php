@@ -445,7 +445,7 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing)
 	// For file, the last element in the subs is the file name.
 	// Therefore, it is always count($subs) - 2
 	$limit = count($subs) - 2;
-	$level = $limit - 1;
+	$level = $limit;
 	$level = $level <= 0 ? 0 : $level;
 
 	for ($n = 0; $n < $limit; $n++)
