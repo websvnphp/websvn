@@ -441,9 +441,14 @@ function showTreeDir($svnrep, $path, $rev, $peg, $listing)
 
 	$subs = explode('/', $path);
 
-	// For directory, the last element in the subs is empty.
-	// For file, the last element in the subs is the file name.
-	// Therefore, it is always count($subs) - 2
+	// The last element in "$subs" is empty for directories, some file name for files, but ALWAYS
+	// exists as an additional element. Hence, "-2" is necessary.
+	//
+	// Additionally, level and limit are conceptually different things, first to e.g. start access
+	// checks FROM, latter to process UNTIL. So don't merge those values too easily, especially as
+	// both values needed to be different in some environments in the past for some unkown reason.
+	//
+	// https://github.com/websvnphp/websvn/issues/146#issuecomment-913353366
 	$limit = count($subs) - 2;
 	$level = $limit;
 	$level = $level <= 0 ? 0 : $level;
