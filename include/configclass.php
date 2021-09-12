@@ -691,7 +691,7 @@ class WebSvnConfig {
 	var $quote = "'";
 	var $pathSeparator = ':';
 	var $fileUrlPrefix = 'file://';
-	var $nameBreadcrumbRepoRootAsRepo = false;
+	var $breadcrumbRepoRootAsRepo = false;
 
 	var $_repositories = array();
 
@@ -1683,12 +1683,12 @@ class WebSvnConfig {
 
 	// {{{ Change the name of the breadcrumb root-phrase to that of the current repo?
 
-	function nameBreadcrumbRepoRootAsRepo() {
-		$this->nameBreadcrumbRepoRootAsRepo = true;
+	function setBreadcrumbRepoRootAsRepo($newValue) {
+		$this->breadcrumbRepoRootAsRepo = $newValue;
 	}
 
-	function getNameBreadcrumbRepoRootAsRepo() {
-		return $this->nameBreadcrumbRepoRootAsRepo;
+	function getBreadcrumbRepoRootAsRepo() {
+		return $this->breadcrumbRepoRootAsRepo;
 	}
 
 	// }}}

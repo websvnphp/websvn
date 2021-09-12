@@ -52,7 +52,7 @@ function createPathLinks($rep, $path, $rev, $peg = '') {
 	$vars['path_links']				= '';
 	$vars['path_links_root_root']	= "<a href=\"${pathSoFarURL}\" class=\"root\"><span>${rootName}</span></a>";
 	$vars['path_links_root_repo']	= "<a href=\"${pathSoFarURL}\" class=\"root\"><span>${repoName}</span></a>";
-	$vars['path_links_root_config']	= $config->getNameBreadcrumbRepoRootAsRepo()
+	$vars['path_links_root_config']	= $config->getBreadcrumbRepoRootAsRepo()
 										? $vars['path_links_root_repo']
 										: $vars['path_links_root_root'];
 

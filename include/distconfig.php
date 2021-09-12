@@ -520,6 +520,6 @@ $config->expandTabsBy(8);
 // $config->expandTabsBy(3, 'myrep'); // Expand Tabs by 3 for repository 'myrep'
 
 // Change the name of the breadcrumb root-phrase to that of the current repo?
-// $config->nameBreadcrumbRepoRootAsRepo();
+// $config->setBreadcrumbRepoRootAsRepo(true);
 
 // }}}
