@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Uzbek";
 $lang["LANGUAGENAMENATIVE"] = "Oëzbekcha";
 $lang["LANGUAGENAMEHTML"] = "O&euml;zbekcha";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Farq";
 

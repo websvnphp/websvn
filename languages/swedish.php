@@ -28,6 +28,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Swedish";
 $lang["LANGUAGENAMENATIVE"] = "Svenska";
 $lang["LANGUAGENAMEHTML"] = "Svenska";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Logg";
 $lang["DIFF"] = "Skillnad";
 

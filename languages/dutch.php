@@ -31,6 +31,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Dutch";
 $lang["LANGUAGENAMENATIVE"] = "Nederlands";
 $lang["LANGUAGENAMEHTML"] = "Nederlands";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Diff";
 

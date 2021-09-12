@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Japanese";
 $lang["LANGUAGENAMENATIVE"] = "日本語";
 $lang["LANGUAGENAMEHTML"] = "&#26085;&#26412;&#35486;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "ログ";
 $lang["DIFF"] = "差分";
 

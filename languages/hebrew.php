@@ -28,6 +28,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Hebrew";
 $lang["LANGUAGENAMENATIVE"] = "עברית";
 $lang["LANGUAGENAMEHTML"] = "&#1506;&#1489;&#1512;&#1497;&#1514;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "לוג";
 $lang["DIFF"] = "שוני";
 

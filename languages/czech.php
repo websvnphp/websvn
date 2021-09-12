@@ -28,6 +28,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Czech";
 $lang["LANGUAGENAMENATIVE"] = "Česky";
 $lang["LANGUAGENAMEHTML"] = "&#268;esky";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Záznam";
 // $lang["DIFF"] = "Diff";
 

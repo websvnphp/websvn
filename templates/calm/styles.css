@@ -570,7 +570,7 @@ tr td.feed a:link {
 /*
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ File, Blame, Diff
 */
-h2#pathlinks {
+h2#path_links {
 	text-transform:none;
 	margin:0 2% 15px;
 }
@@ -917,7 +917,7 @@ td.changes .mod {
 	tr td.path {
 		white-space: nowrap;
 	}
-	h2#pathlinks {
+	h2#path_links {
 		overflow-x: auto;
 		overflow-y: hidden;
 	}

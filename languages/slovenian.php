@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Slovenian";
 $lang["LANGUAGENAMENATIVE"] = "Slovenščina";
 $lang["LANGUAGENAMEHTML"] = "Sloven&#353;&#269;ina";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Dnevnik";
 $lang["DIFF"] = "Razlike";
 

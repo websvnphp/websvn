@@ -169,11 +169,11 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // By default, WebSVN loads parent path directories and then on user click other,
 // This options loads the entire directory in one go and allows to browse without delay.
 // By default all will be collapsed to root directory and can be expanded.
-// The performance will be impacted as it takes time to load up all the things in the 
+// The performance will be impacted as it takes time to load up all the things in the
 // repository. Once loaded directory exapansion is instantaneous.
-// The alphabetical order is applied to all directory and files. 
+// The alphabetical order is applied to all directory and files.
 // This means that grouping of all dirs together and all files together is NOT supported currently!
-// The files and directories are shown as is with a mixture of files and folders. 
+// The files and directories are shown as is with a mixture of files and folders.
 
 // $config->setLoadAllRepos(true);
 
@@ -412,10 +412,10 @@ $config->setMinDownloadLevel(2);
 
 // {{{ Markdown Render
 
-// Uncomment this line if you want to enable Markdown Rendering of README.md file in the path. 
+// Uncomment this line if you want to enable Markdown Rendering of README.md file in the path.
 // You will need the Parsedown.php (https://github.com/erusev/parsedown) library for this to work.
 // This will look for README.md file on the path and render it.
-// The name of "README.md" isn't configurable for now to simply follow GitHub's conventions. 
+// The name of "README.md" isn't configurable for now to simply follow GitHub's conventions.
 
 // $config->useParsedown();
 
@@ -518,5 +518,8 @@ $config->expandTabsBy(8);
 // Use the convention 'groupname.myrep' if your repository is in a group.
 
 // $config->expandTabsBy(3, 'myrep'); // Expand Tabs by 3 for repository 'myrep'
+
+// Change the name of the breadcrumb root-phrase to that of the current repo?
+// $config->setBreadcrumbRepoRootAsRepo(true);
 
 // }}}

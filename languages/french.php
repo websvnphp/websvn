@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "French";
 $lang["LANGUAGENAMENATIVE"] = "Français";
 $lang["LANGUAGENAMEHTML"] = "Fran&ccedil;ais";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Journal";
 $lang["DIFF"] = "Diffé.";
 

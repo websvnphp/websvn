@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Macedonian";
 $lang["LANGUAGENAMENATIVE"] = "Македонски";
 $lang["LANGUAGENAMEHTML"] = "&#1052;&#1072;&#1082;&#1077;&#1076;&#1086;&#1085;&#1089;&#1082;&#1080;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Забелешка";
 $lang["DIFF"] = "Разлика";
 

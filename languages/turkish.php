@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Turkish";
 $lang["LANGUAGENAMENATIVE"] = "Türkçe";
 $lang["LANGUAGENAMEHTML"] = "T&uuml;rk&ccedil;e";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Kayıt";
 $lang["DIFF"] = "Fark";
 

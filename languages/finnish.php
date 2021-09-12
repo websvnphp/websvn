@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Finnish";
 $lang["LANGUAGENAMENATIVE"] = "Suomi";
 $lang["LANGUAGENAMEHTML"] = "Suomi";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Loki";
 $lang["DIFF"] = "Diff";
 

@@ -30,6 +30,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Traditional Chinese";
 $lang["LANGUAGENAMENATIVE"] = "中文";
 $lang["LANGUAGENAMEHTML"] = "&#20013;&#25991;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "歷史記錄";
 $lang["DIFF"] = "比對";
 
