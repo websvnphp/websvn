@@ -684,7 +684,7 @@ class SVNRepository {
 		$shouldTrimOutput = false;
 		$explodeStr = "\n";
 		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($path)) {
-			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg);
+			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, $highlight);
 			// Geshi outputs in HTML format, enscript does not
 			$shouldTrimOutput = true;
 			$explodeStr = "<br />";
@@ -780,7 +780,7 @@ class SVNRepository {
 	//
 	// perform syntax highlighting using geshi
 
-	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false) {
+	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false, $highlight = 'file') {
 		// Output the file to the filename
 		$error	= '';
 		$cmd	= $this->svnCommandString('cat', $path, $rev, $peg).' > '.quote($filename);
@@ -808,8 +808,10 @@ class SVNRepository {
 		$this->geshi->set_header_type(GESHI_HEADER_NONE);
 		$this->geshi->set_overall_class('geshi');
 		$this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
-		$this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
-		$this->geshi->enable_ids(true);
+		if ($highlight == 'file') {
+			$this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
+			$this->geshi->enable_ids(true);
+		}
 
 		if ($return) {
 			return $this->geshi->parse_code();
