@@ -808,6 +808,8 @@ class SVNRepository {
 		$this->geshi->set_header_type(GESHI_HEADER_NONE);
 		$this->geshi->set_overall_class('geshi');
 		$this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
+		$this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
+		$this->geshi->enable_ids(true);
 
 		if ($return) {
 			return $this->geshi->parse_code();
