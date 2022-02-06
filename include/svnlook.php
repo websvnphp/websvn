@@ -812,7 +812,8 @@ class SVNRepository {
 		$this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
 
 		if ($highlight == 'file') {
-			$this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
+			$this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS,1);
+			$this->geshi->set_overall_id('line');
 			$this->geshi->enable_ids(true);
 		}
 
