@@ -797,17 +797,20 @@ class SVNRepository {
 		}
 
 		$source = file_get_contents($filename);
+
 		if ($this->geshi === null) {
 			if (!defined('USE_AUTOLOADER')) {
 				require_once 'geshi.php';
 			}
 			$this->geshi = new GeSHi();
 		}
+
 		$this->geshi->set_source($source);
 		$this->geshi->set_language($language);
 		$this->geshi->set_header_type(GESHI_HEADER_NONE);
 		$this->geshi->set_overall_class('geshi');
 		$this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
+
 		if ($highlight == 'file') {
 			$this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
 			$this->geshi->enable_ids(true);
