@@ -75,7 +75,7 @@ if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAcces
 {
 	$base = basename($path);
 	header('Content-Type: application/gzip');
-	header('Content-Disposition: attachment; filename='.urlencode($base).'.gz');
+	header("Content-Disposition: attachment; filename*=UTF-8''".rawurlencode($base).'.gz');
 
 	// Get the file contents and pipe into gzip. All this without creating
 	// a temporary file. Damn clever.
@@ -137,7 +137,7 @@ if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false))
 	$base = basename($path);
 	header('Content-Type: '.$mimeType);
 	//header('Content-Length: '.$size);
-	header("Content-Disposition: inline; filename*=UTF-8''" . rawurlencode($base));
+	header("Content-Disposition: inline; filename*=UTF-8''".rawurlencode($base));
 	$svnrep->getFileContents($path, '', $rev, $peg);
 	exit;
 }
