@@ -313,7 +313,7 @@ if (is_readable($downloadArchive))
 
 	header('Content-Type: '.$downloadMimeType);
 	header('Content-Length: '.filesize($downloadArchive));
-	header('Content-Disposition: attachment; filename="'. $downloadFilename .'"');
+	header("Content-Disposition: attachment; filename*=UTF-8''".rawurlencode($downloadFilename));
 	readfile($downloadArchive);
 }
 else
