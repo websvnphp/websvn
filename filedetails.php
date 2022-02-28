@@ -145,7 +145,8 @@ if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false))
 // Display the file inline using WebSVN.
 
 $vars['action'] = '';
-$vars['path'] = escape($ppath);
+$vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
+$vars['safepath'] = escape($ppath);
 
 if (isset($history->entries[0])) 
 {
@@ -230,7 +231,7 @@ if ($mimeType && !isset($vars['warning']))
 	$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">'.$lang['VIEWAS'].' "'.$mimeType.'"</a>';
 }
 
-$vars['rev'] = escape($rev);
+$vars['rev'] = $rev;
 $vars['peg'] = $peg;
 
 if (!$rep->hasReadAccess($path)) 

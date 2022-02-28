@@ -76,7 +76,8 @@ else
 
 $prevrev = @$history->entries[1]->rev;
 
-$vars['path'] = escape($ppath);
+$vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
+$vars['safepath'] = escape($ppath);
 $vars['rev1'] = $rev;
 $vars['rev2'] = $prevrev;
 $vars['prevrev'] = $prevrev;

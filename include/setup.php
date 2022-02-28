@@ -496,10 +496,10 @@ if (count($templates) > 1) {
 $vars['indexurl'] = $config->getURL('', '', 'index');
 $vars['validationurl'] = getFullURL($_SERVER['SCRIPT_NAME']).'?'.buildQuery($queryParams + array('template' => $template, 'language' => $language), '%26');
 
-// To avoid a possible XSS exploit, need to clean up the passed-in path first
-$path = !empty($_REQUEST['path']) ? escape($_REQUEST['path']) : null;
+$path = !empty($_REQUEST['path']) ? $_REQUEST['path'] : null;
 if ($path === null || $path === '')
 	$path = '/';
+$vars['path'] = str_replace('%2F', '/', rawurlencode($path));
 $vars['safepath'] = escape($path);
 // Set operative and peg revisions (if specified) and save passed-in revision
 $rev = (int)@$_REQUEST['rev'];

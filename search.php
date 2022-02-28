@@ -111,7 +111,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 
 		$listvar['isDir'] = $isDir;
 		$listvar['openDir'] = $openDir;
-		$listvar['path'] = $path.$file;
+		$listvar['path'] = str_replace('%2F', '/', rawurlencode($path.$file));
 
 		$tempelements = explode('/',$file);
 
@@ -120,14 +120,14 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 			$lastindexfile = count($tempelements)-1 - 1;
 			$listvar['node'] = $lastindexfile; // t-node
 			$listvar['level'] = ($treeview) ? $lastindexfile : 0;
-			$listvar['filename'] = $tempelements[$lastindexfile];
+			$listvar['filename'] = escape($tempelements[$lastindexfile]);
 		}
 		else
 		{
 			$lastindexfile = count($tempelements)-1;
 			$listvar['node'] = $lastindexfile; // t-node
 			$listvar['level'] = ($treeview) ? $lastindexfile : 0;
-			$listvar['filename'] = $tempelements[$lastindexfile];
+			$listvar['filename'] = escape($tempelements[$lastindexfile]);
 		}
 
 		for ($j=1;$j<=$lastindexfile;$j++)
@@ -316,7 +316,8 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 $vars['action'] = '';
 $vars['rev'] = $rev;
 $vars['peg'] = $peg;
-$vars['path'] = escape($ppath);
+$vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
+$vars['safepath'] = escape($ppath);
 $vars['lastchangedrev'] = $lastChangedRev;
 
 if ($logEntry)

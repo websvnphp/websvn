@@ -29,7 +29,7 @@
 function createPathLinks($rep, $path, $rev, $peg = '') {
 	global $config, $lang, $vars;
 
-	$pathComponents = explode('/', escape($path));
+	$pathComponents = explode('/', $path);
 	$count = count($pathComponents);
 
 	// The number of links depends on the last item.	It's empty if we're looking
@@ -57,17 +57,17 @@ function createPathLinks($rep, $path, $rev, $peg = '') {
 										: $vars['path_links_root_root'];
 
 	for ($n = 1; $n < $limit; $n++) {
-		$pathSoFar .= html_entity_decode($pathComponents[$n]).'/';
+		$pathSoFar .= $pathComponents[$n].'/';
 		$pathSoFarURL = $config->getURL($rep, $pathSoFar, 'dir').$passRevString;
-		$vars['path_links'] .= '<a href="'.$pathSoFarURL.'#'.anchorForPath($pathSoFar).'">'.$pathComponents[$n].'</a>/';
+		$vars['path_links'] .= '<a href="'.$pathSoFarURL.'#'.anchorForPath($pathSoFar).'">'.escape($pathComponents[$n]).'</a>/';
 	}
 
 	if (!empty($pathComponents[$n])) {
 		$pegrev = ($peg && $peg != $rev) ? ' <a class="peg" href="'.'?'.escape(str_replace('&peg='.$peg, '', $_SERVER['QUERY_STRING'])).'">@ '.$peg.'</a>' : '';
 		if ($dir) {
-			$vars['path_links'] .= '<span class="dir">'.$pathComponents[$n].'/'.$pegrev.'</span>';
+			$vars['path_links'] .= '<span class="dir">'.escape($pathComponents[$n]).'/'.$pegrev.'</span>';
 		} else {
-			$vars['path_links'] .= '<span class="file">'.$pathComponents[$n].$pegrev.'</span>';
+			$vars['path_links'] .= '<span class="file">'.escape($pathComponents[$n]).$pegrev.'</span>';
 		}
 	}
 }
