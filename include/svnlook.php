@@ -1032,7 +1032,7 @@ class SVNRepository {
 		if (strstr($error, 'found format')) {
 			$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.nl2br(escape(toOutputEncoding(substr($error, strrpos($error, 'Expected'))))).'.")';
 		} else if (strstr($error, 'No such revision')) {
-			$vars['warning'] = 'Revision '.escape($rev).' of this resource does not exist.';
+			$vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
 		} else {
 			$vars['error'] = $lang['BADCMD'].': <code>'.escape(stripCredentialsFromCommand($cmd)).'</code><br />'.nl2br(escape(toOutputEncoding($error)));
 		}

@@ -81,7 +81,8 @@ $parent = substr($ppath, 0, $pos + 1);
 
 $vars['rev'] = $rev;
 $vars['peg'] = $peg;
-$vars['path'] = escape($ppath);
+$vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
+$vars['safepath'] = escape($ppath);
 
 if (isset($history->entries[0])) 
 {

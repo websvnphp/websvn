@@ -93,7 +93,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 		{
 			$listvar = &$listing[$index];
 			$listvar['rowparity'] = $index % 2;
-			$listvar['path'] = $parentPath;
+			$listvar['path'] = str_replace('%2F', '/', rawurlencode($parentPath));
 			$listvar['filetype'] = 'dir';
 			$listvar['filename'] = '..';
 			$listvar['fileurl'] = urlForPath($parentPath, $passRevString);
@@ -155,7 +155,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 		$listvar['openDir'] = $openDir;
 		$listvar['level'] = ($treeview) ? $level : 0;
 		$listvar['node'] = 0; // t-node
-		$listvar['path'] = $path.$file;
+		$listvar['path'] = str_replace('%2F', '/', rawurlencode($path.$file));
 		$listvar['filename'] = escape($file);
 
 		if ($isDir)
@@ -264,7 +264,7 @@ function showAllDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeView
 		{
 			$listvar = &$listing[$index];
 			$listvar['rowparity'] = $index % 2;
-			$listvar['path'] = $parentPath;
+			$listvar['path'] = str_replace('%2F', '/', rawurlencode($parentPath));
 			$listvar['filetype'] = 'dir';
 			$listvar['filename'] = '..';
 			$listvar['fileurl'] = urlForPath($parentPath, $passRevString);
@@ -322,7 +322,7 @@ function showAllDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeView
 
 		$listvar['isDir'] = $isDir;
 		$listvar['openDir'] = $openDir;
-		$listvar['path'] = $path.$file;
+		$listvar['path'] = str_replace('%2F', '/', rawurlencode($path.$file));
 		$tempelements = explode('/',$file);
 
 		if ($tempelements[count($tempelements)-1] === "")
@@ -330,7 +330,7 @@ function showAllDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeView
 			$lastindexfile = count($tempelements)-1 - 1;
 			$listvar['node'] = $lastindexfile; // t-node
 			$listvar['level'] = ($treeView) ? $lastindexfile : 0;
-			$listvar['filename'] = $tempelements[$lastindexfile];
+			$listvar['filename'] = escape($tempelements[$lastindexfile]);
 			$listvar['classname'] = '';
 
 			for ($n = 0; $n < $lastindexfile; ++$n)
@@ -347,7 +347,7 @@ function showAllDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeView
 			$lastindexfile = count($tempelements)-1;
 			$listvar['node'] = $lastindexfile; // t-node
 			$listvar['level'] = ($treeView) ? $lastindexfile : 0;
-			$listvar['filename'] = $tempelements[$lastindexfile];
+			$listvar['filename'] = escape($tempelements[$lastindexfile]);
 			$listvar['classname'] = '';
 
 			for ($n=0; $n < $lastindexfile; ++$n)
@@ -574,7 +574,8 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 $vars['action'] = '';
 $vars['rev'] = $rev;
 $vars['peg'] = $peg;
-$vars['path'] = escape($ppath);
+$vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
+$vars['safepath'] = escape($ppath);
 $vars['lastchangedrev'] = $lastChangedRev;
 
 if ($logEntry)

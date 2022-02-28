@@ -114,7 +114,8 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 $vars['action'] = '';
 $vars['rev'] = $rev;
 $vars['peg'] = $peg;
-$vars['path'] = escape($ppath);
+$vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
+$vars['safepath'] = escape($ppath);
 
 if ($logEntry) 
 {
@@ -184,8 +185,10 @@ foreach ($changes as $change)
 
 	$resourceExisted = $change->action == 'M' || $change->copyfrom;
 	$listing[] = array(
-		'path' => escape($change->path),
-		'oldpath' => $change->copyfrom ? $change->copyfrom.' @ '.$change->copyrev : '',
+		'path' => str_replace('%2F', '/', rawurlencode($change->path)),
+		'safepath' => escape($change->path),
+		'oldpath' => str_replace('%2F', '/', rawurlencode($change->copyfrom)).($change->copyfrom ? '@'.$change->copyrev : ''),
+		'oldsafepath' => escape($change->copyfrom ? $change->copyfrom.'@'.$change->copyrev : ''),
 		'action' => $change->action,
 		'added' => $change->action == 'A',
 		'deleted' => $change->action == 'D',

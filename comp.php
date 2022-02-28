@@ -142,10 +142,7 @@ $vars['compare_rev2input'] = '<input type="text" size="5" name="compare_rev[1]" 
 $vars['compare_submit'] = '<input name="comparesubmit" type="submit" value="'.$lang['COMPAREPATHS'].'" />';
 $vars['compare_endform'] = '</form>';
 
-// safe paths are a hack for fixing XSS exploit
-$vars['path1'] = escape($path1);
 $vars['safepath1'] = escape($path1);
-$vars['path2'] = escape($path2);
 $vars['safepath2'] = escape($path2);
 
 $vars['rev1'] = $rev1;
@@ -477,7 +474,7 @@ if (!$noinput)
 				$listvar = &$listing[$index];
 				$listvar['newpath'] = escape($absnode);
 
-				$listvar['fileurl'] = $config->getURL($rep, escape($absnode), 'file').'rev='.$rev2;
+				$listvar['fileurl'] = $config->getURL($rep, $absnode, 'file').'rev='.$rev2;
 
 				if ($debug) echo 'Creating node '.$node.'<br />';
 
