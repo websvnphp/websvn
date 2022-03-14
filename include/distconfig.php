@@ -37,7 +37,8 @@
 
 // Configure these lines if your commands aren't on your path.
 //
-// $config->setSVNCommandPath('/path/to/svn/command/'); //  e.g. c:\\program files\\subversion\\bin
+// $config->setSvnCommandPath('/path/to/svn/command/'); //  e.g. c:\\program files\\subversion\\bin
+// $config->setSvnAuthzCommandPath('/path/to/svnauthz/command/'); //  e.g. c:\\program files\\subversion\\bin\tools
 // $config->setDiffPath('/path/to/diff/command/');
 
 // For syntax colouring, if option enabled...
