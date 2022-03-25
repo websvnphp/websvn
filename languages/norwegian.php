@@ -34,6 +34,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Norwegian";
 $lang["LANGUAGENAMENATIVE"] = "Norsk";
 $lang["LANGUAGENAMEHTML"] = "Norsk";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Logg";
 $lang["DIFF"] = "Diff";
 

@@ -684,7 +684,7 @@ class SVNRepository {
 		$shouldTrimOutput = false;
 		$explodeStr = "\n";
 		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($path)) {
-			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg);
+			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, $highlight);
 			// Geshi outputs in HTML format, enscript does not
 			$shouldTrimOutput = true;
 			$explodeStr = "<br />";
@@ -780,7 +780,7 @@ class SVNRepository {
 	//
 	// perform syntax highlighting using geshi
 
-	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false) {
+	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false, $highlight = 'file') {
 		// Output the file to the filename
 		$error	= '';
 		$cmd	= $this->svnCommandString('cat', $path, $rev, $peg).' > '.quote($filename);
@@ -797,17 +797,25 @@ class SVNRepository {
 		}
 
 		$source = file_get_contents($filename);
+
 		if ($this->geshi === null) {
 			if (!defined('USE_AUTOLOADER')) {
 				require_once 'geshi.php';
 			}
 			$this->geshi = new GeSHi();
 		}
+
 		$this->geshi->set_source($source);
 		$this->geshi->set_language($language);
 		$this->geshi->set_header_type(GESHI_HEADER_NONE);
 		$this->geshi->set_overall_class('geshi');
 		$this->geshi->set_tab_width($this->repConfig->getExpandTabsBy());
+
+		if ($highlight == 'file') {
+			$this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
+			$this->geshi->set_overall_id('geshi');
+			$this->geshi->enable_ids(true);
+		}
 
 		if ($return) {
 			return $this->geshi->parse_code();
@@ -1024,7 +1032,7 @@ class SVNRepository {
 		if (strstr($error, 'found format')) {
 			$vars['error'] = 'Repository uses a newer format than Subversion '.$config->getSubversionVersion().' can read. ("'.nl2br(escape(toOutputEncoding(substr($error, strrpos($error, 'Expected'))))).'.")';
 		} else if (strstr($error, 'No such revision')) {
-			$vars['warning'] = 'Revision '.escape($rev).' of this resource does not exist.';
+			$vars['warning'] = 'Revision '.$rev.' of this resource does not exist.';
 		} else {
 			$vars['error'] = $lang['BADCMD'].': <code>'.escape(stripCredentialsFromCommand($cmd)).'</code><br />'.nl2br(escape(toOutputEncoding($error)));
 		}

@@ -100,7 +100,7 @@ form {
 	padding: 0 2px;
 }
 
-#header #info a:hover, #header #info h2#pathlinks a:hover {
+#header #info a:hover, #header #info h2#path_links a:hover {
 	background-color: rgba(63,63,63,0.35);
 }
 
@@ -179,20 +179,20 @@ form {
 	clear: both;
 }
 
-#header h2#pathlinks > * {
+#header h2#path_links > * {
 	padding: 1px;
 }
 
-#header h2#pathlinks a.root {
+#header h2#path_links a.root {
 	background: url(images/home.png) no-repeat 0 1px;
 	padding-left: 16px;
 }
 
-#header h2#pathlinks a.root span {
+#header h2#path_links a.root span {
 	display: none;
 }
 
-#header h2#pathlinks a.peg {
+#header h2#path_links a.peg {
 	background: url(images/remove.png) no-repeat right 1px;
 	padding-right: 20px;
 }

@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Russian";
 $lang["LANGUAGENAMENATIVE"] = "Русский";
 $lang["LANGUAGENAMEHTML"] = "&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Журнал";
 $lang["DIFF"] = "Различия";
 

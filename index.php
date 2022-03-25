@@ -30,6 +30,7 @@ $vars['action'] = $lang['PROJECTS'];
 $vars['repname'] = '';
 $vars['rev'] = 0;
 $vars['path'] = '';
+$vars['safepath'] = escape('');
 $vars['showlastmod'] = $config->showLastModInIndex();
 
 // Sort the repositories by group

@@ -691,6 +691,7 @@ class WebSvnConfig {
 	var $quote = "'";
 	var $pathSeparator = ':';
 	var $fileUrlPrefix = 'file://';
+	var $breadcrumbRepoRootAsRepo = false;
 
 	var $_repositories = array();
 
@@ -1241,24 +1242,28 @@ class WebSvnConfig {
 	// Define directory path to use for --config-dir parameter
 	function setSvnConfigDir($path) {
 		$this->_svnConfigDir = $path;
-		$this->_updateSVNCommand();
+		$this->_updateSvnCommand();
 	}
 
 	// Define flag to use --trust-server-cert parameter
 	function setTrustServerCert() {
 		$this->_svnTrustServerCert = true;
-		$this->_updateSVNCommand();
+		$this->_updateSvnCommand();
 	}
 
 	// Define the location of the svn command (e.g. '/usr/bin')
 	function setSvnCommandPath($path) {
 		$this->_svnCommandPath = $path;
-		$this->_updateSVNCommand();
+		$this->_updateSvnCommand();
 	}
 
-	function _updateSVNCommand() {
-		$this->_setPath($this->svn,			$this->_svnCommandPath, 'svn',		'--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
-		$this->_setPath($this->svnAuthz,	$this->_svnCommandPath, 'svnauthz',	'accessof');
+	// Define the location of the svnauthz command (e.g. '/usr/bin')
+	function setSvnAuthzCommandPath($path) {
+		$this->_setPath($this->svnAuthz, $path, 'svnauthz', 'accessof');
+	}
+
+	function _updateSvnCommand() {
+		$this->_setPath($this->svn, $this->_svnCommandPath, 'svn', '--non-interactive --config-dir '.$this->_svnConfigDir.($this->_svnTrustServerCert ? ' --trust-server-cert' : ''));
 	}
 
 	function getSvnCommand() {
@@ -1676,6 +1681,18 @@ class WebSvnConfig {
 		if (!empty($this->_repositories)) {
 			mergesort($this->_repositories, 'cmpGroups');
 		}
+	}
+
+	// }}}
+
+	// {{{ Change the name of the breadcrumb root-phrase to that of the current repo?
+
+	function setBreadcrumbRepoRootAsRepo($newValue) {
+		$this->breadcrumbRepoRootAsRepo = $newValue;
+	}
+
+	function getBreadcrumbRepoRootAsRepo() {
+		return $this->breadcrumbRepoRootAsRepo;
 	}
 
 	// }}}

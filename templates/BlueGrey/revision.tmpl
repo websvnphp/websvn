@@ -4,7 +4,7 @@
     <div id="error">[websvn:error]</div>
 [websvn-else]
     <div id="revjump">[websvn:revision_form]<b>[lang:REV]:</b>[websvn:revision_input][websvn:revision_submit][websvn:revision_endform]</div>
-    <div id="pathlinks">[websvn:pathlinks]</div>
+    <div id="path_links">[websvn:path_links_root_config]/[websvn:path_links]</div>
     [websvn-test:warning]
     [websvn-else]
     <table cellpadding="2" cellspacing="0" class="outline">
@@ -72,12 +72,12 @@
       <tr class="[websvn:action] row[websvn:rowparity]">
          <td>[websvn:action]
            [websvn-test:notinpath]
-           <a href="[websvn:detailurl]" class="notinpath">[websvn:path]</a>
+           <a href="[websvn:detailurl]" class="notinpath">[websvn:safepath]</a>
            [websvn-else]
-           <a href="[websvn:detailurl]">[websvn:path]</a>
+           <a href="[websvn:detailurl]">[websvn:safepath]</a>
            [websvn-endtest]
-           [websvn-test:oldpath]
-           <br/>&nbsp; &nbsp;<del>[websvn:oldpath] ([lang:PREV])</del>
+           [websvn-test:oldsafepath]
+           <br/>&nbsp; &nbsp;<del>[websvn:oldsafepath] ([lang:PREV])</del>
            [websvn-endtest]
          </td>
         [websvn-test:blameurl]

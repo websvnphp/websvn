@@ -29,6 +29,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Indonesian";
 $lang["LANGUAGENAMENATIVE"] = "Bahasa Indonesia";
 $lang["LANGUAGENAMEHTML"] = "Bahasa Indonesia";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Log";
 $lang["DIFF"] = "Perbedaan";
 

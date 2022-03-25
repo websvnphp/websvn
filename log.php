@@ -157,7 +157,8 @@ if ($path == '' || $path[0] != '/')
 $vars['action'] = $lang['LOG'];
 $vars['rev'] = $rev;
 $vars['peg'] = $peg;
-$vars['path'] = escape($ppath);
+$vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
+$vars['safepath'] = escape($ppath);
 
 if ($history && isset($history->entries[0])) 
 {
@@ -384,8 +385,8 @@ if (!empty($history))
 
 			$url = $config->getURL($rep, $precisePath, ($isDir ? 'dir' : 'file')).$thisRevString;
 
-			$listvar['revpathlink'] = '<a href="'.$url.'">'.$precisePath.'</a>';
-			$listvar['revpath'] = $precisePath;
+			$listvar['revpathlink'] = '<a href="'.$url.'">'.escape($precisePath).'</a>';
+			$listvar['revpath'] = escape($precisePath);
 			$listvar['revauthor'] = $revision->author;
 			$listvar['revdate'] = $revision->date;
 			$listvar['revage'] = $revision->age;

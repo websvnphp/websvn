@@ -27,9 +27,9 @@
 // Create a list of links to the current path that'll be available from the template
 
 function createPathLinks($rep, $path, $rev, $peg = '') {
-	global $vars, $config;
+	global $config, $lang, $vars;
 
-	$pathComponents = explode('/', escape($path));
+	$pathComponents = explode('/', $path);
 	$count = count($pathComponents);
 
 	// The number of links depends on the last item.	It's empty if we're looking
@@ -42,24 +42,32 @@ function createPathLinks($rep, $path, $rev, $peg = '') {
 		$dir = false;
 	}
 
-	$passRevString = createRevAndPegString($rev, $peg);
+	$passRevString	= createRevAndPegString($rev, $peg);
+	$pathSoFar		= '/';
+	$pathSoFarURL	= $config->getURL($rep, $pathSoFar, 'dir').$passRevString;
 
-	$pathSoFar = '/';
-	$pathSoFarURL = $config->getURL($rep, $pathSoFar, 'dir').$passRevString;
-	$vars['pathlinks'] = '<a href="'.$pathSoFarURL.'" class="root"><span>(root)</span></a>/';
+	$repoName = $rep->getDisplayName();
+	$rootName = $lang['BREADCRUMB_REPO_ROOT'];
+
+	$vars['path_links']				= '';
+	$vars['path_links_root_root']	= "<a href=\"${pathSoFarURL}\" class=\"root\"><span>${rootName}</span></a>";
+	$vars['path_links_root_repo']	= "<a href=\"${pathSoFarURL}\" class=\"root\"><span>${repoName}</span></a>";
+	$vars['path_links_root_config']	= $config->getBreadcrumbRepoRootAsRepo()
+										? $vars['path_links_root_repo']
+										: $vars['path_links_root_root'];
 
 	for ($n = 1; $n < $limit; $n++) {
-		$pathSoFar .= html_entity_decode($pathComponents[$n]).'/';
+		$pathSoFar .= $pathComponents[$n].'/';
 		$pathSoFarURL = $config->getURL($rep, $pathSoFar, 'dir').$passRevString;
-		$vars['pathlinks'] .= '<a href="'.$pathSoFarURL.'#'.anchorForPath($pathSoFar).'">'.$pathComponents[$n].'</a>/';
+		$vars['path_links'] .= '<a href="'.$pathSoFarURL.'#'.anchorForPath($pathSoFar).'">'.escape($pathComponents[$n]).'</a>/';
 	}
 
 	if (!empty($pathComponents[$n])) {
 		$pegrev = ($peg && $peg != $rev) ? ' <a class="peg" href="'.'?'.escape(str_replace('&peg='.$peg, '', $_SERVER['QUERY_STRING'])).'">@ '.$peg.'</a>' : '';
 		if ($dir) {
-			$vars['pathlinks'] .= '<span class="dir">'.$pathComponents[$n].'/'.$pegrev.'</span>';
+			$vars['path_links'] .= '<span class="dir">'.escape($pathComponents[$n]).'/'.$pegrev.'</span>';
 		} else {
-			$vars['pathlinks'] .= '<span class="file">'.$pathComponents[$n].$pegrev.'</span>';
+			$vars['path_links'] .= '<span class="file">'.escape($pathComponents[$n]).$pegrev.'</span>';
 		}
 	}
 }

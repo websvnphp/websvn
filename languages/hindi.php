@@ -31,6 +31,8 @@ $lang["LANGUAGENAMEENGLISH"] = "Hindi";
 $lang["LANGUAGENAMENATIVE"] = "हिंदी";
 $lang["LANGUAGENAMEHTML"] = "&#2361;&#2367;&#2306;&#2342;&#2368;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "टिप्पणी";
 $lang["DIFF"] = "फ़र्क";
 

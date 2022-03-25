@@ -21,7 +21,7 @@
 //
 // ukrainian.php
 //
-// Ukrainian language strings (UTF-8 encoding) 
+// Ukrainian language strings (UTF-8 encoding)
 // by Vitaliy Tsybulyak <fauve@ukr.net>
 
 $lang["LANGUAGETAG"] = "uk"; // Language tag (RFC 4646) for this translation.
@@ -29,30 +29,32 @@ $lang["LANGUAGENAMEENGLISH"] = "Ukrainian";
 $lang["LANGUAGENAMENATIVE"] = "Українська";
 $lang["LANGUAGENAMEHTML"] = "&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;";
 
+$lang['BREADCRUMB_REPO_ROOT'] = '(root)';
+
 $lang["LOG"] = "Журнал";
 $lang["DIFF"] = "Відмінності";
 
-$lang["NOREP"] = "Репозитарію не вказано";  
-$lang["NOPATH"] = "Шлях не знайдено";   
-$lang["NOACCESS"] = "У вас недостатньо дозволів на читання цього каталогу"; 
+$lang["NOREP"] = "Репозитарію не вказано";
+$lang["NOPATH"] = "Шлях не знайдено";
+$lang["NOACCESS"] = "У вас недостатньо дозволів на читання цього каталогу";
 $lang["RESTRICTED"] = "Обмежений доступ";
 $lang["SUPPLYREP"] = "Задайте будь ласка шлях до репозитарію в include/config.php за допомогою <code>\$config->parentPath</code> або <code>\$config->addRepository</code>. Додатковий опис можна знайти в довіднику зі встановлення.";
 
 $lang["DIFFREVS"] = "Відмінності між редагуваннями";
-$lang["AND"] = "і";     
-$lang["REV"] = "Версія";    
-$lang["LINE"] = "Рядок";    
-$lang["LINENO"] = "№ рядка"; 
-$lang["SHOWENTIREFILE"] = "Показати увесь файл";                
-$lang["SHOWCOMPACT"] = "Показати тільки ділянки з відмінностями"; 
+$lang["AND"] = "і";
+$lang["REV"] = "Версія";
+$lang["LINE"] = "Рядок";
+$lang["LINENO"] = "№ рядка";
+$lang["SHOWENTIREFILE"] = "Показати увесь файл";
+$lang["SHOWCOMPACT"] = "Показати тільки ділянки з відмінностями";
 $lang["IGNOREWHITESPACE"] = "Ігнорувати пробіли";
 $lang["REGARDWHITESPACE"] = "Зважати на пробіли";
 
 $lang["LISTING"] = "Вивід вмісту каталогу";
-$lang["FILEDETAIL"] = "Докладніше"; 
+$lang["FILEDETAIL"] = "Докладніше";
 $lang["VIEWAS"] = "Показати як";
-$lang["DIFFPREV"] = "Порівняти з попередньою"; 
-$lang["BLAME"] = "Авторство"; 
+$lang["DIFFPREV"] = "Порівняти з попередньою";
+$lang["BLAME"] = "Авторство";
 $lang["BLAMEFOR"] = "Інформація про авторство версії";
 
 $lang["REVINFO"] = "Інформація про версію";

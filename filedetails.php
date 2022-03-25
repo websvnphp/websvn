@@ -75,7 +75,7 @@ if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAcces
 {
 	$base = basename($path);
 	header('Content-Type: application/gzip');
-	header('Content-Disposition: attachment; filename='.urlencode($base).'.gz');
+	header("Content-Disposition: attachment; filename*=UTF-8''".rawurlencode($base).'.gz');
 
 	// Get the file contents and pipe into gzip. All this without creating
 	// a temporary file. Damn clever.
@@ -137,7 +137,7 @@ if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false))
 	$base = basename($path);
 	header('Content-Type: '.$mimeType);
 	//header('Content-Length: '.$size);
-	header("Content-Disposition: inline; filename*=UTF-8''" . rawurlencode($base));
+	header("Content-Disposition: inline; filename*=UTF-8''".rawurlencode($base));
 	$svnrep->getFileContents($path, '', $rev, $peg);
 	exit;
 }
@@ -145,7 +145,8 @@ if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false))
 // Display the file inline using WebSVN.
 
 $vars['action'] = '';
-$vars['path'] = escape($ppath);
+$vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
+$vars['safepath'] = escape($ppath);
 
 if (isset($history->entries[0])) 
 {
@@ -230,7 +231,7 @@ if ($mimeType && !isset($vars['warning']))
 	$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">'.$lang['VIEWAS'].' "'.$mimeType.'"</a>';
 }
 
-$vars['rev'] = escape($rev);
+$vars['rev'] = $rev;
 $vars['peg'] = $peg;
 
 if (!$rep->hasReadAccess($path)) 
