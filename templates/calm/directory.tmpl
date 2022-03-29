@@ -1,11 +1,8 @@
 [websvn-test:error]
    <div id="error">[websvn:error]</div>
 [websvn-else]
-<h2 id="path_links">[websvn:path_links_root_config]/[websvn:path_links] &ndash; [lang:REV] [websvn:rev]</h2>
+<h2 id="pathlinks">[websvn:pathlinks] &ndash; [lang:REV] [websvn:rev]</h2>
 <div id="revjump">[websvn:revision_form]<div>[lang:REV] [websvn:revision_input]<span class="submit">[websvn:revision_submit]</span></div>[websvn:revision_endform]</div>
-[websvn-test:search]
-<div id="searchcss">[websvn:search_form]<div>[lang:SEARCH] [websvn:search_input]<span class="submit">[websvn:search_submit]</span></div>[websvn:search_endform]</div>
-[websvn-endtest]
 <p>
 [websvn-test:prevrevurl]
 	<span class="prev"><a href="[websvn:prevrevurl]">[lang:REV] [websvn:prevrev]</a></span> &#124;
@@ -74,7 +71,7 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
 <div id="wrap">
 [websvn:compare_form]
   <div class="table-responsive">
-   <table id="listing">
+   <table>
       <thead>
       <tr align="left" valign="middle">
         <th scope="col" class="path">[lang:PATH]</th>
@@ -95,11 +92,7 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
       </thead>
       <tbody>
       [websvn-startlisting]
-      <tr class="row[websvn:rowparity]" valign="middle"
-            [websvn-test:loadalldir]
-                title="[websvn:classname]"
-            [websvn-endtest]
-        >
+      <tr class="row[websvn:rowparity]" valign="middle">
          <td class="path" valign="middle">
             [websvn:compare_box]
             [websvn-treenode]
@@ -144,9 +137,5 @@ e-node=<img src="[websvn:locwebsvnhttp]/templates/calm/images/e-node.png" alt="[
   </p>
   [websvn:compare_endform]
 </div>
-[websvn-endtest]
-[websvn-test:loadalldir]
-<script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/jquery.min.1.9.1.js"></script>
-<script type="text/javascript" src="[websvn:locwebsvnhttp]/javascript/collapsible.js"></script>
 [websvn-endtest]
 [websvn-endtest]
