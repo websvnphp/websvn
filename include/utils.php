@@ -456,7 +456,7 @@ function tempnamWithCheck($dir, $prefix, $rmOnShutdown = true) {
 	}
 	if ($tmp && $rmOnShutdown)
 	{
-		register_shutdown_function(removeDirectory, $tmp);
+		register_shutdown_function('removeDirectory', $tmp);
 		return $tmp;
 	}
 
