@@ -406,7 +406,7 @@ if (!$noinput)
 						$line = fgets($diff);
 						if ($debug) print 'Ignoring: "'.$line.'"<br />';
 
-						while ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-') 
+						while ($line && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-'))
 						{
 							$line = fgets($diff);
 							if ($debug) print 'Ignoring: "'.$line.'"<br />';
