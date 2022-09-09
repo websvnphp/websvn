@@ -68,7 +68,7 @@ class Authorization {
 		$username		= !$this->hasUsername()	? '' : '--username ' . quote($this->user);
 		$subDirs		= !$checkSubDirs		? '' : '-R';
 		$authzFile		= quote($this->accessFile);
-		$retVal			= "${cmd} ${repoAndPath} ${username} ${subDirs} ${authzFile}";
+		$retVal			= "{$cmd} {$repoAndPath} {$username} {$subDirs} {$authzFile}";
 
 		return $retVal;
 	}
