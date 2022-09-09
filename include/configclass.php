@@ -32,7 +32,7 @@ require_once 'include/version.php';
 
 function cmpReps($a, $b) {
 	// First, sort by group
-	$g = strcasecmp($a->group, $b->group);
+	$g = strcasecmp((string) $a->group, (string) $b->group);
 	if ($g) return $g;
 
 	// Same group? Sort by name
@@ -44,7 +44,7 @@ function cmpReps($a, $b) {
 // {{{ cmpGroups($a, $b)
 
 function cmpGroups($a, $b) {
-	$g = strcasecmp($a->group, $b->group);
+	$g = strcasecmp((string) $a->group, (string) $b->group);
 	if ($g) return $g;
 
 	return 0;

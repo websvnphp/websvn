@@ -41,13 +41,13 @@ else
 	$showchanges = $rep->logsShowChanges();
 }
 
-$search = trim(@$_REQUEST['search']);
+$search = trim((string) @$_REQUEST['search']);
 $dosearch = strlen($search) > 0;
 
 $words = preg_split('#\s+#', $search);
 $fromRev = (int)@$_REQUEST['fr'];
-$startrev = strtoupper(trim(@$_REQUEST['sr']));
-$endrev = strtoupper(trim(@$_REQUEST['er']));
+$startrev = strtoupper(trim((string) @$_REQUEST['sr']));
+$endrev = strtoupper(trim((string) @$_REQUEST['er']));
 $max = isset($_REQUEST['max']) ? (int)$_REQUEST['max'] : false;
 
 // Max number of results to find at a time
