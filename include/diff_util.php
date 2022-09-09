@@ -45,6 +45,8 @@ class LineDiffInterface {
 // Default line diffing function
 class LineDiff extends LineDiffInterface {
 
+	private bool $ignoreWhitespace;
+
 	function __construct($ignoreWhitespace) {
 		$this->ignoreWhitespace = $ignoreWhitespace;
 	}
