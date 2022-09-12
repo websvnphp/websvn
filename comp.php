@@ -100,7 +100,7 @@ $vars['rev1url'] = $config->getURL($rep, $path1, 'dir').createRevAndPegString($r
 $vars['rev2url'] = $config->getURL($rep, $path2, 'dir').createRevAndPegString($rev2, $rev2);
 
 $url = $config->getURL($rep, '', 'comp');
-$vars['reverselink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
+$vars['reverselink'] = '<a href="'.$url.'compare%5B%5D='.rawurlencode($path2).'@'.$rev2.'&amp;compare%5B%5D='.rawurlencode($path1).'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
 $toggleIgnoreWhitespace = '';
 
 if ($ignoreWhitespace == $config->getIgnoreWhitespacesInDiff()) 
@@ -110,11 +110,11 @@ if ($ignoreWhitespace == $config->getIgnoreWhitespacesInDiff())
 
 if (!$ignoreWhitespace) 
 {
-	$vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').$toggleIgnoreWhitespace.'">'.$lang['IGNOREWHITESPACE'].'</a>';
+	$vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.rawurlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.rawurlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').$toggleIgnoreWhitespace.'">'.$lang['IGNOREWHITESPACE'].'</a>';
 }
 else 
 {
-	$vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.urlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.urlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').$toggleIgnoreWhitespace.'">'.$lang['REGARDWHITESPACE'].'</a>';
+	$vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.rawurlencode($path1).'@'.$rev1.'&amp;compare%5B%5D='.rawurlencode($path2).'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').$toggleIgnoreWhitespace.'">'.$lang['REGARDWHITESPACE'].'</a>';
 }
 
 if ($rev1 == 0) $rev1 = 'HEAD';

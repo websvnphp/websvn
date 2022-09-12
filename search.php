@@ -333,7 +333,7 @@ $vars['revlink'] = '<a href="'.$vars['revurl'].'">'.$lang['LASTMOD'].'</a>';
 
 if ($history && count($history->entries) > 1)
 {
-	$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.urlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
+	$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.rawurlencode($history->entries[1]->path).'@'.$history->entries[1]->rev. '&amp;compare[]='.rawurlencode($history->entries[0]->path).'@'.$history->entries[0]->rev;
 	$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 

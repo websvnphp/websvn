@@ -207,7 +207,7 @@ foreach ($changes as $change)
 
 if (isset($prevRev)) 
 {
-	$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.urlencode($path).'@'.$rev;
+	$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.rawurlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.rawurlencode($path).'@'.$rev;
 	$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 

@@ -344,13 +344,13 @@ function buildQuery($data, $separator = '&amp;', $key = '') {
 		$data = get_object_vars($data);
 	$p = array();
 	foreach ($data as $k => $v) {
-		$k = urlencode($k);
+		$k = rawurlencode($k);
 		if (!empty($key))
 			$k = $key.'['.$k.']';
 		if (is_array($v) || is_object($v)) {
 			$p[] = buildQuery($v, $separator, $k);
 		} else {
-			$p[] = $k.'='.urlencode($v);
+			$p[] = $k.'='.rawurlencode($v);
 		}
 	}
 	return implode($separator, $p);

@@ -1102,7 +1102,7 @@ class WebSvnConfig {
 		list($base, $params) = $this->getUrlParts($rep, $path, $op);
 		$url = $base.'?';
 		foreach ($params as $k => $v) {
-			$url .= $k.'='.urlencode($v).'&amp;';
+			$url .= $k.'='.rawurlencode($v).'&amp;';
 		}
 		return $url;
 	}

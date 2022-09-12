@@ -517,7 +517,7 @@ function encodePath($uri) {
 	$parts = explode('/', $uri);
 	$partscount = count($parts);
 	for ($i = 0; $i < $partscount; $i++) {
-		// do not urlencode the 'svn+ssh://' part!
+		// do not rawurlencode the 'svn+ssh://' part!
 		if ($i != 0 || $parts[$i] != 'svn+ssh:') {
 			$parts[$i] = rawurlencode($parts[$i]);
 		}
