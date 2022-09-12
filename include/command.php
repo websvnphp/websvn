@@ -82,7 +82,7 @@ function escape($str) {
 	$entities['>'] = '&gt;';
 	$entities['"'] = '&quot;';
 	$entities['\''] = '&apos;';
-	return str_replace(array_keys($entities), array_values($entities), $str);
+	return str_replace(array_keys($entities), array_values($entities), $str ?? '');
 }
 
 // }}}

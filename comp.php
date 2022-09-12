@@ -187,8 +187,8 @@ $noinput = empty($path1) || empty($path2);
 $relativePath1 = $path1;
 $relativePath2 = $path2;
 
-$svnpath1 = encodepath($svnrep->getSvnPath(str_replace(DIRECTORY_SEPARATOR, '/', $path1)));
-$svnpath2 = encodepath($svnrep->getSvnPath(str_replace(DIRECTORY_SEPARATOR, '/', $path2)));
+$svnpath1 = encodepath($svnrep->getSvnPath(str_replace(DIRECTORY_SEPARATOR, '/', $path1 ?? '')));
+$svnpath2 = encodepath($svnrep->getSvnPath(str_replace(DIRECTORY_SEPARATOR, '/', $path2 ?? '')));
 
 $debug = false;
 
