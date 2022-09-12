@@ -83,7 +83,7 @@ else
 	$history = $svnrep->getLog($path, $rev, $rev - 1, true, 1, $peg);
 }
 
-$logEntry = ($history) ? $history->entries[0] : null;
+$logEntry = ($history && !empty($history->entries)) ? $history->entries[0] : null;
 
 if (!$logEntry)
 {
