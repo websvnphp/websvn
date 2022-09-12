@@ -1134,7 +1134,7 @@ class WebSvnConfig {
 			if ($op == 'index') {
 				$url .= '/';
 			} else if (is_object($rep)) {
-				$url .= '/'.$rep->getDisplayName().str_replace('%2F', '/', rawurlencode($path));
+				$url .= '/'.$rep->getDisplayName().str_replace('%2F', '/', rawurlencode($path ?? ''));
 
 				if ($op && $op != 'dir' && $op != 'file') {
 					$params['op'] = $op;
