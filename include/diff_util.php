@@ -22,11 +22,8 @@
 //
 // help diff_inc.php to make sensible changes from added and deleted diff lines
 // These lines are automatically paired and also inline diff is performed to show
-// insertions/deletions on one line
-
-if (!defined('USE_AUTOLOADER')) {
-	@include_once 'Text/Diff.php';
-}
+// insertions/deletions on one line. diff_inc.php must have all Horde_Text_Diff
+// requirements met (include_once statements).
 
 // Interface for diffing function
 class LineDiffInterface {
@@ -167,8 +164,8 @@ class LineDiff extends LineDiffInterface {
 			$do_diff = false;
 		}
 
-		// Exit gracefully if loading of Text_Diff failed
-		if (!class_exists('Text_Diff') || !class_exists('Text_MappedDiff')) {
+		// Exit gracefully if loading of Horde_Text_Diff failed
+		if (!class_exists('Horde_Text_Diff') || !class_exists('Horde_Text_Diff_Mapped')) {
 			$do_diff = false;
 		}
 
@@ -181,7 +178,7 @@ class LineDiff extends LineDiffInterface {
 		$tokens2 = $this->tokenize($highlighted2, $highlighted, $this->ignoreWhitespace);
 
 		if (!$this->ignoreWhitespace) {
-			$diff = @new Text_Diff('native', array($tokens1, $tokens2));
+			$diff = new Horde_Text_Diff('Native', array($tokens1, $tokens2));
 		} else {
 			// we need to create mapped parts for MappedDiff
 			$mapped1 = array();
@@ -192,7 +189,7 @@ class LineDiff extends LineDiffInterface {
 			foreach ($tokens2 as $token) {
 				$mapped2[] = str_replace($whitespaces, array(), $token);
 			}
-			$diff = @new Text_MappedDiff($tokens1, $tokens2, $mapped1, $mapped2);
+			$diff = new Horde_Text_Diff_Mapped('Native', array($tokens1, $tokens2, $mapped1, $mapped2));
 		}
 
 		// now, get the diff and annotate text
@@ -201,14 +198,14 @@ class LineDiff extends LineDiffInterface {
 		$line1 = '';
 		$line2 = '';
 		foreach ($edits as $edit) {
-			if (@is_a($edit, 'Text_Diff_Op_copy')) {
+			if ($edit instanceof Horde_Text_Diff_Op_Copy) {
 				$line1 .= implode('', $edit->orig);
 				$line2 .= implode('', $edit->final);
-			} else if (@is_a($edit, 'Text_Diff_Op_delete')) {
+			} else if ($edit instanceof Horde_Text_Diff_Op_Delete) {
 				$line1 .= '<del>'.implode('', $edit->orig).'</del>';
-			} else if (@is_a($edit, 'Text_Diff_Op_add')) {
+			} else if ($edit instanceof Horde_Text_Diff_Op_Add) {
 				$line2 .= '<ins>'.implode('', $edit->final).'</ins>';
-			} else if (@is_a($edit, 'Text_Diff_Op_change')) {
+			} else if ($edit instanceof Horde_Text_Diff_Op_Change) {
 				$line1 .= '<del>'.implode('', $edit->orig).'</del>';
 				$line2 .= '<ins>'.implode('', $edit->final).'</ins>';
 			} else {

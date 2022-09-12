@@ -23,9 +23,17 @@
 // Diff to files
 
 if (!defined('USE_AUTOLOADER')) {
-	@include_once 'Text/Diff.php';
-	@include_once 'Text/Diff/Renderer.php';
-	@include_once 'Text/Diff/Renderer/unified.php';
+	@include_once 'Horde/String.php';
+	@include_once 'Horde/Text/Diff.php';
+	@include_once 'Horde/Text/Diff/Mapped.php';
+	@include_once 'Horde/Text/Diff/Engine/Native.php';
+	@include_once 'Horde/Text/Diff/Op/Base.php';
+	@include_once 'Horde/Text/Diff/Op/Copy.php';
+	@include_once 'Horde/Text/Diff/Op/Delete.php';
+	@include_once 'Horde/Text/Diff/Op/Add.php';
+	@include_once 'Horde/Text/Diff/Op/Change.php';
+	@include_once 'Horde/Text/Diff/Renderer.php';
+	@include_once 'Horde/Text/Diff/Renderer/Unified.php';
 }
 include_once 'include/diff_util.php';
 
@@ -298,7 +306,7 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 	$fromLines = file($oldtname);
 	$toLines = file($newtname);
 	if (!$ignoreWhitespace) {
-		$diff = @new Text_Diff('auto', array($fromLines, $toLines));
+		$diff = new Horde_Text_Diff('Native', array($fromLines, $toLines));
 	} else {
 		$whitespaces = array(' ', "\t", "\n", "\r");
 		$mappedFromLines = array();
@@ -313,9 +321,9 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 			$toLines[$k] = $line;
 			$mappedToLines[] = str_replace($whitespaces, array(), $line);
 		}
-		$diff = @new Text_MappedDiff($fromLines, $toLines, $mappedFromLines, $mappedToLines);
+		$diff = new Horde_Text_Diff_Mapped('Native', array($fromLines, $toLines, $mappedFromLines, $mappedToLines));
 	}
-	$renderer = new Text_Diff_Renderer_unified(array('leading_context_lines' => $context, 'trailing_context_lines' => $context));
+	$renderer = new Horde_Text_Diff_Renderer_Unified(array('leading_context_lines' => $context, 'trailing_context_lines' => $context));
 	$rendered = explode("\n", $renderer->render($diff));
 
 	// restore previous error reporting level
@@ -333,8 +341,9 @@ function inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname
 }
 
 function do_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname, $newhlname, $oldhlname) {
-	if (class_exists('Text_Diff')) {
-		return inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname, $newhlname, $oldhlname);
+	if ((!$ignoreWhitespace ? class_exists('Horde_Text_Diff') : class_exists('Horde_Text_Diff_Mapped'))
+           && class_exists('Horde_Text_Diff_Renderer_Unified')) {
+		   return inline_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname, $newhlname, $oldhlname);
 	} else {
 		return command_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtname, $newhlname, $oldhlname);
 	}
