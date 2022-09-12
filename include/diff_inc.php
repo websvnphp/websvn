@@ -261,7 +261,7 @@ function command_diff($all, $ignoreWhitespace, $highlighted, $newtname, $oldtnam
 
 	// Open a pipe to the diff command with $context lines of context:
 	$cmd	= $config->diff.$whitespaceFlag.' -U '.$context.' "'.$oldtname.'" "'.$newtname.'"';
-	$diff	= runCommand($cmd);
+	$diff	= runCommand($cmd, true);
 
 	// Ignore the 3 header lines:
 	$line = array_shift($diff);
