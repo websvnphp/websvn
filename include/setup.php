@@ -298,6 +298,7 @@ $extGeshi = array(
 	'perl'			=> array('pl', 'pm'),
 	'php'			=> array('php', 'php3', 'php4', 'php5', 'phps', 'phtml'),
 	'povray'		=> array('pov'),
+	'properties'	=> array('properties'),
 	'providex'		=> array('pvc', 'pvx'),
 	'python'		=> array('py'),
 	'reg'			=> array('reg'),
