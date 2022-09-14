@@ -314,7 +314,7 @@ $extGeshi = array(
 	'vhdl'			=> array('vhd', 'vhdl'),
 	'vim'			=> array('vim'),
 	'whitespace'	=> array('ws'),
-	'xml'			=> array('xml', 'xsl', 'xsd', 'xib', 'wsdl', 'svg', 'plist'),
+	'xml'			=> array('xml', 'xsl', 'xsd', 'xib', 'wsdl', 'svg', 'plist','jmx'),
 	'z80'			=> array('z80'),
 );
 
