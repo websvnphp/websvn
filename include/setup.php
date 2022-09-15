@@ -279,7 +279,7 @@ $extGeshi = array(
 	'eiffel'		=> array('e'),
 	'erlang'		=> array('erl'),
 	'email'			=> array('eml'),
-	'fortran'		=> array('f', 'for', '.f90'),
+	'fortran'		=> array('f', 'for', 'f90'),
 	'gettext'		=> array('po', 'pot'),
 	'gml'			=> array('gml'),
 	'gnuplot'		=> array('plt'),
@@ -315,7 +315,7 @@ $extGeshi = array(
 	'vhdl'			=> array('vhd', 'vhdl'),
 	'vim'			=> array('vim'),
 	'whitespace'	=> array('ws'),
-	'xml'			=> array('xml', 'xsl', 'xsd', 'xib', 'wsdl', 'svg', 'plist','jmx'),
+	'xml'			=> array('xml', 'xsl', 'xsd', 'xib', 'wsdl', 'svg', 'plist', 'jmx'),
 	'z80'			=> array('z80'),
 );
 
