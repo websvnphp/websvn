@@ -7,6 +7,6 @@
         "geshi/geshi": "^1.0.9.1",
         "pear/archive_tar": "^1.4.14",
         "pear/text_diff": "^1.2.2",
-        "erusev/parsedown": "^2.0.0-beta-1"
+        "erusev/parsedown": "^1.7.4"
     }
 }
