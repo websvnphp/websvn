@@ -684,7 +684,7 @@ class SVNRepository {
 		$shouldTrimOutput = false;
 		$explodeStr = "\n";
 		if ($highlight != 'no' && $config->useGeshi && $geshiLang = $this->highlightLanguageUsingGeshi($path)) {
-			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, $highlight);
+			$this->applyGeshi($path, $tempname, $geshiLang, $rev, $peg, false, $highlight);
 			// Geshi outputs in HTML format, enscript does not
 			$shouldTrimOutput = true;
 			$explodeStr = "<br />";
