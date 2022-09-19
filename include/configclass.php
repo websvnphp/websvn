@@ -1023,21 +1023,6 @@ class WebSvnConfig {
 
 	function getTempDir() {
 		if (empty($this->tempDir)) {
-			if (!function_exists('sys_get_temp_dir')) {
-				function sys_get_temp_dir() {
-					if (($tmp = getenv('TMPDIR')) ||
-						($tmp = getenv('TMP')) ||
-						($tmp = getenv('TEMP')) ||
-						($tmp = ini_get('upload_tmp_dir')))
-						return $tmp;
-					$tmp = tempnam(__FILE__, '');
-					if (file_exists($tmp)) {
-						unlink($tmp);
-						return dirname($tmp);
-					}
-					return null;
-				}
-			}
 			$this->tempDir = sys_get_temp_dir();
 		}
 		return $this->tempDir;
