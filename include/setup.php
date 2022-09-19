@@ -360,11 +360,6 @@ if (!$confSuccess) {
 // Make sure that the input locale is set up correctly
 putenv("LANG=".setlocale(LC_ALL, $config->getLocale()));
 
-// assure that a default timezone is set
-if (function_exists('date_default_timezone_get')) {
-	$timezone = @date_default_timezone_get();
-	date_default_timezone_set($timezone);
-}
 $vars['showageinsteadofdate'] = $config->showAgeInsteadOfDate();
 
 // Initialize the version of SVN that is being used by WebSVN internally.
