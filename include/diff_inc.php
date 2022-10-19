@@ -175,7 +175,7 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhit
 				$fin = true;
 			} else {
 				$mod = $line[0];
-				$line = rtrim(substr($line, 1));
+				$line = substr($line, 1);
 
 				switch ($mod) {
 					case '-':
@@ -195,7 +195,6 @@ function diff_result($all, $highlighted, $newtname, $oldtname, $obj, $ignoreWhit
 
 						$text1 = getWrappedLineFromFile($ofile, $highlighted);
 						$text2 = getWrappedLineFromFile($nfile, $highlighted);
-
 						$listingHelper->addLine($text1, $curoline, $text2, $curnline);
 
 						$curoline++;

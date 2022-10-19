@@ -288,9 +288,7 @@ function listCharacterData($parser, $data) {
 
 		case 'DATE':
 			if ($debugxml) print 'Date: '.$data."\n";
-			$data = trim($data);
 			if ($data === false || $data === '') return;
-
 			$committime = parseSvnTimestamp($data);
 			$curList->curEntry->committime = $committime;
 			$curList->curEntry->date = date('Y-m-d H:i:s', $committime);
@@ -439,9 +437,7 @@ function logCharacterData($parser, $data) {
 
 		case 'DATE':
 			if ($debugxml) print 'Date: '.$data."\n";
-			$data = trim($data);
 			if ($data === false || $data === '') return;
-
 			$committime = parseSvnTimestamp($data);
 			$curLog->curEntry->committime = $committime;
 			$curLog->curEntry->date = date('Y-m-d H:i:s', $committime);
@@ -457,9 +453,7 @@ function logCharacterData($parser, $data) {
 
 		case 'PATH':
 			if ($debugxml) print 'Path name: '.$data."\n";
-			$data = trim($data);
 			if ($data === false || $data === '') return;
-
 			$curLog->curEntry->curMod->path .= $data;
 			break;
 	}

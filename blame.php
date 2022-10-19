@@ -181,7 +181,7 @@ else
 
 			while (!feof($blame) && !feof($file)) 
 			{
-				$blameline = fgets($blame);
+				$blameline = rtrim(fgets($blame), "\n\r");
 
 				if ($blameline != '') 
 				{
@@ -207,7 +207,7 @@ else
 					$listvar['row_class'] = $row_class;
 					$last_rev = $revision;
 
-					$line = rtrim(fgets($file));
+					$line = rtrim(fgets($file), "\n\r");
 					if (!$highlighted)
 					{
 						$line = escape(toOutputEncoding($line));

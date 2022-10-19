@@ -142,14 +142,14 @@ function runCommand($cmd, $mayReturnNothing = false, &$errorIf = 'NOT_USED') {
 	$firstline	= true;
 
 	while (!feof($handle)) {
-		$line = fgets($handle);
+		$line = rtrim(fgets($handle), "\n\r");
 		if ($firstline && empty($line) && !$mayReturnNothing) {
 			$error = 'No output on STDOUT.';
 			break;
 		}
 
 		$firstline	= false;
-		$output[]	= toOutputEncoding(rtrim($line));
+		$output[]	= toOutputEncoding($line);
 	}
 
 	while (!feof($pipes[2])) {

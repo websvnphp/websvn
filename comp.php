@@ -326,7 +326,7 @@ if (!$noinput)
 			{
 				if ($bufferedLine === false) 
 				{
-					$bufferedLine = rtrim(fgets($diff), "\r\n");
+					$bufferedLine = rtrim(fgets($diff), "\n\r");
 				}
 
 				$newlineR = strpos($bufferedLine, "\r");
@@ -494,7 +494,7 @@ if (!$noinput)
 				{
 					$index++;
 					clearVars();
-					$listing[$index++]['info'] = escape(toOutputEncoding($line));
+					$listing[$index++]['info'] = escape(toOutputEncoding(rtrim($line, "\n\r")));
 					continue;
 				}
 
@@ -537,13 +537,13 @@ if (!$noinput)
 				$line = fgets($diff);
 				if ($debug) print 'Skipping: '.$line.'<br />';
 
-				while ($line = trim(fgets($diff))) 
+				while ($line = rtrim(fgets($diff), "\n\r"))
 				{
-					if (!strncmp($line, 'Index: ', 7)) 
+					if (!strncmp(trim($line), 'Index: ', 7))
 					{
 						break;
 					}
-					if (!strncmp($line, '##', 2) || $line == '\ No newline at end of file') 
+					if (!strncmp(trim($line), '##', 2) || $line == '\ No newline at end of file')
 					{
 						continue;
 					}
