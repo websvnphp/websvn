@@ -963,7 +963,7 @@ class SVNRepository {
 	// Exports the directory to the given location
 
 	function exportRepositoryPath($path, $filename, $rev = 0, $peg = '') {
-		$cmd = $this->svnCommandString('export', $path, $rev, $peg).' '.quote($filename);
+		$cmd = $this->svnCommandString('export', $path, $rev, $peg).' '.quote($filename.'@');
 		$retcode = 0;
 		execCommand($cmd, $retcode);
 		if ($retcode != 0) {
