@@ -32,6 +32,12 @@ $page = (int)@$_REQUEST['page'];
 $all = @$_REQUEST['all'] == 1;
 $isDir = @$_REQUEST['isdir'] == 1 || $path == '' || $path == '/';
 
+// Make sure that we have a repository
+if (!$rep)
+{
+	renderTemplate404('log','NOREP');
+}
+
 if (isset($_REQUEST['showchanges']))
 {
 	$showchanges = @$_REQUEST['showchanges'] == 1;
@@ -93,12 +99,6 @@ if ($dosearch)
 }
 
 $maxperpage = 20;
-
-// Make sure that we have a repository
-if (!$rep)
-{
-	renderTemplate404('log','NOREP');
-}
 
 $svnrep = new SVNRepository($rep);
 
