@@ -54,16 +54,16 @@ function setDirectoryTimestamp($dir, $timestamp) {
 
 // Make sure that downloading the specified file/directory is permitted
 
+if (!$rep)
+{
+	http_response_code(404);
+	exit;
+}
+
 if (!$rep->isDownloadAllowed($path)) {
 	http_response_code(403);
 	error_log('Unable to download resource at path: '.$path);
 	print 'Unable to download resource at path: '.xml_entities($path);
-	exit;
-}
-
-if (!$rep)
-{
-	http_response_code(404);
 	exit;
 }
 
