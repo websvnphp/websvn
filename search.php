@@ -370,7 +370,7 @@ $vars['compare_endform'] = '</form>';
 
 $vars['showlastmod'] = $config->showLastModInListing();
 
-if ($_GET["search"] === NULL)
+if (empty($_GET["search"]))
 {
 	$vars['warning'] = $lang['NOSEARCHTERM'];
 	createSearchSelectionForm();
