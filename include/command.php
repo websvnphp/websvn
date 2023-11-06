@@ -23,11 +23,11 @@
 // External command handling
 
 function detectCharacterEncoding($str) {
-	$list = array('UTF-8', 'windows-1252', 'ISO-8859-1');
+	$list = array('UTF-8', 'ISO-8859-1', 'windows-1252');
 	if (function_exists('mb_detect_encoding')) {
-		// @see http://de3.php.net/manual/en/function.mb-detect-encoding.php#81936
-		// why appending an 'a' and specifying an encoding list is necessary
-		return mb_detect_encoding($str.'a', $list);
+		foreach ($list as $item) {
+			if (mb_check_encoding($str, $item)) return $item;
+		}
 
 	} else if (function_exists('iconv')) {
 		foreach ($list as $item) {
