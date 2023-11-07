@@ -639,8 +639,8 @@ class SVNRepository {
 		$lang = false;
 		if (array_key_exists($filename, $extEnscript)) {
 			$lang = $extEnscript[$filename];
-		} else if ($ext && array_key_exists($ext, $extEnscript)) {
-			$lang = $extEnscript[$ext];
+		} else if ($ext && array_key_exists(strtolower($ext), $extEnscript)) {
+			$lang = $extEnscript[strtolower($ext)];
 		}
 
 		$cmd = $config->enscript.' --language=html';
@@ -753,7 +753,7 @@ class SVNRepository {
 		if (substr($ext, 0, 1) == '.') $ext = substr($ext, 1);
 
 		foreach ($extGeshi as $language => $extensions) {
-			if (in_array($filename, $extensions) || in_array($ext, $extensions)) {
+			if (in_array($filename, $extensions) || in_array(strtolower($ext), $extensions)) {
 				if ($this->geshi === null) {
 					if (!defined('USE_AUTOLOADER')) {
 						require_once $config->getGeshiScript();
