@@ -656,7 +656,9 @@ class WebSvnConfig {
 	var $useEnscript = false;
 	var $useEnscriptBefore_1_6_3 = false;
 	var $useGeshi = false;
+	var $geshiScript = 'geshi.php';
 	var $useParsedown = false;
+	var $parsedownScript = 'Parsedown.php';
 	var $inlineMimeTypes = array();
 	var $allowDownload = false;
 	var $tempDir = '';
@@ -865,6 +867,14 @@ class WebSvnConfig {
 
 	// {{{ GeSHi
 
+	function setGeshiPath($path) {
+		$this->_setPath($this->geshiScript, $path, 'geshi.php');
+	}
+
+	function getGeshiScript() {
+		return $this->geshiScript;
+	}
+
 	// useGeshi
 	//
 	// Use GeSHi to colourise listings
@@ -879,6 +889,14 @@ class WebSvnConfig {
 	// }}}
 
 	// {{{ Parsedown
+
+	function setParsedownPath($path) {
+		$this->_setPath($this->parsedownScript, $path, 'Parsedown.php');
+	}
+
+	function getParsedownScript() {
+		return $this->parsedownScript;
+	}
 
 	// useParsedown
 	//
