@@ -888,7 +888,7 @@ class SVNRepository {
 
 		// Autoloader handles most of the time
 		if (!defined('USE_AUTOLOADER')) {
-			require_once 'Parsedown.php';
+			require_once $config->getParsedownScript();
 		}
 
 		$mdParser = new Parsedown();

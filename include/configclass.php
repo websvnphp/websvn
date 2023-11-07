@@ -658,6 +658,7 @@ class WebSvnConfig {
 	var $useGeshi = false;
 	var $geshiScript = 'geshi.php';
 	var $useParsedown = false;
+	var $parsedownScript = 'Parsedown.php';
 	var $inlineMimeTypes = array();
 	var $allowDownload = false;
 	var $tempDir = '';
@@ -888,6 +889,14 @@ class WebSvnConfig {
 	// }}}
 
 	// {{{ Parsedown
+
+	function setParsedownPath($path) {
+		$this->_setPath($this->parsedownScript, $path, 'Parsedown.php');
+	}
+
+	function getParsedownScript() {
+		return $this->parsedownScript;
+	}
 
 	// useParsedown
 	//
