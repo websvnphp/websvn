@@ -397,6 +397,7 @@ $config->setMinDownloadLevel(2);
 
 // Uncomment this line if you want to use GeSHi to colourise your file listings
 //
+// $config->setGeshiPath('/usr/share/php-geshi'); // optional. Use if you have Geshi installed without PEAR/Composer
 // $config->useGeshi();
 
 // GeSHi need to be told what the contents of a file are so that it can be colourised

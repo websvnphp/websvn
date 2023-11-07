@@ -656,6 +656,7 @@ class WebSvnConfig {
 	var $useEnscript = false;
 	var $useEnscriptBefore_1_6_3 = false;
 	var $useGeshi = false;
+	var $geshiPath = '';
 	var $useParsedown = false;
 	var $inlineMimeTypes = array();
 	var $allowDownload = false;
@@ -864,6 +865,28 @@ class WebSvnConfig {
 	// }}}
 
 	// {{{ GeSHi
+
+	function setGeshiPath($path) {
+		$this->geshiPath = $path;
+	}
+
+	function getGeshiPath() {
+		global $config;
+		if (!empty($this->geshiPath)) {
+			return $this->geshiPath;
+		}
+		return '';
+	}
+
+	function getGeshiScript() {
+		if (defined('USE_AUTOLOADER')) {
+			return 'geshi.php';
+		} else {
+			$path = $this->getGeshiPath();
+			if (!empty($path)) $path .= DIRECTORY_SEPARATOR;
+			return $path . 'geshi.php';
+		}
+	}
 
 	// useGeshi
 	//
