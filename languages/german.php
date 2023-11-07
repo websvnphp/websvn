@@ -119,6 +119,7 @@ $lang["WITHPATH"] = "Mit Pfad:";
 $lang["FILEDELETED"] = "Datei gelöscht";
 $lang["FILEADDED"] = "Neue Datei";
 
+$lang['NOSEARCHTERM'] = "Kein Suchbegriff angegeben";
 $lang['SEARCH'] = "suchen";
 $lang['SEARCH_PLACEHOLDER'] = "Suchen Sie hier nach Elementen";
 $lang['NOITEMSFOUND'] = "Keine Elemente gefunden";

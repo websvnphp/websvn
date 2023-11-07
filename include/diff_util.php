@@ -237,7 +237,7 @@ class SensibleLineChanges {
 
 	// this function computes simple match - first min(deleted,added) lines are marked as changed
 	// it is intended to be run instead of _computeBestMatching if the diff is too big
-	function _computeFastMatching() {
+	function _computeFastMatching($n, $m) {
 		$result = array();
 		$q = 0;
 		while ($q < $n && $q < $m) {
@@ -264,7 +264,7 @@ class SensibleLineChanges {
 
 		// if the computation will be slow, just run fast algorithm
 		if ($n * $m > 10000) {
-			return $this->_computeFastMatching();
+			return $this->_computeFastMatching($n, $m);
 		}
 
 		// dyn[$i][$j] holds best sum of similarities we can obtain if we match

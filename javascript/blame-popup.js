@@ -22,10 +22,12 @@ function mouseover(a) {
   // Find the revision number within the hyperlink text
   var m = /rev=(\d+)/.exec(a.href);
   var r = m[1];
-  var div = document.createElement('div');
-  div.className = 'blame-popup';
-  div.innerHTML = rev[r];
-  a.parentNode.appendChild(div);
+  if (rev[r]) {
+    var div = document.createElement('div');
+    div.className = 'blame-popup';
+    div.innerHTML = rev[r];
+    a.parentNode.appendChild(div);
+  }
 }
 
 function mouseout(a) {

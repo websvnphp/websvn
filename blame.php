@@ -242,7 +242,7 @@ else
 		{
 			$history = $svnrep->getLog($path, $key, $key, false, 1, $peg);
 
-			if ($history) 
+			if ($history && $history->curEntry)
 			{
 				$javascript[] = 'rev['.$key.'] = \'<div class="date">'.$history->curEntry->date.'</div><div class="msg">'.addslashes(preg_replace('/\n/', ' ', $history->curEntry->msg)).'</div>\';';
 			}
