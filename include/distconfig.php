@@ -419,7 +419,7 @@ $config->setMinDownloadLevel(2);
 // This will look for README.md file on the path and render it.
 // The name of "README.md" isn't configurable for now to simply follow GitHub's conventions.
 
-// $config->setParsedownPath('/usr/share/php/Parsedown/Parsedown.php'); // optional. Use if you have Parsedown installed without PEAR/Composer
+// $config->setParsedownPath('/usr/share/php/Parsedown/'); // optional. Use if you have Parsedown installed without PEAR/Composer
 // $config->useParsedown();
 
 // }}}
