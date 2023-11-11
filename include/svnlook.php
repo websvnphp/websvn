@@ -752,8 +752,7 @@ class SVNRepository {
 		if (substr($ext, 0, 1) == '.') $ext = substr($ext, 1);
 
 		foreach ($extGeshi as $language => $extensions) {
-			$extensions_lc = array_map('strtolower', $extensions);
-			if (in_array(strtolower($filename), $extensions_lc) || in_array(strtolower($ext), $extensions_lc)) {
+			if (in_array($filename, $extensions) || in_array(strtolower($ext), $extensions)) {
 				if ($this->geshi === null) {
 					if (!defined('USE_AUTOLOADER')) {
 						require_once 'geshi.php';
