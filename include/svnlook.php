@@ -745,6 +745,7 @@ class SVNRepository {
 	// check if geshi can highlight the given extension and return the language
 
 	function highlightLanguageUsingGeshi($path) {
+		global $config;
 		global $extGeshi;
 
 		$filename = basename($path);
@@ -756,7 +757,7 @@ class SVNRepository {
 			if (in_array(strtolower($filename), $extensions_lc) || in_array(strtolower($ext), $extensions_lc)) {
 				if ($this->geshi === null) {
 					if (!defined('USE_AUTOLOADER')) {
-						require_once 'geshi.php';
+						require_once $config->getGeshiScript();
 					}
 					$this->geshi = new GeSHi();
 				}
@@ -776,6 +777,8 @@ class SVNRepository {
 	// perform syntax highlighting using geshi
 
 	function applyGeshi($path, $filename, $language, $rev, $peg = '', $return = false, $highlight = 'file') {
+		global $config;
+
 		// Output the file to the filename
 		$error	= '';
 		$cmd	= $this->svnCommandString('cat', $path, $rev, $peg).' > '.quote($filename);
@@ -795,7 +798,7 @@ class SVNRepository {
 
 		if ($this->geshi === null) {
 			if (!defined('USE_AUTOLOADER')) {
-				require_once 'geshi.php';
+				require_once $config->getGeshiScript();
 			}
 			$this->geshi = new GeSHi();
 		}
@@ -886,7 +889,7 @@ class SVNRepository {
 
 		// Autoloader handles most of the time
 		if (!defined('USE_AUTOLOADER')) {
-			require_once 'Parsedown.php';
+			require_once $config->getParsedownScript();
 		}
 
 		$mdParser = new Parsedown();
