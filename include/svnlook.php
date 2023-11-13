@@ -639,8 +639,8 @@ class SVNRepository {
 		$lang = false;
 		if (array_key_exists($filename, $extEnscript)) {
 			$lang = $extEnscript[$filename];
-		} else if ($ext && array_key_exists($ext, $extEnscript)) {
-			$lang = $extEnscript[$ext];
+		} else if ($ext && array_key_exists(strtolower($ext), $extEnscript)) {
+			$lang = $extEnscript[strtolower($ext)];
 		}
 
 		$cmd = $config->enscript.' --language=html';
