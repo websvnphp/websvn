@@ -31,6 +31,9 @@
 // with native commands.
 // $config->setLocale('C.UTF-8');
 
+// Set the array of character encodings for user files.
+// $config->setCharacterEncodings(array( 'UTF-8', 'ISO-8859-1', 'windows-1252' ));
+
 // Configure the path for Subversion to use for --config-dir
 // (e.g. if accepting certificates is required when using repositories via https)
 // $config->setSvnConfigDir('/tmp/websvn');
