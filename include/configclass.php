@@ -630,6 +630,7 @@ class WebSvnConfig {
 	var $tar = 'tar';
 	var $zip = 'zip';
 	var $locale = '';
+	var $characterEncodings = array( 'UTF-8', 'ISO-8859-1', 'windows-1252' );
 
 	// different modes for file and directory download
 
@@ -1358,6 +1359,17 @@ class WebSvnConfig {
 
 	function getLocale() {
 		return $this->locale;
+	}
+
+	// setCharacterEncodings
+	//
+	// Set the array of character encodings for user files.
+	function setCharacterEncodings($characterEncodings) {
+		$this->characterEncodings = $characterEncodings;
+	}
+
+	function getCharacterEncodings() {
+		return $this->characterEncodings;
 	}
 
 	// setDefaultFileDlMode

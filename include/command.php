@@ -23,7 +23,9 @@
 // External command handling
 
 function detectCharacterEncoding($str) {
-	$list = array('UTF-8', 'ISO-8859-1', 'windows-1252');
+	global $config;
+
+	$list = $config->getCharacterEncodings();
 	if (function_exists('mb_detect_encoding')) {
 		foreach ($list as $item) {
 			if (mb_check_encoding($str, $item)) return $item;
