@@ -122,12 +122,10 @@ function runCommand($cmd, $mayReturnNothing = false, &$errorIf = 'NOT_USED') {
 	$error	= '';
 	$opts	= null;
 
-	// https://github.com/websvnphp/websvn/issues/75
-	// https://github.com/websvnphp/websvn/issues/78
 	if ($config->serverIsWindows) {
 		if (!strpos($cmd, '>') && !strpos($cmd, '|')) {
 			$opts = array('bypass_shell' => true);
-		} else {
+		} else if (PHP_MAJOR_VERSION < 8) {
 			$cmd = '"'.$cmd.'"';
 		}
 	}
