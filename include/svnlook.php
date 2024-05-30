@@ -878,6 +878,11 @@ class SVNRepository {
 
 		if ($this->isFile($path.$file) != True)
 		{
+			$file = "readme.md";
+		}
+
+		if ($this->isFile($path.$file) != True)
+		{
 			return;
 		}
 
