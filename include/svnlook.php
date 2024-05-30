@@ -870,7 +870,7 @@ class SVNRepository {
 
 	// {{{ listReadmeContents
 	//
-	// Parse the README.md file
+	// Parse the README.md or readme.md file
 	function listReadmeContents($path, $rev = 0, $peg = '') {
 		global $config;
 
