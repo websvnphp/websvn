@@ -870,11 +870,16 @@ class SVNRepository {
 
 	// {{{ listReadmeContents
 	//
-	// Parse the README.md file
+	// Parse the README.md or readme.md file
 	function listReadmeContents($path, $rev = 0, $peg = '') {
 		global $config;
 
 		$file = "README.md";
+
+		if ($this->isFile($path.$file) != True)
+		{
+			$file = "readme.md";
+		}
 
 		if ($this->isFile($path.$file) != True)
 		{

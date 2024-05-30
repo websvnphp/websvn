@@ -901,7 +901,7 @@ class WebSvnConfig {
 
 	// useParsedown
 	//
-	// Use Parsedown to render README.md
+	// Use Parsedown to render README.md or readme.md
 	function useParsedown() {
 		$this->useParsedown = true;
 	}
