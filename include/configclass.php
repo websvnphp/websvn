@@ -252,7 +252,7 @@ class Repository {
 		$this->group = $group;
 		$this->username = $username;
 		$this->password = $password;
-		$this->clientRootURL = rtrim($clientRootURL, '/');
+		$this->clientRootURL = $clientRootURL !== null ? rtrim($clientRootURL, '/') : null;
 	}
 
 	// }}}
