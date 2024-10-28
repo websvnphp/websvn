@@ -36,9 +36,9 @@ $lang["DIFF"] = "差分";
 
 $lang["NOREP"] = "リポジトリが指定されていません";
 $lang["NOPATH"] = "パスが見付かりません";
-// $lang["NOACCESS"] = "You do not have the necessary permissions to read this content";
+// $lang["NOACCESS"] = "You do not have the necessary permissions to view this content.";
 $lang["RESTRICTED"] = "アクセスが制限されています";
-$lang["SUPPLYREP"] = "ファイル include/config.php 内に \$config->parentPath もしくは \$config->addRepository を使用してリポジトリパスを設定してください。<p>詳しくはインストールガイドを参照してください。";
+$lang["SUPPLYREP"] = "ファイル include/config.php 内に <code>\$config->parentPath</code> もしくは <code>\$config->addRepository</code> を使用してリポジトリパスを設定してください。詳しくはインストールガイドを参照してください。";
 
 $lang["DIFFREVS"] = "リビジョン間の差分";
 $lang["AND"] = "と";
@@ -120,6 +120,7 @@ $lang["WITHPATH"] = "比較先パス：";
 $lang["FILEDELETED"] = "ファイル削除";
 $lang["FILEADDED"] = "新規ファイル";
 
-$lang['SEARCH'] = "探す";
-$lang['SEARCH_PLACEHOLDER'] = "こちらから商品を検索";
+$lang['NOSEARCHTERM'] = "検索条件が指定されていません";
+$lang['SEARCH'] = "検索";
+$lang['SEARCH_PLACEHOLDER'] = "こちらから項目を検索";
 $lang['NOITEMSFOUND'] = "項目は見つかりませんでした";
