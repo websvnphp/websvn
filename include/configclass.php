@@ -116,7 +116,7 @@ class ParentPath {
 		$this->group = $group;
 		$this->pattern = $pattern;
 		$this->skipAlreadyAdded = $skipAlreadyAdded;
-		$this->clientRootURL = rtrim($clientRootURL, '/');
+		$this->clientRootURL = $clientRootURL !== null ? rtrim($clientRootURL, '/') : null;
 	}
 	// }}}
 
