@@ -28,9 +28,9 @@ require_once 'include/svnlook.php';
 require_once 'include/utils.php';
 require_once 'include/template.php';
 
-function checkRevision($rev) 
+function checkRevision($rev)
 {
-	if (is_numeric($rev) && ((int)$rev > 0)) 
+	if (is_numeric($rev) && ((int)$rev > 0))
 	{
 		return $rev;
 	}
@@ -53,7 +53,7 @@ $rev2 = (int)@$_REQUEST['compare_rev'][1];
 $manualorder = (@$_REQUEST['manualorder'] == 1);
 $ignoreWhitespace = $config->getIgnoreWhitespacesInDiff();
 
-if (array_key_exists('ignorews', $_REQUEST)) 
+if (array_key_exists('ignorews', $_REQUEST))
 {
 	$ignoreWhitespace = (bool)$_REQUEST['ignorews'];
 }
@@ -85,7 +85,7 @@ $rev2 = checkRevision($rev2);
 
 // Choose a sensible comparison order unless told not to
 
-if (!$manualorder && is_numeric($rev1) && is_numeric($rev2) && $rev1 > $rev2) 
+if (!$manualorder && is_numeric($rev1) && is_numeric($rev2) && $rev1 > $rev2)
 {
 	$temppath = $path1;
 	$path1 = $path2;
@@ -103,16 +103,16 @@ $url = $config->getURL($rep, '', 'comp');
 $vars['reverselink'] = '<a href="'.$url.'compare%5B%5D='.rawurlencode($path2 ?? '').'@'.$rev2.'&amp;compare%5B%5D='.rawurlencode($path1 ?? '').'@'.$rev1.'&amp;manualorder=1'.($ignoreWhitespace ? '&amp;ignorews=1' : '').'">'.$lang['REVCOMP'].'</a>';
 $toggleIgnoreWhitespace = '';
 
-if ($ignoreWhitespace == $config->getIgnoreWhitespacesInDiff()) 
+if ($ignoreWhitespace == $config->getIgnoreWhitespacesInDiff())
 {
 	$toggleIgnoreWhitespace = '&amp;ignorews='.($ignoreWhitespace ? '0' : '1');
 }
 
-if (!$ignoreWhitespace) 
+if (!$ignoreWhitespace)
 {
 	$vars['ignorewhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.rawurlencode($path1 ?? '').'@'.$rev1.'&amp;compare%5B%5D='.rawurlencode($path2 ?? '').'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').$toggleIgnoreWhitespace.'">'.$lang['IGNOREWHITESPACE'].'</a>';
 }
-else 
+else
 {
 	$vars['regardwhitespacelink'] = '<a href="'.$url.'compare%5B%5D='.rawurlencode($path1 ?? '').'@'.$rev1.'&amp;compare%5B%5D='.rawurlencode($path2 ?? '').'@'.$rev2.($manualorder ? '&amp;manualorder=1' : '').$toggleIgnoreWhitespace.'">'.$lang['REGARDWHITESPACE'].'</a>';
 }
@@ -125,7 +125,7 @@ $vars['action'] = $lang['PATHCOMPARISON'];
 
 $hidden = '<input type="hidden" name="manualorder" value="1" />';
 
-if ($config->multiViews) 
+if ($config->multiViews)
 {
 	$hidden .= '<input type="hidden" name="op" value="comp"/>';
 }
@@ -149,7 +149,7 @@ $vars['rev1'] = $rev1;
 $vars['rev2'] = $rev2;
 
 $history1 = $svnrep->getLog($path1, $rev1, 0, false, 1);
-if (!$history1) 
+if (!$history1)
 {
 	renderTemplate404('compare','NOPATH');
 }
@@ -157,7 +157,7 @@ else
 {
 	$history2 = $svnrep->getLog($path2, $rev2, 0, false, 1);
 
-	if (!$history2) 
+	if (!$history2)
 	{
 		renderTemplate404('compare','NOPATH');
 	}
@@ -165,7 +165,7 @@ else
 
 // Set variables used for the more recent of the two revisions
 $history = ($rev1 >= $rev2 ? $history1 : $history2);
-if ($history && $history->curEntry) 
+if ($history && $history->curEntry)
 {
 	$logEntry = $history->curEntry;
 	$vars['rev'] = $logEntry->rev;
@@ -192,63 +192,63 @@ $svnpath2 = encodepath($svnrep->getSvnPath(str_replace(DIRECTORY_SEPARATOR, '/',
 
 $debug = false;
 
-if (!$noinput) 
+if (!$noinput)
 {
 	$cmd = $config->getSvnCommand().$rep->svnCredentials().' diff '.($ignoreWhitespace ? '-x "-w --ignore-eol-style" ' : '').quote($svnpath1.'@'.$rev1).' '.quote($svnpath2.'@'.$rev2);
 }
 
-function clearVars() 
+function clearVars()
 {
 	global $ignoreWhitespace, $listing, $index;
 
-	if ($ignoreWhitespace && $index > 1) 
+	if ($ignoreWhitespace && $index > 1)
 	{
 		$endBlock = false;
 		$previous = $index - 1;
 		if ($listing[$previous]['endpath']) $endBlock = 'newpath';
 		else if ($listing[$previous]['enddifflines']) $endBlock = 'difflines';
 
-		if ($endBlock !== false) 
+		if ($endBlock !== false)
 		{
 			// check if block ending at previous contains real diff data
 			$i = $previous;
 			$containsOnlyEqualDiff = true;
 			$addedLines = array();
 			$removedLines = array();
-			while ($i >= 0 && !$listing[$i - 1][$endBlock]) 
+			while ($i >= 0 && !$listing[$i - 1][$endBlock])
 			{
 				$diffclass = $listing[$i - 1]['diffclass'];
 
-				if ($diffclass !== 'diffadded' && $diffclass !== 'diffdeleted') 
+				if ($diffclass !== 'diffadded' && $diffclass !== 'diffdeleted')
 				{
-					if ($addedLines !== $removedLines) 
+					if ($addedLines !== $removedLines)
 					{
 						$containsOnlyEqualDiff = false;
 						break;
 					}
 				}
 
-				if (count($addedLines) > 0 && $addedLines === $removedLines) 
+				if (count($addedLines) > 0 && $addedLines === $removedLines)
 				{
 					$addedLines = array();
 					$removedLines = array();
 				}
 
-				if ($diffclass === 'diff') 
+				if ($diffclass === 'diff')
 				{
 					$i--;
 					continue;
 				}
 
-				if ($diffclass === null) 
+				if ($diffclass === null)
 				{
 					$containsOnlyEqualDiff = false;
 					break;;
 				}
 
-				if ($diffclass === 'diffdeleted') 
+				if ($diffclass === 'diffdeleted')
 				{
-					if (count($addedLines) <= count($removedLines)) 
+					if (count($addedLines) <= count($removedLines))
 					{
 						$containsOnlyEqualDiff = false;
 						break;;
@@ -259,9 +259,9 @@ function clearVars()
 					continue;
 				}
 
-				if ($diffclass === 'diffadded') 
+				if ($diffclass === 'diffadded')
 				{
-					if (count($removedLines) > 0) 
+					if (count($removedLines) > 0)
 					{
 						$containsOnlyEqualDiff = false;
 						break;;
@@ -275,15 +275,15 @@ function clearVars()
 				assert(false);
 			}
 
-			if ($containsOnlyEqualDiff) 
+			if ($containsOnlyEqualDiff)
 			{
 				$containsOnlyEqualDiff = $addedLines === $removedLines;
 			}
 
 			// remove blocks which only contain diffclass=diff and equal removes and adds
-			if ($containsOnlyEqualDiff) 
+			if ($containsOnlyEqualDiff)
 			{
-				for ($j = $i - 1; $j < $index; $j++) 
+				for ($j = $i - 1; $j < $index; $j++)
 				{
 					unset($listing[$j]);
 				}
@@ -305,10 +305,10 @@ function clearVars()
 
 $vars['success'] = false;
 
-if (!$noinput) 
+if (!$noinput)
 {
 	// TODO: Report warning/error if comparison encounters any problems
-	if ($diff = popenCommand($cmd, 'r')) 
+	if ($diff = popenCommand($cmd, 'r'))
 	{
 		$listing = array();
 		$index = 0;
@@ -320,23 +320,23 @@ if (!$noinput)
 
 		$vars['success'] = true;
 
-		while (!feof($diff)) 
+		while (!feof($diff))
 		{
-			if ($getLine) 
+			if ($getLine)
 			{
-				if ($bufferedLine === false) 
+				if ($bufferedLine === false)
 				{
 					$bufferedLine = rtrim(fgets($diff), "\n\r");
 				}
 
 				$newlineR = strpos($bufferedLine, "\r");
 				$newlineN = strpos($bufferedLine, "\n");
-				if ($newlineR === false && $newlineN === false) 
+				if ($newlineR === false && $newlineN === false)
 				{
 					$line = $bufferedLine;
 					$bufferedLine = false;
 				}
-				else 
+				else
 				{
 					$newline = ($newlineR < $newlineN ? $newlineR : $newlineN);
 					$line = substr($bufferedLine, 0, $newline);
@@ -347,12 +347,12 @@ if (!$noinput)
 			clearVars();
 			$getLine = true;
 			if ($debug) print 'Line = "'.$line.'"<br />';
-			if ($indiff) 
+			if ($indiff)
 			{
 				// If we're in a diff proper, just set up the line
-				if ($indiffproper) 
+				if ($indiffproper)
 				{
-					if (strlen($line) > 0 && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-')) 
+					if (strlen($line) > 0 && ($line[0] == ' ' || $line[0] == '+' || $line[0] == '-'))
 					{
 						$subline = escape(toOutputEncoding(substr($line, 1)));
 						$subline = rtrim($subline, "\n\r");
@@ -360,7 +360,7 @@ if (!$noinput)
 						$listvar = &$listing[$index];
 						$listvar['line'] = $subline;
 
-						switch ($line[0]) 
+						switch ($line[0])
 						{
 							case ' ':
 								$listvar['diffclass'] = 'diff';
@@ -378,8 +378,8 @@ if (!$noinput)
 								break;
 						}
 						$index++;
-					} 
-					else if ($line != '\ No newline at end of file') 
+					}
+					else if ($line != '\ No newline at end of file')
 					{
 						$indiffproper = false;
 						$listing[$index++]['enddifflines'] = true;
@@ -390,7 +390,7 @@ if (!$noinput)
 				}
 
 				// Check for the start of a new diff area
-				if (!strncmp($line, '@@', 2)) 
+				if (!strncmp($line, '@@', 2))
 				{
 					$pos = strpos($line, '+');
 					$posline = substr($line, $pos);
@@ -401,7 +401,7 @@ if (!$noinput)
 					if ($debug) print 'sline = "'.$sline.'", eline = "'.$eline.'"<br />';
 
 					// Check that this isn't a file deletion
-					if ($sline == 0 && $eline == 0) 
+					if ($sline == 0 && $eline == 0)
 					{
 						$line = fgets($diff);
 						if ($debug) print 'Ignoring: "'.$line.'"<br />';
@@ -416,8 +416,8 @@ if (!$noinput)
 						if ($debug) print 'Unignoring previous - marking as deleted<br />';
 						$listing[$index++]['info'] = $lang['FILEDELETED'];
 
-					} 
-					else 
+					}
+					else
 					{
 						$listvar = &$listing[$index];
 						$listvar['difflines'] = $line;
@@ -438,8 +438,8 @@ if (!$noinput)
 
 					continue;
 
-				} 
-				else 
+				}
+				else
 				{
 					$indiff = false;
 					if ($debug) print 'Ending diff';
@@ -447,10 +447,10 @@ if (!$noinput)
 			}
 
 			// Check for a new node entry
-			if (strncmp(trim($line), 'Index: ', 7) == 0) 
+			if (strncmp(trim($line), 'Index: ', 7) == 0)
 			{
 				// End the current node
-				if ($node) 
+				if ($node)
 				{
 					$listing[$index++]['endpath'] = true;
 					clearVars();
@@ -460,7 +460,7 @@ if (!$noinput)
 				$node = substr($node, 7);
 				if ($node == '' || $node[0] != '/') $node = '/'.$node;
 
-				if (substr($path2, -strlen($node)) === $node) 
+				if (substr($path2, -strlen($node)) === $node)
 				{
 					$absnode = $path2;
 				}
@@ -485,12 +485,12 @@ if (!$noinput)
 				// Check for a file addition
 				$line = fgets($diff);
 				if ($debug) print 'Examining: '.$line.'<br />';
-				if (strpos($line, '(revision 0)')) 
+				if (strpos($line, '(revision 0)'))
 				{
 					$listvar['info'] = $lang['FILEADDED'];
 				}
 
-				if (strncmp(trim($line), 'Cannot display:', 15) == 0) 
+				if (strncmp(trim($line), 'Cannot display:', 15) == 0)
 				{
 					$index++;
 					clearVars();
@@ -508,16 +508,16 @@ if (!$noinput)
 				continue;
 			}
 
-			if (strncmp(trim($line), 'Property changes on: ', 21) == 0) 
+			if (strncmp(trim($line), 'Property changes on: ', 21) == 0)
 			{
 				$propnode = trim($line);
 				$propnode = substr($propnode, 21);
 				if ($propnode == '' || $propnode[0] != '/') $propnode = '/'.$propnode;
 
 				if ($debug) print 'Properties on '.$propnode.' (cur node $ '.$node.')';
-				if ($propnode != $node) 
+				if ($propnode != $node)
 				{
-					if ($node) 
+					if ($node)
 					{
 						$listing[$index++]['endpath'] = true;
 						clearVars();
@@ -556,7 +556,7 @@ if (!$noinput)
 			}
 
 			// Check for error messages
-			if (strncmp(trim($line), 'svn: ', 5) == 0) 
+			if (strncmp(trim($line), 'svn: ', 5) == 0)
 			{
 				$listing[$index++]['info'] = urldecode($line);
 				$vars['success'] = false;
@@ -564,18 +564,18 @@ if (!$noinput)
 			}
 
 			$listing[$index++]['info'] = escape(toOutputEncoding($line));
-			
-			if (strlen($line) === 0) 
+
+			if (strlen($line) === 0)
 			{
-				if (!isset($vars['warning'])) 
+				if (!isset($vars['warning']))
 				{
 					$vars['warning'] = "No changes between revisions";
 				}
 			}
-			
+
 		}
 
-		if ($node) 
+		if ($node)
 		{
 			clearVars();
 			$listing[$index++]['endpath'] = true;
@@ -583,36 +583,36 @@ if (!$noinput)
 
 		if ($debug) print_r($listing);
 
-		if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false)) 
+		if (!$rep->hasUnrestrictedReadAccess($relativePath1) || !$rep->hasUnrestrictedReadAccess($relativePath2, false))
 		{
 			// check every item for access and remove it if read access is not allowed
 			$restricted = array();
 			$inrestricted = false;
-			foreach ($listing as $i => $item) 
+			foreach ($listing as $i => $item)
 			{
-				if ($item['newpath'] !== null) 
+				if ($item['newpath'] !== null)
 				{
 					$newpath = $item['newpath'];
 					$inrestricted = !$rep->hasReadAccess($newpath, false);
 				}
 
-				if ($inrestricted) 
+				if ($inrestricted)
 				{
 					$restricted[] = $i;
 				}
 
-				if ($item['endpath'] !== null) 
+				if ($item['endpath'] !== null)
 				{
 					$inrestricted = false;
 				}
 			}
 
-			foreach ($restricted as $i) 
+			foreach ($restricted as $i)
 			{
 				unset($listing[$i]);
 			}
 
-			if (count($restricted) && !count($listing)) 
+			if (count($restricted) && !count($listing))
 			{
 				$vars['error'] = $lang['NOACCESS'];
 				sendHeaderForbidden();

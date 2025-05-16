@@ -43,12 +43,12 @@ $passRevString = createRevAndPegString($rev, $peg);
 // Find the youngest revision containing changes for the given path
 $history = $svnrep->getLog($path, 'HEAD', 1, true, 2, ($path == '/') ? '' : $peg);
 
-if (!$history) 
+if (!$history)
 {
 	unset($vars['error']);
 	$history = $svnrep->getLog($path, '', '', true, 2, ($path == '/') ? '' : $peg);
 
-	if (!$history) 
+	if (!$history)
 	{
 		renderTemplate404('revision','NOPATH');
 	}
@@ -64,7 +64,7 @@ $vars['youngestrev'] = $youngest;
 $lastChangedRev = ($rev) ? $rev : $youngest;
 $history = $svnrep->getLog($path, $lastChangedRev, 1, false, 2, $peg, true);
 
-if (!$history) 
+if (!$history)
 {
 	renderTemplate404('revision','NOPATH');
 }
@@ -77,16 +77,16 @@ if (empty($rev))
 // Generate links to newer and older revisions
 $revurl = $config->getURL($rep, $path, 'revision');
 
-if ($rev < $youngest) 
+if ($rev < $youngest)
 {
 	$vars['goyoungesturl'] = $config->getURL($rep, $path, 'revision');
 	$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
 
 	$history2 = $svnrep->getLog($path, $rev, $youngest, true, 2, $peg);
-	if (isset($history2->entries[1])) 
+	if (isset($history2->entries[1]))
 	{
 		$nextRev = $history2->entries[1]->rev;
-		if ($nextRev != $youngest) 
+		if ($nextRev != $youngest)
 		{
 			$vars['nextrev'] = $nextRev;
 			$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $path != '/' ? $peg ? $peg : $rev : '');
@@ -97,7 +97,7 @@ if ($rev < $youngest)
 	unset($vars['error']);
 }
 
-if (isset($history->entries[1])) 
+if (isset($history->entries[1]))
 {
 	$prevRev = $history->entries[1]->rev;
 	$prevPath = $history->entries[1]->path;
@@ -117,7 +117,7 @@ $vars['peg'] = $peg;
 $vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
 $vars['safepath'] = escape($ppath);
 
-if ($logEntry) 
+if ($logEntry)
 {
 	$vars['date'] = $logEntry->date;
 	$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
@@ -133,7 +133,7 @@ $dirPath = $isDir ? $path : dirname($path).'/';
 $vars['directoryurl'] = $config->getURL($rep, $dirPath, 'dir').$passRevString.'#'.anchorForPath($dirPath);
 $vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
 
-if ($path != $dirPath) 
+if ($path != $dirPath)
 {
 	$vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;
 	$vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDETAIL'].'</a>';
@@ -141,7 +141,7 @@ if ($path != $dirPath)
 	$vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
 }
 
-if ($rep->isRssEnabled()) 
+if ($rep->isRssEnabled())
 {
 	$vars['rssurl'] = $config->getURL($rep, $path, 'rss').createRevAndPegString('', $peg);
 	$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
@@ -149,7 +149,7 @@ if ($rep->isRssEnabled())
 
 $changes = $logEntry ? $logEntry->mods : array();
 
-if (!is_array($changes)) 
+if (!is_array($changes))
 {
 	$changes = array();
 }
@@ -161,16 +161,16 @@ $row = 0;
 $prevRevString = createRevAndPegString($rev - 1, $rev - 1);
 $thisRevString = createRevAndPegString($rev, $rev);
 
-foreach ($changes as $change) 
+foreach ($changes as $change)
 {
 	$linkRevString = ($change->action == 'D') ? $prevRevString : $thisRevString;
 	$isDir = $change->isdir;
 
-	if ($isDir !== null) 
+	if ($isDir !== null)
 	{
 		$isFile = !$isDir;
 	}
-	else 
+	else
 	{
 		// NOTE: This is a hack (runs `svn info` on each path) to see if it's a file.
 		// `svn log --verbose --xml` should really provide this info, but does only in recent version?
@@ -178,7 +178,7 @@ foreach ($changes as $change)
 		$isFile = $svnrep->isFile($change->path, $lastSeenRev, $lastSeenRev);
 	}
 
-	if (!$isFile && $change->path != '/') 
+	if (!$isFile && $change->path != '/')
 	{
 		$change->path .= '/';
 	}
@@ -205,13 +205,13 @@ foreach ($changes as $change)
 	$row = 1 - $row;
 }
 
-if (isset($prevRev)) 
+if (isset($prevRev))
 {
 	$vars['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.rawurlencode($prevPath).'@'.$prevRev. '&amp;compare[]='.rawurlencode($path).'@'.$rev;
 	$vars['comparelink'] = '<a href="'.$vars['compareurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
-if (!$rep->hasReadAccess($path)) 
+if (!$rep->hasReadAccess($path))
 {
 	$vars['error'] = $lang['NOACCESS'];
 	sendHeaderForbidden();

@@ -28,31 +28,31 @@ require_once 'include/utils.php';
 require_once 'include/template.php';
 require_once 'include/bugtraq.php';
 
-function removeURLSeparator($url) 
+function removeURLSeparator($url)
 {
 	return preg_replace('#(\?|&(amp;)?)$#', '', $url);
 }
 
-function urlForPath($fullpath, $passRevString) 
+function urlForPath($fullpath, $passRevString)
 {
 	global $config, $rep;
 
 	$isDir = $fullpath[strlen($fullpath) - 1] == '/';
 
-	if ($isDir) 
+	if ($isDir)
 	{
 		if ($config->treeView)
 		{
 			$url = $config->getURL($rep, $fullpath, 'dir').$passRevString;
 			$id = anchorForPath($fullpath);
 			$url .= '#'.$id.'" id="'.$id;
-		} 
+		}
 		else
 		{
 			$url = $config->getURL($rep, $fullpath, 'dir').$passRevString;
 		}
-	} 
-	else 
+	}
+	else
 	{
 		$url = $config->getURL($rep, $fullpath, 'file').$passRevString;
 	}
@@ -60,7 +60,7 @@ function urlForPath($fullpath, $passRevString)
 	return removeURLSeparator($url);
 }
 
-function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing,  $index=0, $treeview = true) 
+function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing,  $index=0, $treeview = true)
 {
 
 	global $config, $lang, $rep, $passrev, $peg, $passRevString;
@@ -72,7 +72,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 
 	$openDir = false;
 	$logList = $svnrep->getListSearch($path, $searchstring, $rev, $peg);
-	
+
 	if (!$logList)
 	{
 		return $listing;
@@ -80,7 +80,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 
 	$downloadRevAndPeg = createRevAndPegString($rev, $peg ? $peg : $rev);
 
-	foreach ($logList->entries as $entry) 
+	foreach ($logList->entries as $entry)
 	{
 		$isDir = $entry->isdir;
 		$file = $entry->file;
@@ -98,12 +98,12 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 		$listvar = &$listing[$index];
 		$listvar['rowparity'] = $index % 2;
 
-		if ($isDir) 
+		if ($isDir)
 		{
 			$listvar['filetype'] = ($openDir) ? 'diropen' : 'dir';
 			$openDir = true;
 		}
-		else 
+		else
 		{
 			$listvar['filetype'] = strtolower(strrchr($file, '.'));
 			$openDir = false;
@@ -135,7 +135,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 			$listvar['last_i_node'][$j] = false;
 		}
 
-		if ($isDir) 
+		if ($isDir)
 		{
 			$listvar['fileurl'] = urlForPath($path.$file, $passRevString);
 		}
@@ -146,7 +146,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 
 		$listvar['filelink'] = '<a href="'.$listvar['fileurl'].'">'.$listvar['filename'].'</a>';
 
-		if ($isDir) 
+		if ($isDir)
 		{
 			$listvar['logurl'] = $config->getURL($rep, $path.$file, 'log').$isDirString.$passRevString;
 		}
@@ -160,7 +160,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 			$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.escape($path.$file).'@'.$passrev.'" onclick="enforceOnlyTwoChecked(this)" />';
 		}
 
-		if ($config->showLastModInListing()) 
+		if ($config->showLastModInListing())
 		{
 			$listvar['committime'] = $entry->committime;
 			$listvar['revision'] = $entry->rev;
@@ -174,7 +174,7 @@ function showSearchResults($svnrep, $path, $searchstring, $rev, $peg, $listing, 
 		{
 			$downloadurl = $config->getURL($rep, $path.$file, 'dl').$isDirString.$downloadRevAndPeg;
 
-			if ($isDir) 
+			if ($isDir)
 			{
 				$listvar['downloadurl'] = $downloadurl;
 				$listvar['downloadplainurl'] = '';
@@ -217,7 +217,7 @@ if (!empty($rev))
 {
 	$info = $svnrep->getInfo($path, $rev, $peg);
 
-	if ($info) 
+	if ($info)
 	{
 		$path = $info->path;
 		$peg = (int)$info->rev;

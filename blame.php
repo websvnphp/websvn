@@ -41,7 +41,7 @@ $svnrep = new SVNRepository($rep);
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
 
-if (!$history) 
+if (!$history)
 {
 	unset($vars['error']);
 	$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
@@ -53,24 +53,24 @@ if (!$history)
 }
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
 
-if (empty($rev)) 
+if (empty($rev))
 {
 	$rev = $youngest;
-} 
-else 
+}
+else
 {
 	$history = $svnrep->getLog($path, $rev, '', false, 2, $peg);
-	if (!$history) 
+	if (!$history)
 	{
 		renderTemplate404('blame','NOPATH');
 	}
 }
 
-if ($path[0] != '/') 
+if ($path[0] != '/')
 {
 	$ppath = '/'.$path;
-} 
-else 
+}
+else
 {
 	$ppath = $path;
 }
@@ -84,7 +84,7 @@ $vars['peg'] = $peg;
 $vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
 $vars['safepath'] = escape($ppath);
 
-if (isset($history->entries[0])) 
+if (isset($history->entries[0]))
 {
 	$vars['log'] = xml_entities($history->entries[0]->msg);
 	$vars['date'] = $history->entries[0]->date;
@@ -95,7 +95,7 @@ if (isset($history->entries[0]))
 createPathLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($rev, $peg);
 
-if ($rev != $youngest) 
+if ($rev != $youngest)
 {
 	$vars['goyoungesturl'] = $config->getURL($rep, $path, 'blame').createRevAndPegString('', $peg);
 	$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
@@ -103,14 +103,14 @@ if ($rev != $youngest)
 
 $revurl = $config->getURL($rep, $path, 'blame');
 
-if ($rev < $youngest) 
+if ($rev < $youngest)
 {
 	$history2 = $svnrep->getLog($path, $rev, $youngest, true, 2, $peg);
 
-	if (isset($history2->entries[1])) 
+	if (isset($history2->entries[1]))
 	{
 		$nextRev = $history2->entries[1]->rev;
-		if ($nextRev != $youngest) 
+		if ($nextRev != $youngest)
 		{
 			$vars['nextrev'] = $nextRev;
 			$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg);
@@ -120,7 +120,7 @@ if ($rev < $youngest)
 	unset($vars['error']);
 }
 
-if (isset($history->entries[1])) 
+if (isset($history->entries[1]))
 {
 	$prevRev = $history->entries[1]->rev;
 	$prevPath = $history->entries[1]->path;
@@ -137,13 +137,13 @@ $vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 $vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;
 $vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDETAIL'].'</a>';
 
-if ($history == null || count($history->entries) > 1) 
+if ($history == null || count($history->entries) > 1)
 {
 	$vars['diffurl'] = $config->getURL($rep, $path, 'diff').$passRevString;
 	$vars['difflink'] = '<a href="'.$vars['diffurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
-if ($rep->isRssEnabled()) 
+if ($rep->isRssEnabled())
 {
 	$vars['rssurl'] = $config->getURL($rep, $path, 'rss').createRevAndPegString('', $peg);
 	$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
@@ -152,25 +152,25 @@ if ($rep->isRssEnabled())
 // Check for binary file type before grabbing blame information.
 $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev, $peg);
 
-if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType)) 
+if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType))
 {
 	$vars['warning'] = 'Cannot display blame info for binary file. (svn:mime-type = '.$svnMimeType.')';
 	$vars['javascript'] = '';
 }
-else 
+else
 {
 	// Get the contents of the file
 	$tfname = tempnamWithCheck($config->getTempDir(), '');
 	$highlighted = $svnrep->getFileContents($path, $tfname, $rev, $peg, '', 'line');
 
-	if ($file = fopen($tfname, 'r')) 
+	if ($file = fopen($tfname, 'r'))
 	{
 		// Get the blame info
 		$tbname = tempnamWithCheck($config->getTempDir(), '');
 
 		$svnrep->getBlameDetails($path, $tbname, $rev, $peg);
 
-		if ($blame = fopen($tbname, 'r')) 
+		if ($blame = fopen($tbname, 'r'))
 		{
 			// Create an array of version/author/line
 
@@ -179,11 +179,11 @@ else
 			$last_rev = '';
 			$row_class = '';
 
-			while (!feof($blame) && !feof($file)) 
+			while (!feof($blame) && !feof($file))
 			{
 				$blameline = rtrim(fgets($blame), "\n\r");
 
-				if ($blameline != '') 
+				if ($blameline != '')
 				{
 					list($revision, $author, $remainder) = sscanf($blameline, '%d %s %s');
 					$empty = !$remainder;
@@ -191,14 +191,14 @@ else
 					$listvar = &$listing[$index];
 					$listvar['lineno'] = $index + 1;
 
-					if ($last_rev != $revision) 
+					if ($last_rev != $revision)
 					{
 						$listvar['revision'] = '<a id="l'.$index.'-rev" class="blame-revision" href="'.$config->getURL($rep, $path, 'blame').createRevAndPegString($revision, $peg ? $peg : $rev).'">'.$revision.'</a>';
 						$seen_rev[$revision] = 1;
 						$row_class = ($row_class == 'light') ? 'dark' : 'light';
 						$listvar['author'] = $author;
-					} 
-					else 
+					}
+					else
 					{
 						$listvar['revision'] = '';
 						$listvar['author'] = '';
@@ -236,9 +236,9 @@ else
 	{
 		$peg = $rev;
 	}
-	if (!isset($vars['warning'])) 
+	if (!isset($vars['warning']))
 	{
-		foreach ($seen_rev as $key => $val) 
+		foreach ($seen_rev as $key => $val)
 		{
 			$history = $svnrep->getLog($path, $key, $key, false, 1, $peg);
 
@@ -254,7 +254,7 @@ else
 	$vars['javascript'] = implode("\n", $javascript);
 }
 
-if (!$rep->hasReadAccess($path, false)) 
+if (!$rep->hasReadAccess($path, false))
 {
 	$vars['error'] = $lang['NOACCESS'];
 	sendHeaderForbidden();

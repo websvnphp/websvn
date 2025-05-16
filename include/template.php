@@ -263,7 +263,7 @@ function parseTags($line, $vars) {
 //
 // Renders the templates for the given view
 
-function renderTemplate($view, $readmePath = null) 
+function renderTemplate($view, $readmePath = null)
 {
 
 	global $config, $rep, $vars, $listing, $lang, $locwebsvnhttp;
@@ -275,18 +275,18 @@ function renderTemplate($view, $readmePath = null)
 	$path = !empty($rep) ? $rep->getTemplatePath() : $config->getTemplatePath();
 	$path = $path . 'template.php';
 
-	if (is_readable($path)) 
+	if (is_readable($path))
 	{
 		$vars['templateentrypoint'] = $path;
 		executePlainPhpTemplate($vars);
 	}
-	else 
+	else
 	{
 		parseTemplate('header.tmpl');
 		flush(); // http://developer.yahoo.com/performance/rules.html#flush
 		parseTemplate($view . '.tmpl');
 
-		if (($view === 'directory') || ($view === 'log')) 
+		if (($view === 'directory') || ($view === 'log'))
 		{
 			print '<script type="text/javascript" src="'.$locwebsvnhttp.'/javascript/compare-checkboxes.js"></script>';
 		}

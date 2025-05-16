@@ -59,7 +59,7 @@ $max = isset($_REQUEST['max']) ? (int)$_REQUEST['max'] : false;
 // Max number of results to find at a time
 $numSearchResults = 20;
 
-if ($search == '') 
+if ($search == '')
 {
 	$dosearch = false;
 }
@@ -70,7 +70,7 @@ if ($search == '')
 // ideal, but expecting everyone to install 'unac' seems a little
 // excessive as well...
 
-function removeAccents($string) 
+function removeAccents($string)
 {
 	$string = htmlentities($string, ENT_QUOTES, 'ISO-8859-1');
 	$string = preg_replace('/&([A-Za-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron);/', '$1', $string);
@@ -78,7 +78,7 @@ function removeAccents($string)
 }
 
 // Normalise the search words
-foreach ($words as $index => $word) 
+foreach ($words as $index => $word)
 {
 	$words[$index] = strtolower(removeAccents($word));
 
@@ -104,12 +104,12 @@ $svnrep = new SVNRepository($rep);
 
 $history = $svnrep->getLog($path, 'HEAD', '', false, 1, ($path == '/') ? '' : $peg);
 
-if (!$history) 
+if (!$history)
 {
 	unset($vars['error']);
 	$history = $svnrep->getLog($path, '', '', false, 1, ($path == '/') ? '' : $peg);
 
-	if (!$history) 
+	if (!$history)
 	{
 		renderTemplate404('log','NOPATH');
 	}
@@ -117,31 +117,31 @@ if (!$history)
 
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : 0;
 
-if (empty($startrev)) 
+if (empty($startrev))
 {
 	//$startrev = ($rev) ? $rev : 'HEAD';
 	$startrev = $rev;
 }
-else if ($startrev != 'HEAD' && $startrev != 'BASE' && $startrev != 'PREV' && $startrev != 'COMMITTED') 
+else if ($startrev != 'HEAD' && $startrev != 'BASE' && $startrev != 'PREV' && $startrev != 'COMMITTED')
 {
 	$startrev = (int)$startrev;
 }
 
-if (empty($endrev)) 
+if (empty($endrev))
 {
 	$endrev = 1;
 }
-else if ($endrev != 'HEAD' && $endrev != 'BASE' && $endrev != 'PREV' && $endrev != 'COMMITTED') 
+else if ($endrev != 'HEAD' && $endrev != 'BASE' && $endrev != 'PREV' && $endrev != 'COMMITTED')
 {
 	$endrev = (int)$endrev;
 }
 
-if (empty($rev)) 
+if (empty($rev))
 {
 	$rev = $youngest;
 }
 
-if (empty($startrev)) 
+if (empty($startrev))
 {
 	$startrev = $rev;
 }
@@ -149,7 +149,7 @@ if (empty($startrev))
 // make sure path is prefixed by a /
 $ppath = $path;
 
-if ($path == '' || $path[0] != '/') 
+if ($path == '' || $path[0] != '/')
 {
 	$ppath = '/'.$path;
 }
@@ -160,7 +160,7 @@ $vars['peg'] = $peg;
 $vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
 $vars['safepath'] = escape($ppath);
 
-if ($history && isset($history->entries[0])) 
+if ($history && isset($history->entries[0]))
 {
 	$vars['log'] = xml_entities($history->entries[0]->msg);
 	$vars['date'] = $history->entries[0]->date;
@@ -168,11 +168,11 @@ if ($history && isset($history->entries[0]))
 	$vars['author'] = $history->entries[0]->author;
 }
 
-if ($max === false) 
+if ($max === false)
 {
 	$max = ($dosearch) ? 0 : 40;
 }
-else if ($max < 0) 
+else if ($max < 0)
 {
 	$max = 40;
 }
@@ -213,12 +213,12 @@ else
 
 $vars['revurl'] = $config->getURL($rep, $path, 'revision').$isDirString.$passRevString;
 
-if ($isDir) 
+if ($isDir)
 {
 	$vars['directoryurl'] = $config->getURL($rep, $path, 'dir').$passRevString.'#'.anchorForPath($path);
 	$vars['directorylink'] = '<a href="'.$vars['directoryurl'].'">'.$lang['LISTING'].'</a>';
 }
-else 
+else
 {
 	$vars['filedetailurl'] = $config->getURL($rep, $path, 'file').$passRevString;
 	$vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDETAIL'].'</a>';
@@ -230,19 +230,19 @@ else
 	$vars['difflink'] = '<a href="'.$vars['diffurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
-if ($rep->isRssEnabled()) 
+if ($rep->isRssEnabled())
 {
 	$vars['rssurl'] = $config->getURL($rep, $path, 'rss').$isDirString.createRevAndPegString('', $peg);
 	$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
 }
 
-if ($rev != $youngest) 
+if ($rev != $youngest)
 {
-	if ($path == '/') 
+	if ($path == '/')
 	{
 		$vars['goyoungesturl'] = $config->getURL($rep, '', 'log').$isDirString;
 	}
-	else 
+	else
 	{
 		$vars['goyoungesturl'] = $config->getURL($rep, $path, 'log').$isDirString.'peg='.($peg ? $peg : $rev);
 	}
@@ -257,29 +257,29 @@ $vars['logsearch_moreresultslink'] = '';
 $vars['pagelinks'] = '';
 $vars['showalllink'] = '';
 
-if ($history) 
+if ($history)
 {
 	$history = $svnrep->getLog($path, $startrev, $endrev, true, $max, $peg);
 
-	if (empty($history)) 
+	if (empty($history))
 	{
 		unset($vars['error']);
 		$vars['warning'] = 'Revision '.$startrev.' of this resource does not exist.';
 	}
 }
 
-if (!empty($history)) 
+if (!empty($history))
 {
 	// Get the number of separate revisions
 	$revisions = count($history->entries);
 
-	if ($all) 
+	if ($all)
 	{
 		$firstrevindex = 0;
 		$lastrevindex = $revisions - 1;
 		$pages = 1;
 	}
-	else 
+	else
 	{
 		// Calculate the number of pages
 		$pages = floor($revisions / $maxperpage);
@@ -298,7 +298,7 @@ if (!empty($history))
 
 	$entries = array();
 
-	if ($brev && $erev) 
+	if ($brev && $erev)
 	{
 		$history = $svnrep->getLog($path, $brev, $erev, false, 0, $peg, true);
 		if ($history)
@@ -311,36 +311,36 @@ if (!empty($history))
 	$index = 0;
 	$found = false;
 
-	foreach ($entries as $revision) 
+	foreach ($entries as $revision)
 	{
 		// Assume a good match
 		$match = true;
 		$thisrev = $revision->rev;
 
 		// Check the log for the search words, if searching
-		if ($dosearch) 
+		if ($dosearch)
 		{
-			if ((empty($fromRev) || $fromRev > $thisrev)) 
+			if ((empty($fromRev) || $fromRev > $thisrev))
 			{
 				// Turn all the HTML entities into real characters.
 
 				// Make sure that each word in the search in also in the log
-				foreach ($words as $word) 
+				foreach ($words as $word)
 				{
-					if (strpos(strtolower(removeAccents($revision->msg)), $word) === false && strpos(strtolower(removeAccents($revision->author)), $word) === false) 
+					if (strpos(strtolower(removeAccents($revision->msg)), $word) === false && strpos(strtolower(removeAccents($revision->author)), $word) === false)
 					{
 						$match = false;
 						break;
 					}
 				}
 
-				if ($match) 
+				if ($match)
 				{
 					$numSearchResults--;
 					$found = true;
 				}
-			} 
-			else 
+			}
+			else
 			{
 				$match = false;
 			}
@@ -348,26 +348,26 @@ if (!empty($history))
 
 		$thisRevString = createRevAndPegString($thisrev, ($peg ? $peg : $thisrev));
 
-		if ($match) 
+		if ($match)
 		{
 			// Add the trailing slash if we need to (svnlook history doesn't return trailing slashes!)
 			$rpath = $revision->path;
 
-			if (empty($rpath)) 
+			if (empty($rpath))
 			{
 				$rpath = '/';
 			}
-			else if ($isDir && $rpath[strlen($rpath) - 1] != '/') 
+			else if ($isDir && $rpath[strlen($rpath) - 1] != '/')
 			{
 				$rpath .= '/';
 			}
 
 			$precisePath = $revision->precisePath;
-			if (empty($precisePath)) 
+			if (empty($precisePath))
 			{
 				$precisePath = '/';
 			}
-			else if ($isDir && $precisePath[strlen($precisePath) - 1] != '/') 
+			else if ($isDir && $precisePath[strlen($precisePath) - 1] != '/')
 			{
 				$precisePath .= '/';
 			}
@@ -394,19 +394,19 @@ if (!empty($history))
 			$listvar['rowparity'] = $row;
 			$listvar['compareurl'] = $config->getURL($rep, '', 'comp').'compare[]='.urlencode($rpath).'@'.($thisrev - 1).'&amp;compare[]='.urlencode($rpath).'@'.$thisrev;
 
-			if ($showchanges) 
+			if ($showchanges)
 			{
 				// Aggregate added/deleted/modified paths for display in table
 				$modpaths = array();
 
-				foreach ($revision->mods as $mod) 
+				foreach ($revision->mods as $mod)
 				{
 					$modpaths[$mod->action][] = $mod->path;
 				}
 
 				ksort($modpaths);
 
-				foreach ($modpaths as $action => $paths) 
+				foreach ($modpaths as $action => $paths)
 				{
 					sort($paths);
 					$modpaths[$action] = $paths;
@@ -422,7 +422,7 @@ if (!empty($history))
 		}
 
 		// If we've reached the search limit, stop here...
-		if (!$numSearchResults) 
+		if (!$numSearchResults)
 		{
 			$url = $config->getURL($rep, $path, 'log').$isDirString.$thisRevString;
 			$vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;search='.$search.'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
@@ -432,25 +432,25 @@ if (!empty($history))
 
 	$vars['logsearch_resultsfound'] = true;
 
-	if ($dosearch && !$found) 
+	if ($dosearch && !$found)
 	{
-		if ($fromRev == 0) 
+		if ($fromRev == 0)
 		{
 			$vars['logsearch_nomatches'] = true;
 			$vars['logsearch_resultsfound'] = false;
-		} 
-		else 
+		}
+		else
 		{
 			$vars['logsearch_nomorematches'] = true;
 		}
-	} 
-	else if ($dosearch && $numSearchResults > 0) 
+	}
+	else if ($dosearch && $numSearchResults > 0)
 	{
 		$vars['logsearch_nomorematches'] = true;
 	}
 
 	// Work out the paging options, create links to pages of results
-	if ($pages > 1) 
+	if ($pages > 1)
 	{
 		$prev = $page - 1;
 		$next = $page + 1;
@@ -458,32 +458,32 @@ if (!empty($history))
 		unset($queryParams['page']);
 		$logurl = $config->getURL($rep, $path, 'log').buildQuery($queryParams);
 
-		if ($page > 1) 
+		if ($page > 1)
 		{
 			$vars['pagelinks'] .= '<a href="'.$logurl.(!$peg && $frev && $prev != 1 ? '&amp;peg='.$frev : '').'&amp;page='.$prev.'">&larr;'.$lang['PREV'].'</a>';
 		}
-		else 
+		else
 		{
 			$vars['pagelinks'] .= '<span>&larr;'.$lang['PREV'].'</span>';
 		}
 
-		for ($p = 1; $p <= $pages; $p++) 
+		for ($p = 1; $p <= $pages; $p++)
 		{
-			if ($p != $page) 
+			if ($p != $page)
 			{
 				$vars['pagelinks'] .= '<a href="'.$logurl.(!$peg && $frev && $p != 1 ? '&amp;peg='.$frev : '').'&amp;page='.$p.'">'.$p.'</a>';
-			} 
-			else 
+			}
+			else
 			{
 				$vars['pagelinks'] .= '<span id="curpage">'.$p.'</span>';
 			}
 		}
 
-		if ($page < $pages) 
+		if ($page < $pages)
 		{
 			$vars['pagelinks'] .= '<a href="'.$logurl.(!$peg && $frev ? '&amp;peg='.$frev : '').'&amp;page='.$next.'">'.$lang['NEXT'].'&rarr;</a>';
 		}
-		else 
+		else
 		{
 			$vars['pagelinks'] .= '<span>'.$lang['NEXT'].'&rarr;</span>';
 		}
@@ -493,11 +493,11 @@ if (!empty($history))
 }
 
 // Create form elements for filtering and searching log messages
-if ($config->multiViews) 
+if ($config->multiViews)
 {
 	$hidden = '<input type="hidden" name="op" value="log" />';
 }
-else 
+else
 {
 	$hidden = '<input type="hidden" name="repname" value="'.$repname.'" />';
 	$hidden .= '<input type="hidden" name="path" value="'.$path.'" />';
@@ -528,7 +528,7 @@ $vars['logsearch_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 $vars['logsearch_endform'] = '</form>';
 
 // If a filter is in place, produce a link to clear all filter parameters
-if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 40) 
+if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endrev !== 1 || $max !== 40)
 {
 	$url = $config->getURL($rep, $path, 'log').$isDirString.$passRevString;
 	$vars['logsearch_clearloglink'] = '<a href="'.$url.'">'.$lang['CLEARLOG'].'</a>';
@@ -537,7 +537,7 @@ if ($page !== 1 || $all || $dosearch || $fromRev || $startrev !== $rev || $endre
 // Create form elements for comparing selected revisions
 $vars['compare_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'comp').'" id="compare">';
 
-if ($config->multiViews) 
+if ($config->multiViews)
 {
 	$vars['compare_form'] .= '<input type="hidden" name="op" value="comp" />';
 }
@@ -549,7 +549,7 @@ else
 $vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
 $vars['compare_endform'] = '</form>';
 
-if (!$rep->hasReadAccess($path, false)) 
+if (!$rep->hasReadAccess($path, false))
 {
 	$vars['error'] = $lang['NOACCESS'];
 	sendHeaderForbidden();

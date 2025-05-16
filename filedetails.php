@@ -35,11 +35,11 @@ if (!$rep)
 
 $svnrep = new SVNRepository($rep);
 
-if ($path[0] != '/') 
+if ($path[0] != '/')
 {
 	$ppath = '/'.$path;
-} 
-else 
+}
+else
 {
 	$ppath = $path;
 }
@@ -49,11 +49,11 @@ $useMime = false;
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, 'HEAD', 1, false, 2, ($path == '/') ? '' : $peg);
 
-if (!$history) 
+if (!$history)
 {
 	unset($vars['error']);
 	$history = $svnrep->getLog($path, '', '', false, 2, ($path == '/') ? '' : $peg);
-	if (!$history) 
+	if (!$history)
 	{
 		renderTemplate404('file','NOPATH');
 	}
@@ -61,7 +61,7 @@ if (!$history)
 
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
 
-if (empty($rev)) 
+if (empty($rev))
 {
 	$rev = !$peg ? $youngest : min($peg, $youngest);
 }
@@ -71,7 +71,7 @@ $extn = strtolower(strrchr($path, '.'));
 // Check to see if the user has requested that this type be zipped and sent
 // to the browser as an attachment
 
-if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess($path, false)) 
+if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAccess($path, false))
 {
 	$base = basename($path);
 	header('Content-Type: application/gzip');
@@ -87,43 +87,43 @@ if ($history && isset($zipped) && in_array($extn, $zipped) && $rep->hasReadAcces
 // The content-type could come from an svn:mime-type property on the
 // file, or from the $contentType array in setup.php.
 
-if (!$rep->getIgnoreSvnMimeTypes()) 
+if (!$rep->getIgnoreSvnMimeTypes())
 {
 	$svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
 }
 
-if (!$rep->getIgnoreWebSVNContentTypes()) 
+if (!$rep->getIgnoreWebSVNContentTypes())
 {
 	$setupContentType = @$contentType[$extn];
 }
 
 // Use the documented priorities when establishing what content-type to use.
-if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream') 
+if (!empty($svnMimeType) && $svnMimeType != 'application/octet-stream')
 {
 	$mimeType = $svnMimeType;
 }
-else if (!empty($setupContentType)) 
+else if (!empty($setupContentType))
 {
 	$mimeType = $setupContentType;
 }
-else if (!empty($svnMimeType)) 
+else if (!empty($svnMimeType))
 {
 	$mimeType = $svnMimeType; // Use SVN's default of 'application/octet-stream'
 }
-else 
+else
 {
 	$mimeType = '';
 }
 
 $useMime = ($mimeType) ? @$_REQUEST['usemime'] : false;
 
-if ($history && !empty($mimeType) && !$useMime) 
+if ($history && !empty($mimeType) && !$useMime)
 {
 	$useMime = $mimeType; // Save MIME type for later before possibly clobbering
 	// If a MIME type exists but is set to be ignored, set it to an empty string.
-	foreach ($config->inlineMimeTypes as $inlineType) 
+	foreach ($config->inlineMimeTypes as $inlineType)
 	{
-		if (preg_match('|'.$inlineType.'|', $mimeType)) 
+		if (preg_match('|'.$inlineType.'|', $mimeType))
 		{
 			$mimeType = '';
 			break;
@@ -132,7 +132,7 @@ if ($history && !empty($mimeType) && !$useMime)
 }
 
 // If a MIME type is associated with the file, deliver with Content-Type header.
-if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false)) 
+if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false))
 {
 	$base = basename($path);
 	header('Content-Type: '.$mimeType);
@@ -148,7 +148,7 @@ $vars['action'] = '';
 $vars['path'] = str_replace('%2F', '/', rawurlencode($ppath));
 $vars['safepath'] = escape($ppath);
 
-if (isset($history->entries[0])) 
+if (isset($history->entries[0]))
 {
 	$vars['log'] = xml_entities($history->entries[0]->msg);
 	$vars['date'] = $history->entries[0]->date;
@@ -159,7 +159,7 @@ if (isset($history->entries[0]))
 createPathLinks($rep, $ppath, !$passrev && $peg ? $rev : $passrev, $peg);
 $passRevString = createRevAndPegString($rev, $peg);
 
-if ($rev != $youngest) 
+if ($rev != $youngest)
 {
 	$vars['goyoungesturl'] = $config->getURL($rep, $path, 'file').createRevAndPegString($youngest, $peg);
 	$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
@@ -167,14 +167,14 @@ if ($rev != $youngest)
 
 $revurl = $config->getURL($rep, $path, 'file');
 
-if ($rev < $youngest) 
+if ($rev < $youngest)
 {
 	$history2 = $svnrep->getLog($path, $rev, $youngest, true, 2, $peg ? $peg : 'HEAD');
 
-	if (isset($history2->entries[1])) 
+	if (isset($history2->entries[1]))
 	{
 		$nextRev = $history2->entries[1]->rev;
-		if ($nextRev != $youngest) 
+		if ($nextRev != $youngest)
 		{
 			$vars['nextrev'] = $nextRev;
 			$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg);
@@ -186,7 +186,7 @@ if ($rev < $youngest)
 
 $history3 = $svnrep->getLog($path, $rev, 1, true, 2, $peg ? $peg : 'HEAD');
 
-if (isset($history3->entries[1])) 
+if (isset($history3->entries[1]))
 {
 	$prevRev = $history3->entries[1]->rev;
 	$prevPath = $history3->entries[1]->path;
@@ -205,19 +205,19 @@ $vars['loglink'] = '<a href="'.$vars['logurl'].'">'.$lang['VIEWLOG'].'</a>';
 $vars['blameurl'] = $config->getURL($rep, $path, 'blame').$passRevString;
 $vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
 
-if ($history == null || count($history->entries) > 1) 
+if ($history == null || count($history->entries) > 1)
 {
 	$vars['diffurl'] = $config->getURL($rep, $path, 'diff').$passRevString;
 	$vars['difflink'] = '<a href="'.$vars['diffurl'].'">'.$lang['DIFFPREV'].'</a>';
 }
 
-if ($rep->isDownloadAllowed($path)) 
+if ($rep->isDownloadAllowed($path))
 {
 	$vars['downloadlurl'] = $config->getURL($rep, $path, 'dl').$passRevString;
 	$vars['downloadlink'] = '<a href="'.$vars['downloadlurl'].'">'.$lang['DOWNLOAD'].'</a>';
 }
 
-if ($rep->isRssEnabled()) 
+if ($rep->isRssEnabled())
 {
 	$vars['rssurl'] = $config->getURL($rep, $path, 'rss').createRevAndPegString('', $peg);
 	$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
@@ -225,7 +225,7 @@ if ($rep->isRssEnabled())
 
 $mimeType = $useMime; // Restore preserved value to use for 'mimelink' variable.
 // If there was a MIME type, create a link to display file with that type.
-if ($mimeType && !isset($vars['warning'])) 
+if ($mimeType && !isset($vars['warning']))
 {
 	$vars['mimeurl'] = $config->getURL($rep, $path, 'file').'usemime=1&amp;'.$passRevString;
 	$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">'.$lang['VIEWAS'].' "'.$mimeType.'"</a>';
@@ -234,12 +234,12 @@ if ($mimeType && !isset($vars['warning']))
 $vars['rev'] = $rev;
 $vars['peg'] = $peg;
 
-if (!$rep->hasReadAccess($path)) 
+if (!$rep->hasReadAccess($path))
 {
 	$vars['error'] = $lang['NOACCESS'];
 	sendHeaderForbidden();
 }
-else if (!$svnrep->isFile($path, $rev, $peg)) 
+else if (!$svnrep->isFile($path, $rev, $peg))
 {
 	renderTemplate404('file','NOPATH');
 }

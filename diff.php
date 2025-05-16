@@ -34,7 +34,7 @@ $vars['action'] = $lang['DIFF'];
 $all = (@$_REQUEST['all'] == 1);
 $ignoreWhitespace = $config->getIgnoreWhitespacesInDiff();
 
-if (array_key_exists('ignorews', $_REQUEST)) 
+if (array_key_exists('ignorews', $_REQUEST))
 {
 	$ignoreWhitespace = (bool)$_REQUEST['ignorews'];
 }
@@ -50,7 +50,7 @@ $svnrep = new SVNRepository($rep);
 // If there's no revision info, go to the lastest revision for this path
 $history = $svnrep->getLog($path, 'HEAD', 1, true, 2, ($path == '/') ? '' : $peg);
 
-if (!$history) 
+if (!$history)
 {
 	unset($vars['error']);
 	$history = $svnrep->getLog($path, '', '', true, 2, ($path == '/') ? '' : $peg);
@@ -58,18 +58,18 @@ if (!$history)
 
 $youngest = ($history && isset($history->entries[0])) ? $history->entries[0]->rev : false;
 
-if (empty($rev)) 
+if (empty($rev))
 {
 	$rev = $youngest;
 }
 
 $history = $svnrep->getLog($path, $rev, 1, false, 2, $peg);
 
-if ($path[0] != '/') 
+if ($path[0] != '/')
 {
 	$ppath = '/'.$path;
 }
-else 
+else
 {
 	$ppath = $path;
 }
@@ -82,7 +82,7 @@ $vars['rev1'] = $rev;
 $vars['rev2'] = $prevrev;
 $vars['prevrev'] = $prevrev;
 
-if (isset($history->entries[0])) 
+if (isset($history->entries[0]))
 {
 	$vars['log'] = xml_entities($history->entries[0]->msg);
 	$vars['date'] = $history->entries[0]->date;
@@ -96,12 +96,12 @@ createPathLinks($rep, $ppath, $passrev, $peg);
 $passRevString = createRevAndPegString($rev, $peg);
 
 $passIgnoreWhitespace = '';
-if ($ignoreWhitespace != $config->getIgnoreWhitespacesInDiff()) 
+if ($ignoreWhitespace != $config->getIgnoreWhitespacesInDiff())
 {
 	$passIgnoreWhitespace = '&amp;ignorews='.($ignoreWhitespace ? '1' : '0');
 }
 
-if ($rev != $youngest) 
+if ($rev != $youngest)
 {
 	$vars['goyoungesturl'] = $config->getURL($rep, $path, 'diff').createRevAndPegString('', $peg).$passIgnoreWhitespace;
 	$vars['goyoungestlink'] = '<a href="'.$vars['goyoungesturl'].'"'.($youngest ? ' title="'.$lang['REV'].' '.$youngest.'"' : '').'>'.$lang['GOYOUNGEST'].'</a>';
@@ -109,14 +109,14 @@ if ($rev != $youngest)
 
 $revurl = $config->getURL($rep, $path, 'diff');
 
-if ($rev < $youngest) 
+if ($rev < $youngest)
 {
 	$history2 = $svnrep->getLog($path, $rev, $youngest, true, 2, $peg ? $peg : 'HEAD');
 
-	if (isset($history2->entries[1])) 
+	if (isset($history2->entries[1]))
 	{
 		$nextRev = $history2->entries[1]->rev;
-		if ($nextRev != $youngest) 
+		if ($nextRev != $youngest)
 		{
 			$vars['nextrev'] = $nextRev;
 			$vars['nextrevurl'] = $revurl.createRevAndPegString($nextRev, $peg).$passIgnoreWhitespace;
@@ -126,7 +126,7 @@ if ($rev < $youngest)
 	unset($vars['error']);
 }
 
-if (isset($history->entries[1])) 
+if (isset($history->entries[1]))
 {
 	$prevRev = $history->entries[1]->rev;
 	$prevPath = $history->entries[1]->path;
@@ -146,7 +146,7 @@ $vars['filedetaillink'] = '<a href="'.$vars['filedetailurl'].'">'.$lang['FILEDET
 $vars['blameurl'] = $config->getURL($rep, $path, 'blame').$passRevString;
 $vars['blamelink'] = '<a href="'.$vars['blameurl'].'">'.$lang['BLAME'].'</a>';
 
-if ($rep->isRssEnabled()) 
+if ($rep->isRssEnabled())
 {
 	$vars['rssurl'] = $config->getURL($rep, $path, 'rss').createRevAndPegString('', $peg);
 	$vars['rsslink'] = '<a href="'.$vars['rssurl'].'">'.$lang['RSSFEED'].'</a>';
@@ -156,12 +156,12 @@ if ($rep->isRssEnabled())
 $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
 
 // If no previous revision exists, bail out before diffing
-if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType)) 
+if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType))
 {
 	$vars['warning'] = 'Cannot display diff of binary file. (svn:mime-type = '.$svnMimeType.')';
 
 }
-else if (!$prevrev) 
+else if (!$prevrev)
 {
 	$vars['noprev'] = 1;
 }
@@ -169,11 +169,11 @@ else
 {
 	$diff = $config->getURL($rep, $path, 'diff').$passRevString;
 
-	if ($all) 
+	if ($all)
 	{
 		$vars['showcompactlink'] = '<a href="'.$diff.$passIgnoreWhitespace.'">'.$lang['SHOWCOMPACT'].'</a>';
 	}
-	else 
+	else
 	{
 		$vars['showalllink'] = '<a href="'.$diff.$passIgnoreWhitespace.'&amp;all=1'.'">'.$lang['SHOWENTIREFILE'].'</a>';
 	}
@@ -181,16 +181,16 @@ else
 	$passShowAll = ($all ? '&amp;all=1' : '');
 	$toggleIgnoreWhitespace = '';
 
-	if ($ignoreWhitespace == $config->getIgnoreWhitespacesInDiff()) 
+	if ($ignoreWhitespace == $config->getIgnoreWhitespacesInDiff())
 	{
 		$toggleIgnoreWhitespace = '&amp;ignorews='.($ignoreWhitespace ? '0' : '1');
 	}
 
-	if ($ignoreWhitespace) 
+	if ($ignoreWhitespace)
 	{
 		$vars['regardwhitespacelink'] = '<a href="'.$diff.$passShowAll.$toggleIgnoreWhitespace.'">'.$lang['REGARDWHITESPACE'].'</a>';
 	}
-	else 
+	else
 	{
 		$vars['ignorewhitespacelink'] = '<a href="'.$diff.$passShowAll.$toggleIgnoreWhitespace.'">'.$lang['IGNOREWHITESPACE'].'</a>';
 	}
@@ -209,11 +209,11 @@ else
 
 	$highlighted = ($highlightedNew && $highlightedOld);
 
-	if ($highlighted) 
+	if ($highlighted)
 	{
 		$listing = do_diff($all, $ignoreWhitespace, $highlighted, $newerFile, $olderFile, $newerFileHl, $olderFileHl);
 	}
-	else 
+	else
 	{
 		$listing = do_diff($all, $ignoreWhitespace, $highlighted, $newerFile, $olderFile, null, null);
 	}
@@ -225,7 +225,7 @@ else
 	@unlink($olderFileHl);
 }
 
-if (!$rep->hasReadAccess($path, false)) 
+if (!$rep->hasReadAccess($path, false))
 {
 	$vars['error'] = $lang['NOACCESS'];
 	sendHeaderForbidden();
