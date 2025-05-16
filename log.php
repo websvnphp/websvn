@@ -500,7 +500,7 @@ if ($config->multiViews)
 else
 {
 	$hidden = '<input type="hidden" name="repname" value="'.$repname.'" />';
-	$hidden .= '<input type="hidden" name="path" value="'.$path.'" />';
+	$hidden .= '<input type="hidden" name="path" value="'.escape($path).'" />';
 }
 
 if ($isDir)
