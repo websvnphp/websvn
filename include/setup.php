@@ -585,6 +585,7 @@ function createRevisionSelectionForm() {
 	$vars['revision_form'] = '<form method="get" action="" id="revision">'.$hidden;
 	if ($rev === null)
 		$rev = (int)@$_REQUEST['rev'];
+	$rev = escape($rev);
 	$vars['revision_input'] = '<input type="text" size="5" name="rev" placeholder="'.($rev ? $rev : 'HEAD').'" />';
 	$vars['revision_submit'] = '<input type="submit" value="'.$lang['GO'].'" />';
 	$vars['revision_endform'] = '</form>';
@@ -611,6 +612,7 @@ function createSearchSelectionForm() {
 	$vars['search'] = true;
 	$vars['search_form'] = '<form method="get" action="'.$config->getURL($rep, '', 'search').'" id="search">'.$hidden;
 	$search = $search? $search : $lang['SEARCH_PLACEHOLDER'];
+	$search = escape($search);
 	$vars['search_input'] = '<input type="text" size="20" name="search" placeholder="'.$search.'" />';
 	$vars['search_submit'] = '<input type="submit" value="'.$lang['SEARCH'].'" />';
 	$vars['search_endform'] = '</form>';
