@@ -1028,7 +1028,6 @@ class SVNRepository {
 			exit;
 		}
 
-		xml_parser_free($xml_parser);
 		if (empty($error)) {
 			return;
 		}
