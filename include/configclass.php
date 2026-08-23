@@ -662,8 +662,6 @@ class WebSvnConfig {
 	var $useEnscriptBefore_1_6_3 = false;
 	var $useGeshi = false;
 	var $geshiScript = 'geshi.php';
-	var $useParsedown = false;
-	var $parsedownScript = 'Parsedown.php';
 	var $inlineMimeTypes = array();
 	var $allowDownload = false;
 	var $tempDir = '';
@@ -889,29 +887,6 @@ class WebSvnConfig {
 
 	function getUseGeshi() {
 		return $this->useGeshi;
-	}
-
-	// }}}
-
-	// {{{ Parsedown
-
-	function setParsedownPath($path) {
-		$this->_setPath($this->parsedownScript, $path, 'Parsedown.php');
-	}
-
-	function getParsedownScript() {
-		return $this->parsedownScript;
-	}
-
-	// useParsedown
-	//
-	// Use Parsedown to render README.md or readme.md
-	function useParsedown() {
-		$this->useParsedown = true;
-	}
-
-	function getUseParsedown() {
-		return $this->useParsedown;
 	}
 
 	// }}}

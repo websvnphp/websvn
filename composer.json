@@ -7,8 +7,7 @@
         "php": "^8.0",
         "geshi/geshi": "^1.0.9.1",
         "pear/archive_tar": "^1.4.14",
-        "horde/text_diff": "3.0.0alpha4",
-        "erusev/parsedown": "1.7.4"
+        "horde/text_diff": "3.0.0alpha4"
     },
     "minimum-stability": "alpha",
     "config": {

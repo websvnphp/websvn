@@ -427,18 +427,6 @@ $config->setMinDownloadLevel(2);
 
 // }}}
 
-// {{{ Markdown Render
-
-// Uncomment this line if you want to enable Markdown Rendering of README.md or readme.md file in the path.
-// You will need the Parsedown.php (https://github.com/erusev/parsedown) library for this to work.
-// This will look for README.md or readme.md file on the path and render it.
-// The name of README file isn't configurable for now to simply follow GitHub's conventions.
-
-// $config->useParsedown();
-// $config->setParsedownPath('/usr/share/php/Parsedown/'); // optional. Use if you have Parsedown installed without PEAR/Composer
-
-// }}}
-
 // {{{ RSSFEED ---
 
 // Uncomment this line to hide the RSS feed links across all repositories
