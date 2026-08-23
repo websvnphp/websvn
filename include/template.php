@@ -41,7 +41,7 @@ function parseCommand($line, $vars, $handle) {
 	global $ignore, $ignorestack, $ignorelevel, $config, $listing, $vars;
 
 	// process content of included file
-	if (strncmp(trim($line), '[websvn-include:', 16) == 0) {
+	if (str_starts_with(trim($line), '[websvn-include:')) {
 		if (!$ignore) {
 			$line = trim($line);
 			$file = substr($line, 16, -1);
@@ -52,7 +52,7 @@ function parseCommand($line, $vars, $handle) {
 
 
 	// Check for test conditions
-	if (strncmp(trim($line), '[websvn-test:', 13) == 0) {
+	if (str_starts_with(trim($line), '[websvn-test:')) {
 		if (!$ignore) {
 			$line = trim($line);
 			$var = substr($line, 13, -1);
@@ -68,14 +68,14 @@ function parseCommand($line, $vars, $handle) {
 		return true;
 	}
 
-	if (strncmp(trim($line), '[websvn-else]', 13) == 0) {
+	if (str_starts_with(trim($line), '[websvn-else]')) {
 		if ($ignorelevel == 0) {
 			$ignore = !$ignore;
 		}
 		return true;
 	}
 
-	if (strncmp(trim($line), '[websvn-endtest]', 16) == 0) {
+	if (str_starts_with(trim($line), '[websvn-endtest]')) {
 		if ($ignorelevel > 0) {
 			$ignorelevel--;
 		} else {
@@ -84,7 +84,7 @@ function parseCommand($line, $vars, $handle) {
 		return true;
 	}
 
-	if (strncmp(trim($line), '[websvn-getlisting]', 19) == 0) {
+	if (str_starts_with(trim($line), '[websvn-getlisting]')) {
 		global $svnrep, $path, $rev, $peg;
 
 		if (!$ignore) {
@@ -118,7 +118,7 @@ function parseCommand($line, $vars, $handle) {
 		return true;
 	}
 
-	if (strncmp(trim($line), '[websvn-icon]', 13) == 0) {
+	if (str_starts_with(trim($line), '[websvn-icon]')) {
 		global $icons, $vars;
 
 		if (!$ignore) {
@@ -133,7 +133,7 @@ function parseCommand($line, $vars, $handle) {
 		return true;
 	}
 
-	if (strncmp(trim($line), '[websvn-treenode]', 17) == 0) {
+	if (str_starts_with(trim($line), '[websvn-treenode]')) {
 		global $icons, $vars;
 
 		if (!$ignore) {
@@ -206,7 +206,7 @@ function parseTemplate($file) {
 			continue;
 		} else {
 			// Check for the start of the file list
-			if (strncmp(trim($line), '[websvn-startlisting]', 21) == 0) {
+			if (str_starts_with(trim($line), '[websvn-startlisting]')) {
 				$inListing = true;
 			} else {
 				if ($ignore == false) {

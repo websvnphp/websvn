@@ -75,8 +75,8 @@ class Bugtraq {
 				}
 			}
 
-			$this->msgstring = trim(@$this->msgstring);
-			$this->urlstring = trim(@$this->urlstring);
+			$this->msgstring = trim($this->msgstring ?? '');
+			$this->urlstring = trim($this->urlstring ?? '');
 
 			if ($enoughdata && !empty($this->msgstring)) {
 				$this->initPartInfo();

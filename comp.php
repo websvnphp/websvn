@@ -390,7 +390,7 @@ if (!$noinput)
 				}
 
 				// Check for the start of a new diff area
-				if (!strncmp($line, '@@', 2))
+				if (str_starts_with($line, '@@'))
 				{
 					$pos = strpos($line, '+');
 					$posline = substr($line, $pos);
@@ -447,7 +447,7 @@ if (!$noinput)
 			}
 
 			// Check for a new node entry
-			if (strncmp(trim($line), 'Index: ', 7) == 0)
+			if (str_starts_with(trim($line), 'Index: '))
 			{
 				// End the current node
 				if ($node)
@@ -460,14 +460,14 @@ if (!$noinput)
 				$node = substr($node, 7);
 				if ($node == '' || $node[0] != '/') $node = '/'.$node;
 
-				if (substr($path2, -strlen($node)) === $node)
+				if (str_ends_with($path2, $node))
 				{
 					$absnode = $path2;
 				}
 				else
 				{
 					$absnode = $path2;
-					if (substr($absnode, -1) == '/') $absnode = substr($absnode, 0, -1);
+					if (str_ends_with($absnode, '/')) $absnode = substr($absnode, 0, -1);
 					$absnode .= $node;
 				}
 
@@ -490,7 +490,7 @@ if (!$noinput)
 					$listvar['info'] = $lang['FILEADDED'];
 				}
 
-				if (strncmp(trim($line), 'Cannot display:', 15) == 0)
+				if (str_starts_with(trim($line), 'Cannot display:'))
 				{
 					$index++;
 					clearVars();
@@ -508,7 +508,7 @@ if (!$noinput)
 				continue;
 			}
 
-			if (strncmp(trim($line), 'Property changes on: ', 21) == 0)
+			if (str_starts_with(trim($line), 'Property changes on: '))
 			{
 				$propnode = trim($line);
 				$propnode = substr($propnode, 21);
@@ -539,11 +539,11 @@ if (!$noinput)
 
 				while ($line = rtrim(fgets($diff), "\n\r"))
 				{
-					if (!strncmp(trim($line), 'Index: ', 7))
+					if (str_starts_with(trim($line), 'Index: '))
 					{
 						break;
 					}
-					if (!strncmp(trim($line), '##', 2) || $line == '\ No newline at end of file')
+					if (str_starts_with(trim($line), '##') || $line == '\ No newline at end of file')
 					{
 						continue;
 					}
@@ -556,7 +556,7 @@ if (!$noinput)
 			}
 
 			// Check for error messages
-			if (strncmp(trim($line), 'svn: ', 5) == 0)
+			if (str_starts_with(trim($line), 'svn: '))
 			{
 				$listing[$index++]['info'] = urldecode($line);
 				$vars['success'] = false;

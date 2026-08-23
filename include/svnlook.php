@@ -533,11 +533,11 @@ function encodePath($uri) {
 
 	// Correct for Window share names
 	if ($config->serverIsWindows) {
-		if (substr($uri, 0, 2) == '//') {
+		if (str_starts_with($uri, '//')) {
 			$uri = '\\'.substr($uri, 2, strlen($uri));
 		}
 
-		if (substr($uri, 0, 10) == 'file://///' ) {
+		if (str_starts_with($uri, 'file://///')) {
 			$uri = 'file:///\\'.substr($uri, 10, strlen($uri));
 		}
 	}
@@ -1198,7 +1198,7 @@ class SVNRepository {
 						$pos = strrpos($modpath, '/');
 						$modpath = substr($modpath, 0, $pos + 1);
 					}
-					if (strlen($modpath) == 0 || substr($modpath, -1) !== '/') {
+					if (strlen($modpath) == 0 || !str_ends_with($modpath, '/')) {
 						$modpath .= '/';
 					}
 					//compare with current precise path
@@ -1206,7 +1206,7 @@ class SVNRepository {
 						$precisePath = $modpath;
 					} else {
 						$equalPart = _equalPart($precisePath, $modpath);
-						if (substr($equalPart, -1) !== '/') {
+						if (!str_ends_with($equalPart, '/')) {
 							$pos = strrpos($equalPart, '/');
 							$equalPart = substr($equalPart, 0, $pos + 1);
 						}

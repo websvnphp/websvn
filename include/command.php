@@ -65,7 +65,17 @@ function toOutputEncoding($str) {
 			|  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
 			)*$%xs', $str
 		);
-		if (!$isUtf8) $str = utf8_encode($str);
+		if (!$isUtf8) {
+			// Neither mbstring nor iconv is available: fall back to a manual
+			// ISO-8859-1/Latin-1 to UTF-8 conversion (utf8_encode() is
+			// deprecated as of PHP 8.2 and removed in PHP 9.0).
+			$out = '';
+			foreach (str_split($str) as $c) {
+				$o = ord($c);
+				$out .= ($o < 0x80) ? $c : (chr(0xC0 | ($o >> 6)).chr(0x80 | ($o & 0x3F)));
+			}
+			$str = $out;
+		}
 	}
 
 	return $str;
@@ -125,8 +135,6 @@ function runCommand($cmd, $mayReturnNothing = false, &$errorIf = 'NOT_USED') {
 	if ($config->serverIsWindows) {
 		if (!strpos($cmd, '>') && !strpos($cmd, '|')) {
 			$opts = array('bypass_shell' => true);
-		} else if (PHP_MAJOR_VERSION < 8) {
-			$cmd = '"'.$cmd.'"';
 		}
 	}
 

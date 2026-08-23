@@ -106,7 +106,7 @@ $tempDir = tempnamWithCheck($config->getTempDir(), 'websvn');
 mkdir($tempDir);
 // Create the name of the directory being archived
 $archiveName = $path;
-$isDir = (substr($archiveName, -1) == '/');
+$isDir = str_ends_with($archiveName, '/');
 
 if ($isDir)
 {
@@ -177,7 +177,7 @@ if (!empty($_REQUEST['dlmode']))
 {
 	$downloadMode = $_REQUEST['dlmode'];
 
-	if (substr($logEntry->path, -1) == '/')
+	if (str_ends_with($logEntry->path, '/'))
 	{
 		if (!in_array($downloadMode, $config->validDirectoryDlModes))
 		{

@@ -1092,7 +1092,7 @@ class WebSvnConfig {
 
 	function findException($path, $exceptions) {
 		foreach ($exceptions as $key => $exc) {
-			if (strncmp($exc, $path, strlen($exc)) == 0) {
+			if (str_starts_with($path, $exc)) {
 				return true;
 			}
 		}
@@ -1135,7 +1135,7 @@ class WebSvnConfig {
 				$path = '/'.$path;
 			}
 
-			if (substr($url, -5) == 'index') {
+			if (str_ends_with($url, 'index')) {
 				$url = substr($url, 0, -5).$this->multiViewsIndex;
 			}
 

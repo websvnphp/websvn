@@ -103,8 +103,8 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 			$listvar['revision'] = $rev;
 			$listvar['revurl'] = $config->getURL($rep, $parentPath, 'revision').'rev='.$rev.'&amp;isdir=1';
 			global $vars;
-			$listvar['date'] = $vars['date'];
-			$listvar['age'] = datetimeFormatDuration(time() - strtotime($vars['date']), true, true);
+			$listvar['date'] = $vars['date'] ?? '';
+			$listvar['age'] = $listvar['date'] ? datetimeFormatDuration(time() - strtotime($listvar['date']), true, true) : '';
 			$index++;
 		}
 	}
@@ -227,7 +227,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 		if ($isDir && ($level != $limit))
 		{
 			// @todo remove the alternate check with htmlentities when assured that there are not side effects
-			if (isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp(htmlentities($subs[$level + 1], ENT_QUOTES).'/', htmlentities($file))))
+			if (isset($subs[$level + 1]) && (!strcmp($subs[$level + 1].'/', $file) || !strcmp(htmlentities($subs[$level + 1], ENT_QUOTES).'/', htmlentities($file, ENT_QUOTES))))
 			{
 				$listing = showDirFiles($svnrep, $subs, $level + 1, $limit, $rev, $peg, $listing, $index);
 				$index = count($listing);
@@ -274,8 +274,8 @@ function showAllDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeView
 			$listvar['revision'] = $rev;
 			$listvar['revurl'] = $config->getURL($rep, $parentPath, 'revision').'rev='.$rev.'&amp;isdir=1';
 			global $vars;
-			$listvar['date'] = $vars['date'];
-			$listvar['age'] = datetimeFormatDuration(time() - strtotime($vars['date']), true, true);
+			$listvar['date'] = $vars['date'] ?? '';
+			$listvar['age'] = $listvar['date'] ? datetimeFormatDuration(time() - strtotime($listvar['date']), true, true) : '';
 			$index++;
 		}
 	}
