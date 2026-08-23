@@ -500,8 +500,8 @@ if ($path === null || $path === '')
 $vars['path'] = str_replace('%2F', '/', rawurlencode($path));
 $vars['safepath'] = escape($path);
 // Set operative and peg revisions (if specified) and save passed-in revision
-$rev = (int)@$_REQUEST['rev'];
-$peg = (int)@$_REQUEST['peg'];
+$rev = max(0, (int)@$_REQUEST['rev']);
+$peg = max(0, (int)@$_REQUEST['peg']);
 $search = (string)@$_REQUEST['search'];
 if ($peg === 0)
 	$peg = '';
