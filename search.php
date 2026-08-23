@@ -362,7 +362,7 @@ if ($config->multiViews)
 }
 else
 {
-	$vars['compare_form'] .= '<input type="hidden" name="repname" value="'.$repname.'" />';
+	$vars['compare_form'] .= '<input type="hidden" name="repname" value="'.escape($repname).'" />';
 }
 
 $vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREPATHS'].'" />';

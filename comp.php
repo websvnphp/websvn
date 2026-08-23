@@ -131,7 +131,7 @@ if ($config->multiViews)
 }
 else
 {
-	$hidden .= '<input type="hidden" name="repname" value="'.$repname.'" />';
+	$hidden .= '<input type="hidden" name="repname" value="'.escape($repname).'" />';
 }
 
 $vars['compare_form'] = '<form method="get" action="'.$url.'" id="compare">'.$hidden;

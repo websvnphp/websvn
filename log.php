@@ -425,7 +425,7 @@ if (!empty($history))
 		if (!$numSearchResults)
 		{
 			$url = $config->getURL($rep, $path, 'log').$isDirString.$thisRevString;
-			$vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;search='.$search.'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
+			$vars['logsearch_moreresultslink'] = '<a href="'.$url.'&amp;search='.rawurlencode($search).'&amp;fr='.$thisrev.'">'.$lang['MORERESULTS'].'</a>';
 			break;
 		}
 	}
@@ -499,7 +499,7 @@ if ($config->multiViews)
 }
 else
 {
-	$hidden = '<input type="hidden" name="repname" value="'.$repname.'" />';
+	$hidden = '<input type="hidden" name="repname" value="'.escape($repname).'" />';
 	$hidden .= '<input type="hidden" name="path" value="'.escape($path).'" />';
 }
 
@@ -519,8 +519,8 @@ if ($showchanges != $rep->logsShowChanges())
 }
 
 $vars['logsearch_form'] = '<form method="get" action="'.$config->getURL($rep, $path, 'log').'" id="search">'.$hidden;
-$vars['logsearch_startbox'] = '<input name="sr" size="5" value="'.$startrev.'" />';
-$vars['logsearch_endbox'] = '<input name="er" size="5" value="'.$endrev.'" />';
+$vars['logsearch_startbox'] = '<input name="sr" size="5" value="'.escape($startrev).'" />';
+$vars['logsearch_endbox'] = '<input name="er" size="5" value="'.escape($endrev).'" />';
 $vars['logsearch_maxbox'] = '<input name="max" size="5" value="'.($max == 0 ? 40 : $max).'" />';
 $vars['logsearch_inputbox'] = '<input name="search" value="'.escape($search).'" />';
 $vars['logsearch_showall'] = '<input type="checkbox" name="all" value="1"'.($all ? ' checked="checked"' : '').' />';
@@ -543,7 +543,7 @@ if ($config->multiViews)
 }
 else
 {
-	$vars['compare_form'] .= '<input type="hidden" name="repname" value="'.$repname.'" />';
+	$vars['compare_form'] .= '<input type="hidden" name="repname" value="'.escape($repname).'" />';
 }
 
 $vars['compare_submit'] = '<input type="submit" value="'.$lang['COMPAREREVS'].'" />';
