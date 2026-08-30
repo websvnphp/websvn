@@ -48,12 +48,25 @@ class Authorization {
 	// Set the username from the current http session
 
 	function setUsername() {
+		global $config;
+
 		if (isset($_SERVER['REMOTE_USER'])) {
 			$this->user = $_SERVER['REMOTE_USER'];
 		} else if (isset($_SERVER['REDIRECT_REMOTE_USER'])) {
 			$this->user = $_SERVER['REDIRECT_REMOTE_USER'];
 		} else if (isset($_SERVER['PHP_AUTH_USER'])) {
 			$this->user = $_SERVER['PHP_AUTH_USER'];
+		}
+
+		if ($this->user !== null) {
+			switch ($config->getAuthzUsernameCase()) {
+				case 'upper':
+					$this->user = strtoupper($this->user);
+					break;
+				case 'lower':
+					$this->user = strtolower($this->user);
+					break;
+			}
 		}
 	}
 

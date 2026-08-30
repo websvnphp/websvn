@@ -676,6 +676,8 @@ class WebSvnConfig {
 	var $bugtraq = false;
 	var $bugtraqProperties = null;
 	var $authz = null;
+	var $authzUsernameCase = null;
+	var $validAuthzUsernameCases = array( 'upper', 'lower' );
 	var $blockRobots = false;
 
 	var $loadAllRepos = false;
@@ -1537,6 +1539,24 @@ class WebSvnConfig {
 			$repo =& $this->findRepository($myrep);
 			$repo->useAccessFile($file);
 		}
+	}
+
+	// mod_authz_svn's "AuthzForceUsernameCase" folds the username's case before checking it against
+	// the authz file, but only for its own authorization decision: it never touches the underlying
+	// REMOTE_USER value, so WebSVN (running as a separate script) always sees the unconverted
+	// username and has no way to detect that mod_authz_svn is folding case for its own purposes.
+	// Set to 'upper' or 'lower' to apply the equivalent conversion before WebSVN checks access itself.
+	function setAuthzUsernameCase($case) {
+		if (in_array($case, $this->validAuthzUsernameCases)) {
+			$this->authzUsernameCase = $case;
+		} else {
+			echo 'Setting authz username case to an invalid value "'.$case.'"';
+			exit;
+		}
+	}
+
+	function getAuthzUsernameCase() {
+		return $this->authzUsernameCase;
 	}
 
 	function &getAuthz() {

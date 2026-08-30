@@ -263,6 +263,16 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 
 // $config->useAccessFile('/path/to/accessfile', 'myrep'); // Access file for myrep
 
+// If your Subversion setup uses mod_authz_svn's "AuthzForceUsernameCase" directive to fold the
+// authenticated username's case before checking it against the access file, uncomment one of the
+// following lines to apply the same conversion in WebSVN. mod_authz_svn only folds the case for
+// its own authorization decision; the username WebSVN receives (e.g. via REMOTE_USER) is always
+// unconverted, so without this WebSVN's access checks won't match entries in an access file that
+// assumes case-folded usernames.
+
+// $config->setAuthzUsernameCase('lower');
+// $config->setAuthzUsernameCase('upper');
+
 // Uncomment this line if you want to prevent search bots to index the WebSVN pages.
 
 // $config->setBlockRobots();
