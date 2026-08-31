@@ -540,7 +540,13 @@ class Repository {
 
 	// {{{ Authorization
 
+	// Deprecated alias for setAccessFile(), kept for backwards compatibility.
 	function useAccessFile($file) {
+		trigger_error('useAccessFile() is deprecated, use setAccessFile() instead', E_USER_DEPRECATED);
+		$this->setAccessFile($file);
+	}
+
+	function setAccessFile($file) {
 		if (is_readable($file)) {
 			if ($this->authz === null) {
 				$this->authz = new Authorization();
@@ -1522,7 +1528,13 @@ class WebSvnConfig {
 		return $this->ignoreWebSVNContentTypes;
 	}
 
+	// Deprecated alias for setAccessFile(), kept for backwards compatibility.
 	function useAccessFile($file, $myrep = 0) {
+		trigger_error('useAccessFile() is deprecated, use setAccessFile() instead', E_USER_DEPRECATED);
+		$this->setAccessFile($file, $myrep);
+	}
+
+	function setAccessFile($file, $myrep = 0) {
 		if (empty($myrep)) {
 			if (is_readable($file)) {
 				if ($this->authz === null) {
@@ -1535,7 +1547,7 @@ class WebSvnConfig {
 			}
 		} else {
 			$repo =& $this->findRepository($myrep);
-			$repo->useAccessFile($file);
+			$repo->setAccessFile($file);
 		}
 	}
 
