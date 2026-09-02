@@ -678,8 +678,6 @@ class WebSvnConfig {
 	var $authz = null;
 	var $blockRobots = false;
 
-	var $loadAllRepos = false;
-
 	var $templatePaths = array();
 	var $userTemplate = false;
 
@@ -1576,12 +1574,16 @@ class WebSvnConfig {
 		return $this->openTree;
 	}
 
+	// Removed: loading and rendering an entire repository tree in one page was too heavy (a single
+	// "svn list -R" call per page view, regardless of how much of the tree was ever expanded) and
+	// didn't work correctly with either MultiViews or an access file that restricts an ancestor
+	// directory. Kept as a no-op so existing config.php files calling this don't break outright.
 	function setLoadAllRepos($flag) {
-		$this->loadAllRepos = $flag;
+		trigger_error('setLoadAllRepos() no longer has any effect; the "load all repos" feature has been removed', E_USER_DEPRECATED);
 	}
 
 	function showLoadAllRepos() {
-		return $this->loadAllRepos;
+		return false;
 	}
 
 	function setAlphabeticOrder($flag) {

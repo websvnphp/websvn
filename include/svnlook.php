@@ -1042,7 +1042,7 @@ class SVNRepository {
 	// {{{ getList
 
 	function getList($path, $rev = 0, $peg = '') {
-		global $config, $curList;
+		global $curList;
 
 		// Since directories returned by svn log don't have trailing slashes (:-(), we need to remove
 		// the trailing slash from the path for comparison purposes
@@ -1063,15 +1063,9 @@ class SVNRepository {
 				$rev = $headlog->entries[0]->rev;
 		}
 
-		if ($config->showLoadAllRepos()) {
-			$cmd = $this->svnCommandString('list -R --xml', $path, $rev, $peg);
-			$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
-		}
-		else {
-			$cmd = $this->svnCommandString('list --xml', $path, $rev, $peg);
-			$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
-			usort($curList->entries, '_listSort');
-		}
+		$cmd = $this->svnCommandString('list --xml', $path, $rev, $peg);
+		$this->_xmlParseCmdOutput($cmd, 'listStartElement', 'listEndElement', 'listCharacterData');
+		usort($curList->entries, '_listSort');
 
 		return $curList;
 	}
