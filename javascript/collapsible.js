@@ -29,18 +29,20 @@ function collapseAllGroups()
     }
 }
 
-$("table.collapsible thead").find("th").on("click", function(e)
+document.querySelectorAll("table.collapsible thead th").forEach(function(th)
 {
-    if ($(e.target).closest("a").length)
+    th.addEventListener("click", function(e)
     {
-        return; // let the link navigate; don't toggle the diff too
-    }
+        if (e.target.closest("a"))
+        {
+            return; // let the link navigate; don't toggle the diff too
+        }
 
-    let oldClass = $(this).get(0).className;
-    let newClass = (oldClass == 'open') ? 'closed' : 'open';
+        th.className = (th.className == 'open') ? 'closed' : 'open';
 
-    $(this).get(0).className = newClass;
-    $(this).closest("table").find("tbody").toggle();
+        let tbody = th.closest("table").querySelector("tbody");
+        tbody.style.display = (tbody.style.display == 'none') ? '' : 'none';
+    });
 });
 
 /**
