@@ -29,8 +29,13 @@ function collapseAllGroups()
     }
 }
 
-$("table.collapsible thead").find("th").on("click", function()
+$("table.collapsible thead").find("th").on("click", function(e)
 {
+    if ($(e.target).closest("a").length)
+    {
+        return; // let the link navigate; don't toggle the diff too
+    }
+
     let oldClass = $(this).get(0).className;
     let newClass = (oldClass == 'open') ? 'closed' : 'open';
 
