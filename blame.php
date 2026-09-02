@@ -244,7 +244,8 @@ else
 
 			if ($history && $history->curEntry)
 			{
-				$javascript[] = 'rev['.$key.'] = \'<div class="date">'.$history->curEntry->date.'</div><div class="msg">'.addslashes(preg_replace('/\n/', ' ', $history->curEntry->msg)).'</div>\';';
+				$msg = xml_entities(preg_replace('/\r?\n/', ' ', $history->curEntry->msg));
+				$javascript[] = 'rev['.$key.'] = \'<div class="date">'.$history->curEntry->date.'</div><div class="msg">'.addslashes($msg).'</div>\';';
 			}
 		}
 	}
