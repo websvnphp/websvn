@@ -115,7 +115,7 @@ if (is_array($history->entries)) {
 		if (!$quiet) {
 			$description .= ' '.mb_convert_encoding('&#x2013;', 'UTF-8', 'HTML-ENTITIES').' '.count($r->mods).' '.$lang['FILESMODIFIED'];
 		}
-		$description .= '</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors(str_replace('<', '&lt;', $r->msg)))).'</div>';
+		$description .= '</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors($r->msg))).'</div>';
 		if (!$quiet) {
 			usort($r->mods, 'SVNLogEntry_compare');
 			foreach ($r->mods as $modifiedResource) {
