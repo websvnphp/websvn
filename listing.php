@@ -254,6 +254,7 @@ function showAllDirFiles($svnrep, $path, $rev, $peg, $listing, $index, $treeView
 	$accessToThisDir = $rep->hasReadAccess($path, false);
 
 	// If using flat view and not at the root, create a '..' entry at the top.
+	$subs = explode('/', $path);
 	if (!$treeView && count($subs) > 2)
 	{
 		$parentPath = $subs;
