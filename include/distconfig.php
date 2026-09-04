@@ -256,12 +256,12 @@ $config->addTemplatePath($locwebsvnreal.'/templates/Elegant/');
 // to the WebSVN (or browse) directory as you have for Subversion itself. More information can be
 // found in install.txt
 
-// $config->useAccessFile('/path/to/accessfile'); // Global access file
+// $config->setAccessFile('/path/to/accessfile'); // Global access file
 
 // You may also specify a per repository access file by uncommenting and copying the following
 // line as necessary. Use the convention 'groupname.myrep' if your repository is in a group.
 
-// $config->useAccessFile('/path/to/accessfile', 'myrep'); // Access file for myrep
+// $config->setAccessFile('/path/to/accessfile', 'myrep'); // Access file for myrep
 
 // If your Subversion setup uses mod_authz_svn's "AuthzForceUsernameCase" directive to fold the
 // authenticated username's case before checking it against the access file, uncomment one of the
