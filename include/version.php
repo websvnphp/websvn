@@ -22,4 +22,4 @@
 //
 // Version information
 
-$version = '2.8.9-DEV';
+$version = '2.9.0';
