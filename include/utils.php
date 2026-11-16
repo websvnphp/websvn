@@ -108,8 +108,10 @@ function anchorForPath($path) {
 function create_anchors($text) {
 	$ret = $text;
 
-	// Match correctly formed URLs that aren't already links
-	$ret = preg_replace('#\b(?<!href=")([a-z]+?)://(\S*)([\w/]+)#i',
+	// Match correctly formed URLs that aren't already links. Only well-known
+	// schemes are linked; anything else (e.g. "javascript://%0A...") would run
+	// script from a log message when clicked.
+	$ret = preg_replace('#\b(?<!href=")(https?|ftps?|svn(?:\+ssh)?)://(\S*)([\w/]+)#i',
 								'<a href="\\1://\\2\\3" target="_blank">\\1://\\2\\3</a>',
 								$ret);
 
