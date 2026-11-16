@@ -104,6 +104,25 @@ class Bugtraq {
 
 	// }}}
 
+	// {{{ makeLink($issue)
+	//
+	// Create the link to an issue from the bugtraq:url property. $issue is part of
+	// the already HTML-escaped log message. As bugtraq:url and bugtraq:logregex are
+	// versioned properties any committer can set, the URL is escaped as a whole and
+	// only relative and http(s) URLs are linked.
+
+	function makeLink($issue) {
+		$url = str_replace('%BUGID%', html_entity_decode($issue, ENT_QUOTES | ENT_HTML5, 'UTF-8'), $this->urlstring);
+		// Browsers ignore control characters and spaces when determining the scheme
+		if (preg_match('/^([a-z][a-z0-9+.\-]*):/i', preg_replace('/[\x00-\x20]+/', '', $url), $matches) && !in_array(strtolower($matches[1]), array('http', 'https'))) {
+			return $issue;
+		}
+
+		return '<a href="'.escape($url).'">'.$issue.'</a>';
+	}
+
+	// }}}
+
 	// {{{ replaceIDs($message)
 
 	function replaceIDs($message) {
@@ -145,9 +164,9 @@ class Bugtraq {
 				$issue	= trim(substr($issues, 0, $pos));
 				$issues = substr($issues, $pos + 1);
 
-				$line .= '<a href="'.str_replace('%BUGID%', $issue, $this->urlstring).'">'.$issue.'</a>, ';
+				$line .= $this->makeLink($issue).', ';
 			}
-			$line .= '<a href="'.str_replace('%BUGID%', trim($issues), $this->urlstring).'">'.trim($issues).'</a>'.$this->lastPart;
+			$line .= $this->makeLink(trim($issues)).$this->lastPart;
 
 			if ($this->append) {
 				$message = $logmsg.$line;
@@ -177,7 +196,7 @@ class Bugtraq {
 						$issue = $matches[$match][1][0];
 						$issueOffset = $matches[$match][1][1];
 
-						$issueLink = '<a href="'.str_replace('%BUGID%', $issue, $this->urlstring).'">'.$issue.'</a>';
+						$issueLink = $this->makeLink($issue);
 						$message = substr_replace($message, $issueLink, $issueOffset + $addedOffset, strlen($issue));
 						$addedOffset += strlen($issueLink) - strlen($issue);
 					}
@@ -199,7 +218,7 @@ class Bugtraq {
 							$issue = $matches[$match][1][0];
 							$issueOffset = $matches[$match][1][1];
 
-							$issueLink = '<a href="'.str_replace('%BUGID%', $issue, $this->urlstring).'">'.$issue.'</a>';
+							$issueLink = $this->makeLink($issue);
 							$replacement = substr_replace($replacement, $issueLink, $issueOffset + $addedOffset, strlen($issue));
 							$addedOffset += strlen($issueLink) - strlen($issue);
 						}
