@@ -37,7 +37,8 @@ $quiet = (isset($_REQUEST['quiet']));
 if ($config->multiViews) {
 	$baseurl = '';
 } else {
-	$baseurl = dirname($_SERVER['PHP_SELF']);
+	// SCRIPT_NAME, unlike PHP_SELF, does not include the client-supplied PATH_INFO
+	$baseurl = dirname($_SERVER['SCRIPT_NAME']);
 	if ($baseurl != '' && $baseurl != DIRECTORY_SEPARATOR && $baseurl != '\\' && $baseurl != '/') {
 		$baseurl .= '/';
 	} else {
@@ -89,7 +90,7 @@ $bugtraq = new Bugtraq($rep, $svnrep, $ppath);
 // Generate RSS 2.0 feed
 $rss = '<?xml version="1.0" encoding="utf-8"?>';
 $rss .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel>';
-$rss .= '<title>'.escape($rep->getDisplayName()).($path ? ' &#x2013; '.$path : '').'</title>';
+$rss .= '<title>'.escape($rep->getDisplayName()).($path ? ' &#x2013; '.escape($path) : '').'</title>';
 $rss .= '<description>'.escape($lang['RSSFEEDTITLE']).' &#x2013; '.escape($repname).'</description>';
 $rss .= '<lastBuildDate>'.date('r').'</lastBuildDate>'; // RFC 2822 date format
 $rss .= '<generator>WebSVN '.$vars['version'].'</generator>';
@@ -111,11 +112,13 @@ if (is_array($history->entries)) {
 			$title = implode(' ', array_slice($words, 0, $wordLimit)).' ...';
 		}
 		$title = $lang['REV'].' '.$r->rev.' '.mb_convert_encoding('&#x2013;', 'UTF-8', 'HTML-ENTITIES').' '.$title;
-		$description = '<div><strong>'.$r->author;
+		// The description is HTML which is escaped once more below to embed it in the
+		// XML, so text taken from the repository must be HTML-escaped here first.
+		$description = '<div><strong>'.escape($r->author);
 		if (!$quiet) {
 			$description .= ' '.mb_convert_encoding('&#x2013;', 'UTF-8', 'HTML-ENTITIES').' '.count($r->mods).' '.$lang['FILESMODIFIED'];
 		}
-		$description .= '</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors($r->msg))).'</div>';
+		$description .= '</strong><br/>'.nl2br($bugtraq->replaceIDs(create_anchors(escape($r->msg)))).'</div>';
 		if (!$quiet) {
 			usort($r->mods, 'SVNLogEntry_compare');
 			foreach ($r->mods as $modifiedResource) {
@@ -124,9 +127,9 @@ if (is_array($history->entries)) {
 					case 'M': $description .= '~ '; break;
 					case 'D': $description .= 'x '; break;
 				}
-				$description .= $modifiedResource->path;
+				$description .= escape($modifiedResource->path);
 				if ($modifiedResource->copyfrom != '') {
-					$description .= ' <i>(copied from '.$modifiedResource->copyfrom.'@'.$modifiedResource->copyrev.')</i>';
+					$description .= ' <i>(copied from '.escape($modifiedResource->copyfrom).'@'.$modifiedResource->copyrev.')</i>';
 				}
 				$description .= '<br />';
 			}
