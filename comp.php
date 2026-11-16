@@ -172,7 +172,7 @@ if ($history && $history->curEntry)
 	$vars['peg'] = $peg;
 	$vars['date'] = $logEntry->date;
 	$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
-	$vars['author'] = $logEntry->author;
+	$vars['author'] = escape($logEntry->author);
 	$vars['log'] = xml_entities($logEntry->msg);
 }
 else

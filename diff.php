@@ -87,7 +87,7 @@ if (isset($history->entries[0]))
 	$vars['log'] = xml_entities($history->entries[0]->msg);
 	$vars['date'] = $history->entries[0]->date;
 	$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
-	$vars['author'] = $history->entries[0]->author;
+	$vars['author'] = escape($history->entries[0]->author);
 	$vars['rev'] = $vars['rev1'] = $history->entries[0]->rev;
 	$vars['peg'] = $peg;
 }
@@ -158,7 +158,7 @@ $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev);
 // If no previous revision exists, bail out before diffing
 if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType))
 {
-	$vars['warning'] = 'Cannot display diff of binary file. (svn:mime-type = '.$svnMimeType.')';
+	$vars['warning'] = 'Cannot display diff of binary file. (svn:mime-type = '.escape($svnMimeType).')';
 
 }
 else if (!$prevrev)

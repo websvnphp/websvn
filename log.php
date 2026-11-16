@@ -165,7 +165,7 @@ if ($history && isset($history->entries[0]))
 	$vars['log'] = xml_entities($history->entries[0]->msg);
 	$vars['date'] = $history->entries[0]->date;
 	$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
-	$vars['author'] = $history->entries[0]->author;
+	$vars['author'] = escape($history->entries[0]->author);
 }
 
 if ($max === false)
@@ -379,7 +379,7 @@ if (!empty($history))
 			$compareValue = (($isDir) ? $parent : $rpath).'@'.$thisrev;
 
 			$listvar = &$listing[$index];
-			$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.$compareValue.'" onclick="enforceOnlyTwoChecked(this)" />';
+			$listvar['compare_box'] = '<input type="checkbox" name="compare[]" value="'.escape($compareValue).'" onclick="enforceOnlyTwoChecked(this)" />';
 			$url = $config->getURL($rep, $rpath, 'revision').$thisRevString;
 			$listvar['revlink'] = '<a href="'.$url.'">'.$thisrev.'</a>';
 
@@ -387,7 +387,7 @@ if (!empty($history))
 
 			$listvar['revpathlink'] = '<a href="'.$url.'">'.escape($precisePath).'</a>';
 			$listvar['revpath'] = escape($precisePath);
-			$listvar['revauthor'] = $revision->author;
+			$listvar['revauthor'] = escape($revision->author);
 			$listvar['revdate'] = $revision->date;
 			$listvar['revage'] = $revision->age;
 			$listvar['revlog'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($revision->msg))));

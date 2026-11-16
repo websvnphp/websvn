@@ -89,7 +89,7 @@ if (isset($history->entries[0]))
 	$vars['log'] = xml_entities($history->entries[0]->msg);
 	$vars['date'] = $history->entries[0]->date;
 	$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
-	$vars['author'] = $history->entries[0]->author;
+	$vars['author'] = escape($history->entries[0]->author);
 }
 
 createPathLinks($rep, $ppath, $passrev, $peg);
@@ -154,7 +154,7 @@ $svnMimeType = $svnrep->getProperty($path, 'svn:mime-type', $rev, $peg);
 
 if (!$rep->getIgnoreSvnMimeTypes() && preg_match('~application/*~', $svnMimeType))
 {
-	$vars['warning'] = 'Cannot display blame info for binary file. (svn:mime-type = '.$svnMimeType.')';
+	$vars['warning'] = 'Cannot display blame info for binary file. (svn:mime-type = '.escape($svnMimeType).')';
 	$vars['javascript'] = '';
 }
 else
@@ -196,7 +196,7 @@ else
 						$listvar['revision'] = '<a id="l'.$index.'-rev" class="blame-revision" href="'.$config->getURL($rep, $path, 'blame').createRevAndPegString($revision, $peg ? $peg : $rev).'">'.$revision.'</a>';
 						$seen_rev[$revision] = 1;
 						$row_class = ($row_class == 'light') ? 'dark' : 'light';
-						$listvar['author'] = $author;
+						$listvar['author'] = escape($author);
 					}
 					else
 					{

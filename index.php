@@ -83,7 +83,7 @@ foreach ($projects as $project) {
 			$listvar['revision'] = $head->rev;
 			$listvar['date'] = $head->date;
 			$listvar['age'] = datetimeFormatDuration(time() - strtotime($head->date));
-			$listvar['author'] = $head->author;
+			$listvar['author'] = escape($head->author);
 		} else {
 			$listvar['revision'] = 0;
 			$listvar['date'] = '';

@@ -121,7 +121,7 @@ if ($logEntry)
 {
 	$vars['date'] = $logEntry->date;
 	$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
-	$vars['author'] = $logEntry->author;
+	$vars['author'] = escape($logEntry->author);
 	$vars['log'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg))));
 }
 

@@ -198,7 +198,7 @@ function showDirFiles($svnrep, $subs, $level, $limit, $rev, $peg, $listing, $ind
 			{
 				$listvar['committime'] = $entry->committime;
 				$listvar['revision'] = $entry->rev;
-				$listvar['author'] = $entry->author;
+				$listvar['author'] = escape($entry->author);
 				$listvar['age'] = $entry->age;
 				$listvar['date'] = $entry->date;
 				$listvar['revurl'] = $config->getURL($rep, $path.$file, 'revision').$isDirString.createRevAndPegString($entry->rev, $peg ? $peg : $rev);
@@ -405,7 +405,7 @@ if ($logEntry)
 {
 	$vars['date'] = $logEntry->date;
 	$vars['age'] = datetimeFormatDuration(time() - strtotime($logEntry->date));
-	$vars['author'] = $logEntry->author;
+	$vars['author'] = escape($logEntry->author);
 	$vars['log'] = nl2br($bugtraq->replaceIDs(create_anchors(xml_entities($logEntry->msg))));
 }
 

@@ -164,7 +164,7 @@ if (isset($history->entries[0]))
 	$vars['log'] = xml_entities($history->entries[0]->msg);
 	$vars['date'] = $history->entries[0]->date;
 	$vars['age'] = datetimeFormatDuration(time() - strtotime($history->entries[0]->date));
-	$vars['author'] = $history->entries[0]->author;
+	$vars['author'] = escape($history->entries[0]->author);
 }
 
 createPathLinks($rep, $ppath, !$passrev && $peg ? $rev : $passrev, $peg);
@@ -239,7 +239,7 @@ $mimeType = $useMime; // Restore preserved value to use for 'mimelink' variable.
 if ($mimeType && !isset($vars['warning']))
 {
 	$vars['mimeurl'] = $config->getURL($rep, $path, 'file').'usemime=1&amp;'.$passRevString;
-	$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">'.$lang['VIEWAS'].' "'.$mimeType.'"</a>';
+	$vars['mimelink'] = '<a href="'.$vars['mimeurl'].'">'.$lang['VIEWAS'].' "'.escape($mimeType).'"</a>';
 }
 
 $vars['rev'] = $rev;
