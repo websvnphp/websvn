@@ -138,6 +138,17 @@ if ($history && !empty($mimeType) && $rep->hasReadAccess($path, false))
 	header('Content-Type: '.$mimeType);
 	//header('Content-Length: '.$size);
 	header("Content-Disposition: inline; filename*=UTF-8''".rawurlencode($base));
+	// The file comes straight from the repository and is rendered on WebSVN's own
+	// origin. Unless it is of a type that cannot carry script, sandbox it so that
+	// active content (e.g. text/html or image/svg+xml with scripts) cannot run with
+	// access to WebSVN pages. PDFs are not sandboxed as browsers refuse to show
+	// them in a sandbox; their viewers do not run script on the page's origin.
+	if (!preg_match('#^(image/(png|jpeg|gif|webp|avif|bmp|x-icon|vnd\.microsoft\.icon)|audio/|video/|application/pdf|text/plain)\b#i', $mimeType))
+	{
+		header('Content-Security-Policy: sandbox');
+	}
+	// Stop browsers from sniffing other types into HTML.
+	header('X-Content-Type-Options: nosniff');
 	$svnrep->getFileContents($path, '', $rev, $peg);
 	exit;
 }
